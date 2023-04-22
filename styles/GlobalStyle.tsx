@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -16,7 +17,17 @@ const GlobalStyle = createGlobalStyle`
     }
 
     html {
+        display:flex;
+        justify-content: center;
         font-size: 62.5%;
+        background-color: ${theme.colors.white};
+    }
+
+    body {
+        /* width:37.5rem; */
+        height:100vh;
+        background-color: ${theme.colors.bg_yellow};
+
     }
 
 
@@ -33,6 +44,11 @@ const GlobalStyle = createGlobalStyle`
     button{
         cursor: pointer;
     }
+
+    @font-face{
+    font-family:'bitbit';
+    src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
+}
 `;
 
 export default GlobalStyle;

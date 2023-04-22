@@ -1,20 +1,35 @@
+import { DefaultTheme } from 'styled-components';
+
 const colors = {
-  yellow: '#FBF26C',
-  black: '#1E2025',
+  bg_yellow: '#FFF8D4',
+  main_blue: '#00ABFF',
+  dark_blue: '#1D3F61',
+  pastel_blue: '#C6E3FF',
+  warning_red: '#BE2121',
+  white: '#FFFFFF',
+  black: '#000000',
+  gray1: '#CCCCCC',
+  gray2: '#999999',
+  gray3: '#666666',
+  gray4: '#333333',
+
   card_hover: 'rgba(47, 47, 47, 0.4)',
   icon_hover: 'rgba(235, 235, 235, 0.5);',
-} as const;
+};
+
+export type ColorsTypes = typeof colors;
 
 interface Font {
+  family: boolean;
   weight: 300 | 400 | 500 | 600 | 700 | 800;
   size: number;
   lineHeight: number;
   letterSpacing?: number;
 }
 
-function FONT({ weight, size, lineHeight, letterSpacing }: Font): string {
+function FONT({ family, weight, size, lineHeight, letterSpacing }: Font): string {
   return `
-      font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
+      font-family: ${family ? 'bitbit' : 'Galmuri11'};
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight}rem;
@@ -23,12 +38,15 @@ function FONT({ weight, size, lineHeight, letterSpacing }: Font): string {
 }
 
 const fonts = {
-  title1: FONT({ weight: 700, size: 4, lineHeight: 5.4 }),
-} as const;
+  title1: FONT({ family: true, weight: 700, size: 4, lineHeight: 5.4 }),
+  body: FONT({ family: false, weight: 700, size: 4, lineHeight: 5.4 }),
+};
+
+export type FontsTypes = typeof fonts;
 
 const theme = {
   colors,
   fonts,
-} as const;
+};
 
 export default theme;
