@@ -7,7 +7,6 @@ export default function About() {
     <>
       <Styled.Root>Hello</Styled.Root>
       <Styled.Test>Hello Test 입니다!!</Styled.Test>
-      <div style={{ backgroundColor: 'blue' }}>안녕하세요</div>
       <Styled.About>안녕하세요</Styled.About>
     </>
   );
@@ -15,13 +14,13 @@ export default function About() {
 
 const Styled = {
   Root: styled.div`
-    ${theme.fonts.title1}
+    ${theme.fonts.title56}
     font-size: 20px;
     font-weight: bold;
     background-color: ${theme.colors.bg_yellow};
   `,
   Test: styled.div`
-    ${theme.fonts.body}
+    ${theme.fonts.body16}
     font-size: 20px;
     font-weight: bold;
     background-color: ${theme.colors.dark_blue};

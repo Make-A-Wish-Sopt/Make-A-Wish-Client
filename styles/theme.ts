@@ -23,7 +23,7 @@ interface Font {
   family: boolean;
   weight: 300 | 400 | 500 | 600 | 700 | 800;
   size: number;
-  lineHeight: number;
+  lineHeight: string;
   letterSpacing?: number;
 }
 
@@ -32,14 +32,21 @@ function FONT({ family, weight, size, lineHeight, letterSpacing }: Font): string
       font-family: ${family ? 'bitbit' : 'Galmuri11'};
       font-weight: ${weight};
       font-size: ${size}rem;
-      line-height: ${lineHeight}rem;
+      line-height: ${lineHeight};
       ${letterSpacing && `letter-spacing: -0.0${letterSpacing}rem;`}
     `;
 }
 
 const fonts = {
-  title1: FONT({ family: true, weight: 700, size: 4, lineHeight: 5.4 }),
-  body: FONT({ family: false, weight: 700, size: 4, lineHeight: 5.4 }),
+  title56: FONT({ family: true, weight: 400, size: 5.6, lineHeight: '100%' }),
+  headline20: FONT({ family: true, weight: 400, size: 2, lineHeight: '130%' }),
+  headline24_100: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '100%' }),
+  headline24_130: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '130%' }),
+  headline30: FONT({ family: true, weight: 400, size: 3, lineHeight: '100%' }),
+  body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '130%' }),
+  body14: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '130%' }),
+  body12: FONT({ family: true, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
+  button16: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '3rem' }),
 };
 
 export type FontsTypes = typeof fonts;
