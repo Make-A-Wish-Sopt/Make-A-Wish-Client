@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        /* width:37.5rem; */
+        width:37.5rem;
         height:100vh;
         background-color: ${theme.colors.bg_yellow};
 
