@@ -26,6 +26,9 @@ const GlobalStyle = createGlobalStyle`
     body {
         width:37.5rem;
         height:100vh;
+
+        display : flex;
+        justify-content: center;
         background-color: ${theme.colors.bg_yellow};
 
     }
