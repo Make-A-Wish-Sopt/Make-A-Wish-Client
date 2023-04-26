@@ -48,6 +48,12 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
+    input {
+        border: none;
+        outline:none;
+        background: transparent;
+    }
+
     @font-face{
     font-family:'bitbit';
     src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
