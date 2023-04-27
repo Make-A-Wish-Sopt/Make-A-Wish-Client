@@ -4,7 +4,10 @@ export default function useInput(initValue: string, maxInput: number) {
   const [value, setValue] = useState(initValue);
 
   const changeInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    e.currentTarget.value.length <= maxInput && setValue(e.currentTarget.value);
+    //-1일 경우 입력제한이 없는 Input (ex. 링크, 계좌번호)
+    if (e.currentTarget.value.length <= maxInput || maxInput === -1) {
+      setValue(e.currentTarget.value);
+    }
   }, []);
   return [value, changeInput] as const;
 }
