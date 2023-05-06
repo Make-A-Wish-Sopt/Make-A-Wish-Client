@@ -48,15 +48,20 @@ export default function Giver() {
         <InputTitle title={'보내고 싶은 케이크 선택하기'} />
 
         <Styled.CakeContainer>
-          {CAKE_LIST.map((cake) => (
-            <InputCakeBox isClicked={true} key={cake.name}>
+          {CAKE_LIST.map((cake, index) => (
+            <Styled.CakeBox
+              onClick={() => selectCake(index)}
+              index={index}
+              selectedIndex={selectedIndex}
+              key={cake.name}
+            >
               <Image src={cake.cakeImage} alt={`${cake.name}이미지`} />
-            </InputCakeBox>
+            </Styled.CakeBox>
           ))}
         </Styled.CakeContainer>
         <TextareaBox>
           <Styled.TextareaImageWrapper>
-            <Image src={CAKE_LIST[0].detailImage} alt="케이크 상세 이미지" />
+            <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
           </Styled.TextareaImageWrapper>
         </TextareaBox>
         <Styled.CakeInfo></Styled.CakeInfo>
