@@ -1,28 +1,33 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
-import InputHeader from '@/components/common/inputHeader';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
-import BackBtn from '@/components/button/backBtn';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
-import InputCakeBox from '@/components/common/input/inputCakeBox';
 import { CAKE_LIST } from '@/constant/cakeList';
+import { CakeListType } from '@/types/cakeListType';
 import Image from 'next/image';
 import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
+import { useState } from 'react';
+import GiverHeader from '@/components/giver/giverHeader';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
+  const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  const selectCake = (index: number) => {
+    setSelectedCake(CAKE_LIST[index]);
+    setSelectedIndex(index);
+  };
 
   return (
     <>
-      <InputHeader>
-        <BackBtn />
-      </InputHeader>
+      <GiverHeader />
 
       {/* API 데이터 */}
       <Styled.Title>✨화정이의 앙큼 벌스데이✨</Styled.Title>
@@ -141,5 +146,22 @@ const Styled = {
   ButtonText: styled.div`
     ${theme.fonts.button16};
     color: ${theme.colors.white};
+  `,
+
+  CakeBox: styled.div<{ index: number; selectedIndex: number }>`
+    width: 7.4rem;
+    height: 4.6rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.8rem 1.4rem;
+    border: 0.1rem solid ${theme.colors.main_blue};
+    background-color: ${(props) =>
+      props.index === props.selectedIndex ? theme.colors.main_blue : theme.colors.pastel_blue};
+    border-radius: 0.6rem;
+
+    cursor: pointer;
   `,
 };
