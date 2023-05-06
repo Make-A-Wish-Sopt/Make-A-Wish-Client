@@ -25,6 +25,10 @@ export default function Giver() {
     setSelectedIndex(index);
   };
 
+  const convertMoneyText = (price: number) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   return (
     <>
       <GiverHeader />
@@ -69,7 +73,9 @@ export default function Giver() {
             <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
           </Styled.TextareaImageWrapper>
         </TextareaBox>
-        <Styled.CakeInfo></Styled.CakeInfo>
+        <Styled.CakeInfo>
+          {selectedCake.name} {convertMoneyText(selectedCake.price)}원
+        </Styled.CakeInfo>
       </InputContainer>
 
       <InputContainer>
@@ -139,6 +145,9 @@ const Styled = {
   CakeInfo: styled.span`
     ${theme.fonts.button16};
     color: ${theme.colors.main_blue};
+
+    display: flex;
+    justify-content: center;
 
     margin-top: 1rem;
   `,
