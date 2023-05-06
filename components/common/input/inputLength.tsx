@@ -20,6 +20,5 @@ const Styled = {
   Box: styled.div`
     color: ${theme.colors.gray2};
     ${theme.fonts.body12};
-    margin-right: 0.2rem;
   `,
 };

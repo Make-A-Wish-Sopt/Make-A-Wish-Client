@@ -1,5 +1,3 @@
-import { DefaultTheme } from 'styled-components';
-
 const colors = {
   bg_yellow: '#FFF8D4',
   main_blue: '#00ABFF',
