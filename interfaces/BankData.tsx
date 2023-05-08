@@ -1,7 +1,7 @@
 import bankImgs from '@/public/assets/images';
 import { StaticImageData } from 'next/image';
 
-export interface BankListType {
+interface BankListType {
     name: string;
     bankNumber: number;
     logo: StaticImageData;

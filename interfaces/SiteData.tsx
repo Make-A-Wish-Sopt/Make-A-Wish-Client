@@ -1,7 +1,7 @@
 import { TwentynineLogoImg, CoupangLogoImg } from '@/public/assets/images';
 import { StaticImageData } from 'next/image';
 
-export interface SiteListType {
+interface SiteListType {
     name: string;
     link: string;
     siteLogo: StaticImageData;

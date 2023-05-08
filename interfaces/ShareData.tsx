@@ -1,7 +1,7 @@
 import { KaKaoLogoImg, InstaLogoImg, FacebookLogoImg, TwitterLogoImg } from '@/public/assets/images';
 import { StaticImageData } from 'next/image';
 
-export interface ShareListType {
+interface ShareListType {
     name: string;
     link: string;
     logo: StaticImageData;
