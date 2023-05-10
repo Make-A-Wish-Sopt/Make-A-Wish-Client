@@ -45,7 +45,7 @@ const fonts = {
   headline30: FONT({ family: true, weight: 400, size: 3, lineHeight: '100%' }),
   body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '130%' }),
   body14: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '130%' }),
-  body12: FONT({ family: true, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
+  body12: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
   button16: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '3rem' }),
 };
 
