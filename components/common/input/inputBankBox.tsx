@@ -1,18 +1,21 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
-interface InputBoxProps {
-  children: React.ReactNode;
+interface InputBankBoxProps {
+    children: React.ReactNode;
+    onClick: () => void;
 }
 
-export default function InputBox(props: InputBoxProps) {
-  const { children } = props;
+export default function InputBankBox(props: InputBankBoxProps) {
+    const { children, onClick } = props;
 
-  return <Styled.Box >{children}</Styled.Box>;
+    return <Styled.Box onClick={onClick}>
+        {children}
+    </Styled.Box>;
 }
 
 const Styled = {
-  Box: styled.div`
+    Box: styled.div`
     width: 33.1rem;
     height: 5rem;
 
@@ -23,5 +26,5 @@ const Styled = {
     background-color: ${theme.colors.pastel_blue};
     border: 0.1rem solid ${theme.colors.main_blue};
     border-radius: 1rem;
-  `,
+    `,
 };

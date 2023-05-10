@@ -7,6 +7,7 @@ interface InputHeaderProps {
 
 export default function InputHeader(props: InputHeaderProps) {
   const { children } = props;
+
   return <Styled.Root>{children}</Styled.Root>;
 }
 
