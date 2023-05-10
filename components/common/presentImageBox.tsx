@@ -19,6 +19,6 @@ const Styled = {
     cursor: pointer;
     margin: 0 1rem 1rem 0;
     float: left;
-    border-radius: 16px;
+    border-radius: 1.6rem;
   `,
 };

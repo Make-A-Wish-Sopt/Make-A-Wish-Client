@@ -1,10 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import InfoBtn from '@/components/common/button/infoBtn';
-import KaKaoLoginBtn from '@/components/common/button/kakaoLoginBtn';
-import Footer from '@/components/common/footer';
+import { InfoBtnIC } from '@/public/assets/icons';
+import { KakaoLoginIc } from '@/public/assets/icons';
+import { LoginChatImg } from '@/public/assets/images';
+import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
+import Footer from '@/components/common/footer';
+import IconButton from '@/components/common/button/iconButton';
+
 
 
 export default function LoginPage() {
@@ -13,28 +17,24 @@ export default function LoginPage() {
     return (
         <>
             <Header>
-                <InfoBtn />
+                <IconButton src={InfoBtnIC} alt="서비스 소개" />
             </Header>
 
             <Styled.Container>
                 <Styled.ImageContainer>
                     <Styled.Title>조물주보다<br />생일선물주</Styled.Title>
 
-                    <Image src="assets/images/loginPage_chat.svg"
-                        width={241}
-                        height={62}
-                        alt="Main Cake Chat" />
-                    <Image src="assets/images/pillCake.svg"
-                        width={219}
-                        height={219}
-                        alt="Main Cake" />
+                    <Image src={LoginChatImg}
+                        alt="진짜 원하는 선물을 말해봐요" />
+                    <Image src={PillCakeImg}
+                        alt="케이크" />
                 </Styled.ImageContainer>
                 <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
                 <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
             </Styled.Container>
 
             <Footer>
-                <KaKaoLoginBtn />
+                <IconButton src={KakaoLoginIc} alt="카카오 로그인" />
             </Footer>
 
         </>

@@ -1,12 +1,12 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { CloseSmallIC } from '@/public/assets/icons';
+import { LinkCopyIC } from '@/public/assets/icons';
+import IconButton from '@/components/common/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
-import CloseSmallBtn from '@/components/common/button/closeSmallBtn';
-import LinkCopyBtn from '@/components/common/button/linkCopyBtn';
-import ShareBtn from '@/components/common/button/shareBtn';
+import SnsBox from '@/components/common/button/snsBox';
 
-import { useState } from 'react'
 import { SHARE_LIST } from '@/interfaces/ShareData';
 
 
@@ -19,19 +19,22 @@ export default function ShareModal(props: ShareModalProps) {
 
     return (
         <Styled.Modal>
-            <CloseSmallBtn></CloseSmallBtn>
+            <IconButton src={CloseSmallIC} alt="닫기" />
 
             <Styled.SnsContainer>
                 {SHARE_LIST.map((sns) => (
-                    <ShareBtn>
+                    <SnsBox>
                         <Image src={sns.logo} alt={`${sns.name}`} />
-                    </ShareBtn>
+                    </SnsBox>
                 ))}
             </Styled.SnsContainer>
 
             <InputLink>
                 <Styled.InputText value="www.asdf.co.kr" />
-                <LinkCopyBtn></LinkCopyBtn>
+                <IconButton src={LinkCopyIC} alt="링크 복사" />
+
+                <IconButton src={CloseSmallIC} alt="닫기" />
+
             </InputLink>
         </Styled.Modal >
 
@@ -44,7 +47,7 @@ const Styled = {
     height: 14.3rem;
     background-color: ${theme.colors.pastel_blue};
     padding: 1.6rem 1.5rem 1.6rem;
-    border-radius: 16px;
+    border-radius: 1.6rem;
     `,
 
     SnsContainer: styled.div`

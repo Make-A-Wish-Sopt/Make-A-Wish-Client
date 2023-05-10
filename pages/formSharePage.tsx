@@ -1,9 +1,13 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import CloseBtn from '@/components/common/button/closeBtn';
-import Footer from '@/components/common/footer';
+import { CloseBlueIc } from '@/public/assets/icons';
+import { ShareChatImg } from '@/public/assets/images';
+import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
+import Footer from '@/components/common/footer';
+import IconButton from '@/components/common/button/iconButton';
+
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react'
 
@@ -16,7 +20,7 @@ export default function FormSharePage() {
     return (
         <>
             <Header>
-                <CloseBtn />
+                <IconButton src={CloseBlueIc} alt="닫기" />
             </Header>
 
             <Styled.Container>
@@ -24,14 +28,10 @@ export default function FormSharePage() {
                 <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
 
                 <Styled.ImageContainer>
-                    <Image src="assets/images/sharePage_chat.svg"
-                        width={163}
-                        height={62}
-                        alt="Main Cake Chat" />
-                    <Image src="assets/images/pillCake.svg"
-                        width={219}
-                        height={219}
-                        alt="Main Cake" />
+                    <Image src={ShareChatImg}
+                        alt="이뤄져라 얍!" />
+                    <Image src={PillCakeImg}
+                        alt="케이크" />
                 </Styled.ImageContainer>
             </Styled.Container>
 

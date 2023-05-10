@@ -1,10 +1,10 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
+import PresentImageBox from '@/components/common/presentImageBox';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import InputBox from '@/components/common/input/inputBox';
-import PresentImageBox from '@/components/common/presentImageBox';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
 
 
@@ -24,9 +24,7 @@ export default function FormPreviewPage() {
                     <PresentImageBox>
                         <Image
                             src=""
-                            width={100}
-                            height={100}
-                            alt="Present Image" />
+                            alt="선물" />
                     </PresentImageBox>
                     <Styled.PresentPrice>가격: 707,480원</Styled.PresentPrice>
                 </Styled.PresentContainer>

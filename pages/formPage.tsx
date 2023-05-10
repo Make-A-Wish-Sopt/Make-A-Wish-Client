@@ -1,20 +1,22 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { CalendarIC } from '@/public/assets/icons';
+import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
-import InputBox from '@/components/common/input/inputBox';
-import InputBankBox from '@/components/common/input/inputBankBox';
-import InputLength from '@/components/common/input/inputLength';
-import SiteBtn from '@/components/common/button/siteBtn';
+import SiteBox from '@/components/common/button/siteBox';
 import AlertTextBox from '@/components/common/AlertText';
 import PresentImageBox from '@/components/common/presentImageBox';
-
+import InputBox from '@/components/common/input/inputBox';
+import InputLength from '@/components/common/input/inputLength';
+import InputLargeBox from '@/components/common/input/inputLargeBox';
+import InputBankBox from '@/components/common/input/inputBankBox';
 import InputCalendar from '@/components/common/input/inputCalendar';
+
 import BankModal from '@/components/modal/BankModal';
 import { SITE_LIST } from '@/interfaces/SiteData';
 import { useState } from 'react'
-import InputLargeBox from '@/components/common/input/inputLargeBox';
 
 
 
@@ -33,9 +35,9 @@ export default function FormPage() {
             <Styled.ItemBox>
                 <Styled.InputTitle>갖고 싶은 선물 링크 불러오기</Styled.InputTitle>
                 {SITE_LIST.map((site) => (
-                    <SiteBtn>
-                        <Image src={site.siteLogo} alt={`${site.name} 로고`} />
-                    </SiteBtn>
+                    <SiteBox key={site.name}>
+                        <Image src={site.logo} alt={`${site.name} 로고`} />
+                    </SiteBox>
                 ))}
                 <InputBox>
                     <Styled.InputText
@@ -49,9 +51,7 @@ export default function FormPage() {
                     <PresentImageBox>
                         <Image
                             src=""
-                            width={100}
-                            height={100}
-                            alt="Present Image" />
+                            alt="선물" />
                     </PresentImageBox>
                     <Styled.PresentPrice>가격: 707,480원</Styled.PresentPrice>
                 </Styled.PresentContainer>
@@ -96,10 +96,8 @@ export default function FormPage() {
                             readOnly
                         />
                         <Image
-                            src="assets/icons/CalendarIC.svg"
-                            width={19}
-                            height={22}
-                            alt="Calendar Icon" />
+                            src={CalendarIC}
+                            alt="캘린더" />
                     </InputCalendar>
                     <InputCalendar>
                         <Styled.InputText
@@ -107,10 +105,8 @@ export default function FormPage() {
                             readOnly
                         />
                         <Image
-                            src="assets/icons/CalendarIC.svg"
-                            width={19}
-                            height={22}
-                            alt="Calendar Icon" />
+                            src={CalendarIC}
+                            alt="캘린더" />
                     </InputCalendar>
                 </Styled.CalendarContainer>
             </Styled.ItemBox>
@@ -123,17 +119,14 @@ export default function FormPage() {
                     />
                 </InputBox>
                 <br />
-                {/* Modal */}
                 <InputBankBox onClick={clickModal}>
                     <Styled.InputText
                         placeholder="은행 선택"
                         readOnly
                     />
                     <Image
-                        src="assets/icons/arrow_downIC.svg"
-                        width={14}
-                        height={8}
-                        alt="arrow-down" />
+                        src={ArrowDownIc}
+                        alt="열기" />
                 </InputBankBox>
                 {showModal && <BankModal clickModal={clickModal} />}
                 <br />

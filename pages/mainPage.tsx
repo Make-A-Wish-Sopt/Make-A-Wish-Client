@@ -1,7 +1,13 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import SideBar from '@/components/common/button/sidebarBtn';
+import { SideBarIc } from '@/public/assets/icons';
+import { PillCakeImg } from '@/public/assets/images';
+import { MainChatImg } from '@/public/assets/images';
+import { GaugeBarImg } from '@/public/assets/images';
+import IconButton from '@/components/common/button/iconButton';
+
+
 
 export default function MainPage() {
 
@@ -13,34 +19,26 @@ export default function MainPage() {
                     <br /><span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고<br />케이크를 모아봐요!
                 </Styled.Title >
                 <Styled.SideContainer>
-                    <SideBar />
+                    <IconButton src={SideBarIc} alt="사이드바" />
                     <Styled.DDay>
                         D-?</Styled.DDay>
                 </Styled.SideContainer>
             </Styled.HeaderContainer>
 
             <Styled.CenterContainer>
-                <div style={{ display: "block" }}>
-                    <Styled.BarContainer>
-                        <Image src="assets/images/GaugeBarImg.svg"
-                            width={10}
-                            height={280}
-                            alt="GaugeBar"
-                        />
-                    </Styled.BarContainer>
-                    <Image src="assets/images/mainPage_chat.svg"
-                        width={163}
-                        height={62}
-                        alt="Main Cake Chat" />
-                    <Styled.ImageContainer>
-                        <Image src="assets/images/pillCake.svg"
-                            width={219}
-                            height={219}
-                            alt="Main Cake" />
-                    </Styled.ImageContainer>
-                    <Styled.About>모인 케이크 금액</Styled.About>
-                    <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
-                </div>
+                <Styled.BarContainer>
+                    <Image src={GaugeBarImg}
+                        alt="게이지바"
+                    />
+                </Styled.BarContainer>
+                <Image src={MainChatImg}
+                    alt="날 모아줄래? (두근)" />
+                <Styled.ImageContainer>
+                    <Image src={PillCakeImg}
+                        alt="케이크" />
+                </Styled.ImageContainer>
+                <Styled.About>모인 케이크 금액</Styled.About>
+                <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
             </Styled.CenterContainer>
 
             <button>소원 링크 생성하기</button>

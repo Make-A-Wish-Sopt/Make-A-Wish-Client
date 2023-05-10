@@ -1,11 +1,11 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
-interface ShareBtnProps {
+interface SnsBoxProps {
     children: React.ReactNode;
 }
 
-export default function ShareBtn(props: ShareBtnProps) {
+export default function SnsBox(props: SnsBoxProps) {
     const { children } = props;
 
     return <Styled.Box>{children}</Styled.Box>;
@@ -15,6 +15,5 @@ const Styled = {
     Box: styled.div`
     cursor: pointer;
     margin: 0 0.5rem 0;
-    float: left;
   `,
 };

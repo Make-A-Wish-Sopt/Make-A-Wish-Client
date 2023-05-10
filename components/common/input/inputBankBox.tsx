@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface InputBankBoxProps {
     children: React.ReactNode;
-    onClick: any;
+    onClick: () => void;
 }
 
 export default function InputBankBox(props: InputBankBoxProps) {
@@ -15,7 +15,7 @@ export default function InputBankBox(props: InputBankBoxProps) {
 }
 
 const Styled = {
-    Box: styled.div<{ onClick: boolean }>`
+    Box: styled.div`
     width: 33.1rem;
     height: 5rem;
 
@@ -26,5 +26,5 @@ const Styled = {
     background-color: ${theme.colors.pastel_blue};
     border: 0.1rem solid ${theme.colors.main_blue};
     border-radius: 1rem;
-  `,
+    `,
 };

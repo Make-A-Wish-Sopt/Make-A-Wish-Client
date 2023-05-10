@@ -14,7 +14,6 @@ export default function BankModal(props: BankModalProps) {
     const { clickModal } = props
 
     return (
-        // {/* 뒷배경을 클릭하면 모달을 나갈 수 있게 뒷 배경 onClick state함수 추가하기*/ }
         <Styled.Modal>
             <Styled.Title>은행을 선택해주세요.</Styled.Title>
             <Styled.BankContainer>
@@ -39,8 +38,8 @@ const Styled = {
     height: 60rem;
     background-color: ${theme.colors.pastel_blue};
     padding: 2.2rem;
-    border: 1px solid #00ABFF;
-    border-radius: 20px;
+    border: 0.1rem solid ${theme.colors.main_blue};
+    border-radius: 2rem;
     `,
 
     Title: styled.div`
@@ -63,7 +62,7 @@ const Styled = {
 
     BankLogoBox: styled.div`
     background-color: ${theme.colors.white};
-    border-radius: 10px;
+    border-radius: 1rem;
     padding: 1rem 0 0.5rem;
     `,
 

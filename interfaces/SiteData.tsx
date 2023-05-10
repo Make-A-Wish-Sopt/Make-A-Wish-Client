@@ -4,18 +4,18 @@ import { StaticImageData } from 'next/image';
 interface SiteListType {
     name: string;
     link: string;
-    siteLogo: StaticImageData;
+    logo: StaticImageData;
 }
 
 export const SITE_LIST: SiteListType[] = [
     {
         name: '쿠팡',
         link: 'https://www.coupang.com/',
-        siteLogo: CoupangLogoImg,
+        logo: CoupangLogoImg,
     },
     {
         name: '29cm',
         link: 'https://www.29cm.co.kr/',
-        siteLogo: TwentynineLogoImg,
+        logo: TwentynineLogoImg,
     },
 ];

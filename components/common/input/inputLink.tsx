@@ -21,6 +21,6 @@ const Styled = {
 
     padding: 1.4rem 1.2rem;
     background-color: ${theme.colors.main_blue};
-    border-radius: 10px;
+    border-radius: 1rem;
   `,
 };

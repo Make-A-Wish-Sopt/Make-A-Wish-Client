@@ -7,6 +7,7 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
     const { children } = props;
+
     return <Styled.Root>{children}</Styled.Root>;
 }
 
