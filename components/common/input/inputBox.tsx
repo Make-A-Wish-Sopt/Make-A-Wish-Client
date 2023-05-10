@@ -8,7 +8,7 @@ interface InputBoxProps {
 export default function InputBox(props: InputBoxProps) {
   const { children } = props;
 
-  return <Styled.Box>{children}</Styled.Box>;
+  return <Styled.Box >{children}</Styled.Box>;
 }
 
 const Styled = {
