@@ -1,5 +1,6 @@
 //명명규칙 : 1. 첫글자는 대문자 2. ~~Ic으로 끝내기
 
+
 export { default as BackBtnIc } from '@/public/assets/icons/backBtnIc.svg'
 export { default as InfoBtnIC } from '@/public/assets/icons/infoBtnIC.svg'
 export { default as KakaoLoginIc } from '@/public/assets/icons/kakaoLoginIc.svg'

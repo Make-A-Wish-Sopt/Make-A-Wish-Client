@@ -13,13 +13,13 @@ export default function InputBox(props: InputBoxProps) {
 
 const Styled = {
   Box: styled.div`
-    width: 33.1rem;
+    width: 100%;
     height: 5rem;
 
     display: flex;
     align-items: center;
 
-    padding: 1.4rem 1.2rem;
+    padding: 1.2rem 1rem 1.2rem 1.2rem;
     background-color: ${theme.colors.pastel_blue};
     border: 0.1rem solid ${theme.colors.main_blue};
     border-radius: 1rem;
