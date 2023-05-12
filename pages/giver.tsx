@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
+import BackBtn from '@/components/common/backBtn';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
