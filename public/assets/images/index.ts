@@ -11,7 +11,7 @@ export { default as VitaminCakeDetailImg } from '../images/vitaminCakeDetailImg.
 
 export { default as BeefCakeImg } from '../images/beefCakeImg.svg';
 export { default as ChickenCakeImg } from '../images/chickenCakeImg.svg';
-export { default as CoffeeCakeImg } from '../images/coffeeCakeDetailImg.svg';
+export { default as CoffeeCakeImg } from '../images/coffeeCakeImg.svg';
 export { default as FlowerCakeImg } from '../images/flowerCakeImg.svg';
 export { default as PerfumeCakeImg } from '../images/perfumeCakeImg.svg';
 export { default as PoopCakeImg } from '../images/poopCakeImg.svg';

@@ -1,4 +1,4 @@
-import BackBtn from '../button/backBtn';
+import BackBtn from '../common/backBtn';
 import InputHeader from '../common/inputHeader';
 
 export default function GiverHeader() {
