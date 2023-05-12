@@ -31,7 +31,7 @@ export default function FormPage() {
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
 
-  console.log(title, hint1, hint2, name, account, phone);
+  console.log(title, hint1, hint2, name, bankName, account, phone);
 
   const clickModal = () => setShowModal(!showModal);
 
@@ -120,7 +120,7 @@ export default function FormPage() {
           <Styled.InputText placeholder="은행 선택" readOnly />
           <Image src={ArrowDownIc} alt="열기" />
         </InputBankBox>
-        {showModal && <BankModal clickModal={clickModal} />}
+        {showModal && <BankModal clickModal={clickModal} changeBankName={changeBankName} />}
         <br />
         <InputBox>
           <Styled.InputText
