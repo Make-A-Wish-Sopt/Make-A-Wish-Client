@@ -67,7 +67,6 @@ const Styled = {
   `,
 
   PresentContainer: styled.div`
-    display: none;
     margin: 1rem 0 0;
   `,
 

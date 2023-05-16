@@ -164,5 +164,7 @@ const Styled = {
     height: 10.5rem;
     background-color: ${theme.colors.pastel_blue};
     border: none;
+
+    resize: none;
   `,
 };
