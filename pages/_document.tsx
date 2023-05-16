@@ -48,6 +48,8 @@ class MyDocument extends Document {
             href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css"
             rel="stylesheet"
           />
+          {/* 카카오 로그인 SDK */}
+          <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
         </Head>
         <body>
           <Main />

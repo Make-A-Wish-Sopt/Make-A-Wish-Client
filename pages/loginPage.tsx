@@ -1,24 +1,38 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { InfoBtnIC } from '@/public/assets/icons';
+import { GuideBtnIC } from '@/public/assets/icons';
 import { KakaoLoginIc } from '@/public/assets/icons';
 import { LoginChatImg } from '@/public/assets/images';
 import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import Footer from '@/components/common/footer';
 import IconButton from '@/components/common/button/iconButton';
-
+import { useState } from 'react';
+import GuideModal from '@/components/modal/GuideModal';
 
 
 export default function LoginPage() {
+
+    const [showModal, setShowModal] = useState(false);
+
+    const clickModal = () => {
+        setShowModal(!showModal);
+    };
+
+    const KakaoLogin = () => {
+        window.Kakao.Auth.authorize({
+            redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI
+        });
+    };
 
 
     return (
         <>
             <Header>
-                <IconButton src={InfoBtnIC} alt="서비스 소개" />
+                <IconButton onClick={clickModal} src={GuideBtnIC} alt="서비스 가이드" />
             </Header>
+            {showModal && <GuideModal />}
 
             <Styled.Container>
                 <Styled.ImageContainer>
@@ -34,7 +48,7 @@ export default function LoginPage() {
             </Styled.Container>
 
             <Footer>
-                <IconButton src={KakaoLoginIc} alt="카카오 로그인" />
+                <IconButton onClick={KakaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
             </Footer>
 
         </>

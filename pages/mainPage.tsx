@@ -6,16 +6,18 @@ import { PillCakeImg } from '@/public/assets/images';
 import { MainChatImg } from '@/public/assets/images';
 import { GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/common/button/iconButton';
-
+import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
 
 
 export default function MainPage() {
+
+    const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
 
 
     return (
         <>
             <Styled.HeaderContainer>
-                <Styled.Title>ㅇㅇ님,
+                <Styled.Title>{nickname}님,
                     <br /><span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고<br />케이크를 모아봐요!
                 </Styled.Title >
                 <Styled.SideContainer>
@@ -24,6 +26,11 @@ export default function MainPage() {
                         D-?</Styled.DDay>
                 </Styled.SideContainer>
             </Styled.HeaderContainer>
+            <h2>사용자 정보</h2>
+            <p>아이디: {kakaoId}</p>
+            <p>닉네임: {nickname}</p>
+            <p>프로필 이미지: {profileImage}</p>
+            <p>이메일: {email}</p>
 
             <Styled.CenterContainer>
                 <Styled.BarContainer>

@@ -6,6 +6,13 @@ import GlobalStyle from '../styles/GlobalStyle';
 import { useMediaQuery } from 'react-responsive';
 import { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
+import { useEffect } from 'react';
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   // const mobile = useMediaQuery({ query: 'max-width:800px' });
@@ -21,6 +28,12 @@ export default function App({ Component, pageProps }: AppProps) {
       },
     },
   });
+
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
 
   return (
     <RecoilRoot>
