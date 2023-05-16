@@ -1,6 +1,6 @@
 const REGEX = Object.freeze({
   COOPANG: /^http[s]?:\/\/www.coupang.com/,
-  TWENTY_NINE: /^http[s]?:\/\/www.29cm.co.kr/,
+  TWENTY_NINE: /^http[s]?:\/\/product.29cm.co.kr/,
 });
 
 export const validation = {
