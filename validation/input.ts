@@ -6,8 +6,10 @@ const REGEX = Object.freeze({
 });
 
 export const validation = {
-
-  isCorrectPhoneNumber(input: string) {
+  isCorrectSite(input: string) {
+    return REGEX.COOPANG.test(input) || REGEX.TWENTY_NINE.test(input);
+  },
+    isCorrectPhoneNumber(input: string) {
     return REGEX.PHONE.test(input);
   }
 };

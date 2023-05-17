@@ -1,5 +1,11 @@
 const PATH = {
-  TEST: 'test',
+  V1: 'v1',
+  CAKES: 'cakes',
+  PAY: 'pay',
+  AUTH: 'auth',
+  WISHES: 'wishes',
+  MAIN: 'main',
+  APPROVE: 'approve',
 };
 
 export default PATH;

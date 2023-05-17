@@ -5,9 +5,7 @@ import { CalendarIC } from '@/public/assets/icons';
 import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
-import SiteBox from '@/components/common/button/siteBox';
 import AlertTextBox from '@/components/common/AlertText';
-import PresentImageBox from '@/components/common/presentImageBox';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
@@ -19,9 +17,12 @@ import { SITE_LIST } from '@/interfaces/SiteData';
 import { useState } from 'react';
 import useInput from '@/hooks/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
+import ItemLink from '@/components/formPage/itemLink';
+
 
 export default function FormPage() {
   const [showModal, setShowModal] = useState(false);
+
 
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
   const [hint1, changeHint1] = useInput('', LIMIT_TEXT[300]);
@@ -50,28 +51,13 @@ export default function FormPage() {
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
 
-      <Styled.ItemBox>
-        <Styled.InputTitle>갖고 싶은 선물 링크 불러오기</Styled.InputTitle>
-        {SITE_LIST.map((site) => (
-          <SiteBox key={site.name}>
-            <Image src={site.logo} alt={`${site.name} 로고`} />
-          </SiteBox>
-        ))}
-        <InputBox>
-          <Styled.InputText placeholder="정해진 사이트에서 원하는 선물 링크 복사, 붙여넣기" />
-        </InputBox>
-        <Styled.AlertBox>
-          <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
-        </Styled.AlertBox>
-        <Styled.PresentContainer>
-          <PresentImageBox>{/* <Image src="" alt="선물" /> */}</PresentImageBox>
-          <Styled.PresentPrice>가격: 707,480원</Styled.PresentPrice>
-        </Styled.PresentContainer>
-      </Styled.ItemBox>
+      <ItemLink />
+
 
       <Styled.ItemBox>
         <Styled.InputTitle>소원 링크 제목 작성하기</Styled.InputTitle>
         <InputBox>
+
           <Styled.InputText placeholder="ex. OO이의 앙큼 벌스데이" onChange={changeTitle} />
           <InputLength inputLength={title.length} limit={LIMIT_TEXT[20]} />
         </InputBox>
@@ -80,6 +66,7 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
         <InputLargeBox>
+
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
             onChange={changeHint1}
@@ -203,11 +190,11 @@ const Styled = {
   `,
 
   TextareaText: styled.textarea`
+    ${theme.fonts.body12};
     width: 100%;
     height: 10.5rem;
-
-    color: ${theme.colors.dark_blue};
-    ${theme.fonts.body12};
+    background-color: ${theme.colors.pastel_blue};
+    border: none;
     resize: none;
   `,
 };
