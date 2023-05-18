@@ -25,17 +25,4 @@ const nextConfig = {
   },
 };
 
-// const rewrites = async () => {
-//   return [
-//     // {
-//     //   source: '/:path*',
-//     //   destination: 'https://product.29cm.co.kr/:path*',
-//     // },
-//     {
-//       source: '/:path*',
-//       destination: 'https://www.coupang.com/:path*',
-//     },
-//   ];
-// };
-
 module.exports = nextConfig;
