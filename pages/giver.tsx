@@ -14,6 +14,10 @@ import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useState } from 'react';
 import GiverHeader from '@/components/giver/giverHeader';
+import { convertMoneyText } from '@/util/common/convertMoneyText';
+import { useQuery } from 'react-query';
+import { QUERY_KEY } from '@/constant/queryKey';
+import { getWishesData } from '@/api/giver/getWishesData';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
@@ -26,21 +30,22 @@ export default function Giver() {
     setSelectedIndex(index);
   };
 
-  const convertMoneyText = (price: number) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const handleClick = () => {
+    console.log(giverName, letter, selectedCake);
   };
+
+  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(2), {});
 
   return (
     <>
-      <GiverHeader />
+      <GiverHeader dayCount={wishesData?.dayCount} />
 
-      {/* API 데이터 */}
-      <Styled.Title>✨화정이의 앙큼 벌스데이✨</Styled.Title>
+      <Styled.Title>{wishesData?.title}</Styled.Title>
 
       {/* API 데이터 */}
       <InputContainer>
-        <InputTitle title={'ㅇㅇ님이 남긴 선물에 대한 힌트'} />
-        <TextareaBox>api로 받아오는 데이터</TextareaBox>
+        <InputTitle title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`} />
+        <TextareaBox>{wishesData?.hint}</TextareaBox>
       </InputContainer>
 
       <InputContainer>
@@ -94,7 +99,11 @@ export default function Giver() {
         </TextareaBox>
       </InputContainer>
 
-      <ButtonBox backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+      <ButtonBox
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+        handleClick={handleClick}
+      >
         케이크 보내기
       </ButtonBox>
     </>
