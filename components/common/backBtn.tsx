@@ -1,5 +1,6 @@
 import { BackBtnIc } from '@/public/assets/icons';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function BackBtn() {
@@ -7,12 +8,14 @@ export default function BackBtn() {
 
   return (
     <>
-      <Image
-        src={BackBtnIc}
-        alt="뒤로가기"
-        style={{ cursor: 'pointer' }}
-        onClick={() => router.back()}
-      ></Image>
+      <Link href="../">
+        <Image
+          src={BackBtnIc}
+          alt="뒤로가기"
+          style={{ cursor: 'pointer' }}
+          onClick={() => router.back()}
+        ></Image>
+      </Link>
     </>
   );
 }
