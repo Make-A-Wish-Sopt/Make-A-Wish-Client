@@ -5,4 +5,5 @@ export interface CakeListType {
   price: number;
   cakeImage: StaticImageData;
   detailImage: StaticImageData;
+  cakeNumber: number;
 }
