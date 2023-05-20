@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
-import BackBtn from '@/components/common/backBtn';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
@@ -15,15 +14,19 @@ import { LIMIT_TEXT } from '@/constant/limitText';
 import { useState } from 'react';
 import GiverHeader from '@/components/giver/giverHeader';
 import { convertMoneyText } from '@/util/common/convertMoneyText';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { getWishesData } from '@/api/giver/getWishesData';
+import { postPayReady } from '@/api/giver/payReady';
+import { useRouter } from 'next/router';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const router = useRouter();
 
   const selectCake = (index: number) => {
     setSelectedCake(CAKE_LIST[index]);
@@ -31,10 +34,28 @@ export default function Giver() {
   };
 
   const handleClick = () => {
-    console.log(giverName, letter, selectedCake);
+    mutate();
   };
 
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries(QUERY_KEY.payReady);
+
   const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(2), {});
+
+  const { mutate } = useMutation(
+    QUERY_KEY.payReady,
+    () => postPayReady(giverName, selectedCake.cakeNumber),
+    {
+      onSuccess: (data) => {
+        const nextLink = data.data.data.next_redirect_pc_url;
+        router.replace(nextLink);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 
   return (
     <>
