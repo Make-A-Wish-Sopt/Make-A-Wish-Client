@@ -16,8 +16,8 @@ import GiverHeader from '@/components/giver/giverHeader';
 import { convertMoneyText } from '@/util/common/convertMoneyText';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QUERY_KEY } from '@/constant/queryKey';
-import { getWishesData } from '@/api/giver/getWishesData';
-import { postPayReady } from '@/api/giver/payReady';
+import { getWishesData } from '@/api/cakes/getWishesData';
+import { postPayReady } from '@/api/cakes/payReady';
 import { useRouter } from 'next/router';
 
 export default function Giver() {
