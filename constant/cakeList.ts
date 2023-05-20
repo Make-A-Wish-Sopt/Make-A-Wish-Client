@@ -15,6 +15,14 @@ import {
   FlowerCakeDetailImg,
   PerfumeCakeDetailImg,
   VitaminCakeDetailImg,
+  BeefCakeThanksImg,
+  ChickenCakeThanksImg,
+  CoffeeCakeThanksImg,
+  PoopCakeThanksImg,
+  SushiCakeThanksImg,
+  FlowerCakeThanksImg,
+  PerfumeCakeThanksImg,
+  VitaminCakeThanksImg,
 } from '@/public/assets/images';
 import { CakeListType } from '@/types/cakeListType';
 
@@ -24,6 +32,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 4900,
     cakeImage: CoffeeCakeImg,
     detailImage: CoffeeCakeDetailImg,
+    thanksImage: CoffeeCakeThanksImg,
     cakeNumber: 2,
   },
   {
@@ -31,6 +40,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 9900,
     cakeImage: VitaminCakeImg,
     detailImage: VitaminCakeDetailImg,
+    thanksImage: VitaminCakeThanksImg,
     cakeNumber: 3,
   },
   {
@@ -38,6 +48,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 17900,
     cakeImage: ChickenCakeImg,
     detailImage: ChickenCakeDetailImg,
+    thanksImage: ChickenCakeThanksImg,
     cakeNumber: 4,
   },
   {
@@ -45,6 +56,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 25900,
     cakeImage: SushiCakeImg,
     detailImage: SushiCakeDetailImg,
+    thanksImage: SushiCakeThanksImg,
     cakeNumber: 5,
   },
   {
@@ -52,6 +64,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 38900,
     cakeImage: FlowerCakeImg,
     detailImage: FlowerCakeDetailImg,
+    thanksImage: FlowerCakeThanksImg,
     cakeNumber: 6,
   },
   {
@@ -59,6 +72,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 46900,
     cakeImage: BeefCakeImg,
     detailImage: BeefCakeDetailImg,
+    thanksImage: BeefCakeThanksImg,
     cakeNumber: 7,
   },
   {
@@ -66,6 +80,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 55900,
     cakeImage: PerfumeCakeImg,
     detailImage: PerfumeCakeDetailImg,
+    thanksImage: PerfumeCakeThanksImg,
     cakeNumber: 8,
   },
   {
@@ -73,6 +88,7 @@ export const CAKE_LIST: CakeListType[] = [
     price: 0,
     cakeImage: PoopCakeImg,
     detailImage: PoopCakeDetailImg,
+    thanksImage: PoopCakeThanksImg,
     cakeNumber: 1,
   },
 ];
