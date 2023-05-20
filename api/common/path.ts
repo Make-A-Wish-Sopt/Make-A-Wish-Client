@@ -1,4 +1,5 @@
 const PATH = {
+  API: 'api',
   V1: 'v1',
   CAKES: 'cakes',
   PAY: 'pay',
@@ -6,6 +7,7 @@ const PATH = {
   WISHES: 'wishes',
   MAIN: 'main',
   APPROVE: 'approve',
+  READY: 'ready',
 };
 
 export default PATH;

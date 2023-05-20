@@ -15,14 +15,14 @@ const nextConfig = {
   },
 
   //29cm도 해야됩니다.
-  async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'https://www.coupang.com/:path*',
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/:path*',
+  //       destination: 'https://www.coupang.com/:path*',
+  //     },
+  //   ];
+  // },
 };
 
 // const rewrites = async () => {
