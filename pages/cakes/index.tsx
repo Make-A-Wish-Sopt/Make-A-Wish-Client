@@ -11,7 +11,7 @@ import { CakeListType } from '@/types/cakeListType';
 import Image from 'next/image';
 import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GiverHeader from '@/components/giver/giverHeader';
 import { convertMoneyText } from '@/util/common/convertMoneyText';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -19,21 +19,43 @@ import { QUERY_KEY } from '@/constant/queryKey';
 import { getWishesData } from '@/api/cakes/getWishesData';
 import { postPayReady } from '@/api/cakes/payReady';
 import { useRouter } from 'next/router';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { CakesDataType } from '@/types/cakes/cakesDataType';
+import { CakesData } from '@/reocil/cakes/cakesData';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
   const router = useRouter();
+
+  const resetCakesData = useResetRecoilState(CakesData);
+
+  useEffect(() => {
+    resetCakesData();
+  }, []);
 
   const selectCake = (index: number) => {
     setSelectedCake(CAKE_LIST[index]);
     setSelectedIndex(index);
   };
 
+  const saveReocilData = () => {
+    setCakesData((prevData) => ({
+      ...prevData,
+      giverName: giverName,
+      wishesName: '홍명헌', //wishesData로 수정해야합니다.
+      cake: selectedIndex,
+      message: letter,
+      wishId: 3, //값 수정해야됩니다.
+      selectedCake: selectedCake,
+    }));
+  };
+
   const handleClick = () => {
+    saveReocilData();
     mutate();
   };
 

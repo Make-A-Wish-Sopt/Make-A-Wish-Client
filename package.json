@@ -24,6 +24,7 @@
     "react-query": "^3.39.3",
     "react-responsive": "^9.0.2",
     "recoil": "^0.7.7",
+    "recoil-persist": "^4.2.0",
     "serverless": "^2.59.0",
     "styled-components": "^5.3.9",
     "styled-reset": "^4.4.6",
