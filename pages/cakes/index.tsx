@@ -46,7 +46,7 @@ export default function Giver() {
     setCakesData((prevData) => ({
       ...prevData,
       giverName: giverName,
-      wishesName: '홍명헌', //wishesData로 수정해야합니다.
+      wishesName: wishesData?.name,
       cake: selectedIndex,
       message: letter,
       wishId: 7, //값 수정해야됩니다. query 값으로 수정해야됨!
