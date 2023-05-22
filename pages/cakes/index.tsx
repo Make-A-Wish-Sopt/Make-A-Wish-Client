@@ -12,12 +12,12 @@ import Image from 'next/image';
 import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useEffect, useState } from 'react';
-import GiverHeader from '@/components/giver/giverHeader';
+import CakesHeader from '@/components/cakes/cakesHeader';
 import { convertMoneyText } from '@/util/common/convertMoneyText';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { getWishesData } from '@/api/cakes/getWishesData';
-import { postPayReady } from '@/api/cakes/payReady';
+import { postPayReady } from '@/api/cakes/postPayReady';
 import { useRouter } from 'next/router';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
@@ -49,21 +49,22 @@ export default function Giver() {
       wishesName: '홍명헌', //wishesData로 수정해야합니다.
       cake: selectedIndex,
       message: letter,
-      wishId: 3, //값 수정해야됩니다.
+      wishId: 7, //값 수정해야됩니다. query 값으로 수정해야됨!
       selectedCake: selectedCake,
     }));
   };
 
   const handleClick = () => {
     saveReocilData();
-    mutate();
+    selectedCake.cakeNumber === 1 ? router.replace('cakes/approve') : mutate();
   };
 
   const queryClient = useQueryClient();
-
   queryClient.invalidateQueries(QUERY_KEY.payReady);
 
-  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(2), {});
+  //관심사 분리해야됨
+  // 전달하는 케이크 주인 정보 가져오기
+  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(7), {});
 
   const { mutate } = useMutation(
     QUERY_KEY.payReady,
@@ -71,6 +72,13 @@ export default function Giver() {
     {
       onSuccess: (data) => {
         const nextLink = data.data.data.next_redirect_pc_url;
+        const tid = data.data.data.tid;
+
+        setCakesData((prevData) => ({
+          ...prevData,
+          tid: tid,
+        }));
+
         router.replace(nextLink);
       },
       onError: (error) => {
@@ -81,7 +89,7 @@ export default function Giver() {
 
   return (
     <>
-      <GiverHeader dayCount={wishesData?.dayCount} />
+      <CakesHeader dayCount={wishesData?.dayCount} />
 
       <Styled.Title>{wishesData?.title}</Styled.Title>
 
