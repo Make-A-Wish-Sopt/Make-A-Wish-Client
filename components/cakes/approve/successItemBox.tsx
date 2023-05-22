@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import TestImage from '../../../public/assets/testImage.jpeg';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import Contribution from '../contribution';
 
 interface SuccessItemBoxProps {
   cakesData: CakesDataType | undefined;
@@ -20,11 +21,11 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
     cakesData?.pgToken && mutate();
   }, [cakesData?.pgToken]);
 
-  const { data, mutate } = useMutation(
-    QUERY_KEY.payReady,
+  const { data, mutate, isSuccess } = useMutation(
     () => postPayApprove(cakesData?.pgToken, cakesData),
     {},
   );
+
 
   return (
     <>
@@ -47,6 +48,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Box>
       )}
+      {isSuccess && <Contribution percent={Number(data.contribute)} vertical={false} />}
     </>
   );
 }
