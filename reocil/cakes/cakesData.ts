@@ -10,8 +10,8 @@ export const CakesData = atom<CakesDataType>({
   default: {
     pgToken: '',
     tid: '',
-    partnerOrderId: '',
-    partnerUserId: '',
+    partnerOrderId: 'Make A Wish Test',
+    partnerUserId: '970311',
     giverName: '',
     wishesName: '',
     cake: 0,

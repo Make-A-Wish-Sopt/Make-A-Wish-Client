@@ -19,7 +19,7 @@ export { default as SushiCakeImg } from '../images/cakes/sushiCakeImg.svg';
 export { default as VitaminCakeImg } from '../images/cakes/vitaminCakeImg.svg';
 
 export { default as BeefCakeThanksImg } from '../images/cakes/beefCakeThanksImg.svg';
-export { default as ChickenCakeThanksImg } from '../images/cakes/chickenCakeImg.svg';
+export { default as ChickenCakeThanksImg } from '../images/cakes/chickenCakeThanksImg.svg';
 export { default as CoffeeCakeThanksImg } from '../images/cakes/coffeeCakeThanksImg.svg';
 export { default as FlowerCakeThanksImg } from '../images/cakes/flowerCakeThanksImg.svg';
 export { default as PerfumeCakeThanksImg } from '../images/cakes/perfumeCakeThanksImg.svg';
