@@ -1,41 +1,51 @@
-import InputLargeBox from '@/components/common/input/inputLargeBox';
+import { getPgTokenData } from '@/api/cakes/getPgTokenData';
+import ButtonBox from '@/components/button/buttonBox';
+import SuccessItemBox from '@/components/cakes/approve/successItemBox';
+import SuccessMsgBox from '@/components/cakes/approve/successMsgBox';
+import { QUERY_KEY } from '@/constant/queryKey';
 import { CakesData } from '@/reocil/cakes/cakesData';
 import theme from '@/styles/theme';
-import Image from 'next/image';
+import { CakesDataType } from '@/types/cakes/cakesDataType';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 
 export default function approve() {
-  const cakesData = useRecoilValue(CakesData);
-  console.log(cakesData);
+  const globalValue = useRecoilValue(CakesData);
+  const [cakesData, setCakesData] = useState<CakesDataType>();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setCakesData({ ...globalValue });
+
+    if (!router.isReady) return;
+
+    setCakesData((prevData) => ({
+      ...prevData,
+      pgToken: router.query.pg_token,
+    }));
+  }, [router.isReady]);
+
+  const { data } = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
+
+  const handleClick = () => {
+    console.log('hello');
+  };
+
   return (
     <>
-      <Styled.CompleteMessageBox>
-        {/* <span>{cakesData.wishesName}님께</span> */}
-        <Image src={cakesData.selectedCake.thanksImage} alt="케이크 감사 이미지" />
-        {/* <Styled.CakeText>{cakesData.selectedCake.name}</Styled.CakeText> */}
-        <span>선물이 완료 되었어요!</span>
-      </Styled.CompleteMessageBox>
-
-      <InputLargeBox>
-        {/* <Image src={cakesData.selectedCake.detailImage} alt="실제 선물 이미지" /> */}
-      </InputLargeBox>
+      <SuccessMsgBox cakesData={cakesData} />
+      <SuccessItemBox cakesData={cakesData} />
+      {/* 게이지바 */}
+      <ButtonBox
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+        handleClick={handleClick}
+      >
+        당신도 받고 싶은 선물이 있나요?
+      </ButtonBox>
     </>
   );
 }
-
-const Styled = {
-  CompleteMessageBox: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    ${theme.fonts.headline30};
-
-    margin-top: 9.5rem;
-    margin-bottom: 5rem;
-  `,
-  CakeText: styled.span`
-    color: ${theme.colors.main_blue};
-  `,
-};
