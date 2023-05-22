@@ -7,10 +7,8 @@ import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import Footer from '@/components/common/footer';
 import IconButton from '@/components/common/button/iconButton';
-
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react'
-
 
 export default function FormSharePage() {
     const [showModal, setShowModal] = useState(false)

@@ -6,16 +6,19 @@ import { LinkCopyIC } from '@/public/assets/icons';
 import IconButton from '@/components/common/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/common/button/snsBox';
-
+import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
+import { KaKaoLogoImg } from '@/public/assets/images';
 import { SHARE_LIST } from '@/interfaces/ShareData';
-
+import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
 
 interface ShareModalProps {
     clickModal: () => void;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-    const { clickModal } = props
+    const { nickname } = useAuthKaKao();
+
+    const shareKakao = () => { sendKakaoMessage(nickname); };
 
     return (
         <Styled.Modal>
@@ -23,7 +26,10 @@ export default function ShareModal(props: ShareModalProps) {
 
             <Styled.SnsContainer>
                 {SHARE_LIST.map((sns) => (
-                    <SnsBox>
+                    <SnsBox
+                        key={sns.name}
+                        onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}
+                    >
                         <Image src={sns.logo} alt={`${sns.name}`} />
                     </SnsBox>
                 ))}
@@ -32,7 +38,6 @@ export default function ShareModal(props: ShareModalProps) {
             <InputLink>
                 <Styled.InputText value="www.asdf.co.kr" />
                 <IconButton src={LinkCopyIC} alt="링크 복사" />
-
                 <IconButton src={CloseSmallIC} alt="닫기" />
 
             </InputLink>

@@ -20,7 +20,7 @@ export function useAuthKaKao() {
       console.log("TokenResponse : " + tokenResponse);
 
       if (!tokenResponse.access_token) {
-        router.push('/');
+        router.replace('/'); //push
         console.log("로그인 실패 : 액세스 토큰을 가져올 수 없습니다.");
         return;
       }
@@ -29,7 +29,7 @@ export function useAuthKaKao() {
       const apiResponse: ResponseType = await sendTokenToServer(tokenResponse.access_token);
 
       if (apiResponse.success) {
-        router.push('/mainPage');
+        router.replace('/mainPage');
         console.log("로그인 성공 : " + apiResponse.data);
 
         // 3. 사용자 정보 받아오기
@@ -43,9 +43,8 @@ export function useAuthKaKao() {
         setNickname(nickname);
         setProfileImage(profile_image);
         setEmail(email);
-
       } else {
-        router.push('/loginPage');
+        router.replace('/loginPage');
         console.log("로그인 실패 : " + apiResponse.message);
       }
     },
@@ -56,7 +55,7 @@ export function useAuthKaKao() {
     if (authCode) {
       loginHandler(authCode as string);
     } else if (kakaoServerError) {
-      router.push('/loginPage');
+      router.replace('/loginPage');
       console.log("로그인 실패 : " + kakaoServerError);
     }
   }, [loginHandler, authCode, kakaoServerError, router]);

@@ -18,7 +18,7 @@ export async function sendTokenToServer(accessToken: string) {
 }
 
 export async function getUserFromKakao(access_token: string) {
-  const userInfoUrl = '/api/v1/user';
+  const userInfoUrl = 'https://www.sunmulzu.shop/api/v1/user';
   const response: UserInfo = await client.get(userInfoUrl, {
     headers: {
       'Content-Type': 'application/json',
