@@ -60,11 +60,12 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
-    input {
+    button, input, textarea {
         border: none;
         outline:none;
         background: transparent;
     }
+
 
     @font-face{
     font-family:'bitbit';

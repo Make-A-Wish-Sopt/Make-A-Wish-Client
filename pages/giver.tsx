@@ -1,28 +1,38 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
-import InputHeader from '@/components/common/inputHeader';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import BackBtn from '@/components/common/backBtn';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
-import InputCakeBox from '@/components/common/input/inputCakeBox';
 import { CAKE_LIST } from '@/constant/cakeList';
+import { CakeListType } from '@/types/cakeListType';
 import Image from 'next/image';
 import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
+import { useState } from 'react';
+import GiverHeader from '@/components/giver/giverHeader';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
+  const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  const selectCake = (index: number) => {
+    setSelectedCake(CAKE_LIST[index]);
+    setSelectedIndex(index);
+  };
+
+  const convertMoneyText = (price: number) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
   return (
     <>
-      <InputHeader>
-        <BackBtn />
-      </InputHeader>
+      <GiverHeader />
 
       {/* API 데이터 */}
       <Styled.Title>✨화정이의 앙큼 벌스데이✨</Styled.Title>
@@ -48,18 +58,25 @@ export default function Giver() {
         <InputTitle title={'보내고 싶은 케이크 선택하기'} />
 
         <Styled.CakeContainer>
-          {CAKE_LIST.map((cake) => (
-            <InputCakeBox isClicked={true} key={cake.name}>
+          {CAKE_LIST.map((cake, index) => (
+            <Styled.CakeBox
+              onClick={() => selectCake(index)}
+              index={index}
+              selectedIndex={selectedIndex}
+              key={cake.name}
+            >
               <Image src={cake.cakeImage} alt={`${cake.name}이미지`} />
-            </InputCakeBox>
+            </Styled.CakeBox>
           ))}
         </Styled.CakeContainer>
         <TextareaBox>
           <Styled.TextareaImageWrapper>
-            <Image src={CAKE_LIST[0].detailImage} alt="케이크 상세 이미지" />
+            <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
           </Styled.TextareaImageWrapper>
         </TextareaBox>
-        <Styled.CakeInfo></Styled.CakeInfo>
+        <Styled.CakeInfo>
+          {selectedCake.name} {convertMoneyText(selectedCake.price)}원
+        </Styled.CakeInfo>
       </InputContainer>
 
       <InputContainer>
@@ -130,11 +147,31 @@ const Styled = {
     ${theme.fonts.button16};
     color: ${theme.colors.main_blue};
 
+    display: flex;
+    justify-content: center;
+
     margin-top: 1rem;
   `,
 
   ButtonText: styled.div`
     ${theme.fonts.button16};
     color: ${theme.colors.white};
+  `,
+
+  CakeBox: styled.div<{ index: number; selectedIndex: number }>`
+    width: 7.4rem;
+    height: 4.6rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.8rem 1.4rem;
+    border: 0.1rem solid ${theme.colors.main_blue};
+    background-color: ${(props) =>
+      props.index === props.selectedIndex ? theme.colors.main_blue : theme.colors.pastel_blue};
+    border-radius: 0.6rem;
+
+    cursor: pointer;
   `,
 };
