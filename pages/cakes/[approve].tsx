@@ -2,6 +2,8 @@ import { getPgTokenData } from '@/api/cakes/getPgTokenData';
 import ButtonBox from '@/components/button/buttonBox';
 import SuccessItemBox from '@/components/cakes/approve/successItemBox';
 import SuccessMsgBox from '@/components/cakes/approve/successMsgBox';
+import Contribution from '@/components/cakes/contribution';
+import ProgressBar from '@/components/common/progressBar';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { CakesData } from '@/reocil/cakes/cakesData';
 import theme from '@/styles/theme';
@@ -10,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 
 export default function approve() {
   const globalValue = useRecoilValue(CakesData);
@@ -31,14 +34,13 @@ export default function approve() {
   const { data } = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
 
   const handleClick = () => {
-    console.log('hello');
+    router.replace('/');
   };
 
   return (
-    <>
+    <Box>
       <SuccessMsgBox cakesData={cakesData} />
       <SuccessItemBox cakesData={cakesData} />
-      {/* 게이지바 */}
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
@@ -46,6 +48,12 @@ export default function approve() {
       >
         당신도 받고 싶은 선물이 있나요?
       </ButtonBox>
-    </>
+    </Box>
   );
 }
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
