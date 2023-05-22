@@ -16,7 +16,7 @@ const Styled = {
     top: 95%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height : 10%;    
+    padding: 0 2.2rem 5.4rem;
     `,
 };
 

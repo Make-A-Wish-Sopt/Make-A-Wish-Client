@@ -5,7 +5,7 @@ import { CalendarIC } from '@/public/assets/icons';
 import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
-import SiteBox from '@/components/common/button/siteBox';
+import SiteBox from '@/components/button/siteBox';
 import AlertTextBox from '@/components/common/AlertText';
 import PresentImageBox from '@/components/common/presentImageBox';
 import InputBox from '@/components/common/input/inputBox';

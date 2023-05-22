@@ -7,7 +7,7 @@ import { LoginChatImg } from '@/public/assets/images';
 import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import Footer from '@/components/common/footer';
-import IconButton from '@/components/common/button/iconButton';
+import IconButton from '@/components/button/iconButton';
 
 
 
