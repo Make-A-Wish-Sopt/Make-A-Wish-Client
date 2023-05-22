@@ -7,7 +7,7 @@ interface GiverHeaderProps {
   dayCount: number;
 }
 
-export default function GiverHeader(props: GiverHeaderProps) {
+export default function CakesHeader(props: GiverHeaderProps) {
   const { dayCount } = props;
   return (
     <InputHeader>
