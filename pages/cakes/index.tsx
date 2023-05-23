@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
-import BackBtn from '@/components/common/backBtn';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
@@ -12,35 +11,92 @@ import { CakeListType } from '@/types/cakeListType';
 import Image from 'next/image';
 import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { useState } from 'react';
-import GiverHeader from '@/components/giver/giverHeader';
+import { useEffect, useState } from 'react';
+import CakesHeader from '@/components/cakes/cakesHeader';
+import { convertMoneyText } from '@/util/common/convertMoneyText';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { QUERY_KEY } from '@/constant/queryKey';
+import { getWishesData } from '@/api/cakes/getWishesData';
+import { postPayReady } from '@/api/cakes/postPayReady';
+import { useRouter } from 'next/router';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { CakesDataType } from '@/types/cakes/cakesDataType';
+import { CakesData } from '@/reocil/cakes/cakesData';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
+  const router = useRouter();
+
+  const resetCakesData = useResetRecoilState(CakesData);
+
+  useEffect(() => {
+    resetCakesData();
+  }, []);
 
   const selectCake = (index: number) => {
     setSelectedCake(CAKE_LIST[index]);
     setSelectedIndex(index);
   };
 
-  const convertMoneyText = (price: number) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const saveReocilData = () => {
+    setCakesData((prevData) => ({
+      ...prevData,
+      giverName: giverName,
+      wishesName: wishesData?.name,
+      cake: selectedIndex,
+      message: letter,
+      wishId: 7, //값 수정해야됩니다. query 값으로 수정해야됨!
+      selectedCake: selectedCake,
+    }));
   };
+
+  const handleClick = () => {
+    saveReocilData();
+    selectedCake.cakeNumber === 1 ? router.replace('cakes/approve') : mutate();
+  };
+
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries(QUERY_KEY.payReady);
+
+  //관심사 분리해야됨
+  // 전달하는 케이크 주인 정보 가져오기
+  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(7), {});
+
+  const { mutate } = useMutation(
+    QUERY_KEY.payReady,
+    () => postPayReady(giverName, selectedCake.cakeNumber),
+    {
+      onSuccess: (data) => {
+        const nextLink = data.data.data.next_redirect_pc_url;
+        const tid = data.data.data.tid;
+
+        setCakesData((prevData) => ({
+          ...prevData,
+          tid: tid,
+        }));
+
+        router.replace(nextLink);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 
   return (
     <>
-      <GiverHeader />
+      <CakesHeader dayCount={wishesData?.dayCount} />
 
-      {/* API 데이터 */}
-      <Styled.Title>✨화정이의 앙큼 벌스데이✨</Styled.Title>
+      <Styled.Title>{wishesData?.title}</Styled.Title>
 
       {/* API 데이터 */}
       <InputContainer>
-        <InputTitle title={'ㅇㅇ님이 남긴 선물에 대한 힌트'} />
-        <TextareaBox>api로 받아오는 데이터</TextareaBox>
+        <InputTitle title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`} />
+        <TextareaBox>{wishesData?.hint}</TextareaBox>
       </InputContainer>
 
       <InputContainer>
@@ -94,7 +150,11 @@ export default function Giver() {
         </TextareaBox>
       </InputContainer>
 
-      <ButtonBox backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+      <ButtonBox
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+        handleClick={handleClick}
+      >
         케이크 보내기
       </ButtonBox>
     </>
