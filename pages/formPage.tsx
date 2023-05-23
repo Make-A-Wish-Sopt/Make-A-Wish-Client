@@ -22,10 +22,10 @@ import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { WishesDataType } from '@/types/wishesData';
 import Link from 'next/link';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/modal';
 
 export default function FormPage() {
-  const [showModal, setShowModal] = useState(false);
-
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
@@ -36,9 +36,9 @@ export default function FormPage() {
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
 
-  const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
+  const { isOpen, toggle } = useModal();
 
-  const clickModal = () => setShowModal(!showModal);
+  const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
 
   const changePrice = (input: number) => {
     setPrice(input);
@@ -83,17 +83,22 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>소원 링크 제목 작성하기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="ex. OO이의 앙큼 벌스데이" onChange={changeTitle} />
+          <Styled.InputText
+            placeholder="ex. OO이의 앙큼 벌스데이"
+            onChange={changeTitle}
+            value={title}
+          />
           <InputLength inputLength={title.length} limit={LIMIT_TEXT[20]} />
         </InputBox>
       </Styled.ItemBox>
 
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
-        <InputLargeBox bgColor={ theme.colors.pastel_blue}>
+        <InputLargeBox bgColor={theme.colors.pastel_blue}>
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
             onChange={changeHint1}
+            value={hint1}
           />
           <InputLength inputLength={hint1.length} limit={LIMIT_TEXT[300]} />
         </InputLargeBox>
@@ -102,7 +107,11 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>선물의 초성 적어보기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" onChange={changeHint2} />
+          <Styled.InputText
+            placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
+            onChange={changeHint2}
+            value={hint2}
+          />
           <InputLength inputLength={hint2.length} limit={LIMIT_TEXT[15]} />
         </InputBox>
       </Styled.ItemBox>
@@ -124,19 +133,24 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>송금 받을 계좌번호 입력하기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="예금주명" onChange={changeName} />
+          <Styled.InputText placeholder="예금주명" onChange={changeName} value={name} />
         </InputBox>
         <br />
-        <InputBankBox onClick={clickModal}>
-          <Styled.InputText placeholder="은행 선택" readOnly />
+        <InputBankBox onClick={toggle}>
+          <Styled.InputText placeholder="은행 선택" value={bankName} readOnly />
           <Image src={ArrowDownIc} alt="열기" />
         </InputBankBox>
-        {showModal && <BankModal clickModal={clickModal} changeBankName={changeBankName} />}
+        {isOpen && (
+          <Modal isOpen={isOpen} toggle={toggle}>
+            <BankModal toggle={toggle} changeBankName={changeBankName} />
+          </Modal>
+        )}
         <br />
         <InputBox>
           <Styled.InputText
             placeholder="계좌번호는 (-)없이 입력해주세요"
             onChange={changeAccount}
+            value={account}
           />
         </InputBox>
         {isIncludeHyphen(account) && <AlertTextBox> 계좌번호는 (-)없이 입력해주세요</AlertTextBox>}
@@ -148,6 +162,7 @@ export default function FormPage() {
           <Styled.InputTextLarge
             placeholder="연락처는 (-)없이 입력해주세요"
             onChange={changePhone}
+            value={phone}
           />
         </InputBox>
         {isIncludeHyphen(phone) && <AlertTextBox> 연락처는 (-)없이 입력해주세요</AlertTextBox>}
@@ -202,10 +217,6 @@ const Styled = {
 
   CalendarContainer: styled.div`
     display: flex;
-  `,
-
-  AlertBox: styled.div`
-    display: none;
   `,
 
   PresentContainer: styled.div`
