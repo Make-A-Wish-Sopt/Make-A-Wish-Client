@@ -13,7 +13,13 @@ import { getItemImage } from '@/api/formPage/getItemData';
 import { useState } from 'react';
 import { QUERY_KEY } from '@/constant/queryKey';
 
-export default function ItemLink() {
+interface ItemLinkProps {
+  changePrice: (input: number) => void;
+  changeImageUrl: (input: string) => void;
+}
+
+export default function ItemLink(props: ItemLinkProps) {
+  const { changePrice, changeImageUrl } = props;
   const [link, changeLink] = useInput('', LIMIT_TEXT.none);
   const [isCorrectLink, setIsCorrectLink] = useState(false);
 
@@ -23,6 +29,10 @@ export default function ItemLink() {
     QUERY_KEY.itemData,
     async () => await getItemImage(replacedLink(link)),
     {
+      onSuccess: () => {
+        changePrice(itemData?.totalPrice);
+        changeImageUrl(itemData?.totalPrice);
+      },
       onError: (error) => {
         console.log(error);
       },
@@ -33,7 +43,6 @@ export default function ItemLink() {
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
     if (link.length > 0 && validation.isCorrectSite(link)) {
-      console.log(link);
       isCorrectLink && queryClient.invalidateQueries([QUERY_KEY.itemData, link]);
       setIsCorrectLink(true);
       return;

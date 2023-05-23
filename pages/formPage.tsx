@@ -13,17 +13,21 @@ import InputBankBox from '@/components/common/input/inputBankBox';
 import InputCalendar from '@/components/common/input/inputCalendar';
 
 import BankModal from '@/components/modal/BankModal';
-import { SITE_LIST } from '@/interfaces/SiteData';
 import { useState } from 'react';
 import useInput from '@/hooks/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import ItemLink from '@/components/formPage/itemLink';
-
+import ButtonBox from '@/components/button/buttonBox';
+import { useSetRecoilState } from 'recoil';
+import { WishesData } from '@/recoil/formPage/wishesData';
+import { WishesDataType } from '@/types/wishesData';
+import Link from 'next/link';
 
 export default function FormPage() {
   const [showModal, setShowModal] = useState(false);
 
-
+  const [imageUrl, setImageUrl] = useState('');
+  const [price, setPrice] = useState(0);
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
   const [hint1, changeHint1] = useInput('', LIMIT_TEXT[300]);
   const [hint2, changeHint2] = useInput('', LIMIT_TEXT[15]);
@@ -32,12 +36,35 @@ export default function FormPage() {
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
 
-  console.log(title, hint1, hint2, name, bankName, account, phone);
+  const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
 
   const clickModal = () => setShowModal(!showModal);
 
+  const changePrice = (input: number) => {
+    setPrice(input);
+  };
+
+  const changeImageUrl = (input: string) => {
+    setImageUrl(input);
+  };
+
   const changeBankName = (input: string) => {
     setBankName(input);
+  };
+
+  const movePreviewPage = () => {
+    setWishesData((prevData) => ({
+      ...prevData,
+      imageUrl: imageUrl,
+      price: price,
+      title: title,
+      hint1: hint1,
+      hint2: hint2,
+      name: name,
+      bankName: bankName,
+      account: account,
+      phone: phone,
+    }));
   };
 
   const isIncludeHyphen = (input: string) => {
@@ -51,13 +78,11 @@ export default function FormPage() {
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
 
-      <ItemLink />
-
+      <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
 
       <Styled.ItemBox>
         <Styled.InputTitle>소원 링크 제목 작성하기</Styled.InputTitle>
         <InputBox>
-
           <Styled.InputText placeholder="ex. OO이의 앙큼 벌스데이" onChange={changeTitle} />
           <InputLength inputLength={title.length} limit={LIMIT_TEXT[20]} />
         </InputBox>
@@ -66,7 +91,6 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
         <InputLargeBox bgColor={ theme.colors.pastel_blue}>
-
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
             onChange={changeHint1}
@@ -129,7 +153,13 @@ export default function FormPage() {
         {isIncludeHyphen(phone) && <AlertTextBox> 연락처는 (-)없이 입력해주세요</AlertTextBox>}
       </Styled.ItemBox>
 
-      <button>소원 링크 생성하기</button>
+      <ButtonBox
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+        handleClick={movePreviewPage}
+      >
+        <Link href="/formPreviewPage">소원 링크 생성하기</Link>
+      </ButtonBox>
     </>
   );
 }
