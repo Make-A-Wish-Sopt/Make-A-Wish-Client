@@ -3,38 +3,73 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { CloseSmallIC } from '@/public/assets/icons';
 import { LinkCopyIC } from '@/public/assets/icons';
-import IconButton from '@/components/common/button/iconButton';
+import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
-import SnsBox from '@/components/common/button/snsBox';
-
+import SnsBox from '@/components/button/snsBox';
+import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
+import { KaKaoLogoImg } from '@/public/assets/images';
 import { SHARE_LIST } from '@/interfaces/ShareData';
+import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
+import { useState, useEffect } from 'react';
+import { getWishesMain } from '@/api/getWishesMain';
+
 
 
 interface ShareModalProps {
     clickModal: () => void;
 }
 
+
 export default function ShareModal(props: ShareModalProps) {
-    const { clickModal } = props
+    const { clickModal } = props;
+    const [wishLink, setWishLink] = useState('');
+
+    const { nickname } = useAuthKaKao();
+
+    const shareKakao = () => { sendKakaoMessage(nickname); };
+
+    const handleCopyClipBoard = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert('클립보드에 링크가 복사되었습니다.');
+        } catch (e) {
+            alert('복사에 실패하였습니다');
+        }
+    };
+
+    useEffect(() => {
+        getWishesMain()
+            .then((data) => {
+                setWishLink(data);
+            })
+            .catch((error) => {
+                console.error('소원 링크를 가져오는 중 오류가 발생했습니다:', error);
+            });
+    }, []);
 
     return (
         <Styled.Modal>
-            <IconButton src={CloseSmallIC} alt="닫기" />
+            <Styled.Header>
+                <IconButton src={CloseSmallIC} alt="닫기" onClick={clickModal} />
+            </Styled.Header>
 
             <Styled.SnsContainer>
                 {SHARE_LIST.map((sns) => (
-                    <SnsBox>
+                    <SnsBox
+                        key={sns.name}
+                        onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}
+                    >
                         <Image src={sns.logo} alt={`${sns.name}`} />
                     </SnsBox>
                 ))}
             </Styled.SnsContainer>
 
             <InputLink>
-                <Styled.InputText value="www.asdf.co.kr" />
-                <IconButton src={LinkCopyIC} alt="링크 복사" />
-
-                <IconButton src={CloseSmallIC} alt="닫기" />
-
+                <Styled.InputText value={wishLink} readOnly />
+                <IconButton
+                    src={LinkCopyIC}
+                    alt="링크 복사"
+                    onClick={() => handleCopyClipBoard("www.asdf.co.kr")} />
             </InputLink>
         </Styled.Modal >
 
@@ -43,15 +78,27 @@ export default function ShareModal(props: ShareModalProps) {
 
 const Styled = {
     Modal: styled.div`
-    width: 100%;
+    width: 31.6rem;
     height: 14.3rem;
     background-color: ${theme.colors.pastel_blue};
-    padding: 1.6rem 1.5rem 1.6rem;
+    padding: 2.2rem 1.5rem 1.6rem;
     border-radius: 1.6rem;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    `,
+
+    Header: styled.header`
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    transform: translate(-50%, -50%);
     `,
 
     SnsContainer: styled.div`
-    margin: 0 0 1.7rem;
+    margin: 0 0 1.5rem;
     display: flex;
     justify-content: center;
     `,
@@ -62,4 +109,3 @@ const Styled = {
     width: 100%;
     `,
 };
-

@@ -32,4 +32,5 @@ const Container = styled.button<{ backgroundColor: string; fontColor: string }>`
   color: ${(props) => props.fontColor};
   ${theme.fonts.button16};
   background-color: ${(props) => props.backgroundColor};
+  border-color: transparent;
 `;

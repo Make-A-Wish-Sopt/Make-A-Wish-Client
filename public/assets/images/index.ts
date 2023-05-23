@@ -28,12 +28,15 @@ export { default as SushiCakeThanksImg } from '../images/cakes/sushiCakeThanksIm
 export { default as VitaminCakeThanksImg } from '../images/cakes/vitaminCakeThanksImg.svg';
 
 export { default as GaugeBarImg } from '@/public/assets/images/GaugeBarImg.svg';
+export { default as HeartImg } from '@/public/assets/images/heartImg.svg';
 
 // 케이크, 말풍선
 export { default as PillCakeImg } from '@/public/assets/images/pillCakeImg.svg';
 export { default as ShareChatImg } from '@/public/assets/images/sharePageChatImg.svg';
 export { default as LoginChatImg } from '@/public/assets/images/loginPageChatImg.svg';
 export { default as MainChatImg } from '@/public/assets/images/mainPageChatImg.svg';
+export { default as GiverMainChatImg } from '@/public/assets/images/giverMainPageChatImg.svg';
+
 
 // site
 export { default as TwentynineLogoImg } from '@/public/assets/images/twentynineLogoImg.svg';

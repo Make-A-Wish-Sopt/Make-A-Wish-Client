@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 interface SnsBoxProps {
     children: React.ReactNode;
+    onClick?: () => void;
 }
 
 export default function SnsBox(props: SnsBoxProps) {
-    const { children } = props;
+    const { children, onClick } = props;
 
-    return <Styled.Box>{children}</Styled.Box>;
+    return <Styled.Box onClick={onClick}>{children}</Styled.Box>;
 }
 
 const Styled = {

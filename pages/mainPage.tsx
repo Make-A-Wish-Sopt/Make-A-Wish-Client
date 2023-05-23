@@ -5,17 +5,23 @@ import { SideBarIc } from '@/public/assets/icons';
 import { PillCakeImg } from '@/public/assets/images';
 import { MainChatImg } from '@/public/assets/images';
 import { GaugeBarImg } from '@/public/assets/images';
-import IconButton from '@/components/common/button/iconButton';
-
+import IconButton from '@/components/button/iconButton';
+import router from "next/router";
+import ButtonBox from '@/components/button/buttonBox';
+import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
 
 
 export default function MainPage() {
+
+    const moveToForm = () => { router.push('/formPage'); };
+
+    const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
 
 
     return (
         <>
             <Styled.HeaderContainer>
-                <Styled.Title>ㅇㅇ님,
+                <Styled.Title>{nickname}님,
                     <br /><span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고<br />케이크를 모아봐요!
                 </Styled.Title >
                 <Styled.SideContainer>
@@ -24,6 +30,11 @@ export default function MainPage() {
                         D-?</Styled.DDay>
                 </Styled.SideContainer>
             </Styled.HeaderContainer>
+            <h2>사용자 정보</h2>
+            <p>아이디: {kakaoId}</p>
+            <p>닉네임: {nickname}</p>
+            <p>프로필 이미지: {profileImage}</p>
+            <p>이메일: {email}</p>
 
             <Styled.CenterContainer>
                 <Styled.BarContainer>
@@ -41,7 +52,9 @@ export default function MainPage() {
                 <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
             </Styled.CenterContainer>
 
-            <button>소원 링크 생성하기</button>
+            <ButtonBox onClick={moveToForm} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+                소원 링크 생성하기
+            </ButtonBox>
         </>
     );
 }
@@ -69,7 +82,7 @@ const Styled = {
     `,
 
     CenterContainer: styled.div`
-    margin: 9rem 0 0;
+    margin: 9rem 0 15.5rem;
     `,
 
     BarContainer: styled.div`
@@ -94,6 +107,5 @@ const Styled = {
     ${theme.fonts.headline24_100};
     display: flex;
     justify-content: center;
-    margin: 0 0 15rem;
     `,
 };

@@ -2,7 +2,7 @@
 
 
 export { default as BackBtnIc } from '@/public/assets/icons/backBtnIc.svg'
-export { default as InfoBtnIC } from '@/public/assets/icons/infoBtnIC.svg'
+export { default as GuideBtnIC } from '@/public/assets/icons/GuideBtnIC.svg'
 export { default as KakaoLoginIc } from '@/public/assets/icons/kakaoLoginIc.svg'
 export { default as SideBarIc } from '@/public/assets/icons/SideBarIc.svg'
 export { default as CloseBlueIc } from '@/public/assets/icons/closeBlueIc.svg'
