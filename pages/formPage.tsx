@@ -80,6 +80,7 @@ export default function FormPage() {
 
       <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
 
+      {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
       <Styled.ItemBox>
         <Styled.InputTitle>소원 링크 제목 작성하기</Styled.InputTitle>
         <InputBox>
@@ -92,6 +93,7 @@ export default function FormPage() {
         </InputBox>
       </Styled.ItemBox>
 
+      {/* 나중에 TextArea 구성 공통컴포넌트로 분리 */}
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
         <InputLargeBox bgColor={theme.colors.pastel_blue}>
@@ -100,7 +102,10 @@ export default function FormPage() {
             onChange={changeHint1}
             value={hint1}
           />
-          <InputLength inputLength={hint1.length} limit={LIMIT_TEXT[300]} />
+          <Styled.TextareaWrapper>
+            <div></div>
+            <InputLength inputLength={hint1.length} limit={LIMIT_TEXT[300]} />
+          </Styled.TextareaWrapper>
         </InputLargeBox>
       </Styled.ItemBox>
 
@@ -231,11 +236,15 @@ const Styled = {
   `,
 
   TextareaText: styled.textarea`
-    ${theme.fonts.body12};
     width: 100%;
     height: 10.5rem;
+    ${theme.fonts.body12};
     background-color: ${theme.colors.pastel_blue};
-    border: none;
     resize: none;
+  `,
+
+  TextareaWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
   `,
 };
