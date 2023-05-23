@@ -52,7 +52,7 @@ export default function MainPage() {
                 <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
             </Styled.CenterContainer>
 
-            <ButtonBox onClick={moveToForm} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+            <ButtonBox handleClick={moveToForm} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
                 소원 링크 생성하기
             </ButtonBox>
         </>
