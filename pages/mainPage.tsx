@@ -5,11 +5,15 @@ import { SideBarIc } from '@/public/assets/icons';
 import { PillCakeImg } from '@/public/assets/images';
 import { MainChatImg } from '@/public/assets/images';
 import { GaugeBarImg } from '@/public/assets/images';
-import IconButton from '@/components/common/button/iconButton';
+import IconButton from '@/components/button/iconButton';
+import router from "next/router";
+import ButtonBox from '@/components/button/buttonBox';
 import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
 
 
 export default function MainPage() {
+
+    const moveToForm = () => { router.push('/formPage'); };
 
     const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
 
@@ -48,7 +52,9 @@ export default function MainPage() {
                 <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
             </Styled.CenterContainer>
 
-            <button>소원 링크 생성하기</button>
+            <ButtonBox onClick={moveToForm} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+                소원 링크 생성하기
+            </ButtonBox>
         </>
     );
 }
@@ -76,7 +82,7 @@ const Styled = {
     `,
 
     CenterContainer: styled.div`
-    margin: 9rem 0 0;
+    margin: 9rem 0 15.5rem;
     `,
 
     BarContainer: styled.div`
@@ -101,6 +107,5 @@ const Styled = {
     ${theme.fonts.headline24_100};
     display: flex;
     justify-content: center;
-    margin: 0 0 15rem;
     `,
 };

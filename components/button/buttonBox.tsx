@@ -6,12 +6,20 @@ interface ButtonBoxProps {
   children: ReactNode;
   backgroundColor: string;
   fontColor: string;
+  onClick?: () => void;
 }
 
 export default function ButtonBox(props: ButtonBoxProps) {
-  const { children, backgroundColor, fontColor } = props;
+  const { children, backgroundColor, fontColor, onClick } = props;
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <Container backgroundColor={backgroundColor} fontColor={fontColor}>
+    <Container onClick={handleClick} backgroundColor={backgroundColor} fontColor={fontColor}>
       {children}
     </Container>
   );
@@ -31,4 +39,5 @@ const Container = styled.button<{ backgroundColor: string; fontColor: string }>`
   color: ${(props) => props.fontColor};
   ${theme.fonts.button16};
   background-color: ${(props) => props.backgroundColor};
+  border-color: transparent;
 `;

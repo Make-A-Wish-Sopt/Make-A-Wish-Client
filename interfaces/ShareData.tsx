@@ -18,14 +18,14 @@ export const SHARE_LIST: ShareListType[] = [
         link: '',
         logo: InstaLogoImg,
     },
-    {
-        name: 'FaceBook',
-        link: '',
-        logo: FacebookLogoImg,
-    },
-    {
-        name: 'Twitter',
-        link: '',
-        logo: TwitterLogoImg,
-    },
+    // {
+    //     name: 'FaceBook',
+    //     link: '',
+    //     logo: FacebookLogoImg,
+    // },
+    // {
+    //     name: 'Twitter',
+    //     link: '',
+    //     logo: TwitterLogoImg,
+    // },
 ];

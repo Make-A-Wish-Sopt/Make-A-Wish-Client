@@ -2,11 +2,12 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { CloseBlueIc } from '@/public/assets/icons';
-import { ShareChatImg } from '@/public/assets/images';
-import { PillCakeImg } from '@/public/assets/images';
+import { ShareChatImg, PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import Footer from '@/components/common/footer';
-import IconButton from '@/components/common/button/iconButton';
+import IconButton from '@/components/button/iconButton';
+import ButtonBox from '@/components/button/buttonBox';
+
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react'
 
@@ -14,6 +15,7 @@ export default function FormSharePage() {
     const [showModal, setShowModal] = useState(false)
 
     const clickModal = () => setShowModal(!showModal)
+
 
     return (
         <>
@@ -35,7 +37,9 @@ export default function FormSharePage() {
 
             {showModal && <ShareModal clickModal={clickModal} />}
             <Footer>
-                <button onClick={clickModal}>링크 공유하기</button>
+                <ButtonBox onClick={clickModal} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+                    링크 공유하기
+                </ButtonBox>
             </Footer>
         </>
     );
@@ -57,6 +61,7 @@ const Styled = {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            /* margin: 10rem 0 12rem; */
             `,
 
     ImageContainer: styled.div`
