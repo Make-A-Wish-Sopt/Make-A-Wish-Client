@@ -13,16 +13,14 @@ const nextConfig = {
       },
     ],
   },
-
-  //29cm도 해야됩니다.
-  async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'https://www.coupang.com/:path*',
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
+
+module.exports = {
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    ORDER_ID: process.env.ORDER_ID,
+    USER_ID: process.env.USER_ID,
+  },
+};

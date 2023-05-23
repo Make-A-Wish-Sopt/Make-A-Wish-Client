@@ -90,7 +90,7 @@ export default function FormPage() {
 
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
-        <InputLargeBox>
+        <InputLargeBox bgColor={ theme.colors.pastel_blue}>
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
             onChange={changeHint1}

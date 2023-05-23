@@ -6,6 +6,7 @@ import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import InputBox from '@/components/common/input/inputBox';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
+
 import { useRecoilValue } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import ButtonBox from '@/components/button/buttonBox';
@@ -16,13 +17,14 @@ export default function FormPreviewPage() {
   const postWishesData = () => {
     //API Post
   };
-
+  
   return (
     <>
       <InputHeader>
         <BackBtn />
       </InputHeader>
       <Styled.Title>소원 링크 화면 미리보기</Styled.Title>
+
       <Styled.InputTitle>
         {wishesData.startDate}~{wishesData.endDate}
       </Styled.InputTitle>
@@ -40,7 +42,7 @@ export default function FormPreviewPage() {
       </Styled.ItemBox>
 
       <Styled.ItemBox>
-        <InputLargeBox>
+        <InputLargeBox bgColor={theme.colors.pastel_blue}>
           <Styled.Text>{wishesData.hint1}</Styled.Text>
         </InputLargeBox>
       </Styled.ItemBox>

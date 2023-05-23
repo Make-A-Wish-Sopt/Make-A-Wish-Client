@@ -2,24 +2,27 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface InputLargeBoxProps {
-    children: React.ReactNode;
+  bgColor: string;
+  children: React.ReactNode;
 }
 
 export default function InputLargeBox(props: InputLargeBoxProps) {
-    const { children } = props;
+  const { bgColor, children } = props;
 
-    return <Styled.Box>{children}</Styled.Box>;
+  return <Styled.Box bgColor={bgColor}>{children}</Styled.Box>;
 }
 
 const Styled = {
-    Box: styled.div`
+  Box: styled.div<{ bgColor: string }>`
+    display: flex;
+    justify-content: center;
+
     width: 100%;
     height: 15rem;
 
     padding: 1.4rem 1.2rem;
-    background-color: ${theme.colors.pastel_blue};
+    background-color: ${(props) => props.bgColor};
     border: 0.1rem solid ${theme.colors.main_blue};
     border-radius: 1rem;
-    text-align: right;
-    `,
+  `,
 };
