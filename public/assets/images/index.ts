@@ -37,7 +37,6 @@ export { default as LoginChatImg } from '@/public/assets/images/loginPageChatImg
 export { default as MainChatImg } from '@/public/assets/images/mainPageChatImg.svg';
 export { default as GiverMainChatImg } from '@/public/assets/images/giverMainPageChatImg.svg';
 
-
 // site
 export { default as TwentynineLogoImg } from '@/public/assets/images/twentynineLogoImg.svg';
 export { default as CoupangLogoImg } from '@/public/assets/images/coupangLogoImg.svg';
@@ -47,6 +46,8 @@ export { default as KaKaoLogoImg } from '@/public/assets/images/kakaoLogoImg.svg
 export { default as InstaLogoImg } from '@/public/assets/images/instaLogoImg.svg';
 export { default as FacebookLogoImg } from '@/public/assets/images/facebookLogoImg.svg';
 export { default as TwitterLogoImg } from '@/public/assets/images/twitterLogoImg.svg';
+
+export { default as LoginCakeImg } from '@/public/assets/images/login/loginCakeImg.png';
 
 // bank
 const bankImgs: Record<string, any> = {};
