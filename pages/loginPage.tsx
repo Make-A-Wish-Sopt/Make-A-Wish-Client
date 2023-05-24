@@ -1,12 +1,9 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { GuideBtnIC } from '@/public/assets/icons';
-import { KakaoLoginIc } from '@/public/assets/icons';
+import { GuideBtnIC, KakaoLoginIc } from '@/public/assets/icons';
 import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
-import { PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import Footer from '@/components/common/footer';
 import IconButton from '@/components/common/button/iconButton';
 import { useState } from 'react';
 import GuideModal from '@/components/modal/GuideModal';
@@ -73,7 +70,7 @@ const Styled = {
   About: styled.div`
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
-    margin: 0 0 1.5rem;
+    margin: 1.4rem 0 1.5rem;
     display: flex;
     justify-content: center;
   `,
@@ -83,5 +80,6 @@ const Styled = {
     color: ${theme.colors.main_blue};
     display: flex;
     justify-content: center;
+    margin: 0 0 10.15rem;
   `,
 };
