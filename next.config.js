@@ -7,7 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.coupangcdn.com',
+        hostname: 'github.com',
         port: '',
         pathname: '/**',
       },
@@ -17,10 +17,10 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-module.exports = {
-  env: {
-    BASE_URL: process.env.BASE_URL,
-    ORDER_ID: process.env.ORDER_ID,
-    USER_ID: process.env.USER_ID,
-  },
-};
+// module.exports = {
+//   env: {
+//     BASE_URL: process.env.BASE_URL,
+//     ORDER_ID: process.env.ORDER_ID,
+//     USER_ID: process.env.USER_ID,
+//   },
+// };

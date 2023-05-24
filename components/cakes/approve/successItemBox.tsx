@@ -26,6 +26,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
     {},
   );
 
+  console.log(data);
 
   return (
     <>
@@ -43,7 +44,9 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
       ) : (
         <Styled.Box>
           <InputLargeBox bgColor={theme.colors.white}>
-            <Image src={TestImage} width={100} height={100} alt="실제 선물 이미지" />
+            <Styled.ImageWrapper>
+              <Image src={data?.imageUrl} width={100} height={100} alt="실제 선물 이미지" />
+            </Styled.ImageWrapper>
           </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Box>
@@ -79,5 +82,14 @@ const Styled = {
   HintText: styled.div`
     ${theme.fonts.headline30};
     margin-top: 3.4rem;
+  `,
+
+  ImageWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
   `,
 };
