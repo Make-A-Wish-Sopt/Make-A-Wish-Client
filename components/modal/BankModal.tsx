@@ -35,7 +35,7 @@ export default function BankModal(props: BankModalProps) {
 
 const Styled = {
   Modal: styled.div`
-    width: 100%;
+    width: 33.1rem;
     height: 60rem;
     background-color: ${theme.colors.pastel_blue};
     padding: 2.2rem 2.2rem 0 2.2rem;
