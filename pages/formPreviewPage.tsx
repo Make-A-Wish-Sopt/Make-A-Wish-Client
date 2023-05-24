@@ -14,6 +14,8 @@ import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
 import TermsModal from '@/components/modal/termsModal';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
 
 export default function FormPreviewPage() {
   const wishesData = useRecoilValue(WishesData);
@@ -21,6 +23,10 @@ export default function FormPreviewPage() {
   const { isOpen, modalToggle } = useModal();
 
   const [isAgreed, setIsAgreed] = useState(false);
+
+  const { data, mutate, isSuccess } = useMutation(() => createWishesLink(wishesData), {});
+
+  console.log(data);
 
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);
@@ -31,7 +37,7 @@ export default function FormPreviewPage() {
   };
 
   const postWishesData = () => {
-    //API
+    mutate();
   };
 
   return (

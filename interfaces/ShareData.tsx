@@ -13,11 +13,11 @@ export const SHARE_LIST: ShareListType[] = [
         link: '',
         logo: KaKaoLogoImg,
     },
-    {
-        name: 'Instagram',
-        link: '',
-        logo: InstaLogoImg,
-    },
+    // {
+    //     name: 'Instagram',
+    //     link: '',
+    //     logo: InstaLogoImg,
+    // },
     // {
     //     name: 'FaceBook',
     //     link: '',

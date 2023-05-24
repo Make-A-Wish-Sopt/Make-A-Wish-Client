@@ -2,9 +2,8 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { CloseBlueIc } from '@/public/assets/icons';
-import { ShareChatImg, PillCakeImg } from '@/public/assets/images';
+import { ShareChatImg, LoginCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import Footer from '@/components/common/footer';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 
@@ -32,20 +31,18 @@ export default function FormSharePage() {
 
         <Styled.ImageContainer>
           <Image src={ShareChatImg} alt="이뤄져라 얍!" />
-          <Image src={PillCakeImg} alt="케이크" />
+          <Image src={LoginCakeImg} alt="케이크" />
         </Styled.ImageContainer>
       </Styled.Container>
 
       {showModal && <ShareModal clickModal={clickModal} />}
-      <Footer>
-        <ButtonBox
-          handleClick={clickModal}
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-        >
-          링크 공유하기
-        </ButtonBox>
-      </Footer>
+      <ButtonBox
+        handleClick={clickModal}
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+      >
+        링크 공유하기
+      </ButtonBox>
     </>
   );
 }
@@ -62,11 +59,7 @@ const Styled = {
   `,
 
   Container: styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* margin: 10rem 0 12rem; */
+    margin: 6.7rem 0 12.2rem;
   `,
 
   ImageContainer: styled.div`
