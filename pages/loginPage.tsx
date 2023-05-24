@@ -9,47 +9,47 @@ import { useState } from 'react';
 import GuideModal from '@/components/modal/GuideModal';
 
 export default function LoginPage() {
-  const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-  const clickModal = () => {
-    setShowModal(!showModal);
-  };
+    const clickModal = () => {
+        setShowModal(!showModal);
+    };
 
-  const KakaoLogin = () => {
-    window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
-    });
-  };
+    const KakaoLogin = () => {
+        window.Kakao.Auth.authorize({
+            redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+        });
+    };
 
-  return (
-    <>
-      <Header>
-        <IconButton onClick={clickModal} src={GuideBtnIC} alt="서비스 가이드" />
-      </Header>
-      {showModal && <GuideModal />}
+    return (
+        <>
+            <Header>
+                <IconButton onClick={clickModal} src={GuideBtnIC} alt="서비스 가이드" />
+            </Header>
+            {showModal && <GuideModal clickModal={clickModal} />}
 
-      <Styled.Container>
-        <Styled.ImageContainer>
-          <Styled.Title>
-            조물주보다
-            <br />
-            생일선물주
-          </Styled.Title>
+            <Styled.Container>
+                <Styled.ImageContainer>
+                    <Styled.Title>
+                        조물주보다
+                        <br />
+                        생일선물주
+                    </Styled.Title>
 
-          <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
-        </Styled.ImageContainer>
-        <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
-        <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
-      </Styled.Container>
+                    <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
+                    <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+                </Styled.ImageContainer>
+                <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
+                <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
+            </Styled.Container>
 
-      <IconButton onClick={KakaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
-    </>
-  );
+            <IconButton onClick={KakaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
+        </>
+    );
 }
 
 const Styled = {
-  Title: styled.div`
+    Title: styled.div`
     ${theme.fonts.title56};
     color: ${theme.colors.main_blue};
     margin: 2rem 0 2.8rem;
@@ -58,16 +58,16 @@ const Styled = {
     white-space: pre-line;
   `,
 
-  Container: styled.div``,
+    Container: styled.div``,
 
-  ImageContainer: styled.div`
+    ImageContainer: styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   `,
 
-  About: styled.div`
+    About: styled.div`
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
     margin: 1.4rem 0 1.5rem;
@@ -75,7 +75,7 @@ const Styled = {
     justify-content: center;
   `,
 
-  AboutSmall: styled.div`
+    AboutSmall: styled.div`
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
     display: flex;

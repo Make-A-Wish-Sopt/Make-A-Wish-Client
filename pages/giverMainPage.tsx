@@ -9,8 +9,16 @@ import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 import router from 'next/router';
+import { useState } from 'react';
+import GuideModal from '@/components/modal/GuideModal';
 
 export default function GiverMainPage() {
+  const [showModal, setShowModal] = useState(false);
+
+  const clickModal = () => {
+    setShowModal(!showModal);
+  };
+
   const moveToCake = () => {
     router.push('/giver');
   };
@@ -21,8 +29,9 @@ export default function GiverMainPage() {
   return (
     <>
       <Header>
-        <IconButton src={GuideBtnIC} alt="서비스 소개" />
+        <IconButton onClick={clickModal} src={GuideBtnIC} alt="서비스 가이드" />
       </Header>
+      {showModal && <GuideModal clickModal={clickModal} />}
 
       <Styled.Container>
         <Styled.ImageContainer>
