@@ -10,15 +10,26 @@ import InputLargeBox from '@/components/common/input/inputLargeBox';
 import { useRecoilValue } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import ButtonBox from '@/components/button/buttonBox';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/modal';
+import TermsModal from '@/components/modal/termsModal';
+import { useState } from 'react';
 
 export default function FormPreviewPage() {
   const wishesData = useRecoilValue(WishesData);
 
   const { isOpen, modalToggle } = useModal();
+
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const changeIsAgreed = (isChecked: boolean) => {
+    setIsAgreed(isChecked);
+  };
+
   const postWishesData = () => {
     //API Post
   };
-  
+
   return (
     <>
       <InputHeader>
