@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 interface ModalProps {
   isOpen: boolean;
-  toggle: () => void;
+  modalToggle: () => void;
 }
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
-  const { isOpen, toggle, children } = props;
+  const { isOpen, modalToggle, children } = props;
   return (
     <>
       {isOpen && (
-        <Styled.ModalOverlay onClick={toggle}>
+        <Styled.ModalOverlay onClick={modalToggle}>
           <Styled.ModalContainer onClick={(e) => e.stopPropagation()}>
             {children}
           </Styled.ModalContainer>

@@ -36,7 +36,8 @@ export default function FormPage() {
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
 
-  const { isOpen, toggle } = useModal();
+
+  const { isOpen, modalToggle } = useModal();
 
   const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
 
@@ -66,6 +67,8 @@ export default function FormPage() {
       phone: phone,
     }));
   };
+
+
 
   const isIncludeHyphen = (input: string) => {
     return input.includes('-');
@@ -141,13 +144,13 @@ export default function FormPage() {
           <Styled.InputText placeholder="예금주명" onChange={changeName} value={name} />
         </InputBox>
         <br />
-        <InputBankBox onClick={toggle}>
+        <InputBankBox onClick={modalToggle}>
           <Styled.InputText placeholder="은행 선택" value={bankName} readOnly />
           <Image src={ArrowDownIc} alt="열기" />
         </InputBankBox>
         {isOpen && (
-          <Modal isOpen={isOpen} toggle={toggle}>
-            <BankModal toggle={toggle} changeBankName={changeBankName} />
+          <Modal isOpen={isOpen} modalToggle={modalToggle}>
+            <BankModal modalToggle={modalToggle} changeBankName={changeBankName} />
           </Modal>
         )}
         <br />

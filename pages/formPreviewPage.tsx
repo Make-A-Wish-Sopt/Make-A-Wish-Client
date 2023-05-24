@@ -14,6 +14,7 @@ import ButtonBox from '@/components/button/buttonBox';
 export default function FormPreviewPage() {
   const wishesData = useRecoilValue(WishesData);
 
+  const { isOpen, modalToggle } = useModal();
   const postWishesData = () => {
     //API Post
   };
@@ -70,10 +71,14 @@ export default function FormPreviewPage() {
         </InputBox>
       </Styled.ItemBox>
 
+      <Modal isOpen={isOpen} modalToggle={modalToggle}>
+        <TermsModal modalToggle={modalToggle} changeIsAgreed={changeIsAgreed} />
+      </Modal>
+
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        handleClick={postWishesData}
+        handleClick={modalToggle}
       >
         소원 링크 생성하기
       </ButtonBox>
