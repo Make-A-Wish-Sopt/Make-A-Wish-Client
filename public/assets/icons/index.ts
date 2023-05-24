@@ -11,3 +11,5 @@ export { default as CalendarIC } from '@/public/assets/icons/calendarIC.svg';
 export { default as ArrowDownIc } from '@/public/assets/icons/arrowDownIC.svg';
 export { default as AlertIC } from '@/public/assets/icons/alertIC.svg';
 export { default as LinkCopyIC } from '@/public/assets/icons/linkCopyIC.svg';
+export { default as DetailCloseIc } from '@/public/assets/icons/detailCloseIC.svg';
+export { default as DetailOpenIc } from '@/public/assets/icons/detailOpenIC.svg';

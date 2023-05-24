@@ -10,14 +10,30 @@ import InputLargeBox from '@/components/common/input/inputLargeBox';
 import { useRecoilValue } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import ButtonBox from '@/components/button/buttonBox';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/modal';
+import TermsModal from '@/components/modal/termsModal';
+import { useState } from 'react';
 
 export default function FormPreviewPage() {
   const wishesData = useRecoilValue(WishesData);
 
-  const postWishesData = () => {
-    //API Post
+  const { isOpen, modalToggle } = useModal();
+
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const changeIsAgreed = (isChecked: boolean) => {
+    setIsAgreed(isChecked);
   };
-  
+
+  const createLink = () => {
+    return isAgreed ? postWishesData() : modalToggle();
+  };
+
+  const postWishesData = () => {
+    //API
+  };
+
   return (
     <>
       <InputHeader>
@@ -70,10 +86,14 @@ export default function FormPreviewPage() {
         </InputBox>
       </Styled.ItemBox>
 
+      <Modal isOpen={isOpen} modalToggle={modalToggle}>
+        <TermsModal modalToggle={modalToggle} changeIsAgreed={changeIsAgreed} />
+      </Modal>
+
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        handleClick={postWishesData}
+        handleClick={createLink}
       >
         소원 링크 생성하기
       </ButtonBox>
