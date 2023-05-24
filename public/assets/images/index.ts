@@ -29,6 +29,10 @@ export { default as VitaminCakeThanksImg } from '../images/cakes/vitaminCakeThan
 
 export { default as GaugeBarImg } from '@/public/assets/images/GaugeBarImg.svg';
 export { default as HeartImg } from '@/public/assets/images/heartImg.svg';
+export { default as LoginCakeImg } from '@/public/assets/images/login/loginCakeImg.png';
+export { default as GuideContentImg } from '@/public/assets/images/guideContent.svg';
+export { default as GuideBoxImg } from '@/public/assets/images/guideBoxImg.svg';
+export { default as GuideTopImg } from '@/public/assets/images/guideTopImg.svg';
 
 // 케이크, 말풍선
 export { default as PillCakeImg } from '@/public/assets/images/pillCakeImg.svg';
@@ -46,8 +50,6 @@ export { default as KaKaoLogoImg } from '@/public/assets/images/kakaoLogoImg.svg
 export { default as InstaLogoImg } from '@/public/assets/images/instaLogoImg.svg';
 export { default as FacebookLogoImg } from '@/public/assets/images/facebookLogoImg.svg';
 export { default as TwitterLogoImg } from '@/public/assets/images/twitterLogoImg.svg';
-
-export { default as LoginCakeImg } from '@/public/assets/images/login/loginCakeImg.png';
 
 // bank
 const bankImgs: Record<string, any> = {};

@@ -24,6 +24,17 @@ import { WishesDataType } from '@/types/wishesData';
 import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
+import CustomDatePicker from "@/components/modal/DatePickerModal";
+
+function getDate(date: Date | null): string {
+  if (!date) {
+    date = new Date();
+  }
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 export default function FormPage() {
   const [imageUrl, setImageUrl] = useState('');
@@ -35,6 +46,10 @@ export default function FormPage() {
   const [bankName, setBankName] = useState('');
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
+  const [endDate, setEndDate] = useState<string>(getDate(new Date()));
+  const [showEndDate, setShowEndDate] = useState(false);
+
+  const startDate = getDate(new Date());
 
   const { isOpen, modalToggle } = useModal();
 
@@ -66,12 +81,21 @@ export default function FormPage() {
       bankName: bankName,
       account: account,
       phone: phone,
+      startDate: startDate,
+      endDate: endDate
     }));
   };
 
   const isIncludeHyphen = (input: string) => {
     return input.includes('-');
   };
+
+
+
+  const handleInputClick = () => {
+    setShowEndDate(true);
+  };
+
 
   return (
     <>
@@ -127,12 +151,24 @@ export default function FormPage() {
         <Styled.InputTitle>나의 생일주간 설정하기</Styled.InputTitle>
         <Styled.CalendarContainer>
           <InputCalendar>
-            <Styled.InputTextDone placeholder="2023.04.12" readOnly />
+            <Styled.InputTextDone
+              placeholder={startDate}
+              readOnly
+            />
             <Image src={CalendarIC} alt="캘린더" />
           </InputCalendar>
           <InputCalendar>
-            <Styled.InputText placeholder="종료일" readOnly />
-            <Image src={CalendarIC} alt="캘린더" />
+            {!showEndDate && (
+              <Styled.InputText
+                placeholder="종료일"
+                readOnly
+                style={{ display: showEndDate ? "none" : "initial" }}
+              />
+            )}
+            {showEndDate && (
+              <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />
+            )}
+            <Image src={CalendarIC} alt="캘린더" onClick={handleInputClick} />
           </InputCalendar>
         </Styled.CalendarContainer>
       </Styled.ItemBox>
