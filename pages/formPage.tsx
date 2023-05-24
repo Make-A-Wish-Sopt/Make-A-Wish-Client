@@ -22,10 +22,21 @@ import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { WishesDataType } from '@/types/wishesData';
 import Link from 'next/link';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/modal';
+import CustomDatePicker from "@/components/modal/DatePickerModal";
+
+function getDate(date: Date | null): string {
+  if (!date) {
+    date = new Date();
+  }
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 export default function FormPage() {
-  const [showModal, setShowModal] = useState(false);
-
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
@@ -35,10 +46,14 @@ export default function FormPage() {
   const [bankName, setBankName] = useState('');
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
+  const [endDate, setEndDate] = useState<string>(getDate(new Date()));
+  const [showEndDate, setShowEndDate] = useState(false);
+
+  const startDate = getDate(new Date());
+
+  const { isOpen, modalToggle } = useModal();
 
   const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
-
-  const clickModal = () => setShowModal(!showModal);
 
   const changePrice = (input: number) => {
     setPrice(input);
@@ -64,12 +79,23 @@ export default function FormPage() {
       bankName: bankName,
       account: account,
       phone: phone,
+      startDate: startDate,
+      endDate: endDate
     }));
   };
+
+
 
   const isIncludeHyphen = (input: string) => {
     return input.includes('-');
   };
+
+
+
+  const handleInputClick = () => {
+    setShowEndDate(true);
+  };
+
 
   return (
     <>
@@ -80,29 +106,43 @@ export default function FormPage() {
 
       <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
 
+      {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
       <Styled.ItemBox>
         <Styled.InputTitle>소원 링크 제목 작성하기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="ex. OO이의 앙큼 벌스데이" onChange={changeTitle} />
+          <Styled.InputText
+            placeholder="ex. OO이의 앙큼 벌스데이"
+            onChange={changeTitle}
+            value={title}
+          />
           <InputLength inputLength={title.length} limit={LIMIT_TEXT[20]} />
         </InputBox>
       </Styled.ItemBox>
 
+      {/* 나중에 TextArea 구성 공통컴포넌트로 분리 */}
       <Styled.ItemBox>
         <Styled.InputTitle>선물에 대한 힌트 자유롭게 적어보기</Styled.InputTitle>
-        <InputLargeBox bgColor={ theme.colors.pastel_blue}>
+        <InputLargeBox bgColor={theme.colors.pastel_blue}>
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
             onChange={changeHint1}
+            value={hint1}
           />
-          <InputLength inputLength={hint1.length} limit={LIMIT_TEXT[300]} />
+          <Styled.TextareaWrapper>
+            <div></div>
+            <InputLength inputLength={hint1.length} limit={LIMIT_TEXT[300]} />
+          </Styled.TextareaWrapper>
         </InputLargeBox>
       </Styled.ItemBox>
 
       <Styled.ItemBox>
         <Styled.InputTitle>선물의 초성 적어보기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" onChange={changeHint2} />
+          <Styled.InputText
+            placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
+            onChange={changeHint2}
+            value={hint2}
+          />
           <InputLength inputLength={hint2.length} limit={LIMIT_TEXT[15]} />
         </InputBox>
       </Styled.ItemBox>
@@ -111,12 +151,24 @@ export default function FormPage() {
         <Styled.InputTitle>나의 생일주간 설정하기</Styled.InputTitle>
         <Styled.CalendarContainer>
           <InputCalendar>
-            <Styled.InputTextDone placeholder="2023.04.12" readOnly />
+            <Styled.InputTextDone
+              placeholder={startDate}
+              readOnly
+            />
             <Image src={CalendarIC} alt="캘린더" />
           </InputCalendar>
           <InputCalendar>
-            <Styled.InputText placeholder="종료일" readOnly />
-            <Image src={CalendarIC} alt="캘린더" />
+            {!showEndDate && (
+              <Styled.InputText
+                placeholder="종료일"
+                readOnly
+                style={{ display: showEndDate ? "none" : "initial" }}
+              />
+            )}
+            {showEndDate && (
+              <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />
+            )}
+            <Image src={CalendarIC} alt="캘린더" onClick={handleInputClick} />
           </InputCalendar>
         </Styled.CalendarContainer>
       </Styled.ItemBox>
@@ -124,19 +176,24 @@ export default function FormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>송금 받을 계좌번호 입력하기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="예금주명" onChange={changeName} />
+          <Styled.InputText placeholder="예금주명" onChange={changeName} value={name} />
         </InputBox>
         <br />
-        <InputBankBox onClick={clickModal}>
-          <Styled.InputText placeholder="은행 선택" readOnly />
+        <InputBankBox onClick={modalToggle}>
+          <Styled.InputText placeholder="은행 선택" value={bankName} readOnly />
           <Image src={ArrowDownIc} alt="열기" />
         </InputBankBox>
-        {showModal && <BankModal clickModal={clickModal} changeBankName={changeBankName} />}
+        {isOpen && (
+          <Modal isOpen={isOpen} modalToggle={modalToggle}>
+            <BankModal modalToggle={modalToggle} changeBankName={changeBankName} />
+          </Modal>
+        )}
         <br />
         <InputBox>
           <Styled.InputText
             placeholder="계좌번호는 (-)없이 입력해주세요"
             onChange={changeAccount}
+            value={account}
           />
         </InputBox>
         {isIncludeHyphen(account) && <AlertTextBox> 계좌번호는 (-)없이 입력해주세요</AlertTextBox>}
@@ -148,6 +205,7 @@ export default function FormPage() {
           <Styled.InputTextLarge
             placeholder="연락처는 (-)없이 입력해주세요"
             onChange={changePhone}
+            value={phone}
           />
         </InputBox>
         {isIncludeHyphen(phone) && <AlertTextBox> 연락처는 (-)없이 입력해주세요</AlertTextBox>}
@@ -204,10 +262,6 @@ const Styled = {
     display: flex;
   `,
 
-  AlertBox: styled.div`
-    display: none;
-  `,
-
   PresentContainer: styled.div`
     display: none;
     margin: 1rem 0 0;
@@ -220,11 +274,15 @@ const Styled = {
   `,
 
   TextareaText: styled.textarea`
-    ${theme.fonts.body12};
     width: 100%;
     height: 10.5rem;
+    ${theme.fonts.body12};
     background-color: ${theme.colors.pastel_blue};
-    border: none;
     resize: none;
+  `,
+
+  TextareaWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
   `,
 };

@@ -14,9 +14,6 @@ export default function InputLargeBox(props: InputLargeBoxProps) {
 
 const Styled = {
   Box: styled.div<{ bgColor: string }>`
-    display: flex;
-    justify-content: center;
-
     width: 100%;
     height: 15rem;
 

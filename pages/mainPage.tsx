@@ -2,9 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { SideBarIc } from '@/public/assets/icons';
-import { PillCakeImg } from '@/public/assets/images';
-import { MainChatImg } from '@/public/assets/images';
-import { GaugeBarImg } from '@/public/assets/images';
+import { LoginCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
 import router from "next/router";
 import ButtonBox from '@/components/button/buttonBox';
@@ -45,7 +43,7 @@ export default function MainPage() {
                 <Image src={MainChatImg}
                     alt="날 모아줄래? (두근)" />
                 <Styled.ImageContainer>
-                    <Image src={PillCakeImg}
+                    <Image src={LoginCakeImg}
                         alt="케이크" />
                 </Styled.ImageContainer>
                 <Styled.About>모인 케이크 금액</Styled.About>
@@ -82,12 +80,12 @@ const Styled = {
     `,
 
     CenterContainer: styled.div`
-    margin: 9rem 0 15.5rem;
+    margin: 9.9rem 0 15.5rem;
     `,
 
     BarContainer: styled.div`
     float: right;
-    margin: 6rem 1.5rem 0 0;
+    margin: 6rem 2.2rem 0 0;
     `,
 
     ImageContainer: styled.div`

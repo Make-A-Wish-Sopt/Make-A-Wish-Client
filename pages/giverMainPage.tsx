@@ -2,11 +2,10 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { GuideBtnIC } from '@/public/assets/icons';
-import { PillCakeImg } from '@/public/assets/images';
+import { LoginCakeImg } from '@/public/assets/images';
 import { GiverMainChatImg } from '@/public/assets/images';
 import { HeartImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import Footer from '@/components/common/footer';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 import router from 'next/router';
@@ -43,7 +42,7 @@ export default function GiverMainPage() {
           </Styled.Title>
 
           <Image src={GiverMainChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={PillCakeImg} alt="케이크" />
+          <Image src={LoginCakeImg} alt="케이크" />
         </Styled.ImageContainer>
         <Styled.About>
           OO님의 선물을
@@ -58,23 +57,21 @@ export default function GiverMainPage() {
         </Styled.AboutSmallContainer>
       </Styled.Container>
 
-      <Footer>
-        <ButtonBox
-          handleClick={moveToCake}
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-        >
-          케이크 보내기
-        </ButtonBox>
-        <div style={{ height: '1.4rem' }} />
-        <ButtonBox
-          handleClick={moveToLogin}
-          backgroundColor={theme.colors.pastel_blue}
-          fontColor={theme.colors.main_blue}
-        >
-          나도 소원 빌러 가기
-        </ButtonBox>
-      </Footer>
+      <ButtonBox
+        handleClick={moveToCake}
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+      >
+        케이크 보내기
+      </ButtonBox>
+      <div style={{ height: '1.4rem' }} />
+      <ButtonBox
+        handleClick={moveToLogin}
+        backgroundColor={theme.colors.pastel_blue}
+        fontColor={theme.colors.main_blue}
+      >
+        나도 소원 빌러 가기
+      </ButtonBox>
     </>
   );
 }
@@ -83,18 +80,14 @@ const Styled = {
   Title: styled.div`
     ${theme.fonts.title56};
     color: ${theme.colors.main_blue};
-    margin: 0 0 3rem;
+    margin: 2rem 0 2.8rem;
     display: flex;
     justify-content: center;
     white-space: pre-line;
   `,
 
   Container: styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 70%;
+      margin: 0 0 3.5rem;
   `,
 
   ImageContainer: styled.div`
@@ -126,3 +119,4 @@ const Styled = {
     display: flex;
   `,
 };
+
