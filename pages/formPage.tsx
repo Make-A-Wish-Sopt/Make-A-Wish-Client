@@ -36,7 +36,6 @@ export default function FormPage() {
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
 
-
   const { isOpen, modalToggle } = useModal();
 
   const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
@@ -56,7 +55,9 @@ export default function FormPage() {
   const movePreviewPage = () => {
     setWishesData((prevData) => ({
       ...prevData,
-      imageUrl: imageUrl,
+      // imageUrl: imageUrl,
+      imageUrl:
+        'https://img.29cm.co.kr/next-product/2022/04/25/4143c72951de4ebe9d687b04aff8e8c5_20220425153023.jpg?width=700',
       price: price,
       title: title,
       hint1: hint1,
@@ -67,8 +68,6 @@ export default function FormPage() {
       phone: phone,
     }));
   };
-
-
 
   const isIncludeHyphen = (input: string) => {
     return input.includes('-');

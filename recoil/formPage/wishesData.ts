@@ -9,7 +9,7 @@ export const WishesData = atom<WishesDataType>({
     title: '',
     hint1: '',
     hint2: '',
-    startDate: '2023-05-18',
+    startDate: '2023-05-24',
     endDate: '2023-05-30',
     name: '',
     bankName: '',
