@@ -26,8 +26,12 @@ export default function FormPreviewPage() {
     setIsAgreed(isChecked);
   };
 
+  const createLink = () => {
+    return isAgreed ? postWishesData() : modalToggle();
+  };
+
   const postWishesData = () => {
-    //API Post
+    //API
   };
 
   return (
@@ -89,7 +93,7 @@ export default function FormPreviewPage() {
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        handleClick={modalToggle}
+        handleClick={createLink}
       >
         소원 링크 생성하기
       </ButtonBox>
