@@ -1,9 +1,9 @@
 //명명규칙 : 1. 첫글자는 대문자 2. ~~Ic으로 끝내기
 
 export { default as BackBtnIc } from '@/public/assets/icons/backBtnIc.svg';
-export { default as GuideBtnIc } from '@/public/assets/icons/GuideBtnIc.svg';
+export { default as GuideBtnIc } from '@/public/assets/icons/guideBtnIc.svg';
 export { default as KakaoLoginIc } from '@/public/assets/icons/kakaoLoginIc.svg';
-export { default as SideBarIc } from '@/public/assets/icons/SideBarIc.svg';
+export { default as SideBarIc } from '@/public/assets/icons/sideBarIc.svg';
 export { default as CloseBlueIc } from '@/public/assets/icons/closeBlueIc.svg';
 export { default as CloseWhiteIc } from '@/public/assets/icons/closeWhiteIc.svg';
 export { default as CloseSmallIc } from '@/public/assets/icons/closeSmallIc.svg';
