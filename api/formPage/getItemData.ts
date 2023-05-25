@@ -6,7 +6,7 @@ import PATH from '../common/path';
 export const getItemInfo = async (link: string) => {
   const accessToken =
     'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgzMTgxODk1LCJleHAiOjE2ODgwMjAyOTV9.RnUKwBtESVxvKU6YeXy4ssAJlEGHnIKd2LewByQhI8cPuTAh9tJQeJiMyRLYwJHFg8YwUZ667F1QRCECf1uR6w';
-  console.log(link);
+  
   const imageTag = await client.get(
     `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PRESENT}/${PATH.INFO}?url=${link}&tag=${PARSING_TAG_KEY['29cm'].imageTag}`,
     {
