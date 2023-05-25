@@ -4,28 +4,17 @@ import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
-
-    :root {
-        --vh: 100%;
-    }
-
     * {
-        box-sizing: border-box !important;
-        -moz-box-sizing:border-box !important; /* Firefox */
-        -webkit-box-sizing:border-box !important; /* Safari */
-        transition: ${createTransitionQuery()};
-        -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
     }
 
     html,
     body {
-        width: 100%;
-        height: 100vh;
-
-        padding: 0;
-        margin: 0;
+        max-width: 100vw;
         overflow-x: hidden;
-        font-size: 62.5%;
+        height: -webkit-fill-available;
     }
 
     html {
@@ -33,22 +22,14 @@ const GlobalStyle = createGlobalStyle`
         justify-content: center;
         background-color: ${theme.colors.white};
 
-        height: -webkit-fill-available;
-
-
-        overflow: hidden;
+        font-size: 62.5%;
     }
 
     body {
         width:37.5rem;
-        min-height: 100vh;
-        /* mobile viewport bug fix */
-        min-height: -webkit-fill-available;
-        height: fill-available;
 
         padding : 2.2rem;
         background-color: ${theme.colors.bg_yellow};
-
     }
 
 
