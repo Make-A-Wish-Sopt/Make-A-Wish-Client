@@ -37,11 +37,6 @@ export default function ShareModal(props: ShareModalProps) {
   };
 
   useEffect(() => {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-    console.log('로그인 성공');
-  }, []);
-
-  useEffect(() => {
     getWishesMain()
       .then((data) => {
         setWishLink(data);

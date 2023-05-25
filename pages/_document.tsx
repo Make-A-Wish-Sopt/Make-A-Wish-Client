@@ -49,6 +49,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <script src="https://developers.kakao.com/sdk/js/kakao.js" async></script>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <body>
           <Main />
