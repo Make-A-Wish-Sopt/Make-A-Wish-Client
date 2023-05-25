@@ -23,7 +23,9 @@ export default function ShareModal(props: ShareModalProps) {
 
   const { nickname } = useAuthKaKao();
 
-  const shareKakao = () => { sendKakaoMessage(nickname); };
+  const shareKakao = () => {
+    sendKakaoMessage(nickname);
+  };
 
   const handleCopyClipBoard = async (text: string) => {
     try {
@@ -33,6 +35,11 @@ export default function ShareModal(props: ShareModalProps) {
       alert('복사에 실패하였습니다');
     }
   };
+
+  useEffect(() => {
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    console.log('로그인 성공');
+  }, []);
 
   useEffect(() => {
     getWishesMain()
@@ -51,12 +58,12 @@ export default function ShareModal(props: ShareModalProps) {
       </Styled.Header>
 
       <Styled.SnsContainer>
-          {SHARE_LIST.map((sns) => (
-            <SnsBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}>
-              <Image src={sns.logo} alt={`${sns.name}`} />
-            </SnsBox>
-          ))}
-        </Styled.SnsContainer>
+        {SHARE_LIST.map((sns) => (
+          <SnsBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}>
+            <Image src={sns.logo} alt={`${sns.name}`} />
+          </SnsBox>
+        ))}
+      </Styled.SnsContainer>
 
       <InputLink>
         <Styled.InputText value={wishLink} readOnly />
