@@ -26,6 +26,7 @@ import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/modal/DatePickerModal';
+import Layout from '@/components/common/layout';
 
 function getDate(date: Date | null): string {
   if (!date) {
@@ -94,7 +95,7 @@ export default function FormPage() {
   };
 
   return (
-    <>
+    <Layout>
       <InputHeader>
         <BackBtn />
       </InputHeader>
@@ -213,7 +214,7 @@ export default function FormPage() {
       >
         <Link href="/formPreviewPage">소원 링크 생성하기</Link>
       </ButtonBox>
-    </>
+    </Layout>
   );
 }
 

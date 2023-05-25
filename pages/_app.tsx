@@ -29,7 +29,6 @@ export default function App({ Component, pageProps }: AppProps) {
     },
   });
 
-
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
@@ -38,21 +37,21 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Head>
-            <title>Make A Wish | 선물고민은 그만!</title>
-          </Head>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Component
-              style={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-              }}
-              {...pageProps}
-            />
-          </ThemeProvider>
-        </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Head>
+          <title>Make A Wish | 선물고민은 그만!</title>
+        </Head>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Component
+            style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+            }}
+            {...pageProps}
+          />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   );
 }
