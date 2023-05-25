@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { GuideBtnIC } from '@/public/assets/icons';
+import { GuideBtnIc } from '@/public/assets/icons';
 import { LoginCakeImg } from '@/public/assets/images';
 import { GiverMainChatImg } from '@/public/assets/images';
 import { HeartImg } from '@/public/assets/images';
@@ -29,7 +29,7 @@ export default function GiverMainPage() {
   return (
     <>
       <Header>
-        <IconButton onClick={clickModal} src={GuideBtnIC} alt="서비스 가이드" />
+        <IconButton onClick={clickModal} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
       {showModal && <GuideModal clickModal={clickModal} />}
 
@@ -119,4 +119,3 @@ const Styled = {
     display: flex;
   `,
 };
-

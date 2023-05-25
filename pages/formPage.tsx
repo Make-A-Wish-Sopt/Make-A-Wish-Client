@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CalendarIC } from '@/public/assets/icons';
+import { CalendarIc } from '@/public/assets/icons';
 import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
@@ -152,7 +152,7 @@ export default function FormPage() {
         <Styled.CalendarContainer>
           <InputCalendar>
             <Styled.InputTextDone placeholder={startDate} readOnly />
-            <Image src={CalendarIC} alt="캘린더" />
+            <Image src={CalendarIc} alt="캘린더" />
           </InputCalendar>
           <InputCalendar>
             {!showEndDate && (
@@ -163,7 +163,7 @@ export default function FormPage() {
               />
             )}
             {showEndDate && <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />}
-            <Image src={CalendarIC} alt="캘린더" onClick={handleInputClick} />
+            <Image src={CalendarIc} alt="캘린더" onClick={handleInputClick} />
           </InputCalendar>
         </Styled.CalendarContainer>
       </Styled.ItemBox>

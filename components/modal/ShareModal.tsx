@@ -1,8 +1,8 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CloseSmallIC } from '@/public/assets/icons';
-import { LinkCopyIC } from '@/public/assets/icons';
+import { CloseSmallIc } from '@/public/assets/icons';
+import { LinkCopyIc } from '@/public/assets/icons';
 import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/button/snsBox';
@@ -48,32 +48,29 @@ export default function ShareModal(props: ShareModalProps) {
     }, []);
 
     return (
-        <Styled.Modal>
-            <Styled.Header>
-                <IconButton src={CloseSmallIC} alt="닫기" onClick={clickModal} />
-            </Styled.Header>
+      <Styled.Modal>
+        <Styled.Header>
+          <IconButton src={CloseSmallIc} alt="닫기" onClick={clickModal} />
+        </Styled.Header>
 
-            <Styled.SnsContainer>
-                {SHARE_LIST.map((sns) => (
-                    <SnsBox
-                        key={sns.name}
-                        onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}
-                    >
-                        <Image src={sns.logo} alt={`${sns.name}`} />
-                    </SnsBox>
-                ))}
-            </Styled.SnsContainer>
+        <Styled.SnsContainer>
+          {SHARE_LIST.map((sns) => (
+            <SnsBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}>
+              <Image src={sns.logo} alt={`${sns.name}`} />
+            </SnsBox>
+          ))}
+        </Styled.SnsContainer>
 
-            <InputLink>
-                <Styled.InputText value={wishLink} readOnly />
-                <IconButton
-                    src={LinkCopyIC}
-                    alt="링크 복사"
-                    onClick={() => handleCopyClipBoard("www.asdf.co.kr")} />
-            </InputLink>
-        </Styled.Modal >
-
-    )
+        <InputLink>
+          <Styled.InputText value={wishLink} readOnly />
+          <IconButton
+            src={LinkCopyIc}
+            alt="링크 복사"
+            onClick={() => handleCopyClipBoard('www.asdf.co.kr')}
+          />
+        </InputLink>
+      </Styled.Modal>
+    );
 }
 
 const Styled = {

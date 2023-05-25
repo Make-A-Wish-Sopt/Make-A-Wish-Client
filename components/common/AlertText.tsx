@@ -1,4 +1,4 @@
-import { AlertIC } from '@/public/assets/icons';
+import { AlertIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -10,12 +10,12 @@ interface AlertTextBoxProps {
 export default function AlertTextBox(props: AlertTextBoxProps) {
     const { children } = props;
 
-    return <Styled.Box>
-        <Image
-            src={AlertIC}
-            alt="경고" />
+    return (
+      <Styled.Box>
+        <Image src={AlertIc} alt="경고" />
         <Styled.Text>{children}</Styled.Text>
-    </Styled.Box >;
+      </Styled.Box>
+    );
 }
 
 const Styled = {
