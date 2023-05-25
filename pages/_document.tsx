@@ -49,7 +49,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           {/* 카카오 로그인 SDK */}
-          <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+          <script src="https://developers.kakao.com/sdk/js/kakao.js" async></script>
         </Head>
         <body>
           <Main />
