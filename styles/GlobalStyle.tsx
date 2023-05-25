@@ -7,14 +7,12 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
         transition: ${createTransitionQuery()};
-        padding: 0;
-        margin: 0;
     }
 
     html,
     body {
         width: 100%;
-        height: 100svh;
+
         overflow-x: hidden;
     }
 
@@ -22,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
         display:flex;
         justify-content: center;
 
+        height: -webkit-fill-available;
         font-size: 62.5%;
 
         overflow: hidden;
@@ -29,6 +28,8 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         width:37.5rem;
+        min-height: 100vh; /* fallback */
+        min-height: calc(var(--vh) * 100);
 
         padding : 2.2rem;
         background-color: ${theme.colors.bg_yellow};

@@ -14,9 +14,9 @@ export default Layout;
 
 const Root = styled.div`
   width: 100%;
-  &.minHeight {
+  /* &.minHeight {
     min-height: 136.7rem;
-  }
+  } */
   display: flex;
   flex-direction: column;
 `;
