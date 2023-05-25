@@ -48,7 +48,7 @@ class MyDocument extends Document {
             href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css"
             rel="stylesheet"
           />
-          {/* <script src="https://developers.kakao.com/sdk/js/kakao.js" async></script> */}
+          <script src="https://developers.kakao.com/sdk/js/kakao.js" async></script>
         </Head>
         <body>
           <Main />
