@@ -7,7 +7,6 @@ import { useMediaQuery } from 'react-responsive';
 import { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
 import { useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 declare global {
   interface Window {
@@ -30,28 +29,15 @@ export default function App({ Component, pageProps }: AppProps) {
     },
   });
 
-  const ErrorFallback = () => {
-    return <div>ERROR!!</div>;
-  };
-
-  const kakaoInit = () => {
-    console.log(window.Kakao);
-    console.log(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
-    console.log(window.Kakao.isInitialized());
-  };
 
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
-      console.log(window.Kakao);
-      console.log(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
     }
   }, []);
 
   return (
     <RecoilRoot>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
         <QueryClientProvider client={queryClient}>
           <Head>
             <title>Make A Wish | 선물고민은 그만!</title>
@@ -67,13 +53,6 @@ export default function App({ Component, pageProps }: AppProps) {
             />
           </ThemeProvider>
         </QueryClientProvider>
-        {/* 카카오 로그인 SDK */}
-        <script
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-          async
-          onLoad={kakaoInit}
-        ></script>
-      </ErrorBoundary>
     </RecoilRoot>
   );
 }
