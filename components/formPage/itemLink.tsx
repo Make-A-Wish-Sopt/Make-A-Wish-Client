@@ -9,7 +9,7 @@ import { validation } from '@/validation/input';
 import useInput from '@/hooks/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useQuery, useQueryClient } from 'react-query';
-import { getItemImage } from '@/api/formPage/getItemData';
+import { getItemInfo } from '@/api/formPage/getItemData';
 import { useState } from 'react';
 import { QUERY_KEY } from '@/constant/queryKey';
 
@@ -27,11 +27,14 @@ export default function ItemLink(props: ItemLinkProps) {
 
   const { data: itemData, isSuccess } = useQuery(
     QUERY_KEY.itemData,
-    async () => await getItemImage(replacedLink(link)),
+    async () => await getItemInfo(link),
     {
-      onSuccess: () => {
-        changePrice(itemData?.totalPrice);
-        changeImageUrl(itemData?.totalPrice);
+      onSuccess: (data) => {
+        const imageData = data.imageTag.data?.data;
+        const priceData = data.priceTag.data?.data;
+
+        changePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
+        changeImageUrl(extractImageSrc(imageData));
       },
       onError: (error) => {
         console.log(error);
@@ -50,8 +53,20 @@ export default function ItemLink(props: ItemLinkProps) {
     setIsCorrectLink(false);
   };
 
-  const replacedLink = (link: string) => {
-    return link.replace('https://www.coupang.com/', '').replace('https://product.29cm.co.kr/', '');
+  const extractImageSrc = (imageLink: string) => {
+    const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+    const imageSrc = regex.exec(imageLink);
+
+    return imageSrc[1];
+  };
+
+  const extractPrice = (totalPrice: string) => {
+    const html = document.createElement('span');
+    html.innerHTML = totalPrice;
+    const innerHtmlText = html.querySelector('.css-4bcxzt')?.innerHTML;
+    const price = innerHtmlText?.substring(0, innerHtmlText.indexOf('<'));
+
+    return price;
   };
 
   return (
@@ -79,9 +94,18 @@ export default function ItemLink(props: ItemLinkProps) {
       {isSuccess && (
         <Styled.PresentContainer>
           <PresentImageBox>
-            <Image src={itemData.itemImage} width={158} height={158} alt="선물" />
+            <Styled.ImageWrapper>
+              <Image
+                src={extractImageSrc(itemData.imageTag.data?.data)}
+                fill={true}
+                alt="선물"
+                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
+              />
+            </Styled.ImageWrapper>
           </PresentImageBox>
-          <Styled.PresentPrice>가격 : {itemData.totalPrice}</Styled.PresentPrice>
+          <Styled.PresentPrice>
+            가격 : {extractPrice(itemData.priceTag.data?.data)}원
+          </Styled.PresentPrice>
         </Styled.PresentContainer>
       )}
     </Styled.ItemBox>
@@ -122,5 +146,13 @@ const Styled = {
     background-color: ${theme.colors.white};
     cursor: pointer;
     margin: 0 1rem 1rem 0;
+  `,
+  ImageWrapper: styled.div`
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
   `,
 };

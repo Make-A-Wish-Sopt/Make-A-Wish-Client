@@ -17,14 +17,15 @@ import { useState } from 'react';
 import useInput from '@/hooks/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import ItemLink from '@/components/formPage/itemLink';
+
 import ButtonBox from '@/components/button/buttonBox';
 import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
-import { WishesDataType } from '@/types/wishesData';
+import { WishesDataType } from '@/types/wishesDataType';
 import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
-import CustomDatePicker from "@/components/modal/DatePickerModal";
+import CustomDatePicker from '@/components/modal/DatePickerModal';
 
 function getDate(date: Date | null): string {
   if (!date) {
@@ -70,9 +71,7 @@ export default function FormPage() {
   const movePreviewPage = () => {
     setWishesData((prevData) => ({
       ...prevData,
-      // imageUrl: imageUrl,
-      imageUrl:
-        'https://img.29cm.co.kr/next-product/2022/04/25/4143c72951de4ebe9d687b04aff8e8c5_20220425153023.jpg?width=700',
+      imageUrl: imageUrl,
       price: price,
       title: title,
       hint1: hint1,
@@ -82,7 +81,7 @@ export default function FormPage() {
       account: account,
       phone: phone,
       startDate: startDate,
-      endDate: endDate
+      endDate: endDate,
     }));
   };
 
@@ -90,12 +89,9 @@ export default function FormPage() {
     return input.includes('-');
   };
 
-
-
   const handleInputClick = () => {
     setShowEndDate(true);
   };
-
 
   return (
     <>
@@ -103,7 +99,6 @@ export default function FormPage() {
         <BackBtn />
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
-
       <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
 
       {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
@@ -151,10 +146,7 @@ export default function FormPage() {
         <Styled.InputTitle>나의 생일주간 설정하기</Styled.InputTitle>
         <Styled.CalendarContainer>
           <InputCalendar>
-            <Styled.InputTextDone
-              placeholder={startDate}
-              readOnly
-            />
+            <Styled.InputTextDone placeholder={startDate} readOnly />
             <Image src={CalendarIC} alt="캘린더" />
           </InputCalendar>
           <InputCalendar>
@@ -162,12 +154,10 @@ export default function FormPage() {
               <Styled.InputText
                 placeholder="종료일"
                 readOnly
-                style={{ display: showEndDate ? "none" : "initial" }}
+                style={{ display: showEndDate ? 'none' : 'initial' }}
               />
             )}
-            {showEndDate && (
-              <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />
-            )}
+            {showEndDate && <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />}
             <Image src={CalendarIC} alt="캘린더" onClick={handleInputClick} />
           </InputCalendar>
         </Styled.CalendarContainer>
@@ -276,8 +266,11 @@ const Styled = {
   TextareaText: styled.textarea`
     width: 100%;
     height: 10.5rem;
+
     ${theme.fonts.body12};
+    color: ${theme.colors.dark_blue};
     background-color: ${theme.colors.pastel_blue};
+
     resize: none;
   `,
 

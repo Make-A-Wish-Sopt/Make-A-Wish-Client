@@ -8,7 +8,9 @@ const PATH = {
   MAIN: 'main',
   APPROVE: 'approve',
   READY: 'ready',
-  PG_TOKEN:'pg_token'
+  PG_TOKEN: 'pg_token',
+  PRESENT: 'present',
+  INFO: 'info',
 };
 
 export default PATH;
