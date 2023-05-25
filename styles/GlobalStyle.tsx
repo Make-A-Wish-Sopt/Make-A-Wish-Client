@@ -14,13 +14,12 @@ const GlobalStyle = createGlobalStyle`
     body {
         max-width: 100vw;
         overflow-x: hidden;
-        height: -webkit-fill-available;
+        height: 100lvh;
     }
 
     html {
         display:flex;
         justify-content: center;
-        background-color: ${theme.colors.white};
 
         font-size: 62.5%;
     }
