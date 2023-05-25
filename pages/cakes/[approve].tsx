@@ -5,7 +5,7 @@ import SuccessMsgBox from '@/components/cakes/approve/successMsgBox';
 import Contribution from '@/components/cakes/contribution';
 import ProgressBar from '@/components/common/progressBar';
 import { QUERY_KEY } from '@/constant/queryKey';
-import { CakesData } from '@/reocil/cakes/cakesData';
+import { CakesData } from '@/recoil/cakes/cakesData';
 import theme from '@/styles/theme';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { useRouter } from 'next/router';

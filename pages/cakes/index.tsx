@@ -13,7 +13,7 @@ import ButtonBox from '@/components/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useEffect, useState } from 'react';
 import CakesHeader from '@/components/cakes/cakesHeader';
-import { convertMoneyText } from '@/util/common/convertMoneyText';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { getWishesData } from '@/api/cakes/getWishesData';
@@ -21,7 +21,7 @@ import { postPayReady } from '@/api/cakes/postPayReady';
 import { useRouter } from 'next/router';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
-import { CakesData } from '@/reocil/cakes/cakesData';
+import { CakesData } from '@/recoil/cakes/cakesData';
 
 export default function Giver() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
