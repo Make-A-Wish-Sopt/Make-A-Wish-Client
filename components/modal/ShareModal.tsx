@@ -23,7 +23,7 @@ export default function ShareModal(props: ShareModalProps) {
 
   const { nickname } = useAuthKaKao();
 
-  // const shareKakao = () => { sendKakaoMessage(nickname); };
+  const shareKakao = () => { sendKakaoMessage(nickname); };
 
   const handleCopyClipBoard = async (text: string) => {
     try {
@@ -50,13 +50,13 @@ export default function ShareModal(props: ShareModalProps) {
         <IconButton src={CloseSmallIc} alt="닫기" onClick={clickModal} />
       </Styled.Header>
 
-      {/* <Styled.SnsContainer>
+      <Styled.SnsContainer>
           {SHARE_LIST.map((sns) => (
             <SnsBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}>
               <Image src={sns.logo} alt={`${sns.name}`} />
             </SnsBox>
           ))}
-        </Styled.SnsContainer> */}
+        </Styled.SnsContainer>
 
       <InputLink>
         <Styled.InputText value={wishLink} readOnly />

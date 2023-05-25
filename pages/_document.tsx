@@ -22,6 +22,7 @@ class MyDocument extends Document {
         enhanceComponent: (Component) => Component,
       });
 
+
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`
     const initialProps = await Document.getInitialProps(ctx);
     return {
@@ -48,8 +49,6 @@ class MyDocument extends Document {
             href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css"
             rel="stylesheet"
           />
-          {/* 카카오 로그인 SDK */}
-          <script src="https://developers.kakao.com/sdk/js/kakao.js" async></script>
         </Head>
         <body>
           <Main />

@@ -29,6 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
     },
   });
 
+  const kakaoInit = () => {
+    console.log(window.Kakao);
+    console.log(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    console.log(window.Kakao.isInitialized());
+  };
+
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
       console.log(window.Kakao);
@@ -54,6 +61,8 @@ export default function App({ Component, pageProps }: AppProps) {
           />
         </ThemeProvider>
       </QueryClientProvider>
+      {/* 카카오 로그인 SDK */}
+      <script src="https://developers.kakao.com/sdk/js/kakao.js" async onLoad={kakaoInit}></script>
     </RecoilRoot>
   );
 }
