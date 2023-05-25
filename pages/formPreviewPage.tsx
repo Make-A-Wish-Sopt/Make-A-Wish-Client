@@ -26,8 +26,6 @@ export default function FormPreviewPage() {
 
   const { data, mutate, isSuccess } = useMutation(() => createWishesLink(wishesData), {});
 
-  console.log(data);
-
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);
   };
@@ -55,9 +53,14 @@ export default function FormPreviewPage() {
         <Styled.InputTitle>{wishesData.title}</Styled.InputTitle>
         <Styled.PresentContainer>
           <PresentImageBox>
-            {/* <Image
-                            src=""
-                            alt="선물" /> */}
+            <Styled.ImageWrapper>
+              <Image
+                src={wishesData.imageUrl}
+                fill={true}
+                alt="선물"
+                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
+              />
+            </Styled.ImageWrapper>
           </PresentImageBox>
           <Styled.PresentPrice>가격: {wishesData.price}원</Styled.PresentPrice>
         </Styled.PresentContainer>
@@ -138,5 +141,14 @@ const Styled = {
     ${theme.fonts.body12};
     color: ${theme.colors.dark_blue};
     text-align: left;
+  `,
+
+  ImageWrapper: styled.div`
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
   `,
 };

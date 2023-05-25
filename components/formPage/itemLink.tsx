@@ -99,7 +99,7 @@ export default function ItemLink(props: ItemLinkProps) {
                 src={extractImageSrc(itemData.imageTag.data?.data)}
                 fill={true}
                 alt="선물"
-                style={{ borderRadius: '1.6rem', objectFit:'cover'}}
+                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
           </PresentImageBox>

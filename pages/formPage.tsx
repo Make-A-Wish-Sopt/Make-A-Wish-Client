@@ -266,8 +266,11 @@ const Styled = {
   TextareaText: styled.textarea`
     width: 100%;
     height: 10.5rem;
+
     ${theme.fonts.body12};
+    color: ${theme.colors.dark_blue};
     background-color: ${theme.colors.pastel_blue};
+
     resize: none;
   `,
 
