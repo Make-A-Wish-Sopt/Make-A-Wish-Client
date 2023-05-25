@@ -7,7 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.coupangcdn.com',
+        hostname: 'img.29cm.co.kr',
         port: '',
         pathname: '/**',
       },
@@ -16,11 +16,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
-module.exports = {
-  env: {
-    BASE_URL: process.env.BASE_URL,
-    ORDER_ID: process.env.ORDER_ID,
-    USER_ID: process.env.USER_ID,
-  },
-};
