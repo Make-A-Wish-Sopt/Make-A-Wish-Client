@@ -1,85 +1,113 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
-import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
-import Header from '@/components/common/header';
-import IconButton from '@/components/common/button/iconButton';
-import { useState } from 'react';
-import GuideModal from '@/components/modal/GuideModal';
+import { SideBarIc } from '@/public/assets/icons';
+import { PillCakeImg } from '@/public/assets/images';
+import { MainChatImg } from '@/public/assets/images';
+import { GaugeBarImg } from '@/public/assets/images';
+import IconButton from '@/components/button/iconButton';
+import router from 'next/router';
+import ButtonBox from '@/components/button/buttonBox';
+import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
 
-export default function LoginPage() {
-  const [showModal, setShowModal] = useState(false);
-
-  const clickModal = () => {
-    setShowModal(!showModal);
+export default function MainPage() {
+  const moveToForm = () => {
+    router.push('/formPage');
   };
 
-  const KakaoLogin = () => {
-    window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
-    });
-  };
+  const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
 
   return (
     <>
-      <Header>
-        <IconButton onClick={clickModal} src={GuideBtnIc} alt="서비스 가이드" />
-      </Header>
-      {showModal && <GuideModal clickModal={clickModal} />}
+      <Styled.HeaderContainer>
+        <Styled.Title>
+          {nickname}님,
+          <br />
+          <span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고
+          <br />
+          케이크를 모아봐요!
+        </Styled.Title>
+        <Styled.SideContainer>
+          <IconButton src={SideBarIc} alt="사이드바" />
+          <Styled.DDay>D-?</Styled.DDay>
+        </Styled.SideContainer>
+      </Styled.HeaderContainer>
+      <h2>사용자 정보</h2>
+      <p>아이디: {kakaoId}</p>
+      <p>닉네임: {nickname}</p>
+      <p>프로필 이미지: {profileImage}</p>
+      <p>이메일: {email}</p>
 
-      <Styled.Container>
+      <Styled.CenterContainer>
+        <Styled.BarContainer>
+          <Image src={GaugeBarImg} alt="게이지바" />
+        </Styled.BarContainer>
+        <Image src={MainChatImg} alt="날 모아줄래? (두근)" />
         <Styled.ImageContainer>
-          <Styled.Title>
-            조물주보다
-            <br />
-            생일선물주
-          </Styled.Title>
-
-          <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+          <Image src={PillCakeImg} alt="케이크" />
         </Styled.ImageContainer>
-        <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
-        <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
-      </Styled.Container>
+        <Styled.About>모인 케이크 금액</Styled.About>
+        <Styled.AboutSmall>총 ???원</Styled.AboutSmall>
+      </Styled.CenterContainer>
 
-      <IconButton onClick={KakaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
+      <ButtonBox
+        handleClick={moveToForm}
+        backgroundColor={theme.colors.main_blue}
+        fontColor={theme.colors.white}
+      >
+        소원 링크 생성하기
+      </ButtonBox>
     </>
   );
 }
 
 const Styled = {
-  Title: styled.div`
-    ${theme.fonts.title56};
-    color: ${theme.colors.main_blue};
-    margin: 2rem 0 2.8rem;
+  HeaderContainer: styled.div`
     display: flex;
-    justify-content: center;
-    white-space: pre-line;
   `,
 
-  Container: styled.div``,
+  SideContainer: styled.div`
+    margin-left: auto;
+  `,
+
+  Title: styled.div`
+    ${theme.fonts.headline24_130};
+    margin: 0 0 3rem;
+  `,
+
+  DDay: styled.div`
+    ${theme.fonts.headline20};
+    color: ${theme.colors.main_blue};
+    display: flex;
+    justify-content: center;
+    margin-top: 2.3rem;
+  `,
+
+  CenterContainer: styled.div`
+    margin: 9rem 0 15.5rem;
+  `,
+
+  BarContainer: styled.div`
+    float: right;
+    margin: 6rem 1.5rem 0 0;
+  `,
 
   ImageContainer: styled.div`
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
   `,
 
   About: styled.div`
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
-    margin: 1.4rem 0 1.5rem;
+    margin: 0 0 1rem;
     display: flex;
     justify-content: center;
   `,
 
   AboutSmall: styled.div`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
+    ${theme.fonts.headline24_100};
     display: flex;
     justify-content: center;
-    margin: 0 0 10.15rem;
   `,
 };
