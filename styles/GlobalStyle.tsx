@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
     body {
         width: 100%;
         height: 100vh;
-        height: -webkit-fill-available;
 
         padding: 0;
         margin: 0;
@@ -34,14 +33,17 @@ const GlobalStyle = createGlobalStyle`
         justify-content: center;
         background-color: ${theme.colors.white};
 
+        height: -webkit-fill-available;
+
+
         overflow: hidden;
     }
 
     body {
         width:37.5rem;
-        height:100vh;
-        height: 100vh;
-        height: -webkit-fill-available;
+        min-height: 100vh;
+        /* mobile viewport bug fix */
+        min-height: -webkit-fill-available;
         height: fill-available;
 
         padding : 2.2rem;
