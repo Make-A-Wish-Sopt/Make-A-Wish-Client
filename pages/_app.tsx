@@ -31,6 +31,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
+      console.log(window.Kakao);
+      console.log(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
     }
   }, []);
