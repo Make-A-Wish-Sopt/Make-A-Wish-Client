@@ -1,6 +1,6 @@
 import PATH from '../common/path';
 import { client } from '../common/axios';
-import { WishesDataType } from '@/types/wishesData';
+import { WishesDataType } from '@/types/wishesDataType';
 
 export async function createWishesLink(wishesData: WishesDataType) {
   const data = await client.post(
