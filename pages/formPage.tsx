@@ -99,7 +99,12 @@ export default function FormPage() {
         <BackBtn />
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
-      <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
+      <ItemLink
+        changePrice={changePrice}
+        changeImageUrl={changeImageUrl}
+        imageUrl={imageUrl}
+        price={price}
+      />
 
       {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
       <Styled.ItemBox>

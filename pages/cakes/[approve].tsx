@@ -16,20 +16,28 @@ import styled from 'styled-components';
 
 export default function approve() {
   const globalValue = useRecoilValue(CakesData);
-  const [cakesData, setCakesData] = useState<CakesDataType>();
+  const [cakesData, setCakesData] = useState<CakesDataType>(globalValue);
 
   const router = useRouter();
 
   useEffect(() => {
-    setCakesData({ ...globalValue });
+    // setCakesData({ ...globalValue });
 
     if (!router.isReady) return;
 
-    setCakesData((prevData) => ({
-      ...prevData,
-      pgToken: router.query.pg_token,
-    }));
+    const pgToken = router.query.pg_token;
+
+    if (pgToken) {
+      setCakesData((prevData) => ({
+        ...prevData,
+        pgToken: pgToken,
+      }));
+    }
   }, [router.isReady]);
+
+  useEffect(() => {
+    setCakesData({ ...globalValue });
+  }, []);
 
   const { data } = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
 

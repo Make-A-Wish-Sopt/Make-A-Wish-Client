@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 interface SuccessMsgBoxProps {
-  cakesData: CakesDataType | undefined;
+  cakesData: CakesDataType;
 }
 
 export default function SuccessMsgBox(props: SuccessMsgBoxProps) {

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import DatePicker from "react-datepicker";
-import { Dispatch, SetStateAction } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import { ko } from "date-fns/locale";
-import { getMonth, getYear, isBefore } from "date-fns";
+import DatePicker from 'react-datepicker';
+import { Dispatch, SetStateAction } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale';
+import { getMonth, getYear, isBefore } from 'date-fns';
 
 interface CustomDatePickerProps {
   endDate: string;
@@ -23,30 +23,18 @@ function getDate(date: Date | null): string {
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
-  const _ = require("lodash");
+  //eslint-disable-next-line
+  const _ = require('lodash');
 
   // 연도 range(시작 연도, 끝 연도, 연도 간격)
   const years = _.range(getYear(new Date()), getYear(new Date()) + 5, 1);
 
-  const months = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
+  const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
   const handleDateChange = (date: Date | null) => {
     if (date && isBefore(date, new Date())) {
       // 선택한 날짜가 현재 날짜보다 예전인 경우
-      alert("선택하신 날짜는 현재 날짜보다 이전입니다. 유효한 날짜를 선택해주세요.")
+      alert('선택하신 날짜는 현재 날짜보다 이전입니다. 유효한 날짜를 선택해주세요.');
       return;
     }
     props.setEndDate(getDate(date));
@@ -67,13 +55,10 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
                 </option>
               ))}
             </select>
-            년
-            &emsp;
+            년 &emsp;
             <select
               value={months[getMonth(date)]}
-              onChange={({ target: { value } }) =>
-                changeMonth(months.indexOf(value))
-              }
+              onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
             >
               {months.map((option) => (
                 <option key={option} value={option}>
@@ -95,10 +80,8 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
   );
 }
 
-
 const Styled = {
   Container: styled.div`
-  width: 11rem;
+    width: 11rem;
   `,
 };
-
