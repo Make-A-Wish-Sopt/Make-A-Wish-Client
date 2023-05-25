@@ -4,33 +4,48 @@ import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+
+    :root {
+        --vh: 100%;
+    }
+
     * {
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
+        box-sizing: border-box !important;
+        -moz-box-sizing:border-box !important; /* Firefox */
+        -webkit-box-sizing:border-box !important; /* Safari */
+        transition: ${createTransitionQuery()};
+        -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
     }
 
     html,
     body {
-        max-width: 100vw;
+        width: 100%;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        padding: 0;
+        margin: 0;
         overflow-x: hidden;
-        height: 100lvh;
     }
 
     html {
         display:flex;
         justify-content: center;
 
+        height: -webkit-fill-available;
         font-size: 62.5%;
+
+        overflow: hidden;
     }
 
     body {
         width:37.5rem;
+        height:100vh;
+        min-height: 100vh;
 
         padding : 2.2rem;
         background-color: ${theme.colors.bg_yellow};
-    }
 
+    }
 
 
 

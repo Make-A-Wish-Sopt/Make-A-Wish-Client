@@ -31,7 +31,7 @@ export default function LoginPage() {
       <Styled.Container>
         <Styled.ImageContainer>
           <Styled.Title>
-            조물주보다
+            조물주보다,
             <br />
             생일선물주
           </Styled.Title>
