@@ -1,10 +1,11 @@
 import { AlertIC } from '@/public/assets/icons';
+import { ReactNode } from 'react';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 
 interface AlertTextBoxProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export default function AlertTextBox(props: AlertTextBoxProps) {

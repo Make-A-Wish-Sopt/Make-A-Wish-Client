@@ -8,14 +8,14 @@ import { GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
 import router from 'next/router';
 import ButtonBox from '@/components/button/buttonBox';
-import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
+import { useAuthKaKao } from '@/hooks/useAuthKakao';
 
 export default function MainPage() {
   const moveToForm = () => {
     router.push('/formPage');
   };
 
-  const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
+  const { nickname } = useAuthKaKao();
 
   return (
     <>
@@ -32,11 +32,6 @@ export default function MainPage() {
           <Styled.DDay>D-?</Styled.DDay>
         </Styled.SideContainer>
       </Styled.HeaderContainer>
-      <h2>사용자 정보</h2>
-      <p>아이디: {kakaoId}</p>
-      <p>닉네임: {nickname}</p>
-      <p>프로필 이미지: {profileImage}</p>
-      <p>이메일: {email}</p>
 
       <Styled.CenterContainer>
         <Styled.BarContainer>

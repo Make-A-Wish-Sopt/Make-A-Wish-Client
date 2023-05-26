@@ -4,9 +4,10 @@ import Image from 'next/image';
 import { GuideBtnIC, KakaoLoginIc } from '@/public/assets/icons';
 import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/common/button/iconButton';
+import IconButton from '@/components/button/iconButton';
 import { useState } from 'react';
 import GuideModal from '@/components/modal/GuideModal';
+import { useRouter } from 'next/router';
 
 export default function LoginPage() {
     const [showModal, setShowModal] = useState(false);
@@ -15,10 +16,11 @@ export default function LoginPage() {
         setShowModal(!showModal);
     };
 
+    const router = useRouter();
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
+
     const KakaoLogin = () => {
-        window.Kakao.Auth.authorize({
-            redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
-        });
+        router.replace(KAKAO_AUTH_URL);
     };
 
     return (
