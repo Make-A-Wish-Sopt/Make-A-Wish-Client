@@ -29,10 +29,23 @@ export default function App({ Component, pageProps }: AppProps) {
     },
   });
 
+
+
+
+  const setVh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+  };
+
+
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
     }
+
+    //높이 resize
+    window.addEventListener('resize', setVh);
+    setVh();
+
   }, []);
 
   return (

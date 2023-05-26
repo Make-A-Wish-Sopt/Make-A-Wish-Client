@@ -24,28 +24,33 @@ const GlobalStyle = createGlobalStyle`
         height: calc(var(--vh, 1vh) * 100);
         padding: 0;
         margin: 0;
+        line-height: 1.6;
+
+        width: 100%;
+        height: 100vh;
+        height: var(--vh);
         overflow-x: hidden;
         font-size: 62.5%;
+        position:fixed;
+        @media (max-height:700px){
+            font-size: 56.25%;
+        }
     }
 
     html {
         display:flex;
         justify-content: center;
-        background-color: ${theme.colors.white};
+
+        font-size: 62.5%;
 
         overflow: hidden;
     }
 
     body {
         width:37.5rem;
-        height:100vh;
-
         padding : 2.2rem;
         background-color: ${theme.colors.bg_yellow};
-
     }
-
-
 
     a {
     color: inherit;

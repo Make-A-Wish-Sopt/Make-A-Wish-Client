@@ -1,7 +1,7 @@
 import { CakeListType } from '../cakeListType';
 
 export interface CakesDataType {
-  pgToken: string;
+  pgToken: string | string[] | undefined;
   tid: string;
   partnerOrderId: string;
   partnerUserId: string;

@@ -50,6 +50,7 @@ export { default as KaKaoLogoImg } from '@/public/assets/images/kakaoLogoImg.svg
 export { default as InstaLogoImg } from '@/public/assets/images/instaLogoImg.svg';
 export { default as FacebookLogoImg } from '@/public/assets/images/facebookLogoImg.svg';
 export { default as TwitterLogoImg } from '@/public/assets/images/twitterLogoImg.svg';
+export { default as WishesChatImg } from '@/public/assets/images/wishesChatImg.png';
 
 // bank
 const bankImgs: Record<string, any> = {};

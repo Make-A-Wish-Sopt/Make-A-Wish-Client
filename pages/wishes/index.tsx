@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CalendarIC } from '@/public/assets/icons';
+import { CalendarIc } from '@/public/assets/icons';
 import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
@@ -26,6 +26,8 @@ import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/modal/DatePickerModal';
+import Layout from '@/components/common/layout';
+import { useRouter } from 'next/router';
 
 function getDate(date: Date | null): string {
   if (!date) {
@@ -37,7 +39,7 @@ function getDate(date: Date | null): string {
   return `${year}-${month}-${day}`;
 }
 
-export default function FormPage() {
+export default function WishesFormPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
@@ -49,6 +51,8 @@ export default function FormPage() {
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
   const [endDate, setEndDate] = useState<string>(getDate(new Date()));
   const [showEndDate, setShowEndDate] = useState(false);
+
+  const router = useRouter();
 
   const startDate = getDate(new Date());
 
@@ -83,6 +87,7 @@ export default function FormPage() {
       startDate: startDate,
       endDate: endDate,
     }));
+    router.push('/wishes/preview');
   };
 
   const isIncludeHyphen = (input: string) => {
@@ -94,12 +99,17 @@ export default function FormPage() {
   };
 
   return (
-    <>
+    <Layout>
       <InputHeader>
         <BackBtn />
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
-      <ItemLink changePrice={changePrice} changeImageUrl={changeImageUrl} />
+      <ItemLink
+        changePrice={changePrice}
+        changeImageUrl={changeImageUrl}
+        imageUrl={imageUrl}
+        price={price}
+      />
 
       {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
       <Styled.ItemBox>
@@ -147,7 +157,7 @@ export default function FormPage() {
         <Styled.CalendarContainer>
           <InputCalendar>
             <Styled.InputTextDone placeholder={startDate} readOnly />
-            <Image src={CalendarIC} alt="캘린더" />
+            <Image src={CalendarIc} alt="캘린더" />
           </InputCalendar>
           <InputCalendar>
             {!showEndDate && (
@@ -158,7 +168,7 @@ export default function FormPage() {
               />
             )}
             {showEndDate && <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />}
-            <Image src={CalendarIC} alt="캘린더" onClick={handleInputClick} />
+            <Image src={CalendarIc} alt="캘린더" onClick={handleInputClick} />
           </InputCalendar>
         </Styled.CalendarContainer>
       </Styled.ItemBox>
@@ -206,9 +216,9 @@ export default function FormPage() {
         fontColor={theme.colors.white}
         handleClick={movePreviewPage}
       >
-        <Link href="/formPreviewPage">소원 링크 생성하기</Link>
+        소원 링크 생성하기
       </ButtonBox>
-    </>
+    </Layout>
   );
 }
 

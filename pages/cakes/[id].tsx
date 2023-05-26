@@ -23,13 +23,23 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { CakesData } from '@/recoil/cakes/cakesData';
 
-export default function Giver() {
+export default function CakesPage() {
   const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
+  const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
   const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setWishesId(router.query.id);
+  }, [router.isReady]);
+
+  const { data: wishesData } = useQuery('wished', async () => getWishesData(wishesId), {
+    enabled: wishesId !== '',
+  });
 
   const resetCakesData = useResetRecoilState(CakesData);
 
@@ -61,10 +71,6 @@ export default function Giver() {
 
   const queryClient = useQueryClient();
   queryClient.invalidateQueries(QUERY_KEY.payReady);
-
-  //관심사 분리해야됨
-  // 전달하는 케이크 주인 정보 가져오기
-  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(7), {});
 
   const { mutate } = useMutation(
     QUERY_KEY.payReady,

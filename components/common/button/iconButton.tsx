@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 interface IconButtonProps {
   src: string;
@@ -15,5 +17,14 @@ export default function IconButton(props: IconButtonProps) {
     }
   };
 
-  return <Image onClick={handleClick} src={src} alt={alt} style={{ cursor: 'pointer' }} />;
+  return (
+    <Button onClick={handleClick}>
+      <Image src={src} alt={alt} style={{ cursor: 'pointer' }} />
+    </Button>
+  );
 }
+
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+`;

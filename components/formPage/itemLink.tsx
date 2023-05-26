@@ -16,10 +16,12 @@ import { QUERY_KEY } from '@/constant/queryKey';
 interface ItemLinkProps {
   changePrice: (input: number) => void;
   changeImageUrl: (input: string) => void;
+  imageUrl: string;
+  price: number;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { changePrice, changeImageUrl } = props;
+  const { changePrice, changeImageUrl, imageUrl } = props;
   const [link, changeLink] = useInput('', LIMIT_TEXT.none);
   const [isCorrectLink, setIsCorrectLink] = useState(false);
 
@@ -33,8 +35,11 @@ export default function ItemLink(props: ItemLinkProps) {
         const imageData = data.imageTag.data?.data;
         const priceData = data.priceTag.data?.data;
 
-        changePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
-        changeImageUrl(extractImageSrc(imageData));
+        if (imageData && priceData) {
+          changePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
+          const imageSrc = extractImageSrc(imageData);
+          imageSrc && changeImageUrl(imageSrc);
+        }
       },
       onError: (error) => {
         console.log(error);
@@ -54,10 +59,11 @@ export default function ItemLink(props: ItemLinkProps) {
   };
 
   const extractImageSrc = (imageLink: string) => {
+    //eslint-disable-next-line
     const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
     const imageSrc = regex.exec(imageLink);
 
-    return imageSrc[1];
+    if (imageSrc !== null) return imageSrc[1];
   };
 
   const extractPrice = (totalPrice: string) => {
@@ -91,12 +97,12 @@ export default function ItemLink(props: ItemLinkProps) {
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
-      {isSuccess && (
+      {isSuccess && itemData && (
         <Styled.PresentContainer>
           <PresentImageBox>
             <Styled.ImageWrapper>
               <Image
-                src={extractImageSrc(itemData.imageTag.data?.data)}
+                src={imageUrl}
                 fill={true}
                 alt="선물"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}

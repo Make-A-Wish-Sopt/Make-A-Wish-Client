@@ -3,7 +3,7 @@ import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { client } from '../common/axios';
 
 export async function postPayApprove(
-  pgToken: string | undefined,
+  pgToken: string | string[] | undefined,
   cakesData: CakesDataType | undefined,
 ) {
   const data = await client.post(
