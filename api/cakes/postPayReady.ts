@@ -10,9 +10,9 @@ export async function postPayReady(userId: string, cakeNumber: number) {
       cake: cakeNumber,
       taxFreeAmount: '200',
       vatAmount: '1',
-      approvalUri: 'https://sunmulzu.store/cakes/approve',
-      cancelUri: 'https://sunmulzu.store/cakes',
-      failUri: 'https://sunmulzu.store/cakes',
+      approvalUrl: 'https://sunmulzu.store/cakes/approve',
+      cancelUrl: 'https://sunmulzu.store/cakes',
+      failUrl: 'https://sunmulzu.store/cakes',
     },
     {
       headers: {},
