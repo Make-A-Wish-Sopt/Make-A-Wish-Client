@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
         display:flex;
         justify-content: center;
 
-        height: -webkit-fill-available;
+        height: 100vh;
         font-size: 62.5%;
 
         overflow: hidden;
@@ -28,8 +28,8 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         width:37.5rem;
-        min-height: 100vh; /* fallback */
-        min-height: calc(var(--vh) * 100);
+        height: 100svh; /* fallback */
+        height: calc(var(--vh) * 100);
 
         padding : 2.2rem;
         background-color: ${theme.colors.bg_yellow};
