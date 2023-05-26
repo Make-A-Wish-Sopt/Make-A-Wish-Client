@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 interface IconButtonProps {
   src: string;

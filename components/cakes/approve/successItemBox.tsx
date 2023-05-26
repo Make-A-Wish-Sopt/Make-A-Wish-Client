@@ -1,6 +1,5 @@
 import { postPayApprove } from '@/api/cakes/postPayApprove';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
-import { QUERY_KEY } from '@/constant/queryKey';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import Image from 'next/image';
 import { useEffect } from 'react';

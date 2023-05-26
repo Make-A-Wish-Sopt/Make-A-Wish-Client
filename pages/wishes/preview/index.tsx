@@ -24,7 +24,7 @@ export default function PreviewPage() {
   const router = useRouter();
   const wishesData = useRecoilValue(WishesData);
 
-  const { data, mutate, isSuccess } = useMutation(() => createWishesLink(wishesData), {
+  const { mutate } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: () => {
       router.push('/wishes/share');
     },

@@ -22,7 +22,6 @@ import ButtonBox from '@/components/button/buttonBox';
 import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { WishesDataType } from '@/types/wishesDataType';
-import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/modal/DatePickerModal';

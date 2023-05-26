@@ -2,8 +2,6 @@ import { getPgTokenData } from '@/api/cakes/getPgTokenData';
 import ButtonBox from '@/components/button/buttonBox';
 import SuccessItemBox from '@/components/cakes/approve/successItemBox';
 import SuccessMsgBox from '@/components/cakes/approve/successMsgBox';
-import Contribution from '@/components/cakes/contribution';
-import ProgressBar from '@/components/common/progressBar';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import theme from '@/styles/theme';
@@ -39,7 +37,7 @@ export default function ApprovePage() {
     setCakesData({ ...globalValue });
   }, []);
 
-  const { data } = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
+  const { data} = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
 
   const handleClick = () => {
     router.replace('/');
