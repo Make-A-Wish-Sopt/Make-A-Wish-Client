@@ -12,7 +12,7 @@ import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
 
 export default function MainPage() {
   const moveToForm = () => {
-    router.push('/formPage');
+    router.push('/wishes');
   };
 
   const { kakaoId, nickname, profileImage, email } = useAuthKaKao();
