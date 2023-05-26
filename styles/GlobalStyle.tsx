@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
         height: var(--vh);
         overflow-x: hidden;
         font-size: 62.5%;
-        position:fixed;
+        position:ablosute;
         @media (max-height:700px){
             font-size: 56.25%;
         }
