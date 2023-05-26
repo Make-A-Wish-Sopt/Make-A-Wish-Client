@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import InputBox from '../common/input/inputBox';
 import { SITE_LIST } from '@/interfaces/SiteData';
 import Image from 'next/image';
-import AlertTextBox from '../common/AlertText';
+import AlertTextBox from '../common/alertTextBox';
 import PresentImageBox from '../common/presentImageBox';
 import { validation } from '@/validation/input';
 import useInput from '@/hooks/useInput';

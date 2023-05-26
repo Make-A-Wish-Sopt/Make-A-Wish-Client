@@ -6,13 +6,10 @@ import { LinkCopyIC } from '@/public/assets/icons';
 import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/button/snsBox';
-import { useAuthKaKao } from '@/utils/hooks/useAuthKakao';
-import { KaKaoLogoImg } from '@/public/assets/images';
+import { useAuthKaKao } from '@/hooks/useAuthKakao';
 import { SHARE_LIST } from '@/interfaces/ShareData';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
 import { useState, useEffect } from 'react';
-import { getWishesMain } from '@/api/getWishesMain';
-
 
 
 interface ShareModalProps {
@@ -38,13 +35,6 @@ export default function ShareModal(props: ShareModalProps) {
     };
 
     useEffect(() => {
-        getWishesMain()
-            .then((data) => {
-                setWishLink(data);
-            })
-            .catch((error) => {
-                console.error('소원 링크를 가져오는 중 오류가 발생했습니다:', error);
-            });
     }, []);
 
     return (

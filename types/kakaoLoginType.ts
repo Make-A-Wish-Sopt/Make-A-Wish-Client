@@ -8,17 +8,29 @@ export interface TokenResponse {
   scope: string;
 }
 
-export interface UserInfo {
-  id: number;
-  properties: {
-    nickname: string;
-    profile_image: string;
-    email: string;
+export interface ResponseType {
+  status: number;
+  success: boolean;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    isRegistered: boolean;
   };
 }
 
-export interface ResponseType {
-  success: boolean;
-  message: string;
-  data: any;
+export interface UserInfo {
+  id: number;
+  connected_at: string;
+  properties: {
+    nickname: string;
+  };
+  kakao_account: {
+    profile_nickname_needs_agreement: boolean;
+    profile: {
+      nickname: string;
+    };
+    has_email: boolean;
+    email_needs_agreement: boolean;
+  };
 }

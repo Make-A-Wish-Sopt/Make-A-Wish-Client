@@ -5,7 +5,7 @@ import { CalendarIC } from '@/public/assets/icons';
 import { ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
-import AlertTextBox from '@/components/common/AlertText';
+import AlertTextBox from '@/components/common/alertTextBox';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import InputLargeBox from '@/components/common/input/inputLargeBox';

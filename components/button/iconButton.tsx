@@ -17,6 +17,6 @@ export default function IconButton(props: IconButtonProps) {
     };
 
     return (
-        <Image onClick={handleClick} src={src} alt={alt} style={{ cursor: 'pointer' }} />
+        <Image onClick={handleClick} src={src} alt={alt} style={{ cursor: 'pointer' }} ></Image>
     );
 }
