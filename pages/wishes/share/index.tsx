@@ -10,7 +10,7 @@ import ButtonBox from '@/components/button/buttonBox';
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react';
 
-export default function FormSharePage() {
+export default function Share() {
   const [showModal, setShowModal] = useState(false);
 
   const clickModal = () => setShowModal(!showModal);

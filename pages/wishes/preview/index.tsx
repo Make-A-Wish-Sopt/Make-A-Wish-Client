@@ -16,15 +16,19 @@ import TermsModal from '@/components/modal/termsModal';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
+import { useRouter } from 'next/router';
 
-export default function FormPreviewPage() {
+export default function PreviewPage() {
+  const [isAgreed, setIsAgreed] = useState(false);
+  const { isOpen, modalToggle } = useModal();
+  const router = useRouter();
   const wishesData = useRecoilValue(WishesData);
 
-  const { isOpen, modalToggle } = useModal();
-
-  const [isAgreed, setIsAgreed] = useState(false);
-
-  const { data, mutate, isSuccess } = useMutation(() => createWishesLink(wishesData), {});
+  const { data, mutate, isSuccess } = useMutation(() => createWishesLink(wishesData), {
+    onSuccess: () => {
+      router.push('/wishes/share');
+    },
+  });
 
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);

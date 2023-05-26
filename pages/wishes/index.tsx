@@ -27,6 +27,7 @@ import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/modal/DatePickerModal';
 import Layout from '@/components/common/layout';
+import { useRouter } from 'next/router';
 
 function getDate(date: Date | null): string {
   if (!date) {
@@ -38,7 +39,7 @@ function getDate(date: Date | null): string {
   return `${year}-${month}-${day}`;
 }
 
-export default function FormPage() {
+export default function WishesFormPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
   const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
@@ -50,6 +51,8 @@ export default function FormPage() {
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
   const [endDate, setEndDate] = useState<string>(getDate(new Date()));
   const [showEndDate, setShowEndDate] = useState(false);
+
+  const router = useRouter();
 
   const startDate = getDate(new Date());
 
@@ -84,6 +87,7 @@ export default function FormPage() {
       startDate: startDate,
       endDate: endDate,
     }));
+    router.push('/wishes/preview');
   };
 
   const isIncludeHyphen = (input: string) => {
@@ -212,7 +216,7 @@ export default function FormPage() {
         fontColor={theme.colors.white}
         handleClick={movePreviewPage}
       >
-        <Link href="/formPreviewPage">소원 링크 생성하기</Link>
+        소원 링크 생성하기
       </ButtonBox>
     </Layout>
   );

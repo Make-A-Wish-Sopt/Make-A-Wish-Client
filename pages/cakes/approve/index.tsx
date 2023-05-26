@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-export default function approve() {
+export default function ApprovePage() {
   const globalValue = useRecoilValue(CakesData);
   const [cakesData, setCakesData] = useState<CakesDataType>(globalValue);
 
