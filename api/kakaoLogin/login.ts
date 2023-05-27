@@ -7,27 +7,24 @@ export async function getTokenFromKakao(authCode: string) {
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 
+  //eslint-disable-next-line
   const payload = qs.stringify({
-    grant_type: "authorization_code",
+    grant_type: 'authorization_code',
     client_id: REST_API_KEY,
     redirect_uri: REDIRECT_URI,
     code: authCode,
   });
 
   try {
-    const response = await axios.post(
-      "https://kauth.kakao.com/oauth/token",
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-        },
-      }
-    );
+    const response = await axios.post('https://kauth.kakao.com/oauth/token', payload, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to get access token from Kakao");
+    throw new Error('Failed to get access token from Kakao');
   }
 }
 
@@ -35,10 +32,10 @@ export async function sendTokenToServer(accessToken: string): Promise<ResponseTy
   const url = 'https://www.sunmulzu.shop/api/v1/auth';
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`
+    Authorization: `Bearer ${accessToken}`,
   };
   const requestBody = {
-    socialType: 'KAKAO'
+    socialType: 'KAKAO',
   };
 
   try {
@@ -54,8 +51,8 @@ export async function sendTokenToServer(accessToken: string): Promise<ResponseTy
 export async function getUserFromKakao(accessToken: string): Promise<any> {
   const url = 'https://kapi.kakao.com/v2/user/me';
   const headers = {
-    'Authorization': `Bearer ${accessToken}`,
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
   };
 
   try {

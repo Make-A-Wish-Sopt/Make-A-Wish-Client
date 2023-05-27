@@ -3,12 +3,12 @@ import { client } from '../common/axios';
 import { WishesDataType } from '@/types/wishesDataType';
 
 export async function createWishesLink(wishesData: WishesDataType) {
-  const accessToken =
-    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgzMTgxODk1LCJleHAiOjE2ODgwMjAyOTV9.RnUKwBtESVxvKU6YeXy4ssAJlEGHnIKd2LewByQhI8cPuTAh9tJQeJiMyRLYwJHFg8YwUZ667F1QRCECf1uR6w';
+  const accessToken = localStorage.getItem('accessToken');
 
   const startDate = wishesData.startDate.replaceAll('-', '.');
   const endDate = wishesData.endDate.replaceAll('-', '.');
-  console.log(startDate, endDate);
+
+  console.log(wishesData);
 
   const data = await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.WISHES}`,
@@ -32,5 +32,6 @@ export async function createWishesLink(wishesData: WishesDataType) {
       },
     },
   );
+  console.log(data);
   return data;
 }

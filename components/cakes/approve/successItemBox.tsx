@@ -8,6 +8,7 @@ import TestImage from '../../../public/assets/testImage.jpeg';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
+import PresentImageBox from '@/components/common/presentImageBox';
 
 interface SuccessItemBoxProps {
   cakesData: CakesDataType | undefined;
@@ -25,7 +26,6 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
     {},
   );
 
-
   return (
     <>
       {cakesData?.selectedCake.cakeNumber === 1 ? (
@@ -41,9 +41,16 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
         </Styled.Box>
       ) : (
         <Styled.Box>
-          <InputLargeBox bgColor={theme.colors.white}>
-            <Image src={TestImage} width={100} height={100} alt="실제 선물 이미지" />
-          </InputLargeBox>
+          <PresentImageBox>
+            <Styled.ImageWrapper>
+              <Image
+                src={TestImage}
+                fill={true}
+                alt="실제 선물 이미지"
+                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
+              />
+            </Styled.ImageWrapper>
+          </PresentImageBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Box>
       )}
@@ -78,5 +85,14 @@ const Styled = {
   HintText: styled.div`
     ${theme.fonts.headline30};
     margin-top: 3.4rem;
+  `,
+
+  ImageWrapper: styled.div`
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
   `,
 };

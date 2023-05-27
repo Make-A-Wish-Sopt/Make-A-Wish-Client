@@ -9,7 +9,9 @@ import SnsBox from '@/components/button/snsBox';
 import { useAuthKaKao } from '@/hooks/useAuthKakao';
 import { SHARE_LIST } from '@/interfaces/ShareData';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useRecoilValue } from 'recoil';
 
 interface ShareModalProps {
   clickModal: () => void;
@@ -17,12 +19,16 @@ interface ShareModalProps {
 
 export default function ShareModal(props: ShareModalProps) {
   const { clickModal } = props;
-  const [wishLink, setWishLink] = useState('');
+  const [wishesLink, setWishesLink] = useState('');
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
+  console.log(loginUserInfo);
 
-  const { nickname } = useAuthKaKao();
+  useEffect(() => {
+    setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
+  }, []);
 
   const shareKakao = () => {
-    sendKakaoMessage(nickname);
+    sendKakaoMessage(loginUserInfo.nickName);
   };
 
   const handleCopyClipBoard = async (text: string) => {
@@ -49,11 +55,11 @@ export default function ShareModal(props: ShareModalProps) {
       </Styled.SnsContainer>
 
       <InputLink>
-        <Styled.InputText value={wishLink} readOnly />
+        <Styled.InputText value={wishesLink} readOnly />
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          onClick={() => handleCopyClipBoard('www.asdf.co.kr')}
+          onClick={() => handleCopyClipBoard(wishesLink)}
         />
       </InputLink>
     </Styled.Modal>
