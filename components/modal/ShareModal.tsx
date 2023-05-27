@@ -6,20 +6,16 @@ import { LinkCopyIc } from '@/public/assets/icons';
 import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/button/snsBox';
-import { useAuthKaKao } from '@/hooks/useAuthKakao';
 import { SHARE_LIST } from '@/interfaces/ShareData';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
-import { useState } from 'react';
 
 interface ShareModalProps {
   clickModal: () => void;
+  nickname: string;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { clickModal } = props;
-  const [wishLink, setWishLink] = useState('');
-
-  const { nickname } = useAuthKaKao();
+  const { clickModal, nickname } = props;
 
   const shareKakao = () => {
     sendKakaoMessage(nickname);
@@ -51,7 +47,7 @@ export default function ShareModal(props: ShareModalProps) {
       </Styled.SnsContainer>
 
       <InputLink>
-        <Styled.InputText value={wishLink} readOnly />
+        <Styled.InputText value={""} readOnly />
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"

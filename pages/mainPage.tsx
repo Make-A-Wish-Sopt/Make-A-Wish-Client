@@ -7,13 +7,22 @@ import IconButton from '@/components/button/iconButton';
 import router from 'next/router';
 import ButtonBox from '@/components/button/buttonBox';
 import { useAuthKaKao } from '@/hooks/useAuthKakao';
+import { useEffect } from 'react';
 
 export default function MainPage() {
   const moveToForm = () => {
-    router.push('/wishes');
+    router.push('/wishes/share');
   };
 
-  const { nickname } = useAuthKaKao();
+  const { accessToken, nickname } = useAuthKaKao();
+
+  useEffect(() => {
+    if (accessToken) {
+      window.Kakao.Auth.setAccessToken(accessToken);
+      localStorage.setItem('accessToken', accessToken);
+      console.log(`getAccessToken: ${window.Kakao.Auth.getAccessToken()}`);
+    }
+  }, [accessToken]);
 
   return (
     <>
