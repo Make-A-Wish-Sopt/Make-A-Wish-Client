@@ -19,8 +19,6 @@ export default function ApprovePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // setCakesData({ ...globalValue });
-
     if (!router.isReady) return;
 
     const pgToken = router.query.pg_token;
