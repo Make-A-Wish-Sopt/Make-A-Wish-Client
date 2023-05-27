@@ -8,9 +8,14 @@ import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useRecoilValue } from 'recoil';
 
 export default function Share() {
   const [showModal, setShowModal] = useState(false);
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  console.log(loginUserInfo)
 
   const clickModal = () => setShowModal(!showModal);
 
@@ -22,7 +27,7 @@ export default function Share() {
 
       <Styled.Container>
         <Styled.Title>
-          ㅇㅇ님의
+          { loginUserInfo.nickName}님의
           <br />
           소원 생성 완료!
         </Styled.Title>
