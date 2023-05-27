@@ -1,8 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CalendarIc } from '@/public/assets/icons';
-import { ArrowDownIc } from '@/public/assets/icons';
+import { CalendarIc, CalendarGreyIc, ArrowDownIc } from '@/public/assets/icons';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import AlertTextBox from '@/components/common/alertTextBox';
@@ -154,11 +153,11 @@ export default function WishesFormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>나의 생일주간 설정하기</Styled.InputTitle>
         <Styled.CalendarContainer>
-          <InputCalendar>
+          <InputCalendar borderColor={theme.colors.gray2}>
             <Styled.InputTextDone placeholder={startDate} readOnly />
-            <Image src={CalendarIc} alt="캘린더" />
+            <Image src={CalendarGreyIc} alt="캘린더" />
           </InputCalendar>
-          <InputCalendar>
+          <InputCalendar borderColor={theme.colors.main_blue}>
             {!showEndDate && (
               <Styled.InputText
                 placeholder="종료일"

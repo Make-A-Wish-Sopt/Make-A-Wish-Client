@@ -40,11 +40,11 @@ export function useAuthKaKao() {
 
           setNickname(nickname);
         } else {
-          router.replace('/loginPage');
+          router.replace('.');
           console.log("로그인 실패2 : " + apiResponse.message);
         }
       } catch (error: any) {
-        router.replace('/loginPage');
+        router.replace('.');
         console.log("로그인 실패3 : " + error.message);
       }
     },

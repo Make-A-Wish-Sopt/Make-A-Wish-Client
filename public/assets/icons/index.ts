@@ -8,6 +8,7 @@ export { default as CloseBlueIc } from '@/public/assets/icons/closeBlueIc.svg';
 export { default as CloseWhiteIc } from '@/public/assets/icons/closeWhiteIc.svg';
 export { default as CloseSmallIc } from '@/public/assets/icons/closeSmallIc.svg';
 export { default as CalendarIc } from '@/public/assets/icons/calendarIc.svg';
+export { default as CalendarGreyIc } from '@/public/assets/icons/calendarGreyIc.svg';
 export { default as ArrowDownIc } from '@/public/assets/icons/arrowDownIc.svg';
 export { default as AlertIc } from '@/public/assets/icons/alertIc.svg';
 export { default as LinkCopyIc } from '@/public/assets/icons/linkCopyIc.svg';

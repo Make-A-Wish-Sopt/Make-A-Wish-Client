@@ -34,6 +34,8 @@ export default function ShareModal(props: ShareModalProps) {
     }
   };
 
+  // 수정: 링크 가져오기
+
   return (
     <Styled.Modal>
       <Styled.Header>
@@ -53,7 +55,7 @@ export default function ShareModal(props: ShareModalProps) {
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          onClick={() => handleCopyClipBoard('www.asdf.co.kr')}
+          onClick={() => handleCopyClipBoard('www.asdf.co.kr')} // 수정: 받아온 링크
         />
       </InputLink>
     </Styled.Modal>
@@ -77,7 +79,7 @@ const Styled = {
   Header: styled.header`
     position: absolute;
     top: 20%;
-    right: 0%;
+    right: 5%;
     transform: translate(-50%, -50%);
   `,
 

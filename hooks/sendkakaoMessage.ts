@@ -1,4 +1,5 @@
 export const sendKakaoMessage = (nickname: string) => {
+  // 수정: link, nickname
   const link = ``;
 
   if (window.Kakao) {

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { getMonth, getYear, isBefore } from 'date-fns';
+import theme from '@/styles/theme';
 
 interface CustomDatePickerProps {
   endDate: string;
@@ -23,11 +24,9 @@ function getDate(date: Date | null): string {
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
-  //eslint-disable-next-line
-  const _ = require('lodash');
-
   // 연도 range(시작 연도, 끝 연도, 연도 간격)
-  const years = _.range(getYear(new Date()), getYear(new Date()) + 5, 1);
+  const years = Array.from(
+    { length: getYear(new Date()) + 6 - getYear(new Date()) }, (_, index) => getYear(new Date()) + index);
 
   const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
@@ -44,7 +43,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
     <Styled.Container>
       <DatePicker
         renderCustomHeader={({ date, changeYear, changeMonth }) => (
-          <div className="custom-react-datepicker__select-wrapper">
+          <div>
             <select
               value={getYear(date)}
               onChange={({ target: { value } }) => changeYear(Number(value))}
@@ -70,7 +69,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
           </div>
         )}
         locale={ko}
-        dateFormat="yyyy.MM.dd"
+        dateFormat="yyyy-MM-dd"
         selected={new Date(props.endDate)}
         onChange={handleDateChange}
         selectsEnd
@@ -82,6 +81,11 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
 
 const Styled = {
   Container: styled.div`
+    width: 11rem;
+    ${theme.fonts.body14};
+  `,
+
+  CustomDatePicker: styled(DatePicker)`
     width: 11rem;
   `,
 };
