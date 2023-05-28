@@ -40,11 +40,11 @@ export function useAuthKaKao() {
 
           setNickname(nickname);
         } else {
-          router.replace('/');
+          // router.replace('/');
           console.log('로그인 실패2 : ' + apiResponse.message);
         }
       } catch (error: any) {
-        router.replace('/');
+        // router.replace('/');
         console.log('로그인 실패3 : ' + error.message);
       }
     },
@@ -55,7 +55,7 @@ export function useAuthKaKao() {
     if (authCode) {
       loginHandler(authCode as string);
     } else if (kakaoServerError) {
-      router.push('/');
+      // router.push('/');
       console.log('로그인 실패4 : ' + kakaoServerError);
     }
   }, [loginHandler, authCode, kakaoServerError, router]);
