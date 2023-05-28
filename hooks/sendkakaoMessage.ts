@@ -1,7 +1,17 @@
-export const sendKakaoMessage = (nickname: string) => {
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
-  // 수정: link
-  const link = ``;
+
+const link = ''
+
+export const sendKakaoMessage = (nickname: string) => {
+  // const [wishesLink, setWishesLink] = useState('');
+  // const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  // useEffect(() => {
+  //   setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
+  // }, []);
 
   if (window.Kakao) {
     window.Kakao.Share.sendDefault({

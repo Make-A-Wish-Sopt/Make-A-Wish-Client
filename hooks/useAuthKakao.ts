@@ -3,10 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { TokenResponse, UserInfo, ResponseType } from '@/types/kakaoLoginType';
 import { getTokenFromKakao, sendTokenToServer, getUserFromKakao } from '@/api/kakaoLogin/login';
 import { useSetRecoilState } from 'recoil';
-import { NicknameData } from '@/recoil/kakaoLogin/nicknameData';
 
 export function useAuthKaKao() {
-  const setNicknameData = useSetRecoilState(NicknameData);
   const [nickname, setNickname] = useState<string>('');
   const [accessToken, setAccessToken] = useState<string>('');
 
@@ -27,6 +25,7 @@ export function useAuthKaKao() {
 
         const accessToken = apiResponse.data.accessToken
         console.log("token from Service server : " + accessToken);
+        setAccessToken(accessToken);
 
         if (apiResponse.success) {
           router.push('/mainPage');
@@ -39,8 +38,6 @@ export function useAuthKaKao() {
           const nickname = properties.nickname;
 
           setNickname(nickname);
-          setNicknameData(nickname);
-          console.log("nickname 저장 완료");
         } else {
           router.replace('/');
           console.log("로그인 실패2 : " + apiResponse.message);

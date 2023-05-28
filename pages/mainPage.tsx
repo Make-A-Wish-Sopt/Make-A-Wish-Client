@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 export default function MainPage() {
   const moveToForm = () => {
-    router.push('/wishes/share');
+    router.push('/wishes');
   };
 
   const { accessToken, nickname } = useAuthKaKao();
