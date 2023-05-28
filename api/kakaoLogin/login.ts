@@ -1,6 +1,5 @@
 import { client } from '@/api/common/axios';
 import { AxiosRequestConfig } from 'axios';
-
 import { TokenResponse, UserInfo, ResponseType } from '@/types/kakaoLoginType';
 
 export async function getTokenFromKakao(authCode: string): Promise<TokenResponse> {
@@ -20,7 +19,7 @@ export async function getTokenFromKakao(authCode: string): Promise<TokenResponse
     return response.data;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to get access token from Kakao");
+    throw new Error('Failed to get access token from Kakao');
   }
 }
 
@@ -28,10 +27,10 @@ export async function sendTokenToServer(accessToken: string): Promise<ResponseTy
   const url = 'https://www.sunmulzu.shop/api/v1/auth';
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`
+    Authorization: `Bearer ${accessToken}`,
   };
   const requestBody = {
-    socialType: 'KAKAO'
+    socialType: 'KAKAO',
   };
 
   try {

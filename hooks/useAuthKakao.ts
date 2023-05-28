@@ -27,7 +27,6 @@ export function useAuthKaKao() {
 
         const accessToken = apiResponse.data.accessToken
         console.log("token from Service server : " + accessToken);
-        setAccessToken(accessToken);
 
         if (apiResponse.success) {
           router.push('/mainPage');
@@ -43,11 +42,11 @@ export function useAuthKaKao() {
           setNicknameData(nickname);
           console.log("nickname 저장 완료");
         } else {
-          router.replace('.');
+          router.replace('/');
           console.log("로그인 실패2 : " + apiResponse.message);
         }
       } catch (error: any) {
-        router.replace('.');
+        router.replace('/');
         console.log("로그인 실패3 : " + error.message);
       }
     },
@@ -58,7 +57,7 @@ export function useAuthKaKao() {
     if (authCode) {
       loginHandler(authCode as string);
     } else if (kakaoServerError) {
-      router.push('/loginPage');
+      router.push('/');
       console.log("로그인 실패4 : " + kakaoServerError);
     }
   }, [loginHandler, authCode, kakaoServerError, router]);

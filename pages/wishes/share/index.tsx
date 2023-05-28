@@ -8,13 +8,14 @@ import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 import ShareModal from '@/components/modal/ShareModal';
 import { useState } from 'react';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';
-import { NicknameData } from '@/recoil/kakaoLogin/nicknameData';
-
 
 export default function Share() {
   const [showModal, setShowModal] = useState(false);
-  const nickname = useRecoilValue(NicknameData);
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  console.log(loginUserInfo)
 
   const clickModal = () => setShowModal(!showModal);
 
@@ -26,7 +27,7 @@ export default function Share() {
 
       <Styled.Container>
         <Styled.Title>
-          {nickname}님의
+          {loginUserInfo.nickName}님의
           <br />
           소원 생성 완료!
         </Styled.Title>
@@ -38,7 +39,7 @@ export default function Share() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      {showModal && <ShareModal nickname={nickname} clickModal={clickModal} />}
+      {showModal && <ShareModal clickModal={clickModal} />}
       <ButtonBox
         handleClick={clickModal}
         backgroundColor={theme.colors.main_blue}

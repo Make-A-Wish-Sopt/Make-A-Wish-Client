@@ -8,17 +8,26 @@ import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/button/snsBox';
 import { SHARE_LIST } from '@/interfaces/ShareData';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
+import { useEffect, useState } from 'react';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useRecoilValue } from 'recoil';
 
 interface ShareModalProps {
   clickModal: () => void;
-  nickname: string;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { clickModal, nickname } = props;
+  const { clickModal } = props;
+  const [wishesLink, setWishesLink] = useState('');
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
+  console.log(loginUserInfo);
+
+  useEffect(() => {
+    setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
+  }, []);
 
   const shareKakao = () => {
-    sendKakaoMessage(nickname);
+    sendKakaoMessage(loginUserInfo.nickName);
   };
 
   const handleCopyClipBoard = async (text: string) => {
@@ -29,8 +38,6 @@ export default function ShareModal(props: ShareModalProps) {
       alert('복사에 실패하였습니다');
     }
   };
-
-  // 수정: 링크 가져오기
 
   return (
     <Styled.Modal>
@@ -47,11 +54,11 @@ export default function ShareModal(props: ShareModalProps) {
       </Styled.SnsContainer>
 
       <InputLink>
-        <Styled.InputText value={""} readOnly />
+        <Styled.InputText value={wishesLink} readOnly />
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          onClick={() => handleCopyClipBoard('www.asdf.co.kr')} // 수정: 받아온 링크
+          onClick={() => handleCopyClipBoard(wishesLink)}
         />
       </InputLink>
     </Styled.Modal>
