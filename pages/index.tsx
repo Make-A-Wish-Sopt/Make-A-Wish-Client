@@ -16,11 +16,10 @@ export default function LoginPage() {
     setShowModal(!showModal);
   };
 
-  const router = useRouter();
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
-
   const KakaoLogin = () => {
-    router.replace(KAKAO_AUTH_URL);
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI
+    });
   };
 
   return (

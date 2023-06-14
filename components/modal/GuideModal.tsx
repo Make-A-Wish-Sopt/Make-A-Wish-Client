@@ -14,7 +14,7 @@ interface GuideModalProps {
 export default function GuideModal(props: GuideModalProps) {
     const { clickModal } = props
 
-    const moveToForm = () => { router.push('/formPage'); };
+    const moveToChat = () => { router.push('/'); };
 
     return (
         <Styled.Container>
@@ -34,8 +34,8 @@ export default function GuideModal(props: GuideModalProps) {
                                 src={GuideContentImg}
                                 alt="서비스 가이드" />
                             <Styled.ButtonContainer2>
-                                <ButtonBox handleClick={moveToForm} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
-                                    소원 링크 생성하기
+                                <ButtonBox handleClick={moveToChat} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+                                    고객센터 문의하기
                                 </ButtonBox>
                             </Styled.ButtonContainer2>
                         </Styled.ScrollContent>
@@ -93,7 +93,7 @@ const Styled = {
 
     ButtonContainer: styled.div`
     position: relative;
-    margin: 2.3rem 0.5rem 2.9rem;
+    margin: 2.3rem 0rem 2.9rem;
     `,
 
     ButtonContainer2: styled.div`

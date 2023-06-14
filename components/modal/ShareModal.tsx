@@ -6,7 +6,6 @@ import { LinkCopyIc } from '@/public/assets/icons';
 import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SnsBox from '@/components/button/snsBox';
-import { useAuthKaKao } from '@/hooks/useAuthKakao';
 import { SHARE_LIST } from '@/interfaces/ShareData';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
 import { useEffect, useState } from 'react';
@@ -83,7 +82,7 @@ const Styled = {
   Header: styled.header`
     position: absolute;
     top: 20%;
-    right: 0%;
+    right: 5%;
     transform: translate(-50%, -50%);
   `,
 

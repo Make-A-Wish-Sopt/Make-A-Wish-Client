@@ -27,7 +27,7 @@ export default function Share() {
 
       <Styled.Container>
         <Styled.Title>
-          { loginUserInfo.nickName}님의
+          {loginUserInfo.nickName}님의
           <br />
           소원 생성 완료!
         </Styled.Title>
