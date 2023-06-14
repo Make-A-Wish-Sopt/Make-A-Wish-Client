@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { TokenResponse, UserInfo, ResponseType } from '@/types/kakaoLoginType';
 import { getTokenFromKakao, sendTokenToServer, getUserFromKakao } from '@/api/kakaoLogin/login';
-import { useSetRecoilState } from 'recoil';
 
 export function useAuthKaKao() {
   const [nickname, setNickname] = useState<string>('');
@@ -29,6 +28,8 @@ export function useAuthKaKao() {
 
         if (apiResponse.success) {
           router.push('/mainPage');
+          console.log('로그인 성공_토큰 : ' + apiResponse.data.accessToken);
+          localStorage.setItem('accessToken', apiResponse.data.accessToken);
 
           // 3. 사용자 정보 받아오기
           const userInfo = await getUserFromKakao(access_token);
@@ -39,23 +40,26 @@ export function useAuthKaKao() {
 
           setNickname(nickname);
         } else {
-          router.replace('/');
-          console.log("로그인 실패2 : " + apiResponse.message);
+          // router.replace('/');
+          router.push('/mainPage');
+          console.log('로그인 실패2 : ' + apiResponse.message);
         }
       } catch (error: any) {
-        router.replace('/');
-        console.log("로그인 실패3 : " + error.message);
+        // router.replace('/');
+        router.push('/mainPage');
+        console.log('로그인 실패3 : ' + error.message);
       }
     },
-    [router]
+    [router],
   );
 
   useEffect(() => {
     if (authCode) {
       loginHandler(authCode as string);
     } else if (kakaoServerError) {
-      router.push('/');
-      console.log("로그인 실패4 : " + kakaoServerError);
+      // router.push('/');
+      router.push('/mainPage');
+      console.log('로그인 실패4 : ' + kakaoServerError);
     }
   }, [loginHandler, authCode, kakaoServerError, router]);
 

@@ -5,6 +5,7 @@ import { client } from '../common/axios';
 export async function postPayApprove(
   pgToken: string | string[] | undefined,
   cakesData: CakesDataType | undefined,
+  wishId: number,
 ) {
   const data = await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.CAKES}/${PATH.PAY}/${PATH.APPROVE}`,
@@ -16,7 +17,7 @@ export async function postPayApprove(
       name: cakesData?.giverName,
       cake: cakesData?.selectedCake.cakeNumber,
       message: cakesData?.message,
-      wishId: cakesData?.wishId,
+      wishId: wishId,
     },
     {
       headers: {},

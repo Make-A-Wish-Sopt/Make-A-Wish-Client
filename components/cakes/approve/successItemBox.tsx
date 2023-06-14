@@ -9,6 +9,8 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
 import PresentImageBox from '@/components/common/presentImageBox';
+import { useRecoilValue } from 'recoil';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
 interface SuccessItemBoxProps {
   cakesData: CakesDataType | undefined;
@@ -16,13 +18,14 @@ interface SuccessItemBoxProps {
 
 export default function SuccessItemBox(props: SuccessItemBoxProps) {
   const { cakesData } = props;
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   useEffect(() => {
     cakesData?.pgToken && mutate();
   }, [cakesData?.pgToken]);
 
   const { data, mutate, isSuccess } = useMutation(
-    () => postPayApprove(cakesData?.pgToken, cakesData),
+    () => postPayApprove(cakesData?.pgToken, cakesData, loginUserInfo.wishesId),
     {},
   );
 
