@@ -38,7 +38,7 @@ function getDate(date: Date | null): string {
 }
 
 export default function WishesPage() {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageURL, setImageURL] = useState('');
   const [price, setPrice] = useState(0);
   const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);
   const [hint1, handleChangeHint1] = useInput('', LIMIT_TEXT[300]);
@@ -62,8 +62,8 @@ export default function WishesPage() {
     setPrice(input);
   };
 
-  const handleChangeImageUrl = (input: string) => {
-    setImageUrl(input);
+  const handleChangeImageURL = (input: string) => {
+    setImageURL(input);
   };
 
   const handleChangeBankName = (input: string) => {
@@ -73,7 +73,7 @@ export default function WishesPage() {
   const handleMovePreviewPage = () => {
     setWishesData((prevData) => ({
       ...prevData,
-      imageUrl: imageUrl,
+      imageUrl: imageURL,
       price: price,
       title: title,
       hint1: hint1,
@@ -104,8 +104,8 @@ export default function WishesPage() {
       <Styled.Title>소원 링크 생성하기</Styled.Title>
       <ItemLink
         handleChangePrice={handleChangePrice}
-        handleChangeImageUrl={handleChangeImageUrl}
-        imageUrl={imageUrl}
+        handleChangeImageURL={handleChangeImageURL}
+        imageURL={imageURL}
         price={price}
       />
 

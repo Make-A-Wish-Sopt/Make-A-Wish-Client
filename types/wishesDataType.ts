@@ -1,5 +1,5 @@
 export interface WishesDataType {
-  imageUrl: string;
+  imageURL: string;
   price: number;
   title: string;
   hint1: string;

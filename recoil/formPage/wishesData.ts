@@ -4,7 +4,7 @@ import { atom } from 'recoil';
 export const WishesData = atom<WishesDataType>({
   key: 'WishesData',
   default: {
-    imageUrl: '',
+    imageURL: '',
     price: 0,
     title: '',
     hint1: '',

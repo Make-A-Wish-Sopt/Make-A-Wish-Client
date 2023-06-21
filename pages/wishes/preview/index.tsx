@@ -15,7 +15,7 @@ import Modal from '@/components/common/modal';
 import TermsModal from '@/components/common/modal/termsModal';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
+import { createWishesLink } from '@/api/wishes/preview/createWishesLink';
 import { useRouter } from 'next/router';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
@@ -67,7 +67,7 @@ export default function PreviewPage() {
           <PresentImageBox>
             <Styled.ImageWrapper>
               <Image
-                src={wishesData.imageUrl}
+                src={wishesData.imageURL}
                 fill={true}
                 alt="선물"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}

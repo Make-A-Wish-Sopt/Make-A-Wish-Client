@@ -15,13 +15,13 @@ import { QUERY_KEY } from '@/constant/queryKey';
 
 interface ItemLinkProps {
   handleChangePrice: (input: number) => void;
-  handleChangeImageUrl: (input: string) => void;
-  imageUrl: string;
+  handleChangeImageURL: (input: string) => void;
+  imageURL: string;
   price: number;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { handleChangePrice, handleChangeImageUrl, imageUrl } = props;
+  const { handleChangePrice, handleChangeImageURL, imageURL } = props;
   const [link, changeLink] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
 
@@ -38,7 +38,7 @@ export default function ItemLink(props: ItemLinkProps) {
         if (imageData && priceData) {
           handleChangePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
           const imageSrc = extractImageSrc(imageData);
-          imageSrc && handleChangeImageUrl(imageSrc);
+          imageSrc && handleChangeImageURL(imageSrc);
         }
       },
       onError: (error) => {
@@ -102,7 +102,7 @@ export default function ItemLink(props: ItemLinkProps) {
           <PresentImageBox>
             <Styled.ImageWrapper>
               <Image
-                src={imageUrl}
+                src={imageURL}
                 fill={true}
                 alt="선물"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
