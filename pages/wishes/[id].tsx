@@ -6,7 +6,7 @@ import { LoginCakeImg, WishesChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/common/button/iconButton';
 import { useEffect, useState } from 'react';
-import GuideModal from '@/components/modal/GuideModal';
+import GuideModal from '@/components/common/modal/GuideModal';
 import ButtonBox from '@/components/button/buttonBox';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';

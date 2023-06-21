@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/common/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import InputContainer from '@/components/common/input/inputContainer';
@@ -24,7 +24,7 @@ import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { CakesData } from '@/recoil/cakes/cakesData';
 
 export default function CakesPage() {
-  const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
+  const [giverName, changeGiverName] = useInput('');
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);

@@ -6,7 +6,7 @@ import { ShareChatImg, LoginCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
-import ShareModal from '@/components/modal/ShareModal';
+import ShareModal from '@/components/common/modal/ShareModal';
 import { useState } from 'react';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';

@@ -10,9 +10,9 @@ import InputLargeBox from '@/components/common/input/inputLargeBox';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import ButtonBox from '@/components/button/buttonBox';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
-import TermsModal from '@/components/modal/termsModal';
+import TermsModal from '@/components/common/modal/termsModal';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
@@ -20,11 +20,13 @@ import { useRouter } from 'next/router';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
 export default function PreviewPage() {
-  const [isAgreed, setIsAgreed] = useState(false);
-  const { isOpen, modalToggle } = useModal();
-  const router = useRouter();
   const wishesData = useRecoilValue(WishesData);
   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
+
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const { isOpen, handleToggle } = useModal();
+  const router = useRouter();
 
   const { mutate } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: (data) => {
@@ -41,7 +43,7 @@ export default function PreviewPage() {
   };
 
   const createLink = () => {
-    return isAgreed ? postWishesData() : modalToggle();
+    return isAgreed ? postWishesData() : handleToggle();
   };
 
   const postWishesData = () => {
@@ -105,8 +107,8 @@ export default function PreviewPage() {
         </InputBox>
       </Styled.ItemBox>
 
-      <Modal isOpen={isOpen} modalToggle={modalToggle}>
-        <TermsModal modalToggle={modalToggle} changeIsAgreed={changeIsAgreed} />
+      <Modal isOpen={isOpen} handleToggle={handleToggle}>
+        <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
       </Modal>
 
       <ButtonBox
@@ -160,5 +162,10 @@ const Styled = {
     height: 100%;
 
     object-fit: fill;
+  `,
+
+  GiftImage: styled.img`
+    border-radius: 1.6rem;
+    object-fit: cover;
   `,
 };

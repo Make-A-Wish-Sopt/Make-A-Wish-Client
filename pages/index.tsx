@@ -6,7 +6,7 @@ import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import { useState } from 'react';
-import GuideModal from '@/components/modal/GuideModal';
+import GuideModal from '@/components/common/modal/GuideModal';
 import { useRouter } from 'next/router';
 
 export default function LoginPage() {
@@ -18,7 +18,7 @@ export default function LoginPage() {
 
   const KakaoLogin = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
     });
   };
 
