@@ -9,11 +9,11 @@ interface InputCalendarProps {
 export default function InputCalendar(props: InputCalendarProps) {
     const { children, borderColor } = props;
 
-    return <Styled.Box borderColor={borderColor}>{children}</Styled.Box>;
+    return <Styled.Container borderColor={borderColor}>{children}</Styled.Container>;
 }
 
 const Styled = {
-    Box: styled.div<{ borderColor: string }>`
+  Container: styled.div<{ borderColor: string }>`
     width: 16rem;
     height: 5rem;
     display: flex;
@@ -24,6 +24,5 @@ const Styled = {
     border: 0.1rem solid;
     border-color: ${(props) => props.borderColor};
     border-radius: 1rem;
-
   `,
 };

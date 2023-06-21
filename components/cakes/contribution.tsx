@@ -10,19 +10,19 @@ interface ContributionProps {
 export default function Contribution(props: ContributionProps) {
   const { percent, vertical } = props;
   return (
-    <Styled.Box>
+    <Styled.Container>
       <Styled.Text>당신의 기여도는...?</Styled.Text>
       <ProgressBar percent={percent} vertical={vertical} />
       <Styled.ProgressBox>
         <Styled.PercentWrapper percent={percent}></Styled.PercentWrapper>
         <Styled.Percent>{percent}%</Styled.Percent>
       </Styled.ProgressBox>
-    </Styled.Box>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

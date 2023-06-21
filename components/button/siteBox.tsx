@@ -2,17 +2,17 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface SiteBoxProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function SiteBox(props: SiteBoxProps) {
-    const { children } = props;
+  const { children } = props;
 
-    return <Styled.Box>{children}</Styled.Box>;
+  return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-    Box: styled.div`
+  Container: styled.div`
     display: inline-block;
     width: 6rem;
     height: 6rem;

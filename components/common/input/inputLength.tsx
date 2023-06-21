@@ -10,14 +10,14 @@ export default function InputLength(props: InputLengthProps) {
   const { inputLength, limit } = props;
 
   return (
-    <Styled.Box>
+    <Styled.Container>
       {inputLength}/{limit}
-    </Styled.Box>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     color: ${theme.colors.gray2};
     ${theme.fonts.body12};
   `,

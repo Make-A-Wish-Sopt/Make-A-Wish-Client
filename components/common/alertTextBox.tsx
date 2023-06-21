@@ -12,15 +12,15 @@ export default function AlertTextBox(props: AlertTextBoxProps) {
   const { children } = props;
 
   return (
-    <Styled.Box>
+    <Styled.Container>
       <Image src={AlertIc} alt="경고" />
       <Styled.Text>{children}</Styled.Text>
-    </Styled.Box>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     display: flex;
     align-items: center;
     margin-top: 1rem;

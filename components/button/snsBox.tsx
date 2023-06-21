@@ -5,14 +5,14 @@ interface SnsBoxProps {
   onClick?: () => void;
 }
 
-export default function SnsBox(props: SnsBoxProps) {
+export default function SNSBox(props: SnsBoxProps) {
   const { children, onClick } = props;
 
-  return <Styled.Box onClick={onClick}>{children}</Styled.Box>;
+  return <Styled.Container onClick={onClick}>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     cursor: pointer;
     margin: 0 0.5rem 0;
   `,

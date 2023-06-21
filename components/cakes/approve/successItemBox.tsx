@@ -32,7 +32,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
   return (
     <>
       {cakesData?.selectedCake.cakeNumber === 1 ? (
-        <Styled.Box>
+        <Styled.Container>
           <InputLargeBox bgColor={theme.colors.pastel_blue}>
             <Styled.HintWrapper>
               ~선물 초성힌트~
@@ -41,9 +41,9 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
             </Styled.HintWrapper>
           </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...비밀이야❤</Styled.WishText>
-        </Styled.Box>
+        </Styled.Container>
       ) : (
-        <Styled.Box>
+        <Styled.Container>
           <PresentImageBox>
             <Styled.ImageWrapper>
               <Image
@@ -55,7 +55,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
             </Styled.ImageWrapper>
           </PresentImageBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
-        </Styled.Box>
+        </Styled.Container>
       )}
       {isSuccess && <Contribution percent={Number(data.contribute)} vertical={false} />}
     </>
@@ -63,7 +63,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
 }
 
 const Styled = {
-  Box: styled.section`
+  Container: styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
