@@ -6,23 +6,23 @@ import Image from 'next/image';
 import AlertTextBox from '../common/alertTextBox';
 import PresentImageBox from '../common/presentImageBox';
 import { validation } from '@/validation/input';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/common/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useQuery, useQueryClient } from 'react-query';
-import { getItemInfo } from '@/api/formPage/getItemData';
+import { getItemInfo } from '@/api/wishes/getItemInfo';
 import { useState } from 'react';
 import { QUERY_KEY } from '@/constant/queryKey';
 
 interface ItemLinkProps {
-  changePrice: (input: number) => void;
-  changeImageUrl: (input: string) => void;
+  handleChangePrice: (input: number) => void;
+  handleChangeImageUrl: (input: string) => void;
   imageUrl: string;
   price: number;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { changePrice, changeImageUrl, imageUrl } = props;
-  const [link, changeLink] = useInput('', LIMIT_TEXT.none);
+  const { handleChangePrice, handleChangeImageUrl, imageUrl } = props;
+  const [link, changeLink] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
 
   const queryClient = useQueryClient();
@@ -36,9 +36,9 @@ export default function ItemLink(props: ItemLinkProps) {
         const priceData = data.priceTag.data?.data;
 
         if (imageData && priceData) {
-          changePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
+          handleChangePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
           const imageSrc = extractImageSrc(imageData);
-          imageSrc && changeImageUrl(imageSrc);
+          imageSrc && handleChangeImageUrl(imageSrc);
         }
       },
       onError: (error) => {
@@ -76,7 +76,7 @@ export default function ItemLink(props: ItemLinkProps) {
   };
 
   return (
-    <Styled.ItemBox>
+    <Styled.Container>
       <Styled.InputTitle>갖고 싶은 선물 링크 불러오기</Styled.InputTitle>
       {SITE_LIST.map((site) => (
         <Styled.SiteBox key={site.name}>
@@ -114,12 +114,12 @@ export default function ItemLink(props: ItemLinkProps) {
           </Styled.PresentPrice>
         </Styled.PresentContainer>
       )}
-    </Styled.ItemBox>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  ItemBox: styled.div`
+  Container: styled.div`
     margin: 0 0 4rem;
   `,
 
