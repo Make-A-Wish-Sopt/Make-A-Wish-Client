@@ -9,11 +9,6 @@ interface IconButtonProps {
 export default function IconButton(props: IconButtonProps) {
   const { src, alt, onClick } = props;
 
-  const handleClick = () => {
-    if (onClick) {
-      onClick();
-    }
-  };
 
-  return <Image onClick={handleClick} src={src} alt={alt} style={{ cursor: 'pointer' }} />;
+  return <Image onClick={onClick} src={src} alt={alt} style={{ cursor: 'pointer' }} />;
 }

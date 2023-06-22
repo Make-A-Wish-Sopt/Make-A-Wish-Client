@@ -3,14 +3,12 @@ import { StaticImageData } from 'next/image';
 
 interface ShareListType {
     name: string;
-    link: string;
     logo: StaticImageData;
 }
 
 export const SHARE_LIST: ShareListType[] = [
     {
         name: 'KaKaoTalk',
-        link: '',
         logo: KaKaoLogoImg,
     },
     // {
