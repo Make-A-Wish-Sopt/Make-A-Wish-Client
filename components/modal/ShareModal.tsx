@@ -10,7 +10,7 @@ import InputLink from '@/components/common/input/inputLink';
 import SNSBox from '@/components/button/snsBox';
 
 import { SNS_LIST } from '@/constant/snsList';
-import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
+import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
 
@@ -29,7 +29,7 @@ export default function ShareModal(props: ShareModalProps) {
   }, []);
 
   const handleKakaoShare = () => {
-    sendKakaoMessage(loginUserInfo.nickName);
+    useKakaoShare(loginUserInfo.nickName, wishesLink);
   };
 
   const handleTextCopy = (text: string) => {

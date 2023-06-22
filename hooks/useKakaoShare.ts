@@ -1,18 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
-
-const link = ''
-
-export const sendKakaoMessage = (nickname: string) => {
-  // const [wishesLink, setWishesLink] = useState('');
-  // const loginUserInfo = useRecoilValue(LoginUserInfo);
-
-  // useEffect(() => {
-  //   setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
-  // }, []);
-
+export const useKakaoShare = (nickname: string, link: string) => {
   if (window.Kakao) {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
