@@ -1,19 +1,17 @@
-import theme from '@/styles/theme';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+import router from 'next/router';
+
+import theme from '@/styles/theme';
 import { SideBarIc } from '@/public/assets/icons';
 import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
-import router from 'next/router';
 import ButtonBox from '@/components/button/buttonBox';
+
 import { useAuthKaKao } from '@/hooks/useAuthKakao';
-import { useEffect } from 'react';
 
-export default function MainPage() {
-  const moveToForm = () => {
-    router.push('/wishes');
-  };
-
+export default function MainContainer() {
   const { accessToken, nickname } = useAuthKaKao();
 
   useEffect(() => {
@@ -24,13 +22,18 @@ export default function MainPage() {
     }
   }, [accessToken]);
 
+  const moveToForm = () => {
+    router.push('/wishes');
+  };
+
+
   return (
     <>
       <Styled.HeaderContainer>
         <Styled.Title>
           {nickname}님,
           <br />
-          <span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고
+          <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
           <br />
           케이크를 모아봐요!
         </Styled.Title>
@@ -65,24 +68,28 @@ export default function MainPage() {
 
 const Styled = {
   HeaderContainer: styled.div`
-    display: flex;
+  display: flex;
+  `,
+
+  Title: styled.div`
+  margin: 0 0 3rem;
+  ${theme.fonts.headline24_130};
+  `,
+
+  TitleColor: styled.span`
+  color: ${theme.colors.main_blue};
   `,
 
   SideContainer: styled.div`
     margin-left: auto;
   `,
 
-  Title: styled.div`
-    ${theme.fonts.headline24_130};
-    margin: 0 0 3rem;
-  `,
-
   DDay: styled.div`
-    ${theme.fonts.headline20};
-    color: ${theme.colors.main_blue};
     display: flex;
     justify-content: center;
     margin-top: 2.3rem;
+    ${theme.fonts.headline20};
+    color: ${theme.colors.main_blue};
   `,
 
   CenterContainer: styled.div`
@@ -100,16 +107,16 @@ const Styled = {
   `,
 
   About: styled.div`
-    ${theme.fonts.headline24_100};
-    color: ${theme.colors.main_blue};
-    margin: 0 0 1rem;
     display: flex;
     justify-content: center;
+    margin: 0 0 1rem;
+    ${theme.fonts.headline24_100};
+    color: ${theme.colors.main_blue};
   `,
 
   AboutSmall: styled.div`
-    ${theme.fonts.headline24_100};
     display: flex;
     justify-content: center;
+    ${theme.fonts.headline24_100};
   `,
 };
