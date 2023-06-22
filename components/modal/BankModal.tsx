@@ -1,7 +1,7 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { BANK_LIST } from '@/interfaces/BankData';
+import theme from '@/styles/theme';
+import { BANK_LIST } from '@/constant/bankList';
 
 interface BankModalProps {
   modalToggle: () => void;
@@ -11,7 +11,7 @@ interface BankModalProps {
 export default function BankModal(props: BankModalProps) {
   const { modalToggle, changeBankName } = props;
 
-  const handleChnageBankName = (input: string) => {
+  const handleChangeBankName = (input: string) => {
     changeBankName(input);
     modalToggle();
   };
@@ -21,7 +21,7 @@ export default function BankModal(props: BankModalProps) {
       <Styled.Title>은행을 선택해주세요.</Styled.Title>
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-          <Styled.BankLogoBox key={bank.name} onClick={() => handleChnageBankName(bank.name)}>
+          <Styled.BankLogoBox key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
             <Styled.Image>
               <Image src={bank.logo} alt={`${bank.name} 로고`} />
             </Styled.Image>

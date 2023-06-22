@@ -1,9 +1,11 @@
-import theme from '@/styles/theme';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import IconButton from '@/components/button/iconButton';
+
+import theme from '@/styles/theme';
 import { CloseWhiteIc, DetailCloseIc, DetailOpenIc } from '@/public/assets/icons';
-import { useEffect, useState } from 'react';
+import IconButton from '@/components/button/iconButton';
+
 
 interface TermsModalProps {
   modalToggle: () => void;
@@ -23,6 +25,7 @@ export default function TermsModal(props: TermsModalProps) {
   const handleMoreViewToggle = () => {
     setIsHidden(!isHidden);
   };
+
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
     changeIsAgreed(!isChecked);
@@ -30,14 +33,12 @@ export default function TermsModal(props: TermsModalProps) {
 
   return (
     <Styled.Container>
-      <Styled.Background onClick={modalToggle}></Styled.Background>
-
-      <Styled.Background2>
+      <Styled.BoxContainer>
         <Styled.ButtonContainer onClick={modalToggle}>
           <IconButton src={CloseWhiteIc} alt="닫기" />
         </Styled.ButtonContainer>
 
-        <Styled.Content>
+        <Styled.ContentContainer>
           <Styled.About>
             &apos;조물주보다 생일선물주&apos;는 카카오페이 결제
             <br />
@@ -75,12 +76,13 @@ export default function TermsModal(props: TermsModalProps) {
             </Styled.AboutDetail>
           )}
 
-          <Styled.AgreeText>
+          <Styled.CheckContainer>
             <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} />
             동의하고, 소원링크 생성하기
-          </Styled.AgreeText>
-        </Styled.Content>
-      </Styled.Background2>
+          </Styled.CheckContainer>
+
+        </Styled.ContentContainer>
+      </Styled.BoxContainer>
     </Styled.Container>
   );
 }
@@ -96,17 +98,13 @@ const Styled = {
     justify-content: center;
   `,
 
-  Background: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000000;
-    opacity: 0.4;
+  BoxContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   `,
 
-  Content: styled.div`
+  ContentContainer: styled.div`
     position: relative;
     width: 32rem;
     background: ${theme.colors.pastel_blue};
@@ -117,12 +115,6 @@ const Styled = {
   ButtonContainer: styled.div`
     position: relative;
     margin: 6.4rem 0 2.3rem;
-  `,
-
-  Background2: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
   `,
 
   About: styled.div`
@@ -148,7 +140,7 @@ const Styled = {
     margin-top: 2rem;
   `,
 
-  AgreeText: styled.div`
+  CheckContainer: styled.div`
     ${theme.fonts.body14};
     color: ${theme.colors.dark_blue};
     display: flex;
