@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { CloseBlueIc } from '@/public/assets/icons';
-import { ShareChatImg, LoginCakeImg } from '@/public/assets/images';
+import { PillCakeImg, ShareChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
@@ -35,7 +35,7 @@ export default function Share() {
 
         <Styled.ImageContainer>
           <Image src={ShareChatImg} alt="이뤄져라 얍!" />
-          <Image src={LoginCakeImg} alt="케이크" />
+          <Image src={PillCakeImg} alt="케이크" />
         </Styled.ImageContainer>
       </Styled.Container>
 

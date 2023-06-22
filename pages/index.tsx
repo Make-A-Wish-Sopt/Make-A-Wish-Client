@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
-import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
+import { PillCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import { useState } from 'react';
@@ -38,7 +38,7 @@ export default function LoginPage() {
           </Styled.Title>
 
           <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+          <Image src={PillCakeImg} alt="로그인 케이크 이미지" />
         </Styled.ImageContainer>
         <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
         <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>

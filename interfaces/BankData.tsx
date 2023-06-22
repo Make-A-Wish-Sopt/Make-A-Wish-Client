@@ -17,6 +17,6 @@ for (let i = 0; i <= 32; i++) {
                 "저축은행", "제주", "씨티", "KDB산업", "산림조합", "SBI저축은행", "BOA", "중국", "HSBC",
                 "중국공상", "도이치", "JP모건", "BNP파리바", "중국건설"][i],
         bankNumber: i + 1,
-        logo: bankImgs[`bank${i + 1}_Img`],
+        logo: bankImgs[`bank${i + 1}Img`],
     });
 }
