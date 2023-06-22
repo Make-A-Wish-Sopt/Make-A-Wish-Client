@@ -8,11 +8,11 @@ interface SiteBoxProps {
 export default function SiteBox(props: SiteBoxProps) {
     const { children } = props;
 
-    return <Styled.Box>{children}</Styled.Box>;
+    return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-    Box: styled.div`
+    Container: styled.div`
     display: inline-block;
     width: 6rem;
     height: 6rem;
