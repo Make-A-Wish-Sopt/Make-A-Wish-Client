@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
-import { useQuery } from 'react-query';
 
 import theme from '@/styles/theme';
 import { CloseSmallIc, LinkCopyIc } from '@/public/assets/icons';
@@ -10,15 +9,14 @@ import IconButton from '@/components/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
 import SNSBox from '@/components/button/snsBox';
 
-import { SHARE_LIST } from '@/interfaces/ShareData';
+import { SNS_LIST } from '@/constant/snsList';
 import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import { QUERY_KEY } from '@/constant/queryKey';
+
 
 interface ShareModalProps {
   onClick: () => void;
 }
-
 
 export default function ShareModal(props: ShareModalProps) {
   const { onClick } = props;
@@ -50,7 +48,7 @@ export default function ShareModal(props: ShareModalProps) {
       </Styled.IconContainer>
 
       <Styled.SNSContainer>
-        {SHARE_LIST.map((sns) => (
+        {SNS_LIST.map((sns) => (
           <SNSBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? handleKakaoShare : undefined}>
             <Image src={sns.logo} alt={`${sns.name}`} />
           </SNSBox>
