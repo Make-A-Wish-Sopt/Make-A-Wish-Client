@@ -19,57 +19,17 @@ interface ItemLinkProps {
 
 export default function ItemLink(props: ItemLinkProps) {
   const { handleChangePrice, handleChangeImageURL, imageURL } = props;
-  const [link, changeLink] = useInput('');
+  const [linkURL, handleChangeLinkURL] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
-
-  const queryClient = useQueryClient();
-
-  const { data: itemData, isSuccess } = useQuery(
-    QUERY_KEY.itemData,
-    async () => await getItemInfo(link),
-    {
-      onSuccess: (data) => {
-        const imageData = data.imageTag.data?.data;
-        const priceData = data.priceTag.data?.data;
-
-        if (imageData && priceData) {
-          handleChangePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
-          const imageSrc = extractImageSrc(imageData);
-          imageSrc && handleChangeImageURL(imageSrc);
-        }
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-      enabled: isCorrectLink,
-    },
-  );
+  const { itemData, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
 
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
-    if (link.length > 0 && validation.isCorrectSite(link)) {
-      isCorrectLink && queryClient.invalidateQueries([QUERY_KEY.itemData, link]);
+    if (linkURL.length > 0 && validation.isCorrectSite(linkURL)) {
       setIsCorrectLink(true);
       return;
     }
     setIsCorrectLink(false);
-  };
-
-  const extractImageSrc = (imageLink: string) => {
-    //eslint-disable-next-line
-    const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-    const imageSrc = regex.exec(imageLink);
-
-    if (imageSrc !== null) return imageSrc[1];
-  };
-
-  const extractPrice = (totalPrice: string) => {
-    const html = document.createElement('span');
-    html.innerHTML = totalPrice;
-    const innerHtmlText = html.querySelector('.css-4bcxzt')?.innerHTML;
-    const price = innerHtmlText?.substring(0, innerHtmlText.indexOf('<'));
-
-    return price;
   };
 
   return (
