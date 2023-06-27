@@ -45,7 +45,7 @@ export default function PreviewPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>{wishesData.title}</Styled.InputTitle>
         <Styled.PresentContainer>
-          <PresentImageBox>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
                 src={wishesData.imageURL}
@@ -54,7 +54,7 @@ export default function PreviewPage() {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
+          </InputLargeBox>
           <Styled.PresentPrice>가격: {wishesData.price}원</Styled.PresentPrice>
         </Styled.PresentContainer>
       </Styled.ItemBox>

@@ -86,17 +86,17 @@ export default function ItemLink(props: ItemLinkProps) {
       <InputBox>
         <Styled.InputText
           placeholder="정해진 사이트에서 원하는 선물 링크 복사, 붙여넣기"
-          onChange={changeLink}
+          onChange={handleChangeLinkURL}
           onBlur={parseImage}
         />
       </InputBox>
-      {link.length > 0 && !validation.isCorrectSite(link) && (
+      {linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
       {isSuccess && itemData && (
         <Styled.PresentContainer>
-          <PresentImageBox>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
                 src={imageURL}
@@ -105,10 +105,8 @@ export default function ItemLink(props: ItemLinkProps) {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
-          <Styled.PresentPrice>
-            가격 : {extractPrice(itemData.priceTag.data?.data)}원
-          </Styled.PresentPrice>
+          </InputLargeBox>
+          <Styled.PresentPrice>가격 : test원</Styled.PresentPrice>
         </Styled.PresentContainer>
       )}
     </Styled.Container>

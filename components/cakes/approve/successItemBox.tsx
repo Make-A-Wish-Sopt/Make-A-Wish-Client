@@ -8,7 +8,6 @@ import TestImage from '../../../public/assets/testImage.jpeg';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
-import PresentImageBox from '@/components/common/presentImageBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
@@ -44,7 +43,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
         </Styled.Container>
       ) : (
         <Styled.Container>
-          <PresentImageBox>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
                 src={TestImage}
@@ -53,7 +52,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
+          </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Container>
       )}
