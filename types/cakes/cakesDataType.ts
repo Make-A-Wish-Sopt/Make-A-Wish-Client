@@ -1,4 +1,4 @@
-import { CakeListType } from '../cakeListType';
+import { CakeListType } from './cakeListType';
 
 export interface CakesDataType {
   pgToken: string | string[] | undefined;

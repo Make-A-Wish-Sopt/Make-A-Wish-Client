@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { BANK_LIST } from '@/interfaces/BankData';
+import { BANK_LIST } from '@/constant/common/bankData';
 
 interface BankModalProps {
   handleToggle: () => void;

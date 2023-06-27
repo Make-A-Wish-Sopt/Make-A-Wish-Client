@@ -17,10 +17,10 @@ import useInput from '@/hooks/common/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import ItemLink from '@/components/wishes/itemLink';
 
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
-import { WishesDataType } from '@/types/wishesDataType';
+import { WishesDataType } from '@/types/wishes/wishesDataType';
 import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/common/modal/DatePickerModal';

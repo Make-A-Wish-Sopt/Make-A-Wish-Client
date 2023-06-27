@@ -5,7 +5,7 @@ import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, LoginCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '@/components/common/modal/ShareModal';
 import { useState } from 'react';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
@@ -15,7 +15,7 @@ export default function Share() {
   const [showModal, setShowModal] = useState(false);
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
-  console.log(loginUserInfo)
+  console.log(loginUserInfo);
 
   const clickModal = () => setShowModal(!showModal);
 

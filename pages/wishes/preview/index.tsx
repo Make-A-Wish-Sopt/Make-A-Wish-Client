@@ -1,42 +1,23 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import PresentImageBox from '@/components/common/presentImageBox';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import InputBox from '@/components/common/input/inputBox';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { WishesData } from '@/recoil/formPage/wishesData';
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import TermsModal from '@/components/common/modal/termsModal';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
-import { createWishesLink } from '@/api/wishes/preview/createWishesLink';
-import { useRouter } from 'next/router';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/wishes';
 
 export default function PreviewPage() {
-  const wishesData = useRecoilValue(WishesData);
-  const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
+  const { wishesData, postWishesData } = useCreateWishesLink();
 
   const [isAgreed, setIsAgreed] = useState(false);
-
   const { isOpen, handleToggle } = useModal();
-  const router = useRouter();
-
-  const { mutate } = useMutation(() => createWishesLink(wishesData), {
-    onSuccess: (data) => {
-      setLoginUserInfo((prevData) => ({
-        ...prevData,
-        wishesId: data.data.data,
-      }));
-      router.push('/wishes/share');
-    },
-  });
 
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);

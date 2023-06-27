@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { SideBarIc } from '@/public/assets/icons';
 import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
-import IconButton from '@/components/button/iconButton';
+import IconButton from '@/components/common/button/iconButton';
 import router from 'next/router';
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import { useAuthKaKao } from '@/hooks/useAuthKakao';
 import { useEffect } from 'react';
 

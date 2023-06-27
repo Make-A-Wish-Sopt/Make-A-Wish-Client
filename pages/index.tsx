@@ -4,10 +4,9 @@ import Image from 'next/image';
 import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
 import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/button/iconButton';
+import IconButton from '@/components/common/button/iconButton';
 import { useState } from 'react';
 import GuideModal from '@/components/common/modal/GuideModal';
-import { useRouter } from 'next/router';
 
 export default function LoginPage() {
   const [showModal, setShowModal] = useState(false);

@@ -1,17 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputBox from '../common/input/inputBox';
-import { SITE_LIST } from '@/interfaces/SiteData';
+import { SITE_LIST } from '@/constant/wishes/siteData';
 import Image from 'next/image';
 import AlertTextBox from '../common/alertTextBox';
-import PresentImageBox from '../common/presentImageBox';
 import { validation } from '@/validation/input';
 import useInput from '@/hooks/common/useInput';
-import { LIMIT_TEXT } from '@/constant/limitText';
-import { useQuery, useQueryClient } from 'react-query';
-import { getItemInfo } from '@/api/wishes/getItemInfo';
 import { useState } from 'react';
-import { QUERY_KEY } from '@/constant/queryKey';
+import { useGetItemInfo } from '@/hooks/queries/wishes/wishes';
+import InputLargeBox from '../common/input/inputLargeBox';
 
 interface ItemLinkProps {
   handleChangePrice: (input: number) => void;

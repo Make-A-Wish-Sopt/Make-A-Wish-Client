@@ -1,6 +1,6 @@
 import PATH from '../../common/path';
 import { client } from '../../common/axios';
-import { WishesDataType } from '@/types/wishesDataType';
+import { WishesDataType } from '@/types/wishes/wishesDataType';
 
 export async function createWishesLink(wishesData: WishesDataType) {
   const accessToken = localStorage.getItem('accessToken');
