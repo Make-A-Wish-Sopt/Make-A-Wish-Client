@@ -9,24 +9,21 @@ import { useEffect, useState } from 'react';
 import GuideModal from '@/components/common/modal/GuideModal';
 import ButtonBox from '@/components/common/button/buttonBox';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
-import { getWishesData } from '@/api/cakes/getWishesData';
+import { useGetWishesData } from '@/hooks/queries/wishes/wishes';
 
 export default function WishesPage() {
   const [showModal, setShowModal] = useState(false);
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
   const router = useRouter();
 
+  const { wishesData } = useGetWishesData(wishesId);
+
   useEffect(() => {
     if (!router.isReady) return;
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { data } = useQuery('wished', async () => getWishesData(wishesId), {
-    enabled: wishesId !== '',
-  });
-
-  const clickModal = () => {
+  const handleClickModal = () => {
     setShowModal(!showModal);
   };
 
@@ -41,11 +38,11 @@ export default function WishesPage() {
   return (
     <>
       <Header>
-        <IconButton onClick={clickModal} src={GuideBtnIc} alt="서비스 가이드" />
+        <IconButton onClick={handleClickModal} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
-      {showModal && <GuideModal clickModal={clickModal} />}
+      {showModal && <GuideModal clickModal={handleClickModal} />}
 
-      <Styled.Container>
+      <>
         <Styled.ImageContainer>
           <Styled.Title>
             조물주보다,
@@ -57,11 +54,11 @@ export default function WishesPage() {
           <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
         </Styled.ImageContainer>
         <Styled.About>
-          {data?.name}님의 선물을 <br />
+          {wishesData?.name}님의 선물을 <br />
           고민중이셨다면?
         </Styled.About>
         <Styled.AboutSmall>선물주님들 사랑해요</Styled.AboutSmall>
-      </Styled.Container>
+      </>
       <Styled.ButtonBoxWrapper>
         <ButtonBox
           backgroundColor={theme.colors.main_blue}
@@ -84,36 +81,40 @@ export default function WishesPage() {
 
 const Styled = {
   Title: styled.div`
+    display: flex;
+    justify-content: center;
+
     ${theme.fonts.title56};
     color: ${theme.colors.main_blue};
     margin: 2rem 0 2.8rem;
-    display: flex;
-    justify-content: center;
+
     white-space: pre-line;
   `,
 
-  Container: styled.div``,
-
   ImageContainer: styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
   `,
 
   About: styled.div`
+    display: flex;
+    justify-content: center;
+
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
     margin: 1.4rem 0 1.5rem;
-    display: flex;
-    justify-content: center;
   `,
 
   AboutSmall: styled.div`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
     display: flex;
     justify-content: center;
+
+    ${theme.fonts.body16};
+    color: ${theme.colors.main_blue};
+
     margin: 0 0 10.15rem;
   `,
 

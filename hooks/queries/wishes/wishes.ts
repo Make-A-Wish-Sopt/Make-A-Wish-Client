@@ -1,5 +1,6 @@
+import { getWishesData } from '@/api/cakes/getWishesData';
 import { getItemInfo } from '@/api/wishes/getItemInfo';
-import { createWishesLink } from '@/api/wishes/preview/createWishesLink';
+import { createWishesLink } from '@/api/wishes/createWishesLink';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { WishesData } from '@/recoil/formPage/wishesData';
@@ -61,7 +62,7 @@ export function useCreateWishesLink() {
   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
   const router = useRouter();
 
-  const { mutate : postWishesData } = useMutation(() => createWishesLink(wishesData), {
+  const { mutate: postWishesData } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: (data) => {
       setLoginUserInfo((prevData) => ({
         ...prevData,
@@ -72,4 +73,12 @@ export function useCreateWishesLink() {
   });
 
   return { wishesData, postWishesData };
+}
+
+export function useGetWishesData(wishesId: string | string[] | undefined) {
+  const { data: wishesData } = useQuery(QUERY_KEY.wishesData, async () => getWishesData(wishesId), {
+    enabled: wishesId !== '',
+  });
+
+  return { wishesData };
 }
