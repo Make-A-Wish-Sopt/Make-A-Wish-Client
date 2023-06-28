@@ -1,5 +1,5 @@
-import PATH from '../../common/path';
-import { client } from '../../common/axios';
+import PATH from '../common/path';
+import { client } from '../common/axios';
 import { WishesDataType } from '@/types/wishes/wishesDataType';
 
 export async function createWishesLink(wishesData: WishesDataType) {

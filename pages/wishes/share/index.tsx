@@ -4,18 +4,16 @@ import Image from 'next/image';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, LoginCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/button/iconButton';
+import IconButton from '@/components/common/button/iconButton';
 import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '@/components/common/modal/ShareModal';
 import { useState } from 'react';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';
 
-export default function Share() {
+export default function SharePage() {
   const [showModal, setShowModal] = useState(false);
   const loginUserInfo = useRecoilValue(LoginUserInfo);
-
-  console.log(loginUserInfo);
 
   const clickModal = () => setShowModal(!showModal);
 
@@ -53,11 +51,14 @@ export default function Share() {
 
 const Styled = {
   Title: styled.div`
-    ${theme.fonts.headline30};
-    color: ${theme.colors.main_blue};
-    margin: 0 0 2rem;
     display: flex;
     justify-content: center;
+
+    ${theme.fonts.headline30};
+    color: ${theme.colors.main_blue};
+
+    margin: 0 0 2rem;
+
     white-space: pre-line;
     text-align: center;
   `,
@@ -67,17 +68,20 @@ const Styled = {
   `,
 
   ImageContainer: styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
   `,
 
   About: styled.div`
-    ${theme.fonts.body14};
-    color: ${theme.colors.main_blue};
-    margin: 0 0 4.3rem;
     display: flex;
     justify-content: center;
+
+    ${theme.fonts.body14};
+    color: ${theme.colors.main_blue};
+
+    margin: 0 0 4.3rem;
   `,
 };

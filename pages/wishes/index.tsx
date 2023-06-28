@@ -37,7 +37,7 @@ function getDate(date: Date | null): string {
   return `${year}-${month}-${day}`;
 }
 
-export default function WishesPage() {
+export default function WishesFormPage() {
   const [imageURL, setImageURL] = useState('');
   const [price, setPrice] = useState(0);
   const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);

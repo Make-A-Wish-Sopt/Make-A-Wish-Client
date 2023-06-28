@@ -27,10 +27,6 @@ export default function PreviewPage() {
     return isAgreed ? postWishesData() : handleToggle();
   };
 
-  const postWishesData = () => {
-    mutate();
-  };
-
   return (
     <>
       <InputHeader>
