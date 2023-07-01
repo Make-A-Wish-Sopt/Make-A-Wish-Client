@@ -15,11 +15,11 @@ import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
 
 interface ShareModalProps {
-  onClick: () => void;
+  handleClick: () => void;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { onClick } = props;
+  const { handleClick } = props;
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
   console.log(loginUserInfo);
@@ -44,7 +44,7 @@ export default function ShareModal(props: ShareModalProps) {
   return (
     <Styled.Container>
       <Styled.IconContainer>
-        <IconButton src={CloseSmallIc} alt="닫기" onClick={onClick} />
+        <IconButton src={CloseSmallIc} alt="닫기" onClick={handleClick} />
       </Styled.IconContainer>
 
       <Styled.SNSContainer>

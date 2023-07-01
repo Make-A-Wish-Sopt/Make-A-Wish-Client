@@ -41,7 +41,7 @@ export default function ShareContainer() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      {showModal && <ShareModal onClick={handleModal} />}
+      {showModal && <ShareModal handleClick={handleModal} />}
       <ButtonBox
         handleClick={handleModal}
         backgroundColor={theme.colors.main_blue}
