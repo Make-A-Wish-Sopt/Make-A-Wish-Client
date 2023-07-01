@@ -30,11 +30,11 @@ export default function WishesContainer() {
     enabled: wishesId !== '',
   });
 
-  const handleMoveCakes = () => {
+  const handleMoveToCakes = () => {
     router.push(`/cakes/${wishesId}`);
   };
 
-  const handleMoveHome = () => {
+  const handleMoveToHome = () => {
     router.push('/');
   };
 
@@ -71,14 +71,14 @@ export default function WishesContainer() {
         <ButtonBox
           backgroundColor={theme.colors.main_blue}
           fontColor={theme.colors.white}
-          handleClick={handleMoveCakes}
+          handleClick={handleMoveToCakes}
         >
           소원들어주러 가기
         </ButtonBox>
         <ButtonBox
           backgroundColor={theme.colors.pastel_blue}
           fontColor={theme.colors.main_blue}
-          handleClick={handleMoveHome}
+          handleClick={handleMoveToHome}
         >
           나도 소원 빌러 가기
         </ButtonBox>

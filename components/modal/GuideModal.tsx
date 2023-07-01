@@ -14,7 +14,7 @@ interface GuideModalProps {
 export default function GuideModal(props: GuideModalProps) {
     const { modalToggle } = props;
 
-    const handleChange = () => {
+    const handleService = () => {
         router.push('/');
     };
 
@@ -32,7 +32,7 @@ export default function GuideModal(props: GuideModalProps) {
                             src={GuideContentImg}
                             alt="서비스 가이드" />
                         <Styled.ButtonContainer2>
-                            <ButtonBox handleClick={handleChange} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
+                            <ButtonBox handleClick={handleService} backgroundColor={theme.colors.main_blue} fontColor={theme.colors.white}>
                                 고객센터 문의하기
                             </ButtonBox>
                         </Styled.ButtonContainer2>
