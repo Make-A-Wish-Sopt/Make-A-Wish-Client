@@ -22,7 +22,7 @@ export default function MainContainer() {
     }
   }, [accessToken]);
 
-  const handlePage = () => {
+  const handleMovePage = () => {
     router.push('/wishes');
   };
 
@@ -56,7 +56,7 @@ export default function MainContainer() {
       </Styled.CenterContainer>
 
       <ButtonBox
-        handleClick={handlePage}
+        handleClick={handleMovePage}
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
       >
