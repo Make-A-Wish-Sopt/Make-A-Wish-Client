@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-interface SnsBoxProps {
+interface SNSBoxProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  handleClick?: () => void;
 }
 
-export default function SnsBox(props: SnsBoxProps) {
-  const { children, onClick } = props;
+export default function SNSBox(props: SNSBoxProps) {
+  const { children, handleClick } = props;
 
-  return <Styled.Box onClick={onClick}>{children}</Styled.Box>;
+  return <Styled.Box onClick={handleClick}>{children}</Styled.Box>;
 }
 
 const Styled = {
   Box: styled.div`
-    cursor: pointer;
     margin: 0 0.5rem 0;
+    cursor: pointer;
   `,
 };

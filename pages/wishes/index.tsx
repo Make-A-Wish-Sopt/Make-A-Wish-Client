@@ -26,16 +26,7 @@ import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/modal/DatePickerModal';
 import Layout from '@/components/common/layout';
 import { useRouter } from 'next/router';
-
-function getDate(date: Date | null): string {
-  if (!date) {
-    date = new Date();
-  }
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+import { useDate } from '@/hooks/useDate';
 
 export default function WishesFormPage() {
   const [imageUrl, setImageUrl] = useState('');
@@ -47,12 +38,12 @@ export default function WishesFormPage() {
   const [bankName, setBankName] = useState('');
   const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
   const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
-  const [endDate, setEndDate] = useState<string>(getDate(new Date()));
+  const [endDate, setEndDate] = useState<string>(useDate(new Date()));
   const [showEndDate, setShowEndDate] = useState(false);
 
   const router = useRouter();
 
-  const startDate = getDate(new Date());
+  const startDate = useDate(new Date());
 
   const { isOpen, modalToggle } = useModal();
 
@@ -159,10 +150,10 @@ export default function WishesFormPage() {
           </InputCalendar>
           <InputCalendar borderColor={theme.colors.main_blue}>
             {!showEndDate && (
-              <Styled.InputText
+              <Styled.InputCalendar
                 placeholder="종료일"
                 readOnly
-                style={{ display: showEndDate ? 'none' : 'initial' }}
+                showEndDate={showEndDate}
               />
             )}
             {showEndDate && <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />}
@@ -241,6 +232,13 @@ const Styled = {
     ${theme.fonts.body12};
     color: ${theme.colors.dark_blue};
     width: 100%;
+  `,
+
+  InputCalendar: styled.input<{ showEndDate: boolean }>`
+    ${theme.fonts.body12};
+    color: ${theme.colors.dark_blue};
+    width: 100%;
+    display: ${({ showEndDate }) => (showEndDate ? 'none' : 'initial')};
   `,
 
   InputTextDone: styled.input`

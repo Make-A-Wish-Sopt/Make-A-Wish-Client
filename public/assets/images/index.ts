@@ -27,35 +27,31 @@ export { default as PoopCakeThanksImg } from '../images/cakes/poopCakeThanksImg.
 export { default as SushiCakeThanksImg } from '../images/cakes/sushiCakeThanksImg.svg';
 export { default as VitaminCakeThanksImg } from '../images/cakes/vitaminCakeThanksImg.svg';
 
-export { default as GaugeBarImg } from '@/public/assets/images/GaugeBarImg.svg';
-export { default as HeartImg } from '@/public/assets/images/heartImg.svg';
-export { default as LoginCakeImg } from '@/public/assets/images/login/loginCakeImg.png';
-export { default as GuideContentImg } from '@/public/assets/images/guideContent.svg';
-export { default as GuideBoxImg } from '@/public/assets/images/guideBoxImg.svg';
-export { default as GuideTopImg } from '@/public/assets/images/guideTopImg.svg';
+export { default as GaugeBarImg } from '../images/gaugeBarImg.svg';
+export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
+export { default as GuideContentImg } from '../images/guideContentImg.svg';
 
-// 케이크, 말풍선
-export { default as PillCakeImg } from '@/public/assets/images/pillCakeImg.svg';
-export { default as ShareChatImg } from '@/public/assets/images/sharePageChatImg.svg';
-export { default as LoginChatImg } from '@/public/assets/images/loginPageChatImg.svg';
-export { default as MainChatImg } from '@/public/assets/images/mainPageChatImg.svg';
-export { default as GiverMainChatImg } from '@/public/assets/images/giverMainPageChatImg.svg';
+// cake
+export { default as PillCakeImg } from '../images/pillCakeImg.svg';
+export { default as ShareChatImg } from '../images/sharePageChatImg.svg';
+export { default as LoginChatImg } from '../images/loginPageChatImg.svg';
+export { default as MainChatImg } from '../images/mainPageChatImg.svg';
+export { default as WishesChatImg } from '../images/wishesChatImg.svg';
 
-// site
-export { default as TwentynineLogoImg } from '@/public/assets/images/twentynineLogoImg.svg';
-export { default as CoupangLogoImg } from '@/public/assets/images/coupangLogoImg.svg';
+// shopping website
+export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';
+export { default as CoupangLogoImg } from '../images/shop/coupangLogoImg.svg';
 
 // SNS share
-export { default as KaKaoLogoImg } from '@/public/assets/images/kakaoLogoImg.svg';
-export { default as InstaLogoImg } from '@/public/assets/images/instaLogoImg.svg';
-export { default as FacebookLogoImg } from '@/public/assets/images/facebookLogoImg.svg';
-export { default as TwitterLogoImg } from '@/public/assets/images/twitterLogoImg.svg';
-export { default as WishesChatImg } from '@/public/assets/images/wishesChatImg.png';
+export { default as KaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';
+export { default as InstaLogoImg } from '../images/sns/instaLogoImg.svg';
+export { default as FacebookLogoImg } from '../images/sns/facebookLogoImg.svg';
+export { default as TwitterLogoImg } from '../images/sns/twitterLogoImg.svg';
 
 // bank
 const bankImgs: Record<string, any> = {};
 for (let i = 1; i <= 33; i++) {
-  bankImgs[`bank${i}_Img`] = require(`@/public/assets/images/bankLogo/bank_${i}.svg`).default;
+  bankImgs[`bank${i}Img`] = require(`../images/bankLogo/bank${i}Img.svg`).default;
 }
 
 export default bankImgs;

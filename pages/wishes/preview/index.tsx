@@ -12,7 +12,7 @@ import { WishesData } from '@/recoil/formPage/wishesData';
 import ButtonBox from '@/components/button/buttonBox';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/modal';
-import TermsModal from '@/components/modal/termsModal';
+import TermsModal from '@/components/modal/TermsModal';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
