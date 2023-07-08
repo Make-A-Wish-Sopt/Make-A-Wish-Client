@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import router from 'next/router';
@@ -9,13 +8,10 @@ import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
 import ButtonBox from '@/components/button/buttonBox';
 
-import { useAuthKaKao } from '@/hooks/useAuthKakao';
-
 export default function MainContainer() {
   const handleMovePage = () => {
     router.push('/wishes');
   };
-
 
   return (
     <>
