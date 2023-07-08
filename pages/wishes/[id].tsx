@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { GuideBtnIc } from '@/public/assets/icons';
-import { LoginCakeImg, WishesChatImg } from '@/public/assets/images';
+import { PillCakeImg, WishesChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/common/button/iconButton';
 import { useEffect, useState } from 'react';
@@ -54,7 +54,7 @@ export default function WishesPage() {
           </Styled.Title>
 
           <Image src={WishesChatImg} alt="선물주 채팅 이미지" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+          <Image src={PillCakeImg} alt="로그인 케이크 이미지" />
         </Styled.ImageContainer>
         <Styled.About>
           {data?.name}님의 선물을 <br />
