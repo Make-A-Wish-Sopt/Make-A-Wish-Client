@@ -12,16 +12,6 @@ import ButtonBox from '@/components/button/buttonBox';
 import { useAuthKaKao } from '@/hooks/useAuthKakao';
 
 export default function MainContainer() {
-  const { accessToken, nickname } = useAuthKaKao();
-
-  useEffect(() => {
-    if (accessToken) {
-      window.Kakao.Auth.setAccessToken(accessToken);
-      localStorage.setItem('accessToken', accessToken);
-      console.log(`getAccessToken: ${window.Kakao.Auth.getAccessToken()}`);
-    }
-  }, [accessToken]);
-
   const handleMovePage = () => {
     router.push('/wishes');
   };
@@ -31,7 +21,7 @@ export default function MainContainer() {
     <>
       <Styled.HeaderContainer>
         <Styled.Title>
-          {nickname}님,
+          { }님,
           <br />
           <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
           <br />
