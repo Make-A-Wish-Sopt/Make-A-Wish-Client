@@ -17,7 +17,7 @@ export default function ShareContainer() {
   const [showModal, setShowModal] = useState(false);
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
-  const handleModal = () => {
+  const handleModalClick = () => {
     setShowModal(!showModal);
   };
 
@@ -41,9 +41,9 @@ export default function ShareContainer() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      {showModal && <ShareModal handleClick={handleModal} />}
+      {showModal && <ShareModal handleModalClick={handleModalClick} />}
       <ButtonBox
-        handleClick={handleModal}
+        handleClick={handleModalClick}
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
       >

@@ -12,14 +12,15 @@ import SNSBox from '@/components/button/snsBox';
 import { SNS_LIST } from '@/constant/snsList';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { SNSListType } from '@/types/snsListType';
 
 
 interface ShareModalProps {
-  handleClick: () => void;
+  handleModalClick: () => void;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { handleClick } = props;
+  const { handleModalClick } = props;
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
   console.log(loginUserInfo);
@@ -28,8 +29,10 @@ export default function ShareModal(props: ShareModalProps) {
     setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
   }, []);
 
-  const handleKakaoShare = () => {
-    useKakaoShare(loginUserInfo.nickName, wishesLink);
+  const handlSNSShare = (name: string) => {
+    if (name === 'KakaoTalk') {
+      useKakaoShare(loginUserInfo.nickName, wishesLink);
+    }
   };
 
   const handleTextCopy = (text: string) => {
@@ -44,12 +47,12 @@ export default function ShareModal(props: ShareModalProps) {
   return (
     <Styled.Container>
       <Styled.IconContainer>
-        <IconButton src={CloseSmallIc} alt="닫기" onClick={handleClick} />
+        <IconButton src={CloseSmallIc} alt="닫기" handleClick={handleModalClick} />
       </Styled.IconContainer>
 
       <Styled.SNSContainer>
         {SNS_LIST.map((sns) => (
-          <SNSBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? handleKakaoShare : undefined}>
+          <SNSBox key={sns.name} handleClick={() => handlSNSShare(sns.name)}>
             <Image src={sns.logo} alt={`${sns.name}`} />
           </SNSBox>
         ))}
@@ -60,7 +63,7 @@ export default function ShareModal(props: ShareModalProps) {
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          onClick={() => handleTextCopy(wishesLink)}
+          handleClick={() => handleTextCopy(wishesLink)}
         />
       </InputLink>
     </Styled.Container>

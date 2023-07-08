@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 interface SNSBoxProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  handleClick?: () => void;
 }
 
 export default function SNSBox(props: SNSBoxProps) {
-  const { children, onClick } = props;
+  const { children, handleClick } = props;
 
-  return <Styled.Box onClick={onClick}>{children}</Styled.Box>;
+  return <Styled.Box onClick={handleClick}>{children}</Styled.Box>;
 }
 
 const Styled = {

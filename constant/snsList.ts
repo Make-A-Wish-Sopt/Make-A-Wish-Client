@@ -5,7 +5,7 @@ import { SNSListType } from '@/types/snsListType';
 
 export const SNS_LIST: SNSListType[] = [
   {
-    name: 'KaKaoTalk',
+    name: 'KakaoTalk',
     logo: KaKaoLogoImg,
   },
   // {
