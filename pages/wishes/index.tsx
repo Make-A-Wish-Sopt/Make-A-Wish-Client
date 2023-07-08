@@ -150,7 +150,7 @@ export default function WishesFormPage() {
           </InputCalendar>
           <InputCalendar borderColor={theme.colors.main_blue}>
             {!showEndDate && (
-              <Styled.InputCalendar
+              <Styled.DateCalendar
                 placeholder="종료일"
                 readOnly
                 showEndDate={showEndDate}
@@ -234,7 +234,7 @@ const Styled = {
     width: 100%;
   `,
 
-  InputCalendar: styled.input<{ showEndDate: boolean }>`
+  DateCalendar: styled.input<{ showEndDate: boolean }>`
     ${theme.fonts.body12};
     color: ${theme.colors.dark_blue};
     width: 100%;

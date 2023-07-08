@@ -12,7 +12,6 @@ import SNSBox from '@/components/button/snsBox';
 import { SNS_LIST } from '@/constant/snsList';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import { SNSListType } from '@/types/snsListType';
 
 
 interface ShareModalProps {
@@ -29,20 +28,21 @@ export default function ShareModal(props: ShareModalProps) {
     setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
   }, []);
 
-  const handlSNSShare = (name: string) => {
+  const handlShareSNS = (name: string) => {
     if (name === 'KakaoTalk') {
       useKakaoShare(loginUserInfo.nickName, wishesLink);
     }
   };
 
-  const handleTextCopy = (text: string) => {
+  const handleTextCopy = async (text: string) => {
     try {
-      navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(text);
       alert('클립보드에 링크가 복사되었습니다.');
     } catch (error) {
       alert('복사에 실패하였습니다');
     }
   };
+
 
   return (
     <Styled.Container>
@@ -52,7 +52,7 @@ export default function ShareModal(props: ShareModalProps) {
 
       <Styled.SNSContainer>
         {SNS_LIST.map((sns) => (
-          <SNSBox key={sns.name} handleClick={() => handlSNSShare(sns.name)}>
+          <SNSBox key={sns.name} handleClick={() => handlShareSNS(sns.name)}>
             <Image src={sns.logo} alt={`${sns.name}`} />
           </SNSBox>
         ))}

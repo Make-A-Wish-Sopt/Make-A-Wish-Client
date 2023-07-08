@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
-import { LoginCakeImg, LoginChatImg } from '@/public/assets/images';
+import { PillCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import GuideModal from '@/components/modal/GuideModal';
@@ -20,7 +20,7 @@ export default function LoginContainer() {
   return (
     <>
       <Header>
-        <IconButton onClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
+        <IconButton handleClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
       {isOpen && (
         <Modal isOpen={isOpen} modalToggle={modalToggle}>
@@ -37,13 +37,13 @@ export default function LoginContainer() {
           </Styled.Title>
 
           <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+          <Image src={PillCakeImg} alt="로그인 케이크 이미지" />
         </Styled.ImageContainer>
         <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
         <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
       </Styled.Container>
 
-      <IconButton onClick={handleKaKaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
+      <IconButton handleClick={handleKaKaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
     </>
   );
 }

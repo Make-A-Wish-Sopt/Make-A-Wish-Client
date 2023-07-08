@@ -9,7 +9,7 @@ export default function Kakao() {
 
   useEffect(() => {
     if (accessToken && refreshToken) {
-      router.push('/mainPage');
+      router.push('/main');
     }
   }, [accessToken, refreshToken]);
 

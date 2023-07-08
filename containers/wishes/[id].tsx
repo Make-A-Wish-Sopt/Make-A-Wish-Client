@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 
 import theme from '@/styles/theme';
 import { GuideBtnIc } from '@/public/assets/icons';
-import { LoginCakeImg, WishesChatImg } from '@/public/assets/images';
+import { PillCakeImg, WishesChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/button/iconButton';
 import GuideModal from '@/components/modal/GuideModal';
@@ -41,7 +41,7 @@ export default function WishesContainer() {
   return (
     <>
       <Header>
-        <IconButton onClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
+        <IconButton handleClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
       {isOpen && (
         <Modal isOpen={isOpen} modalToggle={modalToggle}>
@@ -58,7 +58,7 @@ export default function WishesContainer() {
           </Styled.Title>
 
           <Image src={WishesChatImg} alt="선물주 채팅 이미지" />
-          <Image src={LoginCakeImg} alt="로그인 케이크 이미지" />
+          <Image src={PillCakeImg} alt="로그인 케이크 이미지" />
         </Styled.ImageContainer>
         <Styled.About>
           {data?.name}님의 선물을 <br />

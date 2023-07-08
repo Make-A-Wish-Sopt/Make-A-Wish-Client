@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { getMonth, getYear, isBefore } from 'date-fns';
@@ -13,6 +13,8 @@ interface CustomDatePickerProps {
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
+
+
   const { endDate, setEndDate } = props;
 
   // 연도 range
