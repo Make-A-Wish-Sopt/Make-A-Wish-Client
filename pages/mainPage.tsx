@@ -6,29 +6,17 @@ import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
 import router from 'next/router';
 import ButtonBox from '@/components/button/buttonBox';
-import { useAuthKaKao } from '@/hooks/useAuthKakao';
-import { useEffect } from 'react';
 
 export default function MainPage() {
   const moveToForm = () => {
     router.push('/wishes');
   };
 
-  const { accessToken, nickname } = useAuthKaKao();
-
-  useEffect(() => {
-    if (accessToken) {
-      window.Kakao.Auth.setAccessToken(accessToken);
-      localStorage.setItem('accessToken', accessToken);
-      console.log(`getAccessToken: ${window.Kakao.Auth.getAccessToken()}`);
-    }
-  }, [accessToken]);
-
   return (
     <>
       <Styled.HeaderContainer>
         <Styled.Title>
-          {nickname}님,
+          { }님,
           <br />
           <span style={{ color: theme.colors.main_blue }}>소원 링크</span>를 생성하고
           <br />

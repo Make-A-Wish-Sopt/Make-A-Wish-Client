@@ -11,6 +11,8 @@ const PATH = {
   PG_TOKEN: 'pg_token',
   PRESENT: 'present',
   INFO: 'info',
+  KAKAO: 'kakao',
+  CALLBACK: 'callback'
 };
 
 export default PATH;

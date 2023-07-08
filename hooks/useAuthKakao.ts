@@ -1,67 +1,39 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import { TokenResponse, UserInfo, ResponseType } from '@/types/kakaoLoginType';
-import { getTokenFromKakao, sendTokenToServer, getUserFromKakao } from '@/api/kakaoLogin/login';
+import { useEffect, useState } from 'react';
+import { sendCodeToServer } from '@/api/kakaoLogin/sendCodeToServer';
+import { useMutation } from 'react-query';
 
-export function useAuthKaKao() {
-  const [nickname, setNickname] = useState<string>('');
+
+export function useAuthKakao() {
   const [accessToken, setAccessToken] = useState<string>('');
+  const [refreshToken, setRefreshToken] = useState<string>('');
 
   const router = useRouter();
-  const { code: authCode, error: kakaoServerError } = router.query;
-  // console.log("authCode : " + authCode);
+  const { code: authCode } = router.query;
 
-  const loginHandler = useCallback(
-    async (code: string) => {
-      try {
-        // 1. 인가 코드를 사용해서 엑세스 토큰 가져오기
-        const tokenResponse = await getTokenFromKakao(code);
-        const { access_token: access_token } = tokenResponse;
-        console.log("token from Kakao : " + access_token);
-
-        // 2. 엑세스 토큰을 서버로 보냄
-        const apiResponse = await sendTokenToServer(access_token);
-
-        const accessToken = apiResponse.data.accessToken
-        console.log("token from Service server : " + accessToken);
+  const { mutate: kakaoLoginMutate } = useMutation(() =>
+    sendCodeToServer(authCode as string),
+    {
+      onSuccess: (data) => {
+        const { accessToken, refreshToken } = data
         setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-        if (apiResponse.success) {
-          router.push('/mainPage');
-          console.log('로그인 성공_토큰 : ' + apiResponse.data.accessToken);
-          localStorage.setItem('accessToken', apiResponse.data.accessToken);
-
-          // 3. 사용자 정보 받아오기
-          const userInfo = await getUserFromKakao(access_token);
-          console.log(userInfo);
-
-          const { properties } = userInfo;
-          const nickname = properties.nickname;
-
-          setNickname(nickname);
-        } else {
-          // router.replace('/');
-          router.push('/mainPage');
-          console.log('로그인 실패2 : ' + apiResponse.message);
-        }
-      } catch (error: any) {
-        // router.replace('/');
-        router.push('/mainPage');
-        console.log('로그인 실패3 : ' + error.message);
-      }
-    },
-    [router],
-  );
+        console.log(`accessToken: ${accessToken}, refreshToken: ${refreshToken}`);
+      },
+      onError: (error) => {
+        console.log('kakaoLogin Error : ' + error);
+      },
+    }
+  )
 
   useEffect(() => {
     if (authCode) {
-      loginHandler(authCode as string);
-    } else if (kakaoServerError) {
-      // router.push('/');
-      router.push('/mainPage');
-      console.log('로그인 실패4 : ' + kakaoServerError);
+      kakaoLoginMutate();
     }
-  }, [loginHandler, authCode, kakaoServerError, router]);
+  }, [authCode, kakaoLoginMutate]);
 
-  return { accessToken, nickname };
+  return { accessToken, refreshToken };
 }

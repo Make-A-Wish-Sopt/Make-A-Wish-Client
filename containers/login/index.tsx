@@ -12,10 +12,9 @@ import useModal from '@/hooks/useModal';
 export default function LoginContainer() {
   const { isOpen, modalToggle } = useModal();
 
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
   const handleKaKaoLogin = () => {
-    window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI
-    });
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
