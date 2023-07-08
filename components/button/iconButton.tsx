@@ -3,17 +3,12 @@ import Image from 'next/image';
 interface IconButtonProps {
   src: string;
   alt: string;
-  onClick?: () => void;
+  handleClick?: () => void;
 }
 
 export default function IconButton(props: IconButtonProps) {
-  const { src, alt, onClick } = props;
+  const { src, alt, handleClick } = props;
 
-  const handleClick = () => {
-    if (onClick) {
-      onClick();
-    }
-  };
 
   return <Image onClick={handleClick} src={src} alt={alt} style={{ cursor: 'pointer' }} />;
 }

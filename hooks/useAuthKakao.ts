@@ -27,7 +27,7 @@ export function useAuthKaKao() {
         setAccessToken(accessToken);
 
         if (apiResponse.success) {
-          router.push('/mainPage');
+          router.push('/main');
           console.log('로그인 성공_토큰 : ' + apiResponse.data.accessToken);
           localStorage.setItem('accessToken', apiResponse.data.accessToken);
 
@@ -41,12 +41,12 @@ export function useAuthKaKao() {
           setNickname(nickname);
         } else {
           // router.replace('/');
-          router.push('/mainPage');
+          router.push('/main');
           console.log('로그인 실패2 : ' + apiResponse.message);
         }
       } catch (error: any) {
         // router.replace('/');
-        router.push('/mainPage');
+        router.push('/main');
         console.log('로그인 실패3 : ' + error.message);
       }
     },
@@ -58,7 +58,7 @@ export function useAuthKaKao() {
       loginHandler(authCode as string);
     } else if (kakaoServerError) {
       // router.push('/');
-      router.push('/mainPage');
+      router.push('/main');
       console.log('로그인 실패4 : ' + kakaoServerError);
     }
   }, [loginHandler, authCode, kakaoServerError, router]);

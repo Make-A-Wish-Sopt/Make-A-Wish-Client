@@ -1,23 +1,26 @@
-import theme from '@/styles/theme';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CloseSmallIc } from '@/public/assets/icons';
-import { LinkCopyIc } from '@/public/assets/icons';
-import IconButton from '@/components/button/iconButton';
-import InputLink from '@/components/common/input/inputLink';
-import SnsBox from '@/components/button/snsBox';
-import { SHARE_LIST } from '@/interfaces/ShareData';
-import { sendKakaoMessage } from '@/hooks/sendkakaoMessage';
-import { useEffect, useState } from 'react';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';
 
+import theme from '@/styles/theme';
+import { CloseSmallIc, LinkCopyIc } from '@/public/assets/icons';
+import IconButton from '@/components/button/iconButton';
+import InputLink from '@/components/common/input/inputLink';
+import SNSBox from '@/components/button/snsBox';
+
+import { SNS_LIST } from '@/constant/snsList';
+import { useKakaoShare } from '@/hooks/useKakaoShare';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { SNSListType } from '@/types/snsListType';
+
+
 interface ShareModalProps {
-  clickModal: () => void;
+  handleModalClick: () => void;
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { clickModal } = props;
+  const { handleModalClick } = props;
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
   console.log(loginUserInfo);
@@ -26,47 +29,49 @@ export default function ShareModal(props: ShareModalProps) {
     setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
   }, []);
 
-  const shareKakao = () => {
-    sendKakaoMessage(loginUserInfo.nickName);
+  const handlSNSShare = (name: string) => {
+    if (name === 'KakaoTalk') {
+      useKakaoShare(loginUserInfo.nickName, wishesLink);
+    }
   };
 
-  const handleCopyClipBoard = async (text: string) => {
+  const handleTextCopy = (text: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text);
       alert('클립보드에 링크가 복사되었습니다.');
-    } catch (e) {
+    } catch (error) {
       alert('복사에 실패하였습니다');
     }
   };
 
   return (
-    <Styled.Modal>
-      <Styled.Header>
-        <IconButton src={CloseSmallIc} alt="닫기" onClick={clickModal} />
-      </Styled.Header>
+    <Styled.Container>
+      <Styled.IconContainer>
+        <IconButton src={CloseSmallIc} alt="닫기" handleClick={handleModalClick} />
+      </Styled.IconContainer>
 
-      <Styled.SnsContainer>
-        {SHARE_LIST.map((sns) => (
-          <SnsBox key={sns.name} onClick={sns.name === 'KaKaoTalk' ? shareKakao : undefined}>
+      <Styled.SNSContainer>
+        {SNS_LIST.map((sns) => (
+          <SNSBox key={sns.name} handleClick={() => handlSNSShare(sns.name)}>
             <Image src={sns.logo} alt={`${sns.name}`} />
-          </SnsBox>
+          </SNSBox>
         ))}
-      </Styled.SnsContainer>
+      </Styled.SNSContainer>
 
       <InputLink>
         <Styled.InputText value={wishesLink} readOnly />
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          onClick={() => handleCopyClipBoard(wishesLink)}
+          handleClick={() => handleTextCopy(wishesLink)}
         />
       </InputLink>
-    </Styled.Modal>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  Modal: styled.div`
+  Container: styled.div`
     width: 31.6rem;
     height: 14.3rem;
     background-color: ${theme.colors.pastel_blue};
@@ -79,14 +84,14 @@ const Styled = {
     transform: translate(-50%, -50%);
   `,
 
-  Header: styled.header`
+  IconContainer: styled.header`
     position: absolute;
     top: 20%;
     right: 5%;
     transform: translate(-50%, -50%);
   `,
 
-  SnsContainer: styled.div`
+  SNSContainer: styled.div`
     margin: 0 0 1.5rem;
     display: flex;
     justify-content: center;
