@@ -24,7 +24,7 @@ export default function LoginContainer() {
       </Header>
       {isOpen && (
         <Modal isOpen={isOpen} modalToggle={modalToggle}>
-          <GuideModal modalToggle={modalToggle} />
+          <GuideModal clickModal={modalToggle} />
         </Modal>
       )}
 

@@ -6,6 +6,7 @@ import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
 import IconButton from '@/components/button/iconButton';
 import router from 'next/router';
 import ButtonBox from '@/components/button/buttonBox';
+import { useEffect } from 'react';
 
 export default function MainPage() {
   const moveToForm = () => {

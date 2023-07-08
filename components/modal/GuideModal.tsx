@@ -8,11 +8,11 @@ import { GuideContentImg, GuideBoxImg } from '@/public/assets/images';
 import ButtonBox from '@/components/button/buttonBox';
 
 interface GuideModalProps {
-    modalToggle: () => void;
+    clickModal: () => void;
 }
 
 export default function GuideModal(props: GuideModalProps) {
-    const { modalToggle } = props;
+    const { clickModal } = props;
 
     const handleService = () => {
         router.push('/');
@@ -21,7 +21,7 @@ export default function GuideModal(props: GuideModalProps) {
     return (
         <Styled.Container>
             <Styled.BoxContainer>
-                <Styled.ButtonContainer onClick={modalToggle}>
+                <Styled.ButtonContainer onClick={clickModal}>
                     <IconButton src={CloseWhiteIc} alt="닫기" />
                 </Styled.ButtonContainer>
 

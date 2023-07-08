@@ -45,7 +45,7 @@ export default function WishesContainer() {
       </Header>
       {isOpen && (
         <Modal isOpen={isOpen} modalToggle={modalToggle}>
-          <GuideModal modalToggle={modalToggle} />
+          <GuideModal clickModal={modalToggle} />
         </Modal>
       )}
 
