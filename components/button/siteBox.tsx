@@ -12,7 +12,7 @@ export default function SiteBox(props: SiteBoxProps) {
 }
 
 const Styled = {
-    Container: styled.div`
+    Container: styled.button`
     display: inline-block;
     width: 6rem;
     height: 6rem;
