@@ -1,11 +1,5 @@
 import { TwentynineLogoImg, CoupangLogoImg } from '@/public/assets/images';
-import { StaticImageData } from 'next/image';
-
-interface SiteListType {
-  name: string;
-  link: string;
-  logo: StaticImageData;
-}
+import { SiteListType } from '@/types/siteListType';
 
 export const SITE_LIST: SiteListType[] = [
   // {
