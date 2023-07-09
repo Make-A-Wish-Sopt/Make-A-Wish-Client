@@ -1,4 +1,4 @@
-import MainContainer from '@/containers/main';
+import MainContainer from '@/components/main';
 
 export default function MainPage() {
 

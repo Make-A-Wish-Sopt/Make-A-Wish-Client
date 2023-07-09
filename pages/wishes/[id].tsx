@@ -1,4 +1,4 @@
-import WishesContainer from '@/containers/wishes/[id]';
+import WishesContainer from '@/components/wishes/[id]';
 
 export default function WishesPage() {
   return (

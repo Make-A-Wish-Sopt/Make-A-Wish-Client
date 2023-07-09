@@ -1,4 +1,4 @@
-import ShareContainer from '@/containers/wishes/share';
+import ShareContainer from '@/components/wishes/share';
 
 export default function SharePage() {
 
