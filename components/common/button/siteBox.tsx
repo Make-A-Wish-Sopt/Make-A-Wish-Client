@@ -8,19 +8,11 @@ interface SiteBoxProps {
 export default function SiteBox(props: SiteBoxProps) {
   const { children } = props;
 
-<<<<<<< HEAD:components/button/siteBox.tsx
-    return <Styled.Container>{children}</Styled.Container>;
-}
-
-const Styled = {
-    Container: styled.button`
-=======
   return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Container: styled.div`
->>>>>>> refactor#45-wishes:components/common/button/siteBox.tsx
+  Container: styled.button`
     display: inline-block;
     width: 6rem;
     height: 6rem;

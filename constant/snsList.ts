@@ -10,17 +10,14 @@ export const SNS_LIST: SNSListType[] = [
   },
   // {
   //     name: 'Instagram',
-  //     link: '',
   //     logo: InstaLogoImg,
   // },
   // {
   //     name: 'FaceBook',
-  //     link: '',
   //     logo: FacebookLogoImg,
   // },
   // {
   //     name: 'Twitter',
-  //     link: '',
   //     logo: TwitterLogoImg,
   // },
 ];

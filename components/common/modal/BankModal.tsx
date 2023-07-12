@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-<<<<<<< HEAD:components/modal/BankModal.tsx
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
-=======
-import { BANK_LIST } from '@/constant/common/bankData';
->>>>>>> refactor#45-wishes:components/common/modal/BankModal.tsx
 
 interface BankModalProps {
   handleToggle: () => void;
@@ -25,11 +21,7 @@ export default function BankModal(props: BankModalProps) {
       <Styled.Title>은행을 선택해주세요.</Styled.Title>
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-<<<<<<< HEAD:components/modal/BankModal.tsx
-          <Styled.BankLogoBox key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
-=======
-          <Styled.BankLogoContainer key={bank.name} onClick={() => handleChnageBankName(bank.name)}>
->>>>>>> refactor#45-wishes:components/common/modal/BankModal.tsx
+          <Styled.BankLogoContainer key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
             <Styled.Image>
               <Image src={bank.logo} alt={`${bank.name} 로고`} />
             </Styled.Image>

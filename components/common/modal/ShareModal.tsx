@@ -5,9 +5,9 @@ import { useRecoilValue } from 'recoil';
 
 import theme from '@/styles/theme';
 import { CloseSmallIc, LinkCopyIc } from '@/public/assets/icons';
-import IconButton from '@/components/button/iconButton';
+import IconButton from '@/components/common/button/iconButton';
 import InputLink from '@/components/common/input/inputLink';
-import SNSBox from '@/components/button/snsBox';
+import SNSBox from '@/components/common/button/snsBox';
 
 import { SNS_LIST } from '@/constant/snsList';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
@@ -47,7 +47,7 @@ export default function ShareModal(props: ShareModalProps) {
   return (
     <Styled.Container>
       <Styled.IconContainer>
-        <IconButton src={CloseSmallIc} alt="닫기" handleClick={handleModalClick} />
+        <IconButton src={CloseSmallIc} alt="닫기" onClick={handleModalClick} />
       </Styled.IconContainer>
 
       <Styled.SNSContainer>
@@ -63,7 +63,7 @@ export default function ShareModal(props: ShareModalProps) {
         <IconButton
           src={LinkCopyIc}
           alt="링크 복사"
-          handleClick={() => handleTextCopy(wishesLink)}
+          onClick={() => handleTextCopy(wishesLink)}
         />
       </InputLink>
     </Styled.Container>

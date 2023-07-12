@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputBox from '../common/input/inputBox';
-import { SITE_LIST } from '@/constant/wishes/siteList';
+import { SITE_LIST } from '@/constant/siteList';
 import Image from 'next/image';
 import AlertTextBox from '../common/alertTextBox';
 import { validation } from '@/validation/input';
