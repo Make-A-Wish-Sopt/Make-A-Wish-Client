@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-
 import theme from '@/styles/theme';
+import IconButton from '@/components/common/button/iconButton';
 import { CloseWhiteIc, DetailCloseIc, DetailOpenIc } from '@/public/assets/icons';
-import IconButton from '@/components/button/iconButton';
-
 
 interface TermsModalProps {
-  modalToggle: () => void;
+  handleToggle: () => void;
   changeIsAgreed: (isChecked: boolean) => void;
 }
 
 export default function TermsModal(props: TermsModalProps) {
-  const { modalToggle, changeIsAgreed } = props;
+  const { handleToggle, changeIsAgreed } = props;
 
   const [isHidden, setIsHidden] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
@@ -34,7 +32,7 @@ export default function TermsModal(props: TermsModalProps) {
   return (
     <Styled.Container>
       <Styled.BoxContainer>
-        <Styled.ButtonContainer onClick={modalToggle}>
+        <Styled.ButtonContainer onClick={handleToggle}>
           <IconButton src={CloseWhiteIc} alt="닫기" />
         </Styled.ButtonContainer>
 
@@ -77,10 +75,9 @@ export default function TermsModal(props: TermsModalProps) {
           )}
 
           <Styled.CheckContainer>
-            <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} />
+            {/* <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} /> */}
             동의하고, 소원링크 생성하기
           </Styled.CheckContainer>
-
         </Styled.ContentContainer>
       </Styled.BoxContainer>
     </Styled.Container>
@@ -153,15 +150,15 @@ const Styled = {
     justify-content: center;
   `,
 
-  Checkbox: styled.input.attrs({ type: 'checkbox' })`
-    width: 1.4rem;
-    height: 1.4rem;
-    border: 1px solid ${theme.colors.dark_blue};
-    margin: 0 1rem 0.5rem;
-    cursor: pointer;
-    &:checked {
-      background-color: ${theme.colors.dark_blue};
-    }
-    appearance: none;
-  `,
+  // CheckContainer: styled.input.attrs({ type: 'checkbox' })`
+  //   width: 1.4rem;
+  //   height: 1.4rem;
+  //   border: 1px solid ${theme.colors.dark_blue};
+  //   margin: 0 1rem 0.5rem;
+  //   cursor: pointer;
+  //   &:checked {
+  //     background-color: ${theme.colors.dark_blue};
+  //   }
+  //   appearance: none;
+  // `,
 };

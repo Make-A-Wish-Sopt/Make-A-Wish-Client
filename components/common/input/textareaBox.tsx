@@ -8,11 +8,11 @@ interface TextareaBoxProps {
 
 export default function TextareaBox(props: TextareaBoxProps) {
   const { children } = props;
-  return <Styled.Box>{children}</Styled.Box>;
+  return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.section`
+  Container: styled.section`
     width: 100%;
     height: 15rem;
 

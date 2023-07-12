@@ -1,19 +1,23 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+<<<<<<< HEAD:components/modal/BankModal.tsx
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
+=======
+import { BANK_LIST } from '@/constant/common/bankData';
+>>>>>>> refactor#45-wishes:components/common/modal/BankModal.tsx
 
 interface BankModalProps {
-  modalToggle: () => void;
+  handleToggle: () => void;
   changeBankName: (input: string) => void;
 }
 
 export default function BankModal(props: BankModalProps) {
-  const { modalToggle, changeBankName } = props;
+  const { handleToggle, changeBankName } = props;
 
   const handleChangeBankName = (input: string) => {
     changeBankName(input);
-    modalToggle();
+    handleToggle();
   };
 
   return (
@@ -21,12 +25,16 @@ export default function BankModal(props: BankModalProps) {
       <Styled.Title>은행을 선택해주세요.</Styled.Title>
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
+<<<<<<< HEAD:components/modal/BankModal.tsx
           <Styled.BankLogoBox key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
+=======
+          <Styled.BankLogoContainer key={bank.name} onClick={() => handleChnageBankName(bank.name)}>
+>>>>>>> refactor#45-wishes:components/common/modal/BankModal.tsx
             <Styled.Image>
               <Image src={bank.logo} alt={`${bank.name} 로고`} />
             </Styled.Image>
             <Styled.Name>{bank.name} </Styled.Name>
-          </Styled.BankLogoBox>
+          </Styled.BankLogoContainer>
         ))}
       </Styled.BankContainer>
     </Styled.Modal>
@@ -61,7 +69,7 @@ const Styled = {
     grid-row-gap: 0.8rem;
   `,
 
-  BankLogoBox: styled.div`
+  BankLogoContainer: styled.div`
     background-color: ${theme.colors.white};
     border-radius: 1rem;
     padding: 1rem 0 0.5rem;

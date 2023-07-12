@@ -7,11 +7,11 @@ interface inputTextProps {
 
 export default function Input(props: inputTextProps) {
   const { maxLength } = props;
-  return <Styled.Root maxLength={maxLength}></Styled.Root>;
+  return <Styled.Container maxLength={maxLength}></Styled.Container>;
 }
 
 const Styled = {
-  Root: styled.input`
+  Container: styled.input`
     width: 100%;
     height: 2.2rem;
     background-color: ${theme.colors.gray1};
@@ -20,5 +20,3 @@ const Styled = {
     ${theme.fonts.body12};
   `,
 };
-
-

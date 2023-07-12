@@ -1,15 +1,15 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/common/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import InputContainer from '@/components/common/input/inputContainer';
 import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
 import { CAKE_LIST } from '@/constant/cakeList';
-import { CakeListType } from '@/types/cakeListType';
+import { CakeListType } from '@/types/cakes/cakeListType';
 import Image from 'next/image';
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useEffect, useState } from 'react';
 import CakesHeader from '@/components/cakes/cakesHeader';
@@ -24,7 +24,7 @@ import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { CakesData } from '@/recoil/cakes/cakesData';
 
 export default function CakesPage() {
-  const [giverName, changeGiverName] = useInput('', LIMIT_TEXT.none);
+  const [giverName, changeGiverName] = useInput('');
   const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);

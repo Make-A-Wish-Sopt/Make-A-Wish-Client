@@ -8,11 +8,11 @@ interface PresentImageBoxProps {
 export default function PresentImageBox(props: PresentImageBoxProps) {
   const { children } = props;
 
-  return <Styled.Box>{children}</Styled.Box>;
+  return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;

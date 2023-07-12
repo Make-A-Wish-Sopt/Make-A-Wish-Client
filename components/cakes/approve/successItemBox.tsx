@@ -8,7 +8,6 @@ import TestImage from '../../../public/assets/testImage.jpeg';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
-import PresentImageBox from '@/components/common/presentImageBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
@@ -32,7 +31,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
   return (
     <>
       {cakesData?.selectedCake.cakeNumber === 1 ? (
-        <Styled.Box>
+        <Styled.Container>
           <InputLargeBox bgColor={theme.colors.pastel_blue}>
             <Styled.HintWrapper>
               ~선물 초성힌트~
@@ -41,10 +40,10 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
             </Styled.HintWrapper>
           </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...비밀이야❤</Styled.WishText>
-        </Styled.Box>
+        </Styled.Container>
       ) : (
-        <Styled.Box>
-          <PresentImageBox>
+        <Styled.Container>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
                 src={TestImage}
@@ -53,9 +52,9 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
+          </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
-        </Styled.Box>
+        </Styled.Container>
       )}
       {isSuccess && <Contribution percent={Number(data.contribute)} vertical={false} />}
     </>
@@ -63,7 +62,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
 }
 
 const Styled = {
-  Box: styled.section`
+  Container: styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;

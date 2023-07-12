@@ -24,7 +24,7 @@ import {
   PerfumeCakeThanksImg,
   VitaminCakeThanksImg,
 } from '@/public/assets/images';
-import { CakeListType } from '@/types/cakeListType';
+import { CakeListType } from '@/types/cakes/cakeListType';
 
 export const CAKE_LIST: CakeListType[] = [
   {

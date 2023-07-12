@@ -2,17 +2,25 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface SiteBoxProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function SiteBox(props: SiteBoxProps) {
-    const { children } = props;
+  const { children } = props;
 
+<<<<<<< HEAD:components/button/siteBox.tsx
     return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
     Container: styled.button`
+=======
+  return <Styled.Container>{children}</Styled.Container>;
+}
+
+const Styled = {
+  Container: styled.div`
+>>>>>>> refactor#45-wishes:components/common/button/siteBox.tsx
     display: inline-block;
     width: 6rem;
     height: 6rem;

@@ -9,11 +9,11 @@ interface InputCakeBoxProps {
 export default function InputCakeBox(props: InputCakeBoxProps) {
   const { children, isClicked } = props;
 
-  return <Styled.Box isClicked={isClicked}>{children}</Styled.Box>;
+  return <Styled.Container isClicked={isClicked}>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.div<{ isClicked: boolean }>`
+  Container: styled.div<{ isClicked: boolean }>`
     width: 7.4rem;
     height: 4.6rem;
 

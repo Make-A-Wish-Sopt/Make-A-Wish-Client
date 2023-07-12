@@ -11,7 +11,7 @@ export default function SuccessMsgBox(props: SuccessMsgBoxProps) {
   const { cakesData } = props;
 
   return (
-    <Styled.CompleteMessageBox>
+    <Styled.Container>
       <span>{cakesData?.wishesName}님께</span>
 
       <Image
@@ -22,12 +22,12 @@ export default function SuccessMsgBox(props: SuccessMsgBoxProps) {
       />
       <Styled.CakeText>{cakesData?.selectedCake.name}</Styled.CakeText>
       <span>선물이 완료 되었어요!</span>
-    </Styled.CompleteMessageBox>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  CompleteMessageBox: styled.div`
+  Container: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

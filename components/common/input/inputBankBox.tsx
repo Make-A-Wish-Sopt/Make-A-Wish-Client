@@ -9,11 +9,11 @@ interface InputBankBoxProps {
 export default function InputBankBox(props: InputBankBoxProps) {
   const { children, onClick } = props;
 
-  return <Styled.Box onClick={onClick}>{children}</Styled.Box>;
+  return <Styled.Container onClick={onClick}>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.div`
+  Container: styled.div`
     width: 33.1rem;
     height: 5rem;
 

@@ -9,11 +9,11 @@ interface InputLargeBoxProps {
 export default function InputLargeBox(props: InputLargeBoxProps) {
   const { bgColor, children } = props;
 
-  return <Styled.Box bgColor={bgColor}>{children}</Styled.Box>;
+  return <Styled.Container bgColor={bgColor}>{children}</Styled.Container>;
 }
 
 const Styled = {
-  Box: styled.div<{ bgColor: string }>`
+  Container: styled.div<{ bgColor: string }>`
     width: 100%;
     height: 15rem;
 

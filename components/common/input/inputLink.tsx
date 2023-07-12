@@ -8,11 +8,11 @@ interface InputLinkProps {
 export default function InputLink(props: InputLinkProps) {
     const { children } = props;
 
-    return <Styled.Box>{children}</Styled.Box>;
+    return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
-    Box: styled.div`
+  Container: styled.div`
     width: 100%;
     height: 4.8rem;
 

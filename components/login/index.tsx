@@ -4,13 +4,13 @@ import theme from '@/styles/theme';
 import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
 import { PillCakeImg, LoginChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/button/iconButton';
-import GuideModal from '@/components/modal/GuideModal';
+import IconButton from '../common/button/iconButton';
+import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/common/useModal';
 
 export default function LoginContainer() {
-  const { isOpen, modalToggle } = useModal();
+  const { isOpen, handleToggle } = useModal();
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
   const handleKaKaoLogin = () => {
@@ -20,11 +20,11 @@ export default function LoginContainer() {
   return (
     <>
       <Header>
-        <IconButton handleClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
+        <IconButton onClick={handleToggle} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
       {isOpen && (
-        <Modal isOpen={isOpen} modalToggle={modalToggle}>
-          <GuideModal clickModal={modalToggle} />
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <GuideModal clickModal={handleToggle} />
         </Modal>
       )}
 
@@ -43,7 +43,7 @@ export default function LoginContainer() {
         <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
       </Styled.Container>
 
-      <IconButton handleClick={handleKaKaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
+      <IconButton onClick={handleKaKaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
     </>
   );
 }

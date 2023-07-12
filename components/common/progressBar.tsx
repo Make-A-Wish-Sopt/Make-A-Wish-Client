@@ -10,15 +10,15 @@ export default function ProgressBar(props: ProgressBarProps) {
   const { percent, vertical } = props;
   return (
     <>
-      <Styled.Box vertical={vertical}>
+      <Styled.Container vertical={vertical}>
         <Styled.Progress percent={percent} />
-      </Styled.Box>
+      </Styled.Container>
     </>
   );
 }
 
 const Styled = {
-  Box: styled.div<{ vertical: boolean }>`
+  Container: styled.div<{ vertical: boolean }>`
     width: 27rem;
     height: 1rem;
 

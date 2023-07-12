@@ -11,33 +11,33 @@ import InputLargeBox from '@/components/common/input/inputLargeBox';
 import InputBankBox from '@/components/common/input/inputBankBox';
 import InputCalendar from '@/components/common/input/inputCalendar';
 
-import BankModal from '@/components/modal/BankModal';
+import BankModal from '@/components/common/modal/BankModal';
 import { useState } from 'react';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/common/useInput';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import ItemLink from '@/components/formPage/itemLink';
+import ItemLink from '@/components/wishes/itemLink';
 
-import ButtonBox from '@/components/button/buttonBox';
+import ButtonBox from '@/components/common/button/buttonBox';
 import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
-import { WishesDataType } from '@/types/wishesDataType';
-import useModal from '@/hooks/useModal';
+import { WishesDataType } from '@/types/wishes/wishesDataType';
+import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
-import CustomDatePicker from '@/components/modal/DatePickerModal';
+import CustomDatePicker from '@/components/common/modal/DatePickerModal';
 import Layout from '@/components/common/layout';
 import { useRouter } from 'next/router';
 import { useDate } from '@/hooks/useDate';
 
 export default function WishesFormPage() {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageURL, setImageURL] = useState('');
   const [price, setPrice] = useState(0);
-  const [title, changeTitle] = useInput('', LIMIT_TEXT[20]);
-  const [hint1, changeHint1] = useInput('', LIMIT_TEXT[300]);
-  const [hint2, changeHint2] = useInput('', LIMIT_TEXT[15]);
-  const [name, changeName] = useInput('', LIMIT_TEXT.none);
+  const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);
+  const [hint1, handleChangeHint1] = useInput('', LIMIT_TEXT[300]);
+  const [hint2, handleChangeHint2] = useInput('', LIMIT_TEXT[15]);
+  const [name, handleChangeName] = useInput('');
   const [bankName, setBankName] = useState('');
-  const [account, changeAccount] = useInput('', LIMIT_TEXT.none);
-  const [phone, changePhone] = useInput('', LIMIT_TEXT.none);
+  const [account, handleChangeAccount] = useInput('');
+  const [phone, handleChangePhone] = useInput('');
   const [endDate, setEndDate] = useState<string>(useDate(new Date()));
   const [showEndDate, setShowEndDate] = useState(false);
 
@@ -45,26 +45,26 @@ export default function WishesFormPage() {
 
   const startDate = useDate(new Date());
 
-  const { isOpen, modalToggle } = useModal();
+  const { isOpen, handleToggle } = useModal();
 
   const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
 
-  const changePrice = (input: number) => {
+  const handleChangePrice = (input: number) => {
     setPrice(input);
   };
 
-  const changeImageUrl = (input: string) => {
-    setImageUrl(input);
+  const handleChangeImageURL = (input: string) => {
+    setImageURL(input);
   };
 
-  const changeBankName = (input: string) => {
+  const handleChangeBankName = (input: string) => {
     setBankName(input);
   };
 
-  const movePreviewPage = () => {
+  const handleMovePreviewPage = () => {
     setWishesData((prevData) => ({
       ...prevData,
-      imageUrl: imageUrl,
+      imageUrl: imageURL,
       price: price,
       title: title,
       hint1: hint1,
@@ -83,7 +83,7 @@ export default function WishesFormPage() {
     return input.includes('-');
   };
 
-  const handleInputClick = () => {
+  const handleOpenCalendar = () => {
     setShowEndDate(true);
   };
 
@@ -94,9 +94,9 @@ export default function WishesFormPage() {
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
       <ItemLink
-        changePrice={changePrice}
-        changeImageUrl={changeImageUrl}
-        imageUrl={imageUrl}
+        handleChangePrice={handleChangePrice}
+        handleChangeImageURL={handleChangeImageURL}
+        imageURL={imageURL}
         price={price}
       />
 
@@ -106,7 +106,7 @@ export default function WishesFormPage() {
         <InputBox>
           <Styled.InputText
             placeholder="ex. OO이의 앙큼 벌스데이"
-            onChange={changeTitle}
+            onChange={handleChangeTitle}
             value={title}
           />
           <InputLength inputLength={title.length} limit={LIMIT_TEXT[20]} />
@@ -119,7 +119,7 @@ export default function WishesFormPage() {
         <InputLargeBox bgColor={theme.colors.pastel_blue}>
           <Styled.TextareaText
             placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
-            onChange={changeHint1}
+            onChange={handleChangeHint1}
             value={hint1}
           />
           <Styled.TextareaWrapper>
@@ -134,7 +134,7 @@ export default function WishesFormPage() {
         <InputBox>
           <Styled.InputText
             placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
-            onChange={changeHint2}
+            onChange={handleChangeHint2}
             value={hint2}
           />
           <InputLength inputLength={hint2.length} limit={LIMIT_TEXT[15]} />
@@ -150,14 +150,10 @@ export default function WishesFormPage() {
           </InputCalendar>
           <InputCalendar borderColor={theme.colors.main_blue}>
             {!showEndDate && (
-              <Styled.DateCalendar
-                placeholder="종료일"
-                readOnly
-                showEndDate={showEndDate}
-              />
+              <Styled.DateCalendar placeholder="종료일" readOnly showEndDate={showEndDate} />
             )}
             {showEndDate && <CustomDatePicker endDate={endDate} setEndDate={setEndDate} />}
-            <Image src={CalendarIc} alt="캘린더" onClick={handleInputClick} />
+            <Image src={CalendarIc} alt="캘린더" onClick={handleOpenCalendar} />
           </InputCalendar>
         </Styled.CalendarContainer>
       </Styled.ItemBox>
@@ -165,23 +161,23 @@ export default function WishesFormPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>송금 받을 계좌번호 입력하기</Styled.InputTitle>
         <InputBox>
-          <Styled.InputText placeholder="예금주명" onChange={changeName} value={name} />
+          <Styled.InputText placeholder="예금주명" onChange={handleChangeName} value={name} />
         </InputBox>
         <br />
-        <InputBankBox onClick={modalToggle}>
+        <InputBankBox onClick={handleToggle}>
           <Styled.InputText placeholder="은행 선택" value={bankName} readOnly />
           <Image src={ArrowDownIc} alt="열기" />
         </InputBankBox>
         {isOpen && (
-          <Modal isOpen={isOpen} modalToggle={modalToggle}>
-            <BankModal modalToggle={modalToggle} changeBankName={changeBankName} />
+          <Modal isOpen={isOpen} handleToggle={handleToggle}>
+            <BankModal handleToggle={handleToggle} changeBankName={handleChangeBankName} />
           </Modal>
         )}
         <br />
         <InputBox>
           <Styled.InputText
             placeholder="계좌번호는 (-)없이 입력해주세요"
-            onChange={changeAccount}
+            onChange={handleChangeAccount}
             value={account}
           />
         </InputBox>
@@ -193,7 +189,7 @@ export default function WishesFormPage() {
         <InputBox>
           <Styled.InputTextLarge
             placeholder="연락처는 (-)없이 입력해주세요"
-            onChange={changePhone}
+            onChange={handleChangePhone}
             value={phone}
           />
         </InputBox>
@@ -203,7 +199,7 @@ export default function WishesFormPage() {
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        handleClick={movePreviewPage}
+        handleClick={handleMovePreviewPage}
       >
         소원 링크 생성하기
       </ButtonBox>

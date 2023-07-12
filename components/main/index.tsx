@@ -5,8 +5,8 @@ import router from 'next/router';
 import theme from '@/styles/theme';
 import { SideBarIc } from '@/public/assets/icons';
 import { PillCakeImg, MainChatImg, GaugeBarImg } from '@/public/assets/images';
-import IconButton from '@/components/button/iconButton';
-import ButtonBox from '@/components/button/buttonBox';
+import IconButton from '@/components/common/button/iconButton';
+import ButtonBox from '@/components/common/button/buttonBox';
 
 export default function MainContainer() {
   const handleMovePage = () => {
@@ -17,7 +17,7 @@ export default function MainContainer() {
     <>
       <Styled.HeaderContainer>
         <Styled.Title>
-          { }님,
+          {}님,
           <br />
           <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
           <br />
@@ -54,16 +54,16 @@ export default function MainContainer() {
 
 const Styled = {
   HeaderContainer: styled.div`
-  display: flex;
+    display: flex;
   `,
 
   Title: styled.div`
-  margin: 0 0 3rem;
-  ${theme.fonts.headline24_130};
+    margin: 0 0 3rem;
+    ${theme.fonts.headline24_130};
   `,
 
   TitleColor: styled.span`
-  color: ${theme.colors.main_blue};
+    color: ${theme.colors.main_blue};
   `,
 
   SideContainer: styled.div`

@@ -1,51 +1,30 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
-import PresentImageBox from '@/components/common/presentImageBox';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import InputBox from '@/components/common/input/inputBox';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { WishesData } from '@/recoil/formPage/wishesData';
-import ButtonBox from '@/components/button/buttonBox';
-import useModal from '@/hooks/useModal';
+import ButtonBox from '@/components/common/button/buttonBox';
+import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
-import TermsModal from '@/components/modal/TermsModal';
+import TermsModal from '@/components/common/modal/termsModal';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
-import { createWishesLink } from '@/api/formPreviewPage/createWishesLink';
-import { useRouter } from 'next/router';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/wishes';
 
 export default function PreviewPage() {
-  const [isAgreed, setIsAgreed] = useState(false);
-  const { isOpen, modalToggle } = useModal();
-  const router = useRouter();
-  const wishesData = useRecoilValue(WishesData);
-  const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
+  const { wishesData, postWishesData } = useCreateWishesLink();
 
-  const { mutate } = useMutation(() => createWishesLink(wishesData), {
-    onSuccess: (data) => {
-      setLoginUserInfo((prevData) => ({
-        ...prevData,
-        wishesId: data.data.data,
-      }));
-      router.push('/wishes/share');
-    },
-  });
+  const [isAgreed, setIsAgreed] = useState(false);
+  const { isOpen, handleToggle } = useModal();
 
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);
   };
 
   const createLink = () => {
-    return isAgreed ? postWishesData() : modalToggle();
-  };
-
-  const postWishesData = () => {
-    mutate();
+    return isAgreed ? postWishesData() : handleToggle();
   };
 
   return (
@@ -62,16 +41,16 @@ export default function PreviewPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>{wishesData.title}</Styled.InputTitle>
         <Styled.PresentContainer>
-          <PresentImageBox>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
-                src={wishesData.imageUrl}
+                src={wishesData.imageURL}
                 fill={true}
                 alt="선물"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
+          </InputLargeBox>
           <Styled.PresentPrice>가격: {wishesData.price}원</Styled.PresentPrice>
         </Styled.PresentContainer>
       </Styled.ItemBox>
@@ -105,8 +84,8 @@ export default function PreviewPage() {
         </InputBox>
       </Styled.ItemBox>
 
-      <Modal isOpen={isOpen} modalToggle={modalToggle}>
-        <TermsModal modalToggle={modalToggle} changeIsAgreed={changeIsAgreed} />
+      <Modal isOpen={isOpen} handleToggle={handleToggle}>
+        <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
       </Modal>
 
       <ButtonBox
@@ -160,5 +139,10 @@ const Styled = {
     height: 100%;
 
     object-fit: fill;
+  `,
+
+  GiftImage: styled.img`
+    border-radius: 1.6rem;
+    object-fit: cover;
   `,
 };

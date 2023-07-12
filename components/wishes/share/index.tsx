@@ -7,9 +7,9 @@ import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/button/iconButton';
-import ButtonBox from '@/components/button/buttonBox';
-import ShareModal from '@/components/modal/ShareModal';
+import IconButton from '@/components/common/button/iconButton';
+import ButtonBox from '@/components/common/button/buttonBox';
+import ShareModal from '@/components/common/modal/ShareModal';
 
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 

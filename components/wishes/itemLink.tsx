@@ -1,82 +1,39 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputBox from '../common/input/inputBox';
-import { SITE_LIST } from '@/constant/siteList';
+import { SITE_LIST } from '@/constant/wishes/siteList';
 import Image from 'next/image';
 import AlertTextBox from '../common/alertTextBox';
-import PresentImageBox from '../common/presentImageBox';
 import { validation } from '@/validation/input';
-import useInput from '@/hooks/useInput';
-import { LIMIT_TEXT } from '@/constant/limitText';
-import { useQuery, useQueryClient } from 'react-query';
-import { getItemInfo } from '@/api/formPage/getItemData';
+import useInput from '@/hooks/common/useInput';
 import { useState } from 'react';
-import { QUERY_KEY } from '@/constant/queryKey';
+import { useGetItemInfo } from '@/hooks/queries/wishes/wishes';
+import InputLargeBox from '../common/input/inputLargeBox';
 
 interface ItemLinkProps {
-  changePrice: (input: number) => void;
-  changeImageUrl: (input: string) => void;
-  imageUrl: string;
+  handleChangePrice: (input: number) => void;
+  handleChangeImageURL: (input: string) => void;
+  imageURL: string;
   price: number;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { changePrice, changeImageUrl, imageUrl } = props;
-  const [link, changeLink] = useInput('', LIMIT_TEXT.none);
+  const { handleChangePrice, handleChangeImageURL, imageURL } = props;
+  const [linkURL, handleChangeLinkURL] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
-
-  const queryClient = useQueryClient();
-
-  const { data: itemData, isSuccess } = useQuery(
-    QUERY_KEY.itemData,
-    async () => await getItemInfo(link),
-    {
-      onSuccess: (data) => {
-        const imageData = data.imageTag.data?.data;
-        const priceData = data.priceTag.data?.data;
-
-        if (imageData && priceData) {
-          changePrice(Number(extractPrice(priceData)?.replaceAll(',', '')));
-          const imageSrc = extractImageSrc(imageData);
-          imageSrc && changeImageUrl(imageSrc);
-        }
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-      enabled: isCorrectLink,
-    },
-  );
+  const { itemData, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
 
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
-    if (link.length > 0 && validation.isCorrectSite(link)) {
-      isCorrectLink && queryClient.invalidateQueries([QUERY_KEY.itemData, link]);
+    if (linkURL.length > 0 && validation.isCorrectSite(linkURL)) {
       setIsCorrectLink(true);
       return;
     }
     setIsCorrectLink(false);
   };
 
-  const extractImageSrc = (imageLink: string) => {
-    //eslint-disable-next-line
-    const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-    const imageSrc = regex.exec(imageLink);
-
-    if (imageSrc !== null) return imageSrc[1];
-  };
-
-  const extractPrice = (totalPrice: string) => {
-    const html = document.createElement('span');
-    html.innerHTML = totalPrice;
-    const innerHtmlText = html.querySelector('.css-4bcxzt')?.innerHTML;
-    const price = innerHtmlText?.substring(0, innerHtmlText.indexOf('<'));
-
-    return price;
-  };
-
   return (
-    <Styled.ItemBox>
+    <Styled.Container>
       <Styled.InputTitle>갖고 싶은 선물 링크 불러오기</Styled.InputTitle>
       {SITE_LIST.map((site) => (
         <Styled.SiteBox key={site.name}>
@@ -89,37 +46,35 @@ export default function ItemLink(props: ItemLinkProps) {
       <InputBox>
         <Styled.InputText
           placeholder="정해진 사이트에서 원하는 선물 링크 복사, 붙여넣기"
-          onChange={changeLink}
+          onChange={handleChangeLinkURL}
           onBlur={parseImage}
         />
       </InputBox>
-      {link.length > 0 && !validation.isCorrectSite(link) && (
+      {linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
       {isSuccess && itemData && (
         <Styled.PresentContainer>
-          <PresentImageBox>
+          <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
               <Image
-                src={imageUrl}
+                src={imageURL}
                 fill={true}
                 alt="선물"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </PresentImageBox>
-          <Styled.PresentPrice>
-            가격 : {extractPrice(itemData.priceTag.data?.data)}원
-          </Styled.PresentPrice>
+          </InputLargeBox>
+          <Styled.PresentPrice>가격 : test원</Styled.PresentPrice>
         </Styled.PresentContainer>
       )}
-    </Styled.ItemBox>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  ItemBox: styled.div`
+  Container: styled.div`
     margin: 0 0 4rem;
   `,
 

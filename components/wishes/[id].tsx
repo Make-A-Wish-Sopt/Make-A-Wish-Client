@@ -8,16 +8,16 @@ import theme from '@/styles/theme';
 import { GuideBtnIc } from '@/public/assets/icons';
 import { PillCakeImg, WishesChatImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
-import IconButton from '@/components/button/iconButton';
-import GuideModal from '@/components/modal/GuideModal';
-import ButtonBox from '@/components/button/buttonBox';
+import IconButton from '@/components/common/button/iconButton';
+import GuideModal from '@/components/common/modal/GuideModal';
+import ButtonBox from '@/components/common/button/buttonBox';
 import Modal from '@/components/common/modal';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/common/useModal';
 
 import { getWishesData } from '@/api/cakes/getWishesData';
 
 export default function WishesContainer() {
-  const { isOpen, modalToggle } = useModal();
+  const { isOpen, handleToggle } = useModal();
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
   const router = useRouter();
 
@@ -41,11 +41,11 @@ export default function WishesContainer() {
   return (
     <>
       <Header>
-        <IconButton handleClick={modalToggle} src={GuideBtnIc} alt="서비스 가이드" />
+        <IconButton onClick={handleToggle} src={GuideBtnIc} alt="서비스 가이드" />
       </Header>
       {isOpen && (
-        <Modal isOpen={isOpen} modalToggle={modalToggle}>
-          <GuideModal clickModal={modalToggle} />
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <GuideModal clickModal={handleToggle} />
         </Modal>
       )}
 
@@ -126,7 +126,6 @@ const Styled = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* align-items: center; */
 
     height: 11.4rem;
   `,

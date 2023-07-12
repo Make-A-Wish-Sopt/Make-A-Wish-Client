@@ -1,4 +1,4 @@
-import { ParsingTagKeyType } from '@/types/formPage/parsingTagKeyType';
+import { ParsingTagKeyType } from '@/types/wishes/parsingTagKeyType';
 
 export const PARSING_TAG_KEY: ParsingTagKeyType = {
   ['29cm']: {
