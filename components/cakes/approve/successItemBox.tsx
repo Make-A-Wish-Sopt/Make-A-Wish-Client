@@ -4,7 +4,6 @@ import { CakesDataType } from '@/types/cakes/cakesDataType';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
-import TestImage from '../../../public/assets/testImage.jpeg';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
@@ -44,12 +43,12 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
         <Styled.Container>
           <InputLargeBox bgColor={theme.colors.white}>
             <Styled.ImageWrapper>
-              <Image
+              {/* <Image
                 src={TestImage}
                 fill={true}
                 alt="실제 선물 이미지"
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-              />
+              /> */}
             </Styled.ImageWrapper>
           </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
