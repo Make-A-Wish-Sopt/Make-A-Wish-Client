@@ -14,14 +14,13 @@ import { LIMIT_TEXT } from '@/constant/limitText';
 import { useEffect, useState } from 'react';
 import CakesHeader from '@/components/cakes/cakesHeader';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { QUERY_KEY } from '@/constant/queryKey';
+import { useQuery } from 'react-query';
 import { getWishesData } from '@/api/cakes/getWishesData';
-import { postPayReady } from '@/api/cakes/postPayReady';
 import { useRouter } from 'next/router';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { CakesData } from '@/recoil/cakes/cakesData';
+import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 
 export default function CakesPage() {
   const [giverName, changeGiverName] = useInput('');
@@ -32,10 +31,25 @@ export default function CakesPage() {
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
   const router = useRouter();
 
+  const { data, mutate, isSuccess } = useRequestPayReady(giverName, selectedCake.cakeNumber);
+
   useEffect(() => {
     if (!router.isReady) return;
     setWishesId(router.query.id);
   }, [router.isReady]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const nextLink = data?.data.data.next_redirect_pc_url;
+      const tid = data?.data.data.tid;
+      setCakesData((prevData) => ({
+        ...prevData,
+        tid: tid,
+      }));
+
+      router.replace(nextLink);
+    }
+  }, [isSuccess]);
 
   const { data: wishesData } = useQuery('wished', async () => getWishesData(wishesId), {
     enabled: wishesId !== '',
@@ -68,30 +82,6 @@ export default function CakesPage() {
     saveReocilData();
     selectedCake.cakeNumber === 1 ? router.replace('cakes/approve') : mutate();
   };
-
-  const queryClient = useQueryClient();
-  queryClient.invalidateQueries(QUERY_KEY.payReady);
-
-  const { mutate } = useMutation(
-    QUERY_KEY.payReady,
-    () => postPayReady(giverName, selectedCake.cakeNumber),
-    {
-      onSuccess: (data) => {
-        const nextLink = data.data.data.next_redirect_pc_url;
-        const tid = data.data.data.tid;
-
-        setCakesData((prevData) => ({
-          ...prevData,
-          tid: tid,
-        }));
-
-        router.replace(nextLink);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    },
-  );
 
   return (
     <>

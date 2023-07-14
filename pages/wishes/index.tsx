@@ -21,12 +21,12 @@ import ButtonBox from '@/components/common/button/buttonBox';
 import { useSetRecoilState } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { WishesDataType } from '@/types/wishes/wishesDataType';
-import useModal from '@/hooks/common/useModal';
+import  useModal  from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import CustomDatePicker from '@/components/common/modal/DatePickerModal';
 import Layout from '@/components/common/layout';
 import { useRouter } from 'next/router';
-import { useDate } from '@/hooks/useDate';
+import useDate from '@/hooks/useDate';
 
 export default function WishesFormPage() {
   const [imageURL, setImageURL] = useState('');

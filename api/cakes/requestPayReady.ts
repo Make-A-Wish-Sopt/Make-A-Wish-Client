@@ -1,7 +1,7 @@
 import PATH from '../common/path';
 import { client } from '../common/axios';
 
-export async function postPayReady(userId: string, cakeNumber: number) {
+export const requestPayReady = async (userId: string, cakeNumber: number) => {
   return await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.CAKES}/${PATH.PAY}/${PATH.READY}`,
     {
@@ -18,4 +18,4 @@ export async function postPayReady(userId: string, cakeNumber: number) {
       headers: {},
     },
   );
-}
+};

@@ -12,7 +12,7 @@ const PATH = {
   PRESENT: 'present',
   INFO: 'info',
   KAKAO: 'kakao',
-  CALLBACK: 'callback'
+  CALLBACK: 'callback',
 };
 
 export default PATH;

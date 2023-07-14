@@ -2,7 +2,7 @@ import PATH from '../common/path';
 import { client } from '../common/axios';
 import { WishesDataType } from '@/types/wishes/wishesDataType';
 
-export async function createWishesLink(wishesData: WishesDataType) {
+export const createWishesLink = async (wishesData: WishesDataType) => {
   const accessToken = localStorage.getItem('accessToken');
 
   const startDate = wishesData.startDate.replaceAll('-', '.');
@@ -31,4 +31,4 @@ export async function createWishesLink(wishesData: WishesDataType) {
     },
   );
   return data;
-}
+};

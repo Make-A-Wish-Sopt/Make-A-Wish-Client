@@ -2,11 +2,11 @@ import PATH from '../common/path';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { client } from '../common/axios';
 
-export async function postPayApprove(
+export const requestPayApprove = async (
   pgToken: string | string[] | undefined,
   cakesData: CakesDataType | undefined,
   wishId: number,
-) {
+) => {
   const data = await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.CAKES}/${PATH.PAY}/${PATH.APPROVE}`,
     {
@@ -25,4 +25,4 @@ export async function postPayApprove(
   );
 
   return data.data.data;
-}
+};
