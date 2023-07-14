@@ -6,22 +6,25 @@ import Image from 'next/image';
 import AlertTextBox from '../common/alertTextBox';
 import { validation } from '@/validation/input';
 import useInput from '@/hooks/common/useInput';
-import { useState } from 'react';
-import { useGetItemInfo } from '@/hooks/queries/wishes/wishes';
-import InputLargeBox from '../common/input/inputLargeBox';
+import { useEffect, useState } from 'react';
+import { useGetItemInfo } from '@/hooks/queries/wishes/useGetItemInfo';
+import { useSetRecoilState } from 'recoil';
+import { WishesData } from '@/recoil/formPage/wishesData';
 
-interface ItemLinkProps {
-  handleChangePrice: (input: number) => void;
-  handleChangeImageURL: (input: string) => void;
-  imageURL: string;
-  price: number;
-}
-
-export default function ItemLink(props: ItemLinkProps) {
-  const { handleChangePrice, handleChangeImageURL, imageURL } = props;
+export default function ItemLink() {
   const [linkURL, handleChangeLinkURL] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
-  const { itemData, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
+  const { imageURL, price, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
+
+  const setWishesData = useSetRecoilState(WishesData);
+
+  useEffect(() => {
+    setWishesData((prev) => ({
+      ...prev,
+      imageURL: imageURL,
+      price: Number(price),
+    }));
+  }, [imageURL, price]);
 
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
@@ -30,6 +33,10 @@ export default function ItemLink(props: ItemLinkProps) {
       return;
     }
     setIsCorrectLink(false);
+  };
+
+  const changePriceToNumber = (price: number): string => {
+    return price.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
   };
 
   return (
@@ -54,9 +61,9 @@ export default function ItemLink(props: ItemLinkProps) {
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
-      {isSuccess && itemData && (
+      {isSuccess && (
         <Styled.PresentContainer>
-          <InputLargeBox bgColor={theme.colors.white}>
+          <Styled.PresentBox>
             <Styled.ImageWrapper>
               <Image
                 src={imageURL}
@@ -65,8 +72,8 @@ export default function ItemLink(props: ItemLinkProps) {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </InputLargeBox>
-          <Styled.PresentPrice>가격 : test원</Styled.PresentPrice>
+          </Styled.PresentBox>
+          <Styled.PresentPrice>가격 : {changePriceToNumber(price)}원</Styled.PresentPrice>
         </Styled.PresentContainer>
       )}
     </Styled.Container>
@@ -98,6 +105,19 @@ const Styled = {
     ${theme.fonts.button16};
     color: ${theme.colors.main_blue};
     text-align: center;
+  `,
+
+  PresentBox: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 16rem;
+
+    border: 0.1rem solid ${theme.colors.main_blue};
+    background-color: ${theme.colors.white};
+    border-radius: 1.6rem;
   `,
 
   SiteBox: styled.div`

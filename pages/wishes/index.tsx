@@ -29,8 +29,6 @@ import { useRouter } from 'next/router';
 import { useDate } from '@/hooks/useDate';
 
 export default function WishesFormPage() {
-  const [imageURL, setImageURL] = useState('');
-  const [price, setPrice] = useState(0);
   const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);
   const [hint1, handleChangeHint1] = useInput('', LIMIT_TEXT[300]);
   const [hint2, handleChangeHint2] = useInput('', LIMIT_TEXT[15]);
@@ -49,14 +47,6 @@ export default function WishesFormPage() {
 
   const setWishesData = useSetRecoilState<WishesDataType>(WishesData);
 
-  const handleChangePrice = (input: number) => {
-    setPrice(input);
-  };
-
-  const handleChangeImageURL = (input: string) => {
-    setImageURL(input);
-  };
-
   const handleChangeBankName = (input: string) => {
     setBankName(input);
   };
@@ -64,8 +54,6 @@ export default function WishesFormPage() {
   const handleMovePreviewPage = () => {
     setWishesData((prevData) => ({
       ...prevData,
-      imageUrl: imageURL,
-      price: price,
       title: title,
       hint1: hint1,
       hint2: hint2,
@@ -93,12 +81,7 @@ export default function WishesFormPage() {
         <BackBtn />
       </InputHeader>
       <Styled.Title>소원 링크 생성하기</Styled.Title>
-      <ItemLink
-        handleChangePrice={handleChangePrice}
-        handleChangeImageURL={handleChangeImageURL}
-        imageURL={imageURL}
-        price={price}
-      />
+      <ItemLink />
 
       {/* 입력 형식(타이틀, 인풋 컴포넌트(input,textarea)) 컴포넌트로 분리 */}
       <Styled.ItemBox>

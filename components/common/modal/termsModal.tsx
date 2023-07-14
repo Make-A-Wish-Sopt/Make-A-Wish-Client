@@ -75,7 +75,7 @@ export default function TermsModal(props: TermsModalProps) {
           )}
 
           <Styled.CheckContainer>
-            {/* <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} /> */}
+            <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} />
             동의하고, 소원링크 생성하기
           </Styled.CheckContainer>
         </Styled.ContentContainer>
@@ -150,15 +150,15 @@ const Styled = {
     justify-content: center;
   `,
 
-  // CheckContainer: styled.input.attrs({ type: 'checkbox' })`
-  //   width: 1.4rem;
-  //   height: 1.4rem;
-  //   border: 1px solid ${theme.colors.dark_blue};
-  //   margin: 0 1rem 0.5rem;
-  //   cursor: pointer;
-  //   &:checked {
-  //     background-color: ${theme.colors.dark_blue};
-  //   }
-  //   appearance: none;
-  // `,
+  Checkbox: styled.input.attrs({ type: 'checkbox' })`
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 1px solid ${theme.colors.dark_blue};
+    margin: 0 1rem 0.5rem;
+    cursor: pointer;
+    &:checked {
+      background-color: ${theme.colors.dark_blue};
+    }
+    appearance: none;
+  `,
 };

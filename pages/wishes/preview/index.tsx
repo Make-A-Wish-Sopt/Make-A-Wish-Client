@@ -11,7 +11,7 @@ import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import TermsModal from '@/components/common/modal/termsModal';
 import { useState } from 'react';
-import { useCreateWishesLink } from '@/hooks/queries/wishes/wishes';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 
 export default function PreviewPage() {
   const { wishesData, postWishesData } = useCreateWishesLink();
@@ -41,7 +41,7 @@ export default function PreviewPage() {
       <Styled.ItemBox>
         <Styled.InputTitle>{wishesData.title}</Styled.InputTitle>
         <Styled.PresentContainer>
-          <InputLargeBox bgColor={theme.colors.white}>
+          <Styled.PresentBox>
             <Styled.ImageWrapper>
               <Image
                 src={wishesData.imageURL}
@@ -50,7 +50,7 @@ export default function PreviewPage() {
                 style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
               />
             </Styled.ImageWrapper>
-          </InputLargeBox>
+          </Styled.PresentBox>
           <Styled.PresentPrice>가격: {wishesData.price}원</Styled.PresentPrice>
         </Styled.PresentContainer>
       </Styled.ItemBox>
@@ -118,6 +118,19 @@ const Styled = {
 
   PresentContainer: styled.div`
     margin: 1rem 0 0;
+  `,
+
+  PresentBox: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 16rem;
+
+    border: 0.1rem solid ${theme.colors.main_blue};
+    background-color: ${theme.colors.white};
+    border-radius: 1.6rem;
   `,
 
   PresentPrice: styled.div`
