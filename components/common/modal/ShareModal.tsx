@@ -10,9 +10,8 @@ import InputLink from '@/components/common/input/inputLink';
 import SNSBox from '@/components/common/button/snsBox';
 
 import { SNS_LIST } from '@/constant/snsList';
-import { useKakaoShare } from '@/hooks/useKakaoShare';
+import useKakaoShare from '@/hooks/useKakaoShare';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-
 
 interface ShareModalProps {
   handleModalClick: () => void;
@@ -43,7 +42,6 @@ export default function ShareModal(props: ShareModalProps) {
     }
   };
 
-
   return (
     <Styled.Container>
       <Styled.IconContainer>
@@ -60,11 +58,7 @@ export default function ShareModal(props: ShareModalProps) {
 
       <InputLink>
         <Styled.InputText value={wishesLink} readOnly />
-        <IconButton
-          src={LinkCopyIc}
-          alt="링크 복사"
-          onClick={() => handleTextCopy(wishesLink)}
-        />
+        <IconButton src={LinkCopyIc} alt="링크 복사" onClick={() => handleTextCopy(wishesLink)} />
       </InputLink>
     </Styled.Container>
   );
