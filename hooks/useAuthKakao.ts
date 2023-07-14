@@ -4,7 +4,7 @@ import { sendCodeToServer } from '@/api/kakaoLogin/sendCodeToServer';
 import { useMutation } from 'react-query';
 
 
-export function useAuthKakao() {
+export default function useAuthKakao() {
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');
 

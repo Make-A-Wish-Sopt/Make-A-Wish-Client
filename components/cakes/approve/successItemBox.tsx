@@ -1,4 +1,4 @@
-import { postPayApprove } from '@/api/cakes/postPayApprove';
+import { requestPayApprove } from '@/api/cakes/requestPayApprove';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import Image from 'next/image';
@@ -23,9 +23,8 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
     cakesData?.pgToken && mutate();
   }, [cakesData?.pgToken]);
 
-  const { data, mutate, isSuccess } = useMutation(
-    () => postPayApprove(cakesData?.pgToken, cakesData, loginUserInfo.wishesId),
-    {},
+  const { data, mutate, isSuccess } = useMutation(() =>
+    requestPayApprove(cakesData?.pgToken, cakesData, loginUserInfo.wishesId),
   );
 
   return (

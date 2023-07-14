@@ -7,7 +7,7 @@ interface SuccessMsgBoxProps {
   cakesData: CakesDataType;
 }
 
-export default function SuccessMsgBox(props: SuccessMsgBoxProps) {
+export default function SuccessMessageBox(props: SuccessMsgBoxProps) {
   const { cakesData } = props;
 
   return (

@@ -1,5 +1,4 @@
-
-export const useKakaoShare = (nickname: string, link: string) => {
+export default function useKakaoShare(nickname: string, link: string) {
   if (window.Kakao) {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
@@ -25,4 +24,4 @@ export const useKakaoShare = (nickname: string, link: string) => {
       ],
     });
   }
-};
+}

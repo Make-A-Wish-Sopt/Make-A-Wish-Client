@@ -1,7 +1,7 @@
 import { getPgTokenData } from '@/api/cakes/getPgTokenData';
 import ButtonBox from '@/components/common/button/buttonBox';
 import SuccessItemBox from '@/components/cakes/approve/successItemBox';
-import SuccessMsgBox from '@/components/cakes/approve/successMsgBox';
+import SuccessMsgBox from '@/components/cakes/approve/successMessageBox';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import theme from '@/styles/theme';

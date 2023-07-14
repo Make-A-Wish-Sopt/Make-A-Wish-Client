@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useAuthKakao } from '@/hooks/useAuthKakao';
+import useAuthKakao from '@/hooks/useAuthKakao';
 import { useEffect } from 'react';
 
 export default function Kakao() {

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { getMonth, getYear, isBefore } from 'date-fns';
 import theme from '@/styles/theme';
-import { useDate } from '@/hooks/useDate';
+import useDate from '@/hooks/useDate';
 
 interface CustomDatePickerProps {
   endDate: string;
@@ -13,13 +13,13 @@ interface CustomDatePickerProps {
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
-
-
   const { endDate, setEndDate } = props;
 
   // 연도 range
   const years = Array.from(
-    { length: getYear(new Date()) + 6 - getYear(new Date()) }, (_, index) => getYear(new Date()) + index);
+    { length: getYear(new Date()) + 6 - getYear(new Date()) },
+    (_, index) => getYear(new Date()) + index,
+  );
 
   const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
@@ -79,12 +79,10 @@ const Styled = {
   `,
 
   CalendarHeader: styled.div`
-  width: 100%;
+    width: 100%;
   `,
 
-  SelectBox: styled.select`
-  `,
+  SelectBox: styled.select``,
 
-  OptionBox: styled.option`
-  `,
+  OptionBox: styled.option``,
 };
