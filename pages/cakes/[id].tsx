@@ -4,7 +4,6 @@ import useInput from '@/hooks/common/useInput';
 import InputBox from '@/components/common/input/inputBox';
 import InputLength from '@/components/common/input/inputLength';
 import InputContainer from '@/components/common/input/inputContainer';
-import InputTitle from '@/components/common/input/inputTitle';
 import TextareaBox from '@/components/common/input/textareaBox';
 import { CAKE_LIST } from '@/constant/cakeList';
 import { CakeListType } from '@/types/cakes/cakeListType';
@@ -90,25 +89,19 @@ export default function CakesPage() {
       <Styled.Title>{wishesData?.title}</Styled.Title>
 
       {/* API 데이터 */}
-      <InputContainer>
-        <InputTitle title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`} />
+      <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
         <TextareaBox>{wishesData?.hint}</TextareaBox>
       </InputContainer>
 
-      <InputContainer>
-        <InputTitle title={'본인의 실명 작성하기'} />
-        <InputBox>
-          <Styled.InputText
-            onChange={changeGiverName}
-            value={giverName}
-            placeholder="성과 이름 모두 정확하게 작성해주세요. ex. 홍길동"
-          />
-        </InputBox>
+      <InputContainer title={'본인의 실명 작성하기'}>
+        <InputBox
+          handleChangeValue={changeGiverName}
+          value={giverName}
+          placeholder="성과 이름 모두 정확하게 작성해주세요. ex. 홍길동"
+        />
       </InputContainer>
 
-      <InputContainer>
-        <InputTitle title={'보내고 싶은 케이크 선택하기'} />
-
+      <InputContainer title={'보내고 싶은 케이크 선택하기'}>
         <Styled.CakeContainer>
           {CAKE_LIST.map((cake, index) => (
             <Styled.CakeBox
@@ -131,8 +124,7 @@ export default function CakesPage() {
         </Styled.CakeInfo>
       </InputContainer>
 
-      <InputContainer>
-        <InputTitle title={'친구에게 편지 남기기'} />
+      <InputContainer title={'친구에게 편지 남기기'}>
         <TextareaBox>
           <Styled.TextareaText
             onChange={changeLetter}
@@ -141,7 +133,7 @@ export default function CakesPage() {
           />
           <Styled.TextareaLengthWrapper>
             <div />
-            <InputLength inputLength={letter.length} limit={LIMIT_TEXT[300]} />
+            <InputLength inputLength={letter.length} limitLength={LIMIT_TEXT[300]} />
           </Styled.TextareaLengthWrapper>
         </TextareaBox>
       </InputContainer>
