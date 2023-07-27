@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 interface InputLengthProps {
   inputLength: number;
-  limit: number;
+  limitLength: number;
 }
 
 export default function InputLength(props: InputLengthProps) {
-  const { inputLength, limit } = props;
+  const { inputLength, limitLength } = props;
 
   return (
     <Styled.Container>
-      {inputLength}/{limit}
+      {inputLength}/{limitLength}
     </Styled.Container>
   );
 }
