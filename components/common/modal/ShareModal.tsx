@@ -21,7 +21,6 @@ export default function ShareModal(props: ShareModalProps) {
   const { handleModalClick } = props;
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
-  console.log(loginUserInfo);
 
   useEffect(() => {
     setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
