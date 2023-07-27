@@ -35,7 +35,7 @@ export default function ApprovePage() {
     setCakesData({ ...globalValue });
   }, []);
 
-  const { data } = useQuery(QUERY_KEY.pgToken, async () => getPgTokenData(cakesData?.pgToken), {});
+  const { data } = useQuery(QUERY_KEY.PG_TOKEN, async () => getPgTokenData(cakesData?.pgToken), {});
 
   const handleClick = () => {
     router.replace('/');
