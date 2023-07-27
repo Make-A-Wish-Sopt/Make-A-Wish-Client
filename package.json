@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
+    "@svgr/webpack": "^8.0.1",
     "@types/qs": "^6.9.7",
     "@types/react-datepicker": "^4.11.2",
     "@types/styled-components": "^5.1.26",
