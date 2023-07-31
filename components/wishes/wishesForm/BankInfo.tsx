@@ -1,21 +1,14 @@
 import HalfBox from '@/components/common/box/HalfBox';
 import Button from '@/components/common/button/button';
 import BankInput from '@/components/common/modal/BankInput';
-import useInput from '@/hooks/common/useInput';
 import useUserInfo from '@/hooks/common/useUserInfo';
 import theme from '@/styles/theme';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 export default function BankInfo() {
-  const [bankName, setBankName] = useState('');
-  const [account, handleChangeAccount] = useInput('');
-  const { data } = useUserInfo();
-  console.log(data);
-
-  const handleChangeBankName = (input: string) => {
-    setBankName(input);
-  };
+  const { bankName, handleChangeBankName, account, handleChangeAccount } = useUserInfo();
+  const router = useRouter();
 
   return (
     <>
@@ -34,7 +27,7 @@ export default function BankInfo() {
         <HalfBox bgColor={theme.colors.white} fontColor={theme.colors.main_blue}>
           <Button
             handleClick={() => {
-              console.log('hllo');
+              router.push('/wishes/share');
             }}
           >
             나중에 입력할게요
