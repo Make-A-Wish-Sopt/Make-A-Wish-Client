@@ -10,7 +10,7 @@ export function useCreateWishesLink() {
   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
   const router = useRouter();
 
-  const { mutate: postWishesData } = useMutation(() => createWishesLink(wishesData), {
+  const { mutate: postWishesData, isSuccess } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: (data) => {
       setLoginUserInfo((prevData) => ({
         ...prevData,
@@ -20,5 +20,5 @@ export function useCreateWishesLink() {
     },
   });
 
-  return { wishesData, postWishesData };
+  return { wishesData, postWishesData, isSuccess };
 }
