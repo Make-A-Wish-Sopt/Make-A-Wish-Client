@@ -13,6 +13,7 @@ import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PresentBox from '@/components/common/box/PresentBox';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
+import { convertDateToString } from '@/utils/common/getDate';
 
 interface PreviewProps {
   handleNextStep: () => void;
@@ -48,7 +49,7 @@ export default function Preview(props: PreviewProps) {
   return (
     <>
       <Styled.Period>
-        {wishesData.startDate}~{wishesData.endDate}
+        {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)}
       </Styled.Period>
 
       <InputContainer title={wishesData.title}>
@@ -66,11 +67,11 @@ export default function Preview(props: PreviewProps) {
       </InputContainer>
 
       <InputContainer title="">
-        <TextareaBox value={wishesData.hint1} readOnly />
+        <TextareaBox value={wishesData.hint} readOnly />
       </InputContainer>
 
       <InputContainer title="선물의 초성">
-        <InputBox value={wishesData.hint2} readOnly />
+        <InputBox value={wishesData.initial} readOnly />
       </InputContainer>
 
       <InputContainer title="연락처">
