@@ -23,16 +23,25 @@ import {
   FlowerCakeThanksImg,
   PerfumeCakeThanksImg,
   VitaminCakeThanksImg,
+  BeefCakeSmallImg,
+  VitaminCakeSmallImg,
+  ChickenCakeSmallImg,
+  SushiCakeSmallImg,
+  FlowerCakeSmallImg,
+  PerfumeCakeSmallImg,
+  PoopCakeSmallImg,
+  CoffeeCakeSmallImg
 } from '@/public/assets/images';
 import { CakeListType } from '@/types/cakes/cakeListType';
 
 export const CAKE_LIST: CakeListType[] = [
   {
-    name: '달콤커피 케이크',
+    name: '달콤 커피 케이크',
     price: 4900,
     cakeImage: CoffeeCakeImg,
     detailImage: CoffeeCakeDetailImg,
     thanksImage: CoffeeCakeThanksImg,
+    smallImage: CoffeeCakeSmallImg,
     cakeNumber: 2,
   },
   {
@@ -41,6 +50,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: VitaminCakeImg,
     detailImage: VitaminCakeDetailImg,
     thanksImage: VitaminCakeThanksImg,
+    smallImage: VitaminCakeSmallImg,
     cakeNumber: 3,
   },
   {
@@ -49,6 +59,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: ChickenCakeImg,
     detailImage: ChickenCakeDetailImg,
     thanksImage: ChickenCakeThanksImg,
+    smallImage: ChickenCakeSmallImg,
     cakeNumber: 4,
   },
   {
@@ -57,6 +68,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: SushiCakeImg,
     detailImage: SushiCakeDetailImg,
     thanksImage: SushiCakeThanksImg,
+    smallImage: SushiCakeSmallImg,
     cakeNumber: 5,
   },
   {
@@ -65,6 +77,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: FlowerCakeImg,
     detailImage: FlowerCakeDetailImg,
     thanksImage: FlowerCakeThanksImg,
+    smallImage: FlowerCakeSmallImg,
     cakeNumber: 6,
   },
   {
@@ -73,6 +86,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: BeefCakeImg,
     detailImage: BeefCakeDetailImg,
     thanksImage: BeefCakeThanksImg,
+    smallImage: BeefCakeSmallImg,
     cakeNumber: 7,
   },
   {
@@ -81,6 +95,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: PerfumeCakeImg,
     detailImage: PerfumeCakeDetailImg,
     thanksImage: PerfumeCakeThanksImg,
+    smallImage: PerfumeCakeSmallImg,
     cakeNumber: 8,
   },
   {
@@ -89,6 +104,7 @@ export const CAKE_LIST: CakeListType[] = [
     cakeImage: PoopCakeImg,
     detailImage: PoopCakeDetailImg,
     thanksImage: PoopCakeThanksImg,
+    smallImage: PoopCakeSmallImg,
     cakeNumber: 1,
   },
 ];
