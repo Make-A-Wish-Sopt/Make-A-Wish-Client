@@ -9,7 +9,7 @@ import InputLargeBox from '@/components/common/input/inputLargeBox';
 import ButtonBox from '@/components/common/button/buttonBox';
 import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
-import TermsModal from '@/components/common/modal/termsModal';
+import TermsModal from '@/components/common/modal/TermsModal';
 import { useState } from 'react';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 
