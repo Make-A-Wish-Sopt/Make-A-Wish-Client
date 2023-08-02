@@ -8,13 +8,15 @@ import styled from 'styled-components';
 
 export default function BankInfo() {
   const { bankName, handleChangeBankName, account, handleChangeAccount } = useUserInfo();
+  const titleText =
+    bankName === ''
+      ? '펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.'
+      : '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.';
   const router = useRouter();
 
   return (
     <>
-      <Styled.InputTitle>
-        펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.
-      </Styled.InputTitle>
+      <Styled.InputTitle>{titleText}</Styled.InputTitle>
 
       <BankInput
         bankName={bankName}
