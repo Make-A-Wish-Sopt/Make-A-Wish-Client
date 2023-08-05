@@ -36,11 +36,11 @@ export default function BankInfo() {
     }));
   }, [name, bankName, account]);
 
-  const { mutate } = useMutation(() => editUserAccount(accountInfo));
-
-  const test = () => {
-    mutate();
-  };
+  const { mutate } = useMutation(() => editUserAccount(accountInfo), {
+    onSuccess: () => {
+      router.push('/wishes/share');
+    },
+  });
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function BankInfo() {
           fontColor={theme.colors.white}
           borderColor={'transparent'}
         >
-          <Button handleClick={test}>완료</Button>
+          <Button handleClick={() => mutate}>완료</Button>
         </HalfBox>
       </Styled.ButtonWrapper>
     </>
@@ -86,7 +86,5 @@ const Styled = {
   ButtonWrapper: styled.div`
     display: flex;
     justify-content: space-between;
-
-    /* width: 100%; */
   `,
 };
