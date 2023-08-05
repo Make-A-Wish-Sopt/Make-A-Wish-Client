@@ -8,9 +8,11 @@ export const editUserAccount = async (accountInfo: AccountInfoType) => {
   const data = await client.put(
     `${PATH.API}/${PATH.V1}/${PATH.USER}/${PATH.ACCOUNT}`,
     {
-      name: accountInfo.name,
-      bank: accountInfo.bank,
-      account: accountInfo.account,
+      accountInfo: {
+        name: accountInfo.name,
+        bank: accountInfo.bank,
+        account: accountInfo.account,
+      },
     },
     {
       headers: {
