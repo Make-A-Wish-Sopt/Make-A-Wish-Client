@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import { Dispatch, SetStateAction } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { getMonth, getYear, isBefore } from 'date-fns';
 import theme from '@/styles/theme';
-import useDate from '@/hooks/useDate';
+import { MONTHS } from '@/constant/dateList';
 
 interface CustomDatePickerProps {
-  endDate: string;
-  setEndDate: Dispatch<SetStateAction<string>>;
+  date: Date;
+  changeStartDate?: (value: Date) => void;
+  readOnly: boolean;
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
-  const { endDate, setEndDate } = props;
+  const { date, changeStartDate, readOnly } = props;
 
   // 연도 range
   const years = Array.from(
@@ -21,15 +21,14 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
     (_, index) => getYear(new Date()) + index,
   );
 
-  const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = (date: Date) => {
     if (date && isBefore(date, new Date())) {
       // 선택한 날짜가 현재 날짜보다 예전인 경우
       alert('선택하신 날짜는 현재 날짜보다 이전입니다. 유효한 날짜를 선택해주세요.');
       return;
     }
-    setEndDate(useDate(date));
+
+    changeStartDate && changeStartDate(date);
   };
 
   return (
@@ -37,36 +36,37 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
       <DatePicker
         renderCustomHeader={({ date, changeYear, changeMonth }) => (
           <Styled.CalendarHeader>
-            <Styled.SelectBox
+            <select
               value={getYear(date)}
               onChange={({ target: { value } }) => changeYear(Number(value))}
             >
               {years.map((option: number) => (
-                <Styled.OptionBox key={option} value={option}>
+                <option key={option} value={option}>
                   {option}
-                </Styled.OptionBox>
+                </option>
               ))}
-            </Styled.SelectBox>
+            </select>
             년 &emsp;
-            <Styled.SelectBox
-              value={months[getMonth(date)]}
-              onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
+            <select
+              value={MONTHS[getMonth(date)]}
+              onChange={({ target: { value } }) => changeMonth(MONTHS.indexOf(value))}
             >
-              {months.map((option) => (
-                <Styled.OptionBox key={option} value={option}>
+              {MONTHS.map((option) => (
+                <option key={option} value={option}>
                   {option}
-                </Styled.OptionBox>
+                </option>
               ))}
-            </Styled.SelectBox>
+            </select>
             월
           </Styled.CalendarHeader>
         )}
         locale={ko}
         dateFormat="yyyy-MM-dd"
-        selected={new Date(endDate)}
+        selected={new Date(date)}
         onChange={handleDateChange}
         selectsEnd
-        endDate={new Date(endDate)}
+        endDate={new Date(date)}
+        readOnly={readOnly}
       />
     </Styled.Container>
   );
@@ -74,15 +74,18 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
 
 const Styled = {
   Container: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 11rem;
+
     ${theme.fonts.body14};
+    ${theme.colors.dark_blue};
+
+    cursor: pointer;
   `,
 
   CalendarHeader: styled.div`
     width: 100%;
   `,
-
-  SelectBox: styled.select``,
-
-  OptionBox: styled.option``,
 };

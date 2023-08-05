@@ -8,7 +8,7 @@ export function useGetItemInfo(isCorrectLink: boolean, linkURL: string) {
   const [imageURL, setImageURL] = useState('');
   const [price, setPrice] = useState(0);
 
-  const { isSuccess } = useQuery(QUERY_KEY.itemData, () => getItemInfo(linkURL), {
+  const { isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, () => getItemInfo(linkURL), {
     onSuccess: (data) => {
       const imageData = extractImageSrc(data.imageTag.data?.data);
       const priceData = extractPrice(data.priceTag.data?.data);
