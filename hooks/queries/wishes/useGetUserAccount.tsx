@@ -8,9 +8,9 @@ import { useQuery } from 'react-query';
 export default function useGetUserAccount() {
   const { data, isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
 
-  const [name, handleChangeName] = useInput(data?.data ? 'data' : '');
-  const [bankName, setBankName] = useState(data?.data ? 'data' : '');
-  const [account, handleChangeAccount] = useInput(data?.data ? 'data' : '');
+  const [name, handleChangeName] = useInput(isSuccess ? data?.accountInfo.name : '');
+  const [bankName, setBankName] = useState(isSuccess ? data?.accountInfo.bank : '');
+  const [account, handleChangeAccount] = useInput(isSuccess ? data?.accountInfo.account : '');
 
   const [accountInfo, setAccountInfo] = useState<AccountInfoType>({
     name: name,
