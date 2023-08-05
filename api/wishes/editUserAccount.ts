@@ -2,7 +2,7 @@ import { AccountInfoType } from '@/types/wishes/accountInfotype';
 import { client } from '../common/axios';
 import PATH from '../common/path';
 
-export const changeUserAccount = async (accountInfo: AccountInfoType) => {
+export const editUserAccount = async (accountInfo: AccountInfoType) => {
   const accessToken = localStorage.getItem('accessToken');
 
   const data = await client.put(
