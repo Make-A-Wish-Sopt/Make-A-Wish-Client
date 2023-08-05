@@ -4,4 +4,5 @@ export interface QueryKeyType {
   PAYREADY: string;
   PG_TOKEN: string;
   USER: string;
+  ACCOUNT: string;
 }

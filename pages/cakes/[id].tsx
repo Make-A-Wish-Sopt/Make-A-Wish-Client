@@ -23,7 +23,7 @@ import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 
 export default function CakesPage() {
   const [giverName, changeGiverName] = useInput('');
-  const [letter, changeLetter] = useInput('', LIMIT_TEXT[300]);
+  const [letter, changeLetter] = useInput('', LIMIT_TEXT.DESCRIPTION);
   const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
@@ -133,7 +133,7 @@ export default function CakesPage() {
           />
           <Styled.TextareaLengthWrapper>
             <div />
-            <InputLength inputLength={letter.length} limitLength={LIMIT_TEXT[300]} />
+            <InputLength inputLength={letter.length} limitLength={LIMIT_TEXT.DESCRIPTION} />
           </Styled.TextareaLengthWrapper>
         </TextareaBox>
       </InputContainer>

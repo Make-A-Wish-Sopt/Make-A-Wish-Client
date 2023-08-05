@@ -20,16 +20,16 @@ export default function WishesStep1(props: WishesStep1Props) {
   const [linkURL, handleChangeLinkURL] = useInput('');
   const [isCorrectLink, setIsCorrectLink] = useState(false);
   const { imageURL, price, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
-  const [hint2, handleChangeHint2] = useInput('', LIMIT_TEXT[15]);
+  const [initial, handleChangeInitial] = useInput('', LIMIT_TEXT[15]);
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
 
   const setWishesData = useSetRecoilState(WishesData);
 
   useEffect(() => {
-    isSuccess && isCorrectLink && hint2
+    isSuccess && isCorrectLink && initial
       ? setIsNextStepAvailable(true)
       : setIsNextStepAvailable(false);
-  }, [hint2]);
+  }, [initial]);
 
   const nextStep = () => {
     //아이템 데이터의 유효성 정보에 대한 체크 조건 추가해야됨
@@ -44,7 +44,7 @@ export default function WishesStep1(props: WishesStep1Props) {
       ...prev,
       imageURL: imageURL,
       price: price,
-      hint2: hint2,
+      initial: initial,
     }));
   };
 
@@ -67,8 +67,8 @@ export default function WishesStep1(props: WishesStep1Props) {
       <InputContainer title="선물의 초성 적어보기">
         <InputBox
           placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
-          handleChangeValue={handleChangeHint2}
-          value={hint2}
+          handleChangeValue={handleChangeInitial}
+          value={initial}
           limitLength={LIMIT_TEXT[15]}
         />
       </InputContainer>

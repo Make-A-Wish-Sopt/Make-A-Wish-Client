@@ -2,12 +2,9 @@ export interface WishesDataType {
   imageURL: string;
   price: number;
   title: string;
-  hint1: string;
-  hint2: string;
-  startDate: string;
-  endDate: string;
-  name: string;
-  bankName: string;
-  account: string;
+  hint: string;
+  initial: string;
+  startDate: Date;
+  endDate: Date;
   phone: string;
 }

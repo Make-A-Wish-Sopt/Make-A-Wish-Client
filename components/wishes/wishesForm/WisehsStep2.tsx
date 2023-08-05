@@ -11,7 +11,7 @@ import useInput from '@/hooks/common/useInput';
 import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import theme from '@/styles/theme';
-import { convertDateToString, getDate } from '@/utils/common/getDate';
+import { getDate } from '@/utils/common/getDate';
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ interface WishesStep2Props {
 export default function WishesStep2(props: WishesStep2Props) {
   const { handleNextStep } = props;
   const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);
-  const [hint1, handleChangeHint1] = useInput('', LIMIT_TEXT.DESCRIPTION);
+  const [hint, handleChangeHint] = useInput('', LIMIT_TEXT.DESCRIPTION);
   const [phone, handleChangePhone] = useInput('');
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
 
@@ -37,8 +37,8 @@ export default function WishesStep2(props: WishesStep2Props) {
   }, [startDate]);
 
   useEffect(() => {
-    title && hint1 && phone ? setIsNextStepAvailable(true) : setIsNextStepAvailable(false);
-  }, [title, hint1, phone]);
+    title && hint && phone ? setIsNextStepAvailable(true) : setIsNextStepAvailable(false);
+  }, [title, hint, phone]);
 
   const changeStartDate = (value: Date) => {
     setStartDate(value);
@@ -56,10 +56,10 @@ export default function WishesStep2(props: WishesStep2Props) {
     setWishesData((prev) => ({
       ...prev,
       title: title,
-      hint1: hint1,
+      hint: hint,
       phone: phone,
-      startDate: convertDateToString(startDate),
-      endDate: convertDateToString(endDate),
+      startDate: startDate,
+      endDate: endDate,
     }));
   };
 
@@ -77,8 +77,8 @@ export default function WishesStep2(props: WishesStep2Props) {
       <InputContainer title="선물에 대한 힌트 자유롭게 적어보기">
         <TextareaBox
           placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
-          handleChangeValue={handleChangeHint1}
-          value={hint1}
+          handleChangeValue={handleChangeHint}
+          value={hint}
           limitLength={LIMIT_TEXT.DESCRIPTION}
         />
       </InputContainer>

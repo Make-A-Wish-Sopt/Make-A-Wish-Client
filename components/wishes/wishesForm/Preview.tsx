@@ -12,8 +12,8 @@ import TermsModal from '@/components/common/modal/termsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PresentBox from '@/components/common/box/PresentBox';
-import { useRecoilValue } from 'recoil';
-import { WishesData } from '@/recoil/formPage/wishesData';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
+import { convertDateToString } from '@/utils/common/getDate';
 
 interface PreviewProps {
   handleNextStep: () => void;
@@ -21,7 +21,7 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { handleNextStep } = props;
-  const wishesData = useRecoilValue(WishesData);
+  const { wishesData, postWishesData, isSuccess } = useCreateWishesLink();
 
   const { isOpen, handleToggle } = useModal();
   const [isAgreed, setIsAgreed] = useState(false);
@@ -33,7 +33,13 @@ export default function Preview(props: PreviewProps) {
   };
 
   const createLink = () => {
-    return isAgreed ? handleNextStep() : handleToggle();
+    if (isAgreed) {
+      postWishesData();
+      // return isSuccess && handleNextStep();
+      return handleNextStep();
+    } else {
+      return handleToggle();
+    }
   };
 
   useEffect(() => {
@@ -43,7 +49,7 @@ export default function Preview(props: PreviewProps) {
   return (
     <>
       <Styled.Period>
-        {wishesData.startDate}~{wishesData.endDate}
+        {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)}
       </Styled.Period>
 
       <InputContainer title={wishesData.title}>
@@ -61,11 +67,11 @@ export default function Preview(props: PreviewProps) {
       </InputContainer>
 
       <InputContainer title="">
-        <TextareaBox value={wishesData.hint1} readOnly />
+        <TextareaBox value={wishesData.hint} readOnly />
       </InputContainer>
 
       <InputContainer title="선물의 초성">
-        <InputBox value={wishesData.hint2} readOnly />
+        <InputBox value={wishesData.initial} readOnly />
       </InputContainer>
 
       <InputContainer title="연락처">

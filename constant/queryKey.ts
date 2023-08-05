@@ -6,4 +6,5 @@ export const QUERY_KEY: QueryKeyType = {
   PAYREADY: 'payReady',
   PG_TOKEN: 'pgToken',
   USER: 'user',
+  ACCOUNT:'account'
 };

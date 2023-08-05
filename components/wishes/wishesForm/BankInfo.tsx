@@ -1,29 +1,54 @@
+import { editUserAccount } from '@/api/wishes/editUserAccount';
 import HalfBox from '@/components/common/box/HalfBox';
 import Button from '@/components/common/button/button';
 import BankInput from '@/components/common/modal/BankInput';
-import useInput from '@/hooks/common/useInput';
-import useUserInfo from '@/hooks/common/useUserInfo';
+import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
 import theme from '@/styles/theme';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
 
 export default function BankInfo() {
-  const [bankName, setBankName] = useState('');
-  const [account, handleChangeAccount] = useInput('');
-  const { data } = useUserInfo();
-  console.log(data);
+  const {
+    name,
+    handleChangeName,
+    bankName,
+    handleChangeBankName,
+    account,
+    handleChangeAccount,
+    accountInfo,
+    setAccountInfo,
+    isSuccess,
+  } = useGetUserAccount();
 
-  const handleChangeBankName = (input: string) => {
-    setBankName(input);
+  const titleText = isSuccess
+    ? '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.'
+    : '펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.';
+  const router = useRouter();
+
+  useEffect(() => {
+    setAccountInfo((prev) => ({
+      ...prev,
+      name: name,
+      bank: bankName,
+      account: account,
+    }));
+  }, [name, bankName, account]);
+
+  const { mutate } = useMutation(() => editUserAccount(accountInfo));
+
+  const test = () => {
+    mutate();
   };
 
   return (
     <>
-      <Styled.InputTitle>
-        펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.
-      </Styled.InputTitle>
+      <Styled.InputTitle>{titleText}</Styled.InputTitle>
 
       <BankInput
+        name={name}
+        handleChangeName={handleChangeName}
         bankName={bankName}
         handleChangeBankName={handleChangeBankName}
         account={account}
@@ -34,7 +59,7 @@ export default function BankInfo() {
         <HalfBox bgColor={theme.colors.white} fontColor={theme.colors.main_blue}>
           <Button
             handleClick={() => {
-              console.log('hllo');
+              router.push('/wishes/share');
             }}
           >
             나중에 입력할게요
@@ -45,13 +70,7 @@ export default function BankInfo() {
           fontColor={theme.colors.white}
           borderColor={'transparent'}
         >
-          <Button
-            handleClick={() => {
-              console.log('hello');
-            }}
-          >
-            완료
-          </Button>
+          <Button handleClick={test}>완료</Button>
         </HalfBox>
       </Styled.ButtonWrapper>
     </>

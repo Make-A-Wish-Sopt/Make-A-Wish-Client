@@ -9,7 +9,7 @@ import WishesStep2 from './WisehsStep2';
 import Preview from './Preview';
 import BankInfo from './BankInfo';
 import { useRouter } from 'next/router';
-import EditWishes from '@/components/Auth/EditWishes';
+import EditWishes from '@/components/Mypage/EditWishes';
 
 export default function WishesFormContainer() {
   const { stepIndex, handleNextStep, handlePrevStep } = useWishesStep();

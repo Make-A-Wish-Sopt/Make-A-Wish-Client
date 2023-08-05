@@ -28,7 +28,6 @@ export default function ItemLink(props: ItemLinkProps) {
 
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
-    console.log('hello');
     if (linkURL.length > 0 && validation.isCorrectSite(linkURL)) {
       changeValidation(true);
       return;
