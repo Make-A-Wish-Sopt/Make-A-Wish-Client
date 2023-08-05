@@ -8,6 +8,7 @@ import { validation } from '@/validation/input';
 import { ChangeEvent } from 'react';
 import PresentBox from '@/components/common/box/PresentBox';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import ItemImageBox from './itemImageBox';
 
 interface ItemLinkProps {
   linkURL: string;
@@ -55,19 +56,9 @@ export default function ItemLink(props: ItemLinkProps) {
       )}
 
       {isSuccess && (
-        <Styled.PresentWrapper>
-          <PresentBox>
-            <Styled.ImageWrapper>
-              <Image
-                src={imageURL}
-                fill={true}
-                alt="선물"
-                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-              />
-            </Styled.ImageWrapper>
-          </PresentBox>
+        <ItemImageBox imageURL={imageURL}>
           <Styled.PresentPrice>가격 : {convertMoneyText(price)}원</Styled.PresentPrice>
-        </Styled.PresentWrapper>
+        </ItemImageBox>
       )}
     </Styled.Container>
   );
