@@ -14,6 +14,7 @@ const PATH = {
   KAKAO: 'kakao',
   CALLBACK: 'callback',
   USER: 'user',
+  ACCOUNT: 'account',
 };
 
 export default PATH;
