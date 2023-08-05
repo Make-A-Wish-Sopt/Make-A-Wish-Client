@@ -49,12 +49,21 @@ export default function WishesStep1(props: WishesStep1Props) {
   };
 
   const saveData = () => {
-    setWishesData((prev) => ({
-      ...prev,
-      imageURL: imageURL,
-      price: price,
-      initial: initial,
-    }));
+    if (isLinkLoadType) {
+      setWishesData((prev) => ({
+        ...prev,
+        imageURL: imageURL,
+        price: price,
+        initial: initial,
+      }));
+    } else {
+      setWishesData((prev) => ({
+        ...prev,
+        imageURL: imageURL,
+        price: Number(selfInputPrice),
+        initial: initial,
+      }));
+    }
   };
 
   const handleLoadTypeToggle = (state: boolean) => {
