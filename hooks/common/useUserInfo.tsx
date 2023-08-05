@@ -7,10 +7,11 @@ import { getDate } from '@/utils/common/getDate';
 import { TODAY } from '@/constant/dateList';
 
 export default function useUserInfo() {
-  const { data } = useQuery(QUERY_KEY.USER, getUserInfo);
+  const { data, isSuccess } = useQuery(QUERY_KEY.USER, getUserInfo);
 
   const [startDate, setStartDate] = useState(getDate(TODAY, 0));
   const [endDate, setEndDate] = useState(getDate(startDate, 7));
+  const [name, handleChangeName] = useInput(data ? 'data' : '');
   const [bankName, setBankName] = useState(data ? 'data' : '');
   const [account, handleChangeAccount] = useInput(data ? 'data' : '');
   const [phone, handleChangePhone] = useInput(data ? '010' : '');
@@ -27,7 +28,18 @@ export default function useUserInfo() {
     setStartDate(value);
   };
 
-
-
-  return { startDate, changeStartDate, endDate, bankName, handleChangeBankName, account, handleChangeAccount, phone, handleChangePhone};
+  return {
+    startDate,
+    changeStartDate,
+    endDate,
+    name,
+    handleChangeName,
+    bankName,
+    handleChangeBankName,
+    account,
+    handleChangeAccount,
+    phone,
+    handleChangePhone,
+    isSuccess,
+  };
 }

@@ -8,6 +8,8 @@ import AlertTextBox from '../alertTextBox';
 import { ChangeEvent } from 'react';
 
 interface BankInputProps {
+  name: string;
+  handleChangeName: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
   bankName: string;
   handleChangeBankName: (input: string) => void;
   account: string;
@@ -17,13 +19,14 @@ interface BankInputProps {
 }
 
 export default function BankInput(props: BankInputProps) {
-  const { bankName, handleChangeBankName, account, handleChangeAccount } = props;
+  const { name, handleChangeName, bankName, handleChangeBankName, account, handleChangeAccount } =
+    props;
   const { isOpen, handleToggle } = useModal();
 
   return (
     <>
       <Styled.ItemWrapper>
-        <InputBox placeholder="예금주명" />
+        <InputBox placeholder="예금주명" value={name} handleChangeValue={handleChangeName} />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper>

@@ -17,6 +17,8 @@ export default function EditWishesContainer() {
     startDate,
     changeStartDate,
     endDate,
+    name,
+    handleChangeName,
     bankName,
     handleChangeBankName,
     account,
@@ -67,6 +69,8 @@ export default function EditWishesContainer() {
       {/* BankInfo */}
       <InputContainer title="송금 받을 계좌번호 수정하기">
         <BankInput
+          name={name}
+          handleChangeName={handleChangeName}
           bankName={bankName}
           handleChangeBankName={handleChangeBankName}
           account={account}
