@@ -15,5 +15,5 @@ export default function useInput(initValue: string, inputLimit?: number) {
     },
     [],
   );
-  return [value, handleChangeInput] as const;
+  return [value, handleChangeInput, setValue] as const;
 }
