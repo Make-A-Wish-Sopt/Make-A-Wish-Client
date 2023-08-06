@@ -17,6 +17,7 @@ import { ImageUploadIc } from '@/public/assets/icons';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import ItemImageBox from './itemImageBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
+import Layout from '@/components/common/layout';
 
 interface WishesStep1Props {
   handleNextStep: () => void;
@@ -133,16 +134,18 @@ export default function WishesStep1(props: WishesStep1Props) {
         />
       </InputContainer>
 
-      <BasicBox
-        bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button16}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={nextStep} fontColor={theme.colors.white}>
-          다음
-        </Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button16}
+          borderColor={'transparent'}
+        >
+          <Button handleClick={nextStep} fontColor={theme.colors.white}>
+            다음
+          </Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -165,5 +168,10 @@ const Styled = {
 
   FileInput: styled.input`
     display: none;
+  `,
+
+  ButtonWrapper: styled.div`
+    position: absolute;
+    bottom: 4.6rem;
   `,
 };
