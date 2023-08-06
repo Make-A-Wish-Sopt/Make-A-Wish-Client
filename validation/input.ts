@@ -13,6 +13,6 @@ export const validation = {
   },
 
   isIncludeHyphen(input: string) {
-    return input.includes('-');
+    if (input) return input.includes('-');
   },
 };
