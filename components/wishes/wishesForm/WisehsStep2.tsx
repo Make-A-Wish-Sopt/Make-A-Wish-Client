@@ -118,14 +118,16 @@ export default function WishesStep2(props: WishesStep2Props) {
         />
       </InputContainer>
 
-      <BasicBox
-        bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button16}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={nextStep}>소원링크 생성 완료!</Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button16}
+          borderColor={'transparent'}
+        >
+          <Button handleClick={nextStep}>소원링크 생성 완료!</Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -134,5 +136,9 @@ const Styled = {
   CalendarWrapper: styled.div`
     display: flex;
     justify-content: space-between;
+  `,
+  ButtonWrapper: styled.div`
+    position: absolute;
+    bottom: 4.6rem;
   `,
 };

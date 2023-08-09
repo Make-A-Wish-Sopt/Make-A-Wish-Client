@@ -4,6 +4,7 @@ import Button from '@/components/common/button/button';
 import BankInput from '@/components/common/modal/BankInput';
 import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
 import theme from '@/styles/theme';
+import { validation } from '@/validation/input';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
@@ -36,10 +37,18 @@ export default function BankInfo() {
     }));
   }, [name, bankName, account]);
 
-  const { mutate } = useMutation(() => editUserAccount(accountInfo));
+  const { mutate } = useMutation(() => editUserAccount(accountInfo), {
+    onSuccess: () => {
+      router.push('/wishes/share');
+    },
+  });
 
-  const test = () => {
-    mutate();
+  const uploadAccount = () => {
+    if (name !== '' && bankName !== '' && account !== '' && !validation.isIncludeHyphen(account)) {
+      mutate();
+    } else {
+      alert('계좌정보를 확인 해 주세요!');
+    }
   };
 
   return (
@@ -70,7 +79,7 @@ export default function BankInfo() {
           fontColor={theme.colors.white}
           borderColor={'transparent'}
         >
-          <Button handleClick={test}>완료</Button>
+          <Button handleClick={uploadAccount}>완료</Button>
         </HalfBox>
       </Styled.ButtonWrapper>
     </>
@@ -84,9 +93,12 @@ const Styled = {
   `,
 
   ButtonWrapper: styled.div`
+    position: absolute;
+    bottom: 4.6rem;
+
     display: flex;
     justify-content: space-between;
 
-    /* width: 100%; */
+    width: 33.5rem;
   `,
 };
