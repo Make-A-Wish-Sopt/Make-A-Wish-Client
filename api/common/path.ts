@@ -5,6 +5,7 @@ const PATH = {
   PAY: 'pay',
   AUTH: 'auth',
   WISHES: 'wishes',
+  WISH: 'wish',
   MAIN: 'main',
   APPROVE: 'approve',
   READY: 'ready',
