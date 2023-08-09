@@ -17,7 +17,6 @@ import { ImageUploadIc } from '@/public/assets/icons';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import ItemImageBox from './itemImageBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import Layout from '@/components/common/layout';
 
 interface WishesStep1Props {
   handleNextStep: () => void;
