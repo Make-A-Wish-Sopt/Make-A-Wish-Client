@@ -5,7 +5,6 @@ import IconButton from '@/components/common/button/iconButton';
 import { CloseWhiteIc } from '@/public/assets/icons';
 import { GuideContentImg, GuideBoxImg } from '@/public/assets/images';
 import ButtonBox from '@/components/common/button/buttonBox';
-import router from 'next/router';
 
 interface GuideModalProps {
   clickModal: () => void;
@@ -14,8 +13,10 @@ interface GuideModalProps {
 export default function GuideModal(props: GuideModalProps) {
   const { clickModal } = props;
 
-  const moveToChat = () => {
-    router.push('/');
+  const handleCustomerService = () => {
+    window.Kakao.Channel.chat({
+      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
+    });
   };
 
   return (
@@ -34,7 +35,7 @@ export default function GuideModal(props: GuideModalProps) {
               <Image src={GuideContentImg} alt="서비스 가이드" />
               <Styled.ButtonContainer2>
                 <ButtonBox
-                  handleClick={moveToChat}
+                  handleClick={handleCustomerService}
                   backgroundColor={theme.colors.main_blue}
                   fontColor={theme.colors.white}
                 >
