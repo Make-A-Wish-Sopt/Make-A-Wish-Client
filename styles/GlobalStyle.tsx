@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         width:37.5rem;
         padding : 2.2rem;
-        background-color: ${theme.colors.bg_yellow};
+        background-color: ${theme.colors.background};
     }
 
     a {
