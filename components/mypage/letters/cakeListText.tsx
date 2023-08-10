@@ -2,8 +2,8 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface CakeListTextProps {
-  cakeName: string;
-  cakeNum: number;
+  cakeName?: string;
+  cakeNum?: number;
   fonts: string;
 }
 

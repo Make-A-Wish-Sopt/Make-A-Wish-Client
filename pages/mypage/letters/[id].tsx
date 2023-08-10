@@ -1,10 +1,10 @@
-import LettersContainer from '@/components/mypage/letters/[id]';
+import LettersMainContainer from '@/components/mypage/letters/lettersMain';
 
-export default function LettersPage() {
+export default function LettersMainPage() {
 
   return (
     <>
-      <LettersContainer />
+      <LettersMainContainer />
     </>
   );
 }
