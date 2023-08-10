@@ -1,5 +1,5 @@
 const colors = {
-  bg_yellow: '#FFF8D4',
+  yellow: '#FEE500',
   main_blue: '#00ABFF',
   dark_blue: '#1D3F61',
   pastel_blue: '#C6E3FF',

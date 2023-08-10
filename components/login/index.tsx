@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
-import { GuideBtnIc, KakaoLoginIc } from '@/public/assets/icons';
-import { PillCakeImg, LoginChatImg } from '@/public/assets/images';
+import { GuideBtnIc, KakaoLoginIc, WideArrowDownIc } from '@/public/assets/icons';
+import { PillCakeImg, LoginChatImg, MainLoginImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '../common/button/iconButton';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
+import BasicBox from '../common/box/BasicBox';
+import Button from '../common/button/button';
 
 export default function LoginContainer() {
   const { isOpen, handleToggle } = useModal();
@@ -18,37 +20,51 @@ export default function LoginContainer() {
   };
 
   return (
-    <>
-      <Header>
-        <IconButton onClick={handleToggle} src={GuideBtnIc} alt="서비스 가이드" />
-      </Header>
+    <Styled.Container>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
           <GuideModal clickModal={handleToggle} />
         </Modal>
       )}
 
-      <Styled.Container>
-        <Styled.ImageContainer>
-          <Styled.Title>
-            조물주보다,
-            <br />
-            생일선물주
-          </Styled.Title>
+      <Styled.ImageContainer>
+        <Styled.Title>
+          조물주보다,
+          <br />
+          생일선물주
+        </Styled.Title>
 
-          <Image src={LoginChatImg} alt="진짜 원하는 선물을 말해봐요" />
-          <Image src={PillCakeImg} alt="로그인 케이크 이미지" />
-        </Styled.ImageContainer>
-        <Styled.About>사실 내가 갖고 싶었던 건...</Styled.About>
-        <Styled.AboutSmall>에X팟 맥스</Styled.AboutSmall>
-      </Styled.Container>
+        <Image
+          src={MainLoginImg}
+          alt="사용 설명 케이크 이미지"
+          width={252}
+          onClick={handleToggle}
+        />
+      </Styled.ImageContainer>
+      <Styled.About>
+        매년 받는 기프티콘 선물 대신, <br />
+        생일 펀딩 서비스로
+      </Styled.About>
 
-      <IconButton onClick={handleKaKaoLogin} src={KakaoLoginIc} alt="카카오 로그인" />
-    </>
+      <Styled.WideArrowDownIcon />
+
+      <BasicBox bgColor={theme.colors.yellow} font={theme.fonts.body16} borderColor="transparent">
+        <Button handleClick={handleKaKaoLogin}>
+          <Styled.KakaoLoginIcon />
+          카카오톡 로그인으로 시작하기
+        </Button>
+      </BasicBox>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+
   Title: styled.div`
     ${theme.fonts.title56};
     color: ${theme.colors.main_blue};
@@ -58,28 +74,35 @@ const Styled = {
     white-space: pre-line;
   `,
 
-  Container: styled.div``,
-
   ImageContainer: styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
+
+    margin-top: 6.1rem;
   `,
 
   About: styled.div`
+    display: flex;
+    justify-content: center;
+
+    margin: 1rem 0 2.1rem;
+
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
-    margin: 1.4rem 0 1.5rem;
-    display: flex;
-    justify-content: center;
+
+    text-align: center;
   `,
 
-  AboutSmall: styled.div`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
-    display: flex;
-    justify-content: center;
-    margin: 0 0 10.15rem;
+  WideArrowDownIcon: styled((props) => <Image {...props} src={WideArrowDownIc} alt="아래화살표" />)`
+    margin-bottom: 2.4rem;
+  `,
+
+  KakaoLoginIcon: styled((props) => (
+    <Image {...props} src={KakaoLoginIc} alt="카카오로그인아이콘" />
+  ))`
+    margin-right: 1.3rem;
   `,
 };

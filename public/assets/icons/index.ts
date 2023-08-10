@@ -15,3 +15,4 @@ export { default as LinkCopyIc } from '@/public/assets/icons/linkCopyIc.svg';
 export { default as DetailCloseIc } from '@/public/assets/icons/detailCloseIc.svg';
 export { default as DetailOpenIc } from '@/public/assets/icons/detailOpenIc.svg';
 export { default as WishesFormPresentIc } from '@/public/assets/icons/wishesFormPresentIc.svg';
+export { default as WideArrowDownIc } from '@/public/assets/icons/wideArrowDownIc.svg';
