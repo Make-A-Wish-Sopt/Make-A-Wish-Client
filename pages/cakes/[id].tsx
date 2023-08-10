@@ -192,7 +192,7 @@ const Styled = {
   `,
 
   CakeInfo: styled.span`
-    ${theme.fonts.button16};
+    ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
 
     display: flex;
@@ -202,7 +202,7 @@ const Styled = {
   `,
 
   ButtonText: styled.div`
-    ${theme.fonts.button16};
+    ${theme.fonts.button18};
     color: ${theme.colors.white};
   `,
 

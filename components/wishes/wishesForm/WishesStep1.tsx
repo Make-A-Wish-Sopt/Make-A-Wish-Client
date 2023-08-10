@@ -76,7 +76,7 @@ export default function WishesStep1(props: WishesStep1Props) {
       <BasicBox
         bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
         fontColor={theme.colors.white}
-        font={theme.fonts.button16}
+        font={theme.fonts.button18}
         borderColor={'transparent'}
       >
         <Button handleClick={nextStep} fontColor={theme.colors.white}>

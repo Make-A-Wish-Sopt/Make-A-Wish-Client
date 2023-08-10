@@ -93,7 +93,7 @@ const Styled = {
   `,
 
   PresentPrice: styled.div`
-    ${theme.fonts.button16};
+    ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
     text-align: center;
   `,

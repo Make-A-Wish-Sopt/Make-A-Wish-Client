@@ -85,7 +85,7 @@ export default function Preview(props: PreviewProps) {
       <BasicBox
         bgColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        font={theme.fonts.button16}
+        font={theme.fonts.button18}
         borderColor={'transparent'}
       >
         <Button handleClick={createLink} fontColor={theme.colors.white}>
@@ -113,7 +113,7 @@ const Styled = {
   `,
 
   PresentPrice: styled.p`
-    ${theme.fonts.button16};
+    ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
     text-align: center;
   `,

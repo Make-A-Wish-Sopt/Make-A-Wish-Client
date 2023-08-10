@@ -30,7 +30,7 @@ const Container = styled.button<{ backgroundColor: string; fontColor: string }>`
   border-radius: 1rem;
 
   color: ${(props) => props.fontColor};
-  ${theme.fonts.button16};
+  ${theme.fonts.button18};
   background-color: ${(props) => props.backgroundColor};
   border-color: transparent;
 `;
