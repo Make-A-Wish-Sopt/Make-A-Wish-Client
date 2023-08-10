@@ -19,3 +19,4 @@ export { default as CheckIc } from '@/public/assets/icons/checkIc.svg';
 export { default as DeleteBtnIc } from '@/public/assets/icons/deleteBtnIc.svg';
 export { default as ArrowLeftIc } from '@/public/assets/icons/arrowLeftIc.svg';
 export { default as ArrowRightIc } from '@/public/assets/icons/arrowRightIc.svg';
+export { default as ArrowLargeDownIc } from '@/public/assets/icons/arrowLargeDownIc.svg';
