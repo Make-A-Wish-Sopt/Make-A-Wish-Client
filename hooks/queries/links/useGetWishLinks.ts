@@ -13,10 +13,9 @@ export function useGetWishLinks() {
     async () => getWishLinks(),
     {
       onSuccess: (wishLinks) => {
-        // if (wishLinks.length > 0) {
-        //   setNoWishes(false);
-        // }
-        setNoWishes(false);
+        if (wishLinks.length > 0) {
+          setNoWishes(false);
+        }
 
         setWishLinks(wishLinks);
       },

@@ -1,6 +1,5 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import router from 'next/router';
 
 interface LinksBoxProps {
   title: string;
