@@ -1,30 +1,29 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import Image from 'next/image';
-import { ArrowLinkIc } from '@/public/assets/icons';
+import router from 'next/router';
 
 interface LinksBoxProps {
   title: string;
   date: string;
-  handleClick: () => void;
+  handleCheckbox: () => void;
+  isChecked?: boolean;
+  handleMovePage: () => void;
 }
 
 export default function LinksBox(props: LinksBoxProps) {
-  const { title, date, handleClick } = props;
+  const { title, date, handleCheckbox, isChecked, handleMovePage } = props;
 
-  const handleCheckbox = () => {
-  };
 
   return (
-    <Styled.Container onClick={handleClick}>
-      <Styled.Checkbox onChange={handleCheckbox} />
+    <Styled.Container >
+      <Styled.Checkbox checked={isChecked} onChange={handleCheckbox} />
       <Styled.TextContainer>
         <Styled.Title>{title}</Styled.Title>
         <Styled.Date>{date}</Styled.Date>
       </Styled.TextContainer>
 
-      <Styled.ButtonContainer>
-        <Image src={ArrowLinkIc} alt="화살표" />
+      <Styled.ButtonContainer onClick={handleMovePage}>
+        {'>'}
       </Styled.ButtonContainer>
 
     </Styled.Container>
@@ -41,6 +40,7 @@ const Styled = {
   padding: 0rem 1.5rem;
   border-radius: 1rem;
   background-color: ${theme.colors.pastel_blue};
+  margin: 0 0 1rem;
 `,
 
   TextContainer: styled.div`
@@ -61,8 +61,10 @@ const Styled = {
   color: ${theme.colors.main_blue};
 `,
 
-  ButtonContainer: styled.div`
+  ButtonContainer: styled.button`
     margin-left: auto;
+    color: ${theme.colors.main_blue};
+    ${theme.fonts.button16_2};
 `,
 
   Checkbox: styled.input.attrs({ type: 'checkbox' })`

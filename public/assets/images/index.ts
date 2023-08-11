@@ -52,7 +52,7 @@ export { default as DeleteModalCake } from '../images/deleteModalCake.svg';
 export { default as LinkPageCake } from '../images/linkPageCake.svg';
 export { default as SharePageCake } from '../images/sharePageCake.svg';
 export { default as LoginPageImg } from '../images/loginPageImg.svg';
-
+export { default as LinksPageChatImg } from '../images/linksPageChatImg.svg';
 
 // shopping website
 export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';

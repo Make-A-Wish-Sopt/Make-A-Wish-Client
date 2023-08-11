@@ -1,10 +1,10 @@
-import WishLinksContainer from '@/components/mypage/links/[id]';
+import LinksContainer from '@/components/mypage/links/[id]';
 
-export default function WishLinksPage() {
+export default function LinksPage() {
 
   return (
     <>
-      <WishLinksContainer />
+      <LinksContainer />
     </>
   );
 }

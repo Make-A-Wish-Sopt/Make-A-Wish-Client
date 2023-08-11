@@ -4,35 +4,59 @@ import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import IconButton from '@/components/common/button/iconButton';
 import { DeleteBtnIc } from '@/public/assets/icons';
-import LinksBox from './linksBox';
 import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import DeleteModal from '@/components/common/modal/DeleteModal';
+import { useState } from 'react';
+import { useGetWishLinks } from '@/hooks/queries/links/useGetWishLinks';
+import WishLists from './wishLists';
+import NoWishLists from './noWishLists';
+import { useDeleteWishLinks } from '@/hooks/queries/links/useDeleteWishLinks';
+import { useQueryClient } from 'react-query';
+import { QUERY_KEY } from '@/constant/queryKey';
 
-export default function LinksContainer() {
+
+export default function LinksMainContainer() {
+  const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const { isOpen, handleToggle } = useModal();
+  const queryClient = useQueryClient();
 
-  const handleCheckBox = () => {
+  const deleteWishesMutation = useDeleteWishLinks();
+
+  const { wishLinks, noWishes } = useGetWishLinks();
+
+  const handleCheckbox = (wishId: number) => {
+    if (selectedLinks.includes(wishId)) {
+      setSelectedLinks(prev => prev.filter(item => item !== wishId));
+    } else {
+      setSelectedLinks(prev => [...prev, wishId]);
+    }
   };
+
+  const handleDeleteConfirm = () => {
+    if (selectedLinks.length > 0) {
+      deleteWishesMutation.mutate(selectedLinks, {
+        onSuccess: () => {
+          queryClient.invalidateQueries(QUERY_KEY.WISH_LINKS);
+        },
+      })
+    }
+  }
 
   return (
     <>
       <InputHeader>
         <BackBtn />
-        <IconButton onClick={handleToggle} src={DeleteBtnIc} alt="서비스 가이드" />
+        <IconButton onClick={() => handleToggle()} src={DeleteBtnIc} alt="삭제하기" />
       </InputHeader>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <DeleteModal clickModal={handleToggle} />
+          <DeleteModal clickModal={handleToggle} handleDelete={handleDeleteConfirm} linksCount={selectedLinks.length} />
         </Modal>)}
 
+      <Styled.Title>지난 소원 링크 모음</Styled.Title>
       <Styled.Container>
-        <Styled.Title>나의 소원 링크 모음</Styled.Title>
-
-        <LinksBox
-          handleClick={handleCheckBox}
-          title={"화정이의 앙큼 벌스데이"}
-          date={"2023.01.01~2023.02.02"} />
+        {noWishes ? <NoWishLists /> : <WishLists selectedLinks={selectedLinks} linksData={wishLinks} handleCheckbox={handleCheckbox} />}
       </Styled.Container>
 
     </>
@@ -41,12 +65,14 @@ export default function LinksContainer() {
 
 const Styled = {
   Container: styled.div`
-  margin: 2rem 1rem 0;
+  margin: 0 1rem 0;
+  overflow: auto;
+  max-height: 80vh;
   `,
 
   Title: styled.h1`
     ${theme.fonts.headline24_130};
     color: ${theme.colors.gray4};
-    margin: 0 0 2rem;
+    margin: 2rem 1rem 2rem;
   `,
 };

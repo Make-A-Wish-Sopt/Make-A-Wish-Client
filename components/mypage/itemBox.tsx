@@ -23,7 +23,7 @@ export default function ItemBox(props: ItemBoxProps) {
 }
 
 const Styled = {
-  Container: styled.button<ItemBoxProps>`
+  Container: styled.button<{ backgroundColor: string | undefined; color: string | undefined }>`
   width: 100%;
   height: 6rem;
   display: flex;
@@ -37,7 +37,7 @@ const Styled = {
   color: ${(props) => props.color || theme.colors.main_blue};
 `,
 
-  ButtonContainer: styled.div<ItemBoxProps>`
+  ButtonContainer: styled.div<{ color: string | undefined }>`
     margin-left: auto;
     color: ${(props) => props.color || theme.colors.main_blue};
 `,
