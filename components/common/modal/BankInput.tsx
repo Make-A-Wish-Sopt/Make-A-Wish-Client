@@ -24,7 +24,7 @@ export default function BankInput(props: BankInputProps) {
   const { isOpen, handleToggle } = useModal();
 
   return (
-    <>
+    <Styled.Container>
       <Styled.ItemWrapper>
         <InputBox placeholder="예금주명" value={name} handleChangeValue={handleChangeName} />
       </Styled.ItemWrapper>
@@ -51,11 +51,14 @@ export default function BankInput(props: BankInputProps) {
           <BankModal handleToggle={handleToggle} changeBankName={handleChangeBankName} />
         </Modal>
       )}
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    margin-bottom: 2.4rem;
+  `,
   ItemWrapper: styled.div`
     margin-top: 1.2rem;
   `,

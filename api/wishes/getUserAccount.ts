@@ -10,5 +10,5 @@ export const getUserAccount = async () => {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return data?.data?.data;
+  return data?.data;
 };
