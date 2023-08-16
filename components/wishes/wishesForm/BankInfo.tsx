@@ -1,5 +1,8 @@
 import { editUserAccount } from '@/api/wishes/editUserAccount';
+import AlertTextBox from '@/components/common/alertTextBox';
+import BasicBox from '@/components/common/box/BasicBox';
 import HalfBox from '@/components/common/box/HalfBox';
+import LargeBox from '@/components/common/box/LargeBox';
 import Button from '@/components/common/button/button';
 import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
@@ -8,6 +11,7 @@ import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
 import theme from '@/styles/theme';
 import { validation } from '@/validation/input';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import styled from 'styled-components';
 
@@ -24,12 +28,14 @@ export default function BankInfo() {
     apiStatus,
   } = useGetUserAccount();
 
+  const [isAlertState, setIsAlertState] = useState(false);
+
   const titleText = apiStatus
     ? '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.'
     : '펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.';
   const router = useRouter();
 
-  const { mutate } = useMutation(() => editUserAccount({ name, bankName, account },phone), {
+  const { mutate } = useMutation(() => editUserAccount({ name, bankName, account }, phone), {
     onSuccess: () => {
       router.push('/wishes/share');
     },
@@ -42,6 +48,14 @@ export default function BankInfo() {
       alert('계좌정보를 확인 해 주세요!');
     }
   };
+
+  useEffect(() => {
+    validation.isIncludeHyphen(phone) ? setIsAlertState(true) : setIsAlertState(false);
+    validation.isCorrectPhoneNumber(phone) ? setIsAlertState(false) : setIsAlertState(true);
+  }, [phone]);
+
+  console.log(validation.isIncludeHyphen(phone));
+  console.log(validation.isCorrectPhoneNumber(phone));
 
   return (
     <>
@@ -64,23 +78,16 @@ export default function BankInfo() {
         />
       </InputContainer>
 
+      {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+
       <Styled.ButtonWrapper>
-        <HalfBox bgColor={theme.colors.white} fontColor={theme.colors.main_blue}>
-          <Button
-            handleClick={() => {
-              router.push('/wishes/share');
-            }}
-          >
-            나중에 입력할게요
-          </Button>
-        </HalfBox>
-        <HalfBox
+        <BasicBox
           bgColor={theme.colors.main_blue}
           fontColor={theme.colors.white}
           borderColor={'transparent'}
         >
           <Button handleClick={uploadAccount}>완료</Button>
-        </HalfBox>
+        </BasicBox>
       </Styled.ButtonWrapper>
     </>
   );
