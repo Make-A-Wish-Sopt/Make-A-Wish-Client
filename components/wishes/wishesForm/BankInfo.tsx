@@ -54,9 +54,6 @@ export default function BankInfo() {
     validation.isCorrectPhoneNumber(phone) ? setIsAlertState(false) : setIsAlertState(true);
   }, [phone]);
 
-  console.log(validation.isIncludeHyphen(phone));
-  console.log(validation.isCorrectPhoneNumber(phone));
-
   return (
     <>
       <Styled.InputTitle>{titleText}</Styled.InputTitle>
@@ -82,7 +79,11 @@ export default function BankInfo() {
 
       <Styled.ButtonWrapper>
         <BasicBox
-          bgColor={theme.colors.main_blue}
+          bgColor={
+            !isAlertState && !validation.isIncludeHyphen(account) && bankName && name
+              ? theme.colors.main_blue
+              : theme.colors.gray1
+          }
           fontColor={theme.colors.white}
           borderColor={'transparent'}
         >
