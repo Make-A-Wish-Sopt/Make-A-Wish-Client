@@ -74,10 +74,6 @@ export default function Preview(props: PreviewProps) {
         <InputBox value={wishesData.initial} readOnly />
       </InputContainer>
 
-      <InputContainer title="연락처">
-        <InputBox value={wishesData.phone} readOnly />
-      </InputContainer>
-
       <Modal isOpen={isOpen} handleToggle={handleToggle}>
         <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
       </Modal>
