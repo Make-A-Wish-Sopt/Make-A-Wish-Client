@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { sendCodeToServer } from '@/api/kakaoLogin/sendCodeToServer';
+import { sendCodeToServer } from '@/api/login/sendCodeToServer';
 import { useMutation } from 'react-query';
 
 
