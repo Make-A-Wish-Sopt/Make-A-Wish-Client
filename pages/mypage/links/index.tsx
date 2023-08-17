@@ -1,10 +1,10 @@
-import LinksContainer from '@/components/mypage/links';
+import LinksMainContainer from '@/components/mypage/links';
 
-export default function LinksPage() {
+export default function LinksMainPage() {
 
   return (
     <>
-      <LinksContainer />
+      <LinksMainContainer />
     </>
   );
 }

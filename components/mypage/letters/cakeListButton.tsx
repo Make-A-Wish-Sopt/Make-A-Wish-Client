@@ -4,18 +4,18 @@ import Image, { StaticImageData } from 'next/image';
 
 
 interface CakeListButtonProps {
-  image: StaticImageData;
+  image: string;
   children: React.ReactNode;
   backgroundColor: string;
   fontColor: string;
-  handleClick: () => void;
+  handleClick?: () => void;
 }
 
 export default function CakeListButton(props: CakeListButtonProps) {
   const { image, children, backgroundColor, fontColor, handleClick } = props;
   return (
     <Container backgroundColor={backgroundColor} fontColor={fontColor} onClick={handleClick}>
-      <Image src={image} alt="케이크 이미지" />
+      <Image src={image} alt="케이크 이미지" width={35} height={35} />
       <Styled.TextContainer>{children}</Styled.TextContainer>
     </Container>
   );

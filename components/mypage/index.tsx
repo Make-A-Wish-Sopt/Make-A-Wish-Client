@@ -3,20 +3,35 @@ import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import router from 'next/router';
-import ButtonBox from '@/components/common/button/buttonBox';
-import Image from 'next/image';
-import { MypageCakeImg, MypageChatImg } from '@/public/assets/images';
-
+import ItemBox from './itemBox';
+import { useRecoilValue } from 'recoil';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import GuideModal from '@/components/common/modal/GuideModal';
+import Modal from '@/components/common/modal';
+import useModal from '@/hooks/common/useModal';
 
 export default function MyPageContainer() {
-  const handleMoveToWish = () => {
-    router.push('.');
+  const { isOpen, handleToggle } = useModal();
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  // const { isError } = useUserInfo();
+
+  const handleEditWish = () => {
+    // if (isError) return;
+    // router.push('/mypage/editWishes');
   };
-  const handleMoveToList = () => {
-    router.push('.');
+  const handleStopWish = () => {
+    router.push('/');
   };
-  const handleMoveToChat = () => {
-    router.push('.');
+  const handleWishLinks = () => {
+    router.push('/mypage/links');
+  };
+  const handleCustomerService = () => {
+    window.Kakao.Channel.chat({
+      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
+    });
+  };
+  const handleLogOut = () => {
   };
 
   return (
@@ -25,42 +40,52 @@ export default function MyPageContainer() {
         <BackBtn />
       </InputHeader>
 
+      {isOpen && (
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <GuideModal clickModal={handleToggle} />
+        </Modal>
+      )}
+
       <Styled.Container>
         <Styled.TitleContainer>
           <Styled.Title>
-            { }이화정 님
+            {loginUserInfo.nickName} 님
           </Styled.Title>
         </Styled.TitleContainer>
 
-        <Styled.ImageContainer>
-          <Image src={MypageChatImg} alt="이뤄져라 얍!" />
-          <Image src={MypageCakeImg} alt="케이크" />
-        </Styled.ImageContainer>
+        <ItemBox
+          handleClick={handleEditWish}
+        // {...(isError && {
+        //   backgroundColor: theme.colors.gray1,
+        //   color: theme.colors.gray2,
+        // })}
+        >
+          진행중인 소원 링크 정보 수정하기
+        </ItemBox>
+        <ItemBox
+          handleClick={handleStopWish}
+        >
+          진행중인 펀딩 중단하기
+        </ItemBox>
+        <ItemBox
+          handleClick={handleWishLinks}
+        >
+          지난 소원 링크 모음
+        </ItemBox>
+        <ItemBox
+          handleClick={handleToggle}
+        >
+          사용설명서 보기
+        </ItemBox>
+        <ItemBox
+          handleClick={handleCustomerService}
+        >
+          고객센터 문의하기
+        </ItemBox>
 
-        <Styled.AlertText>현재 생일 주간이 아니예요!</Styled.AlertText>
-        <Styled.ButtonContainer>
-          <ButtonBox
-            backgroundColor={theme.colors.gray1}
-            fontColor={theme.colors.gray2}
-            handleClick={handleMoveToWish}
-          >
-            진행중인 소원 링크 정보 수정하기
-          </ButtonBox>
-          <ButtonBox
-            backgroundColor={theme.colors.main_blue}
-            fontColor={theme.colors.white}
-            handleClick={handleMoveToList}
-          >
-            나의 소원 링크 모음
-          </ButtonBox>
-          <ButtonBox
-            backgroundColor={theme.colors.main_blue}
-            fontColor={theme.colors.white}
-            handleClick={handleMoveToChat}
-          >
-            고객센터 문의하기
-          </ButtonBox>
-        </Styled.ButtonContainer>
+        <Styled.TextContainer onClick={handleLogOut}>
+          로그아웃
+        </Styled.TextContainer>
 
       </Styled.Container>
     </>
@@ -74,36 +99,18 @@ const Styled = {
 
   TitleContainer: styled.div`
   display: flex;
-  margin: 2rem 0 0;
+  margin: 2rem 0 2rem;
   `,
 
   Title: styled.h1`
-  margin: 0 0 3rem;
   ${theme.fonts.headline24_130};
   color: ${theme.colors.gray4};
   `,
 
-  ImageContainer: styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin: 6.7rem 0 8rem;
-  `,
-
-  ButtonContainer: styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 17.8rem;
-  `,
-
-  AlertText: styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 0 1rem;
-  ${theme.fonts.body14};
-  color: ${theme.colors.warning_red};
+  TextContainer: styled.h1`
+margin: 3rem 0 0;
+${theme.fonts.button16_2};
+  color: ${theme.colors.main_blue};
+  text-decoration: underline;
 `,
 };

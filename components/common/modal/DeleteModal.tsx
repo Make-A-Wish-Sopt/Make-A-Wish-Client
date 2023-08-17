@@ -9,12 +9,16 @@ import ButtonBox from '@/components/common/button/buttonBox';
 
 interface DeleteModalProps {
   clickModal: () => void;
+  handleDelete: () => void;
+  linksCount: number;
 }
 
 export default function DeleteModal(props: DeleteModalProps) {
-  const { clickModal } = props;
+  const { clickModal, handleDelete, linksCount } = props;
 
-  const handleClick = () => {
+  const handleDeleteConfirm = () => {
+    handleDelete();
+    clickModal();
   };
 
   return (
@@ -25,17 +29,17 @@ export default function DeleteModal(props: DeleteModalProps) {
 
       <Styled.ContentContainer>
         <Image src={DeleteModalCake} alt={'케이크'} />
-        <Styled.DeleteText>총 { }개의 소원링크를 삭제합니다.</Styled.DeleteText>
+        <Styled.DeleteText>총 {linksCount}개의 소원링크를 삭제합니다.</Styled.DeleteText>
       </Styled.ContentContainer>
 
       <Styled.ButtonContainer>
         <ButtonBox
-          handleClick={handleClick}
+          handleClick={clickModal}
           backgroundColor={theme.colors.white}
           fontColor={theme.colors.main_blue}
         >취소</ButtonBox>
         <ButtonBox
-          handleClick={handleClick}
+          handleClick={handleDeleteConfirm}
           backgroundColor={theme.colors.main_blue}
           fontColor={theme.colors.white}
         >확인</ButtonBox>
@@ -49,7 +53,6 @@ const Styled = {
   Container: styled.div`
     width: 31.6rem;
     height: 21.2rem;
-    /* height: 14.3rem; */
     background-color: ${theme.colors.pastel_blue};
     padding: 2rem;
     border-radius: 1.6rem;
@@ -82,8 +85,10 @@ const Styled = {
   `,
 
   ButtonContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  & > :not(:last-child) {
+    margin-right: 1rem
+  }
 `,
 };

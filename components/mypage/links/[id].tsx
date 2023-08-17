@@ -1,15 +1,27 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import router from 'next/router';
-
+import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import { LinkPageCake, GaugeBarImg } from '@/public/assets/images';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
+import { useEffect, useState } from 'react';
+import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
+import { convertDateFormat } from '@/hooks/useDate';
 
-export default function WishLinkContainer() {
+export default function LinksContainer() {
+  const [wishId, setWishId] = useState<string | string[] | undefined>('');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setWishId(router.query.id);
+  }, [router.isReady]);
+
+  const { wishData } = useGetOneWish(wishId);
+
   const handleMovePage = () => {
-    router.push('/wishes');
+    router.push(`/mypage/letters/${wishId}`);
   };
 
   return (
@@ -18,8 +30,8 @@ export default function WishLinkContainer() {
         <BackBtn />
       </InputHeader>
 
-      <Styled.Title>나의 소원 링크 모음</Styled.Title>
-      <Styled.Date>2023.01.01~2023.02.02</Styled.Date>
+      <Styled.Title>{wishData?.title}</Styled.Title>
+      <Styled.Date>{`${convertDateFormat(wishData?.startAt)}~${convertDateFormat(wishData?.endAt)}`}</Styled.Date>
 
       <Styled.CenterContainer>
         <Styled.BarContainer>
@@ -28,18 +40,14 @@ export default function WishLinkContainer() {
         <Styled.ImageContainer>
           <Image src={LinkPageCake} alt="케이크" />
         </Styled.ImageContainer>
-        <Styled.About>모인 케이크 보러가기 {'>'} </Styled.About>
-        <Styled.AboutSmall>총 { }원</Styled.AboutSmall>
+        <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
+        <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>
       </Styled.CenterContainer>
     </>
   );
 }
 
 const Styled = {
-  HeaderContainer: styled.div`
-    display: flex;
-  `,
-
   Title: styled.div`
     ${theme.fonts.headline24_130};
     color: ${theme.colors.gray4};
