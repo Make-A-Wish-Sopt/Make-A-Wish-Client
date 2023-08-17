@@ -6,4 +6,8 @@ export const QUERY_KEY: QueryKeyType = {
   payReady: 'payReady',
   pgToken: 'pgToken',
   PROGRESS: 'progress',
+  CAKES_COUNT: 'cakesCount',
+  CAKE_LETTERS: 'cakeLetters',
+  WISH_LINKS: 'wishLinks',
+  ONE_WISH: 'oneWish',
 };

@@ -46,13 +46,15 @@ export { default as PillCakeImg } from '../images/pillCakeImg.svg';
 export { default as MypageCakeImg } from '../images/myPageCakeImg.svg';
 export { default as MypageChatImg } from '../images/myPageChatImg.svg';
 export { default as ShareChatImg } from '../images/sharePageChatImg.svg';
-export { default as LoginChatImg } from '../images/loginPageChatImg.svg';
 export { default as MainChatImg } from '../images/mainPageChatImg.svg';
 export { default as WishesChatImg } from '../images/wishesChatImg.svg';
 export { default as DeleteModalCake } from '../images/deleteModalCake.svg';
 export { default as LinkPageCake } from '../images/linkPageCake.svg';
 export { default as MainWishChatImg } from '../images/mainWishChatImg.svg';
 export { default as MainEndChatImg } from '../images/mainEndChatImg.svg';
+export { default as SharePageCake } from '../images/sharePageCake.svg';
+export { default as LoginPageImg } from '../images/loginPageImg.svg';
+export { default as LinksPageChatImg } from '../images/linksPageChatImg.svg';
 
 // shopping website
 export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';
