@@ -5,6 +5,7 @@ export const QUERY_KEY: QueryKeyType = {
   wishesData: 'wishesData',
   payReady: 'payReady',
   pgToken: 'pgToken',
+  PROGRESS: 'progress',
   CAKES_COUNT: 'cakesCount',
   CAKE_LETTERS: 'cakeLetters',
   WISH_LINKS: 'wishLinks',

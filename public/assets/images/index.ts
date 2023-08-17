@@ -50,6 +50,8 @@ export { default as MainChatImg } from '../images/mainPageChatImg.svg';
 export { default as WishesChatImg } from '../images/wishesChatImg.svg';
 export { default as DeleteModalCake } from '../images/deleteModalCake.svg';
 export { default as LinkPageCake } from '../images/linkPageCake.svg';
+export { default as MainWishChatImg } from '../images/mainWishChatImg.svg';
+export { default as MainEndChatImg } from '../images/mainEndChatImg.svg';
 export { default as SharePageCake } from '../images/sharePageCake.svg';
 export { default as LoginPageImg } from '../images/loginPageImg.svg';
 export { default as LinksPageChatImg } from '../images/linksPageChatImg.svg';
