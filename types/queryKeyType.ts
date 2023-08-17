@@ -3,4 +3,5 @@ export interface QueryKeyType {
   wishesData: string;
   payReady: string;
   pgToken: string;
+  PROGRESS: string;
 }

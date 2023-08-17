@@ -4,5 +4,6 @@ export const QUERY_KEY: QueryKeyType = {
   itemData: 'itemData',
   wishesData: 'wishesData',
   payReady: 'payReady',
-  pgToken: 'pgToken'
+  pgToken: 'pgToken',
+  PROGRESS: 'progress',
 };

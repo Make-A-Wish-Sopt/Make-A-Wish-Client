@@ -6,7 +6,7 @@ interface ButtonBoxProps {
   children: ReactNode;
   backgroundColor: string;
   fontColor: string;
-  handleClick: () => void;
+  handleClick?: () => void;
 }
 
 export default function ButtonBox(props: ButtonBoxProps) {
