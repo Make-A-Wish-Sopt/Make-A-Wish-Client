@@ -69,6 +69,8 @@ const GlobalStyle = createGlobalStyle`
         border: none;
         outline:none;
         background: transparent;
+        color:inherit;
+        font : inherit
     }
 
 

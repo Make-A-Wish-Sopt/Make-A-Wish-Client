@@ -1,8 +1,10 @@
 export interface QueryKeyType {
-  itemData: string;
-  wishesData: string;
-  payReady: string;
-  pgToken: string;
+  ITEM_DATA: string;
+  WISHES_DATA: string;
+  PAYREADY: string;
+  PG_TOKEN: string;
+  USER: string;
+  ACCOUNT: string;
   PROGRESS: string;
   CAKES_COUNT: string;
   CAKE_LETTERS: string;

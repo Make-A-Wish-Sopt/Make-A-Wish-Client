@@ -2,14 +2,14 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface InputCalendarProps {
-    children: React.ReactNode;
-    borderColor: string;
+  children: React.ReactNode;
+  borderColor: string;
 }
 
 export default function InputCalendar(props: InputCalendarProps) {
-    const { children, borderColor } = props;
+  const { children, borderColor } = props;
 
-    return <Styled.Container borderColor={borderColor}>{children}</Styled.Container>;
+  return <Styled.Container borderColor={borderColor}>{children}</Styled.Container>;
 }
 
 const Styled = {
