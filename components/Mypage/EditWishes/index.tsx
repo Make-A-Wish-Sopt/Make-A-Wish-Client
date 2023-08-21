@@ -14,7 +14,8 @@ import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
 import ItemLink from '@/components/wishes/wishesForm/itemLink';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { WISHES_STATUS } from '@/constant/wishesStatus';
-import useEditWishInfo from '@/hooks/common/useEditWishInfo';
+import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
+import useEditWishesInfo from '@/hooks/queries/mypage/useEditWishesInfo';
 import { CalendarGreyIc, CalendarIc, ImageUploadIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
 import Image from 'next/image';
@@ -34,7 +35,20 @@ export default function EditWishesContainer() {
     selfInputPrice,
     isLinkLoadType,
     wishesStatus,
-  } = useEditWishInfo();
+  } = useInitEditWishesInfo();
+  const { editWishesData } = useEditWishesInfo({
+    startDate: startDate.startDate,
+    endDate: endDate,
+    name: bankInfo.name,
+    bankName: bankInfo.bankName,
+    account: bankInfo.account,
+    phone: phone.phone,
+    imageUrl: itemLink.imageURL,
+    price: itemLink.price,
+    title: title.title,
+    hint: hint.hint,
+    initial: initial.initial,
+  });
 
   return (
     <>
@@ -175,13 +189,7 @@ export default function EditWishesContainer() {
         font={theme.fonts.button16}
         borderColor={'transparent'}
       >
-        <Button
-          handleClick={() => {
-            console.log('hello');
-          }}
-        >
-          수정완료
-        </Button>
+        <Button handleClick={() => editWishesData()}>수정완료</Button>
       </BasicBox>
     </>
   );

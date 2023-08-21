@@ -1,12 +1,12 @@
-export interface EditWishesInfoType {
-  startDate: string;
-  endDate: string;
+export interface EditWishesInfoDataType {
+  startDate: Date;
+  endDate: Date;
   name: string;
   bankName: string;
   account: string;
   phone: string;
   imageUrl: string;
-  price: 0;
+  price: number;
   title: string;
   hint: string;
   initial: string;

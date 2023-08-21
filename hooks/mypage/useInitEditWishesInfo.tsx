@@ -2,15 +2,13 @@ import { getEditWishesInfo } from '@/api/mypage/getEditWishesInfo';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
-import useInput from './useInput';
+import useInput from '../common/useInput';
 import { getDate } from '@/utils/common/getDate';
-import { TODAY } from '@/constant/dateList';
 import useUploadItemInfo from '../wishes/useUploadItemInfo';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useGetItemInfo } from '../queries/wishes/useGetItemInfo';
-import moment from 'moment';
 
-export default function useEditWishesInfo() {
+export default function useInitEditWishesInfo() {
   const { data, isSuccess: isGetEditWishesInfoSuccess } = useQuery(
     QUERY_KEY.USER,
     getEditWishesInfo,
