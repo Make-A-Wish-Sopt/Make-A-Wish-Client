@@ -18,7 +18,7 @@ export const validation = {
     }
   },
   isCorrectPhoneNumber(input: string) {
-    return REGEX.PHONE.test(input);
+    if (input) return REGEX.PHONE.test(input);
   },
 
   isIncludeHyphen(input: string) {

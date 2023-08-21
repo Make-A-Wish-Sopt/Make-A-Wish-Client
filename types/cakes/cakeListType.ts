@@ -6,5 +6,6 @@ export interface CakeListType {
   cakeImage: StaticImageData;
   detailImage: StaticImageData;
   thanksImage: StaticImageData;
+  smallImage: StaticImageData;
   cakeNumber: number;
 }

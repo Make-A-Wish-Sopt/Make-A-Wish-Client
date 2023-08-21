@@ -45,6 +45,10 @@ const fonts = {
   body14: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '130%' }),
   body12: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
   button16: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '3rem' }),
+  button18: FONT({ family: true, weight: 400, size: 1.8, lineHeight: '3rem' }),
+
+  button16_2: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '2rem' }),
+  body12_2: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2rem' }),
 };
 
 export type FontsTypes = typeof fonts;

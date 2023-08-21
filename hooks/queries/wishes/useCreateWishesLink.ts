@@ -12,6 +12,7 @@ export function useCreateWishesLink() {
 
   const { mutate: postWishesData, isSuccess } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: (data) => {
+      console.log(data);
       setLoginUserInfo((prevData) => ({
         ...prevData,
         wishesId: data.data.data,

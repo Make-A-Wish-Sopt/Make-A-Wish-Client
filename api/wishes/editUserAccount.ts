@@ -2,7 +2,7 @@ import { AccountInfoType } from '@/types/wishes/accountInfotype';
 import { client } from '../common/axios';
 import PATH from '../common/path';
 
-export const editUserAccount = async (accountInfo: AccountInfoType) => {
+export const editUserAccount = async (accountInfo: AccountInfoType, phone: string) => {
   const accessToken = localStorage.getItem('accessToken');
 
   const data = await client.put(
@@ -10,9 +10,10 @@ export const editUserAccount = async (accountInfo: AccountInfoType) => {
     {
       accountInfo: {
         name: accountInfo.name,
-        bank: accountInfo.bank,
+        bank: accountInfo.bankName,
         account: accountInfo.account,
       },
+      phone,
     },
     {
       headers: {
