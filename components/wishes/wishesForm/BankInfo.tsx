@@ -20,7 +20,7 @@ export default function BankInfo() {
     name,
     handleChangeName,
     bankName,
-    handleChangeBankName,
+    changeBankName,
     account,
     handleChangeAccount,
     phone,
@@ -62,7 +62,7 @@ export default function BankInfo() {
         name={name}
         handleChangeName={handleChangeName}
         bankName={bankName}
-        handleChangeBankName={handleChangeBankName}
+        changeBankName={changeBankName}
         account={account}
         handleChangeAccount={handleChangeAccount}
       />

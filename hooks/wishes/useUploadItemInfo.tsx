@@ -17,5 +17,5 @@ export default function useUploadItemInfo() {
     }
   }
 
-  return { imageFile, previewImage, uploadImageFile };
+  return { imageFile, previewImage, setPreviewImage, uploadImageFile };
 }

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { sendCodeToServer } from '@/api/login/sendCodeToServer';
 import { useMutation } from 'react-query';
 
-
 export default function useAuthKakao() {
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');
@@ -11,23 +10,18 @@ export default function useAuthKakao() {
   const router = useRouter();
   const { code: authCode } = router.query;
 
-  const { mutate: kakaoLoginMutate } = useMutation(() =>
-    sendCodeToServer(authCode as string),
-    {
-      onSuccess: (data) => {
-        const { accessToken, refreshToken } = data
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-
-        console.log(`accessToken: ${accessToken}, refreshToken: ${refreshToken}`);
-      },
-      onError: (error) => {
-        console.log('kakaoLogin Error : ' + error);
-      },
-    }
-  )
+  const { mutate: kakaoLoginMutate } = useMutation(() => sendCodeToServer(authCode as string), {
+    onSuccess: (data) => {
+      const { accessToken, refreshToken } = data;
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    },
+    onError: (error) => {
+      console.log('kakaoLogin Error : ' + error);
+    },
+  });
 
   useEffect(() => {
     if (authCode) {

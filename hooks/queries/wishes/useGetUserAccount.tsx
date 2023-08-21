@@ -19,7 +19,7 @@ export default function useGetUserAccount() {
     setPhone(data?.data?.phone);
   }, [data]);
 
-  const handleChangeBankName = (input: string) => {
+  const changeBankName = (input: string) => {
     setBankName(input);
   };
 
@@ -27,7 +27,7 @@ export default function useGetUserAccount() {
     name,
     handleChangeName,
     bankName,
-    handleChangeBankName,
+    changeBankName,
     account,
     handleChangeAccount,
     phone,

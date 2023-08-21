@@ -17,7 +17,7 @@ import { ImageUploadIc } from '@/public/assets/icons';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import ItemImageBox from './itemImageBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import Layout from '@/components/common/layout';
+import { validation } from '@/validation/input';
 
 interface WishesStep1Props {
   handleNextStep: () => void;
@@ -27,9 +27,8 @@ export default function WishesStep1(props: WishesStep1Props) {
   const { handleNextStep } = props;
   const setWishesData = useSetRecoilState(WishesData);
 
-  const [linkURL, handleChangeLinkURL] = useInput('');
-  const [isCorrectLink, setIsCorrectLink] = useState(false);
-  const { imageURL, price, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
+  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } =
+    useGetItemInfo();
   const { imageFile, previewImage, uploadImageFile } = useUploadItemInfo();
   const [initial, handleChangeInitial] = useInput('', LIMIT_TEXT[15]);
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
@@ -37,10 +36,10 @@ export default function WishesStep1(props: WishesStep1Props) {
   const [selfInputPrice, handleChangeSelfInputPrice] = useInput('', LIMIT_TEXT[15]);
 
   useEffect(() => {
-    isSuccess && isCorrectLink && initial
+    imageURL && validation.isCorrectSite(linkURL) && initial
       ? setIsNextStepAvailable(true)
       : setIsNextStepAvailable(false);
-  }, [initial]);
+  }, [initial, imageURL]);
 
   const nextStep = () => {
     //아이템 데이터의 유효성 정보에 대한 체크 조건 추가해야됨
@@ -72,9 +71,6 @@ export default function WishesStep1(props: WishesStep1Props) {
     setIsLinkLoadType(state);
   };
 
-  const changeValidation = (state: boolean) => {
-    setIsCorrectLink(state);
-  };
   return (
     <>
       <UploadTypeToggleBtn
@@ -86,10 +82,10 @@ export default function WishesStep1(props: WishesStep1Props) {
           <ItemLink
             linkURL={linkURL}
             handleChangeLinkURL={handleChangeLinkURL}
-            changeValidation={changeValidation}
-            isSuccess={isSuccess}
             imageURL={imageURL}
+            changeImageURL={changeImageURL}
             price={price}
+            changePrice={changePrice}
           />
         </InputContainer>
       ) : (
