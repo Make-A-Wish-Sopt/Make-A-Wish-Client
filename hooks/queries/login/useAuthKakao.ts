@@ -5,7 +5,6 @@ import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
-
 export default function useAuthKakao() {
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');

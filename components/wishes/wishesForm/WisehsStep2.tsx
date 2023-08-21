@@ -24,7 +24,6 @@ export default function WishesStep2(props: WishesStep2Props) {
   const { handleNextStep } = props;
   const [title, handleChangeTitle] = useInput('', LIMIT_TEXT[20]);
   const [hint, handleChangeHint] = useInput('', LIMIT_TEXT.DESCRIPTION);
-  const [phone, handleChangePhone] = useInput('');
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
 
   const [startDate, setStartDate] = useState(getDate(TODAY, 0));
@@ -37,8 +36,8 @@ export default function WishesStep2(props: WishesStep2Props) {
   }, [startDate]);
 
   useEffect(() => {
-    title && hint && phone ? setIsNextStepAvailable(true) : setIsNextStepAvailable(false);
-  }, [title, hint, phone]);
+    title && hint ? setIsNextStepAvailable(true) : setIsNextStepAvailable(false);
+  }, [title, hint]);
 
   const changeStartDate = (value: Date) => {
     setStartDate(value);
@@ -57,7 +56,6 @@ export default function WishesStep2(props: WishesStep2Props) {
       ...prev,
       title: title,
       hint: hint,
-      phone: phone,
       startDate: startDate,
       endDate: endDate,
     }));
@@ -103,29 +101,23 @@ export default function WishesStep2(props: WishesStep2Props) {
           <HalfBox
             bgColor={theme.colors.pastel_blue}
             fontColor={theme.colors.gray2}
-            borderColor={theme.colors.gray1}
+            borderColor={theme.colors.main_blue}
           >
             <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />
           </HalfBox>
         </Styled.CalendarWrapper>
       </InputContainer>
 
-      <InputContainer title="연락처 입력하기">
-        <InputBox
-          placeholder="연락처는 (-)없이 입력해주세요"
-          handleChangeValue={handleChangePhone}
-          value={phone}
-        />
-      </InputContainer>
-
-      <BasicBox
-        bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button16}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={nextStep}>소원링크 생성 완료!</Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={isNextStepAvailable ? theme.colors.main_blue : theme.colors.gray1}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button16}
+          borderColor={'transparent'}
+        >
+          <Button handleClick={nextStep}>소원링크 생성 완료!</Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -134,5 +126,9 @@ const Styled = {
   CalendarWrapper: styled.div`
     display: flex;
     justify-content: space-between;
+  `,
+  ButtonWrapper: styled.div`
+    position: absolute;
+    bottom: 4.6rem;
   `,
 };

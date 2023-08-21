@@ -9,7 +9,6 @@ import WishesStep2 from './WisehsStep2';
 import Preview from './Preview';
 import BankInfo from './BankInfo';
 import { useRouter } from 'next/router';
-import EditWishes from '@/components/Mypage/EditWishes';
 
 export default function WishesFormContainer() {
   const { stepIndex, handleNextStep, handlePrevStep } = useWishesStep();
@@ -37,10 +36,10 @@ export default function WishesFormContainer() {
           <Image src={WishesFormPresentIc} alt="선물 이미지" />
           {
             {
-              1: <Styled.Title>소원링크 화면 생성하기</Styled.Title>,
-              2: <Styled.Title>소원링크 화면 생성하기</Styled.Title>,
+              1: <Styled.Title>소원링크 생성하기</Styled.Title>,
+              2: <Styled.Title>소원링크 생성하기</Styled.Title>,
               3: <Styled.Title>소원링크 화면 미리보기</Styled.Title>,
-              4: <Styled.Title>계좌번호 입력하기</Styled.Title>,
+              4: <Styled.Title>계좌번호 및 연락처 입력하기</Styled.Title>,
             }[stepIndex]
           }
         </Styled.TitleWrapper>

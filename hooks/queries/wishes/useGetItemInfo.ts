@@ -1,44 +1,29 @@
-import { getItemInfo } from '@/api/wishes/getItemInfo';
-import { QUERY_KEY } from '@/constant/queryKey';
+import useInput from '@/hooks/common/useInput';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
 //링크 타입을 유니온으로 설정해야됨
-export function useGetItemInfo(isCorrectLink: boolean, linkURL: string) {
+export function useGetItemInfo() {
+  const [linkURL, handleChangeLinkURL, setLinkURL] = useInput('');
   const [imageURL, setImageURL] = useState('');
   const [price, setPrice] = useState(0);
 
-  const { isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, () => getItemInfo(linkURL), {
-    onSuccess: (data) => {
-      const imageData = extractImageSrc(data.imageTag.data?.data);
-      const priceData = extractPrice(data.priceTag.data?.data);
-
-      if (imageData && priceData) {
-        setImageURL(imageData);
-        setPrice(priceData);
-      }
-    },
-    enabled: isCorrectLink,
-  });
-
-  const extractImageSrc = (imageLink: string) => {
-    //eslint-disable-next-line
-    const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-    const imageSrc = regex.exec(imageLink);
-
-    return imageSrc && imageSrc[1];
+  const changeLinkURL = (input: string) => {
+    setLinkURL(input);
+  };
+  const changeImageURL = (input: string) => {
+    setImageURL(input);
+  };
+  const changePrice = (input: number) => {
+    setPrice(input);
   };
 
-  const extractPrice = (totalPrice: string) => {
-    const html = document.createElement('span');
-    html.innerHTML = totalPrice;
-    const innerHtmlText = html.querySelector('.css-4bcxzt')?.innerHTML;
-    const price = Number(
-      innerHtmlText?.substring(0, innerHtmlText.indexOf('<')).replaceAll(',', ''),
-    );
-
-    return price;
+  return {
+    linkURL,
+    changeLinkURL,
+    handleChangeLinkURL,
+    imageURL,
+    changeImageURL,
+    price,
+    changePrice,
   };
-
-  return { imageURL, price, isSuccess };
 }
