@@ -186,7 +186,7 @@ export default function EditWishesContainer() {
       <BasicBox
         bgColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        font={theme.fonts.button16}
+        font={theme.fonts.button18}
         borderColor={'transparent'}
       >
         <Button handleClick={() => editWishesData()}>수정완료</Button>

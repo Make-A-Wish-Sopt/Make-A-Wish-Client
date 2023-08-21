@@ -26,7 +26,7 @@ const Styled = {
     width: 100%;
     height: 100%;
 
-    ${theme.fonts.button16};
+    ${theme.fonts.button18};
     color: ${(props) => props.fontColor};
   `,
 };
