@@ -5,4 +5,9 @@ export interface QueryKeyType {
   PG_TOKEN: string;
   USER: string;
   ACCOUNT: string;
+  PROGRESS: string;
+  CAKES_COUNT: string;
+  CAKE_LETTERS: string;
+  WISH_LINKS: string;
+  ONE_WISH: string;
 }

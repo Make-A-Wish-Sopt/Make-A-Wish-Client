@@ -9,15 +9,15 @@ export const SNS_LIST: SNSListType[] = [
     logo: KaKaoLogoImg,
   },
   // {
-  //     name: 'Instagram',
-  //     logo: InstaLogoImg,
+  //   name: 'Instagram',
+  //   logo: InstaLogoImg,
   // },
   // {
-  //     name: 'FaceBook',
-  //     logo: FacebookLogoImg,
+  //   name: 'FaceBook',
+  //   logo: FacebookLogoImg,
   // },
   // {
-  //     name: 'Twitter',
-  //     logo: TwitterLogoImg,
+  //   name: 'Twitter',
+  //   logo: TwitterLogoImg,
   // },
 ];
