@@ -3,7 +3,7 @@ import { client } from '../common/axios';
 
 export const requestPayReady = async (userId: string, cakeNumber: number) => {
   return await client.post(
-    `${PATH.API}/${PATH.V1}/${PATH.CAKES}/${PATH.PAY}/${PATH.READY}`,
+    `${PATH.API}/${PATH.V1}/${PATH.PUBLIC}/${PATH.PAY}/${PATH.READY}`,
     {
       partnerOrderId: process.env.NEXT_PUBLIC_ORDER_ID,
       partnerUserId: process.env.NEXT_PUBLIC_USER_ID,
