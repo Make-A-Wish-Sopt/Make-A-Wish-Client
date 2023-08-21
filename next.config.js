@@ -12,6 +12,7 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
+    domains: ['github.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,6 +21,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    domains: ['img.29cm.co.kr', 'product.29cm.co.kr', 'localhost'],
   },
   rules: {
     test: /\.svg$/,

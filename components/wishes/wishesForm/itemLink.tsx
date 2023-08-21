@@ -5,35 +5,51 @@ import { SITE_LIST } from '@/constant/siteList';
 import Image from 'next/image';
 import AlertTextBox from '../../common/alertTextBox';
 import { validation } from '@/validation/input';
-import { ChangeEvent } from 'react';
-import PresentBox from '@/components/common/box/PresentBox';
+import { ChangeEvent, useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import ItemImageBox from './itemImageBox';
+import { QUERY_KEY } from '@/constant/queryKey';
+import { getItemInfo } from '@/api/wishes/getItemInfo';
+import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
+import { useQuery } from 'react-query';
 
 interface ItemLinkProps {
   linkURL: string;
   handleChangeLinkURL: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => void;
-  changeValidation: (state: boolean) => void;
-  isSuccess: boolean;
   imageURL: string;
+  changeImageURL: (input: string) => void;
   price: number;
+  changePrice: (input: number) => void;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  // const [linkURL, handleChangeLinkURL] = useInput('');
-  // const [isCorrectLink, setIsCorrectLink] = useState(false);
-  // const { imageURL, price, isSuccess } = useGetItemInfo(isCorrectLink, linkURL);
-  const { linkURL, handleChangeLinkURL, changeValidation, isSuccess, imageURL, price } = props;
+  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } = props;
+  const [isCorrectLinkURL, setIsCorrectLinkURL] = useState(false);
 
   //queryClient부분 다시 체크해야됨!
   const parseImage = () => {
-    if (linkURL.length > 0 && validation.isCorrectSite(linkURL)) {
-      changeValidation(true);
-      return;
+    isSuccess && refetch();
+    if (validation.isCorrectSite(linkURL)) {
+      setIsCorrectLinkURL(true);
+    } else {
+      setIsCorrectLinkURL(false);
     }
-    changeValidation(false);
   };
+
+  const { refetch, isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, () => getItemInfo(linkURL), {
+    onSuccess: (data) => {
+      const imageData = extractImageSrc(data?.imageTag.data?.data);
+      const priceData = extractPrice(data?.priceTag.data?.data);
+
+      if (imageData && priceData) {
+        changeImageURL(imageData);
+        changePrice(priceData);
+      }
+    },
+    enabled: isCorrectLinkURL && validation.isCorrectSite(linkURL),
+  });
 
   return (
     <Styled.Container>
@@ -50,24 +66,12 @@ export default function ItemLink(props: ItemLinkProps) {
         handleBlur={parseImage}
         handleChangeValue={handleChangeLinkURL}
       ></InputBox>
-      {linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
+      {linkURL && linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
-      {isSuccess && (
-        <Styled.PresentWrapper>
-          <PresentBox>
-            <Styled.ImageWrapper>
-              <Image
-                src={imageURL}
-                fill={true}
-                alt="선물"
-                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-              />
-            </Styled.ImageWrapper>
-          </PresentBox>
-          <Styled.PresentPrice>가격 : {convertMoneyText(price)}원</Styled.PresentPrice>
-        </Styled.PresentWrapper>
+      {imageURL && (
+        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(price)}원</ItemImageBox>
       )}
     </Styled.Container>
   );

@@ -1,5 +1,5 @@
 export interface AccountInfoType {
   name: string;
-  bank: string;
+  bankName: string;
   account: string;
 }

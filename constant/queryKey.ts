@@ -6,5 +6,10 @@ export const QUERY_KEY: QueryKeyType = {
   PAYREADY: 'payReady',
   PG_TOKEN: 'pgToken',
   USER: 'user',
-  ACCOUNT:'account'
+  ACCOUNT: 'account',
+  PROGRESS: 'progress',
+  CAKES_COUNT: 'cakesCount',
+  CAKE_LETTERS: 'cakeLetters',
+  WISH_LINKS: 'wishLinks',
+  ONE_WISH: 'oneWish',
 };

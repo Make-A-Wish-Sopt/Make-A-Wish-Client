@@ -1,24 +1,25 @@
 import { getUserAccount } from '@/api/wishes/getUserAccount';
 import { QUERY_KEY } from '@/constant/queryKey';
 import useInput from '@/hooks/common/useInput';
-import { AccountInfoType } from '@/types/wishes/accountInfotype';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 export default function useGetUserAccount() {
-  const { data, isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
+  const { data } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
 
-  const [name, handleChangeName] = useInput(data?.data ? 'data' : '');
-  const [bankName, setBankName] = useState(data?.data ? 'data' : '');
-  const [account, handleChangeAccount] = useInput(data?.data ? 'data' : '');
+  const [name, handleChangeName, setName] = useInput('');
+  const [bankName, setBankName] = useState('');
+  const [account, handleChangeAccount, setAccount] = useInput('');
+  const [phone, handleChangePhone, setPhone] = useInput('');
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfoType>({
-    name: name,
-    bank: bankName,
-    account: account,
-  });
+  useEffect(() => {
+    setName(data?.data?.accountInfo?.name);
+    setBankName(data?.data?.accountInfo?.bank);
+    setAccount(data?.data?.accountInfo?.account);
+    setPhone(data?.data?.phone);
+  }, [data]);
 
-  const handleChangeBankName = (input: string) => {
+  const changeBankName = (input: string) => {
     setBankName(input);
   };
 
@@ -26,11 +27,11 @@ export default function useGetUserAccount() {
     name,
     handleChangeName,
     bankName,
-    handleChangeBankName,
+    changeBankName,
     account,
     handleChangeAccount,
-    accountInfo,
-    setAccountInfo,
-    isSuccess,
+    phone,
+    handleChangePhone,
+    apiStatus: data?.success,
   };
 }

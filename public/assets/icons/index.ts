@@ -16,3 +16,9 @@ export { default as DetailCloseIc } from '@/public/assets/icons/detailCloseIc.sv
 export { default as DetailOpenIc } from '@/public/assets/icons/detailOpenIc.svg';
 export { default as WishesFormPresentIc } from '@/public/assets/icons/wishesFormPresentIc.svg';
 export { default as WideArrowDownIc } from '@/public/assets/icons/wideArrowDownIc.svg';
+export { default as ImageUploadIc } from '@/public/assets/icons/imageUploadIc.svg';
+export { default as CheckIc } from '@/public/assets/icons/checkIc.svg';
+export { default as DeleteBtnIc } from '@/public/assets/icons/deleteBtnIc.svg';
+export { default as ArrowLeftIc } from '@/public/assets/icons/arrowLeftIc.svg';
+export { default as ArrowRightIc } from '@/public/assets/icons/arrowRightIc.svg';
+export { default as ArrowLargeDownIc } from '@/public/assets/icons/arrowLargeDownIc.svg';

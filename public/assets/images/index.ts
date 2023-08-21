@@ -28,16 +28,34 @@ export { default as PoopCakeThanksImg } from '../images/cakes/poopCakeThanksImg.
 export { default as SushiCakeThanksImg } from '../images/cakes/sushiCakeThanksImg.svg';
 export { default as VitaminCakeThanksImg } from '../images/cakes/vitaminCakeThanksImg.svg';
 
+export { default as BeefCakeSmallImg } from '../images/cakes/beefCakeSmallImg.svg';
+export { default as ChickenCakeSmallImg } from '../images/cakes/chickenCakeSmallImg.svg';
+export { default as CoffeeCakeSmallImg } from '../images/cakes/coffeeCakeSmallImg.svg';
+export { default as FlowerCakeSmallImg } from '../images/cakes/flowerCakeSmallImg.svg';
+export { default as PerfumeCakeSmallImg } from '../images/cakes/perfumeCakeSmallImg.svg';
+export { default as PoopCakeSmallImg } from '../images/cakes/poopCakeSmallImg.svg';
+export { default as SushiCakeSmallImg } from '../images/cakes/sushiCakeSmallImg.svg';
+export { default as VitaminCakeSmallImg } from '../images/cakes/vitaminCakeSmallImg.svg';
+
 export { default as GaugeBarImg } from '../images/gaugeBarImg.svg';
 export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
 export { default as GuideContentImg } from '../images/guideContentImg.svg';
+export { default as BorderImg } from '../images/borderImg.svg';
 
 // cake
 export { default as PillCakeImg } from '../images/pillCakeImg.svg';
+export { default as MypageCakeImg } from '../images/myPageCakeImg.svg';
+export { default as MypageChatImg } from '../images/myPageChatImg.svg';
 export { default as ShareChatImg } from '../images/sharePageChatImg.svg';
-export { default as LoginChatImg } from '../images/loginPageChatImg.svg';
 export { default as MainChatImg } from '../images/mainPageChatImg.svg';
 export { default as WishesChatImg } from '../images/wishesChatImg.svg';
+export { default as DeleteModalCake } from '../images/deleteModalCake.svg';
+export { default as LinkPageCake } from '../images/linkPageCake.svg';
+export { default as MainWishChatImg } from '../images/mainWishChatImg.svg';
+export { default as MainEndChatImg } from '../images/mainEndChatImg.svg';
+export { default as SharePageCake } from '../images/sharePageCake.svg';
+export { default as LoginPageImg } from '../images/loginPageImg.svg';
+export { default as LinksPageChatImg } from '../images/linksPageChatImg.svg';
 
 // shopping website
 export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';
