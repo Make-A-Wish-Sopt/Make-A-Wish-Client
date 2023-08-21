@@ -30,7 +30,7 @@ export default function LinksBox(props: LinksBoxProps) {
 }
 
 const Styled = {
-  Container: styled.button`
+  Container: styled.div`
   width: 100%;
   height: 7rem;
   display: flex;
