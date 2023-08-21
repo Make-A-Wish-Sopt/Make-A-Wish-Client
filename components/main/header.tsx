@@ -6,6 +6,7 @@ import MainHeader from '../common/mainHeader';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import router from 'next/router';
+import { useEffect, useState } from 'react';
 
 interface HeaderProps {
   wishStatus: string;
@@ -15,7 +16,14 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { wishStatus, dayCount, cakeCount } = props;
+
+  const [nickName, setNicknameState] = useState("");
   const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  useEffect(() => {
+    setNicknameState(loginUserInfo.nickName);
+  }, [loginUserInfo]);
+
 
   const handleMoveToMypage = () => {
     router.push('/mypage');
@@ -25,7 +33,7 @@ export default function Header(props: HeaderProps) {
     if (wishStatus === 'none') {
       return (
         <Styled.Title>
-          {loginUserInfo.nickName}님,
+          {nickName}님,
           <br />
           <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
           <br />
@@ -35,7 +43,7 @@ export default function Header(props: HeaderProps) {
     } else if (wishStatus === 'while' || wishStatus === 'end') {
       return (
         <Styled.Title>
-          {loginUserInfo.nickName}님에게
+          {nickName}님에게
           <br />
           <Styled.TitleColor>{cakeCount}개</Styled.TitleColor>의 조각 케이크가
           <br />
@@ -45,17 +53,25 @@ export default function Header(props: HeaderProps) {
     } else if (wishStatus === 'before') {
       return (
         <Styled.Title>
-          {loginUserInfo.nickName}님,
+          {nickName}님,
           <br />
           <Styled.TitleColor>{dayCount}일 뒤 </Styled.TitleColor>부터 소원링크를
           <br />
           공유해봐요!
         </Styled.Title>
       );
+    } else {
+      <Styled.Title>
+        {nickName}님,
+        <br />
+        <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
+        <br />
+        케이크를 모아봐요!
+      </Styled.Title>
     }
   };
 
-  const getDayText = () => {
+  const getDdayText = () => {
     if (wishStatus === 'while') {
       if (dayCount === 0) {
         return '-DAY'
@@ -70,8 +86,8 @@ export default function Header(props: HeaderProps) {
 
   const sideContent = (
     <>
-      <IconButton src={SideBarIc} alt="사이드바" onClick={handleMoveToMypage} />
-      <Styled.DaysText wishStatus={wishStatus}>D{getDayText()}</Styled.DaysText>
+      <IconButton src={SideBarIc} alt="설정" onClick={handleMoveToMypage} />
+      <Styled.DaysText wishStatus={wishStatus}>D{getDdayText()}</Styled.DaysText>
     </>
   );
 

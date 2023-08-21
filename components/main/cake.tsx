@@ -2,8 +2,10 @@ import styled, { css } from 'styled-components';
 import theme from '@/styles/theme';
 import router from 'next/router';
 import Image from 'next/image';
-import { MainChatImg, MainEndChatImg, MainWishChatImg, PillCakeImg } from '@/public/assets/images';
+import { MainChatImg, MainEndCakeImg, MainEndChatImg, MainWishChatImg, PillCakeImg } from '@/public/assets/images';
 import ProgressBar from '../common/progressBar';
+import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useRecoilValue } from 'recoil';
 
 interface CakeProps {
   wishStatus: string;
@@ -13,12 +15,10 @@ interface CakeProps {
 
 export default function Cake(props: CakeProps) {
   const { wishStatus, percent, price } = props;
-
-  const percentData = percent !== undefined ? percent : 0;
-  const priceData = price !== undefined ? price : '???';
+  const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   const handleMoveToLetters = () => {
-    router.push('/mypage/letters');
+    router.push(`/mypage/letters/${loginUserInfo.wishesId}`);
   };
 
   const ChatImg = () => {
@@ -29,7 +29,10 @@ export default function Cake(props: CakeProps) {
     );
   };
 
-  const CakeImg = () => (wishStatus === 'end' ? PillCakeImg : PillCakeImg);
+  const priceData = (wishStatus === 'while' || wishStatus === 'end') ? price : '???';
+
+
+  const CakeImg = () => (wishStatus === 'end' ? MainEndCakeImg : PillCakeImg);
 
   return (
     <>
@@ -53,9 +56,9 @@ export default function Cake(props: CakeProps) {
 
           {/* 수정 필요 */}
           <Styled.BarContainer>
-            {/* <ProgressBar percent={percent} vertical={true} /> */}
+            <ProgressBar percent={percent} vertical={true} />
             <Styled.ProgressBox>
-              <Styled.Percent>{percentData}%</Styled.Percent>
+              <Styled.Percent>{percent}%</Styled.Percent>
               <Styled.PercentWrapper percent={percent}></Styled.PercentWrapper>
             </Styled.ProgressBox>
           </Styled.BarContainer>
