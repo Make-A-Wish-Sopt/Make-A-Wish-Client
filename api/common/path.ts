@@ -16,6 +16,7 @@ const PATH = {
   USER: 'user',
   ACCOUNT: 'account',
   PROGRESS: 'progress',
+  PUBLIC: 'public',
 };
 
 export default PATH;
