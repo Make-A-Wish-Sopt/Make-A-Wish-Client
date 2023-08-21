@@ -3,5 +3,13 @@ import { atom } from 'recoil';
 
 export const CakesCountData = atom<CakesCountType[]>({
   key: 'CakesCount',
-  default: [],
+  default:
+    [
+      {
+        cakeId: 0,
+        name: '',
+        imageUrl: '',
+        count: 0,
+      }
+    ],
 });

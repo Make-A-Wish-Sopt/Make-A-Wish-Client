@@ -15,7 +15,9 @@ export default function CakeListButton(props: CakeListButtonProps) {
   const { image, children, backgroundColor, fontColor, handleClick } = props;
   return (
     <Container backgroundColor={backgroundColor} fontColor={fontColor} onClick={handleClick}>
-      <Image src={image} alt="케이크 이미지" width={35} height={35} />
+      {image && (
+        <Image src={image} alt="케이크 이미지" width={35} height={35} />
+      )}
       <Styled.TextContainer>{children}</Styled.TextContainer>
     </Container>
   );
