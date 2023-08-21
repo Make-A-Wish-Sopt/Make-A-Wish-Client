@@ -3,35 +3,51 @@ import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import router from 'next/router';
+import Image from 'next/image';
 import ItemBox from './itemBox';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
+import { CakeProfileImg } from '@/public/assets/images';
+import { useEffect, useState } from 'react';
+import useUserInfo from '@/hooks/common/useUserInfo';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
+
+  const [nickName, setNicknameState] = useState("");
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
-  // const { isError } = useUserInfo();
+  useEffect(() => {
+    setNicknameState(loginUserInfo.nickName);
+  }, [loginUserInfo]);
+
+  const { wishEdit } = useUserInfo();
 
   const handleEditWish = () => {
-    // if (isError) return;
-    // router.push('/mypage/editWishes');
-  };
-  const handleStopWish = () => {
-    router.push('/');
+    if (wishEdit) {
+      router.push('/mypage/editWishes');
+    }
   };
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
   const handleCustomerService = () => {
-    window.Kakao.Channel.chat({
-      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
-    });
+    if (wishEdit) {
+      window.Kakao.Channel.chat({
+        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
+      });
+    }
   };
+
   const handleLogOut = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&logout_redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI}`;
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('UserInfo');
+    // useResetRecoilState(LoginUserInfo);
   };
 
   return (
@@ -48,22 +64,27 @@ export default function MyPageContainer() {
 
       <Styled.Container>
         <Styled.TitleContainer>
+          <Image src={CakeProfileImg} alt="케이크 프로필" />
           <Styled.Title>
-            {loginUserInfo.nickName} 님
+            {nickName} 님
           </Styled.Title>
         </Styled.TitleContainer>
 
         <ItemBox
           handleClick={handleEditWish}
-        // {...(isError && {
-        //   backgroundColor: theme.colors.gray1,
-        //   color: theme.colors.gray2,
-        // })}
+          {...(!wishEdit && {
+            backgroundColor: theme.colors.gray1,
+            color: theme.colors.gray2,
+          })}
         >
           진행중인 소원 링크 정보 수정하기
         </ItemBox>
         <ItemBox
-          handleClick={handleStopWish}
+          handleClick={handleCustomerService}
+          {...(!wishEdit && {
+            backgroundColor: theme.colors.gray1,
+            color: theme.colors.gray2,
+          })}
         >
           진행중인 펀딩 중단하기
         </ItemBox>
@@ -105,9 +126,12 @@ const Styled = {
   Title: styled.h1`
   ${theme.fonts.headline24_130};
   color: ${theme.colors.gray4};
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 1.5rem;
   `,
 
-  TextContainer: styled.h1`
+  TextContainer: styled.button`
 margin: 3rem 0 0;
 ${theme.fonts.button16_2};
   color: ${theme.colors.main_blue};

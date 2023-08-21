@@ -7,7 +7,19 @@ import { getDate } from '@/utils/common/getDate';
 import { TODAY } from '@/constant/dateList';
 
 export default function useUserInfo() {
-  const { data, isSuccess } = useQuery(QUERY_KEY.USER, getUserInfo);
+  const [wishEdit, setWishEdit] = useState(false);
+
+  const { data, isSuccess } = useQuery(QUERY_KEY.USER, getUserInfo,
+    {
+      onSuccess: (data) => {
+        if (data !== null) {
+          setWishEdit(true);
+        }
+      },
+      onError: () => {
+        setWishEdit(false);
+      }
+    });
 
   const [startDate, setStartDate] = useState(getDate(TODAY, 0));
   const [endDate, setEndDate] = useState(getDate(startDate, 7));
@@ -41,5 +53,6 @@ export default function useUserInfo() {
     phone,
     handleChangePhone,
     isSuccess,
+    wishEdit
   };
 }

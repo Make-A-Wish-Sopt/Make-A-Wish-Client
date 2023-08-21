@@ -15,6 +15,7 @@ const PATH = {
   CALLBACK: 'callback',
   USER: 'user',
   ACCOUNT: 'account',
+  PROGRESS: 'progress'
 };
 
 export default PATH;
