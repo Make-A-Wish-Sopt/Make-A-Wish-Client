@@ -1,21 +1,10 @@
-import { useRouter } from 'next/router';
-import useAuthKakao from '@/hooks/queries/login/useAuthKakao';
-import { useEffect } from 'react';
+import Redirect from '@/components/login/redirect';
 
 export default function Kakao() {
-  const router = useRouter();
-
-  const { accessToken, refreshToken } = useAuthKakao();
-
-  useEffect(() => {
-    if (accessToken && refreshToken) {
-      router.push('/main');
-    }
-  }, [accessToken, refreshToken]);
 
   return (
     <>
-      <div> 카카오 로그인 중 입니다...</div>
+      <Redirect />
     </>
   );
 }

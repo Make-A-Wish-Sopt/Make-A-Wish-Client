@@ -7,7 +7,8 @@ import Header from '@/components/common/header';
 import IconButton from '../common/button/iconButton';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
-import useModal from '@/hooks/common/useModal';
+import useModal from '@/hooks/common/useModal'
+
 
 export default function LoginContainer() {
   const { isOpen, handleToggle } = useModal();
