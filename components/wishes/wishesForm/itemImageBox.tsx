@@ -11,6 +11,7 @@ interface ItemImageBoxProps {
 
 export default function ItemImageBox(props: ItemImageBoxProps) {
   const { imageURL, children } = props;
+
   return (
     <Styled.PresentWrapper>
       <PresentBox>
@@ -23,7 +24,7 @@ export default function ItemImageBox(props: ItemImageBoxProps) {
           />
         </Styled.ImageWrapper>
       </PresentBox>
-      {children}
+      <Styled.PresentPrice>{children}</Styled.PresentPrice>
     </Styled.PresentWrapper>
   );
 }
@@ -40,5 +41,11 @@ const Styled = {
     height: 100%;
 
     object-fit: fill;
+  `,
+
+  PresentPrice: styled.div`
+    ${theme.fonts.button16};
+    color: ${theme.colors.main_blue};
+    text-align: center;
   `,
 };

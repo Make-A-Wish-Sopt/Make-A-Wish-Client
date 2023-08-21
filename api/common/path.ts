@@ -5,7 +5,6 @@ const PATH = {
   PAY: 'pay',
   AUTH: 'auth',
   WISHES: 'wishes',
-  WISH: 'wish',
   MAIN: 'main',
   APPROVE: 'approve',
   READY: 'ready',
@@ -16,6 +15,7 @@ const PATH = {
   CALLBACK: 'callback',
   USER: 'user',
   ACCOUNT: 'account',
+  PROGRESS: 'progress',
 };
 
 export default PATH;

@@ -1,8 +1,13 @@
-export interface UserInfoType {
-  startDate: Date | null;
-  endDate: Date | null;
-  name: string | null;
-  bankName: string | null;
-  account: string | null;
-  phone: string | null;
+export interface EditWishesInfoType {
+  startDate: string;
+  endDate: string;
+  name: string;
+  bankName: string;
+  account: string;
+  phone: string;
+  imageUrl: string;
+  price: 0;
+  title: string;
+  hint: string;
+  initial: string;
 }

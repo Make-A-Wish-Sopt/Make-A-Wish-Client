@@ -103,7 +103,7 @@ export default function WishesStep2(props: WishesStep2Props) {
           <HalfBox
             bgColor={theme.colors.pastel_blue}
             fontColor={theme.colors.gray2}
-            borderColor={theme.colors.gray1}
+            borderColor={theme.colors.main_blue}
           >
             <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />
           </HalfBox>

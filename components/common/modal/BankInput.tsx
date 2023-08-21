@@ -11,7 +11,7 @@ interface BankInputProps {
   name: string;
   handleChangeName: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
   bankName: string;
-  handleChangeBankName: (input: string) => void;
+  changeBankName: (input: string) => void;
   account: string;
   handleChangeAccount: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -19,19 +19,18 @@ interface BankInputProps {
 }
 
 export default function BankInput(props: BankInputProps) {
-  const { name, handleChangeName, bankName, handleChangeBankName, account, handleChangeAccount } =
-    props;
+  const { name, handleChangeName, bankName, changeBankName, account, handleChangeAccount } = props;
   const { isOpen, handleToggle } = useModal();
 
   return (
     <>
       <Styled.ItemWrapper>
-        <InputBox placeholder="예금주명" value={name} handleChangeValue={handleChangeName} />
+        <InputBox placeholder="예금주명" value={name || ''} handleChangeValue={handleChangeName} />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper>
         <div onClick={handleToggle}>
-          <InputBox placeholder="은행 선택" value={bankName} readOnly dropDown={true} />
+          <InputBox placeholder="은행 선택" value={bankName || ''} readOnly dropDown={true} />
         </div>
       </Styled.ItemWrapper>
 
@@ -39,7 +38,7 @@ export default function BankInput(props: BankInputProps) {
         <InputBox
           placeholder="계좌번호는 (-)없이 입력해주세요"
           handleChangeValue={handleChangeAccount}
-          value={account}
+          value={account || ''}
         />
       </Styled.ItemWrapper>
       {validation.isIncludeHyphen(account) && (
@@ -48,7 +47,7 @@ export default function BankInput(props: BankInputProps) {
 
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <BankModal handleToggle={handleToggle} changeBankName={handleChangeBankName} />
+          <BankModal handleToggle={handleToggle} changeBankName={changeBankName} />
         </Modal>
       )}
     </>

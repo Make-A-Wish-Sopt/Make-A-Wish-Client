@@ -5,36 +5,72 @@ import { useEffect, useState } from 'react';
 import useInput from './useInput';
 import { getDate } from '@/utils/common/getDate';
 import { TODAY } from '@/constant/dateList';
+import useUploadItemInfo from '../wishes/useUploadItemInfo';
+import { LIMIT_TEXT } from '@/constant/limitText';
+import { useGetItemInfo } from '../queries/wishes/useGetItemInfo';
+import moment from 'moment';
 
 export default function useEditWishesInfo() {
-  const { data, isSuccess } = useQuery(QUERY_KEY.USER, getEditWishesInfo);
+  const { data, isSuccess: isGetEditWishesInfoSuccess } = useQuery(
+    QUERY_KEY.USER,
+    getEditWishesInfo,
+  );
 
-  console.log(data?.startDate);
-  const test = new Date(data?.startDate);
-  console.log(test);
+  const wishesStatus = data?.status;
 
-  const [startDate, setStartDate] = useState<Date>(getDate(TODAY, 0));
-  const [endDate, setEndDate] = useState<Date>(getDate(startDate, 7));
+  const [title, handleChangeTitle, setTitle] = useInput('', LIMIT_TEXT[20]);
+  const [initial, handleChangeInitial, setInitial] = useInput('', LIMIT_TEXT[15]);
+
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
+
   const [name, handleChangeName, setName] = useInput('');
   const [bankName, setBankName] = useState('');
   const [account, handleChangeAccount, setAccount] = useInput('');
   const [phone, handleChangePhone, setPhone] = useInput('');
 
+  const {
+    linkURL,
+    handleChangeLinkURL,
+    changeLinkURL,
+    imageURL,
+    changeImageURL,
+    price,
+    changePrice,
+  } = useGetItemInfo();
+
+  const { imageFile, previewImage, setPreviewImage, uploadImageFile } = useUploadItemInfo();
+  const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
+  const [selfInputPrice, handleChangeSelfInputPrice, setSelfInputPrice] = useInput(
+    '',
+    LIMIT_TEXT[15],
+  );
+  const [hint, handleChangeHint, setHint] = useInput('', LIMIT_TEXT.DESCRIPTION);
+
   useEffect(() => {
-    const startDate = new Date(data?.startDate);
-    // setStartDate(startDate);
-    // setEndDate(data?.endDate);
-    setName(data?.accountInfo?.name);
-    setBankName(data?.accountInfo?.bank);
-    setAccount(data?.accountInfo?.account);
-    setPhone(data?.phone);
+    if (data) {
+      setStartDate(data?.startDate);
+      setEndDate(data?.endDate);
+      setPhone(data?.phone);
+      setTitle(data?.title);
+      setHint(data?.hint);
+      setInitial(data?.initial);
+      changeLinkURL(data?.imageUrl);
+      setPreviewImage(data?.imageUrl);
+      setSelfInputPrice(data?.price);
+      changeImageURL(data?.imageUrl);
+      changePrice(data?.price);
+      setName(data?.accountInfo?.name);
+      setBankName(data?.accountInfo?.bank);
+      setAccount(data?.accountInfo?.account);
+    }
   }, [data]);
 
   useEffect(() => {
     setEndDate(getDate(startDate, 7));
   }, [startDate]);
 
-  const handleChangeBankName = (input: string) => {
+  const changeBankName = (input: string) => {
     setBankName(input);
   };
 
@@ -42,18 +78,67 @@ export default function useEditWishesInfo() {
     setStartDate(value);
   };
 
+  const handleLoadTypeToggle = (state: boolean) => {
+    setIsLinkLoadType(state);
+  };
+
   return {
-    startDate,
-    changeStartDate,
+    title: {
+      title,
+      handleChangeTitle,
+    },
+    initial: {
+      initial,
+      handleChangeInitial,
+    },
+    startDate: {
+      startDate,
+      changeStartDate,
+    },
     endDate,
-    name,
-    handleChangeName,
-    bankName,
-    handleChangeBankName,
-    account,
-    handleChangeAccount,
-    phone,
-    handleChangePhone,
-    isSuccess,
+    bankInfo: {
+      name,
+      handleChangeName,
+      bankName,
+      changeBankName,
+      account,
+      handleChangeAccount,
+    },
+
+    phone: {
+      phone,
+      handleChangePhone,
+    },
+    hint: {
+      hint,
+      handleChangeHint,
+    },
+    itemLink: {
+      linkURL,
+      handleChangeLinkURL,
+      imageURL,
+      changeImageURL,
+      price,
+      changePrice,
+    },
+    image: {
+      previewImage,
+      uploadImageFile,
+    },
+
+    isLinkLoadType: {
+      isLinkLoadType,
+      handleLoadTypeToggle,
+    },
+
+    selfInputPrice: {
+      selfInputPrice,
+      handleChangeSelfInputPrice,
+    },
+    price: data?.price,
+
+    wishesStatus,
+
+    isGetEditWishesInfoSuccess,
   };
 }
