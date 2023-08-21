@@ -6,13 +6,13 @@ const REGEX = Object.freeze({
 
 export const validation = {
   isCorrectSite(input: string) {
-    return REGEX.COOPANG.test(input) || REGEX.TWENTY_NINE.test(input);
+    if (input) return REGEX.COOPANG.test(input) || REGEX.TWENTY_NINE.test(input);
   },
   isCorrectPhoneNumber(input: string) {
-    return REGEX.PHONE.test(input);
+    if (input) return REGEX.PHONE.test(input);
   },
 
   isIncludeHyphen(input: string) {
-    return input.includes('-');
+    if (input) return input.includes('-');
   },
 };

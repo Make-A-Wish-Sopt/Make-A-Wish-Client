@@ -74,24 +74,22 @@ export default function Preview(props: PreviewProps) {
         <InputBox value={wishesData.initial} readOnly />
       </InputContainer>
 
-      <InputContainer title="연락처">
-        <InputBox value={wishesData.phone} readOnly />
-      </InputContainer>
-
       <Modal isOpen={isOpen} handleToggle={handleToggle}>
         <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
       </Modal>
 
-      <BasicBox
-        bgColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button16}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={createLink} fontColor={theme.colors.white}>
-          링크 생성하기
-        </Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button16}
+          borderColor={'transparent'}
+        >
+          <Button handleClick={createLink} fontColor={theme.colors.white}>
+            링크 생성하기
+          </Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -116,5 +114,9 @@ const Styled = {
     ${theme.fonts.button16};
     color: ${theme.colors.main_blue};
     text-align: center;
+  `,
+
+  ButtonWrapper: styled.div`
+    margin-top: 1.5rem;
   `,
 };
