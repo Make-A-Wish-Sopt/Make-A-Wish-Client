@@ -18,11 +18,11 @@ export default function useGetProgressData() {
             setWishStatus('while');
           } else if (data.status === 'END') {
             setWishStatus('end');
-          } else if (data.status === 'before') {
+          } else if (data.status === 'BEFORE') {
             setWishStatus('before');
-          } else {
-            setWishStatus('none');
           }
+        } else {
+          setWishStatus('none');
         }
       },
     }
