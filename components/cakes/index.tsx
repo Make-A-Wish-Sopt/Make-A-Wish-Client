@@ -1,13 +1,12 @@
 import { getWishesData } from '@/api/cakes/getWishesData';
-import { CAKE_LIST } from '@/constant/cakeList';
 import useInput from '@/hooks/common/useInput';
 import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import TextareaBox from '../common/input/textareaBox';
 import InputContainer from '../common/input/inputContainer';
 import CakesHeader from './cakesHeader';
@@ -18,23 +17,25 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import ButtonBox from '../common/button/buttonBox';
-import LargeBox from '../common/box/LargeBox';
-import { CakeListType } from '@/types/cakes/cakeListType';
+import useSelectCakes from '@/hooks/cakes/useSelectCakes';
+import SelectCakes from './SelectCakes';
 
 export default function CakesContainer() {
   const [giverName, changeGiverName] = useInput('');
   const [letter, changeLetter] = useInput('', LIMIT_TEXT.DESCRIPTION);
-  const [selectedCake, setSelectedCake] = useState<CakeListType>(CAKE_LIST[0]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
-  const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
+  const { selectedCake, selectedIndex, selectCake } = useSelectCakes();
+  const resetCakesData = useResetRecoilState(CakesData);
+  const [cakesData, setCakesData] = useRecoilState<CakesDataType>(CakesData);
   const router = useRouter();
 
   const { data, mutate, isSuccess } = useRequestPayReady(giverName, selectedCake.cakeNumber);
 
   useEffect(() => {
     if (!router.isReady) return;
-    setWishesId(router.query.id);
+    setCakesData((prev) => ({
+      ...prev,
+      wishId: Number(router.query.id),
+    }));
   }, [router.isReady]);
 
   useEffect(() => {
@@ -45,25 +46,17 @@ export default function CakesContainer() {
         ...prevData,
         tid: tid,
       }));
-
       router.replace(nextLink);
     }
   }, [isSuccess]);
-
-  const { data: wishesData } = useQuery('wished', async () => getWishesData(wishesId), {
-    enabled: wishesId !== '',
-  });
-
-  const resetCakesData = useResetRecoilState(CakesData);
 
   useEffect(() => {
     resetCakesData();
   }, []);
 
-  const selectCake = (index: number) => {
-    setSelectedCake(CAKE_LIST[index]);
-    setSelectedIndex(index);
-  };
+  const { data: wishesData } = useQuery('wished', async () => getWishesData(cakesData.wishId), {
+    enabled: cakesData.wishId !== 0,
+  });
 
   const saveReocilData = () => {
     setCakesData((prevData) => ({
@@ -72,7 +65,6 @@ export default function CakesContainer() {
       wishesName: wishesData?.name,
       cake: selectedIndex,
       message: letter,
-      wishId: 7, //값 수정해야됩니다. query 값으로 수정해야됨!
       selectedCake: selectedCake,
     }));
   };
@@ -101,30 +93,11 @@ export default function CakesContainer() {
         />
       </InputContainer>
 
-      <InputContainer title={'보내고 싶은 케이크 선택하기'}>
-        <Styled.CakeContainer>
-          {CAKE_LIST.map((cake, index) => (
-            <Styled.CakeBox
-              onClick={() => selectCake(index)}
-              index={index}
-              selectedIndex={selectedIndex}
-              key={cake.name}
-            >
-              <Image src={cake.cakeImage} alt={`${cake.name}이미지`} />
-            </Styled.CakeBox>
-          ))}
-        </Styled.CakeContainer>
-
-        <LargeBox bgColor={theme.colors.pastel_blue}>
-          <Styled.CakesImageWrapper>
-            <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
-          </Styled.CakesImageWrapper>
-        </LargeBox>
-
-        <Styled.CakeInfo>
-          {selectedCake.name} {convertMoneyText(selectedCake.price)}원
-        </Styled.CakeInfo>
-      </InputContainer>
+      <SelectCakes
+        selectedCake={selectedCake}
+        selectedIndex={selectedIndex}
+        selectCake={selectCake}
+      />
 
       <InputContainer title={'친구에게 편지 남기기'}>
         <TextareaBox
@@ -172,6 +145,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
   `,
+
   TextareaLengthWrapper: styled.div`
     display: flex;
     justify-content: space-between;

@@ -8,22 +8,17 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Contribution from '../contribution';
 import { useRecoilValue } from 'recoil';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { CakesData } from '@/recoil/cakes/cakesData';
 
-interface SuccessItemBoxProps {
-  cakesData: CakesDataType | undefined;
-}
-
-export default function SuccessItemBox(props: SuccessItemBoxProps) {
-  const { cakesData } = props;
-  const loginUserInfo = useRecoilValue(LoginUserInfo);
+export default function SuccessItemBox() {
+  const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {
     cakesData?.pgToken && mutate();
   }, [cakesData?.pgToken]);
 
   const { data, mutate, isSuccess } = useMutation(() =>
-    requestPayApprove(cakesData?.pgToken, cakesData, loginUserInfo.wishesId),
+    requestPayApprove(cakesData?.pgToken, cakesData, cakesData.wishId),
   );
 
   return (
@@ -33,7 +28,7 @@ export default function SuccessItemBox(props: SuccessItemBoxProps) {
           <InputLargeBox bgColor={theme.colors.pastel_blue}>
             <Styled.HintWrapper>
               ~선물 초성힌트~
-              {/* <Styled.HintText>{data?.hint1}</Styled.HintText> */}
+              <Styled.HintText>{data?.hint1}</Styled.HintText>
               <Styled.HintText>ㅇㅍㅇㅊ</Styled.HintText>
             </Styled.HintWrapper>
           </InputLargeBox>
