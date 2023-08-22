@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
-import { LinksPageChatImg, SharePageCake } from '@/public/assets/images';
+import { LinksPageChatImg, PillCakeImg } from '@/public/assets/images';
 import ButtonBox from '@/components/common/button/buttonBox';
 import router from 'next/router';
 
@@ -16,8 +16,8 @@ export default function NoWishLists() {
     <>
       <Styled.Container>
         <Styled.ImageContainer>
-          <Image src={LinksPageChatImg} alt="이뤄져라 얍!" />
-          <Image src={SharePageCake} alt="케이크" />
+          <Image src={LinksPageChatImg} alt="말풍선" />
+          <Image src={PillCakeImg} alt="케이크" />
         </Styled.ImageContainer>
       </Styled.Container>
 

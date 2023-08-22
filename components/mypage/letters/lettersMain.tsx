@@ -2,17 +2,14 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
-import DdayText from '@/components/common/dDayText';
-import SideContainer from '@/components/common/sideContainer';
 import { useRouter } from 'next/router';
 import CakeListButton from './cakeListButton';
-import CakeListText from './cakeListText';
-import { useGetWishesData } from '@/hooks/queries/wishes/useGetWishesData';
 import { useGetCakesCount } from '@/hooks/queries/letters/useGetCakesCount';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useEffect, useState } from 'react';
-import { CakesCountData } from '@/recoil/cakesCountData';
+import MainHeader from '@/components/common/mainHeader';
+import { CAKE_LIST } from '@/constant/cakeList';
 
 export default function LettersMainContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -25,16 +22,39 @@ export default function LettersMainContainer() {
 
 
   // nickname
+  const [nickName, setNicknameState] = useState("");
   const loginUserInfo = useRecoilValue(LoginUserInfo);
-  // D-day
-  const { wishesData } = useGetWishesData(wishId);
+
+  useEffect(() => {
+    setNicknameState(loginUserInfo.nickName);
+  }, [loginUserInfo]);
+
   // cake 개수, 합
-  const cakeCount = useRecoilValue(CakesCountData);
-  const { total } = useGetCakesCount(wishId);
+  const { cakesCount, total } = useGetCakesCount(wishId);
+
+  const getCakeNum = (cakeId: number, cakesCount: any[]): number => {
+    if (!cakesCount) {
+      return 0;
+    }
+
+    const cake = cakesCount.find(cake => cake.cakeId === cakeId);
+    return cake ? cake.count : 0;
+  };
+
 
   const handleMoveToLetters = (cakeId: number) => {
     router.push(`/mypage/letters/${wishId}/${cakeId}`);
   };
+
+  const title = (
+    <Styled.Title>
+      {nickName}님에게 도착한
+      <br />
+      <Styled.TitleColor>{total}개</Styled.TitleColor>의 조각 케이크
+      <br />
+      편지 열어보기!
+    </Styled.Title>
+  );
 
   return (
     <>
@@ -43,33 +63,20 @@ export default function LettersMainContainer() {
       </InputHeader>
 
       <Styled.Container>
-        <Styled.TitleContainer>
-          <Styled.Title>
-            {loginUserInfo.nickName}님에게 도착한
-            <br />
-            <Styled.TitleColor>{total}개</Styled.TitleColor>의 조각 케이크
-            <br />
-            편지 열어보기!
-          </Styled.Title>
-          <SideContainer>
-            <DdayText days={wishesData?.dayCount ?? "?"} />
-          </SideContainer>
-        </Styled.TitleContainer>
+        <MainHeader title={title} />
 
-        {cakeCount?.map((cake) => (
+        {CAKE_LIST?.map((cake) => (
           <CakeListButton
-            key={cake.cakeId}
-            handleClick={() => handleMoveToLetters(cake.cakeId)}
+            key={cake.name}
+            handleClick={getCakeNum(cake.cakeNumber, cakesCount) !== 0 ? () => handleMoveToLetters(cake.cakeNumber) : undefined}
             backgroundColor={theme.colors.pastel_blue}
             fontColor={theme.colors.gray4}
-            image={cake.imageUrl}
-          >
-            <CakeListText
-              fonts={theme.fonts.button18}
-              cakeName={cake.name}
-              cakeNum={cake.count}
-            />
-          </CakeListButton>
+            fonts={theme.fonts.button18}
+
+            image={cake.smallImage}
+            cakeName={cake.name}
+            cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
+          />
         ))}
       </Styled.Container >
     </>
@@ -79,11 +86,6 @@ export default function LettersMainContainer() {
 const Styled = {
   Container: styled.div`
   margin: 0 1rem 0;
-  `,
-
-  TitleContainer: styled.div`
-    display: flex;
-    margin: 2rem 0 0;
   `,
 
   Title: styled.h1`

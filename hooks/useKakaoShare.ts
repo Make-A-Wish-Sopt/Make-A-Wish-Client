@@ -3,11 +3,11 @@ export default function useKakaoShare(nickname: string, link: string) {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: `${nickname}님이 받고싶어 하는 생일 선물은?`,
+        title: `${nickname}님의 생일선물을 고민하고 있다면?`,
         description:
-          '#마음은 가볍게, 선물은 무겁게 #부담없는 생일 펀딩 플랫폼 #조물주보다 생일선물주',
+          `고민할 필요없이 이 귀여운 케이크를 선물해 ${nickname}님의 생일 펀딩에 참여해보세요!`,
         imageUrl:
-          'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+          'https://ifh.cc/g/wWJNBF.jpg',
         link: {
           mobileWebUrl: link,
           webUrl: link,

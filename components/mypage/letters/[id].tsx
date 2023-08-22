@@ -3,18 +3,15 @@ import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import CakeListButton from './cakeListButton';
-import CakeListText from './cakeListText';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
-import InputContainer from '@/components/common/input/inputContainer';
-import InputTitle from '@/components/common/input/inputTitle';
-import TextareaBox from '@/components/common/input/textareaBox';
 import { useEffect, useState } from 'react';
 import { ArrowLeftIc, ArrowRightIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { useRecoilValue } from 'recoil';
 import { CakesCountData } from '@/recoil/cakesCountData';
+import { CAKE_LIST } from '@/constant/cakeList';
 
 export default function LettersContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -28,7 +25,7 @@ export default function LettersContainer() {
     setCakeId(router.query.cakeId);
   }, [router.isReady]);
 
-
+  const cakeData = CAKE_LIST.find(cake => cake.cakeNumber === Number(cakeId));
   const selectedCake = useRecoilValue(CakesCountData).find(cake => cake.cakeId === Number(cakeId));
 
   const { lettersData, lettersSum } = useGetCakesLetters(wishId, cakeId);
@@ -59,68 +56,62 @@ export default function LettersContainer() {
       <CakeListButton
         backgroundColor={"transparent"}
         fontColor={theme.colors.black}
-        image={selectedCake ? selectedCake.imageUrl : ''}
-      >
-        <CakeListText
-          fonts={theme.fonts.headline20}
-          cakeName={selectedCake?.name}
-          cakeNum={selectedCake?.count}
+        fonts={theme.fonts.headline20}
+
+        image={cakeData ? cakeData.smallImage : ''}
+        cakeName={cakeData?.name}
+        cakeNum={selectedCake?.count}
+      />
+
+      <Styled.Text>{cakeData?.name}를 보낸 선물주님들이<br />남긴 편지를 읽어보세요</Styled.Text>
+
+      <Styled.Title>'{lettersData[clickedBox]?.name}' 선물주님</Styled.Title>
+      <Styled.LetterContainer>
+        <Styled.ArrowButton onClick={() => handleArrowClick('left')}>
+          <Image src={ArrowLeftIc} alt="왼쪽 화살표" />
+        </Styled.ArrowButton>
+
+        <Styled.TextareaText
+          value={lettersData[clickedBox]?.message}
+          readOnly
         />
-      </CakeListButton>
 
-      <Styled.Text>{selectedCake?.name}를 보낸 선물주님들이<br />남긴 편지를 읽어보세요</Styled.Text>
+        <Styled.ArrowButton onClick={() => handleArrowClick('right')}>
+          <Image src={ArrowRightIc} alt="오른쪽 화살표" />
+        </Styled.ArrowButton>
+      </Styled.LetterContainer>
 
-      <InputContainer>
-        <Styled.Text2>
-          <InputTitle title={`'${lettersData[clickedBox]?.name}' 선물주님`} />
-        </Styled.Text2>
+      <Image src={BorderImg} alt="구분선" />
 
-        <Styled.LetterContainer>
-          <Styled.ArrowButton onClick={() => handleArrowClick('left')}>
-            <Image src={ArrowLeftIc} alt="왼쪽 화살표" />
-          </Styled.ArrowButton>
-          <TextareaBox>
-            <Styled.TextareaText
-              value={lettersData[clickedBox]?.content}
-              readOnly
-            />
-          </TextareaBox>
-          <Styled.ArrowButton onClick={() => handleArrowClick('right')}>
-            <Image src={ArrowRightIc} alt="오른쪽 화살표" />
-          </Styled.ArrowButton>
-        </Styled.LetterContainer>
+      <Styled.NameContainer>
+        {lettersData.map((letters, index) => (
+          <Styled.NameBox
+            key={letters.name}
+            active={index === clickedBox}
+            onClick={() => handleNameBoxClick(index)}
+          >
+            {letters.name}
+          </Styled.NameBox>
+        ))}
+      </Styled.NameContainer>
 
-        <Image src={BorderImg} alt="구분선" />
 
-        <Styled.NameContainer>
-          {lettersData.map((letters, index) => (
-            <Styled.NameBox
-              key={letters.name}
-              active={index === clickedBox}
-              onClick={() => handleNameBoxClick(index)}
-            >
-              {letters.name}
-            </Styled.NameBox>
-          ))}
-        </Styled.NameContainer>
-
-      </InputContainer>
     </>
   );
 }
 
 const Styled = {
+  Title: styled.div`
+    ${theme.fonts.body16};
+    color: ${theme.colors.main_blue};
+    margin: 0 0 2rem 1rem;
+  `,
+
   Text: styled.div`
   ${theme.fonts.body16};
   color: ${theme.colors.dark_blue};
-  margin: 1rem 1rem;
+  margin: 1rem 1rem 2rem;
   `,
-
-  Text2: styled.div`
-${theme.fonts.body16};
-color: ${theme.colors.dark_blue};
-margin: 2.5rem 1rem 0;
-`,
 
   LetterContainer: styled.div`
 margin: 0 0 1rem;
@@ -134,9 +125,14 @@ justify-content: space-between;
 
   TextareaText: styled.textarea`
   width: 100%;
-  height: 13rem;
+  height: 15rem;
   color: ${theme.colors.dark_blue};
   ${theme.fonts.body14};
+  resize: none;
+  background-color: ${theme.colors.pastel_blue};
+  border: 0.1rem solid ${theme.colors.main_blue};
+  border-radius: 1rem;
+  padding: 1.2rem 1rem 1.2rem 1.2rem;
   `,
 
   NameContainer: styled.div`
@@ -147,7 +143,7 @@ grid-column-gap: 1.2rem;
 grid-row-gap: 1rem;
 margin: 1rem 0 2rem;
 color: ${theme.colors.white};
-  ${theme.fonts.body12};
+  ${theme.fonts.body14};
   overflow: auto;
   max-height: 45vh;
 `,
@@ -158,7 +154,7 @@ height: 4.6rem;
 display: flex;
 justify-content: center;
 align-items: center;
-padding: 0.8rem 1.4rem;
+padding: 0.8rem;
 border-radius: 0.6rem;
 background-color: ${props => (props.active ? theme.colors.main_blue : theme.colors.pastel_blue)};
 color: ${props => (props.active ? theme.colors.white : theme.colors.main_blue)};
