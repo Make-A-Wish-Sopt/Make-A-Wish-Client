@@ -12,7 +12,7 @@ import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
 import { CakeProfileImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import useUserInfo from '@/hooks/common/useUserInfo';
+import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
@@ -24,10 +24,11 @@ export default function MyPageContainer() {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
 
-  const { wishEdit } = useUserInfo();
+  const { data } = useInitEditWishesInfo();
+
 
   const handleEditWish = () => {
-    if (wishEdit) {
+    if (data !== null) {
       router.push('/mypage/editWishes');
     }
   };
@@ -35,7 +36,7 @@ export default function MyPageContainer() {
     router.push('/mypage/links');
   };
   const handleCustomerService = () => {
-    if (wishEdit) {
+    if (data !== null) {
       window.Kakao.Channel.chat({
         channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
       });
@@ -72,7 +73,7 @@ export default function MyPageContainer() {
 
         <ItemBox
           handleClick={handleEditWish}
-          {...(!wishEdit && {
+          {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,
           })}
@@ -81,7 +82,7 @@ export default function MyPageContainer() {
         </ItemBox>
         <ItemBox
           handleClick={handleCustomerService}
-          {...(!wishEdit && {
+          {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,
           })}
