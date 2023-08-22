@@ -7,8 +7,6 @@ export const CakesCountData = atom<CakesCountType[]>({
     [
       {
         cakeId: 0,
-        name: '',
-        imageUrl: '',
         count: 0,
       }
     ],

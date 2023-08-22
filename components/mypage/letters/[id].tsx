@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import CakeListButton from './cakeListButton';
-import CakeListText from './cakeListText';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { useRecoilValue } from 'recoil';
 import { CakesCountData } from '@/recoil/cakesCountData';
+import { CAKE_LIST } from '@/constant/cakeList';
 
 export default function LettersContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -25,6 +25,7 @@ export default function LettersContainer() {
     setCakeId(router.query.cakeId);
   }, [router.isReady]);
 
+  const cakeData = CAKE_LIST.find(cake => cake.cakeNumber === Number(cakeId));
   const selectedCake = useRecoilValue(CakesCountData).find(cake => cake.cakeId === Number(cakeId));
 
   const { lettersData, lettersSum } = useGetCakesLetters(wishId, cakeId);
@@ -55,16 +56,14 @@ export default function LettersContainer() {
       <CakeListButton
         backgroundColor={"transparent"}
         fontColor={theme.colors.black}
-        image={selectedCake ? selectedCake.imageUrl : ''}
-      >
-        <CakeListText
-          fonts={theme.fonts.headline20}
-          cakeName={selectedCake?.name}
-          cakeNum={selectedCake?.count}
-        />
-      </CakeListButton>
+        fonts={theme.fonts.headline20}
 
-      <Styled.Text>{selectedCake?.name}를 보낸 선물주님들이<br />남긴 편지를 읽어보세요</Styled.Text>
+        image={cakeData ? cakeData.smallImage : ''}
+        cakeName={cakeData?.name}
+        cakeNum={selectedCake?.count}
+      />
+
+      <Styled.Text>{cakeData?.name}를 보낸 선물주님들이<br />남긴 편지를 읽어보세요</Styled.Text>
 
       <Styled.Title>'{lettersData[clickedBox]?.name}' 선물주님</Styled.Title>
       <Styled.LetterContainer>

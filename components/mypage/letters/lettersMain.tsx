@@ -4,14 +4,12 @@ import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import { useRouter } from 'next/router';
 import CakeListButton from './cakeListButton';
-import CakeListText from './cakeListText';
-import { useGetWishesData } from '@/hooks/queries/wishes/useGetWishesData';
 import { useGetCakesCount } from '@/hooks/queries/letters/useGetCakesCount';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useEffect, useState } from 'react';
-import { CakesCountType } from '@/types/letters/cakesCountType';
 import MainHeader from '@/components/common/mainHeader';
+import { CAKE_LIST } from '@/constant/cakeList';
 
 export default function LettersMainContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -31,11 +29,18 @@ export default function LettersMainContainer() {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
 
-  // D-day
-  // const { wishesData } = useGetWishesData(wishId);
-
   // cake 개수, 합
   const { cakesCount, total } = useGetCakesCount(wishId);
+
+  const getCakeNum = (cakeId: number, cakesCount: any[]): number => {
+    if (!cakesCount) {
+      return 0;
+    }
+
+    const cake = cakesCount.find(cake => cake.cakeId === cakeId);
+    return cake ? cake.count : 0;
+  };
+
 
   const handleMoveToLetters = (cakeId: number) => {
     router.push(`/mypage/letters/${wishId}/${cakeId}`);
@@ -60,20 +65,18 @@ export default function LettersMainContainer() {
       <Styled.Container>
         <MainHeader title={title} />
 
-        {cakesCount?.map((cake: CakesCountType) => (
+        {CAKE_LIST?.map((cake) => (
           <CakeListButton
-            key={cake.cakeId}
-            handleClick={cake.count !== 0 ? () => handleMoveToLetters(cake.cakeId) : undefined}
+            key={cake.name}
+            handleClick={getCakeNum(cake.cakeNumber, cakesCount) !== 0 ? () => handleMoveToLetters(cake.cakeNumber) : undefined}
             backgroundColor={theme.colors.pastel_blue}
             fontColor={theme.colors.gray4}
-            image={cake.imageUrl}
-          >
-            <CakeListText
-              fonts={theme.fonts.button18}
-              cakeName={cake.name}
-              cakeNum={cake.count}
-            />
-          </CakeListButton>
+            fonts={theme.fonts.button18}
+
+            image={cake.smallImage}
+            cakeName={cake.name}
+            cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
+          />
         ))}
       </Styled.Container >
     </>
