@@ -1,12 +1,10 @@
-import PATH from '../common/path';
 import { client } from '../common/axios';
+import PATH from '../common/path';
 
-export const getProgressData = async () => {
+export const getPresignedURL = async (fileName: string | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
-
-  const url = `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.MAIN}`;
-
-  const data = await client.get(url,
+  const data = await client.get(
+    `${PATH.API}/${PATH.V1}/${PATH.FILE}?${PATH.FILE_NAME}=${fileName}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -15,5 +13,5 @@ export const getProgressData = async () => {
     },
   );
 
-  return data.data.data;
+  return data;
 };
