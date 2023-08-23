@@ -40,6 +40,7 @@ export default function useAuthKakao() {
 
   useEffect(() => {
     if (authCode) {
+      console.log(authCode);
       kakaoLoginMutate();
     }
   }, [authCode, kakaoLoginMutate]);
