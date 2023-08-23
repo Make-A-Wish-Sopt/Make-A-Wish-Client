@@ -1,27 +1,35 @@
+import { CakesData } from '@/recoil/cakes/cakesData';
 import theme from '@/styles/theme';
-import { CakesDataType } from '@/types/cakes/cakesDataType';
+
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-interface SuccessMsgBoxProps {
-  cakesData: CakesDataType;
-}
+export default function SuccessMessageBox() {
+  const cakesData = useRecoilValue(CakesData);
 
-export default function SuccessMessageBox(props: SuccessMsgBoxProps) {
-  const { cakesData } = props;
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Styled.Container>
-      <span>{cakesData?.wishesName}님께</span>
-
-      <Image
-        src={cakesData?.selectedCake.thanksImage.src}
-        width={cakesData?.selectedCake.thanksImage.width}
-        height={cakesData?.selectedCake.thanksImage.height}
-        alt="케이크 감사 이미지"
-      />
-      <Styled.CakeText>{cakesData?.selectedCake.name}</Styled.CakeText>
-      <span>선물이 완료 되었어요!</span>
+      {isClient && (
+        <>
+          <span>{cakesData.wishesName}님께</span>
+          <Image
+            src={cakesData.selectedCake.thanksImage.src}
+            width={cakesData.selectedCake.thanksImage.width}
+            height={cakesData.selectedCake.thanksImage.height}
+            alt="케이크 감사 이미지"
+          />
+          <Styled.CakeText>{cakesData.selectedCake.name}</Styled.CakeText>
+          <span>선물이 완료 되었어요!</span>
+        </>
+      )}
     </Styled.Container>
   );
 }
