@@ -20,8 +20,6 @@ export default function useUploadItemInfo() {
 
   const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile));
 
-  console.log(data);
-
   function uploadImageFile(e: React.ChangeEvent<HTMLInputElement>) {
     const imageFile = e.target.files && e.target.files[0];
 

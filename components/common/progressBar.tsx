@@ -8,7 +8,7 @@ interface ProgressBarProps {
 
 export default function ProgressBar(props: ProgressBarProps) {
   const { percent, vertical } = props;
-  console.log(vertical);
+
   return (
     <>
       <Styled.Container vertical={vertical}>
