@@ -1,4 +1,4 @@
-import LettersContainer from '@/components/Mypage/letters/[id]';
+import LettersContainer from '@/components/ypage/letters/[id]';
 
 export default function LettersPage() {
   return (

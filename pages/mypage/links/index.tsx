@@ -1,4 +1,4 @@
-import LinksMainContainer from '@/components/Mypage/links';
+import LinksMainContainer from '@/components/ypage/links';
 
 export default function LinksMainPage() {
   return (
