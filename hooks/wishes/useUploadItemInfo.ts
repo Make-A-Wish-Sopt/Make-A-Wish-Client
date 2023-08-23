@@ -6,7 +6,7 @@ import { useMutation, useQuery } from 'react-query';
 
 export default function useUploadItemInfo() {
   const [imageFile, setImageFile] = useState<File | Blob | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>('');
+  const [previewImage, setPreviewImage] = useState<string | null>('');
   const [preSignedURL, setPreSignedURL] = useState('');
 
   const { data } = useQuery(QUERY_KEY.PRE_SIGNED_URL, () => getPresignedURL(imageFile?.name), {
@@ -19,11 +19,7 @@ export default function useUploadItemInfo() {
     }
   }, [data]);
 
-  const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile), {
-    onSuccess: () => {
-      // setPreSignedURL()
-    },
-  });
+  const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile));
 
   console.log(data);
 
@@ -35,7 +31,7 @@ export default function useUploadItemInfo() {
       const reader = new FileReader();
       imageFile && reader.readAsDataURL(imageFile);
       reader.onloadend = () => {
-        setPreviewImage(reader.result);
+        setPreviewImage(reader.result as string);
       };
     }
   }
