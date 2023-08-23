@@ -45,7 +45,6 @@ export default function CakesContainer() {
       setCakesData((prevData) => ({
         ...prevData,
         tid: tid,
-        cakeId: selectedCake.cakeNumber,
       }));
 
       router.replace(nextLink);

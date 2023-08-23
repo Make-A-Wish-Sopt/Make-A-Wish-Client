@@ -7,7 +7,6 @@ export interface CakesDataType {
   partnerUserId: string;
   giverName: string;
   wishesName: string;
-  cakeId: number;
   message: string;
   wishId: number;
   selectedCake: CakeListType;

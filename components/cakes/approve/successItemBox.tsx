@@ -9,17 +9,19 @@ import styled from 'styled-components';
 import Contribution from '../contribution';
 import { useRecoilValue } from 'recoil';
 import { CakesData } from '@/recoil/cakes/cakesData';
+import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
 
 export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {
-    cakesData?.pgToken && mutate();
-  }, [cakesData?.pgToken]);
+    console.log(cakesData);
+    if (cakesData.selectedCake.cakeNumber === 1 || cakesData.pgToken !== '') {
+      mutate();
+    }
+  }, [cakesData]);
 
-  const { data, mutate, isSuccess } = useMutation(() =>
-    requestPayApprove(cakesData?.pgToken, cakesData, cakesData.wishId),
-  );
+  const { data, mutate, isSuccess } = useMutation(() => requestPayApprove(cakesData));
 
   return (
     <>
@@ -28,24 +30,15 @@ export default function SuccessItemBox() {
           <InputLargeBox bgColor={theme.colors.pastel_blue}>
             <Styled.HintWrapper>
               ~선물 초성힌트~
-              <Styled.HintText>{data?.hint1}</Styled.HintText>
-              <Styled.HintText>ㅇㅍㅇㅊ</Styled.HintText>
+              <Styled.HintText>{data?.initial}</Styled.HintText>
             </Styled.HintWrapper>
           </InputLargeBox>
           <Styled.WishText>사실 내가 갖고 싶었던 건...비밀이야❤</Styled.WishText>
         </Styled.Container>
       ) : (
         <Styled.Container>
-          <InputLargeBox bgColor={theme.colors.white}>
-            <Styled.ImageWrapper>
-              {/* <Image
-                src={TestImage}
-                fill={true}
-                alt="실제 선물 이미지"
-                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-              /> */}
-            </Styled.ImageWrapper>
-          </InputLargeBox>
+          <ItemImageBox imageURL={data?.imageUrl} />
+
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Container>
       )}
