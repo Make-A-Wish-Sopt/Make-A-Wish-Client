@@ -4,10 +4,11 @@ import PATH from '../../constant/path';
 
 export const editWishesInfo = async (editWishesInfoData: EditWishesInfoDataType) => {
   const accessToken = localStorage.getItem('accessToken');
+  console.log(editWishesInfoData);
 
   const data = await client.put(
     `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PROGRESS}`,
-    editWishesInfoData,
+    { editWishesInfoData },
     {
       headers: {
         'Content-Type': 'application/json',

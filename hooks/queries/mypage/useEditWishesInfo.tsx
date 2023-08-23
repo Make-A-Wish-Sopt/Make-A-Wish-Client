@@ -1,9 +1,15 @@
 import { editWishesInfo } from '@/api/mypage/editWishesInfo';
 import { EditWishesInfoDataType } from '@/types/mypage/editWishesInfoDataType';
+import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 
 export default function useEditWishesInfo(editWishesInfoData: EditWishesInfoDataType) {
-  const { mutate: editWishesData } = useMutation(() => editWishesInfo(editWishesInfoData), {});
+  const router = useRouter();
+  const { mutate: editWishesData } = useMutation(() => editWishesInfo(editWishesInfoData), {
+    onSuccess: () => {
+      router.back();
+    },
+  });
 
   return { editWishesData };
 }
