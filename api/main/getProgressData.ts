@@ -1,4 +1,4 @@
-import PATH from '../common/path';
+import PATH from '../../constant/path';
 import { client } from '../common/axios';
 
 export const getProgressData = async () => {
@@ -6,14 +6,12 @@ export const getProgressData = async () => {
 
   const url = `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.MAIN}`;
 
-  const data = await client.get(url,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
+  const data = await client.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+  });
 
   return data.data.data;
 };

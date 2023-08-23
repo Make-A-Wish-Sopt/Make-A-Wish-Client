@@ -1,5 +1,5 @@
 import { client } from '@/api/common/axios';
-import PATH from '@/api/common/path';
+import PATH from '@/constant/path';
 
 export const deleteWishLinks = async (wishesData: number[]) => {
   const accessToken = localStorage.getItem('accessToken');

@@ -137,9 +137,7 @@ export default function WishesStep1(props: WishesStep1Props) {
           font={theme.fonts.button16}
           borderColor={'transparent'}
         >
-          <Button handleClick={nextStep} fontColor={theme.colors.white}>
-            다음
-          </Button>
+          <Button handleClick={nextStep}>다음</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </>

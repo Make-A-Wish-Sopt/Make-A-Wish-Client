@@ -1,4 +1,4 @@
-import { createWishesLink } from '@/api/wishes/createWishesLink';
+import { createWishesLink } from '@/api/wishes/wishesAPI';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { useMutation } from 'react-query';
@@ -10,7 +10,6 @@ export function useCreateWishesLink() {
 
   const { mutate: postWishesData, isSuccess } = useMutation(() => createWishesLink(wishesData), {
     onSuccess: (data) => {
-      console.log(data);
       setLoginUserInfo((prevData) => ({
         ...prevData,
         wishesId: data.data.data,

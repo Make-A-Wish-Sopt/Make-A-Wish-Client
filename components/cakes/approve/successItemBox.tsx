@@ -1,7 +1,4 @@
-import { requestPayApprove } from '@/api/cakes/requestPayApprove';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
-import { CakesDataType } from '@/types/cakes/cakesDataType';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import theme from '@/styles/theme';
@@ -10,12 +7,12 @@ import Contribution from '../contribution';
 import { useRecoilValue } from 'recoil';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
+import { requestPayApprove } from '@/api/cakes/cakesAPI';
 
 export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {
-    console.log(cakesData);
     if (cakesData.selectedCake.cakeNumber === 1 || cakesData.pgToken !== '') {
       mutate();
     }

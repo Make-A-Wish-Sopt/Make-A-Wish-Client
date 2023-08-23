@@ -1,8 +1,6 @@
-import { editUserAccount } from '@/api/wishes/editUserAccount';
+import { editUserAccount } from '@/api/wishes/wishesAPI';
 import AlertTextBox from '@/components/common/alertTextBox';
 import BasicBox from '@/components/common/box/BasicBox';
-import HalfBox from '@/components/common/box/HalfBox';
-import LargeBox from '@/components/common/box/LargeBox';
 import Button from '@/components/common/button/button';
 import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';

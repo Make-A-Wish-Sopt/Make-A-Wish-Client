@@ -5,13 +5,12 @@ import theme from '@/styles/theme';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import SuccessMessageBox from '@/components/cakes/approve/successMessageBox';
 
 export default function ApprovePage() {
-  const [cakesData, setCakesData] = useRecoilState<CakesDataType>(CakesData);
-
+  const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
   const router = useRouter();
 
   useEffect(() => {

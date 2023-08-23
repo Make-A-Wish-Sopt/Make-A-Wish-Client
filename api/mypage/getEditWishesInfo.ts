@@ -1,5 +1,5 @@
 import { client } from '../common/axios';
-import PATH from '../common/path';
+import PATH from '../../constant/path';
 
 export const getEditWishesInfo = async () => {
   const accessToken = localStorage.getItem('accessToken');
