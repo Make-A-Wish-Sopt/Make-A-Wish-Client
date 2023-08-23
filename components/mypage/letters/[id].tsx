@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import CakeListButton from './cakeListButton';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
