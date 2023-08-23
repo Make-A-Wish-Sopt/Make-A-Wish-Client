@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
+import router from 'next/router';
 
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
@@ -12,43 +13,74 @@ import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '@/components/common/modal/ShareModal';
 
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import useGetProgressData from '@/hooks/queries/main/useGetProgressData';
 
 export default function ShareContainer() {
   const [showModal, setShowModal] = useState(false);
+
+  const [status, setStatus] = useState('none');
+  const { progressData, wishStatus } = useGetProgressData();
+
+  const [nickName, setNicknameState] = useState("");
   const loginUserInfo = useRecoilValue(LoginUserInfo);
+
+  useEffect(() => {
+    setNicknameState(loginUserInfo.nickName);
+    setStatus('while')
+  }, [loginUserInfo, wishStatus]);
+
 
   const handleModalClick = () => {
     setShowModal(!showModal);
   };
 
+  const handleMoveToMain = () => {
+    router.push('/main');
+  };
+
+
   return (
     <>
       <Header>
-        <IconButton src={CloseBlueIc} alt="닫기" />
+        <IconButton onClick={handleMoveToMain} src={CloseBlueIc} alt="닫기" />
       </Header>
 
       <Styled.Container>
         <Styled.Title>
-          {loginUserInfo.nickName}님의
+          {nickName}님의
           <br />
           소원 생성 완료!
         </Styled.Title>
-        <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
+        {status === 'while' ? (
+          <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
+        ) : (
+          <Styled.About>{progressData ? progressData.dayCount : '?'}일 뒤부터 링크를 공유할 수 있어요</Styled.About>
+        )}
 
         <Styled.ImageContainer>
-          <Image src={ShareChatImg} alt="이뤄져라 얍!" />
+          <Image src={ShareChatImg} alt="말풍선" />
           <Image src={PillCakeImg} alt="케이크" />
         </Styled.ImageContainer>
       </Styled.Container>
 
       {showModal && <ShareModal handleModalClick={handleModalClick} />}
-      <ButtonBox
-        handleClick={handleModalClick}
-        backgroundColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-      >
-        링크 공유하기
-      </ButtonBox>
+      {status === 'while' ? (
+        <ButtonBox
+          handleClick={handleModalClick}
+          backgroundColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+        >
+          링크 공유하기
+        </ButtonBox>
+      ) : (
+        <ButtonBox
+          handleClick={handleMoveToMain}
+          backgroundColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+        >
+          홈화면으로 이동하기
+        </ButtonBox>
+      )}
     </>
   );
 }
@@ -79,7 +111,7 @@ const Styled = {
     display: flex;
     justify-content: center;
     margin: 0 0 4.3rem;
-    ${theme.fonts.body14};
+    ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
   `,
 };

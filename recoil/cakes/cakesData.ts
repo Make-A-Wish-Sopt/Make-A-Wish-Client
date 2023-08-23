@@ -14,7 +14,6 @@ export const CakesData = atom<CakesDataType>({
     partnerUserId: '970311',
     giverName: '',
     wishesName: '',
-    cake: 0,
     message: '',
     wishId: 0,
     selectedCake: CAKE_LIST[0],

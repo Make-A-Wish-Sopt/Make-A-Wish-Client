@@ -4,21 +4,16 @@ import theme from '@/styles/theme';
 
 interface ButtonProps {
   handleClick: MouseEventHandler<HTMLButtonElement>;
-  fontColor?: string;
   children: ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
-  const { handleClick, fontColor, children } = props;
-  return (
-    <Styled.Button onClick={handleClick} fontColor={fontColor}>
-      {children}
-    </Styled.Button>
-  );
+  const { handleClick, children } = props;
+  return <Styled.Button onClick={handleClick}>{children}</Styled.Button>;
 }
 
 const Styled = {
-  Button: styled.button<{ fontColor: string | undefined }>`
+  Button: styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,6 +22,5 @@ const Styled = {
     height: 100%;
 
     ${theme.fonts.button18};
-    color: ${(props) => props.fontColor};
   `,
 };

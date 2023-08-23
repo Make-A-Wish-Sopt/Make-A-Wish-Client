@@ -18,6 +18,7 @@ const PATH = {
   PROGRESS: 'progress',
   FILE: 'file',
   FILE_NAME: 'fileName',
+  PUBLIC: 'public',
 };
 
 export default PATH;

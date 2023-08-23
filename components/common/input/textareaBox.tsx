@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ReactNode } from 'react';
 import styled from 'styled-components';
 import InputLength from './inputLength';
 import LargeBox from '../box/LargeBox';
@@ -10,10 +10,11 @@ interface TextareaBoxProps {
   value?: string | number;
   limitLength?: number;
   readOnly?: boolean;
+  children?: ReactNode;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {
-  const { placeholder, handleChangeValue, value, limitLength, readOnly } = props;
+  const { placeholder, handleChangeValue, value, limitLength, readOnly, children } = props;
   return (
     <LargeBox bgColor={theme.colors.pastel_blue}>
       <Styled.Textarea
@@ -28,6 +29,7 @@ export default function TextareaBox(props: TextareaBoxProps) {
           <InputLength inputLength={value?.toString().length} limitLength={limitLength} />
         )}
       </Styled.InputLengthWrapper>
+      {children}
     </LargeBox>
   );
 }

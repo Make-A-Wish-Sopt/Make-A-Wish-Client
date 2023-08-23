@@ -14,7 +14,7 @@ export const getOneWish = async (wishId: string | string[] | undefined) => {
 
   });
 
-  return data.data.data.data;
+  return data.data.data;
 };
 
 

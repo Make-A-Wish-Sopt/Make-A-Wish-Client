@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
-import { LinkPageCake, GaugeBarImg } from '@/public/assets/images';
+import { LinkPageCake } from '@/public/assets/images';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/backBtn';
 import { useEffect, useState } from 'react';
@@ -31,11 +31,11 @@ export default function LinksContainer() {
       </InputHeader>
 
       <Styled.Title>{wishData?.title}</Styled.Title>
-      <Styled.Date>{`${convertDateFormat(wishData?.startAt)}~${convertDateFormat(wishData?.endAt)}`}</Styled.Date>
+      <Styled.Date>{`${convertDateFormat(wishData?.startAt)} ~ ${convertDateFormat(wishData?.endAt)}`}</Styled.Date>
 
       <Styled.CenterContainer>
         <Styled.BarContainer>
-          <Image src={GaugeBarImg} alt="게이지바" />
+          {/* <Image src={GaugeBarImg} alt="게이지바" /> */}
         </Styled.BarContainer>
         <Styled.ImageContainer>
           <Image src={LinkPageCake} alt="케이크" />
@@ -61,6 +61,7 @@ const Styled = {
 
   CenterContainer: styled.div`
     margin: 9rem 0 15.5rem;
+
   `,
 
   BarContainer: styled.div`
@@ -75,8 +76,8 @@ const Styled = {
   `,
 
   About: styled.div`
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
     margin: 0 0 1rem;
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};

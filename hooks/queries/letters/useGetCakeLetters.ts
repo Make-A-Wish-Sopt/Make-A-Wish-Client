@@ -7,7 +7,7 @@ import { useState } from 'react';
 export function useGetCakesLetters(wishId: string | string[] | undefined, cakeId: string | string[] | undefined) {
   const [lettersData, setLettersData] = useState<CakeLettersType[]>([]);
 
-  const { data } = useQuery<CakeLettersType[]>(
+  const { data } = useQuery(
     QUERY_KEY.CAKE_LETTERS,
     async () => getCakesLetters(wishId, cakeId),
     {
@@ -20,5 +20,5 @@ export function useGetCakesLetters(wishId: string | string[] | undefined, cakeId
 
   const lettersSum = lettersData ? lettersData.length : 0;
 
-  return { lettersData, lettersSum };
+  return { data, lettersData, lettersSum };
 }

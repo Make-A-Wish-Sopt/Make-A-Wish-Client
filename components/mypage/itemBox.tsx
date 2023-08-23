@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 interface ItemBoxProps {
   children: ReactNode;
-  handleClick: () => void;
+  handleClick?: () => void;
   backgroundColor?: string;
   color?: string;
 }
