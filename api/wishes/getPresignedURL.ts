@@ -1,5 +1,5 @@
+import PATH from '@/constant/path';
 import { client } from '../common/axios';
-import PATH from '../common/path';
 
 export const getPresignedURL = async (fileName: string | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
