@@ -1,4 +1,4 @@
-import { requestPayReady } from '@/api/cakes/requestPayReady';
+import { requestPayReady } from '@/api/cakes/cakesAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useMutation } from 'react-query';
 

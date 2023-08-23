@@ -1,4 +1,4 @@
-import { getUserAccount } from '@/api/wishes/getUserAccount';
+import { getUserAccount } from '@/api/wishes/wishesAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
 import useInput from '@/hooks/common/useInput';
 import { useEffect, useState } from 'react';

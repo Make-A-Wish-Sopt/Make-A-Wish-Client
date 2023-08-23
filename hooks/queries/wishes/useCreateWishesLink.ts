@@ -1,4 +1,4 @@
-import { createWishesLink } from '@/api/wishes/createWishesLink';
+import { createWishesLink } from '@/api/wishes/wishesAPI';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import { useMutation } from 'react-query';

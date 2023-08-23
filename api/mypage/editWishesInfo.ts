@@ -1,6 +1,6 @@
 import { EditWishesInfoDataType } from '@/types/mypage/editWishesInfoDataType';
 import { client } from '../common/axios';
-import PATH from '../common/path';
+import PATH from '../../constant/path';
 
 export const editWishesInfo = async (editWishesInfoData: EditWishesInfoDataType) => {
   const accessToken = localStorage.getItem('accessToken');
