@@ -9,7 +9,7 @@ import { ChangeEvent, useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import ItemImageBox from './itemImageBox';
 import { QUERY_KEY } from '@/constant/queryKey';
-import { getItemInfo } from '@/api/wishes/getItemInfo';
+import { getItemInfo } from '@/api/wishes/wishesAPI';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
 

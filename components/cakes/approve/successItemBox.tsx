@@ -1,4 +1,3 @@
-import { requestPayApprove } from '@/api/cakes/requestPayApprove';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
@@ -8,6 +7,7 @@ import Contribution from '../contribution';
 import { useRecoilValue } from 'recoil';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
+import { requestPayApprove } from '@/api/cakes/cakesAPI';
 
 export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);

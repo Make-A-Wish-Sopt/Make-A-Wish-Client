@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import theme from '@/styles/theme';
-
-import { getWishesData } from '@/api/cakes/getWishesData';
 import BasicBox from '../common/box/BasicBox';
 import Button from '../common/button/button';
 import MainView from '../common/mainView';
+import { getWishesData } from '@/api/cakes/cakesAPI';
 
 export default function WishesContainer() {
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');

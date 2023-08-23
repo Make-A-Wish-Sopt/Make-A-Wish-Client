@@ -1,4 +1,4 @@
-import { editUserAccount } from '@/api/wishes/editUserAccount';
+import { editUserAccount } from '@/api/wishes/wishesAPI';
 import AlertTextBox from '@/components/common/alertTextBox';
 import BasicBox from '@/components/common/box/BasicBox';
 import Button from '@/components/common/button/button';

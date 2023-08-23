@@ -1,4 +1,4 @@
-import LinksContainer from '@/components/Mypage/links/[id]';
+import LinksContainer from '@/components/mypage/links/[id]';
 
 export default function LinksPage() {
   return (

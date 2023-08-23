@@ -1,5 +1,5 @@
 import { client } from '@/api/common/axios';
-import PATH from '@/api/common/path';
+import PATH from '@/constant/path';
 
 export const getOneWish = async (wishId: string | string[] | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
@@ -11,10 +11,7 @@ export const getOneWish = async (wishId: string | string[] | undefined) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-
   });
 
   return data.data.data;
 };
-
-

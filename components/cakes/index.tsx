@@ -1,4 +1,3 @@
-import { getWishesData } from '@/api/cakes/getWishesData';
 import useInput from '@/hooks/common/useInput';
 import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 import { CakesData } from '@/recoil/cakes/cakesData';
@@ -17,6 +16,7 @@ import { LIMIT_TEXT } from '@/constant/limitText';
 import ButtonBox from '../common/button/buttonBox';
 import useSelectCakes from '@/hooks/cakes/useSelectCakes';
 import SelectCakes from './SelectCakes';
+import { getWishesData } from '@/api/cakes/cakesAPI';
 
 export default function CakesContainer() {
   const [giverName, changeGiverName] = useInput('');
@@ -38,9 +38,8 @@ export default function CakesContainer() {
 
   useEffect(() => {
     if (isSuccess) {
-      const nextLink = data?.data.data.next_redirect_pc_url;
-      const tid = data?.data.data.tid;
-      console.log(data);
+      const nextLink = data?.data?.data.next_redirect_pc_url;
+      const tid = data?.data?.data.tid;
 
       setCakesData((prevData) => ({
         ...prevData,
