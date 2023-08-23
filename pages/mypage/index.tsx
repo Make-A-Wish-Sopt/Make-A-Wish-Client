@@ -1,4 +1,4 @@
-import MyPageContainer from '@/components/ypage';
+import MyPageContainer from '@/components/mypage';
 
 export default function MyPage() {
   return (

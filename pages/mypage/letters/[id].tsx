@@ -1,4 +1,4 @@
-import LettersMainContainer from '@/components/ypage/letters/lettersMain';
+import LettersMainContainer from '@/components/mypage/letters/lettersMain';
 
 export default function LettersMainPage() {
   return (
