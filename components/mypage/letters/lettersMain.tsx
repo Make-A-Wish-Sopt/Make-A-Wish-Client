@@ -43,7 +43,16 @@ export default function LettersMainContainer() {
 
 
   const handleMoveToLetters = (cakeId: number) => {
-    router.push(`/mypage/letters/${wishId}/${cakeId}`);
+    const cake = CAKE_LIST.find(cake => cake.cakeNumber === cakeId);
+
+    if (cake) {
+      router.push({
+        pathname: `/mypage/letters/${wishId}/${cakeId}`,
+        query: {
+          cake: getCakeNum(cake.cakeNumber, cakesCount)
+        },
+      });
+    }
   };
 
   const title = (

@@ -24,7 +24,7 @@ export default function MainHeader(props: MainHeaderProps) {
 const Styled = {
   Container: styled.div`
     display: flex;
-    margin: 2rem 0 0;
+    margin: 2rem 0 0rem;
   `,
 
   SideContainer: styled.div`
