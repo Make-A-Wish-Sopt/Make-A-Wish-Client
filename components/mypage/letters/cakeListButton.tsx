@@ -4,24 +4,32 @@ import Image, { StaticImageData } from 'next/image';
 
 
 interface CakeListButtonProps {
-  image: string;
-  children: React.ReactNode;
+  image?: string | StaticImageData;
   backgroundColor: string;
   fontColor: string;
+  fonts: string;
   handleClick?: () => void;
+  cakeName?: string;
+  cakeNum?: number;
 }
 
 export default function CakeListButton(props: CakeListButtonProps) {
-  const { image, children, backgroundColor, fontColor, handleClick } = props;
+  const { image, backgroundColor, fonts, fontColor, handleClick, cakeName, cakeNum } = props;
   return (
-    <Container backgroundColor={backgroundColor} fontColor={fontColor} onClick={handleClick}>
-      <Image src={image} alt="케이크 이미지" width={35} height={35} />
-      <Styled.TextContainer>{children}</Styled.TextContainer>
-    </Container>
+    <Styled.Container backgroundColor={backgroundColor} onClick={handleClick}>
+      {image && (
+        <Image src={image} alt="케이크 이미지" width={35} height={35} />
+      )}
+      <Styled.TextContainer fonts={fonts} fontColor={fontColor}>
+        {cakeName} X <Styled.NumText> {cakeNum}개</Styled.NumText>
+      </Styled.TextContainer>
+
+    </Styled.Container>
   );
 }
 
-const Container = styled.button<{ backgroundColor: string; fontColor: string }>`
+const Styled = {
+  Container: styled.button<{ backgroundColor: string } >`
   width: 100%;
   height: 6rem;
 
@@ -32,20 +40,19 @@ const Container = styled.button<{ backgroundColor: string; fontColor: string }>`
   padding: 0 2rem 0;
   border-radius: 1rem;
 
-  color: ${(props) => props.fontColor};
-  ${theme.fonts.button16};
+  color: ${theme.colors.gray4};
   background-color: ${(props) => props.backgroundColor};
   border-color: transparent;
   margin: 0 0 1rem;
-`;
+`,
 
-const Styled = {
-  DaysText: styled.span`
-  ${theme.fonts.headline20};
-  color: ${theme.colors.main_blue};
+  TextContainer: styled.div<{ fonts: string; fontColor: string }>`
+  padding: 0.2rem 0.5rem 0 1rem;
+  ${(props) => props.fonts}
+  
   `,
 
-  TextContainer: styled.div`
-  padding: 0.2rem 0.5rem 0 1rem;
-  `
+  NumText: styled.span`
+color: ${theme.colors.main_blue};
+`
 };

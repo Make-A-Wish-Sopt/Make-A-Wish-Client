@@ -15,6 +15,5 @@ export const getProgressData = async () => {
     },
   );
 
-  console.log(data.data.data);
   return data.data.data;
 };

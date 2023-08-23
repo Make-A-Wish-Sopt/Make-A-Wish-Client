@@ -138,5 +138,7 @@ export default function useInitEditWishesInfo() {
     wishesStatus,
 
     isGetEditWishesInfoSuccess,
+
+    data
   };
 }

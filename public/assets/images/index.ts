@@ -37,29 +37,25 @@ export { default as PoopCakeSmallImg } from '../images/cakes/poopCakeSmallImg.sv
 export { default as SushiCakeSmallImg } from '../images/cakes/sushiCakeSmallImg.svg';
 export { default as VitaminCakeSmallImg } from '../images/cakes/vitaminCakeSmallImg.svg';
 
-export { default as GaugeBarImg } from '../images/gaugeBarImg.svg';
 export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
 export { default as GuideContentImg } from '../images/guideContentImg.svg';
 export { default as BorderImg } from '../images/borderImg.svg';
 
 // cake
 export { default as PillCakeImg } from '../images/pillCakeImg.svg';
-export { default as MypageCakeImg } from '../images/myPageCakeImg.svg';
-export { default as MypageChatImg } from '../images/myPageChatImg.svg';
 export { default as ShareChatImg } from '../images/sharePageChatImg.svg';
 export { default as MainChatImg } from '../images/mainPageChatImg.svg';
+export { default as MainWishChatImg } from '../images/mainWishChatImg.svg';
+export { default as MainEndChatImg } from '../images/mainEndChatImg.svg';
+export { default as MainEndCakeImg } from '../images/mainEndCakeImg.svg';
 export { default as WishesChatImg } from '../images/wishesChatImg.svg';
 export { default as DeleteModalCake } from '../images/deleteModalCake.svg';
 export { default as LinkPageCake } from '../images/linkPageCake.svg';
-export { default as MainWishChatImg } from '../images/mainWishChatImg.svg';
-export { default as MainEndChatImg } from '../images/mainEndChatImg.svg';
-export { default as SharePageCake } from '../images/sharePageCake.svg';
-export { default as LoginPageImg } from '../images/loginPageImg.svg';
 export { default as LinksPageChatImg } from '../images/linksPageChatImg.svg';
+export { default as CakeProfileImg } from '../images/cakeProfileImg.svg';
 
 // shopping website
 export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';
-export { default as CoupangLogoImg } from '../images/shop/coupangLogoImg.svg';
 
 // SNS share
 export { default as KaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';

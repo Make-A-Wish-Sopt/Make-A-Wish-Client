@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface MainHeaderProps {
   title: React.ReactNode;
-  side: React.ReactNode;
+  side?: React.ReactNode;
   children?: React.ReactNode;
 }
 

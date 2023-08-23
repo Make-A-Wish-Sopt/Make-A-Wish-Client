@@ -24,7 +24,7 @@ export default function WishLists(props: WishListsProps) {
           handleMovePage={() => handleMovePage(link.wishId)}
           handleCheckbox={() => handleCheckbox(link.wishId)}
           title={link.title}
-          date={`${convertDateFormat(link.startAt)}~${convertDateFormat(link.endAt)}`}
+          date={`${convertDateFormat(link.startAt)} ~ ${convertDateFormat(link.endAt)}`}
           isChecked={selectedLinks.includes(link.wishId)}
         />
       ))}
