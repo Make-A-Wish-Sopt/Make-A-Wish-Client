@@ -14,33 +14,30 @@ export default function useAuthKakao() {
 
   const router = useRouter();
   const { code: authCode } = router.query;
+  console.log(authCode);
 
-  const { mutate: kakaoLoginMutate } = useMutation(() =>
-    sendCodeToServer(authCode as string),
-    {
-      onSuccess: (data) => {
-        const { nickName, accessToken, refreshToken } = data;
+  const { mutate: kakaoLoginMutate } = useMutation(() => sendCodeToServer(authCode as string), {
+    onSuccess: (data) => {
+      const { nickName, accessToken, refreshToken } = data;
 
-        setLoginUserInfo((prev) => ({
-          ...prev,
-          nickName: nickName,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        }));
+      setLoginUserInfo((prev) => ({
+        ...prev,
+        nickName: nickName,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      }));
 
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-        setNickname(nickName);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      setNickname(nickName);
 
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-      },
-      onError: (error) => {
-        alert('카카오 로그인에 실패하셨습니다. : ' + error);
-        router.back();
-      },
-    }
-  )
+      localStorage.setItem('accessToken', accessToken);
+    },
+    onError: (error) => {
+      alert('카카오 로그인에 실패하셨습니다. : ' + error);
+      router.back();
+    },
+  });
 
   useEffect(() => {
     if (authCode) {

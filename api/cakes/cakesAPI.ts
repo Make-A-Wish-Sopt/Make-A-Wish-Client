@@ -10,7 +10,6 @@ export const getWishesData = async (wishesNumber: number) => {
 };
 
 export const requestPayApprove = async (cakesData: CakesDataType | undefined) => {
-  console.log(cakesData);
   const data = await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.PUBLIC}/${PATH.PAY}/${PATH.APPROVE}`,
     {
