@@ -1,5 +1,4 @@
-import { getPresignedURL } from '@/api/wishes/getPresignedURL';
-import { uploadPresignedURL } from '@/api/wishes/uploadPresignedURL';
+import { getPresignedURL, uploadPresignedURL } from '@/api/wishes/wishesAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';

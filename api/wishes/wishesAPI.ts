@@ -3,6 +3,7 @@ import PATH from '../../constant/path';
 import { client } from '../common/axios';
 import { WishesDataType } from '@/types/wishes/wishesDataType';
 import { PARSING_TAG_KEY } from '@/constant/parsingTagKey';
+import axios from 'axios';
 
 export const createWishesLink = async (wishesData: WishesDataType) => {
   const accessToken = localStorage.getItem('accessToken');
@@ -88,4 +89,31 @@ export const getUserAccount = async () => {
     },
   });
   return data?.data;
+};
+
+export const getPresignedURL = async (fileName: string | undefined) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const data = await client.get(
+    `${PATH.API}/${PATH.V1}/${PATH.FILE}?${PATH.FILE_NAME}=${fileName}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  return data;
+};
+
+export const uploadPresignedURL = async (signedURL: string, file: File | Blob | null) => {
+  console.log(decodeURIComponent(signedURL));
+  const data = await axios.put(signedURL, file, {
+    headers: {
+      'Content-Type': file?.type,
+    },
+  });
+
+  console.log(data);
+  return data;
 };
