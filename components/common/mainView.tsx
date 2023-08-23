@@ -25,7 +25,7 @@ export default function MainView(props: MainViewProps) {
 
       <Styled.ImageContainer>
         <Styled.Title>
-          조물주보다,
+          조물주보다
           <br />
           생일선물주
         </Styled.Title>
