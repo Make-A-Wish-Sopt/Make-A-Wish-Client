@@ -9,8 +9,6 @@ import { useEffect, useState } from 'react';
 import { ArrowLeftIc, ArrowRightIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
-import { useRecoilValue } from 'recoil';
-import { CakesCountData } from '@/recoil/cakesCountData';
 import { CAKE_LIST } from '@/constant/cakeList';
 
 export default function LettersContainer() {
@@ -25,11 +23,11 @@ export default function LettersContainer() {
     setCakeId(router.query.cakeId);
   }, [router.isReady]);
 
+  // 케이크 정보, 개수
+  const { cake } = router.query;
   const cakeData = CAKE_LIST.find((cake) => cake.cakeNumber === Number(cakeId));
-  const selectedCake = useRecoilValue(CakesCountData).find(
-    (cake) => cake.cakeId === Number(cakeId),
-  );
 
+  // 편지
   const { lettersData, lettersSum } = useGetCakesLetters(wishId, cakeId);
 
   const handleNameBoxClick = (index: number) => {
@@ -60,7 +58,7 @@ export default function LettersContainer() {
         fonts={theme.fonts.headline20}
         image={cakeData ? cakeData.smallImage : ''}
         cakeName={cakeData?.name}
-        cakeNum={selectedCake?.count}
+        cakeNum={Number(cake)}
       />
 
       <Styled.Text>
