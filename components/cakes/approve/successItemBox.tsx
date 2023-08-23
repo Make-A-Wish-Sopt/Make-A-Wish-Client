@@ -13,7 +13,6 @@ export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {
-    console.log(cakesData);
     if (cakesData.selectedCake.cakeNumber === 1 || cakesData.pgToken !== '') {
       mutate();
     }
