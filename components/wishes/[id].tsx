@@ -18,7 +18,7 @@ export default function WishesContainer() {
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { data } = useQuery('wished', async () => getWishesData(wishesId), {
+  const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
     enabled: wishesId !== '',
   });
 

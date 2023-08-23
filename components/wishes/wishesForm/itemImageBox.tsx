@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface ItemImageBoxProps {
-  imageURL: string | ArrayBuffer;
+  imageURL: string;
   children?: ReactNode;
 }
 

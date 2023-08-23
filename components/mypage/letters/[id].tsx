@@ -25,8 +25,10 @@ export default function LettersContainer() {
     setCakeId(router.query.cakeId);
   }, [router.isReady]);
 
-  const cakeData = CAKE_LIST.find(cake => cake.cakeNumber === Number(cakeId));
-  const selectedCake = useRecoilValue(CakesCountData).find(cake => cake.cakeId === Number(cakeId));
+  const cakeData = CAKE_LIST.find((cake) => cake.cakeNumber === Number(cakeId));
+  const selectedCake = useRecoilValue(CakesCountData).find(
+    (cake) => cake.cakeId === Number(cakeId),
+  );
 
   const { lettersData, lettersSum } = useGetCakesLetters(wishId, cakeId);
 
@@ -46,7 +48,6 @@ export default function LettersContainer() {
     setClickedBox(movedBox);
   };
 
-
   return (
     <>
       <InputHeader>
@@ -54,27 +55,27 @@ export default function LettersContainer() {
       </InputHeader>
 
       <CakeListButton
-        backgroundColor={"transparent"}
+        backgroundColor={'transparent'}
         fontColor={theme.colors.black}
         fonts={theme.fonts.headline20}
-
         image={cakeData ? cakeData.smallImage : ''}
         cakeName={cakeData?.name}
         cakeNum={selectedCake?.count}
       />
 
-      <Styled.Text>{cakeData?.name}를 보낸 선물주님들이<br />남긴 편지를 읽어보세요</Styled.Text>
+      <Styled.Text>
+        {cakeData?.name}를 보낸 선물주님들이
+        <br />
+        남긴 편지를 읽어보세요
+      </Styled.Text>
 
-      <Styled.Title>'{lettersData[clickedBox]?.name}' 선물주님</Styled.Title>
+      <Styled.Title>{`'${lettersData[clickedBox]?.name}' 선물주님`}</Styled.Title>
       <Styled.LetterContainer>
         <Styled.ArrowButton onClick={() => handleArrowClick('left')}>
           <Image src={ArrowLeftIc} alt="왼쪽 화살표" />
         </Styled.ArrowButton>
 
-        <Styled.TextareaText
-          value={lettersData[clickedBox]?.message}
-          readOnly
-        />
+        <Styled.TextareaText value={lettersData[clickedBox]?.message} readOnly />
 
         <Styled.ArrowButton onClick={() => handleArrowClick('right')}>
           <Image src={ArrowRightIc} alt="오른쪽 화살표" />
@@ -94,8 +95,6 @@ export default function LettersContainer() {
           </Styled.NameBox>
         ))}
       </Styled.NameContainer>
-
-
     </>
   );
 }
@@ -108,56 +107,56 @@ const Styled = {
   `,
 
   Text: styled.div`
-  ${theme.fonts.body16};
-  color: ${theme.colors.dark_blue};
-  margin: 1rem 1rem 2rem;
+    ${theme.fonts.body16};
+    color: ${theme.colors.dark_blue};
+    margin: 1rem 1rem 2rem;
   `,
 
   LetterContainer: styled.div`
-margin: 0 0 1rem;
-display: flex;
-align-items: center;
-justify-content: space-between;
-`,
-
-  ArrowButton: styled.button`
+    margin: 0 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   `,
 
+  ArrowButton: styled.button``,
+
   TextareaText: styled.textarea`
-  width: 100%;
-  height: 15rem;
-  color: ${theme.colors.dark_blue};
-  ${theme.fonts.body14};
-  resize: none;
-  background-color: ${theme.colors.pastel_blue};
-  border: 0.1rem solid ${theme.colors.main_blue};
-  border-radius: 1rem;
-  padding: 1.2rem 1rem 1.2rem 1.2rem;
+    width: 100%;
+    height: 15rem;
+    color: ${theme.colors.dark_blue};
+    ${theme.fonts.body14};
+    resize: none;
+    background-color: ${theme.colors.pastel_blue};
+    border: 0.1rem solid ${theme.colors.main_blue};
+    border-radius: 1rem;
+    padding: 1.2rem 1rem 1.2rem 1.2rem;
   `,
 
   NameContainer: styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-template-rows: 1fr 1fr;
-grid-column-gap: 1.2rem;
-grid-row-gap: 1rem;
-margin: 1rem 0 2rem;
-color: ${theme.colors.white};
-  ${theme.fonts.body14};
-  overflow: auto;
-  max-height: 45vh;
-`,
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 1.2rem;
+    grid-row-gap: 1rem;
+    margin: 1rem 0 2rem;
+    color: ${theme.colors.white};
+    ${theme.fonts.body14};
+    overflow: auto;
+    max-height: 45vh;
+  `,
 
-  NameBox: styled.div<{ active: boolean; }>`
-width: 7.4rem;
-height: 4.6rem;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 0.8rem;
-border-radius: 0.6rem;
-background-color: ${props => (props.active ? theme.colors.main_blue : theme.colors.pastel_blue)};
-color: ${props => (props.active ? theme.colors.white : theme.colors.main_blue)};
-cursor: pointer;
-`,
+  NameBox: styled.div<{ active: boolean }>`
+    width: 7.4rem;
+    height: 4.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 0.6rem;
+    background-color: ${(props) =>
+      props.active ? theme.colors.main_blue : theme.colors.pastel_blue};
+    color: ${(props) => (props.active ? theme.colors.white : theme.colors.main_blue)};
+    cursor: pointer;
+  `,
 };

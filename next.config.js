@@ -1,18 +1,27 @@
 /** @type {import('next').NextConfig} */
 
-const nextPWA = require('next-pwa');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer({
+  compress: true,
+  webpack(config, { webpack }) {
+    const prod = process.env.NODE_ENV === 'production';
+    const plugins = [...config.plugins];
+    return {
+      ...config,
+      mode: prod ? 'producton' : 'development',
+      devtool: prod ? 'hidden-source-map' : 'eval',
+      plugins,
+    };
+  },
+});
 
 const nextConfig = {
   reactStrictMode: true,
-  pwa: {
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === 'development',
-  },
   swcMinify: true,
   images: {
-    domains: ['github.com'],
     remotePatterns: [
       {
         protocol: 'https',

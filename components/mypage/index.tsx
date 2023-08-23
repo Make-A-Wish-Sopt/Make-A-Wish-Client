@@ -5,7 +5,7 @@ import BackBtn from '@/components/common/backBtn';
 import router from 'next/router';
 import Image from 'next/image';
 import ItemBox from './itemBox';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
@@ -17,7 +17,7 @@ import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
 
-  const [nickName, setNicknameState] = useState("");
+  const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function MyPageContainer() {
   }, [loginUserInfo]);
 
   const { data } = useInitEditWishesInfo();
-
 
   const handleEditWish = () => {
     if (data !== null) {
@@ -38,7 +37,7 @@ export default function MyPageContainer() {
   const handleCustomerService = () => {
     if (data !== null) {
       window.Kakao.Channel.chat({
-        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
+        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
       });
     }
   };
@@ -66,9 +65,7 @@ export default function MyPageContainer() {
       <Styled.Container>
         <Styled.TitleContainer>
           <Image src={CakeProfileImg} alt="케이크 프로필" />
-          <Styled.Title>
-            {nickName} 님
-          </Styled.Title>
+          <Styled.Title>{nickName} 님</Styled.Title>
         </Styled.TitleContainer>
 
         <ItemBox
@@ -89,26 +86,11 @@ export default function MyPageContainer() {
         >
           진행중인 펀딩 중단하기
         </ItemBox>
-        <ItemBox
-          handleClick={handleWishLinks}
-        >
-          지난 소원 링크 모음
-        </ItemBox>
-        <ItemBox
-          handleClick={handleToggle}
-        >
-          사용설명서 보기
-        </ItemBox>
-        <ItemBox
-          handleClick={handleCustomerService}
-        >
-          고객센터 문의하기
-        </ItemBox>
+        <ItemBox handleClick={handleWishLinks}>지난 소원 링크 모음</ItemBox>
+        <ItemBox handleClick={handleToggle}>사용설명서 보기</ItemBox>
+        <ItemBox handleClick={handleCustomerService}>고객센터 문의하기</ItemBox>
 
-        <Styled.TextContainer onClick={handleLogOut}>
-          로그아웃
-        </Styled.TextContainer>
-
+        <Styled.TextContainer onClick={handleLogOut}>로그아웃</Styled.TextContainer>
       </Styled.Container>
     </>
   );
@@ -116,26 +98,26 @@ export default function MyPageContainer() {
 
 const Styled = {
   Container: styled.div`
-  margin: 0 1rem 0;
+    margin: 0 1rem 0;
   `,
 
   TitleContainer: styled.div`
-  display: flex;
-  margin: 2rem 0 2rem;
+    display: flex;
+    margin: 2rem 0 2rem;
   `,
 
   Title: styled.h1`
-  ${theme.fonts.headline24_130};
-  color: ${theme.colors.gray4};
-  display: flex;
-  align-items: center;
-  margin: 0 0 0 1.5rem;
+    ${theme.fonts.headline24_130};
+    color: ${theme.colors.gray4};
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 1.5rem;
   `,
 
   TextContainer: styled.button`
-margin: 3rem 0 0;
-${theme.fonts.button16_2};
-  color: ${theme.colors.main_blue};
-  text-decoration: underline;
-`,
+    margin: 3rem 0 0;
+    ${theme.fonts.button16_2};
+    color: ${theme.colors.main_blue};
+    text-decoration: underline;
+  `,
 };

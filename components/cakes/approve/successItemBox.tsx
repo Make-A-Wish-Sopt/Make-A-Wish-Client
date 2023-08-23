@@ -1,7 +1,5 @@
 import { requestPayApprove } from '@/api/cakes/requestPayApprove';
 import InputLargeBox from '@/components/common/input/inputLargeBox';
-import { CakesDataType } from '@/types/cakes/cakesDataType';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import theme from '@/styles/theme';

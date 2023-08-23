@@ -1,7 +1,6 @@
-import LettersMainContainer from '@/components/mypage/letters/lettersMain';
+import LettersMainContainer from '@/components/Mypage/letters/lettersMain';
 
 export default function LettersMainPage() {
-
   return (
     <>
       <LettersMainContainer />

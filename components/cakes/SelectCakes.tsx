@@ -1,6 +1,5 @@
 import { CAKE_LIST } from '@/constant/cakeList';
 import { CakeListType } from '@/types/cakes/cakeListType';
-import { useState } from 'react';
 import InputContainer from '../common/input/inputContainer';
 import styled from 'styled-components';
 import Image from 'next/image';

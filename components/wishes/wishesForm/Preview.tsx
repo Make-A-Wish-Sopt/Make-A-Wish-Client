@@ -85,9 +85,7 @@ export default function Preview(props: PreviewProps) {
           font={theme.fonts.button16}
           borderColor={'transparent'}
         >
-          <Button handleClick={createLink} fontColor={theme.colors.white}>
-            링크 생성하기
-          </Button>
+          <Button handleClick={createLink}>링크 생성하기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </>

@@ -1,7 +1,6 @@
-import MyPageContainer from '@/components/mypage';
+import MyPageContainer from '@/components/Mypage';
 
 export default function MyPage() {
-
   return (
     <>
       <MyPageContainer />
