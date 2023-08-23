@@ -1,0 +1,10 @@
+import MainContainer from '@/components/main';
+
+export default function MainPage() {
+
+  return (
+    <>
+      <MainContainer />
+    </>
+  );
+}
