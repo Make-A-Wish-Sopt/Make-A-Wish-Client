@@ -11,8 +11,6 @@ import TextareaBox from '../common/input/textareaBox';
 import InputContainer from '../common/input/inputContainer';
 import CakesHeader from './cakesHeader';
 import InputBox from '../common/input/inputBox';
-import Image from 'next/image';
-import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { LIMIT_TEXT } from '@/constant/limitText';
@@ -42,10 +40,14 @@ export default function CakesContainer() {
     if (isSuccess) {
       const nextLink = data?.data.data.next_redirect_pc_url;
       const tid = data?.data.data.tid;
+      console.log(data);
+
       setCakesData((prevData) => ({
         ...prevData,
         tid: tid,
+        cakeId: selectedCake.cakeNumber,
       }));
+
       router.replace(nextLink);
     }
   }, [isSuccess]);
@@ -69,9 +71,9 @@ export default function CakesContainer() {
     }));
   };
 
-  const handleClick = () => {
+  const sendCake = () => {
     saveReocilData();
-    selectedCake.cakeNumber === 1 ? router.replace('cakes/approve') : mutate();
+    selectedCake.cakeNumber === 1 ? router.push('/cakes/approve') : mutate();
   };
 
   return (
@@ -110,7 +112,7 @@ export default function CakesContainer() {
       <ButtonBox
         backgroundColor={theme.colors.main_blue}
         fontColor={theme.colors.white}
-        handleClick={handleClick}
+        handleClick={sendCake}
       >
         케이크 보내기
       </ButtonBox>
@@ -123,73 +125,5 @@ const Styled = {
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
     margin: 2.4rem 0 3rem;
-  `,
-  InputText: styled.input`
-    width: 100%;
-
-    color: ${theme.colors.dark_blue};
-    ${theme.fonts.body12};
-  `,
-  TextareaText: styled.textarea`
-    width: 100%;
-    height: 10.5rem;
-
-    color: ${theme.colors.dark_blue};
-    ${theme.fonts.body12};
-    resize: none;
-  `,
-  CakesImageWrapper: styled.div`
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  TextareaLengthWrapper: styled.div`
-    display: flex;
-    justify-content: space-between;
-  `,
-
-  CakeContainer: styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-column-gap: 1.2rem;
-    grid-row-gap: 1rem;
-
-    margin-bottom: 2rem;
-  `,
-
-  CakeInfo: styled.span`
-    ${theme.fonts.button18};
-    color: ${theme.colors.main_blue};
-
-    display: flex;
-    justify-content: center;
-
-    margin-top: 1rem;
-  `,
-
-  ButtonText: styled.div`
-    ${theme.fonts.button18};
-    color: ${theme.colors.white};
-  `,
-
-  CakeBox: styled.div<{ index: number; selectedIndex: number }>`
-    width: 7.4rem;
-    height: 4.6rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0.8rem 1.4rem;
-    border: 0.1rem solid ${theme.colors.main_blue};
-    background-color: ${(props) =>
-      props.index === props.selectedIndex ? theme.colors.main_blue : theme.colors.pastel_blue};
-    border-radius: 0.6rem;
-
-    cursor: pointer;
   `,
 };
