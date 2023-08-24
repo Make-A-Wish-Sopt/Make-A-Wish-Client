@@ -12,6 +12,7 @@ import {
 import ProgressBar from '../common/progressBar';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 interface CakeProps {
   wishStatus: string;
@@ -56,7 +57,11 @@ export default function Cake(props: CakeProps) {
             <Styled.AboutButton>모인 케이크 금액</Styled.AboutButton>
           )}
 
-          <Styled.AboutSmall>총 {priceData}원</Styled.AboutSmall>
+          {typeof priceData === 'number' ? (
+            <Styled.AboutSmall>총 {convertMoneyText(priceData)}원</Styled.AboutSmall>
+          ) : (
+            <Styled.AboutSmall>총 {priceData}원</Styled.AboutSmall>
+          )}
         </Styled.ContentContainer>
 
         <Styled.ProgressBox>
