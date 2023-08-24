@@ -8,18 +8,19 @@ export default function useUploadItemInfo() {
   const [preSignedImageURL, setPreSignedImageURL] = useState('');
 
   const { data } = useQuery(QUERY_KEY.PRE_SIGNED_URL, () => getPresignedURL(imageFile?.name), {
-    onSuccess: (data) => {
-      data?.data?.success && mutate();
-    },
     enabled: imageFile !== null && imageFile?.name !== '',
   });
 
   const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile), {
     onSuccess: () => {
-      const s3URL = `https://wish-image-bucket.s3.ap-northeast-2.amazonaws.com//dev/image/wish/${data?.data?.data.filename}`;
+      const s3URL = `https://wish-image-bucket.s3.ap-northeast-2.amazonaws.com/${data?.data?.data.filename}`;
       setPreSignedImageURL(s3URL);
     },
   });
+
+  useEffect(() => {
+    data?.data?.success && mutate();
+  }, [data]);
 
   function uploadImageFile(e: React.ChangeEvent<HTMLInputElement>) {
     const imageFile = e.target.files && e.target.files[0];
