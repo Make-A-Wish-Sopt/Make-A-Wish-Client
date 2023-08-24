@@ -29,7 +29,7 @@ export default function WishesStep1(props: WishesStep1Props) {
 
   const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } =
     useGetItemInfo();
-  const { imageFile, previewImage, uploadImageFile } = useUploadItemInfo();
+  const { preSignedImageURL, setPreSignedImageURL, uploadImageFile } = useUploadItemInfo();
   const [initial, handleChangeInitial] = useInput('', LIMIT_TEXT[15]);
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
@@ -92,8 +92,8 @@ export default function WishesStep1(props: WishesStep1Props) {
         <>
           <InputContainer title="갖고 싶은 선물 이미지 등록하기">
             <Styled.Lable>
-              {previewImage ? (
-                <ItemImageBox imageURL={previewImage} />
+              {preSignedImageURL ? (
+                <ItemImageBox imageURL={preSignedImageURL} />
               ) : (
                 <LargeBox bgColor={theme.colors.pastel_blue}>
                   <Styled.UploadImageBox>

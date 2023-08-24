@@ -81,8 +81,8 @@ export default function EditWishesContainer() {
         <>
           <InputContainer title="갖고 싶은 선물 이미지 등록하기">
             <Styled.Lable>
-              {image.previewImage ? (
-                <ItemImageBox imageURL={image.previewImage} />
+              {image.preSignedImageURL ? (
+                <ItemImageBox imageURL={image.preSignedImageURL} />
               ) : (
                 <LargeBox bgColor={theme.colors.pastel_blue}>
                   <Styled.UploadImageBox>
