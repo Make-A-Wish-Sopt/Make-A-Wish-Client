@@ -60,7 +60,7 @@ export default function WishesStep1(props: WishesStep1Props) {
     } else {
       setWishesData((prev) => ({
         ...prev,
-        imageURL: imageURL,
+        imageURL: preSignedImageURL,
         price: Number(selfInputPrice),
         initial: initial,
       }));
