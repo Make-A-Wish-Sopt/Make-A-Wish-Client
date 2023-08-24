@@ -9,7 +9,7 @@ export const sendCodeToServer = async (code: string) => {
     {},
     {
       headers: {
-        Authorization: code,
+        'Content-Type': 'application/json',
         code: `${code}`,
       },
     },
