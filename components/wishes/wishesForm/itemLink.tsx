@@ -71,7 +71,7 @@ export default function ItemLink(props: ItemLinkProps) {
       )}
 
       {imageURL && (
-        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(price)}원</ItemImageBox>
+        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(String(price))}원</ItemImageBox>
       )}
     </Styled.Container>
   );

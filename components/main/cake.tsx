@@ -58,7 +58,7 @@ export default function Cake(props: CakeProps) {
           )}
 
           {typeof priceData === 'number' ? (
-            <Styled.AboutSmall>총 {convertMoneyText(priceData)}원</Styled.AboutSmall>
+            <Styled.AboutSmall>총 {convertMoneyText(String(priceData))}원</Styled.AboutSmall>
           ) : (
             <Styled.AboutSmall>총 {priceData}원</Styled.AboutSmall>
           )}

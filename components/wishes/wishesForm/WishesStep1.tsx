@@ -18,6 +18,7 @@ import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import ItemImageBox from './itemImageBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
 import { validation } from '@/validation/input';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 interface WishesStep1Props {
   handleNextStep: () => void;
@@ -114,7 +115,7 @@ export default function WishesStep1(props: WishesStep1Props) {
             <InputBox
               placeholder="ex. 12,000,000"
               handleChangeValue={handleChangeSelfInputPrice}
-              value={selfInputPrice}
+              value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
               limitLength={LIMIT_TEXT[15]}
             />
           </InputContainer>
