@@ -27,5 +27,5 @@ export default function useUploadItemInfo() {
     imageFile && setImageFile(imageFile);
   }
 
-  return { preSignedImageURL, setPreSignedImageURL, uploadImageFile };
+  return { imageFile, preSignedImageURL, setPreSignedImageURL, uploadImageFile };
 }
