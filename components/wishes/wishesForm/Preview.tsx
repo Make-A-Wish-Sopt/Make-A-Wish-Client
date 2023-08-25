@@ -63,7 +63,9 @@ export default function Preview(props: PreviewProps) {
             />
           </Styled.ImageWrapper>
         </PresentBox>
-        <Styled.PresentPrice>가격 : {convertMoneyText(wishesData.price)}</Styled.PresentPrice>
+        <Styled.PresentPrice>
+          가격 : {convertMoneyText(String(wishesData.price))}
+        </Styled.PresentPrice>
       </InputContainer>
 
       <InputContainer title="">
