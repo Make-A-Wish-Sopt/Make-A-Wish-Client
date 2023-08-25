@@ -7,7 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 
 export default function MainContainer() {
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('none');
   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
 
   const { progressData, wishStatus } = useGetProgressData();
