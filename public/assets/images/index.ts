@@ -56,6 +56,7 @@ export { default as CakeProfileImg } from '../images/cakeProfileImg.svg';
 
 // shopping website
 export { default as TwentynineLogoImg } from '../images/shop/twentynineLogoImg.svg';
+export { default as NaverShoppingLogoImg } from '../images/shop/naverShoppingLogoImg.svg';
 
 // SNS share
 export { default as KaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';
