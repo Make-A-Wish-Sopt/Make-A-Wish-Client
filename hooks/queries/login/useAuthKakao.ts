@@ -14,7 +14,6 @@ export default function useAuthKakao() {
 
   const router = useRouter();
   const { code: authCode } = router.query;
-  console.log("1",authCode);
 
   const { mutate: kakaoLoginMutate } = useMutation(() => sendCodeToServer(authCode as string), {
     onSuccess: (data) => {

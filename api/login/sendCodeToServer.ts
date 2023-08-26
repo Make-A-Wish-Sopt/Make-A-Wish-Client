@@ -6,10 +6,10 @@ export const sendCodeToServer = async (code: string) => {
 
   const data = await client.post(
     url,
-    null,
+    {},
     {
       headers: {
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         code: `${code}`,
       },
     },

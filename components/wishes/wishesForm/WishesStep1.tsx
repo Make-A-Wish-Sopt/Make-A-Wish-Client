@@ -18,6 +18,8 @@ import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import ItemImageBox from './itemImageBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
 import { validation } from '@/validation/input';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import AlertTextBox from '@/components/common/alertTextBox';
 
 interface WishesStep1Props {
   handleNextStep: () => void;
@@ -29,7 +31,7 @@ export default function WishesStep1(props: WishesStep1Props) {
 
   const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } =
     useGetItemInfo();
-  const { imageFile, previewImage, uploadImageFile } = useUploadItemInfo();
+  const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
   const [initial, handleChangeInitial] = useInput('', LIMIT_TEXT[15]);
   const [isNextStepAvailable, setIsNextStepAvailable] = useState(false);
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
@@ -60,7 +62,7 @@ export default function WishesStep1(props: WishesStep1Props) {
     } else {
       setWishesData((prev) => ({
         ...prev,
-        imageURL: imageURL,
+        imageURL: preSignedImageURL,
         price: Number(selfInputPrice),
         initial: initial,
       }));
@@ -92,10 +94,15 @@ export default function WishesStep1(props: WishesStep1Props) {
         <>
           <InputContainer title="갖고 싶은 선물 이미지 등록하기">
             <Styled.Lable>
-              {previewImage ? (
-                <ItemImageBox imageURL={previewImage} />
+              {preSignedImageURL ? (
+                <ItemImageBox imageURL={preSignedImageURL} />
               ) : (
-                <LargeBox bgColor={theme.colors.pastel_blue}>
+                <LargeBox
+                  bgColor={theme.colors.pastel_blue}
+                  font={theme.fonts.body14}
+                  fontColor={theme.colors.main_blue}
+                >
+                  ※ 등록 가능한 사진파일 <br />• 파일용량 : 10MB 이하
                   <Styled.UploadImageBox>
                     <Image src={ImageUploadIc} alt="업로드 아이콘" />
                   </Styled.UploadImageBox>
@@ -108,13 +115,16 @@ export default function WishesStep1(props: WishesStep1Props) {
                 readOnly
               />
             </Styled.Lable>
+            {imageFile && !validation.checkImageFileSize(imageFile.size) && (
+              <AlertTextBox> 사진은 10MB 이하로 업로드해주세요!</AlertTextBox>
+            )}
           </InputContainer>
 
           <InputContainer title="선물 가격 입력하기">
             <InputBox
               placeholder="ex. 12,000,000"
               handleChangeValue={handleChangeSelfInputPrice}
-              value={selfInputPrice}
+              value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
               limitLength={LIMIT_TEXT[15]}
             />
           </InputContainer>
@@ -150,8 +160,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
 
-    width: 100%;
-    height: 100%;
+    margin-top: 1.3rem;
 
     cursor: pointer;
   `,
