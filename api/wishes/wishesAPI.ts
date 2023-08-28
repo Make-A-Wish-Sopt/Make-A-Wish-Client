@@ -2,7 +2,8 @@ import { AccountInfoType } from '@/types/wishes/accountInfotype';
 import PATH from '../../constant/path';
 import { client } from '../common/axios';
 import { WishesDataType } from '@/types/wishes/wishesDataType';
-import { PARSING_TAG_KEY } from '@/constant/parsingTagKey';
+import axios from 'axios';
+import { SiteDataType } from '@/types/siteDataType';
 
 export const createWishesLink = async (wishesData: WishesDataType) => {
   const accessToken = localStorage.getItem('accessToken');
@@ -52,28 +53,32 @@ export const editUserAccount = async (accountInfo: AccountInfoType, phone: strin
   return data;
 };
 
-export const getItemInfo = async (link: string) => {
+export const getItemInfo = async (link: string, siteData: SiteDataType | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
 
-  const imageTag = await client.get(
-    `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PRESENT}/${PATH.INFO}?url=${link}&tag=${PARSING_TAG_KEY['29cm'].imageTag}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+  const imageTag =
+    siteData &&
+    (await client.get(
+      `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PRESENT}/${PATH.INFO}?url=${link}&tag=${siteData.IMAGE_TAG}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    },
-  );
+    ));
 
-  const priceTag = await client.get(
-    `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PRESENT}/${PATH.INFO}?url=${link}&tag=${PARSING_TAG_KEY['29cm'].priceTag}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+  const priceTag =
+    siteData &&
+    (await client.get(
+      `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PRESENT}/${PATH.INFO}?url=${link}&tag=${siteData.PRICE_TAG}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    },
-  );
+    ));
 
   return { imageTag, priceTag };
 };
@@ -88,4 +93,29 @@ export const getUserAccount = async () => {
     },
   });
   return data?.data;
+};
+
+export const getPresignedURL = async (fileName: string | undefined) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const data = await client.get(
+    `${PATH.API}/${PATH.V1}/${PATH.FILE}?${PATH.FILE_NAME}=${fileName}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  return data;
+};
+
+export const uploadPresignedURL = async (signedURL: string, file: File | Blob | null) => {
+  const data = await axios.put(signedURL, file, {
+    headers: {
+      'Content-Type': file?.type,
+    },
+  });
+
+  return data;
 };

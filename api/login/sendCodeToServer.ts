@@ -1,7 +1,7 @@
 import { client } from '@/api/common/axios';
 import PATH from '../../constant/path';
 
-export const sendCodeToServer = async (authCode: string) => {
+export const sendCodeToServer = async (code: string) => {
   const url = `${PATH.API}/${PATH.V1}/${PATH.AUTH}/${PATH.KAKAO}/${PATH.CALLBACK}`;
 
   const data = await client.post(
@@ -10,9 +10,7 @@ export const sendCodeToServer = async (authCode: string) => {
     {
       headers: {
         'Content-Type': 'application/json',
-      },
-      params: {
-        code: authCode,
+        code: `${code}`,
       },
     },
   );

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import useAuthKakao from '@/hooks/queries/login/useAuthKakao';
 import { useEffect } from 'react';
+import Loading from '../common/loading';
 
 export default function Redirect() {
   const router = useRouter();
@@ -14,8 +15,6 @@ export default function Redirect() {
   }, [accessToken, refreshToken, nickName]);
 
   return (
-    <>
-      <div> 카카오 로그인 중 입니다...</div>
-    </>
+    <Loading />
   );
 }

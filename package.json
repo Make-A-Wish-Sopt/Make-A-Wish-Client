@@ -27,6 +27,7 @@
     "react-dom": "18.2.0",
     "react-query": "^3.39.3",
     "react-responsive": "^9.0.2",
+    "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
     "recoil-persist": "^4.2.0",
     "serverless": "^2.59.0",

@@ -7,7 +7,7 @@ export const editWishesInfo = async (editWishesInfoData: EditWishesInfoDataType)
 
   const data = await client.put(
     `${PATH.API}/${PATH.V1}/${PATH.WISHES}/${PATH.PROGRESS}`,
-    editWishesInfoData,
+    { editWishesInfoData },
     {
       headers: {
         'Content-Type': 'application/json',

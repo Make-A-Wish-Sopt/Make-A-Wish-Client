@@ -1,14 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import router from 'next/router';
 import Image from 'next/image';
 import ItemBox from './itemBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/common/modal/modal';
 import useModal from '@/hooks/common/useModal';
 import { CakeProfileImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
@@ -27,19 +27,15 @@ export default function MyPageContainer() {
   const { data } = useInitEditWishesInfo();
 
   const handleEditWish = () => {
-    if (data !== null) {
-      router.push('/mypage/editWishes');
-    }
+    router.push('/mypage/editWishes');
   };
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
   const handleCustomerService = () => {
-    if (data !== null) {
-      window.Kakao.Channel.chat({
-        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-      });
-    }
+    window.Kakao.Channel.chat({
+      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+    });
   };
 
   const handleLogOut = () => {
@@ -69,7 +65,7 @@ export default function MyPageContainer() {
         </Styled.TitleContainer>
 
         <ItemBox
-          handleClick={handleEditWish}
+          handleClick={!data ? undefined : handleEditWish}
           {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,
@@ -78,7 +74,7 @@ export default function MyPageContainer() {
           진행중인 소원 링크 정보 수정하기
         </ItemBox>
         <ItemBox
-          handleClick={handleCustomerService}
+          handleClick={!data ? undefined : handleCustomerService}
           {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,

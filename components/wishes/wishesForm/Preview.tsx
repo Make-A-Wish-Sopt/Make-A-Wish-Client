@@ -7,7 +7,7 @@ import theme from '@/styles/theme';
 import BasicBox from '@/components/common/box/BasicBox';
 import Button from '@/components/common/button/button';
 import { useEffect, useState } from 'react';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/common/modal/modal';
 import TermsModal from '@/components/common/modal/termsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
@@ -63,7 +63,9 @@ export default function Preview(props: PreviewProps) {
             />
           </Styled.ImageWrapper>
         </PresentBox>
-        <Styled.PresentPrice>가격 : {convertMoneyText(wishesData.price)}</Styled.PresentPrice>
+        <Styled.PresentPrice>
+          가격 : {convertMoneyText(String(wishesData.price))}
+        </Styled.PresentPrice>
       </InputContainer>
 
       <InputContainer title="">
