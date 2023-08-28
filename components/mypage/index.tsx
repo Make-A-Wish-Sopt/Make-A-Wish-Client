@@ -1,14 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import router from 'next/router';
 import Image from 'next/image';
 import ItemBox from './itemBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/common/modal/modal';
 import useModal from '@/hooks/common/useModal';
 import { CakeProfileImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';

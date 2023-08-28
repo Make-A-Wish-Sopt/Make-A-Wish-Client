@@ -5,6 +5,7 @@ import { KakaoLoginIc } from '@/public/assets/icons';
 import BasicBox from '../common/box/BasicBox';
 import Button from '../common/button/button';
 import MainView from '../common/mainView';
+import Footer from '../common/footer';
 
 export default function LoginContainer() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
@@ -20,6 +21,7 @@ export default function LoginContainer() {
           카카오톡 로그인으로 시작하기
         </Button>
       </BasicBox>
+      <Footer />
     </Styled.Container>
   );
 }

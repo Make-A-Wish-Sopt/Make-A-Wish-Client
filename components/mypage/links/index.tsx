@@ -1,11 +1,11 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import IconButton from '@/components/common/button/iconButton';
 import { DeleteBtnIc } from '@/public/assets/icons';
 import useModal from '@/hooks/common/useModal';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/common/modal/modal';
 import DeleteModal from '@/components/common/modal/DeleteModal';
 import { useState } from 'react';
 import { useGetWishLinks } from '@/hooks/queries/links/useGetWishLinks';

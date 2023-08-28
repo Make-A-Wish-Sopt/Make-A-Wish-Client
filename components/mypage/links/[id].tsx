@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import { LinkPageCake } from '@/public/assets/images';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import { useEffect, useState } from 'react';
 import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
 import { convertDateFormat } from '@/hooks/useDate';

@@ -1,4 +1,4 @@
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import BasicBox from '@/components/common/box/BasicBox';
 import HalfBox from '@/components/common/box/HalfBox';
 import LargeBox from '@/components/common/box/LargeBox';

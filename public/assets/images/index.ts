@@ -41,6 +41,9 @@ export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
 export { default as GuideContentImg } from '../images/guideContentImg.svg';
 export { default as BorderImg } from '../images/borderImg.svg';
 
+export { default as LogoNameImg } from '../images/logoNameImg.svg';
+
+
 // cake
 export { default as PillCakeImg } from '../images/pillCakeImg.svg';
 export { default as ShareChatImg } from '../images/sharePageChatImg.svg';

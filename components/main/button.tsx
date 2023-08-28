@@ -3,7 +3,7 @@ import theme from '@/styles/theme';
 import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '../common/modal/ShareModal';
 import useModal from '@/hooks/common/useModal';
-import Modal from '../common/modal';
+import Modal from '../common/modal/modal';
 
 interface ButtonProps {
   wishStatus: string;
