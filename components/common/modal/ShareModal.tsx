@@ -28,7 +28,9 @@ export default function ShareModal(props: ShareModalProps) {
 
   const handlShareSNS = (name: string) => {
     const link = encodeURIComponent(wishesLink);
-    const text = encodeURIComponent(`${loginUserInfo.nickName}님의 생일선물을 고민하고 있다면?\n고민할 필요없이 이 귀여운 케이크를 선물해 ${loginUserInfo.nickName}님의 생일 펀딩에 참여해보세요! \n`);
+    const text = encodeURIComponent(
+      `${loginUserInfo.nickName}님의 생일선물을 고민하고 있다면?\n고민할 필요없이 이 귀여운 케이크를 선물해 ${loginUserInfo.nickName}님의 생일 펀딩에 참여해보세요! \n`,
+    );
     const hashtag = encodeURIComponent(`#조물주보다생일선물주`);
 
     if (name === 'KakaoTalk') {
@@ -59,6 +61,7 @@ export default function ShareModal(props: ShareModalProps) {
         await navigator.clipboard.writeText(text);
         alert('링크가 복사되었습니다.');
       } catch (error) {
+        console.log(error);
       }
     }
 
