@@ -1,4 +1,4 @@
-import { getEditWishesInfo } from '@/api/mypage/getEditWishesInfo';
+import { getEditWishesInfo } from '@/api/mypage/mypageAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
