@@ -6,7 +6,7 @@ import CakeListButton from './cakeListButton';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import { ArrowLeftIc, ArrowRightIc } from '@/public/assets/icons';
+import { ArrowLeftIc, ArrowRightIc, BackBtnIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { CAKE_LIST } from '@/constant/cakeList';
@@ -46,10 +46,20 @@ export default function LettersContainer() {
     setClickedBox(movedBox);
   };
 
+  const handleMoveBack = () => {
+    window.history.back();
+  }
+
+
   return (
     <>
       <InputHeader>
-        <BackBtn />
+        <Image
+          src={BackBtnIc}
+          alt="뒤로가기"
+          style={{ cursor: 'pointer' }}
+          onClick={handleMoveBack}
+        />
       </InputHeader>
 
       <CakeListButton
