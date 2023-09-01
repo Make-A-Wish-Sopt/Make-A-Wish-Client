@@ -44,37 +44,23 @@ export default function ShareModal(props: ShareModalProps) {
     }
   };
 
-  // const handleTextCopy = async (text: string) => {
-  //   try {
-  //     await navigator.clipboard.writeText(text);
-  //     alert('클립보드에 링크가 복사되었습니다.');
-  //   } catch (error) {
-  //     alert('공유하기가 지원되지 않는 환경입니다.');
-  //   }
-  // };
-
-  const isClipboardSupported = () => navigator?.clipboard != null;
-
   const handleTextCopy = async (text: string) => {
-    if (isClipboardSupported()) {
-      try {
-        await navigator.clipboard.writeText(text);
-        alert('링크가 복사되었습니다.');
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
+    const isClipboardSupported = () => navigator?.clipboard != null;
 
     try {
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
+      if (isClipboardSupported()) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       alert('링크가 복사되었습니다.');
-    } catch (err) {
+    } catch (error) {
       alert('공유하기가 지원되지 않는 환경입니다.');
     }
   };
