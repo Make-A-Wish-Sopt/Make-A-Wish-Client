@@ -8,7 +8,7 @@ import BasicBox from '@/components/common/box/BasicBox';
 import Button from '@/components/common/button/button';
 import { useEffect, useState } from 'react';
 import Modal from '@/components/common/modal/modal';
-import TermsModal from '@/components/common/modal/termsModal';
+import TermsModal from '@/components/common/modal/TermsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PresentBox from '@/components/common/box/PresentBox';
@@ -21,7 +21,7 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { handleNextStep } = props;
-  const { wishesData, postWishesData, isSuccess } = useCreateWishesLink();
+  const { wishesData, postWishesData } = useCreateWishesLink();
 
   const { isOpen, handleToggle } = useModal();
   const [isAgreed, setIsAgreed] = useState(false);
