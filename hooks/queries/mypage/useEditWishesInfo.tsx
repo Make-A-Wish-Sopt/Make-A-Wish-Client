@@ -1,4 +1,4 @@
-import { editWishesInfo } from '@/api/mypage/editWishesInfo';
+import { editWishesInfo } from '@/api/mypage/mypageAPI';
 import { EditWishesInfoDataType } from '@/types/mypage/editWishesInfoDataType';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
