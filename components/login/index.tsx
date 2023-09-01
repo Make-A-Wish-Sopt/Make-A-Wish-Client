@@ -39,7 +39,7 @@ const Styled = {
 
   ButtonWrapper: styled.div`
   position: fixed;
-  bottom: 4.6rem;
+  top: 60rem;
 `,
 
   KakaoLoginIcon: styled((props) => (
