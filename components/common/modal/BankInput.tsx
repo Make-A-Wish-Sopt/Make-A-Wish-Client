@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { validation } from '@/validation/input';
 import AlertTextBox from '../alertTextBox';
 import { ChangeEvent } from 'react';
+import { ALERT_ACCOUNT_LENGTH } from '@/constant/alertMessage';
 
 interface BankInputProps {
   name: string;
@@ -37,12 +38,15 @@ export default function BankInput(props: BankInputProps) {
       <Styled.ItemWrapper>
         <InputBox
           placeholder="계좌번호는 (-)없이 입력해주세요"
-          handleChangeValue={handleChangeAccount}
+          handleChangeValue={(e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            handleChangeAccount(e);
+          }}
           value={account || ''}
         />
       </Styled.ItemWrapper>
-      {validation.isIncludeHyphen(account) && (
-        <AlertTextBox> 계좌번호는 (-)없이 입력해주세요</AlertTextBox>
+      {validation.checkAccountLength(account) && (
+        <AlertTextBox> {ALERT_ACCOUNT_LENGTH}</AlertTextBox>
       )}
 
       {isOpen && (

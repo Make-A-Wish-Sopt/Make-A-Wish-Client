@@ -28,7 +28,10 @@ export const validation = {
   },
 
   checkImageFileSize(size: number) {
-    console.log(size);
     return size < IMAGE_FILE_SIZE;
+  },
+
+  checkAccountLength(input: string) {
+    if (input) return input.length < 10 || input.length > 14;
   },
 };
