@@ -47,7 +47,6 @@ const Styled = {
     width: 37.5rem;
     background-color: ${theme.colors.main_blue};
     padding: 2.9rem 2.2rem;
-    margin: 8.12rem 0 0 0;
   `,
 
   HorizontalLine: styled.div`
