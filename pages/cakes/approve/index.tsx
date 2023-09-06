@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import SuccessMessageBox from '@/components/cakes/approve/successMessageBox';
+import Layout from '@/components/common/layout';
 
 export default function ApprovePage() {
   const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
@@ -31,17 +32,19 @@ export default function ApprovePage() {
   };
 
   return (
-    <Styled.Container>
-      <SuccessMessageBox />
-      <SuccessItemBox />
-      <ButtonBox
-        backgroundColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-        handleClick={moveHome}
-      >
-        당신도 받고 싶은 선물이 있나요?
-      </ButtonBox>
-    </Styled.Container>
+    <Layout>
+      <Styled.Container>
+        <SuccessMessageBox />
+        <SuccessItemBox />
+        <ButtonBox
+          backgroundColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+          handleClick={moveHome}
+        >
+          당신도 받고 싶은 선물이 있나요?
+        </ButtonBox>
+      </Styled.Container>
+    </Layout>
   );
 }
 
