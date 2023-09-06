@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import { useRouter } from 'next/router';
 import CakeListButton from './cakeListButton';
 import { useGetCakesCount } from '@/hooks/queries/letters/useGetCakesCount';

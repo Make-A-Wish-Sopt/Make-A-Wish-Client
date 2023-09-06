@@ -1,9 +1,12 @@
+import Layout from '@/components/common/layout';
 import LoginContainer from '@/components/login';
 
 export default function LoginPage() {
   return (
     <>
-      <LoginContainer />
+      <Layout footer>
+        <LoginContainer />
+      </Layout>
     </>
   );
 }

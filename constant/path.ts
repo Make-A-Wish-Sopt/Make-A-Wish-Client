@@ -19,6 +19,7 @@ const PATH = {
   FILE: 'file',
   FILE_NAME: 'fileName',
   PUBLIC: 'public',
+  REDIRECT_URI: 'redirectUri',
 };
 
 export default PATH;
