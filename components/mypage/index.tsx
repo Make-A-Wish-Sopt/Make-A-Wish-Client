@@ -10,7 +10,7 @@ import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal/modal';
 import useModal from '@/hooks/common/useModal';
-import { CakeProfileImg } from '@/public/assets/images';
+import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import { deleteUserInfo } from '@/api/mypage/mypageAPI';
@@ -67,7 +67,9 @@ export default function MyPageContainer() {
 
       <Styled.Container>
         <Styled.TitleContainer>
-          <Image src={CakeProfileImg} alt="케이크 프로필" />
+          <Styled.ProfileImgContainer>
+            <Image src={MypageCakeImg} alt="케이크 프로필" width={35} height={35} />
+          </Styled.ProfileImgContainer>
           <Styled.Title>{nickName} 님</Styled.Title>
         </Styled.TitleContainer>
 
@@ -125,6 +127,16 @@ const Styled = {
     color: ${theme.colors.main_blue};
     text-decoration: underline;
   `,
+
+  ProfileImgContainer: styled.div`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 30rem;
+  background-color: ${theme.colors.pastel_blue};
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem
+`,
 
   TextWrapper: styled.div`
     display: flex;

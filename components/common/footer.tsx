@@ -1,4 +1,4 @@
-import { LogoNameImg } from '@/public/assets/images';
+import { LogoImg } from '@/public/assets/images';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -18,7 +18,7 @@ export default function Footer() {
 
   return (
     <Styled.Container>
-      <Image src={LogoNameImg} alt={'조물주보다 생일선물주 로고'} />
+      <Image src={LogoImg} alt={'조물주보다 생일선물주 로고'} />
 
       <Styled.ContentContainer>
         상호명: 조물주보다생일선물주

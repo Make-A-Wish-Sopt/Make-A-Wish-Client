@@ -16,7 +16,7 @@ export function useGetCakesCount(wishId: string | string[] | undefined) {
       onSuccess: (data) => {
         // setCakesCountData(data);
         if (Array.isArray(data)) {
-          const cakesTotal = calculateTotal(data.map((cake: { count: any; }) => cake.count));
+          const cakesTotal = calculateTotal(data.map((cake: { count: number }) => cake.count));
           setTotal(cakesTotal);
         }
       },

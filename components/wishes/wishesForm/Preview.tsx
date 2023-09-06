@@ -21,7 +21,7 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { handleNextStep } = props;
-  const { wishesData, postWishesData, isSuccess } = useCreateWishesLink();
+  const { wishesData, postWishesData } = useCreateWishesLink();
 
   const { isOpen, handleToggle } = useModal();
   const [isAgreed, setIsAgreed] = useState(false);

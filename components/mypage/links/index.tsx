@@ -47,7 +47,8 @@ export default function LinksMainContainer() {
     <>
       <InputHeader>
         <BackBtn />
-        {noWishes ? null : <IconButton onClick={() => handleToggle()} src={DeleteBtnIc} alt="삭제하기" />}
+        {/* {noWishes ? null : <IconButton onClick={() => handleToggle()} src={DeleteBtnIc} alt="삭제하기" />} */}
+        <IconButton onClick={() => handleToggle()} src={DeleteBtnIc} alt="삭제하기" />
       </InputHeader>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
