@@ -1,6 +1,6 @@
 import useModal from '@/hooks/common/useModal';
 import InputBox from '../input/inputBox';
-import Modal from './modal';
+import Modal from '../modal';
 import BankModal from './BankModal';
 import styled from 'styled-components';
 import { validation } from '@/validation/input';

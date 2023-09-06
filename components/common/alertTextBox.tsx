@@ -26,7 +26,7 @@ const Styled = {
     margin-top: 1rem;
   `,
   Text: styled.div`
-    margin-left: 0.6rem;
+    margin: 0 0.6rem 0;
     ${theme.fonts.body12};
     color: ${theme.colors.warning_red};
   `,

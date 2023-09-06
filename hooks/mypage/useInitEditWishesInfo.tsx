@@ -1,4 +1,4 @@
-import { getEditWishesInfo } from '@/api/mypage/mypageAPI';
+import { getEditWishesInfo } from '@/api/mypage/getEditWishesInfo';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
@@ -37,7 +37,7 @@ export default function useInitEditWishesInfo() {
     changePrice,
   } = useGetItemInfo();
 
-  const { preSignedImageURL, setPreSignedImageURL, uploadImageFile } = useUploadItemInfo();
+  const { imageFile, previewImage, setPreviewImage, uploadImageFile } = useUploadItemInfo();
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
   const [selfInputPrice, handleChangeSelfInputPrice, setSelfInputPrice] = useInput(
     '',
@@ -54,7 +54,7 @@ export default function useInitEditWishesInfo() {
       setHint(data?.hint);
       setInitial(data?.initial);
       changeLinkURL(data?.imageUrl);
-      setPreSignedImageURL(data?.imageUrl);
+      setPreviewImage(data?.imageUrl);
       setSelfInputPrice(data?.price);
       changeImageURL(data?.imageUrl);
       changePrice(data?.price);
@@ -120,7 +120,7 @@ export default function useInitEditWishesInfo() {
       changePrice,
     },
     image: {
-      preSignedImageURL,
+      previewImage,
       uploadImageFile,
     },
 
@@ -139,6 +139,6 @@ export default function useInitEditWishesInfo() {
 
     isGetEditWishesInfoSuccess,
 
-    data,
+    data
   };
 }

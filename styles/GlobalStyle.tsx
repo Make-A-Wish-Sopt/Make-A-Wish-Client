@@ -3,63 +3,81 @@ import reset from 'styled-reset';
 import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
-	${reset}
+    ${reset}
 
-	* {
-    box-sizing: border-box;
-		-moz-box-sizing:border-box !important; /* Firefox */
-    -webkit-box-sizing:border-box !important; /* Safari */
-    transition: ${createTransitionQuery()};
-    -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
-
-  }
-
-	html {
-    -webkit-touch-callout: none;
-    /* -webkit-user-select:none; */
-    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
-
-    scroll-behavior: smooth;
-
-    font-family: sans-serif;
-    font-size: 62.5%;
-    user-select: none;
-
-    background-color: ${theme.colors.background};
-  }
-
-	ul, li {
-    padding-left: 0rem;
-    list-style: none;
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  input, button {
-    outline: none;
-    border: none;
-    background-color: transparent;
-  }
-  button {
-    cursor: pointer;
-    padding: 0;
-  }
-  input {
-    appearance: none;
-
-    &:focus {
-      outline: none;
+    :root {
+        --vh: 100%;
     }
-  }
+
+    * {
+        box-sizing: border-box !important;
+        -moz-box-sizing:border-box !important; /* Firefox */
+        -webkit-box-sizing:border-box !important; /* Safari */
+        transition: ${createTransitionQuery()};
+        -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        padding: 0;
+        margin: 0;
+        line-height: 1.6;
+
+        width: 100%;
+        height: 100vh;
+        height: var(--vh);
+        overflow-x: hidden;
+        font-size: 62.5%;
+        position:fixed;
+        @media (max-height:700px){
+            font-size: 56.25%;
+        }
+    }
+
+    html {
+        display:flex;
+        justify-content: center;
+
+        font-size: 62.5%;
+
+        overflow: hidden;
+    }
+
+    body {
+        width:37.5rem;
+        padding : 2.2rem;
+        background-color: ${theme.colors.background};
+    }
+
+    a {
+    color: inherit;
+    text-decoration: none;
+    }
+
+    .non-clickable {
+        pointer-events: none;
+    }
+
+    button{
+        cursor: pointer;
+    }
+
+    button, input, textarea {
+        border: none;
+        outline:none;
+        background: transparent;
+        color:inherit;
+        font : inherit
+    }
 
 
-
-
-	@font-face{
-		font-family:'bitbit';
-		src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
-	}
+    @font-face{
+    font-family:'bitbit';
+    src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
+}
 `;
 
 function createTransitionQuery() {

@@ -1,36 +1,22 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
-import Footer from './footer';
 
 interface LayoutProps {
-  footer?: boolean;
   children: React.ReactNode;
 }
 
 function Layout(props: LayoutProps) {
-  const { footer, children } = props;
+  const { children } = props;
 
-  return (
-    <Styled.Root>
-      <Styled.Container>{children}</Styled.Container>
-      {footer && <Footer />}
-    </Styled.Root>
-  );
+  return <Root>{children}</Root>;
 }
 
 export default Layout;
 
-const Styled = {
-  Root: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    width: 100%;
-  `,
-
-  Container: styled.div`
-    width: 37.5rem;
-    padding: 2.2rem;
-  `,
-};
+const Root = styled.div`
+  width: 100%;
+  /* &.minHeight {
+    min-height: 136.7rem;
+  } */
+  display: flex;
+  flex-direction: column;
+`;

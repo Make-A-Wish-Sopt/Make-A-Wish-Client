@@ -4,7 +4,7 @@ import theme from '@/styles/theme';
 import { KakaoLoginIc, WideArrowDownIc } from '@/public/assets/icons';
 import { MainLoginImg } from '@/public/assets/images';
 import GuideModal from '@/components/common/modal/GuideModal';
-import Modal from '@/components/common/modal/modal';
+import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
 
 interface MainViewProps {
@@ -25,7 +25,7 @@ export default function MainView(props: MainViewProps) {
 
       <Styled.ImageContainer>
         <Styled.Title>
-          조물주보다
+          조물주보다,
           <br />
           생일선물주
         </Styled.Title>

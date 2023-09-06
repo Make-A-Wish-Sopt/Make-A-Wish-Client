@@ -6,7 +6,7 @@ import router from 'next/router';
 
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
-import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
+import { ShareChatImg, PillCakeImg } from '@/public/assets/images';
 import Header from '@/components/common/header';
 import IconButton from '@/components/common/button/iconButton';
 import ButtonBox from '@/components/common/button/buttonBox';
@@ -59,7 +59,7 @@ export default function ShareContainer() {
 
         <Styled.ImageContainer>
           <Image src={ShareChatImg} alt="말풍선" />
-          <Image src={MainCakeImg} alt="케이크" width={219} height={219} />
+          <Image src={PillCakeImg} alt="케이크" />
         </Styled.ImageContainer>
       </Styled.Container>
 

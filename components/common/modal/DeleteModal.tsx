@@ -4,7 +4,7 @@ import Image from 'next/image';
 import theme from '@/styles/theme';
 import { CloseSmallIc } from '@/public/assets/icons';
 import IconButton from '@/components/common/button/iconButton';
-import { MainCakeImg } from '@/public/assets/images';
+import { DeleteModalCake } from '@/public/assets/images';
 import ButtonBox from '@/components/common/button/buttonBox';
 
 interface DeleteModalProps {
@@ -28,7 +28,7 @@ export default function DeleteModal(props: DeleteModalProps) {
       </Styled.IconContainer>
 
       <Styled.ContentContainer>
-        <Image src={MainCakeImg} alt={'케이크'} width={60} height={60} />
+        <Image src={DeleteModalCake} alt={'케이크'} />
         <Styled.DeleteText>총 {linksCount}개의 소원링크를 삭제합니다.</Styled.DeleteText>
       </Styled.ContentContainer>
 

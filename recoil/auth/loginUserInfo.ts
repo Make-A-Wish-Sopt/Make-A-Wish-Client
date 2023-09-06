@@ -2,7 +2,8 @@ import { LoginUserInfoType } from '@/types/auth/loginUserInfo';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const localStorage = typeof window !== 'undefined' ? window.localStorage : undefined;
+const localStorage =
+  typeof window !== "undefined" ? window.localStorage : undefined;
 
 const { persistAtom } = recoilPersist({
   key: 'UserInfo',

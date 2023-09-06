@@ -38,7 +38,7 @@ export default function SelectCakes(props: SelectCakesProps) {
       </LargeBox>
 
       <Styled.CakeInfo>
-        {selectedCake.name} {convertMoneyText(String(selectedCake.price))}원
+        {selectedCake.name} {convertMoneyText(selectedCake.price)}원
       </Styled.CakeInfo>
     </InputContainer>
   );
