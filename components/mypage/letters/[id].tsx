@@ -10,6 +10,7 @@ import { ArrowLeftIc, ArrowRightIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { CAKE_LIST } from '@/constant/cakeList';
+import Layout from '@/components/common/layout';
 
 export default function LettersContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');

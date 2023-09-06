@@ -31,6 +31,8 @@ const Styled = {
 
   Container: styled.div`
     width: 37.5rem;
-    padding: 2.2rem;
+    height: 100svh;
+
+    padding: 2.2rem 2.2rem 0 2.2rem;
   `,
 };
