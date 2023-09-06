@@ -24,8 +24,6 @@ export default function LoginContainer() {
           </Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-
-      <Footer />
     </Styled.Container>
   );
 }
