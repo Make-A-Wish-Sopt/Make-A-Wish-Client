@@ -13,6 +13,9 @@ const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
 
   }
+  :root {
+    --vh: 100%;
+  }
 
 	html {
     -webkit-touch-callout: none;
@@ -28,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.colors.background};
   }
 
+  body{
+    overflow: scroll;
+  }
+
 	ul, li {
     padding-left: 0rem;
     list-style: none;
@@ -36,10 +43,12 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-  input, button {
+  textarea, input, button {
     outline: none;
     border: none;
     background-color: transparent;
+		color:inherit;
+		font : inherit
   }
   button {
     cursor: pointer;
@@ -47,7 +56,6 @@ const GlobalStyle = createGlobalStyle`
   }
   input {
     appearance: none;
-
     &:focus {
       outline: none;
     }

@@ -53,27 +53,28 @@ export default function BankInfo() {
   }, [phone]);
 
   return (
-    <>
-      <Styled.InputTitle>{titleText}</Styled.InputTitle>
-
-      <BankInput
-        name={name}
-        handleChangeName={handleChangeName}
-        bankName={bankName}
-        changeBankName={changeBankName}
-        account={account}
-        handleChangeAccount={handleChangeAccount}
-      />
-
-      <InputContainer title="연락처 입력하기">
-        <InputBox
-          placeholder="연락처는 (-)없이 입력해주세요"
-          handleChangeValue={handleChangePhone}
-          value={phone}
+    <Styled.Container>
+      <div>
+        <Styled.InputTitle>{titleText}</Styled.InputTitle>
+        <BankInput
+          name={name}
+          handleChangeName={handleChangeName}
+          bankName={bankName}
+          changeBankName={changeBankName}
+          account={account}
+          handleChangeAccount={handleChangeAccount}
         />
-      </InputContainer>
 
-      {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+        <InputContainer title="연락처 입력하기">
+          <InputBox
+            placeholder="연락처는 (-)없이 입력해주세요"
+            handleChangeValue={handleChangePhone}
+            value={phone}
+          />
+        </InputContainer>
+
+        {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+      </div>
 
       <Styled.ButtonWrapper>
         <BasicBox
@@ -88,23 +89,30 @@ export default function BankInfo() {
           <Button handleClick={uploadAccount}>완료</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100%;
+  `,
+
   InputTitle: styled.p`
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
   `,
 
   ButtonWrapper: styled.div`
-    position: absolute;
-    bottom: 4.6rem;
-
     display: flex;
     justify-content: space-between;
 
-    width: 33.5rem;
+    width: 100%;
+
+    margin-bottom: 4.6rem;
   `,
 };
