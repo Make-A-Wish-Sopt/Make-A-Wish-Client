@@ -8,6 +8,7 @@ import BackBtn from '@/components/common/button/backBtn';
 import { useEffect, useState } from 'react';
 import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
 import { convertDateFormat } from '@/hooks/useDate';
+import VerticalProgressBar from '@/components/common/verticalProgressBar';
 
 export default function LinksContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -34,14 +35,16 @@ export default function LinksContainer() {
       <Styled.Date>{`${convertDateFormat(wishData?.startAt)} ~ ${convertDateFormat(wishData?.endAt)}`}</Styled.Date>
 
       <Styled.CenterContainer>
-        <Styled.BarContainer>
-          {/* <Image src={GaugeBarImg} alt="게이지바" /> */}
-        </Styled.BarContainer>
-        <Styled.ImageContainer>
-          <Image src={LinkBeefCakeImg} alt="케이크" width={152} height={169} />
-        </Styled.ImageContainer>
-        <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
-        <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>
+        <Styled.ContentContainer>
+          <Styled.ImageContainer>
+            <Image src={LinkBeefCakeImg} alt="케이크" width={219} height={219} />
+          </Styled.ImageContainer>
+          <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
+          <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>
+        </Styled.ContentContainer>
+
+        <VerticalProgressBar percent={wishData?.percent} />
+
       </Styled.CenterContainer>
     </>
   );
@@ -61,8 +64,17 @@ const Styled = {
 
   CenterContainer: styled.div`
     margin: 9rem 0 15.5rem;
-
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
   `,
+
+  ContentContainer: styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+`,
 
   BarContainer: styled.div`
     float: right;
