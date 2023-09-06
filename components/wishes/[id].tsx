@@ -7,7 +7,6 @@ import BasicBox from '../common/box/BasicBox';
 import Button from '../common/button/button';
 import MainView from '../common/mainView';
 import { getWishesData } from '@/api/cakes/cakesAPI';
-import Footer from '../common/footer';
 
 export default function WishesContainer() {
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
@@ -32,10 +31,10 @@ export default function WishesContainer() {
 
   return (
     <Styled.Container>
-      <MainView text={`${data?.name ?? "? "}님의 선물을\n고민중이셨다면?`} />
+      <MainView text={`${data?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
         <BasicBox bgColor={theme.colors.main_blue} fontColor={theme.colors.white}>
-          <Button handleClick={handleMoveToCakes}>소원들어주러 가기</Button>
+          <Button handleClick={handleMoveToCakes}>소원 들어주러 가기</Button>
         </BasicBox>
 
         <BasicBox
@@ -46,7 +45,6 @@ export default function WishesContainer() {
           <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-      <Footer />
     </Styled.Container>
   );
 }

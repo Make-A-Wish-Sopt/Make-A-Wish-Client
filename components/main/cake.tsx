@@ -7,9 +7,8 @@ import {
   MainEndCakeImg,
   MainEndChatImg,
   MainWishChatImg,
-  PillCakeImg,
+  MainCakeImg,
 } from '@/public/assets/images';
-import ProgressBar from '../common/progressBar';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useRecoilValue } from 'recoil';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
@@ -39,7 +38,7 @@ export default function Cake(props: CakeProps) {
 
   const priceData = wishStatus === 'while' || wishStatus === 'end' ? price : '???';
 
-  const CakeImg = () => (wishStatus === 'end' ? MainEndCakeImg : PillCakeImg);
+  const CakeImg = () => (wishStatus === 'end' ? MainEndCakeImg : MainCakeImg);
 
   return (
     <Styled.Container>
@@ -47,7 +46,7 @@ export default function Cake(props: CakeProps) {
         <Styled.ContentContainer>
           <Image src={ChatImg()} alt="말풍선" />
           <Styled.ImageContainer>
-            <Image src={CakeImg()} alt="케이크" />
+            <Image src={CakeImg()} alt="케이크" width={219} height={219} />
           </Styled.ImageContainer>
 
           {wishStatus === 'while' || wishStatus === 'end' ? (

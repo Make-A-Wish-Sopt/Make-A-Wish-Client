@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
-import { LinkPageCake } from '@/public/assets/images';
+import { LinkBeefCakeImg } from '@/public/assets/images';
 import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/button/backBtn';
 import { useEffect, useState } from 'react';
@@ -37,7 +37,7 @@ export default function LinksContainer() {
       <Styled.CenterContainer>
         <Styled.ContentContainer>
           <Styled.ImageContainer>
-            <Image src={LinkPageCake} alt="케이크" />
+            <Image src={LinkBeefCakeImg} alt="케이크" />
           </Styled.ImageContainer>
           <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
           <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>

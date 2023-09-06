@@ -5,7 +5,6 @@ import useGetProgressData from '@/hooks/queries/main/useGetProgressData';
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import Footer from '../common/footer';
 
 export default function MainContainer() {
   const [status, setStatus] = useState('none');
@@ -37,7 +36,6 @@ export default function MainContainer() {
       />
 
       <Button wishStatus={status} />
-      <Footer />
     </>
   );
 }
