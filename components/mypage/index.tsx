@@ -124,7 +124,7 @@ const Styled = {
   `,
 
   TextContainer: styled.button`
-    ${theme.fonts.button16_2};
+    ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
     text-decoration: underline;
   `,
