@@ -8,7 +8,7 @@ import BasicBox from '@/components/common/box/BasicBox';
 import Button from '@/components/common/button/button';
 import { useEffect, useState } from 'react';
 import Modal from '@/components/common/modal/modal';
-import TermsModal from '@/components/common/modal/TermsModal';
+import TermsModal from '@/components/common/modal/ermsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PresentBox from '@/components/common/box/PresentBox';
