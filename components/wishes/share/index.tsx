@@ -26,7 +26,7 @@ export default function ShareContainer() {
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
-    setStatus('while')
+    setStatus(wishStatus);
   }, [loginUserInfo, wishStatus]);
 
 

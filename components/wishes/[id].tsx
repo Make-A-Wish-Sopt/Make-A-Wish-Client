@@ -18,6 +18,11 @@ export default function WishesContainer() {
   }, [router.isReady]);
 
   const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
+    onError: (error: any) => {
+      console.error("에러 발생:", error);
+      alert("해당 소원의 펀딩이 아직 가능하지 않습니다. 펀딩 기간을 확인해주세요.");
+      router.back();
+    },
     enabled: wishesId !== '',
   });
 
