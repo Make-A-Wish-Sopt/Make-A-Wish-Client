@@ -13,6 +13,9 @@ const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color:rgba(0,0,0,0); // 아이폰 버튼 클릭 깜박임 해제
 
   }
+  :root {
+    --vh: 100%;
+  }
 
 	html {
     -webkit-touch-callout: none;
@@ -26,6 +29,10 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
 
     background-color: ${theme.colors.background};
+  }
+
+  body{
+    overflow: scroll;
   }
 
 	ul, li {

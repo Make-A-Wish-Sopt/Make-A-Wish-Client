@@ -47,38 +47,40 @@ export default function Preview(props: PreviewProps) {
   }, [isAgreed]);
 
   return (
-    <>
-      <Styled.Period>
-        {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)}
-      </Styled.Period>
+    <Styled.Container>
+      <div>
+        <Styled.Period>
+          {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)}
+        </Styled.Period>
 
-      <InputContainer title={wishesData.title}>
-        <PresentBox>
-          <Styled.ImageWrapper>
-            <Image
-              src={wishesData.imageURL}
-              fill={true}
-              alt="선물이미지 미리보기"
-              style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-            />
-          </Styled.ImageWrapper>
-        </PresentBox>
-        <Styled.PresentPrice>
-          가격 : {convertMoneyText(String(wishesData.price))}
-        </Styled.PresentPrice>
-      </InputContainer>
+        <InputContainer title={wishesData.title}>
+          <PresentBox>
+            <Styled.ImageWrapper>
+              <Image
+                src={wishesData.imageURL}
+                fill={true}
+                alt="선물이미지 미리보기"
+                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
+              />
+            </Styled.ImageWrapper>
+          </PresentBox>
+          <Styled.PresentPrice>
+            가격 : {convertMoneyText(String(wishesData.price))}
+          </Styled.PresentPrice>
+        </InputContainer>
 
-      <InputContainer title="">
-        <TextareaBox value={wishesData.hint} readOnly />
-      </InputContainer>
+        <InputContainer title="">
+          <TextareaBox value={wishesData.hint} readOnly />
+        </InputContainer>
 
-      <InputContainer title="선물의 초성">
-        <InputBox value={wishesData.initial} readOnly />
-      </InputContainer>
+        <InputContainer title="선물의 초성">
+          <InputBox value={wishesData.initial} readOnly />
+        </InputContainer>
 
-      <Modal isOpen={isOpen} handleToggle={handleToggle}>
-        <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
-      </Modal>
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
+        </Modal>
+      </div>
 
       <Styled.ButtonWrapper>
         <BasicBox
@@ -90,11 +92,19 @@ export default function Preview(props: PreviewProps) {
           <Button handleClick={createLink}>링크 생성하기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100%;
+  `,
+
   Period: styled.p`
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
@@ -117,6 +127,6 @@ const Styled = {
   `,
 
   ButtonWrapper: styled.div`
-    margin-top: 1.5rem;
+    padding-bottom: 4.6rem;
   `,
 };

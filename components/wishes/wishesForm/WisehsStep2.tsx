@@ -62,51 +62,53 @@ export default function WishesStep2(props: WishesStep2Props) {
   };
 
   return (
-    <>
-      <InputContainer title="소원 링크 제목 작성하기">
-        <InputBox
-          placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
-          handleChangeValue={handleChangeTitle}
-          value={title}
-          limitLength={LIMIT_TEXT[20]}
-        />
-      </InputContainer>
+    <Styled.Container>
+      <div>
+        <InputContainer title="소원 링크 제목 작성하기">
+          <InputBox
+            placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
+            handleChangeValue={handleChangeTitle}
+            value={title}
+            limitLength={LIMIT_TEXT[20]}
+          />
+        </InputContainer>
 
-      <InputContainer title="선물에 대한 힌트 자유롭게 적어보기">
-        <TextareaBox
-          placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
-          handleChangeValue={handleChangeHint}
-          value={hint}
-          limitLength={LIMIT_TEXT.DESCRIPTION}
-        />
-      </InputContainer>
+        <InputContainer title="선물에 대한 힌트 자유롭게 적어보기">
+          <TextareaBox
+            placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
+            handleChangeValue={handleChangeHint}
+            value={hint}
+            limitLength={LIMIT_TEXT.DESCRIPTION}
+          />
+        </InputContainer>
 
-      <InputContainer title="내 생일주간 설정하기">
-        <Styled.CalendarWrapper>
-          {/* 시작일 */}
-          <HalfBox
-            bgColor={theme.colors.pastel_blue}
-            fontColor={theme.colors.dark_blue}
-            borderColor={theme.colors.main_blue}
-          >
-            <Calendar
-              date={startDate}
-              changeStartDate={changeStartDate}
-              calendarIcon={CalendarIc}
-              readOnly={false}
-            />
-          </HalfBox>
+        <InputContainer title="내 생일주간 설정하기">
+          <Styled.CalendarWrapper>
+            {/* 시작일 */}
+            <HalfBox
+              bgColor={theme.colors.pastel_blue}
+              fontColor={theme.colors.dark_blue}
+              borderColor={theme.colors.main_blue}
+            >
+              <Calendar
+                date={startDate}
+                changeStartDate={changeStartDate}
+                calendarIcon={CalendarIc}
+                readOnly={false}
+              />
+            </HalfBox>
 
-          {/* 종료일 */}
-          <HalfBox
-            bgColor={theme.colors.pastel_blue}
-            fontColor={theme.colors.gray2}
-            borderColor={theme.colors.main_blue}
-          >
-            <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />
-          </HalfBox>
-        </Styled.CalendarWrapper>
-      </InputContainer>
+            {/* 종료일 */}
+            <HalfBox
+              bgColor={theme.colors.pastel_blue}
+              fontColor={theme.colors.gray2}
+              borderColor={theme.colors.main_blue}
+            >
+              <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />
+            </HalfBox>
+          </Styled.CalendarWrapper>
+        </InputContainer>
+      </div>
 
       <Styled.ButtonWrapper>
         <BasicBox
@@ -118,17 +120,25 @@ export default function WishesStep2(props: WishesStep2Props) {
           <Button handleClick={nextStep}>소원링크 생성 완료!</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100%;
+  `,
+
   CalendarWrapper: styled.div`
     display: flex;
     justify-content: space-between;
   `,
+
   ButtonWrapper: styled.div`
-    position: absolute;
-    bottom: 4.6rem;
+    margin-bottom: 4.6rem;
   `,
 };
