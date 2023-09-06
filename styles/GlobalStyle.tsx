@@ -36,10 +36,12 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-  input, button {
+  textarea, input, button {
     outline: none;
     border: none;
     background-color: transparent;
+		color:inherit;
+		font : inherit
   }
   button {
     cursor: pointer;
@@ -47,7 +49,6 @@ const GlobalStyle = createGlobalStyle`
   }
   input {
     appearance: none;
-
     &:focus {
       outline: none;
     }

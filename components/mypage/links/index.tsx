@@ -58,7 +58,6 @@ export default function LinksMainContainer() {
       <Styled.Container>
         {noWishes ? <NoWishLists /> : <WishLists selectedLinks={selectedLinks} linksData={wishLinks} handleCheckbox={handleCheckbox} />}
       </Styled.Container>
-
     </>
   );
 }
