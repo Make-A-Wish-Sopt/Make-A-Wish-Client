@@ -30,7 +30,12 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    domains: ['img.29cm.co.kr', 'product.29cm.co.kr', 'localhost'],
+    domains: [
+      'img.29cm.co.kr',
+      'product.29cm.co.kr',
+      'localhost',
+      'wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
+    ],
   },
   rules: {
     test: /\.svg$/,

@@ -31,10 +31,10 @@ export default function WishesContainer() {
 
   return (
     <Styled.Container>
-      <MainView text={`${data?.name}님의 선물을\n고민중이셨다면?`} />
+      <MainView text={`${data?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
         <BasicBox bgColor={theme.colors.main_blue} fontColor={theme.colors.white}>
-          <Button handleClick={handleMoveToCakes}>소원들어주러 가기</Button>
+          <Button handleClick={handleMoveToCakes}>소원 들어주러 가기</Button>
         </BasicBox>
 
         <BasicBox

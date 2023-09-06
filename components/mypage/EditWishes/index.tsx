@@ -1,4 +1,4 @@
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import BasicBox from '@/components/common/box/BasicBox';
 import HalfBox from '@/components/common/box/HalfBox';
 import LargeBox from '@/components/common/box/LargeBox';
@@ -43,8 +43,8 @@ export default function EditWishesContainer() {
     bankName: bankInfo.bankName,
     account: bankInfo.account,
     phone: phone.phone,
-    imageUrl: itemLink.imageURL,
-    price: itemLink.price,
+    imageUrl: isLinkLoadType ? itemLink.imageURL : image.preSignedImageURL,
+    price: isLinkLoadType ? itemLink.price : Number(selfInputPrice.selfInputPrice),
     title: title.title,
     hint: hint.hint,
     initial: initial.initial,
@@ -81,8 +81,8 @@ export default function EditWishesContainer() {
         <>
           <InputContainer title="갖고 싶은 선물 이미지 등록하기">
             <Styled.Lable>
-              {image.previewImage ? (
-                <ItemImageBox imageURL={image.previewImage} />
+              {image.preSignedImageURL ? (
+                <ItemImageBox imageURL={image.preSignedImageURL} />
               ) : (
                 <LargeBox bgColor={theme.colors.pastel_blue}>
                   <Styled.UploadImageBox>

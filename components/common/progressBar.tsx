@@ -8,6 +8,7 @@ interface ProgressBarProps {
 
 export default function ProgressBar(props: ProgressBarProps) {
   const { percent, vertical } = props;
+
   return (
     <>
       <Styled.Container vertical={vertical}>
@@ -19,8 +20,8 @@ export default function ProgressBar(props: ProgressBarProps) {
 
 const Styled = {
   Container: styled.div<{ vertical: boolean }>`
-    width: 1rem;
-    height: 27rem;
+    width: 27rem;
+    height: 1rem;
 
     background-color: ${theme.colors.pastel_blue};
 

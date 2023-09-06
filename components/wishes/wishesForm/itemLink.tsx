@@ -12,6 +12,7 @@ import { QUERY_KEY } from '@/constant/queryKey';
 import { getItemInfo } from '@/api/wishes/wishesAPI';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
+import { getSiteData } from '@/utils/common/getSiteData';
 
 interface ItemLinkProps {
   linkURL: string;
@@ -38,25 +39,29 @@ export default function ItemLink(props: ItemLinkProps) {
     }
   };
 
-  const { refetch, isSuccess } = useQuery(QUERY_KEY.ITEM_DATA, () => getItemInfo(linkURL), {
-    onSuccess: (data) => {
-      const imageData = extractImageSrc(data?.imageTag.data?.data);
-      const priceData = extractPrice(data?.priceTag.data?.data);
+  const { refetch, isSuccess } = useQuery(
+    QUERY_KEY.ITEM_DATA,
+    () => getItemInfo(linkURL, getSiteData(linkURL)),
+    {
+      onSuccess: (data) => {
+        const imageData = extractImageSrc(data?.imageTag?.data?.data);
+        const priceData = extractPrice(data?.priceTag?.data?.data);
 
-      if (imageData && priceData) {
-        changeImageURL(imageData);
-        changePrice(priceData);
-      }
+        if (imageData && priceData) {
+          changeImageURL(imageData);
+          changePrice(priceData);
+        }
+      },
+      enabled: isCorrectLinkURL && validation.isCorrectSite(linkURL),
     },
-    enabled: isCorrectLinkURL && validation.isCorrectSite(linkURL),
-  });
+  );
 
   return (
     <Styled.Container>
-      {SITE_LIST.map((site) => (
-        <Styled.SiteBox key={site.name}>
-          <a href={site.link} target="_blank" rel="noopener noreferrer">
-            <Image src={site.logo} alt={`${site.name} 로고`} />
+      {Object.values(SITE_LIST).map((siteData) => (
+        <Styled.SiteBox key={siteData.NAME}>
+          <a href={siteData.LINK} target="_blank" rel="noopener noreferrer">
+            <Image src={siteData.LOGO} alt={`${siteData.NAME} 로고`} />
           </a>
         </Styled.SiteBox>
       ))}
@@ -71,7 +76,7 @@ export default function ItemLink(props: ItemLinkProps) {
       )}
 
       {imageURL && (
-        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(price)}원</ItemImageBox>
+        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(String(price))}원</ItemImageBox>
       )}
     </Styled.Container>
   );

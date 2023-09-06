@@ -27,17 +27,41 @@ export default function ShareModal(props: ShareModalProps) {
   }, []);
 
   const handlShareSNS = (name: string) => {
+    const link = encodeURIComponent(wishesLink);
+    const text = encodeURIComponent(
+      `${loginUserInfo.nickName}님의 생일선물을 고민하고 있다면?\n고민할 필요없이 이 귀여운 케이크를 선물해 ${loginUserInfo.nickName}님의 생일 펀딩에 참여해보세요! \n`,
+    );
+    const hashtag = encodeURIComponent(`#조물주보다생일선물주`);
+
     if (name === 'KakaoTalk') {
       useKakaoShare(loginUserInfo.nickName, wishesLink);
+    } else if (name === 'FaceBook') {
+      if (name === 'FaceBook') {
+        window.open(`http://www.facebook.com/sharer/sharer.php?u=${link}&hashtag=${hashtag}`);
+      }
+    } else if (name === 'Twitter') {
+      window.open(`https://twitter.com/intent/tweet?text=${text + link}`);
     }
   };
 
   const handleTextCopy = async (text: string) => {
+    const isClipboardSupported = () => navigator?.clipboard != null;
+
     try {
-      await navigator.clipboard.writeText(text);
-      alert('클립보드에 링크가 복사되었습니다.');
+      if (isClipboardSupported()) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+      alert('링크가 복사되었습니다.');
     } catch (error) {
-      alert('복사에 실패하였습니다');
+      alert('공유하기가 지원되지 않는 환경입니다.');
     }
   };
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BackBtn from '../common/backBtn';
+import BackBtn from '../common/button/backBtn';
 import InputHeader from '../common/inputHeader';
 import theme from '@/styles/theme';
 

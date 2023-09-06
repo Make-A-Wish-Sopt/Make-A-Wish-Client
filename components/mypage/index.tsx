@@ -1,18 +1,19 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/backBtn';
+import BackBtn from '@/components/common/button/backBtn';
 import router from 'next/router';
 import Image from 'next/image';
 import ItemBox from './itemBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/common/modal/modal';
 import useModal from '@/hooks/common/useModal';
-import { CakeProfileImg } from '@/public/assets/images';
+import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
+import { deleteUserInfo } from '@/api/mypage/mypageAPI';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
@@ -27,19 +28,15 @@ export default function MyPageContainer() {
   const { data } = useInitEditWishesInfo();
 
   const handleEditWish = () => {
-    if (data !== null) {
-      router.push('/mypage/editWishes');
-    }
+    router.push('/mypage/editWishes');
   };
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
   const handleCustomerService = () => {
-    if (data !== null) {
-      window.Kakao.Channel.chat({
-        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-      });
-    }
+    window.Kakao.Channel.chat({
+      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+    });
   };
 
   const handleLogOut = () => {
@@ -48,6 +45,12 @@ export default function MyPageContainer() {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('UserInfo');
     // useResetRecoilState(LoginUserInfo);
+  };
+
+  const handleWithdrawal = () => {
+    if (window.confirm('탈퇴를 진행하시겠습니까?')) {
+      deleteUserInfo();
+    }
   };
 
   return (
@@ -64,12 +67,14 @@ export default function MyPageContainer() {
 
       <Styled.Container>
         <Styled.TitleContainer>
-          <Image src={CakeProfileImg} alt="케이크 프로필" />
+          <Styled.ProfileImgContainer>
+            <Image src={MypageCakeImg} alt="케이크 프로필" width={35} height={35} />
+          </Styled.ProfileImgContainer>
           <Styled.Title>{nickName} 님</Styled.Title>
         </Styled.TitleContainer>
 
         <ItemBox
-          handleClick={handleEditWish}
+          handleClick={!data ? undefined : handleEditWish}
           {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,
@@ -78,7 +83,7 @@ export default function MyPageContainer() {
           진행중인 소원 링크 정보 수정하기
         </ItemBox>
         <ItemBox
-          handleClick={handleCustomerService}
+          handleClick={!data ? undefined : handleCustomerService}
           {...(!data && {
             backgroundColor: theme.colors.gray1,
             color: theme.colors.gray2,
@@ -90,7 +95,10 @@ export default function MyPageContainer() {
         <ItemBox handleClick={handleToggle}>사용설명서 보기</ItemBox>
         <ItemBox handleClick={handleCustomerService}>고객센터 문의하기</ItemBox>
 
-        <Styled.TextContainer onClick={handleLogOut}>로그아웃</Styled.TextContainer>
+        <Styled.TextWrapper>
+          <Styled.TextContainer onClick={handleLogOut}>로그아웃</Styled.TextContainer>
+          <Styled.TextContainer onClick={handleWithdrawal}>회원탈퇴</Styled.TextContainer>
+        </Styled.TextWrapper>
       </Styled.Container>
     </>
   );
@@ -115,9 +123,25 @@ const Styled = {
   `,
 
   TextContainer: styled.button`
-    margin: 3rem 0 0;
     ${theme.fonts.button16_2};
     color: ${theme.colors.main_blue};
     text-decoration: underline;
+  `,
+
+  ProfileImgContainer: styled.div`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 30rem;
+  background-color: ${theme.colors.pastel_blue};
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem
+`,
+
+  TextWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    margin: 3rem 0 0;
   `,
 };
