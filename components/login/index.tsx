@@ -21,8 +21,10 @@ export default function LoginContainer() {
           font={theme.fonts.button18}
           borderColor="transparent"
         >
-          <Styled.KakaoLoginIcon />
-          카카오톡 로그인으로 시작하기
+          <Styled.ButtonContentWrapper>
+            <Styled.KakaoLoginIcon />
+            카카오톡 로그인으로 시작하기
+          </Styled.ButtonContentWrapper>
         </BasicBox>
       </Styled.ButtonWrapper>
     </Styled.Container>
@@ -37,7 +39,20 @@ const Styled = {
   `,
 
   ButtonWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+
     margin-bottom: 10.4rem;
+  `,
+
+  ButtonContentWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
   `,
 
   KakaoLoginIcon: styled((props) => (
