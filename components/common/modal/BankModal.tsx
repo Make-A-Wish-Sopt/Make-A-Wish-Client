@@ -49,7 +49,7 @@ const Styled = {
   `,
 
   BankContainer: styled.div`
-    height: 93%;
+    height: 91.4%;
     overflow: auto;
     ::-webkit-scrollbar {
       display: none;

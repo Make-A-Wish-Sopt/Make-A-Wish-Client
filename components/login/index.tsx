@@ -15,12 +15,16 @@ export default function LoginContainer() {
     <Styled.Container>
       <MainView text={'매년 받는 기프티콘 선물 대신 \n 생일 펀딩 서비스로'} />
 
-      <BasicBox bgColor={theme.colors.yellow} font={theme.fonts.body16} borderColor="transparent">
-        <Button handleClick={handleKaKaoLogin}>
+      <Styled.ButtonWrapper onClick={handleKaKaoLogin}>
+        <BasicBox
+          bgColor={theme.colors.yellow}
+          font={theme.fonts.button18}
+          borderColor="transparent"
+        >
           <Styled.KakaoLoginIcon />
           카카오톡 로그인으로 시작하기
-        </Button>
-      </BasicBox>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </Styled.Container>
   );
 }
@@ -30,6 +34,10 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
+  `,
+
+  ButtonWrapper: styled.div`
+    margin-bottom: 10.4rem;
   `,
 
   KakaoLoginIcon: styled((props) => (
