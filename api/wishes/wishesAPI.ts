@@ -80,6 +80,8 @@ export const getItemInfo = async (link: string, siteData: SiteDataType | undefin
       },
     ));
 
+  console.log(imageTag, priceTag);
+
   return { imageTag, priceTag };
 };
 

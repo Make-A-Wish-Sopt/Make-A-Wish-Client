@@ -5,6 +5,7 @@ import useGetProgressData from '@/hooks/queries/main/useGetProgressData';
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import styled from 'styled-components';
 
 export default function MainContainer() {
   const [status, setStatus] = useState('none');
@@ -35,7 +36,15 @@ export default function MainContainer() {
         price={progressData ? progressData.price : 0}
       />
 
-      <Button wishStatus={status} />
+      <Styled.ButtonWrapper>
+        <Button wishStatus={status} />
+      </Styled.ButtonWrapper>
     </>
   );
 }
+
+const Styled = {
+  ButtonWrapper: styled.div`
+    margin-bottom: 10.4rem;
+  `,
+};
