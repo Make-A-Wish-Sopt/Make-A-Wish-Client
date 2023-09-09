@@ -7,9 +7,13 @@ export default function useUploadItemInfo() {
   const [imageFile, setImageFile] = useState<File | Blob | null>(null);
   const [preSignedImageURL, setPreSignedImageURL] = useState('');
 
-  const { data } = useQuery(QUERY_KEY.PRE_SIGNED_URL, () => getPresignedURL(imageFile?.name), {
-    enabled: imageFile !== null && imageFile?.name !== '',
-  });
+  const { data, refetch } = useQuery(
+    QUERY_KEY.PRE_SIGNED_URL,
+    () => getPresignedURL(imageFile?.name),
+    {
+      enabled: imageFile !== null && imageFile?.name !== '',
+    },
+  );
 
   const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile), {
     onSuccess: () => {
@@ -21,6 +25,10 @@ export default function useUploadItemInfo() {
   useEffect(() => {
     data?.data?.success && mutate();
   }, [data]);
+
+  useEffect(() => {
+    imageFile && refetch();
+  }, [imageFile]);
 
   function uploadImageFile(e: React.ChangeEvent<HTMLInputElement>) {
     const imageFile = e.target.files && e.target.files[0];
