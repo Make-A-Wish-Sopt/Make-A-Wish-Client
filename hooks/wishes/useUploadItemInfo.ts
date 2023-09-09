@@ -1,5 +1,6 @@
 import { getPresignedURL, uploadPresignedURL } from '@/api/wishes/wishesAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
+import { validation } from '@/validation/input';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
@@ -27,7 +28,7 @@ export default function useUploadItemInfo() {
   }, [data]);
 
   useEffect(() => {
-    imageFile && refetch();
+    imageFile && validation.checkImageFileSize(imageFile.size) && refetch();
   }, [imageFile]);
 
   function uploadImageFile(e: React.ChangeEvent<HTMLInputElement>) {
