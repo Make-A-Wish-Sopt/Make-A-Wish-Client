@@ -189,7 +189,7 @@ export default function EditWishesContainer() {
         font={theme.fonts.button18}
         borderColor={'transparent'}
       >
-        <Button handleClick={() => editWishesData()}>수정완료</Button>
+        <Button handleClick={() => editWishesData()}>수정 완료</Button>
       </BasicBox>
     </>
   );
