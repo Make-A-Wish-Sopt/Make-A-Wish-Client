@@ -71,9 +71,8 @@ export default function BankInfo() {
               handleChangeValue={handleChangePhone}
               value={phone}
             />
+            {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
           </InputContainer>
-
-          {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
         </InputContainer>
       </div>
 
