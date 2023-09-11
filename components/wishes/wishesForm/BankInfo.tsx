@@ -55,25 +55,26 @@ export default function BankInfo() {
   return (
     <Styled.Container>
       <div>
-        <Styled.InputTitle>{titleText}</Styled.InputTitle>
-        <BankInput
-          name={name}
-          handleChangeName={handleChangeName}
-          bankName={bankName}
-          changeBankName={changeBankName}
-          account={account}
-          handleChangeAccount={handleChangeAccount}
-        />
-
-        <InputContainer title="연락처 입력하기">
-          <InputBox
-            placeholder="연락처는 (-)없이 입력해주세요"
-            handleChangeValue={handleChangePhone}
-            value={phone}
+        <InputContainer title={titleText}>
+          <BankInput
+            name={name}
+            handleChangeName={handleChangeName}
+            bankName={bankName}
+            changeBankName={changeBankName}
+            account={account}
+            handleChangeAccount={handleChangeAccount}
           />
-        </InputContainer>
 
-        {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+          <InputContainer title="연락처 입력하기">
+            <InputBox
+              placeholder="연락처는 (-)없이 입력해주세요"
+              handleChangeValue={handleChangePhone}
+              value={phone}
+            />
+          </InputContainer>
+
+          {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+        </InputContainer>
       </div>
 
       <Styled.ButtonWrapper>
@@ -100,11 +101,6 @@ const Styled = {
     justify-content: space-between;
 
     height: 100%;
-  `,
-
-  InputTitle: styled.p`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
   `,
 
   ButtonWrapper: styled.div`

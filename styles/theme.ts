@@ -32,7 +32,7 @@ function FONT({ family, weight, size, lineHeight, letterSpacing }: Font): string
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight};
-      ${letterSpacing && `letter-spacing: -0.0${letterSpacing}rem;`}
+      ${letterSpacing && `letter-spacing: -${letterSpacing}rem;`}
     `;
 }
 
@@ -42,7 +42,7 @@ const fonts = {
   headline24_100: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '100%' }),
   headline24_130: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '130%' }),
   headline30: FONT({ family: true, weight: 400, size: 3, lineHeight: '100%' }),
-  body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '3rem' }),
+  body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '150%', letterSpacing: 0.05 }),
   body14: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '140%' }),
   body12: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
   button16: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '3rem' }),
