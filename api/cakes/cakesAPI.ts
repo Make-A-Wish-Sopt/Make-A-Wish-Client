@@ -3,7 +3,9 @@ import { client } from '../common/axios';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
 
 export const getWishesData = async () => {
-  const wishesNumber = window.location.pathname.replace('/cakes/', '');
+  const pathname = window.location.pathname.replace('/cakes/', '');
+  const wishesNumber = pathname.replace('/wishes/', '');
+
   const data = await client.get(
     `${PATH.API}/${PATH.V1}/${PATH.PUBLIC}/${PATH.WISHES}/${wishesNumber}`,
   );
