@@ -22,10 +22,10 @@ const Styled = {
     margin-bottom: 2.4rem;
   `,
 
-  InputTitle: styled.p`
+  InputTitle: styled.h4`
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
 
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
   `,
 };

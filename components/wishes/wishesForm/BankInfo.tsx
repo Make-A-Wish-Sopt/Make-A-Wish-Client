@@ -5,6 +5,7 @@ import Button from '@/components/common/button/button';
 import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
 import theme from '@/styles/theme';
 import { validation } from '@/validation/input';
@@ -27,6 +28,7 @@ export default function BankInfo() {
   } = useGetUserAccount();
 
   const [isAlertState, setIsAlertState] = useState(false);
+  const { postWishesData } = useCreateWishesLink();
 
   const titleText = apiStatus
     ? '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.'
@@ -41,6 +43,7 @@ export default function BankInfo() {
 
   const uploadAccount = () => {
     if (name !== '' && bankName !== '' && account !== '' && !validation.isIncludeHyphen(account)) {
+      postWishesData();
       mutate();
     } else {
       alert('계좌정보를 확인 해 주세요!');
@@ -55,31 +58,31 @@ export default function BankInfo() {
   return (
     <Styled.Container>
       <div>
-        <Styled.InputTitle>{titleText}</Styled.InputTitle>
-        <BankInput
-          name={name}
-          handleChangeName={handleChangeName}
-          bankName={bankName}
-          changeBankName={changeBankName}
-          account={account}
-          handleChangeAccount={handleChangeAccount}
-        />
-
-        <InputContainer title="연락처 입력하기">
-          <InputBox
-            placeholder="연락처는 (-)없이 입력해주세요"
-            handleChangeValue={handleChangePhone}
-            value={phone}
+        <InputContainer title={titleText}>
+          <BankInput
+            name={name}
+            handleChangeName={handleChangeName}
+            bankName={bankName}
+            changeBankName={changeBankName}
+            account={account}
+            handleChangeAccount={handleChangeAccount}
           />
-        </InputContainer>
 
-        {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+          <InputContainer title="연락처 입력하기">
+            <InputBox
+              placeholder="연락처는 (-)없이 입력해주세요"
+              handleChangeValue={handleChangePhone}
+              value={phone}
+            />
+            {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+          </InputContainer>
+        </InputContainer>
       </div>
 
       <Styled.ButtonWrapper>
         <BasicBox
           bgColor={
-            !isAlertState && !validation.isIncludeHyphen(account) && bankName && name
+            !isAlertState && !validation.checkAccountLength(account) && bankName && name
               ? theme.colors.main_blue
               : theme.colors.gray1
           }
@@ -99,12 +102,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
-    height: 100%;
-  `,
-
-  InputTitle: styled.p`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
+    height: 100svh;
   `,
 
   ButtonWrapper: styled.div`

@@ -20,6 +20,10 @@ import { CalendarGreyIc, CalendarIc, ImageUploadIc } from '@/public/assets/icons
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { validation } from '@/validation/input';
+import AlertTextBox from '@/components/common/alertTextBox';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 export default function EditWishesContainer() {
   const {
@@ -49,6 +53,33 @@ export default function EditWishesContainer() {
     hint: hint.hint,
     initial: initial.initial,
   });
+
+  const [isAlertState, setIsAlertState] = useState(false);
+  const [isAbleModify, setIsAbleModify] = useState(true);
+
+  useEffect(() => {
+    checkValue() ? setIsAbleModify(true) : setIsAbleModify(false);
+  }, [itemLink, image, initial, title, bankInfo, phone, selfInputPrice]);
+
+  const checkValue = () => {
+    return (
+      (itemLink.imageURL.length !== 0 || image.preSignedImageURL.length !== 0) &&
+      initial.initial.length !== 0 &&
+      title.title.length !== 0 &&
+      bankInfo.account.length !== 0 &&
+      bankInfo.bankName.length !== 0 &&
+      bankInfo.name.length !== 0 &&
+      phone.phone.length !== 0 &&
+      !isAlertState &&
+      !validation.checkAccountLength(bankInfo.account) &&
+      (itemLink.price !== 0 || selfInputPrice.selfInputPrice.length !== 0)
+    );
+  };
+
+  useEffect(() => {
+    validation.isIncludeHyphen(phone.phone) ? setIsAlertState(true) : setIsAlertState(false);
+    validation.isCorrectPhoneNumber(phone.phone) ? setIsAlertState(false) : setIsAlertState(true);
+  }, [phone]);
 
   return (
     <>
@@ -102,8 +133,16 @@ export default function EditWishesContainer() {
           <InputContainer title="선물 가격 입력하기">
             <InputBox
               placeholder="ex. 12,000,000"
-              handleChangeValue={selfInputPrice.handleChangeSelfInputPrice}
-              value={selfInputPrice.selfInputPrice}
+              handleChangeValue={(e) => {
+                e.target.value = e.target.value.replaceAll(',', '');
+                selfInputPrice.handleChangeSelfInputPrice(e);
+              }}
+              isPriceText
+              value={
+                selfInputPrice.selfInputPrice
+                  ? `${convertMoneyText(selfInputPrice.selfInputPrice.toString())}`
+                  : ''
+              }
               limitLength={LIMIT_TEXT[15]}
             />
           </InputContainer>
@@ -171,7 +210,12 @@ export default function EditWishesContainer() {
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
-        <InputBox value={phone.phone} handleChangeValue={phone.handleChangePhone} />
+        <InputBox
+          placeholder="연락처는 (-)없이 입력해주세요"
+          value={phone.phone}
+          handleChangeValue={phone.handleChangePhone}
+        />
+        {phone.phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">
@@ -183,14 +227,22 @@ export default function EditWishesContainer() {
         />
       </InputContainer>
 
-      <BasicBox
-        bgColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button18}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={() => editWishesData()}>수정완료</Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={isAbleModify ? theme.colors.main_blue : theme.colors.gray1}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button18}
+          borderColor={'transparent'}
+        >
+          <Button
+            handleClick={() => {
+              isAbleModify && editWishesData();
+            }}
+          >
+            수정 완료
+          </Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -233,5 +285,14 @@ const Styled = {
 
   FileInput: styled.input`
     display: none;
+  `,
+
+  ButtonWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-bottom: 4.6rem;
   `,
 };

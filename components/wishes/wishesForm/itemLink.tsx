@@ -47,9 +47,6 @@ export default function ItemLink(props: ItemLinkProps) {
         const imageData = extractImageSrc(data?.imageTag?.data?.data);
         const priceData = extractPrice(data?.priceTag?.data?.data, linkURL);
 
-        console.log(imageData);
-        console.log(priceData);
-
         if (imageData && priceData) {
           changeImageURL(imageData);
           changePrice(priceData);

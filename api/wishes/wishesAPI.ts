@@ -18,7 +18,6 @@ export const createWishesLink = async (wishesData: WishesDataType) => {
       initial: wishesData.initial,
       startDate: wishesData.startDate,
       endDate: wishesData.endDate,
-      phone: wishesData.phone,
     },
     {
       headers: {
@@ -79,9 +78,6 @@ export const getItemInfo = async (link: string, siteData: SiteDataType | undefin
         },
       },
     ));
-
-  console.log(imageTag, priceTag);
-
   return { imageTag, priceTag };
 };
 

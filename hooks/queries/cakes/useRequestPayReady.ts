@@ -2,9 +2,9 @@ import { requestPayReady } from '@/api/cakes/cakesAPI';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useMutation } from 'react-query';
 
-export default function useRequestPayReady(userId: string, cakeNumber: number) {
+export default function useRequestPayReady(wishId: number, cakeNumber: number) {
   const { data, mutate, isSuccess } = useMutation(QUERY_KEY.PAYREADY, () =>
-    requestPayReady(userId, cakeNumber),
+    requestPayReady(wishId, cakeNumber),
   );
 
   return { data, mutate, isSuccess };
