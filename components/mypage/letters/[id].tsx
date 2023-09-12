@@ -1,7 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/button/backBtn';
 import CakeListButton from './cakeListButton';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
@@ -10,7 +9,7 @@ import { ArrowLeftIc, ArrowRightIc, BackBtnIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { CAKE_LIST } from '@/constant/cakeList';
-import Layout from '@/components/common/layout';
+
 
 export default function LettersContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
