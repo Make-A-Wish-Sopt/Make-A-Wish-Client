@@ -20,6 +20,10 @@ import { CalendarGreyIc, CalendarIc, ImageUploadIc } from '@/public/assets/icons
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { validation } from '@/validation/input';
+import AlertTextBox from '@/components/common/alertTextBox';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 export default function EditWishesContainer() {
   const {
@@ -49,6 +53,15 @@ export default function EditWishesContainer() {
     hint: hint.hint,
     initial: initial.initial,
   });
+
+  const [isAlertState, setIsAlertState] = useState(false);
+
+  useEffect(() => {
+    validation.isIncludeHyphen(phone.phone) ? setIsAlertState(true) : setIsAlertState(false);
+    validation.isCorrectPhoneNumber(phone.phone) ? setIsAlertState(false) : setIsAlertState(true);
+  }, [phone]);
+
+  console.log(selfInputPrice.selfInputPrice);
 
   return (
     <>
@@ -103,7 +116,11 @@ export default function EditWishesContainer() {
             <InputBox
               placeholder="ex. 12,000,000"
               handleChangeValue={selfInputPrice.handleChangeSelfInputPrice}
-              value={selfInputPrice.selfInputPrice}
+              value={
+                selfInputPrice.selfInputPrice
+                  ? `${convertMoneyText(selfInputPrice.selfInputPrice.toString())}`
+                  : ''
+              }
               limitLength={LIMIT_TEXT[15]}
             />
           </InputContainer>
@@ -171,7 +188,12 @@ export default function EditWishesContainer() {
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
-        <InputBox value={phone.phone} handleChangeValue={phone.handleChangePhone} />
+        <InputBox
+          placeholder="연락처는 (-)없이 입력해주세요"
+          value={phone.phone}
+          handleChangeValue={phone.handleChangePhone}
+        />
+        {phone.phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">
@@ -183,14 +205,16 @@ export default function EditWishesContainer() {
         />
       </InputContainer>
 
-      <BasicBox
-        bgColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-        font={theme.fonts.button18}
-        borderColor={'transparent'}
-      >
-        <Button handleClick={() => editWishesData()}>수정 완료</Button>
-      </BasicBox>
+      <Styled.ButtonWrapper>
+        <BasicBox
+          bgColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+          font={theme.fonts.button18}
+          borderColor={'transparent'}
+        >
+          <Button handleClick={() => editWishesData()}>수정 완료</Button>
+        </BasicBox>
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -233,5 +257,14 @@ const Styled = {
 
   FileInput: styled.input`
     display: none;
+  `,
+
+  ButtonWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-bottom: 4.6rem;
   `,
 };

@@ -18,7 +18,6 @@ export const createWishesLink = async (wishesData: WishesDataType) => {
       initial: wishesData.initial,
       startDate: wishesData.startDate,
       endDate: wishesData.endDate,
-      phone: wishesData.phone,
     },
     {
       headers: {
