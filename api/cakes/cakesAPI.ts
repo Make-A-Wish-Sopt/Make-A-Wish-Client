@@ -43,8 +43,8 @@ export const requestPayReady = async (wishId: number, cakeNumber: number) => {
       taxFreeAmount: '200',
       vatAmount: '1',
       approvalUrl: `${process.env.NEXT_PUBLIC_KAKAOPAY_REDIRECT_URI}`,
-      cancelUrl: `https://sunmulzu.store/${wishId}`,
-      failUrl: `https://sunmulzu.store/${wishId}`,
+      cancelUrl: `https://sunmulzu.store/cakes/${wishId}`,
+      failUrl: `https://sunmulzu.store/cakes/${wishId}`,
     },
     {
       headers: {},
