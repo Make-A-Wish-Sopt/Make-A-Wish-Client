@@ -21,25 +21,22 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { handleNextStep } = props;
-  const { wishesData, postWishesData } = useCreateWishesLink();
+  const { wishesData, postWishesData, isSuccess } = useCreateWishesLink();
 
   const { isOpen, handleToggle } = useModal();
   const [isAgreed, setIsAgreed] = useState(false);
 
+  useEffect(() => {
+    isAgreed && createLink();
+  }, [isAgreed]);
+
   const changeIsAgreed = (isChecked: boolean) => {
-    setTimeout(() => {
-      setIsAgreed(isChecked);
-    }, 300);
+    setIsAgreed(isChecked);
   };
 
   const createLink = () => {
-    if (isAgreed) {
-      postWishesData();
-      // return isSuccess && handleNextStep();
-      return handleNextStep();
-    } else {
-      return handleToggle();
-    }
+    postWishesData();
+    return isSuccess && handleNextStep();
   };
 
   useEffect(() => {
@@ -89,7 +86,7 @@ export default function Preview(props: PreviewProps) {
           font={theme.fonts.button16}
           borderColor={'transparent'}
         >
-          <Button handleClick={createLink}>링크 생성하기</Button>
+          <Button handleClick={handleToggle}>링크 생성하기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </Styled.Container>
