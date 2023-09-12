@@ -124,7 +124,11 @@ export default function WishesStep1(props: WishesStep1Props) {
             <InputContainer title="선물 가격 입력하기">
               <InputBox
                 placeholder="ex. 12,000,000"
-                handleChangeValue={handleChangeSelfInputPrice}
+                isPriceText
+                handleChangeValue={(e) => {
+                  e.target.value = e.target.value.replaceAll(',', '');
+                  handleChangeSelfInputPrice(e);
+                }}
                 value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
                 limitLength={LIMIT_TEXT[15]}
               />

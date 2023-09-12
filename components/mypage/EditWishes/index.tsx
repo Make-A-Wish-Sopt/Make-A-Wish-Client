@@ -55,13 +55,31 @@ export default function EditWishesContainer() {
   });
 
   const [isAlertState, setIsAlertState] = useState(false);
+  const [isAbleModify, setIsAbleModify] = useState(true);
+
+  useEffect(() => {
+    checkValue() ? setIsAbleModify(true) : setIsAbleModify(false);
+  }, [itemLink, image, initial, title, bankInfo, phone, selfInputPrice]);
+
+  const checkValue = () => {
+    return (
+      (itemLink.imageURL.length !== 0 || image.preSignedImageURL.length !== 0) &&
+      initial.initial.length !== 0 &&
+      title.title.length !== 0 &&
+      bankInfo.account.length !== 0 &&
+      bankInfo.bankName.length !== 0 &&
+      bankInfo.name.length !== 0 &&
+      phone.phone.length !== 0 &&
+      !isAlertState &&
+      !validation.checkAccountLength(bankInfo.account) &&
+      (itemLink.price !== 0 || selfInputPrice.selfInputPrice.length !== 0)
+    );
+  };
 
   useEffect(() => {
     validation.isIncludeHyphen(phone.phone) ? setIsAlertState(true) : setIsAlertState(false);
     validation.isCorrectPhoneNumber(phone.phone) ? setIsAlertState(false) : setIsAlertState(true);
   }, [phone]);
-
-  console.log(selfInputPrice.selfInputPrice);
 
   return (
     <>
@@ -115,7 +133,11 @@ export default function EditWishesContainer() {
           <InputContainer title="선물 가격 입력하기">
             <InputBox
               placeholder="ex. 12,000,000"
-              handleChangeValue={selfInputPrice.handleChangeSelfInputPrice}
+              handleChangeValue={(e) => {
+                e.target.value = e.target.value.replaceAll(',', '');
+                selfInputPrice.handleChangeSelfInputPrice(e);
+              }}
+              isPriceText
               value={
                 selfInputPrice.selfInputPrice
                   ? `${convertMoneyText(selfInputPrice.selfInputPrice.toString())}`
@@ -207,12 +229,18 @@ export default function EditWishesContainer() {
 
       <Styled.ButtonWrapper>
         <BasicBox
-          bgColor={theme.colors.main_blue}
+          bgColor={isAbleModify ? theme.colors.main_blue : theme.colors.gray1}
           fontColor={theme.colors.white}
           font={theme.fonts.button18}
           borderColor={'transparent'}
         >
-          <Button handleClick={() => editWishesData()}>수정 완료</Button>
+          <Button
+            handleClick={() => {
+              isAbleModify && editWishesData();
+            }}
+          >
+            수정 완료
+          </Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </>

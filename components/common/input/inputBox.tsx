@@ -11,14 +11,23 @@ interface InputBoxProps {
   handleChangeValue?: ChangeEventHandler<HTMLInputElement>;
   handleBlur?: FocusEventHandler<HTMLInputElement>;
   value?: string | number;
+  isPriceText?: boolean;
   limitLength?: number;
   dropDown?: boolean;
   readOnly?: boolean;
 }
 
 export default function InputBox(props: InputBoxProps) {
-  const { placeholder, handleChangeValue, handleBlur, value, limitLength, dropDown, readOnly } =
-    props;
+  const {
+    placeholder,
+    handleChangeValue,
+    handleBlur,
+    value,
+    isPriceText,
+    limitLength,
+    dropDown,
+    readOnly,
+  } = props;
 
   return (
     <BasicBox bgColor={theme.colors.pastel_blue}>
@@ -30,7 +39,12 @@ export default function InputBox(props: InputBoxProps) {
         readOnly={readOnly ? true : false}
       />
       {limitLength && value !== undefined && (
-        <InputLength inputLength={value.toString().length} limitLength={limitLength} />
+        <InputLength
+          inputLength={
+            isPriceText ? value.toString().replaceAll(',', '').length : value.toString().length
+          }
+          limitLength={limitLength}
+        />
       )}
       {dropDown && <Image src={ArrowDownIc} alt="열기" />}
     </BasicBox>
