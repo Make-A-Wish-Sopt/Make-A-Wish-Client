@@ -12,8 +12,9 @@ import TermsModal from '@/components/common/modal/TermsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PresentBox from '@/components/common/box/PresentBox';
-import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 import { convertDateToString } from '@/utils/common/getDate';
+import { useRecoilValue } from 'recoil';
+import { WishesData } from '@/recoil/formPage/wishesData';
 
 interface PreviewProps {
   handleNextStep: () => void;
@@ -21,27 +22,18 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { handleNextStep } = props;
-  const { wishesData, postWishesData, isSuccess } = useCreateWishesLink();
 
+  const wishesData = useRecoilValue(WishesData);
   const { isOpen, handleToggle } = useModal();
   const [isAgreed, setIsAgreed] = useState(false);
 
   useEffect(() => {
-    isAgreed && createLink();
+    isAgreed && handleNextStep();
   }, [isAgreed]);
 
   const changeIsAgreed = (isChecked: boolean) => {
     setIsAgreed(isChecked);
   };
-
-  const createLink = () => {
-    postWishesData();
-    return isSuccess && handleNextStep();
-  };
-
-  useEffect(() => {
-    isAgreed && handleToggle();
-  }, [isAgreed]);
 
   return (
     <Styled.Container>

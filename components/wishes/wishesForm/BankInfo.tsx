@@ -5,6 +5,7 @@ import Button from '@/components/common/button/button';
 import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
+import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
 import theme from '@/styles/theme';
 import { validation } from '@/validation/input';
@@ -27,6 +28,7 @@ export default function BankInfo() {
   } = useGetUserAccount();
 
   const [isAlertState, setIsAlertState] = useState(false);
+  const { postWishesData } = useCreateWishesLink();
 
   const titleText = apiStatus
     ? '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.'
@@ -41,6 +43,7 @@ export default function BankInfo() {
 
   const uploadAccount = () => {
     if (name !== '' && bankName !== '' && account !== '' && !validation.isIncludeHyphen(account)) {
+      postWishesData();
       mutate();
     } else {
       alert('계좌정보를 확인 해 주세요!');
@@ -99,7 +102,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
-    height: 100%;
+    height: 100svh;
   `,
 
   ButtonWrapper: styled.div`
