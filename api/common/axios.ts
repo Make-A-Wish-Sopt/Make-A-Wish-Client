@@ -33,8 +33,11 @@ client.interceptors.response.use(
       } else if (error.response.data.message === '유효하지 않은 소원 링크입니다.') {
         alert(error.response.data.message);
         window.location.replace('/');
-      } else if (error.response?.data?.message === '이미 진행 중인 소원 링크가 있습니다.') {
-        alert('이미 진행 중인 소원 링크가 있습니다.');
+      } else if (
+        error.response?.data?.message === '이미 진행 중인 소원 링크가 있습니다.' ||
+        error.response?.data?.message === '주간이 끝난 소원 링크입니다.'
+      ) {
+        alert(error.response?.data?.message);
         window.location.replace('/main');
       }
     }

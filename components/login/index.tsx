@@ -3,7 +3,6 @@ import Image from 'next/image';
 import theme from '@/styles/theme';
 import { KakaoLoginIc } from '@/public/assets/icons';
 import BasicBox from '../common/box/BasicBox';
-import Button from '../common/button/button';
 import MainView from '../common/mainView';
 
 export default function LoginContainer() {

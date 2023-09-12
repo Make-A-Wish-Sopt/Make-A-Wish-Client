@@ -82,7 +82,7 @@ export default function BankInfo() {
       <Styled.ButtonWrapper>
         <BasicBox
           bgColor={
-            !isAlertState && !validation.isIncludeHyphen(account) && bankName && name
+            !isAlertState && !validation.checkAccountLength(account) && bankName && name
               ? theme.colors.main_blue
               : theme.colors.gray1
           }

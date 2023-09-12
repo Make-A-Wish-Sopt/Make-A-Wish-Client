@@ -3,7 +3,7 @@ import WishesContainer from '@/components/wishes/[id]';
 
 export default function WishesPage() {
   return (
-    <Layout footer>
+    <Layout>
       <WishesContainer />
     </Layout>
   );

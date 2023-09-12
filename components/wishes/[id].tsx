@@ -17,9 +17,7 @@ export default function WishesContainer() {
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
-    enabled: wishesId !== '',
-  });
+  const { data } = useQuery('wished', getWishesData);
 
   const handleMoveToCakes = () => {
     router.push(`/cakes/${wishesId}`);
@@ -62,5 +60,7 @@ const Styled = {
     justify-content: space-between;
 
     height: 11rem;
+
+    margin-bottom: 4.6rem;
   `,
 };

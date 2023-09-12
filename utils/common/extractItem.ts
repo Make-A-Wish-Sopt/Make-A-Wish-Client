@@ -7,7 +7,6 @@ export const extractImageSrc = (imageLink: string) => {
 };
 
 export const extractPrice = (totalPrice: string, linkURL: string) => {
-  console.log(totalPrice);
   if (linkURL.includes('29cm')) {
     const html = document.createElement('span');
     html.innerHTML = totalPrice;
