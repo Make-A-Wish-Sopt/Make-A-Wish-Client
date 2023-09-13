@@ -11,6 +11,7 @@ interface InputBoxProps {
   handleChangeValue?: ChangeEventHandler<HTMLInputElement>;
   handleBlur?: FocusEventHandler<HTMLInputElement>;
   value?: string | number;
+  color?: string;
   isPriceText?: boolean;
   limitLength?: number;
   dropDown?: boolean;
@@ -23,6 +24,7 @@ export default function InputBox(props: InputBoxProps) {
     handleChangeValue,
     handleBlur,
     value,
+    color,
     isPriceText,
     limitLength,
     dropDown,
@@ -35,6 +37,7 @@ export default function InputBox(props: InputBoxProps) {
         placeholder={placeholder}
         onChange={handleChangeValue}
         value={value}
+        color={color}
         onBlur={handleBlur}
         readOnly={readOnly ? true : false}
       />
@@ -65,9 +68,9 @@ const Styled = {
     border-radius: 1rem;
   `,
 
-  Input: styled.input`
+  Input: styled.input<{ color: string | undefined }>`
     ${theme.fonts.body12};
-    color: ${theme.colors.dark_blue};
+    color: ${(props) => (props.color ? props.color : theme.colors.dark_blue)};
     width: 100%;
   `,
 

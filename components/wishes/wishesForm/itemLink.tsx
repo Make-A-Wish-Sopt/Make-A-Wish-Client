@@ -23,10 +23,12 @@ interface ItemLinkProps {
   changeImageURL: (input: string) => void;
   price: number;
   changePrice: (input: number) => void;
+  readOnly?: boolean;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } = props;
+  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice, readOnly } =
+    props;
   const [isCorrectLinkURL, setIsCorrectLinkURL] = useState(false);
 
   //queryClient부분 다시 체크해야됨!
@@ -70,6 +72,7 @@ export default function ItemLink(props: ItemLinkProps) {
         placeholder="정해진 사이트에서 원하는 선물 링크 복사, 붙여넣기"
         handleBlur={parseImage}
         handleChangeValue={handleChangeLinkURL}
+        readOnly
       ></InputBox>
       {linkURL && linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>

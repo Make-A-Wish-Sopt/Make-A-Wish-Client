@@ -106,27 +106,26 @@ export default function EditWishesContainer() {
             changeImageURL={itemLink.changeImageURL}
             price={itemLink.price}
             changePrice={itemLink.changePrice}
+            readOnly
           />
         </InputContainer>
       ) : (
         <>
           <InputContainer title="갖고 싶은 선물 이미지 등록하기">
             <Styled.Lable>
-              {image.preSignedImageURL ? (
-                <ItemImageBox imageURL={image.preSignedImageURL} />
+              {wishesStatus === WISHES_STATUS.BEFORE ? (
+                <>
+                  <ItemImageBox imageURL={image.preSignedImageURL} />
+                  <Styled.FileInput
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    onChange={image.uploadImageFile}
+                    readOnly
+                  />
+                </>
               ) : (
-                <LargeBox bgColor={theme.colors.pastel_blue}>
-                  <Styled.UploadImageBox>
-                    <Image src={ImageUploadIc} alt="업로드 아이콘" />
-                  </Styled.UploadImageBox>
-                </LargeBox>
+                <ItemImageBox imageURL={image.preSignedImageURL} />
               )}
-              <Styled.FileInput
-                type="file"
-                accept=".jpg,.jpeg,.png"
-                onChange={image.uploadImageFile}
-                readOnly
-              />
             </Styled.Lable>
           </InputContainer>
 
@@ -138,11 +137,13 @@ export default function EditWishesContainer() {
                 selfInputPrice.handleChangeSelfInputPrice(e);
               }}
               isPriceText
+              color={theme.colors.gray2}
               value={
                 selfInputPrice.selfInputPrice
                   ? `${convertMoneyText(selfInputPrice.selfInputPrice.toString())}`
                   : ''
               }
+              readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
               limitLength={LIMIT_TEXT[15]}
             />
           </InputContainer>
@@ -154,7 +155,9 @@ export default function EditWishesContainer() {
           placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
           handleChangeValue={initial.handleChangeInitial}
           value={initial.initial}
+          color={theme.colors.gray2}
           limitLength={LIMIT_TEXT[15]}
+          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
         />
       </InputContainer>
 
@@ -163,7 +166,9 @@ export default function EditWishesContainer() {
           placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
           handleChangeValue={title.handleChangeTitle}
           value={title.title}
+          color={theme.colors.gray2}
           limitLength={LIMIT_TEXT[20]}
+          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
         />
       </InputContainer>
 
@@ -223,7 +228,9 @@ export default function EditWishesContainer() {
           placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
           handleChangeValue={hint.handleChangeHint}
           value={hint.hint}
+          color={theme.colors.gray2}
           limitLength={LIMIT_TEXT.DESCRIPTION}
+          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
         />
       </InputContainer>
 
