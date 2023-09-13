@@ -55,7 +55,7 @@ export default function CakesContainer() {
 
   const { data: wishesData } = useQuery('wished', getWishesData);
 
-  const saveReocilData = () => {
+  const saveRecoilData = () => {
     setCakesData((prevData) => ({
       ...prevData,
       giverName: giverName,
@@ -63,11 +63,12 @@ export default function CakesContainer() {
       cake: selectedIndex,
       message: letter,
       selectedCake: selectedCake,
+      wishId: Number(router.query.id),
     }));
   };
 
   const sendCake = () => {
-    saveReocilData();
+    saveRecoilData();
     selectedCake.cakeNumber === 1 ? router.push('/cakes/approve') : mutate();
   };
 
@@ -80,14 +81,14 @@ export default function CakesContainer() {
 
         {/* API 데이터 */}
         <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
-          <TextareaBox value={wishesData?.hint} readOnly={true} />
+          <TextareaBox value={wishesData?.hint} borderColor="transparent" readOnly={true} />
         </InputContainer>
 
         <InputContainer title={'본인의 실명 작성하기'}>
           <InputBox
             handleChangeValue={changeGiverName}
             value={giverName}
-            placeholder="성과 이름 모두 정확하게 작성해주세요. ex. 홍길동"
+            placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
           />
         </InputContainer>
 

@@ -33,7 +33,7 @@ export default function SelectCakes(props: SelectCakesProps) {
 
       <LargeBox bgColor={theme.colors.pastel_blue}>
         <Styled.CakesImageWrapper>
-          <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
+          <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" height={150} />
         </Styled.CakesImageWrapper>
       </LargeBox>
 
@@ -64,7 +64,6 @@ const Styled = {
     align-items: center;
 
     padding: 0.8rem 1.4rem;
-    border: 0.1rem solid ${theme.colors.main_blue};
     background-color: ${(props) =>
       props.index === props.selectedIndex ? theme.colors.main_blue : theme.colors.pastel_blue};
     border-radius: 0.6rem;

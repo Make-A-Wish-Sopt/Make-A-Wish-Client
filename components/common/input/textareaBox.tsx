@@ -10,14 +10,15 @@ interface TextareaBoxProps {
   value?: string | number;
   color?: string;
   limitLength?: number;
+  borderColor?: string;
   readOnly?: boolean;
   children?: ReactNode;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {
-  const { placeholder, handleChangeValue, value, color, limitLength, readOnly, children } = props;
+  const { placeholder, handleChangeValue, value, color, limitLength, borderColor,readOnly, children } = props;
   return (
-    <LargeBox bgColor={theme.colors.pastel_blue}>
+    <LargeBox bgColor={theme.colors.pastel_blue} borderColor={borderColor}>
       <Styled.Textarea
         placeholder={placeholder}
         onChange={handleChangeValue}
