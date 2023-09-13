@@ -44,7 +44,7 @@ export default function Footer() {
 
 const Styled = {
   Container: styled.footer`
-    width: 37.5rem;
+    width: 100%;
     background-color: ${theme.colors.main_blue};
     padding: 2.9rem 2.2rem;
   `,
