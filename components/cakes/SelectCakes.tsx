@@ -64,7 +64,6 @@ const Styled = {
     align-items: center;
 
     padding: 0.8rem 1.4rem;
-    border: 0.1rem solid ${theme.colors.main_blue};
     background-color: ${(props) =>
       props.index === props.selectedIndex ? theme.colors.main_blue : theme.colors.pastel_blue};
     border-radius: 0.6rem;

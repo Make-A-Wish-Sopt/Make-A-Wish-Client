@@ -80,7 +80,7 @@ export default function CakesContainer() {
 
         {/* API 데이터 */}
         <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
-          <TextareaBox value={wishesData?.hint} readOnly={true} />
+          <TextareaBox value={wishesData?.hint} borderColor="transparent" readOnly={true} />
         </InputContainer>
 
         <InputContainer title={'본인의 실명 작성하기'}>
