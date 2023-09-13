@@ -47,6 +47,8 @@ const Styled = {
     width: 100%;
     background-color: ${theme.colors.main_blue};
     padding: 2.9rem 2.2rem;
+
+    ${theme.fonts.body12_2};
   `,
 
   HorizontalLine: styled.div`
@@ -59,7 +61,6 @@ const Styled = {
   `,
 
   ContentContainer: styled.div`
-    ${theme.fonts.body12};
     line-height: 2.2rem;
     color: ${theme.colors.white};
     opacity: 0.6;
@@ -72,7 +73,6 @@ const Styled = {
   `,
 
   Button: styled.button`
-    ${theme.fonts.body12};
     line-height: 2.2rem;
     color: ${theme.colors.white};
     opacity: 0.8;

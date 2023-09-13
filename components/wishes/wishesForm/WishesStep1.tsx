@@ -81,16 +81,14 @@ export default function WishesStep1(props: WishesStep1Props) {
           handleLoadTypeToggle={handleLoadTypeToggle}
         />
         {isLinkLoadType ? (
-          <InputContainer title="">
-            <ItemLink
-              linkURL={linkURL}
-              handleChangeLinkURL={handleChangeLinkURL}
-              imageURL={imageURL}
-              changeImageURL={changeImageURL}
-              price={price}
-              changePrice={changePrice}
-            />
-          </InputContainer>
+          <ItemLink
+            linkURL={linkURL}
+            handleChangeLinkURL={handleChangeLinkURL}
+            imageURL={imageURL}
+            changeImageURL={changeImageURL}
+            price={price}
+            changePrice={changePrice}
+          />
         ) : (
           <>
             <InputContainer title="갖고 싶은 선물 이미지 등록하기">
