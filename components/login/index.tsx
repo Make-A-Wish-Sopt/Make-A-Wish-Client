@@ -52,6 +52,8 @@ const Styled = {
     align-items: center;
 
     width: 100%;
+
+    cursor: pointer;
   `,
 
   KakaoLoginIcon: styled((props) => (

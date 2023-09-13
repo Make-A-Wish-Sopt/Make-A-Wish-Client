@@ -113,6 +113,8 @@ const Styled = {
     ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
     text-align: center;
+
+    margin-top: 1rem;
   `,
 
   ButtonWrapper: styled.div`

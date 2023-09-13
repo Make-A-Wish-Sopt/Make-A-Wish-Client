@@ -33,14 +33,9 @@ function FONT({ family, weight, size, lineHeight, letterSpacing, textStroke }: F
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight};
-      ${
-        letterSpacing &&
-        `letter-spacing: -${letterSpacing}rem;
-      ${textStroke && `-webkit-text-stroke: ${textStroke}rem`}
-      `
-      }
-
-    `;
+      ${letterSpacing && `letter-spacing: -${letterSpacing}rem;`}
+      ${textStroke && `-webkit-text-stroke: 0.01rem`}
+      }`;
 }
 
 const fonts = {
@@ -49,13 +44,13 @@ const fonts = {
   headline24_100: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '100%' }),
   headline24_130: FONT({ family: true, weight: 400, size: 2.4, lineHeight: '130%' }),
   headline30: FONT({ family: true, weight: 400, size: 3, lineHeight: '100%' }),
-  body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '150%', letterSpacing: 0.05 }),
+  body16: FONT({ family: false, weight: 400, size: 1.6, lineHeight: '150%' }),
   body14: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '140%' }),
-  body12: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '140%', textStroke: 0.01 }),
+  body12: FONT({ family: false, weight: 400, size: 1.4, lineHeight: '140%' }),
   button16: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '3rem' }),
   button18: FONT({ family: true, weight: 400, size: 1.8, lineHeight: '3rem' }),
   button16_2: FONT({ family: true, weight: 400, size: 1.6, lineHeight: '2rem' }),
-  body12_2: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2rem' }),
+  body12_2: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
 };
 
 export type FontsTypes = typeof fonts;
