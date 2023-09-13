@@ -33,7 +33,7 @@ export default function SelectCakes(props: SelectCakesProps) {
 
       <LargeBox bgColor={theme.colors.pastel_blue}>
         <Styled.CakesImageWrapper>
-          <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" />
+          <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" height={150} />
         </Styled.CakesImageWrapper>
       </LargeBox>
 

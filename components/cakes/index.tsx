@@ -87,7 +87,7 @@ export default function CakesContainer() {
           <InputBox
             handleChangeValue={changeGiverName}
             value={giverName}
-            placeholder="성과 이름 모두 정확하게 작성해주세요. ex. 홍길동"
+            placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
           />
         </InputContainer>
 
