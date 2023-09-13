@@ -55,7 +55,7 @@ export default function CakesContainer() {
 
   const { data: wishesData } = useQuery('wished', getWishesData);
 
-  const saveReocilData = () => {
+  const saveRecoilData = () => {
     setCakesData((prevData) => ({
       ...prevData,
       giverName: giverName,
@@ -63,11 +63,12 @@ export default function CakesContainer() {
       cake: selectedIndex,
       message: letter,
       selectedCake: selectedCake,
+      wishId: Number(router.query.id),
     }));
   };
 
   const sendCake = () => {
-    saveReocilData();
+    saveRecoilData();
     selectedCake.cakeNumber === 1 ? router.push('/cakes/approve') : mutate();
   };
 
