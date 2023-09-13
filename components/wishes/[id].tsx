@@ -68,6 +68,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
+    width: 100%;
     height: 11rem;
 
     margin-bottom: 4.6rem;
