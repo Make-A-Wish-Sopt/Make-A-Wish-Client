@@ -30,23 +30,21 @@ export default function GuideModal(props: GuideModalProps) {
 
         <Styled.Content>
           {/* <Image src={GuideBoxImg} alt="서비스 가이드" fill /> */}
-          {/* {
-            <Styled.ScrollContent> */}
-          <Styled.Content2>
-            <Image src={GuideContentImg} alt="서비스 가이드 설명" />
-            <Styled.ButtonContainer2>
-              <ButtonBox
-                handleClick={handleCustomerService}
-                backgroundColor={theme.colors.main_blue}
-                fontColor={theme.colors.white}
-              >
-                고객센터 문의하기
-              </ButtonBox>
-            </Styled.ButtonContainer2>
+          {
+            <Styled.ScrollContent>
+              <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
+              {/* <Styled.ButtonContainer2>
+                <ButtonBox
+                  handleClick={handleCustomerService}
+                  backgroundColor={theme.colors.main_blue}
+                  fontColor={theme.colors.white}
+                >
+                  고객센터 문의하기
+                </ButtonBox>
+              </Styled.ButtonContainer2> */}
 
-          </Styled.Content2>
-          {/* //   </Styled.ScrollContent>
-          // } */}
+            </Styled.ScrollContent>
+          }
         </Styled.Content>
 
       </Styled.Background2>
@@ -85,13 +83,13 @@ const Styled = {
   Content: styled.div`
     position: relative;
     width: 33rem;
-    /* height: 61.4rem; */
+    height: 61.4rem;
     overflow: hidden;
     border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
     background-image:url(${GuideBoxImg.src});
-    background-size: fill; 
+    background-size: contain; 
     background-repeat: no-repeat; 
     background-position: center; 
     /* max-height: 61.4rem; 
@@ -99,19 +97,13 @@ const Styled = {
     padding: 4.5 0 2rem; */
   `,
 
-  Content2: styled.div`
-  padding: 4.5 0 2rem;
-  margin: 4.5rem 0 2rem;
-  background-color: black;
-  overflow-y: auto;
-    position: relative;
-`,
-
   ScrollContent: styled.div`
-    flex: 1;
+    /* flex: 1; */
     overflow-y: auto;
     position: relative;
     margin: 4.5rem 0 2rem;
+    display: flex;
+    justify-content: center;
   `,
 
   ButtonContainer: styled.div`
