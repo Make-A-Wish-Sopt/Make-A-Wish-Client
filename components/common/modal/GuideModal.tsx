@@ -21,7 +21,7 @@ export default function GuideModal(props: GuideModalProps) {
 
   return (
     <Styled.Container>
-      <Styled.Background onClick={clickModal}></Styled.Background>
+      {/* <Styled.Background onClick={clickModal}></Styled.Background> */}
 
       <Styled.Background2>
         <Styled.ButtonContainer onClick={clickModal}>
@@ -29,23 +29,28 @@ export default function GuideModal(props: GuideModalProps) {
         </Styled.ButtonContainer>
 
         <Styled.Content>
-          <Image src={GuideBoxImg} alt="" fill />
-          {
-            <Styled.ScrollContent>
-              <Image src={GuideContentImg} alt="서비스 가이드" />
-              <Styled.ButtonContainer2>
-                <ButtonBox
-                  handleClick={handleCustomerService}
-                  backgroundColor={theme.colors.main_blue}
-                  fontColor={theme.colors.white}
-                >
-                  고객센터 문의하기
-                </ButtonBox>
-              </Styled.ButtonContainer2>
-            </Styled.ScrollContent>
-          }
+          {/* <Image src={GuideBoxImg} alt="서비스 가이드" fill /> */}
+          {/* {
+            <Styled.ScrollContent> */}
+          <Styled.Content2>
+            <Image src={GuideContentImg} alt="서비스 가이드 설명" />
+            <Styled.ButtonContainer2>
+              <ButtonBox
+                handleClick={handleCustomerService}
+                backgroundColor={theme.colors.main_blue}
+                fontColor={theme.colors.white}
+              >
+                고객센터 문의하기
+              </ButtonBox>
+            </Styled.ButtonContainer2>
+
+          </Styled.Content2>
+          {/* //   </Styled.ScrollContent>
+          // } */}
         </Styled.Content>
+
       </Styled.Background2>
+
     </Styled.Container>
   );
 }
@@ -80,12 +85,27 @@ const Styled = {
   Content: styled.div`
     position: relative;
     width: 33rem;
-    height: 61.4rem;
+    /* height: 61.4rem; */
     overflow: hidden;
     border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
+    background-image:url(${GuideBoxImg.src});
+    background-size: fill; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    /* max-height: 61.4rem; 
+    overflow-y: auto;
+    padding: 4.5 0 2rem; */
   `,
+
+  Content2: styled.div`
+  padding: 4.5 0 2rem;
+  margin: 4.5rem 0 2rem;
+  background-color: black;
+  overflow-y: auto;
+    position: relative;
+`,
 
   ScrollContent: styled.div`
     flex: 1;
