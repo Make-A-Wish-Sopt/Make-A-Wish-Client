@@ -32,7 +32,7 @@ const Styled = {
   padding: 0rem 1.5rem;
   border-radius: 1rem;
   margin: 0 0 1rem;
-  ${theme.fonts.button16_2};
+  ${theme.fonts.button18};
   background-color: ${(props) => props.backgroundColor || theme.colors.pastel_blue};
   color: ${(props) => props.color || theme.colors.main_blue};
 `,
