@@ -37,7 +37,7 @@ export default function LinksContainer() {
       <Styled.CenterContainer>
         <Styled.ContentContainer>
           <Styled.ImageContainer>
-            <Image src={LinkBeefCakeImg} alt="케이크" width={152} height={169}} />
+            <Image src={LinkBeefCakeImg} alt="케이크" width={152} height={169} />
           </Styled.ImageContainer>
           <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
           <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>
