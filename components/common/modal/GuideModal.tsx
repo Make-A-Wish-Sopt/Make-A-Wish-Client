@@ -33,7 +33,7 @@ export default function GuideModal(props: GuideModalProps) {
           {
             <Styled.ScrollContent>
               <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
-              {/* <Styled.ButtonContainer2>
+              <Styled.ButtonContainer2>
                 <ButtonBox
                   handleClick={handleCustomerService}
                   backgroundColor={theme.colors.main_blue}
@@ -41,7 +41,7 @@ export default function GuideModal(props: GuideModalProps) {
                 >
                   고객센터 문의하기
                 </ButtonBox>
-              </Styled.ButtonContainer2> */}
+              </Styled.ButtonContainer2>
 
             </Styled.ScrollContent>
           }
@@ -101,9 +101,10 @@ const Styled = {
     /* flex: 1; */
     overflow-y: auto;
     position: relative;
-    margin: 4.5rem 0 2rem;
+    margin: 4rem 1.5rem 2rem;
     display: flex;
     justify-content: center;
+    flex-direction: column;
   `,
 
   ButtonContainer: styled.div`
