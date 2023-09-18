@@ -1,7 +1,6 @@
 import BackBtn from '@/components/common/button/backBtn';
 import BasicBox from '@/components/common/box/BasicBox';
 import HalfBox from '@/components/common/box/HalfBox';
-import LargeBox from '@/components/common/box/LargeBox';
 import Button from '@/components/common/button/button';
 import Calendar from '@/components/common/calendar/calendar';
 import InputBox from '@/components/common/input/inputBox';
@@ -16,9 +15,8 @@ import { LIMIT_TEXT } from '@/constant/limitText';
 import { WISHES_STATUS } from '@/constant/wishesStatus';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import useEditWishesInfo from '@/hooks/queries/mypage/useEditWishesInfo';
-import { CalendarGreyIc, CalendarIc, ImageUploadIc } from '@/public/assets/icons';
+import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
-import Image from 'next/image';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { validation } from '@/validation/input';

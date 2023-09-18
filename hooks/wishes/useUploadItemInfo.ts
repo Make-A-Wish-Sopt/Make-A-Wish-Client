@@ -12,7 +12,10 @@ export default function useUploadItemInfo() {
     QUERY_KEY.PRE_SIGNED_URL,
     () => getPresignedURL(imageFile?.name),
     {
-      enabled: imageFile !== null && imageFile?.name !== '',
+      enabled:
+        imageFile !== null &&
+        validation.checkImageFileSize(imageFile.size) &&
+        imageFile?.name !== '',
     },
   );
 
