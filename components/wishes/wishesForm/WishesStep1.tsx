@@ -38,7 +38,7 @@ export default function WishesStep1(props: WishesStep1Props) {
   const [selfInputPrice, handleChangeSelfInputPrice] = useInput('', LIMIT_TEXT[15]);
 
   useEffect(() => {
-    imageURL && validation.isCorrectSite(linkURL) && initial
+    ((imageURL && validation.isCorrectSite(linkURL)) || preSignedImageURL !== "") && initial
       ? setIsNextStepAvailable(true)
       : setIsNextStepAvailable(false);
   }, [initial, imageURL]);
