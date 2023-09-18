@@ -81,16 +81,14 @@ export default function WishesStep1(props: WishesStep1Props) {
           handleLoadTypeToggle={handleLoadTypeToggle}
         />
         {isLinkLoadType ? (
-          <InputContainer title="">
-            <ItemLink
-              linkURL={linkURL}
-              handleChangeLinkURL={handleChangeLinkURL}
-              imageURL={imageURL}
-              changeImageURL={changeImageURL}
-              price={price}
-              changePrice={changePrice}
-            />
-          </InputContainer>
+          <ItemLink
+            linkURL={linkURL}
+            handleChangeLinkURL={handleChangeLinkURL}
+            imageURL={imageURL}
+            changeImageURL={changeImageURL}
+            price={price}
+            changePrice={changePrice}
+          />
         ) : (
           <>
             <InputContainer title="갖고 싶은 선물 이미지 등록하기">
@@ -124,7 +122,11 @@ export default function WishesStep1(props: WishesStep1Props) {
             <InputContainer title="선물 가격 입력하기">
               <InputBox
                 placeholder="ex. 12,000,000"
-                handleChangeValue={handleChangeSelfInputPrice}
+                isPriceText
+                handleChangeValue={(e) => {
+                  e.target.value = e.target.value.replaceAll(',', '');
+                  handleChangeSelfInputPrice(e);
+                }}
                 value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
                 limitLength={LIMIT_TEXT[15]}
               />
@@ -162,7 +164,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
-    height: 100%;
+    height: 100svh;
   `,
 
   UploadImageBox: styled.div`

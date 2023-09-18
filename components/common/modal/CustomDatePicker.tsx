@@ -22,7 +22,9 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
   );
 
   const handleDateChange = (date: Date) => {
-    if (date && isBefore(date, new Date())) {
+    const today = new Date();
+    const yesterday = new Date(today.setDate(today.getDate() - 1));
+    if (date && isBefore(date, yesterday)) {
       // 선택한 날짜가 현재 날짜보다 예전인 경우
       alert('선택하신 날짜는 현재 날짜보다 이전입니다. 유효한 날짜를 선택해주세요.');
       return;

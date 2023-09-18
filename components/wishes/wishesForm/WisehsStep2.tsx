@@ -130,7 +130,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
-    height: 100%;
+    height: 100svh;
   `,
 
   CalendarWrapper: styled.div`

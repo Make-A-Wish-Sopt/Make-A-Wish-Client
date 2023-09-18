@@ -3,14 +3,14 @@ export { default as MainLoginImg } from '../images/mainLoginImg.png';
 export { default as MainCakeImg } from '../images/mainCakeImg.png';
 export { default as LogoImg } from '../images/logoImg.svg';
 
-export { default as BeefCakeDetailImg } from '../images/cakes/beefCakeDetailImg.svg';
-export { default as ChickenCakeDetailImg } from '../images/cakes/chickenCakeDetailImg.svg';
-export { default as CoffeeCakeDetailImg } from '../images/cakes/coffeeCakeDetailImg.svg';
-export { default as FlowerCakeDetailImg } from '../images/cakes/flowerCakeDetailImg.svg';
-export { default as PerfumeCakeDetailImg } from '../images/cakes/perfumeCakeDetailImg.svg';
-export { default as PoopCakeDetailImg } from '../images/cakes/poopCakeDetailImg.svg';
-export { default as SushiCakeDetailImg } from '../images/cakes/sushiCakeDetailImg.svg';
-export { default as VitaminCakeDetailImg } from '../images/cakes/vitaminCakeDetailImg.svg';
+export { default as BeefCakeDetailImg } from '../images/cakes/beefCakeDetailImg.png';
+export { default as ChickenCakeDetailImg } from '../images/cakes/chickenCakeDetailImg.png';
+export { default as CoffeeCakeDetailImg } from '../images/cakes/coffeeCakeDetailImg.png';
+export { default as FlowerCakeDetailImg } from '../images/cakes/flowerCakeDetailImg.png';
+export { default as PerfumeCakeDetailImg } from '../images/cakes/perfumeCakeDetailImg.png';
+export { default as PoopCakeDetailImg } from '../images/cakes/poopCakeDetailImg.png';
+export { default as SushiCakeDetailImg } from '../images/cakes/sushiCakeDetailImg.png';
+export { default as VitaminCakeDetailImg } from '../images/cakes/vitaminCakeDetailImg.png';
 
 export { default as BeefCakeImg } from '../images/cakes/beefCakeImg.svg';
 export { default as ChickenCakeImg } from '../images/cakes/chickenCakeImg.svg';
@@ -38,7 +38,6 @@ export { default as PerfumeCakeSmallImg } from '../images/cakes/perfumeCakeSmall
 export { default as PoopCakeSmallImg } from '../images/cakes/poopCakeSmallImg.svg';
 export { default as SushiCakeSmallImg } from '../images/cakes/sushiCakeSmallImg.svg';
 export { default as VitaminCakeSmallImg } from '../images/cakes/vitaminCakeSmallImg.svg';
-
 
 export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
 export { default as GuideContentImg } from '../images/guideContentImg.svg';

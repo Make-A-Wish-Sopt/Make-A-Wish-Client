@@ -36,13 +36,15 @@ export default function ApprovePage() {
       <Styled.Container>
         <SuccessMessageBox />
         <SuccessItemBox />
-        <ButtonBox
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-          handleClick={moveHome}
-        >
-          당신도 받고 싶은 선물이 있나요?
-        </ButtonBox>
+        <Styled.ButtonWrapper>
+          <ButtonBox
+            backgroundColor={theme.colors.main_blue}
+            fontColor={theme.colors.white}
+            handleClick={moveHome}
+          >
+            당신도 받고 싶은 선물이 있나요?
+          </ButtonBox>
+        </Styled.ButtonWrapper>
       </Styled.Container>
     </Layout>
   );
@@ -53,5 +55,10 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
+  `,
+
+  ButtonWrapper: styled.div`
+    width: 100%;
+    margin-bottom: 4.6rem;
   `,
 };

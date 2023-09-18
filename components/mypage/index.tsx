@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import { deleteUserInfo } from '@/api/mypage/mypageAPI';
 
+
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
 

@@ -21,14 +21,13 @@ export default function ShareContainer() {
   const [status, setStatus] = useState('none');
   const { progressData, wishStatus } = useGetProgressData();
 
-  const [nickName, setNicknameState] = useState("");
+  const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
-    setStatus('while')
+    setStatus(wishStatus);
   }, [loginUserInfo, wishStatus]);
-
 
   const handleModalClick = () => {
     setShowModal(!showModal);
@@ -37,7 +36,6 @@ export default function ShareContainer() {
   const handleMoveToMain = () => {
     router.push('/main');
   };
-
 
   return (
     <>
@@ -54,7 +52,9 @@ export default function ShareContainer() {
         {status === 'while' ? (
           <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
         ) : (
-          <Styled.About>{progressData ? progressData.dayCount : '?'}일 뒤부터 링크를 공유할 수 있어요</Styled.About>
+          <Styled.About>
+            {progressData ? progressData.dayCount : '?'}일 뒤부터 링크를 공유할 수 있어요
+          </Styled.About>
         )}
 
         <Styled.ImageContainer>
@@ -64,23 +64,25 @@ export default function ShareContainer() {
       </Styled.Container>
 
       {showModal && <ShareModal handleModalClick={handleModalClick} />}
-      {status === 'while' ? (
-        <ButtonBox
-          handleClick={handleModalClick}
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-        >
-          링크 공유하기
-        </ButtonBox>
-      ) : (
-        <ButtonBox
-          handleClick={handleMoveToMain}
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-        >
-          홈화면으로 이동하기
-        </ButtonBox>
-      )}
+      <Styled.ButtonWrapper>
+        {status === 'while' ? (
+          <ButtonBox
+            handleClick={handleModalClick}
+            backgroundColor={theme.colors.main_blue}
+            fontColor={theme.colors.white}
+          >
+            링크 공유하기
+          </ButtonBox>
+        ) : (
+          <ButtonBox
+            handleClick={handleMoveToMain}
+            backgroundColor={theme.colors.main_blue}
+            fontColor={theme.colors.white}
+          >
+            홈화면으로 이동하기
+          </ButtonBox>
+        )}
+      </Styled.ButtonWrapper>
     </>
   );
 }
@@ -113,5 +115,9 @@ const Styled = {
     margin: 0 0 4.3rem;
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
+  `,
+
+  ButtonWrapper: styled.div`
+    margin-bottom: 10.4rem;
   `,
 };
