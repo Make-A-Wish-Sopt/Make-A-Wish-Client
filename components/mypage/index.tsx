@@ -14,7 +14,6 @@ import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import { deleteUserInfo } from '@/api/mypage/mypageAPI';
-import Layout from '../common/layout';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
@@ -34,10 +33,20 @@ export default function MyPageContainer() {
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
+
+  // const handleCustomerService = () => {
+  //   window.Kakao.Channel.chat({
+  //     channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+  //   });
+  // };
   const handleCustomerService = () => {
-    window.Kakao.Channel.chat({
-      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-    });
+    if (window.Kakao && window.Kakao.Channel) {
+      window.Kakao.Channel.chat({
+        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+      });
+    } else {
+      alert("채널 연결에 문제가 발생했습니다. 카카오톡에서 '조물주보다생일선물주'를 검색하여 문의해주세요.");
+    }
   };
 
   const handleLogOut = () => {

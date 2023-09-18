@@ -21,7 +21,6 @@ export default function GuideModal(props: GuideModalProps) {
 
   return (
     <Styled.Container>
-      {/* <Styled.Background onClick={clickModal}></Styled.Background> */}
 
       <Styled.Background2>
         <Styled.ButtonContainer onClick={clickModal}>
@@ -29,7 +28,6 @@ export default function GuideModal(props: GuideModalProps) {
         </Styled.ButtonContainer>
 
         <Styled.Content>
-          {/* <Image src={GuideBoxImg} alt="서비스 가이드" fill /> */}
           {
             <Styled.ScrollContent>
               <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
