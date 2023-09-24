@@ -49,7 +49,7 @@ export default function WishesContainer() {
           fontColor={theme.colors.main_blue}
           borderColor="transparent"
         >
-          <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
+          <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </Styled.Container>

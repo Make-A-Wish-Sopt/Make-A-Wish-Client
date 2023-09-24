@@ -49,9 +49,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
 
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
@@ -62,6 +60,7 @@ class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
           />
+          <meta name="title" content="Make A Wish" />
           <meta
             name="description"
             content="마음은 가볍게, 선물은 무겁게. 부담 없는 생일 펀딩 플랫폼 Make A Wish"
