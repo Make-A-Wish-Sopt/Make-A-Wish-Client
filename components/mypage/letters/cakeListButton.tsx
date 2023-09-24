@@ -16,7 +16,7 @@ interface CakeListButtonProps {
 export default function CakeListButton(props: CakeListButtonProps) {
   const { image, backgroundColor, fonts, fontColor, handleClick, cakeName, cakeNum } = props;
   return (
-    <Styled.Container fonts={fonts} backgroundColor={backgroundColor} onClick={handleClick}>
+    <Styled.Container backgroundColor={backgroundColor} onClick={handleClick}>
       {image && (
         <Image src={image} alt="케이크 이미지" width={35} height={35} />
       )}
@@ -30,7 +30,7 @@ export default function CakeListButton(props: CakeListButtonProps) {
 }
 
 const Styled = {
-  Container: styled.button<{ backgroundColor: string; fonts: string } >`
+  Container: styled.button<{ backgroundColor: string } >`
   width: 100%;
   height: 6rem;
 
@@ -45,7 +45,6 @@ const Styled = {
   background-color: ${(props) => props.backgroundColor};
   border-color: transparent;
   margin: 0 0 1rem;
-  ${(props) => props.fonts}
 `,
 
   // TextContainer: styled.div<{ fonts: string; fontColor: string }>`
