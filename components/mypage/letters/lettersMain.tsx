@@ -74,19 +74,22 @@ export default function LettersMainContainer() {
       <Styled.Container>
         <MainHeader title={title} />
 
-        {CAKE_LIST?.map((cake) => (
-          <CakeListButton
-            key={cake.name}
-            handleClick={getCakeNum(cake.cakeNumber, cakesCount) !== 0 ? () => handleMoveToLetters(cake.cakeNumber) : undefined}
-            backgroundColor={theme.colors.pastel_blue}
-            fontColor={theme.colors.gray4}
-            fonts={theme.fonts.button18}
+        <Styled.ListButton>
+          {CAKE_LIST?.map((cake) => (
+            <CakeListButton
+              key={cake.name}
+              handleClick={getCakeNum(cake.cakeNumber, cakesCount) !== 0 ? () => handleMoveToLetters(cake.cakeNumber) : undefined}
+              backgroundColor={theme.colors.pastel_blue}
+              fontColor={theme.colors.gray4}
+              fonts={theme.fonts.button18}
 
-            image={cake.smallImage}
-            cakeName={cake.name}
-            cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
-          />
-        ))}
+              image={cake.smallImage}
+              cakeName={cake.name}
+              cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
+            />
+          ))}
+        </Styled.ListButton>
+
       </Styled.Container >
     </>
   );
@@ -106,4 +109,8 @@ const Styled = {
   TitleColor: styled.span`
     color: ${theme.colors.main_blue};
   `,
+
+  ListButton: styled.div`
+${theme.fonts.button18};
+`,
 };
