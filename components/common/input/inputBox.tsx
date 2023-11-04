@@ -1,10 +1,12 @@
 import theme from '@/styles/theme';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import InputLength from './inputLength';
-import BasicBox from '../box/BasicBox';
+
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
+import Box from '../box/Box';
+import { BoxType } from '@/types/common/boxStyleType';
 
 interface InputBoxProps {
   placeholder?: string;
@@ -16,6 +18,8 @@ interface InputBoxProps {
   limitLength?: number;
   dropDown?: boolean;
   readOnly?: boolean;
+  boxType?: keyof BoxType;
+  inputBoxStyle?: CSSProperties;
 }
 
 export default function InputBox(props: InputBoxProps) {
@@ -29,18 +33,27 @@ export default function InputBox(props: InputBoxProps) {
     limitLength,
     dropDown,
     readOnly,
+    boxType,
+    inputBoxStyle,
   } = props;
 
   return (
-    <BasicBox bgColor={theme.colors.pastel_blue}>
+    <Box
+      boxType={boxType ? boxType : 'large'}
+      bgColor={'pastel_blue'}
+      borderColor={'main_blue'}
+      padding
+      boxStyle={inputBoxStyle}
+    >
       <Styled.Input
         placeholder={placeholder}
         onChange={handleChangeValue}
         value={value}
         color={color}
         onBlur={handleBlur}
-        readOnly={readOnly ? true : false}
+        readOnly={readOnly}
       />
+
       {limitLength && value !== undefined && (
         <InputLength
           inputLength={
@@ -50,7 +63,7 @@ export default function InputBox(props: InputBoxProps) {
         />
       )}
       {dropDown && <Image src={ArrowDownIc} alt="열기" />}
-    </BasicBox>
+    </Box>
   );
 }
 

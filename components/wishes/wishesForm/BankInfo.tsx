@@ -1,45 +1,66 @@
-import { editUserAccount } from '@/api/wishes/wishesAPI';
+import { editUserAccount, getUserAccount } from '@/api/wishes/wishesAPI';
+import { useForm } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
 import BasicBox from '@/components/common/box/BasicBox';
 import Button from '@/components/common/button/button';
 import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
+import { QUERY_KEY } from '@/constant/queryKey';
+import useInput from '@/hooks/common/useInput';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
-import useGetUserAccount from '@/hooks/queries/wishes/useGetUserAccount';
+
 import theme from '@/styles/theme';
+import { InputsType } from '@/types/common/input';
 import { validation } from '@/validation/input';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
-import styled from 'styled-components';
+import { useMutation, useQuery } from 'react-query';
+import styled, { CSSProperties } from 'styled-components';
+import Box from '@/components/common/box/Box';
+import CheckBox from '@/components/common/checkBox';
+import useCheckBox from '@/hooks/common/useCheckBox';
 
 export default function BankInfo() {
+  const { data } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
+  const [name, handleChangeName, setName] = useInput('');
+  const [bankName, setBankName] = useState('');
+  const [account, handleChangeAccount, setAccount] = useInput('');
+  const { checkBoxState, handleChangeCheckBoxState } = useCheckBox();
+
   const {
-    name,
-    handleChangeName,
-    bankName,
-    changeBankName,
-    account,
-    handleChangeAccount,
-    phone,
-    handleChangePhone,
-    apiStatus,
-  } = useGetUserAccount();
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm<InputsType>();
+
+  useEffect(() => {
+    setValue('phone', data?.data?.phone);
+    setName(data?.data?.accountInfo?.name);
+    setBankName(data?.data?.accountInfo?.bank);
+    setAccount(data?.data?.accountInfo?.account);
+  }, [data]);
+
+  const changeBankName = (input: string) => {
+    setBankName(input);
+  };
 
   const [isAlertState, setIsAlertState] = useState(false);
   const { postWishesData } = useCreateWishesLink();
 
-  const titleText = apiStatus
-    ? '저번에 진행한 펀딩 정보를 가져왔어요.확인 후 변동 사항이 있다면 수정해주세요.'
-    : '펀딩기간이 끝나기 전에 계좌를 입력해주세요. 펀딩 성공 여부와 관계없이 입금됩니다.';
   const router = useRouter();
 
-  const { mutate } = useMutation(() => editUserAccount({ name, bankName, account }, phone), {
-    onSuccess: () => {
-      router.push('/wishes/share');
+  const { mutate } = useMutation(
+    () => editUserAccount({ name, bankName, account }, getValues('phone')),
+    {
+      onSuccess: () => {
+        router.push('/wishes/share');
+      },
     },
-  });
+  );
 
   const uploadAccount = () => {
     if (name !== '' && bankName !== '' && account !== '' && !validation.isIncludeHyphen(account)) {
@@ -50,15 +71,31 @@ export default function BankInfo() {
     }
   };
 
-  useEffect(() => {
-    validation.isIncludeHyphen(phone) ? setIsAlertState(true) : setIsAlertState(false);
-    validation.isCorrectPhoneNumber(phone) ? setIsAlertState(false) : setIsAlertState(true);
-  }, [phone]);
+  //react-hook-form validation 조건으로 변경예정
+
+  // useEffect(() => {
+  //   validation.isIncludeHyphen(phone) ? setIsAlertState(true) : setIsAlertState(false);
+  //   validation.isCorrectPhoneNumber(phone) ? setIsAlertState(false) : setIsAlertState(true);
+  // }, [phone]);
 
   return (
     <Styled.Container>
       <div>
-        <InputContainer title={titleText}>
+        <Box boxStyle={boxStyle} bgColor="pastel_blue">
+          <Styled.GuideContentWrapper>
+            {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
+
+            <Styled.GuideCheckBoxWrapper>
+              <CheckBox
+                checkBoxState={checkBoxState}
+                checkBoxText={'동의함'}
+                handleClickFn={handleChangeCheckBoxState}
+              />
+            </Styled.GuideCheckBoxWrapper>
+          </Styled.GuideContentWrapper>
+        </Box>
+
+        <InputContainer title="계좌번호 입력하기">
           <BankInput
             name={name}
             handleChangeName={handleChangeName}
@@ -66,15 +103,32 @@ export default function BankInfo() {
             changeBankName={changeBankName}
             account={account}
             handleChangeAccount={handleChangeAccount}
+            register={register}
           />
 
-          <InputContainer title="연락처 입력하기">
+          <InputContainer title="전화번호 입력하기">
+            <Styled.InputWrapper>
+              <InputBox
+                boxType={'twoThree'}
+                placeholder="(-)없이 숫자만 입력해주세요"
+                {...register('phone')}
+              />
+              {/* {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>} */}
+              <Box boxType={'oneThree'} bgColor={'main_blue'}>
+                <Button
+                  handleClick={() => console.log('기능추가해주세요!')}
+                  fontColor={'white'}
+                  font={'body14'}
+                >
+                  {'인증번호 받기'}
+                </Button>
+              </Box>
+            </Styled.InputWrapper>
             <InputBox
-              placeholder="연락처는 (-)없이 입력해주세요"
-              handleChangeValue={handleChangePhone}
-              value={phone}
+              boxType={'large'}
+              placeholder="인증번호를 적어주세요"
+              {...register('mobileCode')}
             />
-            {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
           </InputContainer>
         </InputContainer>
       </div>
@@ -105,6 +159,28 @@ const Styled = {
     height: 100svh;
   `,
 
+  GuideContentWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 100%;
+
+    ${theme.fonts.body14};
+    color: ${theme.colors.dark_blue};
+
+    text-align: left;
+  `,
+
+  GuideCheckBoxWrapper: styled.div`
+    display: flex;
+    justify-content: right;
+
+    width: 100%;
+    height: 2rem;
+  `,
+
   ButtonWrapper: styled.div`
     display: flex;
     justify-content: space-between;
@@ -113,4 +189,23 @@ const Styled = {
 
     margin-bottom: 4.6rem;
   `,
+
+  InputWrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-bottom: 1.2rem;
+  `,
+};
+
+const boxStyle: CSSProperties = {
+  width: '33.1rem',
+  height: '9.8rem',
+
+  margin: '-0.6rem 0 2.4rem',
+  padding: '1.2rem',
+
+  borderRadius: '1rem',
 };
