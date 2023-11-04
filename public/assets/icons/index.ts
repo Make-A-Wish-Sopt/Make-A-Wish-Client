@@ -22,3 +22,5 @@ export { default as DeleteBtnIc } from '@/public/assets/icons/deleteBtnIc.svg';
 export { default as ArrowLeftIc } from '@/public/assets/icons/arrowLeftIc.svg';
 export { default as ArrowRightIc } from '@/public/assets/icons/arrowRightIc.svg';
 export { default as ArrowLargeDownIc } from '@/public/assets/icons/arrowLargeDownIc.svg';
+export { default as CheckedBoxIc } from '@/public/assets/icons/checkedBoxIc.svg';
+export { default as UnCheckedBoxIc } from '@/public/assets/icons/unCheckedBoxIc.svg';
