@@ -21,7 +21,7 @@ interface BankInputProps {
   handleChangeAccount: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => void;
-  register: UseFormRegister<InputsType>;
+  register?: UseFormRegister<InputsType>;
 }
 
 export default function BankInput(props: BankInputProps) {
@@ -51,7 +51,8 @@ export default function BankInput(props: BankInputProps) {
           <InputBox
             boxType={'twoThree'}
             placeholder="계좌번호를 입력해주세요"
-            {...register('phone')}
+            value={account || ''}
+            handleChangeValue={handleChangeName}
           />
           {/* {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>} */}
           <Box boxType={'oneThree'} bgColor={'main_blue'}>
