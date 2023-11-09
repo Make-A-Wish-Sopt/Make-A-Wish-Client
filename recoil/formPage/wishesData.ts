@@ -1,4 +1,5 @@
-import { WishesDataType } from '@/types/wishes/wishesDataType';
+
+import { WishesDataType } from '@/types/common/input';
 import { atom } from 'recoil';
 
 export const WishesData = atom<WishesDataType>({

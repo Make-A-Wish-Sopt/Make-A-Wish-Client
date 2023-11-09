@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
+import Box from '../box/Box';
 
 interface BankModalProps {
   handleToggle: () => void;
@@ -19,14 +20,18 @@ export default function BankModal(props: BankModalProps) {
   return (
     <Styled.Modal>
       <Styled.Title>은행을 선택해주세요.</Styled.Title>
+
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-          <Styled.BankLogoContainer key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
-            <Styled.Image>
-              <Image src={bank.logo} alt={`${bank.name} 로고`} />
-            </Styled.Image>
-            <Styled.Name>{bank.name} </Styled.Name>
-          </Styled.BankLogoContainer>
+          <Box boxType={'bank'} key={bank.name}>
+            <Styled.BanksWrapper onClick={() => handleChangeBankName(bank.name)}>
+              <Styled.BankLogo>
+                <Image src={bank.logo} alt={`${bank.name} 로고`} />
+              </Styled.BankLogo>
+
+              <Styled.BankName>{bank.name} </Styled.BankName>
+            </Styled.BanksWrapper>
+          </Box>
         ))}
       </Styled.BankContainer>
     </Styled.Modal>
@@ -34,21 +39,23 @@ export default function BankModal(props: BankModalProps) {
 }
 
 const Styled = {
-  Modal: styled.div`
+  Modal: styled.section`
     width: 33.1rem;
     height: 60rem;
+
     background-color: ${theme.colors.pastel_blue};
     padding: 2.2rem 2.2rem 0 2.2rem;
     border: 0.1rem solid ${theme.colors.main_blue};
+
     border-radius: 2rem;
   `,
 
-  Title: styled.div`
+  Title: styled.h2`
     width: 100%;
     ${theme.fonts.body16};
   `,
 
-  BankContainer: styled.div`
+  BankContainer: styled.ul`
     height: 91.4%;
     overflow: auto;
     ::-webkit-scrollbar {
@@ -61,22 +68,21 @@ const Styled = {
     grid-row-gap: 0.8rem;
   `,
 
-  BankLogoContainer: styled.div`
-    background-color: ${theme.colors.white};
-    border-radius: 1rem;
-    padding: 1rem 0 0.5rem;
+  BanksWrapper: styled.li`
+    display: flex;
+    flex-direction: column;
 
-    cursor: pointer;
+    align-items: center;
   `,
 
-  Name: styled.div`
+  BankName: styled.div`
     ${theme.fonts.body12};
     text-align: center;
 
     margin: 0.5rem 0 0;
   `,
 
-  Image: styled.div`
+  BankLogo: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;

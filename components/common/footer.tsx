@@ -17,33 +17,40 @@ export default function Footer() {
   };
 
   return (
-    <Styled.Container>
-      <Image src={LogoImg} alt={'조물주보다 생일선물주 로고'} />
+    <Styled.FooterContainer>
+      <Styled.FooterWrapper>
+        <Styled.Logo>
+          <Image src={LogoImg} alt={'조물주보다 생일선물주 로고'} />
+        </Styled.Logo>
 
-      <Styled.ContentContainer>
-        상호명: 조물주보다생일선물주
-        <br />
-        사업자등록번호: 246-05-02593
-        <br />
-        통신판매업신고: 2023-경기양주-1379
-        <br />
-        사업장주소지: 경기도 양주시 고덕로 159, 207-403
-        <br />
-        대표자명: 이승원
-      </Styled.ContentContainer>
-      <Styled.HorizontalLine />
+        <Styled.ContentWrapper>
+          상호명: 조물주보다생일선물주
+          <br />
+          사업자등록번호: 246-05-02593
+          <br />
+          통신판매업신고: 2023-경기양주-1379
+          <br />
+          사업장주소지: 경기도 양주시 고덕로 159, 207-403
+          <br />
+          대표자명: 이승원
+        </Styled.ContentWrapper>
+        <Styled.HorizontalLine />
 
-      <Styled.ButtonContainer>
-        <Styled.Button onClick={handleTermsOfUse}>이용약관</Styled.Button>
-        <Styled.Button onClick={handlePrivacyPolicy}>개인정보처리방침</Styled.Button>
-        <Styled.Button onClick={handleMarketingAgreement}>광고마케팅정보수신동의</Styled.Button>
-      </Styled.ButtonContainer>
-    </Styled.Container>
+        <Styled.LinkWrapper>
+          <Styled.Link onClick={handleTermsOfUse}>이용약관</Styled.Link>
+          <Styled.Link onClick={handlePrivacyPolicy}>개인정보처리방침</Styled.Link>
+          <Styled.Link onClick={handleMarketingAgreement}>광고마케팅정보수신동의</Styled.Link>
+        </Styled.LinkWrapper>
+      </Styled.FooterWrapper>
+    </Styled.FooterContainer>
   );
 }
 
 const Styled = {
-  Container: styled.footer`
+  FooterContainer: styled.footer`
+    display: flex;
+    justify-content: center;
+
     width: 100%;
     background-color: ${theme.colors.main_blue};
     padding: 2.9rem 2.2rem;
@@ -51,31 +58,46 @@ const Styled = {
     ${theme.fonts.body12_2};
   `,
 
-  HorizontalLine: styled.div`
+  FooterWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
+
+  Logo: styled.h1`
+    color: ${theme.colors.white};
+    color: ${theme.fonts.headline24_130};
+  `,
+
+  HorizontalLine: styled.hr`
     display: block;
+
     width: 100%;
     height: 0.1rem;
+
     margin: 1rem 0;
+
     background: #ffffff;
     opacity: 0.6;
   `,
 
-  ContentContainer: styled.div`
+  ContentWrapper: styled.div`
     line-height: 2.2rem;
     color: ${theme.colors.white};
     opacity: 0.6;
     margin: 1.5rem 0 0 0;
   `,
 
-  ButtonContainer: styled.div`
+  LinkWrapper: styled.ul`
     display: flex;
     gap: 0.5rem;
   `,
 
-  Button: styled.button`
+  Link: styled.li`
     line-height: 2.2rem;
     color: ${theme.colors.white};
     opacity: 0.8;
     padding: 0;
+
+    cursor: pointer;
   `,
 };
