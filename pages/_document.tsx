@@ -39,6 +39,17 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          {/* <!-- Google Tag Manager --> */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE}');`,
+            }}
+          />
+          {/* <!-- End Google Tag Manager --> */}
           <meta charSet="utf-8" />
           <link
             href="https://cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2"
@@ -49,9 +60,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
 
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
@@ -62,9 +71,10 @@ class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
           />
+          <meta name="title" content="조물주보다 생일선물주" />
           <meta
             name="description"
-            content="마음은 가볍게, 선물은 무겁게. 부담 없는 생일 펀딩 플랫폼 Make A Wish"
+            content="마음은 가볍게, 선물은 무겁게. 부담 없는 생일 펀딩 플랫폼, 조물주보다 생일선물주"
           />
           <meta
             name="keywords"
@@ -72,6 +82,14 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          {/* <!-- Google Tag Manager (noscript) --> */}
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE}"
+              height="0" width="0" style="display:none;visibility:hidden"/>`,
+            }}
+          />
+          {/* <!-- End Google Tag Manager (noscript) --> */}
           <Main />
           <NextScript />
         </body>

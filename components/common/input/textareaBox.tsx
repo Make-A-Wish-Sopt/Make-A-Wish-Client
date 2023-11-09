@@ -8,19 +8,22 @@ interface TextareaBoxProps {
   placeholder?: string;
   handleChangeValue?: ChangeEventHandler<HTMLTextAreaElement>;
   value?: string | number;
+  color?: string;
   limitLength?: number;
+  borderColor?: string;
   readOnly?: boolean;
   children?: ReactNode;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {
-  const { placeholder, handleChangeValue, value, limitLength, readOnly, children } = props;
+  const { placeholder, handleChangeValue, value, color, limitLength, borderColor,readOnly, children } = props;
   return (
-    <LargeBox bgColor={theme.colors.pastel_blue}>
+    <LargeBox bgColor={theme.colors.pastel_blue} borderColor={borderColor}>
       <Styled.Textarea
         placeholder={placeholder}
         onChange={handleChangeValue}
         value={value}
+        color={color}
         readOnly={readOnly ? true : false}
       />
       <Styled.InputLengthWrapper>
@@ -53,12 +56,12 @@ const Styled = {
     justify-content: space-between;
   `,
 
-  Textarea: styled.textarea`
+  Textarea: styled.textarea<{ color: string | undefined }>`
     width: 100%;
     height: 10.5rem;
 
     ${theme.fonts.body12};
-    color: ${theme.colors.dark_blue};
+    color: ${(props) => (props.color ? props.color : theme.colors.dark_blue)};
     background-color: ${theme.colors.pastel_blue};
 
     resize: none;

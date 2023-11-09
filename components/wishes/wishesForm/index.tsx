@@ -20,39 +20,36 @@ export default function WishesFormContainer() {
 
   return (
     <Styled.Container>
-      <>
-        {/* Header */}
-        <InputHeader>
-          <Image
-            src={BackBtnIc}
-            alt="뒤로가기"
-            style={{ cursor: 'pointer' }}
-            onClick={handleBackBtnClick}
-          ></Image>
-        </InputHeader>
-
-        {/* Title */}
-        <Styled.TitleWrapper>
-          <Image src={WishesFormPresentIc} alt="선물 이미지" />
-          {
-            {
-              1: <Styled.Title>소원링크 생성하기</Styled.Title>,
-              2: <Styled.Title>소원링크 생성하기</Styled.Title>,
-              3: <Styled.Title>소원링크 화면 미리보기</Styled.Title>,
-              4: <Styled.Title>계좌번호 및 연락처 입력하기</Styled.Title>,
-            }[stepIndex]
-          }
-        </Styled.TitleWrapper>
-
+      {/* Header */}
+      <InputHeader>
+        <Image
+          src={BackBtnIc}
+          alt="뒤로가기"
+          style={{ cursor: 'pointer' }}
+          onClick={handleBackBtnClick}
+        ></Image>
+      </InputHeader>
+      {/* Title */}
+      <Styled.TitleWrapper>
+        <Image src={WishesFormPresentIc} alt="선물 이미지" />
         {
           {
-            1: <WishesStep1 handleNextStep={handleNextStep} />,
-            2: <WishesStep2 handleNextStep={handleNextStep} />,
-            3: <Preview handleNextStep={handleNextStep} />,
-            4: <BankInfo />,
+            1: <Styled.Title>소원링크 생성하기</Styled.Title>,
+            2: <Styled.Title>소원링크 생성하기</Styled.Title>,
+            3: <Styled.Title>소원링크 화면 미리보기</Styled.Title>,
+            4: <Styled.Title>계좌번호 및 연락처 입력하기</Styled.Title>,
           }[stepIndex]
         }
-      </>
+      </Styled.TitleWrapper>
+
+      {
+        {
+          1: <WishesStep1 handleNextStep={handleNextStep} />,
+          2: <WishesStep2 handleNextStep={handleNextStep} />,
+          3: <Preview handleNextStep={handleNextStep} />,
+          4: <BankInfo />,
+        }[stepIndex]
+      }
     </Styled.Container>
   );
 }

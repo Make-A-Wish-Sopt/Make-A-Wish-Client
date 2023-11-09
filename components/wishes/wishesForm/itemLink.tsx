@@ -23,10 +23,12 @@ interface ItemLinkProps {
   changeImageURL: (input: string) => void;
   price: number;
   changePrice: (input: number) => void;
+  readOnly?: boolean;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice } = props;
+  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice, readOnly } =
+    props;
   const [isCorrectLinkURL, setIsCorrectLinkURL] = useState(false);
 
   //queryClient부분 다시 체크해야됨!
@@ -45,7 +47,7 @@ export default function ItemLink(props: ItemLinkProps) {
     {
       onSuccess: (data) => {
         const imageData = extractImageSrc(data?.imageTag?.data?.data);
-        const priceData = extractPrice(data?.priceTag?.data?.data);
+        const priceData = extractPrice(data?.priceTag?.data?.data, linkURL);
 
         if (imageData && priceData) {
           changeImageURL(imageData);
@@ -67,9 +69,10 @@ export default function ItemLink(props: ItemLinkProps) {
       ))}
 
       <InputBox
-        placeholder="정해진 사이트에서 원하는 선물 링크 복사, 붙여넣기"
+        placeholder="정해진 사이트에서 원하는 선물 링크 붙여넣기"
         handleBlur={parseImage}
         handleChangeValue={handleChangeLinkURL}
+        readOnly={readOnly}
       ></InputBox>
       {linkURL && linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
@@ -83,28 +86,8 @@ export default function ItemLink(props: ItemLinkProps) {
 }
 
 const Styled = {
-  Container: styled.div``,
-
-  InputTitle: styled.div`
-    ${theme.fonts.body16};
-    color: ${theme.colors.main_blue};
-    margin: 0 0 1rem;
-  `,
-
-  InputText: styled.input`
-    ${theme.fonts.body12};
-    color: ${theme.colors.dark_blue};
-    width: 100%;
-  `,
-
-  PresentWrapper: styled.div`
-    margin: 1.2rem 0 1rem;
-  `,
-
-  PresentPrice: styled.div`
-    ${theme.fonts.button18};
-    color: ${theme.colors.main_blue};
-    text-align: center;
+  Container: styled.div`
+    margin-bottom: 2.4rem;
   `,
 
   SiteBox: styled.div`
@@ -114,13 +97,5 @@ const Styled = {
     background-color: ${theme.colors.white};
     cursor: pointer;
     margin: 0 1rem 1rem 0;
-  `,
-  ImageWrapper: styled.div`
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: fill;
   `,
 };

@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import { deleteUserInfo } from '@/api/mypage/mypageAPI';
 
+
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
 
@@ -33,10 +34,20 @@ export default function MyPageContainer() {
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
+
+  // const handleCustomerService = () => {
+  //   window.Kakao.Channel.chat({
+  //     channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+  //   });
+  // };
   const handleCustomerService = () => {
-    window.Kakao.Channel.chat({
-      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-    });
+    if (window.Kakao && window.Kakao.Channel) {
+      window.Kakao.Channel.chat({
+        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
+      });
+    } else {
+      alert("채널 연결에 문제가 발생했습니다. 카카오톡에서 '조물주보다생일선물주'를 검색하여 문의해주세요.");
+    }
   };
 
   const handleLogOut = () => {
@@ -123,7 +134,7 @@ const Styled = {
   `,
 
   TextContainer: styled.button`
-    ${theme.fonts.button16_2};
+    ${theme.fonts.button18};
     color: ${theme.colors.main_blue};
     text-decoration: underline;
   `,

@@ -26,7 +26,7 @@ export default function CakesContainer() {
   const [cakesData, setCakesData] = useRecoilState<CakesDataType>(CakesData);
   const router = useRouter();
 
-  const { data, mutate, isSuccess } = useRequestPayReady(giverName, selectedCake.cakeNumber);
+  const { data, mutate, isSuccess } = useRequestPayReady(cakesData.wishId, selectedCake.cakeNumber);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -45,7 +45,6 @@ export default function CakesContainer() {
         ...prevData,
         tid: tid,
       }));
-
       router.replace(nextLink);
     }
   }, [isSuccess]);
@@ -54,11 +53,9 @@ export default function CakesContainer() {
     resetCakesData();
   }, []);
 
-  const { data: wishesData } = useQuery('wished', async () => getWishesData(cakesData.wishId), {
-    enabled: cakesData.wishId !== 0,
-  });
+  const { data: wishesData } = useQuery('wished', getWishesData);
 
-  const saveReocilData = () => {
+  const saveRecoilData = () => {
     setCakesData((prevData) => ({
       ...prevData,
       giverName: giverName,
@@ -66,62 +63,79 @@ export default function CakesContainer() {
       cake: selectedIndex,
       message: letter,
       selectedCake: selectedCake,
+      wishId: Number(router.query.id),
     }));
   };
 
   const sendCake = () => {
-    saveReocilData();
+    saveRecoilData();
     selectedCake.cakeNumber === 1 ? router.push('/cakes/approve') : mutate();
   };
 
   return (
-    <>
-      <CakesHeader dayCount={wishesData?.dayCount} />
+    <Styled.Container>
+      <div>
+        <CakesHeader dayCount={wishesData?.dayCount} />
 
-      <Styled.Title>{wishesData?.title}</Styled.Title>
+        <Styled.Title>{wishesData?.title}</Styled.Title>
 
-      {/* API 데이터 */}
-      <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
-        <TextareaBox value={wishesData?.hint} readOnly={true} />
-      </InputContainer>
+        {/* API 데이터 */}
+        <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
+          <TextareaBox value={wishesData?.hint} borderColor="transparent" readOnly={true} />
+        </InputContainer>
 
-      <InputContainer title={'본인의 실명 작성하기'}>
-        <InputBox
-          handleChangeValue={changeGiverName}
-          value={giverName}
-          placeholder="성과 이름 모두 정확하게 작성해주세요. ex. 홍길동"
+        <InputContainer title={'본인의 실명 작성하기'}>
+          <InputBox
+            handleChangeValue={changeGiverName}
+            value={giverName}
+            placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
+          />
+        </InputContainer>
+
+        <SelectCakes
+          selectedCake={selectedCake}
+          selectedIndex={selectedIndex}
+          selectCake={selectCake}
         />
-      </InputContainer>
 
-      <SelectCakes
-        selectedCake={selectedCake}
-        selectedIndex={selectedIndex}
-        selectCake={selectCake}
-      />
+        <InputContainer title={'친구에게 편지 남기기'}>
+          <TextareaBox
+            handleChangeValue={changeLetter}
+            value={letter}
+            placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
+          ></TextareaBox>
+        </InputContainer>
+      </div>
 
-      <InputContainer title={'친구에게 편지 남기기'}>
-        <TextareaBox
-          handleChangeValue={changeLetter}
-          value={letter}
-          placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
-        ></TextareaBox>
-      </InputContainer>
-
-      <ButtonBox
-        backgroundColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-        handleClick={sendCake}
-      >
-        케이크 보내기
-      </ButtonBox>
-    </>
+      <Styled.ButtonWrapper>
+        <ButtonBox
+          backgroundColor={theme.colors.main_blue}
+          fontColor={theme.colors.white}
+          handleClick={sendCake}
+        >
+          케이크 보내기
+        </ButtonBox>
+      </Styled.ButtonWrapper>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100svh;
+  `,
+
   Title: styled.h1`
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
     margin: 2.4rem 0 3rem;
+  `,
+
+  ButtonWrapper: styled.div`
+    padding-bottom: 4.6rem;
   `,
 };

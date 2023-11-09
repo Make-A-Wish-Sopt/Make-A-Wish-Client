@@ -17,9 +17,16 @@ export default function WishesContainer() {
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
-    enabled: wishesId !== '',
-  });
+  const { data } = useQuery('wished', getWishesData);
+
+  // const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
+  //     onError: (error: any) => {
+  //       console.error("에러 발생:", error);
+  //       alert("해당 소원의 펀딩이 아직 가능하지 않습니다. 펀딩 기간을 확인해주세요.");
+  //       router.back();
+  //     },
+  //     enabled: wishesId !== '',
+  //   });
 
   const handleMoveToCakes = () => {
     router.push(`/cakes/${wishesId}`);
@@ -42,7 +49,7 @@ export default function WishesContainer() {
           fontColor={theme.colors.main_blue}
           borderColor="transparent"
         >
-          <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
+          <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
     </Styled.Container>
@@ -61,6 +68,9 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
+    width: 100%;
     height: 11rem;
+
+    margin-bottom: 4.6rem;
   `,
 };

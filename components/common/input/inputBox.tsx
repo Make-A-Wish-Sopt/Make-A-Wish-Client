@@ -1,39 +1,69 @@
 import theme from '@/styles/theme';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import InputLength from './inputLength';
-import BasicBox from '../box/BasicBox';
+
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
+import Box from '../box/Box';
+import { BoxType } from '@/types/common/boxStyleType';
 
 interface InputBoxProps {
   placeholder?: string;
   handleChangeValue?: ChangeEventHandler<HTMLInputElement>;
   handleBlur?: FocusEventHandler<HTMLInputElement>;
   value?: string | number;
+  color?: string;
+  isPriceText?: boolean;
   limitLength?: number;
   dropDown?: boolean;
   readOnly?: boolean;
+  boxType?: keyof BoxType;
+  inputBoxStyle?: CSSProperties;
 }
 
 export default function InputBox(props: InputBoxProps) {
-  const { placeholder, handleChangeValue, handleBlur, value, limitLength, dropDown, readOnly } =
-    props;
+  const {
+    placeholder,
+    handleChangeValue,
+    handleBlur,
+    value,
+    color,
+    isPriceText,
+    limitLength,
+    dropDown,
+    readOnly,
+    boxType,
+    inputBoxStyle,
+  } = props;
 
   return (
-    <BasicBox bgColor={theme.colors.pastel_blue}>
+    <Box
+      boxType={boxType ? boxType : 'large'}
+      bgColor={'pastel_blue'}
+      borderColor={'main_blue'}
+      padding
+      boxStyle={inputBoxStyle}
+    >
       <Styled.Input
         placeholder={placeholder}
         onChange={handleChangeValue}
         value={value}
+        color={color}
         onBlur={handleBlur}
-        readOnly={readOnly ? true : false}
+        readOnly={readOnly}
       />
+
       {limitLength && value !== undefined && (
-        <InputLength inputLength={value.toString().length} limitLength={limitLength} />
+        <InputLength
+          inputLength={
+            isPriceText ? value.toString().replaceAll(',', '').length : value.toString().length
+          }
+          limitLength={limitLength}
+        />
       )}
       {dropDown && <Image src={ArrowDownIc} alt="열기" />}
-    </BasicBox>
+    </Box>
   );
 }
 
@@ -51,9 +81,9 @@ const Styled = {
     border-radius: 1rem;
   `,
 
-  Input: styled.input`
+  Input: styled.input<{ color: string | undefined }>`
     ${theme.fonts.body12};
-    color: ${theme.colors.dark_blue};
+    color: ${(props) => (props.color ? props.color : theme.colors.dark_blue)};
     width: 100%;
   `,
 

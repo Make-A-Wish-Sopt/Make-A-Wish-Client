@@ -17,5 +17,5 @@ export function useCreateWishesLink() {
     },
   });
 
-  return { wishesData, postWishesData, isSuccess };
+  return { postWishesData };
 }

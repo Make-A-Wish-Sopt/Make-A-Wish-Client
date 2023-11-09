@@ -21,7 +21,6 @@ export default function GuideModal(props: GuideModalProps) {
 
   return (
     <Styled.Container>
-      <Styled.Background onClick={clickModal}></Styled.Background>
 
       <Styled.Background2>
         <Styled.ButtonContainer onClick={clickModal}>
@@ -29,10 +28,9 @@ export default function GuideModal(props: GuideModalProps) {
         </Styled.ButtonContainer>
 
         <Styled.Content>
-          <Image src={GuideBoxImg} alt="" fill />
           {
             <Styled.ScrollContent>
-              <Image src={GuideContentImg} alt="서비스 가이드" />
+              <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
               <Styled.ButtonContainer2>
                 <ButtonBox
                   handleClick={handleCustomerService}
@@ -42,10 +40,13 @@ export default function GuideModal(props: GuideModalProps) {
                   고객센터 문의하기
                 </ButtonBox>
               </Styled.ButtonContainer2>
+
             </Styled.ScrollContent>
           }
         </Styled.Content>
+
       </Styled.Background2>
+
     </Styled.Container>
   );
 }
@@ -85,13 +86,23 @@ const Styled = {
     border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
+    background-image:url(${GuideBoxImg.src});
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    /* max-height: 61.4rem; 
+    overflow-y: auto;
+    padding: 4.5 0 2rem; */
   `,
 
   ScrollContent: styled.div`
-    flex: 1;
+    /* flex: 1; */
     overflow-y: auto;
     position: relative;
-    margin: 4.5rem 0 2rem;
+    margin: 4rem 1.5rem 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   `,
 
   ButtonContainer: styled.div`

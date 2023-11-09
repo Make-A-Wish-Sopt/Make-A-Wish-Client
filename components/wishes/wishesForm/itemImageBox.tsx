@@ -31,7 +31,7 @@ export default function ItemImageBox(props: ItemImageBoxProps) {
 
 const Styled = {
   PresentWrapper: styled.div`
-    margin: 1.2rem 0 1rem;
+    margin-top: 1.2rem;
   `,
 
   ImageWrapper: styled.div`
@@ -47,5 +47,7 @@ const Styled = {
     ${theme.fonts.button16};
     color: ${theme.colors.main_blue};
     text-align: center;
+
+    margin-top: 1rem;
   `,
 };

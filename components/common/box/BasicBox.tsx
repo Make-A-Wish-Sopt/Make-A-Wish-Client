@@ -29,10 +29,10 @@ const Styled = {
     display: flex;
     align-items: center;
 
-    width: 33.1rem;
+    width: 100%;
     height: 5rem;
 
-    padding: 1.2rem 1rem 1.2rem 1.2rem;
+    padding: 1rem 1rem 1rem 1.2rem;
 
     border: 0.1rem solid
       ${(props) => (props.borderColor ? props.borderColor : theme.colors.main_blue)};

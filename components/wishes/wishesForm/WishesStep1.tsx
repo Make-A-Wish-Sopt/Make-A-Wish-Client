@@ -38,7 +38,7 @@ export default function WishesStep1(props: WishesStep1Props) {
   const [selfInputPrice, handleChangeSelfInputPrice] = useInput('', LIMIT_TEXT[15]);
 
   useEffect(() => {
-    imageURL && validation.isCorrectSite(linkURL) && initial
+    ((imageURL && validation.isCorrectSite(linkURL)) || preSignedImageURL !== "") && initial
       ? setIsNextStepAvailable(true)
       : setIsNextStepAvailable(false);
   }, [initial, imageURL]);
@@ -74,13 +74,13 @@ export default function WishesStep1(props: WishesStep1Props) {
   };
 
   return (
-    <>
-      <UploadTypeToggleBtn
-        isLinkLoadType={isLinkLoadType}
-        handleLoadTypeToggle={handleLoadTypeToggle}
-      />
-      {isLinkLoadType ? (
-        <InputContainer title="">
+    <Styled.Container>
+      <div>
+        <UploadTypeToggleBtn
+          isLinkLoadType={isLinkLoadType}
+          handleLoadTypeToggle={handleLoadTypeToggle}
+        />
+        {isLinkLoadType ? (
           <ItemLink
             linkURL={linkURL}
             handleChangeLinkURL={handleChangeLinkURL}
@@ -89,56 +89,60 @@ export default function WishesStep1(props: WishesStep1Props) {
             price={price}
             changePrice={changePrice}
           />
-        </InputContainer>
-      ) : (
-        <>
-          <InputContainer title="갖고 싶은 선물 이미지 등록하기">
-            <Styled.Lable>
-              {preSignedImageURL ? (
-                <ItemImageBox imageURL={preSignedImageURL} />
-              ) : (
-                <LargeBox
-                  bgColor={theme.colors.pastel_blue}
-                  font={theme.fonts.body14}
-                  fontColor={theme.colors.main_blue}
-                >
-                  ※ 등록 가능한 사진파일 <br />• 파일용량 : 10MB 이하
-                  <Styled.UploadImageBox>
-                    <Image src={ImageUploadIc} alt="업로드 아이콘" />
-                  </Styled.UploadImageBox>
-                </LargeBox>
+        ) : (
+          <>
+            <InputContainer title="갖고 싶은 선물 이미지 등록하기">
+              <Styled.Lable>
+                {preSignedImageURL ? (
+                  <ItemImageBox imageURL={preSignedImageURL} />
+                ) : (
+                  <LargeBox
+                    bgColor={theme.colors.pastel_blue}
+                    font={theme.fonts.body14}
+                    fontColor={theme.colors.main_blue}
+                  >
+                    ※ 등록 가능한 사진파일 <br />• 파일용량 : 10MB 이하
+                    <Styled.UploadImageBox>
+                      <Image src={ImageUploadIc} alt="업로드 아이콘" />
+                    </Styled.UploadImageBox>
+                  </LargeBox>
+                )}
+                <Styled.FileInput
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={uploadImageFile}
+                  readOnly
+                />
+              </Styled.Lable>
+              {imageFile && !validation.checkImageFileSize(imageFile.size) && (
+                <AlertTextBox> 사진은 10MB 이하로 업로드해주세요!</AlertTextBox>
               )}
-              <Styled.FileInput
-                type="file"
-                accept=".jpg,.jpeg,.png"
-                onChange={uploadImageFile}
-                readOnly
+            </InputContainer>
+
+            <InputContainer title="선물 가격 입력하기">
+              <InputBox
+                placeholder="ex. 12,000,000"
+                isPriceText
+                handleChangeValue={(e) => {
+                  e.target.value = e.target.value.replaceAll(',', '');
+                  handleChangeSelfInputPrice(e);
+                }}
+                value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
+                limitLength={LIMIT_TEXT[15]}
               />
-            </Styled.Lable>
-            {imageFile && !validation.checkImageFileSize(imageFile.size) && (
-              <AlertTextBox> 사진은 10MB 이하로 업로드해주세요!</AlertTextBox>
-            )}
-          </InputContainer>
+            </InputContainer>
+          </>
+        )}
 
-          <InputContainer title="선물 가격 입력하기">
-            <InputBox
-              placeholder="ex. 12,000,000"
-              handleChangeValue={handleChangeSelfInputPrice}
-              value={selfInputPrice ? `${convertMoneyText(selfInputPrice)}` : ''}
-              limitLength={LIMIT_TEXT[15]}
-            />
-          </InputContainer>
-        </>
-      )}
-
-      <InputContainer title="선물의 초성 적어보기">
-        <InputBox
-          placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
-          handleChangeValue={handleChangeInitial}
-          value={initial}
-          limitLength={LIMIT_TEXT[15]}
-        />
-      </InputContainer>
+        <InputContainer title="선물의 초성 적어보기">
+          <InputBox
+            placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
+            handleChangeValue={handleChangeInitial}
+            value={initial}
+            limitLength={LIMIT_TEXT[15]}
+          />
+        </InputContainer>
+      </div>
 
       <Styled.ButtonWrapper>
         <BasicBox
@@ -150,11 +154,19 @@ export default function WishesStep1(props: WishesStep1Props) {
           <Button handleClick={nextStep}>다음</Button>
         </BasicBox>
       </Styled.ButtonWrapper>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100svh;
+  `,
+
   UploadImageBox: styled.div`
     display: flex;
     justify-content: center;
@@ -174,7 +186,6 @@ const Styled = {
   `,
 
   ButtonWrapper: styled.div`
-    position: absolute;
-    bottom: 4.6rem;
+    margin-bottom: 4.6rem;
   `,
 };

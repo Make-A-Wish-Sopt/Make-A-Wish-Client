@@ -32,9 +32,11 @@ const nextConfig = {
     ],
     domains: [
       'img.29cm.co.kr',
+      'img2.29cm.co.kr',
       'product.29cm.co.kr',
       'localhost',
       'wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
+      'shopping-phinf.pstatic.net',
     ],
   },
   rules: {

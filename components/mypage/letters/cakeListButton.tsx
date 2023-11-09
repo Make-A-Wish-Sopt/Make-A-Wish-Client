@@ -20,7 +20,8 @@ export default function CakeListButton(props: CakeListButtonProps) {
       {image && (
         <Image src={image} alt="케이크 이미지" width={35} height={35} />
       )}
-      <Styled.TextContainer fonts={fonts} fontColor={fontColor}>
+      {/* <Styled.TextContainer fonts={fonts} fontColor={fontColor}> */}
+      <Styled.TextContainer fontColor={fontColor}>
         {cakeName} X <Styled.NumText> {cakeNum}개</Styled.NumText>
       </Styled.TextContainer>
 
@@ -46,10 +47,14 @@ const Styled = {
   margin: 0 0 1rem;
 `,
 
-  TextContainer: styled.div<{ fonts: string; fontColor: string }>`
-  padding: 0.2rem 0.5rem 0 1rem;
-  ${(props) => props.fonts}
-  
+  // TextContainer: styled.div<{ fonts: string; fontColor: string }>`
+  // padding: 0.2rem 0.5rem 0 1rem;
+  // ${(props) => props.fonts}
+
+  // `,
+
+  TextContainer: styled.div<{ fontColor: string }>`
+  padding: 0.2rem 0.5rem 0 1rem;  
   `,
 
   NumText: styled.span`

@@ -32,7 +32,8 @@ const Styled = {
 
     padding: 1.4rem 1.2rem;
 
-    border: 0.1rem solid ${theme.colors.main_blue};
+    border: 0.1rem solid
+      ${(props) => (props.borderColor ? props.borderColor : theme.colors.main_blue)};
     border-radius: 1rem;
 
     ${(props) => props.font};

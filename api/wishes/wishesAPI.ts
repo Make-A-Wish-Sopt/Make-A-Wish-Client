@@ -1,9 +1,8 @@
-import { AccountInfoType } from '@/types/wishes/accountInfotype';
 import PATH from '../../constant/path';
 import { client } from '../common/axios';
-import { WishesDataType } from '@/types/wishes/wishesDataType';
 import axios from 'axios';
 import { SiteDataType } from '@/types/siteDataType';
+import { AccountInfoType, WishesDataType } from '@/types/common/input';
 
 export const createWishesLink = async (wishesData: WishesDataType) => {
   const accessToken = localStorage.getItem('accessToken');
@@ -18,7 +17,6 @@ export const createWishesLink = async (wishesData: WishesDataType) => {
       initial: wishesData.initial,
       startDate: wishesData.startDate,
       endDate: wishesData.endDate,
-      phone: wishesData.phone,
     },
     {
       headers: {
@@ -79,7 +77,6 @@ export const getItemInfo = async (link: string, siteData: SiteDataType | undefin
         },
       },
     ));
-
   return { imageTag, priceTag };
 };
 

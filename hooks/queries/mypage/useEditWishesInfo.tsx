@@ -7,6 +7,7 @@ export default function useEditWishesInfo(editWishesInfoData: EditWishesInfoData
   const router = useRouter();
   const { mutate: editWishesData } = useMutation(() => editWishesInfo(editWishesInfoData), {
     onSuccess: () => {
+      alert('수정성공');
       router.back();
     },
   });
