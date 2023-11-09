@@ -71,10 +71,10 @@ class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
           />
-          <meta name="title" content="Make A Wish" />
+          <meta name="title" content="조물주보다 생일선물주" />
           <meta
             name="description"
-            content="마음은 가볍게, 선물은 무겁게. 부담 없는 생일 펀딩 플랫폼 Make A Wish"
+            content="마음은 가볍게, 선물은 무겁게. 부담 없는 생일 펀딩 플랫폼, 조물주보다 생일선물주"
           />
           <meta
             name="keywords"
