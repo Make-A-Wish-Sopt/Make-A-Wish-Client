@@ -77,7 +77,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <Head>
-            <title>Make A Wish | 선물고민은 그만!</title>
+            <title>조물주보다 생일선물주</title>
           </Head>
           <ThemeProvider theme={theme}>
             <GlobalStyle />
