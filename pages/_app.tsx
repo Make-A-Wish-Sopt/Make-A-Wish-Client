@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=GTM-TMZ7P9S5`}
       />
       <Script
         id="gtag-init"
@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE}', {
+            gtag('config', 'GTM-TMZ7P9S5', {
               page_path: window.location.pathname,
             });
           `,
