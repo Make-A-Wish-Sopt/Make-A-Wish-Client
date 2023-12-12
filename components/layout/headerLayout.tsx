@@ -8,14 +8,15 @@ export default function HeaderLayout(props: PropsWithChildren) {
 
   return (
     <>
-      <FixedSlot>
-        <Header />
-      </FixedSlot>
-      <main>{children}</main>
+      <Header />
+      <Container>{children}</Container>
     </>
   );
 }
 
-const FixedSlot = styled.div`
-  width: 100%;
+const Container = styled.main`
+  width: 37.5rem;
+  height: 100%;
+
+  padding: 2.2rem 2.2rem 0 2.2rem;
 `;
