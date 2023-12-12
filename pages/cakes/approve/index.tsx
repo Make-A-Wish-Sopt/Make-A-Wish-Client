@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import SuccessMessageBox from '@/components/cakes/approve/successMessageBox';
-import Layout from '@/components/common/layout';
+import Layout from '@/components/layout';
 
 export default function ApprovePage() {
   const setCakesData = useSetRecoilState<CakesDataType>(CakesData);
@@ -32,7 +32,7 @@ export default function ApprovePage() {
   };
 
   return (
-    <Layout>
+    <Layout layoutKey="empty">
       <Styled.Container>
         <SuccessMessageBox />
         <SuccessItemBox />

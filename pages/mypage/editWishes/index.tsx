@@ -1,9 +1,10 @@
-import Layout from '@/components/common/layout';
+
+import Layout from '@/components/layout';
 import EditWishesContainer from '@/components/mypage/EditWishes';
 
 export default function EditWishespage() {
   return (
-    <Layout>
+    <Layout layoutKey="empty">
       <EditWishesContainer />
     </Layout>
   );

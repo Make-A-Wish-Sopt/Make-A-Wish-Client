@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
+import Layout from '@/components/layout';
 import ShareContainer from '@/components/wishes/share';
 
 export default function SharePage() {
   return (
-    <Layout>
+    <Layout layoutKey="empty">
       <ShareContainer />
     </Layout>
   );
