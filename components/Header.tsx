@@ -1,19 +1,24 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+import BackBtn from './common/button/backBtn';
 
 interface HeaderProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function Header(props: HeaderProps) {
   const { children } = props;
 
-  return <Styled.Root>{children}</Styled.Root>;
+  return <Styled.Container>{/* <BackBtn /> */}</Styled.Container>;
 }
 
 const Styled = {
-  Root: styled.header`
+  Container: styled.header`
     display: flex;
-    justify-content: right;
+
+    width: 100%;
+    height: 3rem;
+
+    padding: 0 1.5rem;
   `,
 };
