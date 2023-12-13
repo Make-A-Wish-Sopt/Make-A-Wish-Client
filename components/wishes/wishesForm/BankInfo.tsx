@@ -11,7 +11,7 @@ import useInput from '@/hooks/common/useInput';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 
 import theme from '@/styles/theme';
-import { InputsType } from '@/types/common/input';
+import { BankInfoInputsType } from '@/types/common/input';
 import { validation } from '@/validation/input';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,8 @@ import styled, { CSSProperties } from 'styled-components';
 import Box from '@/components/common/box/Box';
 import CheckBox from '@/components/common/checkBox';
 import useCheckBox from '@/hooks/common/useCheckBox';
+import Input from '@/components/common/input/input';
+import InputBank from '@/components/common/input/inputBank';
 
 export default function BankInfo() {
   const { data } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
@@ -35,7 +37,15 @@ export default function BankInfo() {
     getValues,
     watch,
     formState: { errors },
-  } = useForm<InputsType>();
+  } = useForm<BankInfoInputsType>({
+    defaultValues: {
+      phone: '',
+      mobileCode: '',
+      name: '',
+      bankName: '',
+      account: '',
+    },
+  });
 
   useEffect(() => {
     setValue('phone', data?.data?.phone);
@@ -81,54 +91,35 @@ export default function BankInfo() {
   return (
     <Styled.Container>
       <div>
-        <Box boxStyle={boxStyle} bgColor="pastel_blue">
-          <Styled.GuideContentWrapper>
-            {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
+        <Styled.GuideContentWrapper>
+          {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
 
-            <Styled.GuideCheckBoxWrapper>
-              <CheckBox
-                checkBoxState={checkBoxState}
-                checkBoxText={'동의함'}
-                handleClickFn={handleChangeCheckBoxState}
-              />
-            </Styled.GuideCheckBoxWrapper>
-          </Styled.GuideContentWrapper>
-        </Box>
+          <Styled.GuideCheckBoxWrapper>
+            <CheckBox
+              checkBoxState={checkBoxState}
+              checkBoxText={'동의함'}
+              handleClickFn={handleChangeCheckBoxState}
+            />
+          </Styled.GuideCheckBoxWrapper>
+        </Styled.GuideContentWrapper>
 
         <InputContainer title="계좌번호 입력하기">
-          <BankInput
-            name={name}
-            handleChangeName={handleChangeName}
-            bankName={bankName}
-            changeBankName={changeBankName}
-            account={account}
-            handleChangeAccount={handleChangeAccount}
-            register={register}
-          />
+          <BankInput register={register} />
 
           <InputContainer title="전화번호 입력하기">
             <Styled.InputWrapper>
-              <InputBox
-                boxType={'twoThree'}
-                placeholder="(-)없이 숫자만 입력해주세요"
-                {...register('phone')}
-              />
-              {/* {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>} */}
-              <Box boxType={'oneThree'} bgColor={'main_blue'}>
-                <Button
-                  handleClick={() => console.log('기능추가해주세요!')}
-                  fontColor={'white'}
-                  font={'body14'}
-                >
-                  {'인증번호 받기'}
-                </Button>
-              </Box>
+              <Input placeholder="(-)없이 숫자만 입력해주세요" />
+
+              <Button
+                width={10.6}
+                handleClick={() => console.log('기능추가해주세요!')}
+                fontColor={'white'}
+                font={'body14'}
+              >
+                {'인증번호 받기'}
+              </Button>
             </Styled.InputWrapper>
-            <InputBox
-              boxType={'large'}
-              placeholder="인증번호를 적어주세요"
-              {...register('mobileCode')}
-            />
+            <Input placeholder="인증번호를 적어주세요" />
           </InputContainer>
         </InputContainer>
       </div>
@@ -165,10 +156,15 @@ const Styled = {
     justify-content: space-between;
 
     width: 100%;
-    height: 100%;
+    height: 9.8rem;
 
     ${theme.fonts.body14};
     color: ${theme.colors.dark_blue};
+    background-color: ${theme.colors.pastel_blue};
+
+    padding: 1.2rem;
+
+    border-radius: 1rem;
 
     text-align: left;
   `,
@@ -194,18 +190,10 @@ const Styled = {
     display: flex;
     justify-content: space-between;
 
+    gap: 0.6rem;
+
     width: 100%;
 
     margin-bottom: 1.2rem;
   `,
-};
-
-const boxStyle: CSSProperties = {
-  width: '33.1rem',
-  height: '9.8rem',
-
-  margin: '-0.6rem 0 2.4rem',
-  padding: '1.2rem',
-
-  borderRadius: '1rem',
 };

@@ -22,6 +22,9 @@ import { useEffect, useState } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/common/alertTextBox';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import UploadGift from '@/components/wishes/wishesForm/UploadGift';
+import Input from '@/components/common/input/input';
+import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 
 export default function EditWishesContainer() {
   const {
@@ -54,6 +57,7 @@ export default function EditWishesContainer() {
 
   const [isAlertState, setIsAlertState] = useState(false);
   const [isAbleModify, setIsAbleModify] = useState(true);
+  const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
 
   useEffect(() => {
     checkValue() ? setIsAbleModify(true) : setIsAbleModify(false);
@@ -81,11 +85,6 @@ export default function EditWishesContainer() {
 
   return (
     <>
-      {/* HEADER */}
-      <InputHeader>
-        <BackBtn />
-      </InputHeader>
-
       <Styled.TitleWrapper>
         <Styled.Title>소원링크 정보 수정하기</Styled.Title>
       </Styled.TitleWrapper>
@@ -109,65 +108,32 @@ export default function EditWishesContainer() {
         </InputContainer>
       ) : (
         <>
-          <InputContainer title="갖고 싶은 선물 이미지 등록하기">
-            <Styled.Lable>
-              {wishesStatus === WISHES_STATUS.BEFORE ? (
-                <>
-                  <ItemImageBox imageURL={image.preSignedImageURL} />
-                  <Styled.FileInput
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    onChange={image.uploadImageFile}
-                    readOnly
-                  />
-                </>
-              ) : (
-                <ItemImageBox imageURL={image.preSignedImageURL} />
-              )}
-            </Styled.Lable>
-          </InputContainer>
-
-          <InputContainer title="선물 가격 입력하기">
-            <InputBox
-              placeholder="ex. 12,000,000"
-              handleChangeValue={(e) => {
-                e.target.value = e.target.value.replaceAll(',', '');
-                selfInputPrice.handleChangeSelfInputPrice(e);
-              }}
-              isPriceText
-              color={theme.colors.gray2}
-              value={
-                selfInputPrice.selfInputPrice
-                  ? `${convertMoneyText(selfInputPrice.selfInputPrice.toString())}`
-                  : ''
-              }
-              readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-              limitLength={LIMIT_TEXT[15]}
-            />
-          </InputContainer>
+          <UploadGift />
         </>
       )}
 
       <InputContainer title="선물의 초성 수정하기">
-        <InputBox
+        <Input placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" />
+        {/* <InputBox
           placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
           handleChangeValue={initial.handleChangeInitial}
           value={initial.initial}
           color={theme.colors.gray2}
           limitLength={LIMIT_TEXT[15]}
           readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-        />
+        /> */}
       </InputContainer>
 
       <InputContainer title="소원 링크 제목 수정하기">
-        <InputBox
+        <Input placeholder="ex. ㅇㅇ이의 앙큼 벌스데이" />
+        {/* <InputBox
           placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
           handleChangeValue={title.handleChangeTitle}
           value={title.title}
           color={theme.colors.gray2}
           limitLength={LIMIT_TEXT[20]}
           readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-        />
+        /> */}
       </InputContainer>
 
       {/* Caledar */}
@@ -202,14 +168,7 @@ export default function EditWishesContainer() {
 
       {/* BankInfo */}
       <InputContainer title="송금 받을 계좌번호 수정하기">
-        <BankInput
-          name={bankInfo.name}
-          handleChangeName={bankInfo.handleChangeName}
-          bankName={bankInfo.bankName}
-          changeBankName={bankInfo.changeBankName}
-          account={bankInfo.account}
-          handleChangeAccount={bankInfo.handleChangeAccount}
-        />
+        {/* <BankInput imageFile/> */}
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
