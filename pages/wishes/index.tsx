@@ -1,9 +1,10 @@
-import Layout from '@/components/common/layout';
+
+import Layout from '@/components/layout';
 import WishesFormContainer from '@/components/wishes/wishesForm';
 
 export default function WishesFormPage() {
   return (
-    <Layout>
+    <Layout layoutKey="empty">
       <WishesFormContainer />
     </Layout>
   );

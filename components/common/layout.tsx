@@ -1,18 +1,15 @@
 import styled from 'styled-components';
-import Footer from './footer';
 
 interface LayoutProps {
-  footer?: boolean;
   children: React.ReactNode;
 }
 
 function Layout(props: LayoutProps) {
-  const { footer, children } = props;
+  const { children } = props;
 
   return (
     <Styled.Root>
       <Styled.Container>{children}</Styled.Container>
-      {footer && <Footer />}
     </Styled.Root>
   );
 }

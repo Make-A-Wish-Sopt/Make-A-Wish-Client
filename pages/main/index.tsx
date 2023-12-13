@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
+import Layout from '@/components/layout';
 import MainContainer from '@/components/main';
 
 export default function MainPage() {
   return (
-    <Layout footer>
+    <Layout layoutKey="empty">
       <MainContainer />
     </Layout>
   );
