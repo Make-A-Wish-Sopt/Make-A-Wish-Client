@@ -1,4 +1,4 @@
-export interface InputsType extends AccountInfoType {
+export interface BankInfoInputsType extends AccountInfoType {
   phone: string;
   mobileCode: string;
 }
@@ -9,13 +9,20 @@ export interface AccountInfoType {
   account: string;
 }
 
-export interface WishesDataType {
-  imageURL: string;
-  price: number;
+export interface WishesDataInputType extends Step1InputType {
   title: string;
   hint: string;
-  initial: string;
   startDate: Date;
   endDate: Date;
   phone: string;
+}
+
+export interface Step1InputType extends LoadGiftInputType {
+  initial: string;
+}
+
+export interface LoadGiftInputType {
+  linkURL: string;
+  imageURL: string;
+  price: number;
 }

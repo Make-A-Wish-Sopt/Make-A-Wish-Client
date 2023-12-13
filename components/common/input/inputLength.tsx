@@ -20,5 +20,7 @@ const Styled = {
   Container: styled.div`
     color: ${theme.colors.gray2};
     ${theme.fonts.body12};
+
+    padding-left: 1rem;
   `,
 };

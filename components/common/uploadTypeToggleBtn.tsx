@@ -1,4 +1,4 @@
-import theme from '@/styles/theme';
+import theme, { ColorsTypes } from '@/styles/theme';
 import styled from 'styled-components';
 
 interface UploadTypeToggleBtnProps {
@@ -8,19 +8,21 @@ interface UploadTypeToggleBtnProps {
 
 export default function UploadTypeToggleBtn(props: UploadTypeToggleBtnProps) {
   const { isLinkLoadType, handleLoadTypeToggle } = props;
+  console.log(isLinkLoadType);
+
   return (
     <Styled.ButtonContainer>
       <Styled.ToggleButton
         onClick={() => handleLoadTypeToggle(true)}
-        fontColor={isLinkLoadType ? theme.colors.white : theme.colors.main_blue}
-        bgColor={isLinkLoadType ? theme.colors.main_blue : 'transparent'}
+        fontColor={isLinkLoadType ? 'white' : 'main_blue'}
+        bgColor={isLinkLoadType ? 'main_blue' : 'pastel_blue'}
       >
         선물 링크 불러오기
       </Styled.ToggleButton>
       <Styled.ToggleButton
         onClick={() => handleLoadTypeToggle(false)}
-        fontColor={isLinkLoadType ? theme.colors.main_blue : theme.colors.white}
-        bgColor={isLinkLoadType ? 'transparent' : theme.colors.main_blue}
+        fontColor={isLinkLoadType ? 'main_blue' : 'white'}
+        bgColor={isLinkLoadType ? 'pastel_blue' : 'main_blue'}
       >
         선물 직접 등록하기
       </Styled.ToggleButton>
@@ -44,19 +46,19 @@ const Styled = {
     padding: 0.5rem;
   `,
 
-  ToggleButton: styled.div<{ fontColor: string; bgColor: string }>`
+  ToggleButton: styled.div<{ fontColor: keyof ColorsTypes; bgColor: keyof ColorsTypes }>`
     display: flex;
     justify-content: center;
     align-items: center;
 
     ${theme.fonts.body16};
-    color: ${(props) => props.fontColor};
+    color: ${(props) => theme.colors[props.fontColor]};
 
     width: 16rem;
     height: 4.8rem;
 
     border-radius: 4rem;
-    background-color: ${(props) => props.bgColor};
+    background-color: ${(props) => theme.colors[props.bgColor]};
 
     cursor: pointer;
   `,
