@@ -38,13 +38,7 @@ export default function InputBox(props: InputBoxProps) {
   } = props;
 
   return (
-    <Box
-      boxType={boxType ? boxType : 'large'}
-      bgColor={'pastel_blue'}
-      borderColor={'main_blue'}
-      padding
-      boxStyle={inputBoxStyle}
-    >
+    <>
       <Styled.Input
         placeholder={placeholder}
         onChange={handleChangeValue}
@@ -63,7 +57,7 @@ export default function InputBox(props: InputBoxProps) {
         />
       )}
       {dropDown && <Image src={ArrowDownIc} alt="열기" />}
-    </Box>
+    </>
   );
 }
 

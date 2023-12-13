@@ -20,15 +20,6 @@ export default function WishesFormContainer() {
 
   return (
     <Styled.Container>
-      {/* Header */}
-      <InputHeader>
-        <Image
-          src={BackBtnIc}
-          alt="뒤로가기"
-          style={{ cursor: 'pointer' }}
-          onClick={handleBackBtnClick}
-        ></Image>
-      </InputHeader>
       {/* Title */}
       <Styled.TitleWrapper>
         <Image src={WishesFormPresentIc} alt="선물 이미지" />
