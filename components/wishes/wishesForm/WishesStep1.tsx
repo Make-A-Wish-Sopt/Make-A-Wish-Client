@@ -6,7 +6,7 @@ import Button from '@/components/common/button';
 import styled from 'styled-components';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import { Step1InputType, WishesDataInputType } from '@/types/common/input';
+import { Step1InputType, WishesDataInputType } from '@/types/common/input/wishesInput';
 import { UseFormReturn, useForm } from 'react-hook-form';
 import Input from '@/components/common/input/input';
 import InputLength from '@/components/common/input/inputLength';

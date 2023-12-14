@@ -39,14 +39,14 @@ export default function WishesContainer() {
     <Styled.Container>
       <MainView text={`${data?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClick={handleMoveToCakes}>
+        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleMoveToCakes}>
           소원 들어주러 가기
         </Button>
 
         <Button
           boxType="btn--large"
-          colorSystem="pastelBlue_darkBlue"
-          handleClick={handleMoveToHome}
+          colorSystem="pastelBlue_mainBlue"
+          handleClickFn={handleMoveToHome}
         >
           나도 소원 빌러 가기
         </Button>

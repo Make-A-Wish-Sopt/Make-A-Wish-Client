@@ -158,11 +158,7 @@ export default function EditWishesContainer() {
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">
-        <TextareaBox
-          placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
-          limitLength={LIMIT_TEXT.DESCRIPTION}
-          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-        />
+        <TextareaBox placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ" />
       </InputContainer>
 
       <Styled.ButtonWrapper>

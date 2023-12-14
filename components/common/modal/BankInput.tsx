@@ -6,7 +6,7 @@ import { ChangeEvent } from 'react';
 import Button from '../button';
 import { UseFormRegister, UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
-import { WishesDataInputType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import Box from '../box';

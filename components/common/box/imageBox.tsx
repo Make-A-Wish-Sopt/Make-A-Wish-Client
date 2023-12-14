@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { BoxSize, StyledBox } from '.';
 import theme from '@/styles/theme';
-import { ColorSystemType, ImageBoxTypes } from '@/types/common/boxStyleType';
+import { ColorSystemType, ImageBoxTypes } from '@/types/common/box/boxStyleType';
 import { PropsWithChildren } from 'react';
 
 interface ImageBoxProps {
@@ -21,33 +21,24 @@ export default function ImageBox(props: PropsWithChildren<ImageBoxProps>) {
   );
 }
 
-type ImageBoxStyleType = 'Textarea' | 'Image';
-const ImageBoxStyle: Record<ImageBoxStyleType, CSSProperties> = {
-  Textarea: {
-    padding: '1.4rem 1.2rem',
-    border: `0.1rem solid ${theme.colors.main_blue}`,
-  },
-
-  Image: {
-    position: 'relative',
-    objectFit: 'cover',
-    border: `0.1rem solid ${theme.colors.main_blue}`,
-  },
-};
-
 const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
+  ${BoxSize.Image}
   padding: 1rem 1rem 1rem 1.2rem;
   border: 0.1rem solid ${theme.colors.main_blue};
-  border-radius: 1rem;
+  border-radius: 1.6rem;
 
   //ImageBox Style System
   &.imageBox--textarea {
-    ${BoxSize.Image}
-    ${ImageBoxStyle.Textarea}
+    padding: 1.4rem 1.2rem;
   }
 
   &.imageBox--image {
-    ${BoxSize.Image}
-    ${ImageBoxStyle.Image}
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    object-fit: cover;
   }
 `;

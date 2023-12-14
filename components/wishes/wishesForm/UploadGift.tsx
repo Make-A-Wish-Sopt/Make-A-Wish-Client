@@ -12,7 +12,7 @@ import { ChangeEvent } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/common/alertTextBox';
 import { UseFormReturn } from 'react-hook-form';
-import { Step1InputType } from '@/types/common/input';
+import { Step1InputType } from '@/types/common/input/wishesInput';
 
 interface UploadGiftProps {
   imageFile: File | Blob | null;

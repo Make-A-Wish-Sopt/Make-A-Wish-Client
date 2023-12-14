@@ -10,7 +10,7 @@ import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
 import { getSiteData } from '@/utils/common/getSiteData';
 import Input from '@/components/common/input/input';
-import { Step1InputType } from '@/types/common/input';
+import { Step1InputType } from '@/types/common/input/wishesInput';
 import { UseFormReturn } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
 

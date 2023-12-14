@@ -7,7 +7,7 @@ import { TODAY } from '@/constant/dateList';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
-import { WishesDataInputType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { getDate } from '@/utils/common/getDate';
 import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';

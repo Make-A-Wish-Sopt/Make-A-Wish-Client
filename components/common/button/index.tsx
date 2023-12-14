@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { BtnBoxTypes, ColorSystemType } from '@/types/common/boxStyleType';
+import { BtnBoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
 import BtnBox from '../box/btnBox';
 
 interface ButtonProps {

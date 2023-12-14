@@ -2,7 +2,7 @@ import PATH from '../../constant/path';
 import { client } from '../common/axios';
 import axios from 'axios';
 import { SiteDataType } from '@/types/siteDataType';
-import { AccountInfoType, WishesDataInputType } from '@/types/common/input';
+import { AccountInfoType, WishesDataInputType } from '@/types/common/input/wishesInput';
 
 export const createWishesLink = async (wishesData: WishesDataInputType) => {
   const accessToken = localStorage.getItem('accessToken');

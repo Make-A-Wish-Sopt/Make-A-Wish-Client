@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useWishesStep() {
-  const [stepIndex, setStepIndex] = useState(4);
+  const [stepIndex, setStepIndex] = useState(1);
 
   const handleNextStep = () => {
     setStepIndex((prev) => (prev += 1));

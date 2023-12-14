@@ -14,7 +14,7 @@ import { useRecoilValue } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
 import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ImageBox from '@/components/common/box/imageBox';
 
 interface PreviewProps {

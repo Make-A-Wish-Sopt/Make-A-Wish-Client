@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BoxSize, StyledBox } from '.';
 import theme from '@/styles/theme';
-import { ColorSystemType, InputBoxTypes } from '@/types/common/boxStyleType';
+import { ColorSystemType, InputBoxTypes } from '@/types/common/box/boxStyleType';
 import { PropsWithChildren } from 'react';
 
 interface InputBoxProps {

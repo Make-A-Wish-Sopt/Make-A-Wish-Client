@@ -9,7 +9,7 @@ import Preview from './Preview';
 import BankInfo from './BankInfo';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 
 export default function WishesFormContainer() {
   const { stepIndex, handleNextStep, handlePrevStep } = useWishesStep();

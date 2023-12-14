@@ -5,7 +5,7 @@ import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
-import { BankInfoInputsType } from '@/types/common/input';
+import { BankInfoInputsType } from '@/types/common/input/wishesInput';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery } from 'react-query';
 import styled, { CSSProperties } from 'styled-components';

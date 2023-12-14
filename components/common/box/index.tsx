@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import { BoxTypes, ColorSystemType } from '@/types/common/boxStyleType';
+import { BoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
 import styled, { CSSProperties } from 'styled-components';
 
 interface BoxProps {
@@ -19,8 +19,12 @@ export default function Box(props: BoxProps) {
   );
 }
 
-type BoxSizeType = 'Half' | 'Large' | 'Image';
+type BoxSizeType = 'Small' | 'Half' | 'Large' | 'Image';
 export const BoxSize: Record<BoxSizeType, CSSProperties> = {
+  Small: {
+    width: '7.4rem',
+    height: '4.6rem',
+  },
   Half: {
     width: 'calc(100% / 2) - 0.5rem',
     height: '5rem',
@@ -37,6 +41,10 @@ export const BoxSize: Record<BoxSizeType, CSSProperties> = {
 
 export const StyledBox = styled.div`
   border-radius: 1rem;
+
+  .small {
+    ${BoxSize.Small}
+  }
 
   .half {
     ${BoxSize.Half}
@@ -69,6 +77,11 @@ export const StyledBox = styled.div`
   &.pastelBlue_white {
     background-color: ${theme.colors.pastel_blue};
     color: ${theme.colors.white};
+  }
+
+  &.pastelBlue_mainBlue {
+    background-color: ${theme.colors.pastel_blue};
+    color: ${theme.colors.main_blue};
   }
 
   &.pastelBlue_gray2 {
