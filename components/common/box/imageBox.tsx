@@ -1,4 +1,4 @@
-import styled, { CSSProperties } from 'styled-components';
+import styled from 'styled-components';
 import { BoxSize, StyledBox } from '.';
 import theme from '@/styles/theme';
 import { ColorSystemType, ImageBoxTypes } from '@/types/common/box/boxStyleType';

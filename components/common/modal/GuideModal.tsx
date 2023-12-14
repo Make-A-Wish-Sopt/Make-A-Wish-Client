@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 import IconButton from '@/components/common/button/iconButton';

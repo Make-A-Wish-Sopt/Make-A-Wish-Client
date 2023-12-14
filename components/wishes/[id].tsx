@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import theme from '@/styles/theme';
 import Button from '../common/button';
 import MainView from '../common/mainView';
 import { getWishesData } from '@/api/cakes/cakesAPI';

@@ -13,6 +13,7 @@ export default function Header(props: HeaderProps) {
   return (
     <Styled.Container width={width}>
       <BackBtn />
+      {children}
     </Styled.Container>
   );
 }
@@ -20,6 +21,7 @@ export default function Header(props: HeaderProps) {
 const Styled = {
   Container: styled.header<{ width: string }>`
     display: flex;
+    justify-content: space-between;
     align-items: center;
 
     width: ${(props) => props.width};

@@ -7,9 +7,6 @@ import router from 'next/router';
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
-import Header from '@/components/common/header';
-import IconButton from '@/components/common/button/iconButton';
-import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '@/components/common/modal/ShareModal';
 
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';

@@ -1,8 +1,5 @@
 import InputContainer from '@/components/common/input/inputContainer';
 import styled from 'styled-components';
-import ItemImageBox from './itemImageBox';
-import LargeBox from '@/components/common/box';
-import theme from '@/styles/theme';
 import { ImageUploadIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import InputLength from '@/components/common/input/inputLength';
@@ -14,6 +11,7 @@ import AlertTextBox from '@/components/common/alertTextBox';
 import { UseFormReturn } from 'react-hook-form';
 import { Step1InputType } from '@/types/common/input/wishesInput';
 import ImageBox from '@/components/common/box/imageBox';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface UploadGiftProps {
   imageFile: File | Blob | null;
@@ -29,9 +27,7 @@ export default function UploadGift(props: UploadGiftProps) {
       <InputContainer title="갖고 싶은 선물 이미지 등록하기">
         <Styled.Lable>
           {preSignedImageURL ? (
-            <ImageBox>
-              <Image src={preSignedImageURL} alt="선물 이미지" />
-            </ImageBox>
+            <ItemImageBox src={preSignedImageURL} alt="선물 이미지" />
           ) : (
             <ImageBox boxType="imageBox--image" colorSystem="pastelBlue_darkBlue">
               <Styled.UploadImageBox>

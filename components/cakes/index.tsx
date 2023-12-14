@@ -1,4 +1,3 @@
-import useInput from '@/hooks/common/useInput';
 import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
@@ -7,7 +6,6 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import TextareaBox from '../common/input/textareaBox';
-import CakesHeader from './cakesHeader';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { LIMIT_TEXT } from '@/constant/limitText';

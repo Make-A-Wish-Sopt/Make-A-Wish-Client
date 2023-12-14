@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import { LinkBeefCakeImg } from '@/public/assets/images';
-import BackBtn from '@/components/common/button/backBtn';
 import { useEffect, useState } from 'react';
 import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
 import { convertDateFormat } from '@/hooks/useDate';

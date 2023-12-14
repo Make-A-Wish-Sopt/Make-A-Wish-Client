@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import theme from '@/styles/theme';
 import { LinksPageChatImg, MainCakeImg } from '@/public/assets/images';
 import router from 'next/router';
 import Button from '@/components/common/button';

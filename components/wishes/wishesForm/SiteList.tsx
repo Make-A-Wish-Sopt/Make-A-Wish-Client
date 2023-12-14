@@ -33,12 +33,3 @@ const Styled = {
     margin: 0 1rem 1rem 0;
   `,
 };
-
-const StyledSiteItem = styled.li`
-  display: inline-block;
-  width: 6rem;
-  height: 6rem;
-  background-color: ${theme.colors.white};
-  cursor: pointer;
-  margin: 0 1rem 1rem 0;
-`;

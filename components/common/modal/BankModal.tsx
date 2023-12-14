@@ -22,7 +22,7 @@ export default function BankModal(props: BankModalProps) {
 
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-          <Styled.BankItem>
+          <Styled.BankItem key={bank.name}>
             <Styled.BanksWrapper>
               <Styled.BankLogo>
                 <Image src={bank.logo} alt={`${bank.name} 로고`} />

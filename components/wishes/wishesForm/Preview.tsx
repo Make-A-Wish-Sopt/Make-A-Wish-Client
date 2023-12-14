@@ -1,6 +1,5 @@
 import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import Button from '@/components/common/button';
@@ -15,7 +14,6 @@ import { WishesData } from '@/recoil/formPage/wishesData';
 import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
-import ImageBox from '@/components/common/box/imageBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface PreviewProps {

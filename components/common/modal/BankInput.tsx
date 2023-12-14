@@ -1,15 +1,15 @@
 import useModal from '@/hooks/common/useModal';
 import Modal from './modal';
 import BankModal from './BankModal';
-import styled, { CSSProperties } from 'styled-components';
-import { ChangeEvent } from 'react';
+import styled from 'styled-components';
 import Button from '../button';
-import { UseFormRegister, UseFormReturn } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
-import Box from '../box';
+import { StyledBox } from '../box';
+import theme from '@/styles/theme';
 
 interface BankInputProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -21,16 +21,16 @@ export default function BankInput(props: BankInputProps) {
 
   return (
     <Styled.Container>
-      <Box boxStyled={BoxStyled} colorSystem="lightRed_warningRed">
+      <Styled.GuideBox className={'lightRed_warningRed'}>
         ※ 4회 이상 틀리면, 서비스 이용이 제한됩니다
-      </Box>
+      </Styled.GuideBox>
 
       <Styled.ItemWrapper>
-        <Input placeholder="예금주명" />
+        <Input placeholder="예금주명" register={methods.register('name')} />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <Input placeholder="은행 선택" register={methods.register('name')} readOnly>
+        <Input placeholder="은행 선택" readOnly>
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>
       </Styled.ItemWrapper>
@@ -59,16 +59,6 @@ export default function BankInput(props: BankInputProps) {
   );
 }
 
-const BoxStyled: CSSProperties = {
-  width: '100%',
-  height: '4.4rem',
-  padding: '1.2rem',
-
-  fontSize: '14px',
-  fontFamily: 'Galmuri11',
-  lineHeight: '140%',
-};
-
 const Styled = {
   Container: styled.div`
     margin-bottom: 2.4rem;
@@ -85,5 +75,15 @@ const Styled = {
     gap: 0.6rem;
 
     width: 100%;
+  `,
+
+  GuideBox: styled(StyledBox)`
+    width: 100%;
+    height: 4.4rem;
+
+    padding: 1.2rem;
+
+    ${theme.fonts.body14};
+    line-height: 140%;
   `,
 };
