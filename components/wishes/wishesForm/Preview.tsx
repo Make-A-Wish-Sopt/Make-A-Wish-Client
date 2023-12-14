@@ -16,6 +16,7 @@ import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ImageBox from '@/components/common/box/imageBox';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface PreviewProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -45,15 +46,7 @@ export default function Preview(props: PreviewProps) {
         </Styled.Period>
 
         <InputContainer title={wishesData.title}>
-          <ImageBox boxType="imageBox--image" colorSystem="white_mainBlue">
-            <Image
-              src={wishesData.imageURL}
-              fill={true}
-              alt="선물이미지 미리보기"
-              style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-            />
-          </ImageBox>
-
+          <ItemImageBox src={wishesData.imageURL} alt="선물이미지 미리보기" />
           <Styled.PresentPrice>
             가격 : {convertMoneyText(String(wishesData.price))}
           </Styled.PresentPrice>

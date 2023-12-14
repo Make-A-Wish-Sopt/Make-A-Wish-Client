@@ -13,6 +13,8 @@ interface InputBoxProps {
 export default function InputBox(props: PropsWithChildren<InputBoxProps>) {
   const { width, boxType, colorSystem, children } = props;
 
+  console.log(boxType);
+
   return (
     <StyledInputBox className={`${colorSystem} ${boxType}`} width={width}>
       {children}
@@ -39,5 +41,6 @@ const StyledInputBox = styled(StyledBox)<{ width?: string }>`
 
   &.inputBox--custom {
     width: ${(props) => props.width};
+    height: 5rem;
   }
 `;

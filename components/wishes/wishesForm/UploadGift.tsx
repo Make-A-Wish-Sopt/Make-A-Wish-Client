@@ -13,6 +13,7 @@ import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/common/alertTextBox';
 import { UseFormReturn } from 'react-hook-form';
 import { Step1InputType } from '@/types/common/input/wishesInput';
+import ImageBox from '@/components/common/box/imageBox';
 
 interface UploadGiftProps {
   imageFile: File | Blob | null;
@@ -28,18 +29,15 @@ export default function UploadGift(props: UploadGiftProps) {
       <InputContainer title="갖고 싶은 선물 이미지 등록하기">
         <Styled.Lable>
           {preSignedImageURL ? (
-            <ItemImageBox imageURL={preSignedImageURL} />
+            <ImageBox>
+              <Image src={preSignedImageURL} alt="선물 이미지" />
+            </ImageBox>
           ) : (
-            <LargeBox
-              bgColor={theme.colors.pastel_blue}
-              font={theme.fonts.body14}
-              fontColor={theme.colors.main_blue}
-            >
-              ※ 등록 가능한 사진파일 <br />• 파일용량 : 10MB 이하
+            <ImageBox boxType="imageBox--image" colorSystem="pastelBlue_darkBlue">
               <Styled.UploadImageBox>
                 <Image src={ImageUploadIc} alt="업로드 아이콘" />
               </Styled.UploadImageBox>
-            </LargeBox>
+            </ImageBox>
           )}
           <Styled.FileInput
             type="file"

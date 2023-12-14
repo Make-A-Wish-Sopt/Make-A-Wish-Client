@@ -25,10 +25,10 @@ const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
   ${BoxSize.Image}
   padding: 1rem 1rem 1rem 1.2rem;
   border: 0.1rem solid ${theme.colors.main_blue};
-  border-radius: 1.6rem;
 
   //ImageBox Style System
   &.imageBox--textarea {
+    border-radius: 1rem;
     padding: 1.4rem 1.2rem;
   }
 
@@ -38,6 +38,8 @@ const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    border-radius: 1.6rem;
 
     object-fit: cover;
   }

@@ -1,11 +1,11 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
-interface PresentImageBoxProps {
+interface InputLinkProps {
   children: React.ReactNode;
 }
 
-export default function PresentImageBox(props: PresentImageBoxProps) {
+export default function InputLink(props: InputLinkProps) {
   const { children } = props;
 
   return <Styled.Container>{children}</Styled.Container>;
@@ -13,15 +13,14 @@ export default function PresentImageBox(props: PresentImageBoxProps) {
 
 const Styled = {
   Container: styled.div`
+    width: 100%;
+    height: 4.8rem;
+
     display: flex;
-    justify-content: center;
     align-items: center;
 
-    width: 100%;
-    height: 16rem;
-
-    border: 0.1rem solid ${theme.colors.main_blue};
-    background-color: ${theme.colors.white};
-    border-radius: 1.6rem;
+    padding: 1.4rem 1.2rem;
+    background-color: ${theme.colors.main_blue};
+    border-radius: 1rem;
   `,
 };

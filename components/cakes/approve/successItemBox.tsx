@@ -5,10 +5,9 @@ import styled from 'styled-components';
 import Contribution from '../contribution';
 import { useRecoilValue } from 'recoil';
 import { CakesData } from '@/recoil/cakes/cakesData';
-import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
 import { requestPayApprove } from '@/api/cakes/cakesAPI';
 import ImageBox from '@/components/common/box/imageBox';
-import Image from 'next/image';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);
@@ -35,15 +34,7 @@ export default function SuccessItemBox() {
         </Styled.Container>
       ) : (
         <Styled.Container>
-          <ImageBox boxType="imageBox--image">
-            <Image
-              src={data?.imageUrl}
-              fill={true}
-              alt="실제 선물 이미지"
-              style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-            />
-          </ImageBox>
-
+          <ItemImageBox src={data?.imageUrl} alt="실제 선물 이미지" />
           <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
         </Styled.Container>
       )}

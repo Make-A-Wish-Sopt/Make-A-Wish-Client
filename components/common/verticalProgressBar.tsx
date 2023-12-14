@@ -23,7 +23,6 @@ export default function VerticalProgressBar(props: ProgressBarProps) {
 }
 
 const Styled = {
-
   ProgressBox: styled.div`
     height: 27rem;
     display: flex;

@@ -1,14 +1,9 @@
-import HalfBox from '@/components/common/box/HalfBox';
 import Button from '@/components/common/button';
 import Calendar from '@/components/common/calendar/calendar';
 import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
-import InputHeader from '@/components/common/inputHeader';
-import BankInput from '@/components/common/modal/BankInput';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import ItemImageBox from '@/components/wishes/wishesForm/itemImageBox';
 import ItemLink from '@/components/wishes/wishesForm/itemLink';
-import { LIMIT_TEXT } from '@/constant/limitText';
 import { WISHES_STATUS } from '@/constant/wishesStatus';
 import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import useEditWishesInfo from '@/hooks/queries/mypage/useEditWishesInfo';
@@ -22,63 +17,43 @@ import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import UploadGift from '@/components/wishes/wishesForm/UploadGift';
 import Input from '@/components/common/input/input';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
+import { useForm } from 'react-hook-form';
+import { BankInfoInputsType, WishesDataInputType } from '@/types/common/input/wishesInput';
+import BankInput from '@/components/common/modal/BankInput';
 
 export default function EditWishesContainer() {
-  const {
-    itemLink,
-    image,
-    initial,
-    title,
-    startDate,
-    endDate,
-    bankInfo,
-    phone,
-    hint,
-    selfInputPrice,
-    isLinkLoadType,
-    wishesStatus,
-  } = useInitEditWishesInfo();
-  const { editWishesData } = useEditWishesInfo({
-    startDate: startDate.startDate,
-    endDate: endDate,
-    name: bankInfo.name,
-    bankName: bankInfo.bankName,
-    account: bankInfo.account,
-    phone: phone.phone,
-    imageUrl: isLinkLoadType ? itemLink.imageURL : image.preSignedImageURL,
-    price: isLinkLoadType ? itemLink.price : Number(selfInputPrice.selfInputPrice),
-    title: title.title,
-    hint: hint.hint,
-    initial: initial.initial,
-  });
-
-  const [isAlertState, setIsAlertState] = useState(false);
-  const [isAbleModify, setIsAbleModify] = useState(true);
   const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
+  const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접
 
-  useEffect(() => {
-    checkValue() ? setIsAbleModify(true) : setIsAbleModify(false);
-  }, [itemLink, image, initial, title, bankInfo, phone, selfInputPrice]);
-
-  const checkValue = () => {
-    return (
-      (itemLink.imageURL.length !== 0 || image.preSignedImageURL.length !== 0) &&
-      initial.initial.length !== 0 &&
-      title.title.length !== 0 &&
-      bankInfo.account.length !== 0 &&
-      bankInfo.bankName.length !== 0 &&
-      bankInfo.name.length !== 0 &&
-      phone.phone.length !== 0 &&
-      !isAlertState &&
-      !validation.checkAccountLength(bankInfo.account) &&
-      (itemLink.price !== 0 || selfInputPrice.selfInputPrice.length !== 0)
-    );
+  const handleLoadTypeToggle = (state: boolean) => {
+    setIsLinkLoadType(state);
   };
 
-  useEffect(() => {
-    validation.isIncludeHyphen(phone.phone) ? setIsAlertState(true) : setIsAlertState(false);
-    validation.isCorrectPhoneNumber(phone.phone) ? setIsAlertState(false) : setIsAlertState(true);
-  }, [phone]);
+  const methods = useForm<WishesDataInputType>({
+    defaultValues: {
+      linkURL: '',
+      imageURL: '',
+      price: 0,
+      initial: '',
+      title: '',
+      hint: '',
+      phone: '',
+      mobileCode: '',
+      name: '',
+      bankName: '',
+      account: '',
+    },
+  });
+
+  const bankMethods = useForm<BankInfoInputsType>({
+    defaultValues: {
+      phone: '',
+      mobileCode: '',
+      name: '',
+      bankName: '',
+      account: '',
+    },
+  });
 
   return (
     <>
@@ -87,74 +62,60 @@ export default function EditWishesContainer() {
       </Styled.TitleWrapper>
 
       <UploadTypeToggleBtn
-        isLinkLoadType={isLinkLoadType.isLinkLoadType}
-        handleLoadTypeToggle={isLinkLoadType.handleLoadTypeToggle}
+        isLinkLoadType={isLinkLoadType}
+        handleLoadTypeToggle={handleLoadTypeToggle}
       />
 
-      {isLinkLoadType.isLinkLoadType ? (
-        <InputContainer title="">
-          <ItemLink
-            linkURL={itemLink.linkURL}
-            handleChangeLinkURL={itemLink.handleChangeLinkURL}
-            imageURL={itemLink.imageURL}
-            changeImageURL={itemLink.changeImageURL}
-            price={itemLink.price}
-            changePrice={itemLink.changePrice}
-            readOnly
-          />
+      {isLinkLoadType ? (
+        <InputContainer title="안녕하세요?!">
+          <ItemLink methods={methods} />
         </InputContainer>
       ) : (
         <>
-          <UploadGift />
+          <UploadGift
+            imageFile={imageFile}
+            preSignedImageURL={preSignedImageURL}
+            uploadImageFile={uploadImageFile}
+            methods={methods}
+          />
         </>
       )}
 
       <InputContainer title="선물의 초성 수정하기">
-        <Input placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" />
+        <Input placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" register={methods.register('initial')} />
       </InputContainer>
 
       <InputContainer title="소원 링크 제목 수정하기">
-        <Input placeholder="ex. ㅇㅇ이의 앙큼 벌스데이" />
+        <Input placeholder="ex. ㅇㅇ이의 앙큼 벌스데이" register={methods.register('hint')} />
       </InputContainer>
 
       {/* Caledar */}
       <InputContainer title="나의 생일주간 재설정하기">
         <Styled.CalendarWrapper>
           {/* 시작일 */}
-          <HalfBox
-            bgColor={theme.colors.pastel_blue}
-            fontColor={
-              wishesStatus === WISHES_STATUS.BEFORE ? theme.colors.dark_blue : theme.colors.gray2
-            }
-            borderColor={theme.colors.main_blue}
-          >
-            <Calendar
-              date={startDate.startDate}
-              changeStartDate={startDate.changeStartDate}
-              calendarIcon={wishesStatus === WISHES_STATUS.BEFORE ? CalendarIc : CalendarGreyIc}
-              readOnly={wishesStatus === WISHES_STATUS.BEFORE ? false : true}
-            />
-          </HalfBox>
+
+          {/* <Calendar
+            date={startDate.startDate}
+            changeStartDate={startDate.changeStartDate}
+            calendarIcon={wishesStatus === WISHES_STATUS.BEFORE ? CalendarIc : CalendarGreyIc}
+            readOnly={wishesStatus === WISHES_STATUS.BEFORE ? false : true}
+          />
 
           {/* 종료일 */}
-          <HalfBox
-            bgColor={theme.colors.pastel_blue}
-            fontColor={theme.colors.gray2}
-            borderColor={theme.colors.main_blue}
-          >
-            <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />
-          </HalfBox>
+          {/* <Calendar date={endDate} calendarIcon={CalendarGreyIc} readOnly={true} />  */}
         </Styled.CalendarWrapper>
       </InputContainer>
 
       {/* BankInfo */}
       <InputContainer title="송금 받을 계좌번호 수정하기">
-        {/* <BankInput imageFile/> */}
+        <BankInput methods={bankMethods} />
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
-        <Input placeholder="연락처는 (-)없이 입력해주세요" />
-        {phone.phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
+        <Input
+          placeholder="연락처는 (-)없이 입력해주세요"
+          register={bankMethods.register('phone')}
+        />
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">

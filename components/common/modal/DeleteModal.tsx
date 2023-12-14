@@ -5,7 +5,7 @@ import theme from '@/styles/theme';
 import { CloseSmallIc } from '@/public/assets/icons';
 import IconButton from '@/components/common/button/iconButton';
 import { MainCakeImg } from '@/public/assets/images';
-import ButtonBox from '@/components/common/button/buttonBox';
+import Button from '../button';
 
 interface DeleteModalProps {
   clickModal: () => void;
@@ -33,18 +33,13 @@ export default function DeleteModal(props: DeleteModalProps) {
       </Styled.ContentContainer>
 
       <Styled.ButtonContainer>
-        <ButtonBox
-          handleClick={clickModal}
-          backgroundColor={theme.colors.white}
-          fontColor={theme.colors.main_blue}
-        >취소</ButtonBox>
-        <ButtonBox
-          handleClick={handleDeleteConfirm}
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-        >확인</ButtonBox>
+        <Button boxType="btn--half" handleClickFn={clickModal}>
+          취소
+        </Button>
+        <Button boxType="btn--half" handleClickFn={handleDeleteConfirm}>
+          확인
+        </Button>
       </Styled.ButtonContainer>
-
     </Styled.Container>
   );
 }
@@ -85,10 +80,10 @@ const Styled = {
   `,
 
   ButtonContainer: styled.div`
-  display: flex;
-  align-items: center;
-  & > :not(:last-child) {
-    margin-right: 1rem
-  }
-`,
+    display: flex;
+    align-items: center;
+    & > :not(:last-child) {
+      margin-right: 1rem;
+    }
+  `,
 };

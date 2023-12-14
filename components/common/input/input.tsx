@@ -34,4 +34,5 @@ const StyledInput = styled.input`
   ${theme.fonts.body12};
   color: ${theme.colors.dark_blue};
   width: 100%;
+  height: 100%;
 `;

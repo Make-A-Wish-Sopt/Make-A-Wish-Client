@@ -4,7 +4,7 @@ import Image from 'next/image';
 import IconButton from '@/components/common/button/iconButton';
 import { CloseWhiteIc } from '@/public/assets/icons';
 import { GuideContentImg, GuideBoxImg } from '@/public/assets/images';
-import ButtonBox from '@/components/common/button/buttonBox';
+import Button from '../button';
 
 interface GuideModalProps {
   clickModal: () => void;
@@ -15,13 +15,12 @@ export default function GuideModal(props: GuideModalProps) {
 
   const handleCustomerService = () => {
     window.Kakao.Channel.chat({
-      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID
+      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
     });
   };
 
   return (
     <Styled.Container>
-
       <Styled.Background2>
         <Styled.ButtonContainer onClick={clickModal}>
           <IconButton src={CloseWhiteIc} alt="닫기" />
@@ -32,21 +31,18 @@ export default function GuideModal(props: GuideModalProps) {
             <Styled.ScrollContent>
               <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
               <Styled.ButtonContainer2>
-                <ButtonBox
-                  handleClick={handleCustomerService}
-                  backgroundColor={theme.colors.main_blue}
-                  fontColor={theme.colors.white}
+                <Button
+                  boxType="btn--large"
+                  colorSystem="mainBlue_white"
+                  handleClickFn={handleCustomerService}
                 >
                   고객센터 문의하기
-                </ButtonBox>
+                </Button>
               </Styled.ButtonContainer2>
-
             </Styled.ScrollContent>
           }
         </Styled.Content>
-
       </Styled.Background2>
-
     </Styled.Container>
   );
 }
@@ -86,11 +82,11 @@ const Styled = {
     border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
-    background-image:url(${GuideBoxImg.src});
-    background-size: contain; 
-    background-repeat: no-repeat; 
-    background-position: center; 
-    /* max-height: 61.4rem; 
+    background-image: url(${GuideBoxImg.src});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* max-height: 61.4rem;
     overflow-y: auto;
     padding: 4.5 0 2rem; */
   `,

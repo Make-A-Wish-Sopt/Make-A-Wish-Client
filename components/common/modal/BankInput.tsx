@@ -52,7 +52,7 @@ export default function BankInput(props: BankInputProps) {
 
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <BankModal handleToggle={handleToggle} reister={methods.register('bankName')} />
+          <BankModal handleToggle={handleToggle} register={methods.register('bankName')} />
         </Modal>
       )}
     </Styled.Container>

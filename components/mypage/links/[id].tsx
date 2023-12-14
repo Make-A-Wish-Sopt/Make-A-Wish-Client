@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import { LinkBeefCakeImg } from '@/public/assets/images';
-import InputHeader from '@/components/common/inputHeader';
 import BackBtn from '@/components/common/button/backBtn';
 import { useEffect, useState } from 'react';
 import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
@@ -27,12 +26,10 @@ export default function LinksContainer() {
 
   return (
     <>
-      <InputHeader>
-        <BackBtn />
-      </InputHeader>
-
       <Styled.Title>{wishData?.title}</Styled.Title>
-      <Styled.Date>{`${convertDateFormat(wishData?.startAt)} ~ ${convertDateFormat(wishData?.endAt)}`}</Styled.Date>
+      <Styled.Date>{`${convertDateFormat(wishData?.startAt)} ~ ${convertDateFormat(
+        wishData?.endAt,
+      )}`}</Styled.Date>
 
       <Styled.CenterContainer>
         <Styled.ContentContainer>
@@ -44,7 +41,6 @@ export default function LinksContainer() {
         </Styled.ContentContainer>
 
         <VerticalProgressBar percent={wishData?.percent} />
-
       </Styled.CenterContainer>
     </>
   );
@@ -71,10 +67,10 @@ const Styled = {
   `,
 
   ContentContainer: styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-`,
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  `,
 
   BarContainer: styled.div`
     float: right;
@@ -88,8 +84,8 @@ justify-content: center;
   `,
 
   About: styled.div`
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
     margin: 0 0 1rem;
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};

@@ -25,6 +25,7 @@ const Styled = {
     width: ${(props) => props.width};
     height: 3rem;
 
-    padding: 0 1.5rem;
+    padding: 1rem 1.5rem;
+    margin-top: 1.6rem;
   `,
 };

@@ -17,8 +17,8 @@ import { getWishesData } from '@/api/cakes/cakesAPI';
 import Button from '../common/button';
 import Input from '../common/input/input';
 import { useForm } from 'react-hook-form';
-import { CakesDataInputType } from '@/types/common/input/cakesInput';
 import InputContainer from '../common/input/inputContainer';
+import { CakesDataInputType } from '@/types/common/input/cakesInput';
 
 export default function CakesContainer() {
   const { selectedCake, selectedIndex, selectCake } = useSelectCakes();

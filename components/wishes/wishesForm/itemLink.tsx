@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { validation } from '@/validation/input';
 import { useEffect, useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import ItemImageBox from './itemImageBox';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { getItemInfo } from '@/api/wishes/wishesAPI';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
@@ -13,6 +12,7 @@ import Input from '@/components/common/input/input';
 import { Step1InputType } from '@/types/common/input/wishesInput';
 import { UseFormReturn } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface ItemLinkProps {
   methods: UseFormReturn<Step1InputType, any, undefined>;
