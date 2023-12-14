@@ -2,18 +2,17 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
-import Box from '../box/Box';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface BankModalProps {
   handleToggle: () => void;
-  changeBankName: (input: string) => void;
+  register: UseFormRegisterReturn<'bankName'>;
 }
 
 export default function BankModal(props: BankModalProps) {
-  const { handleToggle, changeBankName } = props;
+  const { handleToggle, register } = props;
 
   const handleChangeBankName = (input: string) => {
-    changeBankName(input);
     handleToggle();
   };
 
@@ -24,7 +23,7 @@ export default function BankModal(props: BankModalProps) {
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
           <Styled.BankItem>
-            <Styled.BanksWrapper onClick={() => handleChangeBankName(bank.name)}>
+            <Styled.BanksWrapper>
               <Styled.BankLogo>
                 <Image src={bank.logo} alt={`${bank.name} 로고`} />
               </Styled.BankLogo>

@@ -3,7 +3,7 @@ import { CakeListType } from '@/types/cakes/cakeListType';
 import InputContainer from '../common/input/inputContainer';
 import styled from 'styled-components';
 import Image from 'next/image';
-import LargeBox from '../common/box/LargeBox';
+import LargeBox from '../common/box';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
@@ -26,7 +26,7 @@ export default function SelectCakes(props: SelectCakesProps) {
             selectedIndex={selectedIndex}
             key={cake.name}
           >
-            <Image src={cake.cakeImage} alt={`${cake.name}이미지`}  width={44}/>
+            <Image src={cake.cakeImage} alt={`${cake.name}이미지`} width={44} />
           </Styled.CakeBox>
         ))}
       </Styled.CakeContainer>

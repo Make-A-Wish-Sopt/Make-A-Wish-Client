@@ -2,34 +2,27 @@ import InputContainer from '@/components/common/input/inputContainer';
 import ItemLink from './itemLink';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { useState } from 'react';
-import Button from '@/components/common/button/button';
+import Button from '@/components/common/button';
 import styled from 'styled-components';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import { Step1InputType } from '@/types/common/input';
-import { useForm } from 'react-hook-form';
+import { Step1InputType, WishesDataInputType } from '@/types/common/input';
+import { UseFormReturn, useForm } from 'react-hook-form';
 import Input from '@/components/common/input/input';
 import InputLength from '@/components/common/input/inputLength';
 import UploadGift from './UploadGift';
 import SiteList from './SiteList';
 
 interface WishesStep1Props {
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
   handleNextStep: () => void;
 }
 
 export default function WishesStep1(props: WishesStep1Props) {
-  const { handleNextStep } = props;
+  const { methods, handleNextStep } = props;
   const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
 
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
-
-  const methods = useForm<Step1InputType>({
-    defaultValues: {
-      imageURL: '',
-      price: 0,
-      initial: '',
-    },
-  });
 
   const nextStep = () => {
     handleNextStep();
@@ -62,7 +55,11 @@ export default function WishesStep1(props: WishesStep1Props) {
         )}
 
         <InputContainer title="선물의 초성 적어보기">
-          <Input placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" register={methods.register('initial')}>
+          <Input
+            boxType="inputBox--large"
+            placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
+            register={methods.register('initial')}
+          >
             <InputLength
               inputLength={methods.watch('initial').length}
               limitLength={LIMIT_TEXT[15]}
@@ -72,7 +69,7 @@ export default function WishesStep1(props: WishesStep1Props) {
       </div>
 
       <Styled.ButtonWrapper>
-        <Button fontColor={'white'} font={'button16'} handleClick={nextStep}>
+        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={nextStep}>
           다음
         </Button>
       </Styled.ButtonWrapper>

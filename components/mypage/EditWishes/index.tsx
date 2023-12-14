@@ -1,9 +1,6 @@
-import BackBtn from '@/components/common/button/backBtn';
-import BasicBox from '@/components/common/box/BasicBox';
 import HalfBox from '@/components/common/box/HalfBox';
-import Button from '@/components/common/button/button';
+import Button from '@/components/common/button';
 import Calendar from '@/components/common/calendar/calendar';
-import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
 import InputHeader from '@/components/common/inputHeader';
@@ -114,26 +111,10 @@ export default function EditWishesContainer() {
 
       <InputContainer title="선물의 초성 수정하기">
         <Input placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ" />
-        {/* <InputBox
-          placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
-          handleChangeValue={initial.handleChangeInitial}
-          value={initial.initial}
-          color={theme.colors.gray2}
-          limitLength={LIMIT_TEXT[15]}
-          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-        /> */}
       </InputContainer>
 
       <InputContainer title="소원 링크 제목 수정하기">
         <Input placeholder="ex. ㅇㅇ이의 앙큼 벌스데이" />
-        {/* <InputBox
-          placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
-          handleChangeValue={title.handleChangeTitle}
-          value={title.title}
-          color={theme.colors.gray2}
-          limitLength={LIMIT_TEXT[20]}
-          readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
-        /> */}
       </InputContainer>
 
       {/* Caledar */}
@@ -172,40 +153,28 @@ export default function EditWishesContainer() {
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
-        <InputBox
-          placeholder="연락처는 (-)없이 입력해주세요"
-          value={phone.phone}
-          handleChangeValue={phone.handleChangePhone}
-        />
+        <Input placeholder="연락처는 (-)없이 입력해주세요" />
         {phone.phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>}
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">
         <TextareaBox
           placeholder="ex. 내가 이 물건 자주 언급했는데...기억나지?ㅋㅋ"
-          handleChangeValue={hint.handleChangeHint}
-          value={hint.hint}
-          color={theme.colors.gray2}
           limitLength={LIMIT_TEXT.DESCRIPTION}
           readOnly={wishesStatus !== WISHES_STATUS.BEFORE}
         />
       </InputContainer>
 
       <Styled.ButtonWrapper>
-        <BasicBox
-          bgColor={isAbleModify ? theme.colors.main_blue : theme.colors.gray1}
-          fontColor={theme.colors.white}
-          font={theme.fonts.button18}
-          borderColor={'transparent'}
+        <Button
+          boxType="btn--large"
+          colorSystem="pastelBlue_white"
+          handleClick={() => {
+            isAbleModify && editWishesData();
+          }}
         >
-          <Button
-            handleClick={() => {
-              isAbleModify && editWishesData();
-            }}
-          >
-            수정 완료
-          </Button>
-        </BasicBox>
+          수정 완료
+        </Button>
       </Styled.ButtonWrapper>
     </>
   );

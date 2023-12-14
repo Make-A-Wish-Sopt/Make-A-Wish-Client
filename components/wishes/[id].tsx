@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import theme from '@/styles/theme';
-import BasicBox from '../common/box/BasicBox';
-import Button from '../common/button/button';
+import Button from '../common/button';
 import MainView from '../common/mainView';
 import { getWishesData } from '@/api/cakes/cakesAPI';
 
@@ -40,17 +39,17 @@ export default function WishesContainer() {
     <Styled.Container>
       <MainView text={`${data?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
-        <BasicBox bgColor={theme.colors.main_blue} fontColor={theme.colors.white}>
-          <Button handleClick={handleMoveToCakes}>소원 들어주러 가기</Button>
-        </BasicBox>
+        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClick={handleMoveToCakes}>
+          소원 들어주러 가기
+        </Button>
 
-        <BasicBox
-          bgColor={theme.colors.pastel_blue}
-          fontColor={theme.colors.main_blue}
-          borderColor="transparent"
+        <Button
+          boxType="btn--large"
+          colorSystem="pastelBlue_darkBlue"
+          handleClick={handleMoveToHome}
         >
-          <Button handleClick={handleMoveToHome}>나도 소원 빌러 가기</Button>
-        </BasicBox>
+          나도 소원 빌러 가기
+        </Button>
       </Styled.ButtonWrapper>
     </Styled.Container>
   );

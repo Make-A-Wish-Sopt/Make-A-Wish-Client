@@ -8,7 +8,6 @@ interface UploadTypeToggleBtnProps {
 
 export default function UploadTypeToggleBtn(props: UploadTypeToggleBtnProps) {
   const { isLinkLoadType, handleLoadTypeToggle } = props;
-  console.log(isLinkLoadType);
 
   return (
     <Styled.ButtonContainer>
@@ -36,7 +35,7 @@ const Styled = {
     justify-content: space-between;
     align-items: center;
 
-    width: 33.1rem;
+    width: 100%;
     height: 5.8rem;
 
     margin-bottom: 2rem;
@@ -54,7 +53,7 @@ const Styled = {
     ${theme.fonts.body16};
     color: ${(props) => theme.colors[props.fontColor]};
 
-    width: 16rem;
+    width: calc(100% / 2);
     height: 4.8rem;
 
     border-radius: 4rem;

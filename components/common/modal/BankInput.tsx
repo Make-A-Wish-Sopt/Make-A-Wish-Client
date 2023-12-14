@@ -1,50 +1,49 @@
 import useModal from '@/hooks/common/useModal';
 import Modal from './modal';
 import BankModal from './BankModal';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { ChangeEvent } from 'react';
-import Button from '../button/button';
-import { UseFormRegister } from 'react-hook-form';
+import Button from '../button';
+import { UseFormRegister, UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
-import InputBank from '../input/inputBank';
-import { BankInfoInputsType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input';
+import { ArrowDownIc } from '@/public/assets/icons';
+import Image from 'next/image';
+import Box from '../box';
 
 interface BankInputProps {
-  name: string;
-  handleChangeName: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
-  bankName: string;
-  changeBankName: (input: string) => void;
-  account: string;
-  handleChangeAccount: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => void;
-  register?: UseFormRegister<BankInfoInputsType>;
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
 export default function BankInput(props: BankInputProps) {
-  const { register } = props;
+  const { methods } = props;
   const { isOpen, handleToggle } = useModal();
 
   return (
     <Styled.Container>
+      <Box boxStyled={BoxStyled} colorSystem="lightRed_warningRed">
+        ※ 4회 이상 틀리면, 서비스 이용이 제한됩니다
+      </Box>
+
       <Styled.ItemWrapper>
         <Input placeholder="예금주명" />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <InputBank placeholder="은행 선택" />
+        <Input placeholder="은행 선택" register={methods.register('name')} readOnly>
+          <Image src={ArrowDownIc} alt="더 보기" />
+        </Input>
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper>
         <Styled.InputWrapper>
-          <Input placeholder="계좌번호를 입력해주세요" />
-
-          <Button
-            width={10.6}
-            handleClick={() => console.log('기능추가해주세요!')}
-            fontColor={'white'}
-            font={'body14'}
-          >
+          <Input
+            width="calc(100% - 10.6rem)"
+            boxType="inputBox--custom"
+            placeholder="계좌번호를 입력해주세요"
+            register={methods.register('account')}
+          />
+          <Button width={10.6} boxType="btn--custom" colorSystem="mainBlue_white">
             {'계좌번호 확인'}
           </Button>
         </Styled.InputWrapper>
@@ -53,12 +52,22 @@ export default function BankInput(props: BankInputProps) {
 
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <BankModal handleToggle={handleToggle} changeBankName={changeBankName} />
+          <BankModal handleToggle={handleToggle} reister={methods.register('bankName')} />
         </Modal>
       )}
     </Styled.Container>
   );
 }
+
+const BoxStyled: CSSProperties = {
+  width: '100%',
+  height: '4.4rem',
+  padding: '1.2rem',
+
+  fontSize: '14px',
+  fontFamily: 'Galmuri11',
+  lineHeight: '140%',
+};
 
 const Styled = {
   Container: styled.div`
@@ -72,6 +81,8 @@ const Styled = {
   InputWrapper: styled.div`
     display: flex;
     justify-content: space-between;
+
+    gap: 0.6rem;
 
     width: 100%;
   `,

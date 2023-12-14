@@ -63,7 +63,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
           </Styled.CalendarHeader>
         )}
         locale={ko}
-        dateFormat="yyyy-MM-dd"
+        dateFormat="yyyy.MM.dd"
         selected={new Date(date)}
         onChange={handleDateChange}
         selectsEnd
@@ -79,10 +79,6 @@ const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 11rem;
-
-    ${theme.fonts.body14};
-    ${theme.colors.dark_blue};
 
     cursor: pointer;
   `,

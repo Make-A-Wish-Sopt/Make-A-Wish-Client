@@ -1,14 +1,15 @@
-import InputHeader from '@/components/common/inputHeader';
 import WishesStep1 from './WishesStep1';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { BackBtnIc, WishesFormPresentIc } from '@/public/assets/icons';
+import { WishesFormPresentIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import useWishesStep from '@/hooks/wishes/useWisehsStep';
 import WishesStep2 from './WisehsStep2';
 import Preview from './Preview';
 import BankInfo from './BankInfo';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { WishesDataInputType } from '@/types/common/input';
 
 export default function WishesFormContainer() {
   const { stepIndex, handleNextStep, handlePrevStep } = useWishesStep();
@@ -18,11 +19,26 @@ export default function WishesFormContainer() {
     stepIndex === 1 ? router.back() : handlePrevStep();
   };
 
+  const methods = useForm<WishesDataInputType>({
+    defaultValues: {
+      linkURL: '',
+      imageURL: '',
+      price: 0,
+      initial: '',
+      title: '',
+      hint: '',
+      phone: '',
+      mobileCode: '',
+      name: '',
+      bankName: '',
+      account: '',
+    },
+  });
+
   return (
     <Styled.Container>
       {/* Title */}
-      <Styled.TitleWrapper>
-        <Image src={WishesFormPresentIc} alt="선물 이미지" />
+      {/* <Styled.TitleWrapper>
         {
           {
             1: <Styled.Title>소원링크 생성하기</Styled.Title>,
@@ -31,13 +47,38 @@ export default function WishesFormContainer() {
             4: <Styled.Title>계좌번호 및 연락처 입력하기</Styled.Title>,
           }[stepIndex]
         }
-      </Styled.TitleWrapper>
+      </Styled.TitleWrapper> */}
 
       {
         {
-          1: <WishesStep1 handleNextStep={handleNextStep} />,
-          2: <WishesStep2 handleNextStep={handleNextStep} />,
-          3: <Preview handleNextStep={handleNextStep} />,
+          1: (
+            <>
+              <Styled.TitleWrapper>
+                <Image src={WishesFormPresentIc} alt="선물 이미지" />
+                <Styled.Title>소원링크 생성하기</Styled.Title>,
+              </Styled.TitleWrapper>
+              <WishesStep1 methods={methods} handleNextStep={handleNextStep} />
+            </>
+          ),
+          2: (
+            <>
+              <Styled.TitleWrapper>
+                <Image src={WishesFormPresentIc} alt="선물 이미지" />
+                <Styled.Title>소원링크 생성하기</Styled.Title>,
+              </Styled.TitleWrapper>
+              <WishesStep2 methods={methods} handleNextStep={handleNextStep} />,
+            </>
+          ),
+          3: (
+            <>
+              <Styled.TitleWrapper>
+                <Image src={WishesFormPresentIc} alt="선물 이미지" />
+                <Styled.Title>소원링크 화면 미리보기</Styled.Title>,
+              </Styled.TitleWrapper>
+              <Preview methods={methods} handleNextStep={handleNextStep} />,
+            </>
+          ),
+
           4: <BankInfo />,
         }[stepIndex]
       }

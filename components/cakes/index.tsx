@@ -7,9 +7,7 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import TextareaBox from '../common/input/textareaBox';
-import InputContainer from '../common/input/inputContainer';
 import CakesHeader from './cakesHeader';
-import InputBox from '../common/input/inputBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { LIMIT_TEXT } from '@/constant/limitText';
@@ -17,6 +15,7 @@ import ButtonBox from '../common/button/buttonBox';
 import useSelectCakes from '@/hooks/cakes/useSelectCakes';
 import SelectCakes from './SelectCakes';
 import { getWishesData } from '@/api/cakes/cakesAPI';
+import Button from '../common/button';
 
 export default function CakesContainer() {
   const [giverName, changeGiverName] = useInput('');
@@ -96,21 +95,15 @@ export default function CakesContainer() {
 
         <InputContainer title={'친구에게 편지 남기기'}>
           <TextareaBox
-            handleChangeValue={changeLetter}
-            value={letter}
             placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
           ></TextareaBox>
         </InputContainer>
       </div>
 
       <Styled.ButtonWrapper>
-        <ButtonBox
-          backgroundColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-          handleClick={sendCake}
-        >
+        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={sendCake}>
           케이크 보내기
-        </ButtonBox>
+        </Button>
       </Styled.ButtonWrapper>
     </Styled.Container>
   );

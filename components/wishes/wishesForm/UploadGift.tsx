@@ -1,7 +1,7 @@
 import InputContainer from '@/components/common/input/inputContainer';
 import styled from 'styled-components';
 import ItemImageBox from './itemImageBox';
-import LargeBox from '@/components/common/box/LargeBox';
+import LargeBox from '@/components/common/box';
 import theme from '@/styles/theme';
 import { ImageUploadIc } from '@/public/assets/icons';
 import Image from 'next/image';
