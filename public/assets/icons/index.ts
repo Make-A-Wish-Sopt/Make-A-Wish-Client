@@ -10,7 +10,8 @@ export { default as CloseSmallIc } from '@/public/assets/icons/closeSmallIc.svg'
 export { default as CalendarIc } from '@/public/assets/icons/calendarIc.svg';
 export { default as CalendarGreyIc } from '@/public/assets/icons/calendarGreyIc.svg';
 export { default as ArrowDownIc } from '@/public/assets/icons/arrowDownIc.svg';
-export { default as AlertIc } from '@/public/assets/icons/alertIc.svg';
+export { default as AlertWarningIc } from '@/public/assets/icons/alertWarningIc.svg';
+export { default as AlertSuccessIc } from '@/public/assets/icons/alertSuccessIc.svg';
 export { default as LinkCopyIc } from '@/public/assets/icons/linkCopyIc.svg';
 export { default as DetailCloseIc } from '@/public/assets/icons/detailCloseIc.svg';
 export { default as DetailOpenIc } from '@/public/assets/icons/detailOpenIc.svg';

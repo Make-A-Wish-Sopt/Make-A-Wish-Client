@@ -6,11 +6,10 @@ import ItemBox from './itemBox';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
-import Modal from '@/components/common/modal/modal';
+import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
 import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import { deleteUserInfo } from '@/api/mypage/mypageAPI';
 
 export default function MyPageContainer() {
@@ -23,8 +22,6 @@ export default function MyPageContainer() {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
 
-  const { data } = useInitEditWishesInfo();
-
   const handleEditWish = () => {
     router.push('/mypage/editWishes');
   };
@@ -32,11 +29,6 @@ export default function MyPageContainer() {
     router.push('/mypage/links');
   };
 
-  // const handleCustomerService = () => {
-  //   window.Kakao.Channel.chat({
-  //     channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-  //   });
-  // };
   const handleCustomerService = () => {
     if (window.Kakao && window.Kakao.Channel) {
       window.Kakao.Channel.chat({
@@ -83,10 +75,7 @@ export default function MyPageContainer() {
           <ItemBox handleClickFn={handleEditWish} colorSystem="pastelBlue_mainBlue">
             진행중인 소원 링크 정보 수정하기
           </ItemBox>
-          <ItemBox
-            handleClickFn={!data ? undefined : handleCustomerService}
-            colorSystem="pastelBlue_mainBlue"
-          >
+          <ItemBox handleClickFn={handleCustomerService} colorSystem="pastelBlue_mainBlue">
             진행중인 펀딩 중단하기
           </ItemBox>
           <ItemBox handleClickFn={handleWishLinks} colorSystem="pastelBlue_mainBlue">
@@ -160,5 +149,7 @@ const Styled = {
 
   TextButton: styled.li`
     line-height: 30px;
+
+    cursor: pointer;
   `,
 };

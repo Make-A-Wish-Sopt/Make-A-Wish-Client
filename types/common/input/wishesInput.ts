@@ -1,7 +1,7 @@
 export interface WishesDataInputType extends BankInfoInputsType {
   linkURL: string;
   imageURL: string;
-  price: number;
+  price: string | number;
   initial: string;
   title: string;
   hint: string;

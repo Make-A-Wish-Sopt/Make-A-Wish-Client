@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useModal from '@/hooks/common/useModal';
-import Modal from '@/components/common/modal/modal';
+import Modal from '@/components/common/modal';
 import DeleteModal from '@/components/common/modal/DeleteModal';
 import { useState } from 'react';
 import { useGetWishLinks } from '@/hooks/queries/links/useGetWishLinks';
