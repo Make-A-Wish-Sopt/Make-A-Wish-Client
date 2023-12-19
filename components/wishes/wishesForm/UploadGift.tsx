@@ -48,7 +48,10 @@ export default function UploadGift(props: UploadGiftProps) {
       </InputContainer>
 
       <InputContainer title="선물 가격 입력하기">
-        <Input placeholder="ex. 12,000,000" register={methods.register('price')}>
+        <Input
+          placeholder="ex. 12,000,000"
+          register={methods.register('price', { required: true })}
+        >
           <InputLength
             inputLength={Number(methods.watch('price').toString().length)}
             limitLength={LIMIT_TEXT[15]}

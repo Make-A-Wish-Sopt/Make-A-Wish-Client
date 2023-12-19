@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { validation } from '@/validation/input';
+import { REGEX, inputRules, linkURL_RULES, validation } from '@/validation/input';
 import { useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { QUERY_KEY } from '@/constant/queryKey';
@@ -12,9 +12,10 @@ import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 
 interface ItemLinkProps {
-  methods: UseFormReturn<Step1InputType, any, undefined>;
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
@@ -56,6 +57,7 @@ export default function ItemLink(props: ItemLinkProps) {
       <Input
         register={methods.register('linkURL', {
           onBlur: parseImage,
+          ...linkURL_RULES,
         })}
         placeholder="정해진 사이트에서 원하는 선물 링크 붙여넣기"
       />
@@ -64,7 +66,11 @@ export default function ItemLink(props: ItemLinkProps) {
       )}
 
       {imageURL && (
-        <ItemImageBox imageURL={imageURL}>가격 : {convertMoneyText(String(price))}원</ItemImageBox>
+        <Styled.ItemImageWrapper>
+          <ItemImageBox src={imageURL} alt="링크에서 불러온 선물이미지">
+            가격 : {convertMoneyText(price)}원
+          </ItemImageBox>
+        </Styled.ItemImageWrapper>
       )}
     </Styled.Container>
   );
@@ -82,5 +88,9 @@ const Styled = {
     background-color: ${theme.colors.white};
     cursor: pointer;
     margin: 0 1rem 1rem 0;
+  `,
+
+  ItemImageWrapper: styled.div`
+    margin-top: 1.2rem;
   `,
 };

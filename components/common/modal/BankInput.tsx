@@ -1,18 +1,19 @@
 import useModal from '@/hooks/common/useModal';
-import Modal from './modal';
+import Modal from '.';
 import BankModal from './BankModal';
 import styled from 'styled-components';
 import Button from '../button';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { BankInfoInputsType } from '@/types/common/input/wishesInput';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import { StyledBox } from '../box';
 import theme from '@/styles/theme';
+import AlertTextBox from '../alertTextBox';
 
 interface BankInputProps {
-  methods: UseFormReturn<WishesDataInputType, any, undefined>;
+  methods: UseFormReturn<BankInfoInputsType, any, undefined>;
 }
 
 export default function BankInput(props: BankInputProps) {
@@ -30,7 +31,7 @@ export default function BankInput(props: BankInputProps) {
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <Input placeholder="은행 선택" readOnly>
+        <Input placeholder="은행 선택" register={methods.register('bankName')} readOnly>
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>
       </Styled.ItemWrapper>
@@ -47,12 +48,14 @@ export default function BankInput(props: BankInputProps) {
             {'계좌번호 확인'}
           </Button>
         </Styled.InputWrapper>
+
+        {/* 조건 기능 추가  */}
+        {/* {<AlertTextBox>{true ? '정상 계좌입니다' : '존재하지 않는 계좌번호입니다'}</AlertTextBox>} */}
       </Styled.ItemWrapper>
-      {/* 기능구현 이후 수정해야하는 부분 */}
 
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <BankModal handleToggle={handleToggle} register={methods.register('bankName')} />
+          <BankModal handleToggle={handleToggle} methods={methods} />
         </Modal>
       )}
     </Styled.Container>
