@@ -5,7 +5,6 @@ import TextareaBox from '@/components/common/input/textareaBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
 import ItemLink from '@/components/wishes/wishesForm/itemLink';
 import { WISHES_STATUS } from '@/constant/wishesStatus';
-import useInitEditWishesInfo from '@/hooks/mypage/useInitEditWishesInfo';
 import useEditWishesInfo from '@/hooks/queries/mypage/useEditWishesInfo';
 import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';

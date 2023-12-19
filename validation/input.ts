@@ -1,6 +1,7 @@
 import { IMAGE_FILE_SIZE } from '@/constant/imageFileSize';
+import { LIMIT_TEXT } from '@/constant/limitText';
 
-const REGEX = Object.freeze({
+export const REGEX = Object.freeze({
   NAVER_SHOPPING: /^http[s]?:\/\/search.shopping.naver.com/,
   TWENTY_NINE_STORE: /^http[s]?:\/\/product.29cm.co.kr/, //실제 29cm스토어에서 가져오는 주소값
   TWENTY_NINE_SERVER: /^http[s]?:\/\/img.29cm.co.kr/, //서버에서 보내주는 주소값
@@ -35,3 +36,6 @@ export const validation = {
     if (input) return input.length < 10 || input.length > 14;
   },
 };
+
+
+

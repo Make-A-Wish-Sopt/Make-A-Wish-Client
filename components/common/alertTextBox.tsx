@@ -1,20 +1,21 @@
 import { ReactNode } from 'react';
-import { AlertIc } from '@/public/assets/icons';
+import { AlertSuccessIc, AlertWarningIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import Image from 'next/image';
 
 interface AlertTextBoxProps {
+  alertSuccess?: boolean;
   children: ReactNode;
 }
 
 export default function AlertTextBox(props: AlertTextBoxProps) {
-  const { children } = props;
+  const { alertSuccess, children } = props;
 
   return (
     <Styled.Container>
-      <Image src={AlertIc} alt="경고" />
-      <Styled.Text>{children}</Styled.Text>
+      <Image src={alertSuccess ? AlertSuccessIc : AlertWarningIc} alt="알림 아이콘" />
+      <Styled.Text alertSuccess={alertSuccess}>{children}</Styled.Text>
     </Styled.Container>
   );
 }
@@ -25,9 +26,9 @@ const Styled = {
     align-items: center;
     margin-top: 1rem;
   `,
-  Text: styled.div`
+  Text: styled.span<{ alertSuccess?: boolean }>`
     margin-left: 0.6rem;
     ${theme.fonts.body12};
-    color: ${theme.colors.warning_red};
+    color: ${(props) => (props.alertSuccess ? theme.colors.dark_blue : theme.colors.warning_red)};
   `,
 };

@@ -2,11 +2,6 @@ import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import Button from '@/components/common/button';
-import { useEffect, useState } from 'react';
-import Modal from '@/components/common/modal/modal';
-import TermsModal from '@/components/common/modal/TermsModal';
-import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { convertDateToString } from '@/utils/common/getDate';
 import { useRecoilValue } from 'recoil';
@@ -15,60 +10,55 @@ import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ItemImageBox from '@/components/common/box/itemImageBox';
+import WishesStepTitle from '../common/wishesStepTitle';
+import WishesStepBtn from '../common/wishesStepBtn';
 
 interface PreviewProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
-  handleNextStep: () => void;
+  wishesStep: {
+    stepIndex: number;
+    prevState: boolean;
+    nextState: boolean;
+    changePrevState: (state: boolean) => void;
+    changeNextState: (state: boolean) => void;
+    handleNextStep: () => void;
+    handlePrevStep: () => void;
+    getNextBtnColor: (state: boolean) => ColorSystemType;
+    getPrevBtnColor: (state: boolean) => ColorSystemType;
+  };
 }
 
 export default function Preview(props: PreviewProps) {
-  const { methods, handleNextStep } = props;
-
-  const wishesData = useRecoilValue(WishesData);
-  const { isOpen, handleToggle } = useModal();
-  const [isAgreed, setIsAgreed] = useState(false);
-
-  useEffect(() => {
-    isAgreed && handleNextStep();
-  }, [isAgreed]);
-
-  const changeIsAgreed = (isChecked: boolean) => {
-    setIsAgreed(isChecked);
-  };
+  const { methods, wishesStep } = props;
 
   return (
-    <Styled.Container>
-      <div>
-        <Styled.Period>
-          {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)}
-        </Styled.Period>
+    <>
+      <WishesStepTitle title="소원링크 화면 미리보기" />
+      <Styled.Container>
+        <div>
+          <Styled.Period>
+            {/* {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)} */}
+          </Styled.Period>
 
-        <InputContainer title={wishesData.title}>
-          <ItemImageBox src={wishesData.imageURL} alt="선물이미지 미리보기" />
-          <Styled.PresentPrice>
-            가격 : {convertMoneyText(String(wishesData.price))}
-          </Styled.PresentPrice>
-        </InputContainer>
+          <InputContainer title={methods.getValues('title')}>
+            <ItemImageBox src={methods.getValues('imageURL')} alt="선물이미지 미리보기" />
+            <Styled.PresentPrice>
+              가격 : {convertMoneyText(methods.getValues('price').toString())}
+            </Styled.PresentPrice>
+          </InputContainer>
 
-        <InputContainer title="">
-          <TextareaBox register={methods.register('hint')} readOnly />
-        </InputContainer>
+          <InputContainer>
+            <TextareaBox register={methods.register('hint')} readOnly />
+          </InputContainer>
 
-        <InputContainer title="선물의 초성">
-          <Input register={methods.register('initial')} readOnly />
-        </InputContainer>
+          <InputContainer title="선물의 초성">
+            <Input register={methods.register('initial')} readOnly />
+          </InputContainer>
+        </div>
 
-        <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <TermsModal handleToggle={handleToggle} changeIsAgreed={changeIsAgreed} />
-        </Modal>
-      </div>
-
-      <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleToggle}>
-          링크 생성하기
-        </Button>
-      </Styled.ButtonWrapper>
-    </Styled.Container>
+        <WishesStepBtn wishesStep={wishesStep} />
+      </Styled.Container>
+    </>
   );
 }
 

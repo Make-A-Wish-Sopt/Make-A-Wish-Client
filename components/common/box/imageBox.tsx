@@ -28,6 +28,8 @@ const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
 
   //ImageBox Style System
   &.imageBox--textarea {
+    height: 16rem;
+
     border-radius: 1rem;
     padding: 1.4rem 1.2rem;
   }
@@ -39,8 +41,10 @@ const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
     justify-content: center;
     align-items: center;
 
+    padding: 0;
+
     border-radius: 1.6rem;
 
-    object-fit: cover;
+    overflow: hidden;
   }
 `;

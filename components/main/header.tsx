@@ -17,13 +17,12 @@ interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const { wishStatus, dayCount, cakeCount } = props;
 
-  const [nickName, setNicknameState] = useState("");
+  const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
-
 
   const handleMoveToMypage = () => {
     router.push('/mypage');
@@ -67,14 +66,14 @@ export default function Header(props: HeaderProps) {
         <Styled.TitleColor>소원 링크</Styled.TitleColor>를 생성하고
         <br />
         케이크를 모아봐요!
-      </Styled.Title>
+      </Styled.Title>;
     }
   };
 
   const getDdayText = () => {
     if (wishStatus === 'while') {
       if (dayCount === 0) {
-        return '-DAY'
+        return '-DAY';
       }
       return `-${dayCount}`;
     } else if (wishStatus === 'end') {
@@ -100,33 +99,32 @@ export default function Header(props: HeaderProps) {
 
 const Styled = {
   Title: styled.div`
-  ${theme.fonts.headline24_130};
-`,
+    ${theme.fonts.headline24_130};
+  `,
 
   TitleColor: styled.span`
-  color: ${theme.colors.main_blue};
-`,
+    color: ${theme.colors.main_blue};
+  `,
 
   DaysText: styled.span<{ wishStatus: string }>`
-${theme.fonts.headline20};
-color: ${theme.colors.main_blue};
-display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
+    ${theme.fonts.headline20};
+    color: ${theme.colors.main_blue};
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
 
+    color: ${theme.colors.main_blue};
 
-  color: ${theme.colors.main_blue};
-
-  ${({ wishStatus }) =>
+    ${({ wishStatus }) =>
       wishStatus === 'end' &&
       css`
-      color: ${theme.colors.warning_red}
-    `}
+        color: ${theme.colors.warning_red};
+      `}
 
-  ${({ wishStatus }) =>
+    ${({ wishStatus }) =>
       wishStatus === 'before' &&
       css`
-      color: ${theme.colors.gray2};
-    `}
-`
-}
+        color: ${theme.colors.gray2};
+      `}
+  `,
+};

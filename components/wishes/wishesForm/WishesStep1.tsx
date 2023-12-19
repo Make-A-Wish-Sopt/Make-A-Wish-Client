@@ -1,8 +1,7 @@
 import InputContainer from '@/components/common/input/inputContainer';
 import ItemLink from './itemLink';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { useState } from 'react';
-import Button from '@/components/common/button';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
@@ -12,68 +11,106 @@ import Input from '@/components/common/input/input';
 import InputLength from '@/components/common/input/inputLength';
 import UploadGift from './UploadGift';
 import SiteList from './SiteList';
+import { initial_RULES, validation } from '@/validation/input';
+import { ColorSystemType } from '@/types/common/box/boxStyleType';
+import WishesStepTitle from '../common/wishesStepTitle';
+import WishesStepBtn from '../common/wishesStepBtn';
 
 interface WishesStep1Props {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
-  handleNextStep: () => void;
+  wishesStep: {
+    stepIndex: number;
+    prevState: boolean;
+    nextState: boolean;
+    changePrevState: (state: boolean) => void;
+    changeNextState: (state: boolean) => void;
+    handleNextStep: () => void;
+    handlePrevStep: () => void;
+    getNextBtnColor: (state: boolean) => ColorSystemType;
+    getPrevBtnColor: (state: boolean) => ColorSystemType;
+  };
 }
 
-export default function WishesStep1(props: WishesStep1Props) {
-  const { methods, handleNextStep } = props;
+export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) {
+  const { methods, wishesStep } = props;
   const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
 
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
-
-  const nextStep = () => {
-    handleNextStep();
-  };
 
   const handleLoadTypeToggle = (state: boolean) => {
     setIsLinkLoadType(state);
   };
 
+  useEffect(() => {
+    wishesStep.changeNextState(false);
+
+    if (isLinkLoadType) {
+      if (
+        validation.isCorrectSite(methods.getValues('linkURL')) &&
+        methods.getValues('initial').length !== 0 &&
+        methods.getValues('initial').length <= 15
+      ) {
+        wishesStep.changeNextState(true);
+      }
+    } else {
+      if (
+        methods.getValues('initial').length !== 0 &&
+        methods.getValues('initial').length <= 15 &&
+        imageFile &&
+        methods.getValues('price') !== '' &&
+        Number(methods.getValues('price')) <= 12000000
+      ) {
+        wishesStep.changeNextState(true);
+      }
+    }
+  }, [methods.watch()]);
+
+  const onSubmit = () => {};
+
   return (
-    <Styled.Container>
-      <div>
-        <UploadTypeToggleBtn
-          isLinkLoadType={isLinkLoadType}
-          handleLoadTypeToggle={handleLoadTypeToggle}
-        />
-
-        {isLinkLoadType ? (
-          <>
-            <SiteList />
-            <ItemLink methods={methods} />
-          </>
-        ) : (
-          <UploadGift
-            imageFile={imageFile}
-            preSignedImageURL={preSignedImageURL}
-            uploadImageFile={uploadImageFile}
-            methods={methods}
+    <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <WishesStepTitle title="소원링크 생성하기" />
+      <Styled.Container>
+        <div>
+          <UploadTypeToggleBtn
+            isLinkLoadType={isLinkLoadType}
+            handleLoadTypeToggle={handleLoadTypeToggle}
           />
-        )}
 
-        <InputContainer title="선물의 초성 적어보기">
-          <Input
-            boxType="inputBox--large"
-            placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
-            register={methods.register('initial')}
-          >
-            <InputLength
-              inputLength={methods.watch('initial').length}
-              limitLength={LIMIT_TEXT[15]}
+          {isLinkLoadType ? (
+            <>
+              <SiteList />
+              <ItemLink methods={methods} />
+            </>
+          ) : (
+            <UploadGift
+              imageFile={imageFile}
+              preSignedImageURL={preSignedImageURL}
+              uploadImageFile={uploadImageFile}
+              methods={methods}
             />
-          </Input>
-        </InputContainer>
-      </div>
+          )}
 
-      <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={nextStep}>
-          다음
-        </Button>
-      </Styled.ButtonWrapper>
-    </Styled.Container>
+          <InputContainer title="선물의 초성 적어보기">
+            <Input
+              boxType="inputBox--large"
+              placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
+              register={methods.register('initial', {
+                ...initial_RULES,
+              })}
+              errors={methods.formState.errors.initial}
+            >
+              <InputLength
+                inputLength={methods.watch('initial').length}
+                limitLength={LIMIT_TEXT[15]}
+              />
+            </Input>
+          </InputContainer>
+        </div>
+
+        <WishesStepBtn wishesStep={wishesStep} />
+      </Styled.Container>
+    </form>
   );
 }
 
@@ -102,9 +139,5 @@ const Styled = {
 
   FileInput: styled.input`
     display: none;
-  `,
-
-  ButtonWrapper: styled.div`
-    margin-bottom: 4.6rem;
   `,
 };

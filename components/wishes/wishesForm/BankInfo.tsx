@@ -1,20 +1,40 @@
 import { editUserAccount, getUserAccount } from '@/api/wishes/wishesAPI';
 import { useForm } from 'react-hook-form';
-import Button from '@/components/common/button';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
 import { BankInfoInputsType } from '@/types/common/input/wishesInput';
-import { useRouter } from 'next/router';
 import { useMutation, useQuery } from 'react-query';
-import styled, { CSSProperties } from 'styled-components';
+import styled from 'styled-components';
 import CheckBox from '@/components/common/checkBox';
 import useCheckBox from '@/hooks/common/useCheckBox';
 import Input from '@/components/common/input/input';
-import Box from '@/components/common/box';
+import { StyledBox } from '@/components/common/box';
+import WishesStepTitle from '../common/wishesStepTitle';
+import WishesStepBtn from '../common/wishesStepBtn';
+import { ColorSystemType } from '@/types/common/box/boxStyleType';
+import theme from '@/styles/theme';
+import { useEffect } from 'react';
+import { validation } from '@/validation/input';
+import AlertTextBox from '@/components/common/alertTextBox';
 
-export default function BankInfo() {
+interface BankInfoProps {
+  wishesStep: {
+    stepIndex: number;
+    prevState: boolean;
+    nextState: boolean;
+    changePrevState: (state: boolean) => void;
+    changeNextState: (state: boolean) => void;
+    handleNextStep: () => void;
+    handlePrevStep: () => void;
+    getNextBtnColor: (state: boolean) => ColorSystemType;
+    getPrevBtnColor: (state: boolean) => ColorSystemType;
+  };
+}
+
+export default function BankInfo(props: BankInfoProps) {
+  const { wishesStep } = props;
   const { data } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
 
   const methods = useForm<BankInfoInputsType>({
@@ -31,69 +51,81 @@ export default function BankInfo() {
 
   const { postWishesData } = useCreateWishesLink();
 
-  const router = useRouter();
+  const { mutate } = useMutation(() => editUserAccount(methods), {
+    onSuccess: () => {
+      router.push('/wishes/share');
+    },
+  });
 
-  // const { mutate } = useMutation(
-  //   () => editUserAccount({ name, bankName, account }, getValues('phone')),
-  //   {
-  //     onSuccess: () => {
-  //       router.push('/wishes/share');
-  //     },
-  //   },
-  // );
-
-  const uploadAccount = () => {};
+  useEffect(() => {
+    if (
+      checkBoxState &&
+      methods.getValues('name') &&
+      methods.getValues('bankName') &&
+      methods.getValues('account') &&
+      methods.getValues('phone') &&
+      validation.isCorrectPhoneNumber(methods.getValues('phone'))
+    ) {
+      wishesStep.changeNextState(true);
+    } else {
+      wishesStep.changeNextState(false);
+    }
+  }, [methods.watch()]);
 
   return (
-    <Styled.Container>
-      <div>
-        <Box boxStyled={BoxStyled} colorSystem="pastelBlue_darkBlue">
-          {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
+    <>
+      <WishesStepTitle title="계좌번호 및 전화번호 입력하기" />
+      <Styled.Container>
+        <div>
+          <GuideBox className="pastelBlue_darkBlue">
+            {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
 
-          <Styled.GuideCheckBoxWrapper>
-            <CheckBox
-              checkBoxState={checkBoxState}
-              checkBoxText={'동의함'}
-              handleClickFn={handleChangeCheckBoxState}
-            />
-          </Styled.GuideCheckBoxWrapper>
-        </Box>
+            <Styled.GuideCheckBoxWrapper>
+              <CheckBox
+                checkBoxState={checkBoxState}
+                checkBoxText={'동의함'}
+                handleClickFn={handleChangeCheckBoxState}
+              />
+            </Styled.GuideCheckBoxWrapper>
+          </GuideBox>
 
-        <InputContainer title="계좌번호 입력하기">
-          <BankInput methods={methods} />
+          <InputContainer title="계좌번호 입력하기">
+            <BankInput methods={methods} />
 
-          <InputContainer title="전화번호 입력하기">
-            <Input placeholder="(-)없이 숫자만 입력해주세요" register={methods.register('phone')} />
+            <InputContainer title="전화번호 입력하기">
+              <Input
+                placeholder="(-)없이 숫자만 입력해주세요"
+                register={methods.register('phone')}
+              />
+              {!validation.isIncludeHyphen(methods.watch('phone')) ||
+                (!validation.isCorrectPhoneNumber(methods.watch('phone')) &&
+                  methods.watch('phone') !== '' && (
+                    <AlertTextBox>{'올바른 연락처를 입력해주세요'}</AlertTextBox>
+                  ))}
+            </InputContainer>
           </InputContainer>
-        </InputContainer>
-      </div>
+        </div>
 
-      <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={uploadAccount}>
-          소원링크 생성 완료
-        </Button>
-      </Styled.ButtonWrapper>
-    </Styled.Container>
+        <WishesStepBtn wishesStep={wishesStep} handleClickFn={() => {}} />
+      </Styled.Container>
+    </>
   );
 }
 
-const BoxStyled: CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+const GuideBox = styled(StyledBox)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-  width: '100%',
-  height: '9.8rem',
-  padding: '1.2rem',
+  width: 100%;
+  height: 9.8rem;
 
-  fontSize: '14px',
-  fontFamily: 'Galmuri11',
-  lineHeight: '140%',
+  ${theme.fonts.body14};
+  text-align: left;
 
-  textAlign: 'left',
-
-  marginBottom: '2.4rem',
-};
+  margin-bottom: 2.4rem;
+  padding: 1.2rem;
+`;
 
 const Styled = {
   Container: styled.div`

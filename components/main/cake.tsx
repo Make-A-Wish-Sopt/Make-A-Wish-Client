@@ -32,8 +32,8 @@ export default function Cake(props: CakeProps) {
     return wishStatus === 'before' || wishStatus === 'while'
       ? MainWishChatImg
       : wishStatus === 'end'
-        ? MainEndChatImg
-        : MainChatImg;
+      ? MainEndChatImg
+      : MainChatImg;
   };
 
   const priceData = wishStatus === 'while' || wishStatus === 'end' ? price : '???';
@@ -69,9 +69,7 @@ export default function Cake(props: CakeProps) {
 
       {(wishStatus === 'while' || wishStatus === 'end') && (
         <Styled.Warning>
-          펀딩 종료 후 3일내에 송금이 완료됩니다.
-          <br />
-          계좌번호를 확인해주세요!
+          {`펀딩 종료 후 3일내에 송금이 완료됩니다.\n계좌번호를 확인해주세요!`}
         </Styled.Warning>
       )}
     </Styled.Container>
@@ -110,6 +108,8 @@ const Styled = {
     ${theme.fonts.body14};
     color: ${theme.colors.warning_red};
     margin: 0 0 3rem;
+
+    white-space: pre-line;
   `,
 
   CenterContainer: styled.div`

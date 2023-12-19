@@ -5,18 +5,13 @@ import styled, { CSSProperties } from 'styled-components';
 interface BoxProps {
   boxType?: BoxTypes;
   colorSystem: ColorSystemType;
-  boxStyled?: CSSProperties;
   children: React.ReactNode;
 }
 
 export default function Box(props: BoxProps) {
-  const { boxType, colorSystem, boxStyled, children } = props;
+  const { boxType, colorSystem, children } = props;
 
-  return (
-    <StyledBox className={`${colorSystem} ${boxType}`} style={boxStyled}>
-      {children}
-    </StyledBox>
-  );
+  return <StyledBox className={`${colorSystem} ${boxType}`}>{children}</StyledBox>;
 }
 
 type BoxSizeType = 'Small' | 'Half' | 'Large' | 'Image';
@@ -26,7 +21,7 @@ export const BoxSize: Record<BoxSizeType, CSSProperties> = {
     height: '4.6rem',
   },
   Half: {
-    width: 'calc(100% / 2) - 0.5rem',
+    width: 'calc(100%/2)',
     height: '5rem',
   },
   Large: {
@@ -59,7 +54,7 @@ export const StyledBox = styled.div`
   }
 
   // Color System
-  &.gary1_white {
+  &.gray1_white {
     background-color: ${theme.colors.gray1};
     color: ${theme.colors.white};
   }
