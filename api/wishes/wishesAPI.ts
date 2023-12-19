@@ -2,11 +2,16 @@ import PATH from '../../constant/path';
 import { client } from '../common/axios';
 import axios from 'axios';
 import { SiteDataType } from '@/types/siteDataType';
-import { AccountInfoType, WishesDataInputType } from '@/types/common/input/wishesInput';
+import {
+  AccountInfoType,
+  BankInfoInputsType,
+  WishesDataInputType,
+} from '@/types/common/input/wishesInput';
+import { UseFormReturn } from 'react-hook-form';
+
+const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 export const createWishesLink = async (wishesData: WishesDataInputType) => {
-  const accessToken = localStorage.getItem('accessToken');
-
   const data = await client.post(
     `${PATH.API}/${PATH.V1}/${PATH.WISHES}`,
     {
@@ -21,30 +26,29 @@ export const createWishesLink = async (wishesData: WishesDataInputType) => {
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
   return data;
 };
 
-export const editUserAccount = async (accountInfo: AccountInfoType, phone: string) => {
-  const accessToken = localStorage.getItem('accessToken');
-
+export const editUserAccount = async (
+  methods: UseFormReturn<BankInfoInputsType, any, undefined>,
+) => {
   const data = await client.put(
     `${PATH.API}/${PATH.V1}/${PATH.USER}/${PATH.ACCOUNT}`,
     {
       accountInfo: {
-        name: accountInfo.name,
-        bank: accountInfo.bankName,
-        account: accountInfo.account,
+        name: methods.getValues('name'),
+        bank: methods.getValues('bankName'),
+        account: methods.getValues('account'),
       },
-      phone,
     },
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
