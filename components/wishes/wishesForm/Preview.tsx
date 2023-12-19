@@ -1,27 +1,28 @@
-import InputBox from '@/components/common/input/inputBox';
 import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import BasicBox from '@/components/common/box/BasicBox';
-import Button from '@/components/common/button/button';
+import Button from '@/components/common/button';
 import { useEffect, useState } from 'react';
 import Modal from '@/components/common/modal/modal';
 import TermsModal from '@/components/common/modal/TermsModal';
 import useModal from '@/hooks/common/useModal';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import PresentBox from '@/components/common/box/PresentBox';
 import { convertDateToString } from '@/utils/common/getDate';
 import { useRecoilValue } from 'recoil';
 import { WishesData } from '@/recoil/formPage/wishesData';
+import Input from '@/components/common/input/input';
+import { UseFormReturn } from 'react-hook-form';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface PreviewProps {
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
   handleNextStep: () => void;
 }
 
 export default function Preview(props: PreviewProps) {
-  const { handleNextStep } = props;
+  const { methods, handleNextStep } = props;
 
   const wishesData = useRecoilValue(WishesData);
   const { isOpen, handleToggle } = useModal();
@@ -43,27 +44,18 @@ export default function Preview(props: PreviewProps) {
         </Styled.Period>
 
         <InputContainer title={wishesData.title}>
-          <PresentBox>
-            <Styled.ImageWrapper>
-              <Image
-                src={wishesData.imageURL}
-                fill={true}
-                alt="선물이미지 미리보기"
-                style={{ borderRadius: '1.6rem', objectFit: 'cover' }}
-              />
-            </Styled.ImageWrapper>
-          </PresentBox>
+          <ItemImageBox src={wishesData.imageURL} alt="선물이미지 미리보기" />
           <Styled.PresentPrice>
             가격 : {convertMoneyText(String(wishesData.price))}
           </Styled.PresentPrice>
         </InputContainer>
 
         <InputContainer title="">
-          <TextareaBox value={wishesData.hint} readOnly />
+          <TextareaBox register={methods.register('hint')} readOnly />
         </InputContainer>
 
         <InputContainer title="선물의 초성">
-          <InputBox value={wishesData.initial} readOnly />
+          <Input register={methods.register('initial')} readOnly />
         </InputContainer>
 
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
@@ -72,14 +64,9 @@ export default function Preview(props: PreviewProps) {
       </div>
 
       <Styled.ButtonWrapper>
-        <BasicBox
-          bgColor={theme.colors.main_blue}
-          fontColor={theme.colors.white}
-          font={theme.fonts.button16}
-          borderColor={'transparent'}
-        >
-          <Button handleClick={handleToggle}>링크 생성하기</Button>
-        </BasicBox>
+        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleToggle}>
+          링크 생성하기
+        </Button>
       </Styled.ButtonWrapper>
     </Styled.Container>
   );
@@ -98,15 +85,6 @@ const Styled = {
     ${theme.fonts.body16};
     color: ${theme.colors.main_blue};
     margin: 0 0 1rem;
-  `,
-
-  ImageWrapper: styled.div`
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: fill;
   `,
 
   PresentPrice: styled.p`

@@ -1,37 +1,30 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import InputBox from '../../common/input/inputBox';
-import { SITE_LIST } from '@/constant/siteList';
-import Image from 'next/image';
-import AlertTextBox from '../../common/alertTextBox';
 import { validation } from '@/validation/input';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import ItemImageBox from './itemImageBox';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { getItemInfo } from '@/api/wishes/wishesAPI';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
 import { getSiteData } from '@/utils/common/getSiteData';
+import Input from '@/components/common/input/input';
+import { UseFormReturn } from 'react-hook-form';
+import AlertTextBox from '@/components/common/alertTextBox';
+import ItemImageBox from '@/components/common/box/itemImageBox';
 
 interface ItemLinkProps {
-  linkURL: string;
-  handleChangeLinkURL: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => void;
-  imageURL: string;
-  changeImageURL: (input: string) => void;
-  price: number;
-  changePrice: (input: number) => void;
-  readOnly?: boolean;
+  methods: UseFormReturn<Step1InputType, any, undefined>;
 }
 
 export default function ItemLink(props: ItemLinkProps) {
-  const { linkURL, handleChangeLinkURL, imageURL, changeImageURL, price, changePrice, readOnly } =
-    props;
+  const { methods } = props;
   const [isCorrectLinkURL, setIsCorrectLinkURL] = useState(false);
 
-  //queryClient부분 다시 체크해야됨!
+  const linkURL = methods.watch('linkURL');
+  const imageURL = methods.getValues('imageURL');
+  const price = methods.getValues('price');
+
   const parseImage = () => {
     isSuccess && refetch();
     if (validation.isCorrectSite(linkURL)) {
@@ -49,9 +42,9 @@ export default function ItemLink(props: ItemLinkProps) {
         const imageData = extractImageSrc(data?.imageTag?.data?.data);
         const priceData = extractPrice(data?.priceTag?.data?.data, linkURL);
 
-        if (imageData && priceData) {
-          changeImageURL(imageData);
-          changePrice(priceData);
+        if (imageData) {
+          methods.setValue('imageURL', imageData);
+          methods.setValue('price', priceData);
         }
       },
       enabled: isCorrectLinkURL && validation.isCorrectSite(linkURL),
@@ -60,20 +53,12 @@ export default function ItemLink(props: ItemLinkProps) {
 
   return (
     <Styled.Container>
-      {Object.values(SITE_LIST).map((siteData) => (
-        <Styled.SiteBox key={siteData.NAME}>
-          <a href={siteData.LINK} target="_blank" rel="noopener noreferrer">
-            <Image src={siteData.LOGO} alt={`${siteData.NAME} 로고`} />
-          </a>
-        </Styled.SiteBox>
-      ))}
-
-      <InputBox
+      <Input
+        register={methods.register('linkURL', {
+          onBlur: parseImage,
+        })}
         placeholder="정해진 사이트에서 원하는 선물 링크 붙여넣기"
-        handleBlur={parseImage}
-        handleChangeValue={handleChangeLinkURL}
-        readOnly={readOnly}
-      ></InputBox>
+      />
       {linkURL && linkURL.length > 0 && !validation.isCorrectSite(linkURL) && (
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}

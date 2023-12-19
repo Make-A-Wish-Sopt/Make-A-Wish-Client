@@ -7,13 +7,11 @@ import router from 'next/router';
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
-import Header from '@/components/common/header';
-import IconButton from '@/components/common/button/iconButton';
-import ButtonBox from '@/components/common/button/buttonBox';
 import ShareModal from '@/components/common/modal/ShareModal';
 
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import useGetProgressData from '@/hooks/queries/main/useGetProgressData';
+import Button from '@/components/common/button';
 
 export default function ShareContainer() {
   const [showModal, setShowModal] = useState(false);
@@ -39,16 +37,8 @@ export default function ShareContainer() {
 
   return (
     <>
-      <Header>
-        <IconButton onClick={handleMoveToMain} src={CloseBlueIc} alt="닫기" />
-      </Header>
-
       <Styled.Container>
-        <Styled.Title>
-          {nickName}님의
-          <br />
-          소원 생성 완료!
-        </Styled.Title>
+        <Styled.Title>{`${nickName}님의\n 소원 생성 완료!`}</Styled.Title>
         {status === 'while' ? (
           <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
         ) : (
@@ -65,23 +55,13 @@ export default function ShareContainer() {
 
       {showModal && <ShareModal handleModalClick={handleModalClick} />}
       <Styled.ButtonWrapper>
-        {status === 'while' ? (
-          <ButtonBox
-            handleClick={handleModalClick}
-            backgroundColor={theme.colors.main_blue}
-            fontColor={theme.colors.white}
-          >
-            링크 공유하기
-          </ButtonBox>
-        ) : (
-          <ButtonBox
-            handleClick={handleMoveToMain}
-            backgroundColor={theme.colors.main_blue}
-            fontColor={theme.colors.white}
-          >
-            홈화면으로 이동하기
-          </ButtonBox>
-        )}
+        <Button
+          boxType="btn--large"
+          colorSystem="mainBlue_white"
+          handleClickFn={status === 'while' ? handleModalClick : handleMoveToMain}
+        >
+          {status === 'while' ? '링크 공유하기' : '홈화면으로 이동하기'}
+        </Button>
       </Styled.ButtonWrapper>
     </>
   );

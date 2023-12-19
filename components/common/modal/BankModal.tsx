@@ -2,18 +2,17 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
-import Box from '../box/Box';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface BankModalProps {
   handleToggle: () => void;
-  changeBankName: (input: string) => void;
+  register: UseFormRegisterReturn<'bankName'>;
 }
 
 export default function BankModal(props: BankModalProps) {
-  const { handleToggle, changeBankName } = props;
+  const { handleToggle, register } = props;
 
   const handleChangeBankName = (input: string) => {
-    changeBankName(input);
     handleToggle();
   };
 
@@ -23,15 +22,15 @@ export default function BankModal(props: BankModalProps) {
 
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-          <Box boxType={'bank'} key={bank.name}>
-            <Styled.BanksWrapper onClick={() => handleChangeBankName(bank.name)}>
+          <Styled.BankItem key={bank.name}>
+            <Styled.BanksWrapper>
               <Styled.BankLogo>
                 <Image src={bank.logo} alt={`${bank.name} 로고`} />
               </Styled.BankLogo>
 
               <Styled.BankName>{bank.name} </Styled.BankName>
             </Styled.BanksWrapper>
-          </Box>
+          </Styled.BankItem>
         ))}
       </Styled.BankContainer>
     </Styled.Modal>
@@ -66,6 +65,18 @@ const Styled = {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 0.8rem;
     grid-row-gap: 0.8rem;
+  `,
+
+  BankItem: styled.div`
+    width: 9rem;
+    height: 6.6rem;
+
+    padding: 1rem 0 0.5rem;
+
+    background-color: ${theme.colors.white};
+    border-radius: 1rem;
+
+    cursor: pointer;
   `,
 
   BanksWrapper: styled.li`

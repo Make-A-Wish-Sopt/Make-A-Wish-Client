@@ -1,8 +1,7 @@
-
-import { WishesDataType } from '@/types/common/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { atom } from 'recoil';
 
-export const WishesData = atom<WishesDataType>({
+export const WishesData = atom<WishesDataInputType>({
   key: 'WishesData',
   default: {
     imageURL: '',

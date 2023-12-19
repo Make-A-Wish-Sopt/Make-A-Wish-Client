@@ -3,9 +3,10 @@ import { CakeListType } from '@/types/cakes/cakeListType';
 import InputContainer from '../common/input/inputContainer';
 import styled from 'styled-components';
 import Image from 'next/image';
-import LargeBox from '../common/box/LargeBox';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import ImageBox from '../common/box/imageBox';
+import { StyledBox } from '../common/box';
 
 interface SelectCakesProps {
   selectedCake: CakeListType;
@@ -18,24 +19,23 @@ export default function SelectCakes(props: SelectCakesProps) {
 
   return (
     <InputContainer title={'보내고 싶은 케이크 선택하기'}>
-      <Styled.CakeContainer>
+      <Styled.CakeWrapper>
         {CAKE_LIST.map((cake, index) => (
           <Styled.CakeBox
+            as="li"
             onClick={() => selectCake(index)}
             index={index}
             selectedIndex={selectedIndex}
             key={cake.name}
           >
-            <Image src={cake.cakeImage} alt={`${cake.name}이미지`}  width={44}/>
+            <Image src={cake.cakeImage} alt={`${cake.name}이미지`} width={44} />
           </Styled.CakeBox>
         ))}
-      </Styled.CakeContainer>
+      </Styled.CakeWrapper>
 
-      <LargeBox bgColor={theme.colors.pastel_blue}>
-        <Styled.CakesImageWrapper>
-          <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" height={150} />
-        </Styled.CakesImageWrapper>
-      </LargeBox>
+      <ImageBox boxType="imageBox--image" colorSystem="pastelBlue_mainBlue">
+        <Image src={selectedCake.detailImage} alt="케이크 상세 이미지" height={150} />
+      </ImageBox>
 
       <Styled.CakeInfo>
         {selectedCake.name} {convertMoneyText(String(selectedCake.price))}원
@@ -45,17 +45,19 @@ export default function SelectCakes(props: SelectCakesProps) {
 }
 
 const Styled = {
-  CakeContainer: styled.div`
+  CakeWrapper: styled.ul`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 1.2rem;
     grid-row-gap: 1rem;
 
-    margin-bottom: 2rem;
+    width: 100%;
+
+    margin-bottom: 1.2rem;
   `,
 
-  CakeBox: styled.div<{ index: number; selectedIndex: number }>`
+  CakeBox: styled(StyledBox)<{ index: number; selectedIndex: number }>`
     width: 7.4rem;
     height: 4.6rem;
 

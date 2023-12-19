@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import styled from 'styled-components';
 
 interface IconButtonProps {
   src: string;
@@ -17,13 +16,8 @@ export default function IconButton(props: IconButtonProps) {
   };
 
   return (
-    <Button onClick={handleClick}>
+    <button onClick={handleClick}>
       <Image src={src} alt={alt} />
-    </Button>
+    </button>
   );
 }
-
-const Button = styled.button`
-  border: none;
-  background-color: transparent;
-`;

@@ -1,80 +1,58 @@
 import useModal from '@/hooks/common/useModal';
-import InputBox from '../input/inputBox';
 import Modal from './modal';
 import BankModal from './BankModal';
 import styled from 'styled-components';
-import { validation } from '@/validation/input';
-import AlertTextBox from '../alertTextBox';
-import { ChangeEvent } from 'react';
-import { ALERT_ACCOUNT_LENGTH } from '@/constant/alertMessage';
-import Box from '../box/Box';
-import Button from '../button/button';
-import { UseFormRegister } from 'react-hook-form';
-import { InputsType } from '@/types/common/input';
+import Button from '../button';
+import { UseFormReturn } from 'react-hook-form';
+import Input from '../input/input';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { ArrowDownIc } from '@/public/assets/icons';
+import Image from 'next/image';
+import { StyledBox } from '../box';
+import theme from '@/styles/theme';
 
 interface BankInputProps {
-  name: string;
-  handleChangeName: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
-  bankName: string;
-  changeBankName: (input: string) => void;
-  account: string;
-  handleChangeAccount: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => void;
-  register?: UseFormRegister<InputsType>;
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
 export default function BankInput(props: BankInputProps) {
-  const {
-    name,
-    handleChangeName,
-    bankName,
-    changeBankName,
-    account,
-    handleChangeAccount,
-    register,
-  } = props;
+  const { methods } = props;
   const { isOpen, handleToggle } = useModal();
 
   return (
     <Styled.Container>
+      <Styled.GuideBox className={'lightRed_warningRed'}>
+        ※ 4회 이상 틀리면, 서비스 이용이 제한됩니다
+      </Styled.GuideBox>
+
       <Styled.ItemWrapper>
-        <InputBox placeholder="예금주명" value={name || ''} handleChangeValue={handleChangeName} />
+        <Input placeholder="예금주명" register={methods.register('name')} />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <InputBox placeholder="은행 선택" value={bankName || ''} readOnly dropDown={true} />
+        <Input placeholder="은행 선택" readOnly>
+          <Image src={ArrowDownIc} alt="더 보기" />
+        </Input>
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper>
         <Styled.InputWrapper>
-          <InputBox
-            boxType={'twoThree'}
+          <Input
+            width="calc(100% - 10.6rem)"
+            boxType="inputBox--custom"
             placeholder="계좌번호를 입력해주세요"
-            value={account || ''}
-            handleChangeValue={handleChangeName}
+            register={methods.register('account')}
           />
-          {/* {phone && isAlertState && <AlertTextBox>올바른 연락처를 입력해주세요</AlertTextBox>} */}
-          <Box boxType={'oneThree'} bgColor={'main_blue'}>
-            <Button
-              handleClick={() => console.log('기능추가해주세요!')}
-              fontColor={'white'}
-              font={'body14'}
-            >
-              {'계좌번호 확인'}
-            </Button>
-          </Box>
+          <Button width={10.6} boxType="btn--custom" colorSystem="mainBlue_white">
+            {'계좌번호 확인'}
+          </Button>
         </Styled.InputWrapper>
       </Styled.ItemWrapper>
       {/* 기능구현 이후 수정해야하는 부분 */}
 
-      {/* {validation.checkAccountLength(account) && (
-        <AlertTextBox> {ALERT_ACCOUNT_LENGTH}</AlertTextBox>
-      )} */}
-
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <BankModal handleToggle={handleToggle} changeBankName={changeBankName} />
+          <BankModal handleToggle={handleToggle} register={methods.register('bankName')} />
         </Modal>
       )}
     </Styled.Container>
@@ -94,6 +72,18 @@ const Styled = {
     display: flex;
     justify-content: space-between;
 
+    gap: 0.6rem;
+
     width: 100%;
+  `,
+
+  GuideBox: styled(StyledBox)`
+    width: 100%;
+    height: 4.4rem;
+
+    padding: 1.2rem;
+
+    ${theme.fonts.body14};
+    line-height: 140%;
   `,
 };

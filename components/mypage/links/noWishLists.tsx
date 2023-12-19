@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import theme from '@/styles/theme';
 import { LinksPageChatImg, MainCakeImg } from '@/public/assets/images';
-import ButtonBox from '@/components/common/button/buttonBox';
 import router from 'next/router';
-
+import Button from '@/components/common/button';
 
 export default function NoWishLists() {
-
   const handleMoveToMain = () => {
     router.push('/main');
   };
@@ -21,27 +18,22 @@ export default function NoWishLists() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      <ButtonBox
-        handleClick={handleMoveToMain}
-        backgroundColor={theme.colors.main_blue}
-        fontColor={theme.colors.white}
-      >
+      <Button handleClickFn={handleMoveToMain} colorSystem="mainBlue_white">
         소원 링크 생성하러 가기
-      </ButtonBox>
+      </Button>
     </>
   );
 }
 
 const Styled = {
   Container: styled.div`
-  margin: 6.7rem 0 3.7rem;
-`,
+    margin: 6.7rem 0 3.7rem;
+  `,
 
   ImageContainer: styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`,
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  `,
 };

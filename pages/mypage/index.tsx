@@ -3,7 +3,7 @@ import MyPageContainer from '@/components/mypage';
 
 export default function MyPage() {
   return (
-    <Layout layoutKey="empty">
+    <Layout layoutKey="header">
       <MyPageContainer />
     </Layout>
   );

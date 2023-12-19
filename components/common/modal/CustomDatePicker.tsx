@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { getMonth, getYear, isBefore } from 'date-fns';
-import theme from '@/styles/theme';
 import { MONTHS } from '@/constant/dateList';
 
 interface CustomDatePickerProps {
@@ -63,7 +62,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
           </Styled.CalendarHeader>
         )}
         locale={ko}
-        dateFormat="yyyy-MM-dd"
+        dateFormat="yyyy.MM.dd"
         selected={new Date(date)}
         onChange={handleDateChange}
         selectsEnd
@@ -79,10 +78,6 @@ const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 11rem;
-
-    ${theme.fonts.body14};
-    ${theme.colors.dark_blue};
 
     cursor: pointer;
   `,

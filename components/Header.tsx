@@ -3,22 +3,31 @@ import styled from 'styled-components';
 import BackBtn from './common/button/backBtn';
 
 interface HeaderProps {
+  width: string;
   children?: ReactNode;
 }
 
 export default function Header(props: HeaderProps) {
-  const { children } = props;
+  const { width, children } = props;
 
-  return <Styled.Container>{/* <BackBtn /> */}</Styled.Container>;
+  return (
+    <Styled.Container width={width}>
+      <BackBtn />
+      {children}
+    </Styled.Container>
+  );
 }
 
 const Styled = {
-  Container: styled.header`
+  Container: styled.header<{ width: string }>`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    width: 100%;
+    width: ${(props) => props.width};
     height: 3rem;
 
-    padding: 0 1.5rem;
+    padding: 1rem 1.5rem;
+    margin-top: 1.6rem;
   `,
 };

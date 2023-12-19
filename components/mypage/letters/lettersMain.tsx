@@ -1,7 +1,5 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import InputHeader from '@/components/common/inputHeader';
-import BackBtn from '@/components/common/button/backBtn';
 import { useRouter } from 'next/router';
 import CakeListButton from './cakeListButton';
 import { useGetCakesCount } from '@/hooks/queries/letters/useGetCakesCount';
@@ -20,9 +18,8 @@ export default function LettersMainContainer() {
     setWishId(router.query.id);
   }, [router.isReady]);
 
-
   // nickname
-  const [nickName, setNicknameState] = useState("");
+  const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   useEffect(() => {
@@ -37,19 +34,18 @@ export default function LettersMainContainer() {
       return 0;
     }
 
-    const cake = cakesCount.find(cake => cake.cakeId === cakeId);
+    const cake = cakesCount.find((cake) => cake.cakeId === cakeId);
     return cake ? cake.count : 0;
   };
 
-
   const handleMoveToLetters = (cakeId: number) => {
-    const cake = CAKE_LIST.find(cake => cake.cakeNumber === cakeId);
+    const cake = CAKE_LIST.find((cake) => cake.cakeNumber === cakeId);
 
     if (cake) {
       router.push({
         pathname: `/mypage/letters/${wishId}/${cakeId}`,
         query: {
-          cake: getCakeNum(cake.cakeNumber, cakesCount)
+          cake: getCakeNum(cake.cakeNumber, cakesCount),
         },
       });
     }
@@ -67,10 +63,6 @@ export default function LettersMainContainer() {
 
   return (
     <>
-      <InputHeader>
-        <BackBtn />
-      </InputHeader>
-
       <Styled.Container>
         <MainHeader title={title} />
 
@@ -78,26 +70,28 @@ export default function LettersMainContainer() {
           {CAKE_LIST?.map((cake) => (
             <CakeListButton
               key={cake.name}
-              handleClick={getCakeNum(cake.cakeNumber, cakesCount) !== 0 ? () => handleMoveToLetters(cake.cakeNumber) : undefined}
+              handleClick={
+                getCakeNum(cake.cakeNumber, cakesCount) !== 0
+                  ? () => handleMoveToLetters(cake.cakeNumber)
+                  : undefined
+              }
               backgroundColor={theme.colors.pastel_blue}
               fontColor={theme.colors.gray4}
               fonts={theme.fonts.button18}
-
               image={cake.smallImage}
               cakeName={cake.name}
               cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
             />
           ))}
         </Styled.ListButton>
-
-      </Styled.Container >
+      </Styled.Container>
     </>
   );
 }
 
 const Styled = {
   Container: styled.div`
-  margin: 0 1rem 0;
+    margin: 0 1rem 0;
   `,
 
   Title: styled.h1`
@@ -111,6 +105,6 @@ const Styled = {
   `,
 
   ListButton: styled.div`
-${theme.fonts.button18};
-`,
+    ${theme.fonts.button18};
+  `,
 };

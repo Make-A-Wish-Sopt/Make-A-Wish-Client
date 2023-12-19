@@ -2,13 +2,13 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface InputLinkProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function InputLink(props: InputLinkProps) {
-    const { children } = props;
+  const { children } = props;
 
-    return <Styled.Container>{children}</Styled.Container>;
+  return <Styled.Container>{children}</Styled.Container>;
 }
 
 const Styled = {
