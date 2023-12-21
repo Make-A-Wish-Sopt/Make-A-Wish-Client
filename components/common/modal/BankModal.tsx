@@ -13,8 +13,8 @@ interface BankModalProps {
 export default function BankModal(props: BankModalProps) {
   const { handleToggle, methods } = props;
 
-  const handleChangeBankName = (input: string) => {
-    methods.setValue('bankName', input);
+  const handleChangeBank = (input: string) => {
+    methods.setValue('bank', input);
     handleToggle();
   };
 
@@ -24,7 +24,7 @@ export default function BankModal(props: BankModalProps) {
 
       <Styled.BankContainer>
         {BANK_LIST.map((bank) => (
-          <Styled.BankItem key={bank.name} onClick={() => handleChangeBankName(bank.name)}>
+          <Styled.BankItem key={bank.name} onClick={() => handleChangeBank(bank.name)}>
             <Styled.BanksWrapper>
               <Styled.BankLogo>
                 <Image src={bank.logo} alt={`${bank.name} 로고`} />

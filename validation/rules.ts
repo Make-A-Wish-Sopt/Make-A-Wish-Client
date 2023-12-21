@@ -22,19 +22,22 @@ export const RULES: Record<keyof WishesDataInputType, unknown> = {
     },
   },
   price: {},
-  imageURL: {},
+  imageUrl: {},
   hint: {},
   startDate: {},
   endDate: {},
   title: {},
   phone: {},
-  mobileCode: {},
   name: {},
-  bankName: {},
+  bank: {},
   account: {},
 };
 
-// const textRules = {
-//   required: 'Text is Required',
-//   validation: {},
-// };
+export const rules_initial = {
+  required: '필수 작성 항목입니다.',
+  pattern: {
+    value: /^http[s]?:\/\/product.29cm.co.kr/,
+    message: '정해진 사이트에서 링크를 가져와주세요!',
+  },
+  minLength: 0,
+};

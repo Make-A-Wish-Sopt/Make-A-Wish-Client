@@ -4,19 +4,18 @@ import useModal from '@/hooks/common/useModal';
 import Modal from '@/components/common/modal';
 import DeleteModal from '@/components/common/modal/DeleteModal';
 import { useState } from 'react';
-import { useGetWishLinks } from '@/hooks/queries/links/useGetWishLinks';
 import WishLists from './wishLists';
 import NoWishLists from './noWishLists';
-import { useDeleteWishLinks } from '@/hooks/queries/links/useDeleteWishLinks';
 import { useQueryClient } from 'react-query';
 import { QUERY_KEY } from '@/constant/queryKey';
+import { useDeleteWishes, useGetWishLinks } from '@/hooks/queries/wishes';
 
 export default function LinksMainContainer() {
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const { isOpen, handleToggle } = useModal();
   const queryClient = useQueryClient();
 
-  const deleteWishesMutation = useDeleteWishLinks();
+  const deleteWishesMutation = useDeleteWishes();
 
   const { wishLinks, noWishes } = useGetWishLinks();
 

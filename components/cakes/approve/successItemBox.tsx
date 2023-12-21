@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useMutation } from 'react-query';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import Contribution from '../contribution';
+import Contribution from './contribution';
 import { useRecoilValue } from 'recoil';
 import { CakesData } from '@/recoil/cakes/cakesData';
-import { requestPayApprove } from '@/api/cakes/cakesAPI';
+
 import ImageBox from '@/components/common/box/imageBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 
@@ -13,12 +12,9 @@ export default function SuccessItemBox() {
   const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {
-    if (cakesData.selectedCake.cakeNumber === 1 || cakesData.pgToken !== '') {
-      mutate();
-    }
+    // if (cakesData.selectedCake.cakeNumber === 1 || cakesData.pgToken !== '') {
+    // }
   }, [cakesData]);
-
-  const { data, mutate, isSuccess } = useMutation(() => requestPayApprove(cakesData));
 
   return (
     <>

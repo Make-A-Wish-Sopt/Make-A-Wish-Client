@@ -1,6 +1,6 @@
 import LinksBox from './linksBox';
 import { WishLinksType } from '@/types/links/wishLinksType';
-import { convertDateFormat } from '@/hooks/useDate';
+import { convertDateFormat } from '@/hooks/common/useDate';
 import router from 'next/router';
 
 interface WishListsProps {

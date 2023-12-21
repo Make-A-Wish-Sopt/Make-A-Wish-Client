@@ -1,4 +1,3 @@
-import PATH from '@/constant/path';
 import axios from 'axios';
 
 //서버통신 함수

@@ -32,13 +32,6 @@ interface WishesStep2Props {
 export default function WishesStep2(props: WishesStep2Props) {
   const { methods, wishesStep } = props;
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(getDate(startDate, 7));
-
-  useEffect(() => {
-    setEndDate(getDate(startDate, 7));
-  }, [startDate]);
-
   useEffect(() => {
     if (
       methods.getValues('title') &&
@@ -50,10 +43,6 @@ export default function WishesStep2(props: WishesStep2Props) {
       wishesStep.changeNextState(false);
     }
   }, [methods.watch()]);
-
-  const changeStartDate = (value: Date) => {
-    setStartDate(value);
-  };
 
   const onSubmit = () => {};
 
@@ -78,17 +67,9 @@ export default function WishesStep2(props: WishesStep2Props) {
           <InputContainer title="내 생일주간 설정하기">
             <Styled.CalendarWrapper>
               {/* 시작일 */}
-              <Calendar
-                date={methods.getValues('startDate')}
-                methods={methods}
-                colorSystem="pastelBlue_darkBlue"
-              />
+              <Calendar date={methods.getValues('startDate')} methods={methods} />
               {/* 종료일 */}
-              <Calendar
-                date={methods.getValues('endDate')}
-                colorSystem="pastelBlue_gray2"
-                disable
-              />
+              <Calendar date={methods.getValues('endDate')} readOnly />
             </Styled.CalendarWrapper>
           </InputContainer>
         </div>

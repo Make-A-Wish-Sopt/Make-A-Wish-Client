@@ -1,11 +1,7 @@
-import { editUserAccount, getUserAccount } from '@/api/wishes/wishesAPI';
-import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
-import { QUERY_KEY } from '@/constant/queryKey';
-import { useCreateWishesLink } from '@/hooks/queries/wishes/useCreateWishesLink';
-import { BankInfoInputsType } from '@/types/common/input/wishesInput';
-import { useMutation, useQuery } from 'react-query';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import styled from 'styled-components';
 import CheckBox from '@/components/common/checkBox';
 import useCheckBox from '@/hooks/common/useCheckBox';
@@ -18,8 +14,11 @@ import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/common/alertTextBox';
+import { useGetUserAccount, usePatchUserAccount } from '@/hooks/queries/user';
+import { usePostWishes } from '@/hooks/queries/wishes';
 
 interface BankInfoProps {
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
   wishesStep: {
     stepIndex: number;
     prevState: boolean;
@@ -34,34 +33,20 @@ interface BankInfoProps {
 }
 
 export default function BankInfo(props: BankInfoProps) {
-  const { wishesStep } = props;
-  const { data } = useQuery(QUERY_KEY.ITEM_DATA, getUserAccount);
+  const { methods, wishesStep } = props;
 
-  const methods = useForm<BankInfoInputsType>({
-    defaultValues: {
-      phone: '',
-      mobileCode: '',
-      name: '',
-      bankName: '',
-      account: '',
-    },
-  });
+  const { userAccountData } = useGetUserAccount();
 
   const { checkBoxState, handleChangeCheckBoxState } = useCheckBox();
 
-  const { postWishesData } = useCreateWishesLink();
-
-  const { mutate } = useMutation(() => editUserAccount(methods), {
-    onSuccess: () => {
-      router.push('/wishes/share');
-    },
-  });
+  const { postWishesData } = usePostWishes(methods);
+  const { patchUserAccountData } = usePatchUserAccount(methods);
 
   useEffect(() => {
     if (
       checkBoxState &&
       methods.getValues('name') &&
-      methods.getValues('bankName') &&
+      methods.getValues('bank') &&
       methods.getValues('account') &&
       methods.getValues('phone') &&
       validation.isCorrectPhoneNumber(methods.getValues('phone'))
@@ -106,7 +91,13 @@ export default function BankInfo(props: BankInfoProps) {
           </InputContainer>
         </div>
 
-        <WishesStepBtn wishesStep={wishesStep} handleClickFn={() => {}} />
+        <WishesStepBtn
+          wishesStep={wishesStep}
+          handleClickFn={() => {
+            postWishesData();
+            patchUserAccountData();
+          }}
+        />
       </Styled.Container>
     </>
   );

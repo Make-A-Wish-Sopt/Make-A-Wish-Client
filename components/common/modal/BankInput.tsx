@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from '../button';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
-import { BankInfoInputsType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import { StyledBox } from '../box';
@@ -13,7 +13,7 @@ import theme from '@/styles/theme';
 import AlertTextBox from '../alertTextBox';
 
 interface BankInputProps {
-  methods: UseFormReturn<BankInfoInputsType, any, undefined>;
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
 export default function BankInput(props: BankInputProps) {
@@ -31,7 +31,7 @@ export default function BankInput(props: BankInputProps) {
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <Input placeholder="은행 선택" register={methods.register('bankName')} readOnly>
+        <Input placeholder="은행 선택" register={methods.register('bank')} readOnly>
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>
       </Styled.ItemWrapper>

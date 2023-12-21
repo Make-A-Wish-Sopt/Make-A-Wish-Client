@@ -3,28 +3,32 @@ import styled from 'styled-components';
 import router from 'next/router';
 import Image from 'next/image';
 import ItemBox from './itemBox';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import GuideModal from '@/components/common/modal/GuideModal';
 import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
 import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import { deleteUserInfo } from '@/api/mypage/mypageAPI';
+import { deleteUserInfo } from '@/api/user';
+import { useGetMainProgressData } from '@/hooks/queries/wishes';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
-
   const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
+  const { progressData } = useGetMainProgressData();
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
 
   const handleEditWish = () => {
+    if (progressData?.status === 'END' || progressData === undefined) return;
+
     router.push('/mypage/editWishes');
   };
+
   const handleWishLinks = () => {
     router.push('/mypage/links');
   };
@@ -46,7 +50,7 @@ export default function MyPageContainer() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('UserInfo');
-    // useResetRecoilState(LoginUserInfo);
+    useResetRecoilState(LoginUserInfo);
   };
 
   const handleWithdrawal = () => {
@@ -72,10 +76,24 @@ export default function MyPageContainer() {
         </Styled.TitleContainer>
 
         <Styled.ItemBoxWrapper>
-          <ItemBox handleClickFn={handleEditWish} colorSystem="pastelBlue_mainBlue">
+          <ItemBox
+            handleClickFn={handleEditWish}
+            colorSystem={
+              progressData?.status === 'END' || progressData === undefined
+                ? 'gray1_gray2'
+                : 'pastelBlue_mainBlue'
+            }
+          >
             진행중인 소원 링크 정보 수정하기
           </ItemBox>
-          <ItemBox handleClickFn={handleCustomerService} colorSystem="pastelBlue_mainBlue">
+          <ItemBox
+            handleClickFn={handleCustomerService}
+            colorSystem={
+              progressData?.status === 'END' || progressData === undefined
+                ? 'gray1_gray2'
+                : 'pastelBlue_mainBlue'
+            }
+          >
             진행중인 펀딩 중단하기
           </ItemBox>
           <ItemBox handleClickFn={handleWishLinks} colorSystem="pastelBlue_mainBlue">

@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { convertDateToString } from '@/utils/common/getDate';
-import { useRecoilValue } from 'recoil';
-import { WishesData } from '@/recoil/formPage/wishesData';
 import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 import WishesStepTitle from '../common/wishesStepTitle';
 import WishesStepBtn from '../common/wishesStepBtn';
+import { ColorSystemType } from '@/types/common/box/boxStyleType';
+import { useEffect } from 'react';
 
 interface PreviewProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -31,17 +31,22 @@ interface PreviewProps {
 export default function Preview(props: PreviewProps) {
   const { methods, wishesStep } = props;
 
+  useEffect(() => {
+    wishesStep.changeNextState(true);
+  }, []);
+
   return (
     <>
       <WishesStepTitle title="소원링크 화면 미리보기" />
       <Styled.Container>
         <div>
           <Styled.Period>
-            {/* {convertDateToString(wishesData.startDate)}~{convertDateToString(wishesData.endDate)} */}
+            {convertDateToString(methods.getValues('startDate'))}~
+            {convertDateToString(methods.getValues('endDate'))}
           </Styled.Period>
 
           <InputContainer title={methods.getValues('title')}>
-            <ItemImageBox src={methods.getValues('imageURL')} alt="선물이미지 미리보기" />
+            <ItemImageBox src={methods.getValues('imageUrl')} alt="선물이미지 미리보기" />
             <Styled.PresentPrice>
               가격 : {convertMoneyText(methods.getValues('price').toString())}
             </Styled.PresentPrice>

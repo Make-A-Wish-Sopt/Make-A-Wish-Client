@@ -5,22 +5,22 @@ import { EmptyBox } from '../box';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ImageBox from '../box/imageBox';
+import { CakesDataInputType } from '@/types/common/input/cakesInput';
 
 interface TextareaBoxProps {
   placeholder?: string;
-  value?: string;
   inputLength: number;
   limitLength: number;
   readOnly?: boolean;
-  register: UseFormRegisterReturn<keyof WishesDataInputType>;
+  register: UseFormRegisterReturn<keyof WishesDataInputType | keyof CakesDataInputType>;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {
-  const { placeholder, value, inputLength, limitLength, readOnly, register } = props;
+  const { placeholder, inputLength, limitLength, readOnly, register } = props;
 
   return (
     <ImageBox boxType="imageBox--textarea" colorSystem="pastelBlue_darkBlue">
-      <Styled.Textarea placeholder={placeholder} value={value} readOnly={readOnly} {...register} />
+      <Styled.Textarea placeholder={placeholder} readOnly={readOnly} {...register} />
       <Styled.InputLengthWrapper>
         <EmptyBox />
         {limitLength && <InputLength inputLength={inputLength} limitLength={limitLength} />}

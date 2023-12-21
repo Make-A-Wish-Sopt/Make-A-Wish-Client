@@ -9,20 +9,26 @@ import BankInfo from './BankInfo';
 import { useForm } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { getDate } from '@/utils/common/getDate';
+import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 
 export default function WishesFormContainer() {
   const wishesStep = { ...useWishesStep() };
+  const { imageFile, preSignedImageUrl, uploadImageFile } = useUploadItemInfo();
 
   const methods = useForm<WishesDataInputType>({
     defaultValues: {
       linkURL: '',
-      imageURL: '',
+      imageUrl: '',
       price: '',
       initial: '',
       title: '',
       hint: '',
       startDate: new Date(),
       endDate: getDate(new Date(), 7),
+      phone: '',
+      name: '',
+      bank: '',
+      account: '',
     },
   });
 
@@ -30,10 +36,18 @@ export default function WishesFormContainer() {
     <Styled.Container>
       {
         {
-          1: <WishesStep1 methods={methods} wishesStep={wishesStep} />,
+          1: (
+            <WishesStep1
+              methods={methods}
+              wishesStep={wishesStep}
+              imageFile={imageFile}
+              preSignedImageUrl={preSignedImageUrl}
+              uploadImageFile={uploadImageFile}
+            />
+          ),
           2: <WishesStep2 methods={methods} wishesStep={wishesStep} />,
           3: <Preview methods={methods} wishesStep={wishesStep} />,
-          4: <BankInfo wishesStep={wishesStep} />,
+          4: <BankInfo methods={methods} wishesStep={wishesStep} />,
         }[wishesStep.stepIndex]
       }
     </Styled.Container>
