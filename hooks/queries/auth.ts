@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { sendCodeToServer } from '@/api/login/sendCodeToServer';
 import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { postAuthKakao } from '@/api/auth';
 
-export default function useAuthKakao() {
+export function useAuthKakao() {
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');
   const [nickName, setNickname] = useState<string>('');
@@ -15,7 +15,7 @@ export default function useAuthKakao() {
   const router = useRouter();
   const { code: authCode } = router.query;
 
-  const { mutate: kakaoLoginMutate } = useMutation(() => sendCodeToServer(authCode as string), {
+  const { mutate: kakaoLoginMutate } = useMutation(() => postAuthKakao(authCode as string), {
     onSuccess: (data) => {
       const { nickName, accessToken, refreshToken } = data;
 
