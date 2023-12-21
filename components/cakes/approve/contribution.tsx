@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import ProgressBar from '../common/progressBar';
+import ProgressBar from '../../common/progressBar';
 import theme from '@/styles/theme';
 
 interface ContributionProps {

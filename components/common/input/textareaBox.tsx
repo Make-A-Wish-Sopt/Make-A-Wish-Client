@@ -5,13 +5,14 @@ import { EmptyBox } from '../box';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import ImageBox from '../box/imageBox';
+import { CakesDataInputType } from '@/types/common/input/cakesInput';
 
 interface TextareaBoxProps {
   placeholder?: string;
   inputLength: number;
   limitLength: number;
   readOnly?: boolean;
-  register: UseFormRegisterReturn<keyof WishesDataInputType>;
+  register: UseFormRegisterReturn<keyof WishesDataInputType | keyof CakesDataInputType>;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {

@@ -3,10 +3,8 @@ import Button from '../common/button';
 import styled from 'styled-components';
 import useModal from '@/hooks/common/useModal';
 import Modal from '../common/modal';
-import ShareModalConent from '../common/modal/share/ShareModalConent';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
-import ModalContainer from '../common/modal/ModalContainer';
-import ShareModal from '../common/modal/share';
+import MainShareModal from '../common/modal/MainShareModal';
 
 export default function MainBtn() {
   const { progressData } = useGetMainProgressData();
@@ -40,9 +38,9 @@ export default function MainBtn() {
         </Button>
       )}
       {isOpen && (
-        <ModalContainer modalType="modalInClose" isOpen={isOpen} handleToggle={handleToggle} bgNone>
-          <ShareModal />
-        </ModalContainer>
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <MainShareModal handleToggle={handleToggle} />
+        </Modal>
       )}
     </Styled.ButtonWrapper>
   );

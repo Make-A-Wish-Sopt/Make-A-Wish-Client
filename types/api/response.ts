@@ -16,3 +16,10 @@ export type UserAccountDataResponseType = DefaultResponseType<{
   id: number;
   phone: string | number;
 }>;
+
+export type PublicWishesDataResponseType = DefaultResponseType<{
+  name: string;
+  dayCount: number;
+  title: string;
+  hint: string;
+}>;
