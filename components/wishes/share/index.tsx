@@ -1,35 +1,25 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import router from 'next/router';
-
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
-import ShareModal from '@/components/common/modal/ShareModal';
-
+import ShareModalContent from '@/components/common/modal/shareModal/ShareModalConent';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import useGetProgressData from '@/hooks/queries/main/useGetProgressData';
 import Button from '@/components/common/button';
+import Modal from '@/components/common/modal';
+import useModal from '@/hooks/common/useModal';
+import { useGetMainProgressData } from '@/hooks/queries/wishes';
+import ModalContainer from '@/components/common/modal/ModalContainer';
+import ShareModal from '@/components/common/modal/shareModal';
 
 export default function ShareContainer() {
-  const [showModal, setShowModal] = useState(false);
+  const { isOpen, handleToggle } = useModal();
 
-  const [status, setStatus] = useState('none');
-  const { progressData, wishStatus } = useGetProgressData();
+  const { progressData } = useGetMainProgressData();
 
-  const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
-
-  useEffect(() => {
-    setNicknameState(loginUserInfo.nickName);
-    setStatus(wishStatus);
-  }, [loginUserInfo, wishStatus]);
-
-  const handleModalClick = () => {
-    setShowModal(!showModal);
-  };
 
   const handleMoveToMain = () => {
     router.push('/main');
@@ -37,13 +27,16 @@ export default function ShareContainer() {
 
   return (
     <>
+      <Styled.TopButtonWrapper>
+        <Image src={CloseBlueIc} alt="닫기" onClick={handleMoveToMain} />
+      </Styled.TopButtonWrapper>
       <Styled.Container>
-        <Styled.Title>{`${nickName}님의\n 소원 생성 완료!`}</Styled.Title>
-        {status === 'while' ? (
+        <Styled.Title>{`${loginUserInfo.nickName}님의\n 소원 생성 완료!`}</Styled.Title>
+        {progressData?.status === 'WHILE' ? (
           <Styled.About>선물주들에게 생일 축하 받으러 가볼까요?</Styled.About>
         ) : (
           <Styled.About>
-            {progressData ? progressData.dayCount : '?'}일 뒤부터 링크를 공유할 수 있어요
+            {progressData ? progressData?.dayCount : '?'}일 뒤부터 링크를 공유할 수 있어요
           </Styled.About>
         )}
 
@@ -68,6 +61,11 @@ export default function ShareContainer() {
 }
 
 const Styled = {
+  TopButtonWrapper: styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+  `,
+
   Title: styled.div`
     display: flex;
     justify-content: center;

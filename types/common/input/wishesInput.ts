@@ -1,6 +1,6 @@
 export interface WishesDataInputType extends BankInfoInputsType {
   linkURL: string;
-  imageURL: string;
+  imageUrl: string;
   price: string | number;
   initial: string;
   title: string;
@@ -11,11 +11,10 @@ export interface WishesDataInputType extends BankInfoInputsType {
 
 export interface BankInfoInputsType extends AccountInfoType {
   phone: string;
-  mobileCode: string;
 }
 
 export interface AccountInfoType {
   name: string;
-  bankName: string;
+  bank: string;
   account: string;
 }
