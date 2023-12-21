@@ -1,20 +1,20 @@
 import InputContainer from '@/components/common/input/inputContainer';
 import ItemLink from './itemLink';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { ChangeEvent, PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '@/components/common/input/input';
 import InputLength from '@/components/common/input/inputLength';
-import UploadGift from './UploadGift';
+import UploadGift from './UploadPresent';
 import SiteList from './SiteList';
-import { initial_RULES, validation } from '@/validation/input';
+import { validation } from '@/validation/input';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import WishesStepTitle from '../common/wishesStepTitle';
 import WishesStepBtn from '../common/wishesStepBtn';
+import { rules_initial } from '@/validation/rules';
 
 interface WishesStep1Props {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -29,12 +29,13 @@ interface WishesStep1Props {
     getNextBtnColor: (state: boolean) => ColorSystemType;
     getPrevBtnColor: (state: boolean) => ColorSystemType;
   };
+  imageFile: File | Blob | null;
+  preSignedImageUrl: string;
+  uploadImageFile: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) {
-  const { methods, wishesStep } = props;
-  const { imageFile, preSignedImageURL, uploadImageFile } = useUploadItemInfo();
-
+  const { methods, wishesStep, imageFile, preSignedImageUrl, uploadImageFile } = props;
   const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
 
   const handleLoadTypeToggle = (state: boolean) => {
@@ -85,7 +86,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
           ) : (
             <UploadGift
               imageFile={imageFile}
-              preSignedImageURL={preSignedImageURL}
+              preSignedImageUrl={preSignedImageUrl}
               uploadImageFile={uploadImageFile}
               methods={methods}
             />
@@ -96,7 +97,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
               boxType="inputBox--large"
               placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
               register={methods.register('initial', {
-                ...initial_RULES,
+                ...rules_initial,
               })}
               errors={methods.formState.errors.initial}
             >

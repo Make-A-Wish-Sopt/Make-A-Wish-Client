@@ -5,7 +5,7 @@ import theme from '@/styles/theme';
 import { LinkBeefCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
-import { convertDateFormat } from '@/hooks/useDate';
+import { convertDateFormat } from '@/hooks/common/useDate';
 import VerticalProgressBar from '@/components/common/verticalProgressBar';
 
 export default function LinksContainer() {

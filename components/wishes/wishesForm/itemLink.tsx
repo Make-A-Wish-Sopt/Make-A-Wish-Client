@@ -1,10 +1,9 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { REGEX, inputRules, linkURL_RULES, validation } from '@/validation/input';
+import { validation } from '@/validation/input';
 import { useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { QUERY_KEY } from '@/constant/queryKey';
-import { getItemInfo } from '@/api/wishes/wishesAPI';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
 import { getSiteData } from '@/utils/common/getSiteData';
@@ -13,6 +12,7 @@ import { UseFormReturn } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { getPresentLinkInfo } from '@/api/wishes';
 
 interface ItemLinkProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -23,7 +23,7 @@ export default function ItemLink(props: ItemLinkProps) {
   const [isCorrectLinkURL, setIsCorrectLinkURL] = useState(false);
 
   const linkURL = methods.watch('linkURL');
-  const imageURL = methods.getValues('imageURL');
+  const imageUrl = methods.getValues('imageUrl');
   const price = methods.getValues('price');
 
   const parseImage = () => {
@@ -37,14 +37,14 @@ export default function ItemLink(props: ItemLinkProps) {
 
   const { refetch, isSuccess } = useQuery(
     QUERY_KEY.ITEM_DATA,
-    () => getItemInfo(linkURL, getSiteData(linkURL)),
+    () => getPresentLinkInfo(linkURL, getSiteData(linkURL)),
     {
       onSuccess: (data) => {
         const imageData = extractImageSrc(data?.imageTag?.data?.data);
         const priceData = extractPrice(data?.priceTag?.data?.data, linkURL);
 
         if (imageData) {
-          methods.setValue('imageURL', imageData);
+          methods.setValue('imageUrl', imageData);
           methods.setValue('price', priceData);
         }
       },
@@ -57,7 +57,6 @@ export default function ItemLink(props: ItemLinkProps) {
       <Input
         register={methods.register('linkURL', {
           onBlur: parseImage,
-          ...linkURL_RULES,
         })}
         placeholder="정해진 사이트에서 원하는 선물 링크 붙여넣기"
       />
@@ -65,10 +64,10 @@ export default function ItemLink(props: ItemLinkProps) {
         <AlertTextBox> 정해진 사이트에서 링크를 가져와주세요!</AlertTextBox>
       )}
 
-      {imageURL && (
+      {imageUrl && linkURL && isCorrectLinkURL && (
         <Styled.ItemImageWrapper>
-          <ItemImageBox src={imageURL} alt="링크에서 불러온 선물이미지">
-            가격 : {convertMoneyText(price)}원
+          <ItemImageBox src={imageUrl} alt="링크에서 불러온 선물이미지">
+            가격 : {convertMoneyText(price.toString())}원
           </ItemImageBox>
         </Styled.ItemImageWrapper>
       )}

@@ -2,12 +2,12 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import CakeListButton from './cakeListButton';
-import { useGetCakesCount } from '@/hooks/queries/letters/useGetCakesCount';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import { useEffect, useState } from 'react';
 import MainHeader from '@/components/common/mainHeader';
 import { CAKE_LIST } from '@/constant/cakeList';
+import { useGetCakesResult } from '@/hooks/queries/cakes';
 
 export default function LettersMainContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -27,7 +27,7 @@ export default function LettersMainContainer() {
   }, [loginUserInfo]);
 
   // cake 개수, 합
-  const { cakesCount, total } = useGetCakesCount(wishId);
+  const { cakesCount, total } = useGetCakesResult(wishId);
 
   const getCakeNum = (cakeId: number, cakesCount: any[]): number => {
     if (!cakesCount) {

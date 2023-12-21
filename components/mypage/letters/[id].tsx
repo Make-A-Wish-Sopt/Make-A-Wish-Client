@@ -6,8 +6,8 @@ import { BorderImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import { ArrowLeftIc, ArrowRightIc, BackBtnIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
-import { useGetCakesLetters } from '@/hooks/queries/letters/useGetCakeLetters';
 import { CAKE_LIST } from '@/constant/cakeList';
+import { useGetCakesInfo } from '@/hooks/queries/cakes';
 
 export default function LettersContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -26,7 +26,7 @@ export default function LettersContainer() {
   const cakeData = CAKE_LIST.find((cake) => cake.cakeNumber === Number(cakeId));
 
   // 편지
-  const { lettersData, lettersSum } = useGetCakesLetters(wishId, cakeId);
+  const { lettersData, lettersSum } = useGetCakesInfo(wishId, cakeId);
 
   const handleNameBoxClick = (index: number) => {
     setClickedBox(index);

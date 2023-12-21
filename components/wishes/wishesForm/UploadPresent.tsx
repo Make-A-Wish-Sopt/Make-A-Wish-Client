@@ -5,29 +5,34 @@ import Image from 'next/image';
 import InputLength from '@/components/common/input/inputLength';
 import Input from '@/components/common/input/input';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/common/alertTextBox';
 import { UseFormReturn } from 'react-hook-form';
-import { Step1InputType } from '@/types/common/input/wishesInput';
 import ImageBox from '@/components/common/box/imageBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
+import { WishesDataInputType } from '@/types/common/input/wishesInput';
 
-interface UploadGiftProps {
+interface UploadPresentProps {
   imageFile: File | Blob | null;
-  preSignedImageURL: string;
+  preSignedImageUrl: string;
   uploadImageFile: (e: ChangeEvent<HTMLInputElement>) => void;
-  methods: UseFormReturn<Step1InputType, any, undefined>;
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
-export default function UploadGift(props: UploadGiftProps) {
-  const { imageFile, preSignedImageURL, uploadImageFile, methods } = props;
+export default function UploadPresent(props: UploadPresentProps) {
+  const { imageFile, preSignedImageUrl, uploadImageFile, methods } = props;
+
+  useEffect(() => {
+    if (preSignedImageUrl) methods.setValue('imageUrl', preSignedImageUrl);
+  }, [preSignedImageUrl]);
+
   return (
     <>
       <InputContainer title="갖고 싶은 선물 이미지 등록하기">
-        <Styled.Lable>
-          {preSignedImageURL ? (
-            <ItemImageBox src={preSignedImageURL} alt="선물 이미지" />
+        <Styled.Label>
+          {methods.watch('imageUrl') ? (
+            <ItemImageBox src={methods.watch('imageUrl')} alt="선물 이미지" />
           ) : (
             <ImageBox boxType="imageBox--image" colorSystem="pastelBlue_darkBlue">
               <Styled.UploadImageBox>
@@ -41,7 +46,7 @@ export default function UploadGift(props: UploadGiftProps) {
             onChange={uploadImageFile}
             readOnly
           />
-        </Styled.Lable>
+        </Styled.Label>
         {imageFile && !validation.checkImageFileSize(imageFile.size) && (
           <AlertTextBox> 사진은 10MB 이하로 업로드해주세요!</AlertTextBox>
         )}
@@ -73,7 +78,7 @@ const Styled = {
     cursor: pointer;
   `,
 
-  Lable: styled.label`
+  Label: styled.label`
     cursor: pointer;
   `,
 

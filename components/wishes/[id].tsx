@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import Button from '../common/button';
 import MainView from '../common/mainView';
-import { getWishesData } from '@/api/cakes/cakesAPI';
+import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
 
 export default function WishesContainer() {
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
@@ -15,16 +15,7 @@ export default function WishesContainer() {
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { data } = useQuery('wished', getWishesData);
-
-  // const { data } = useQuery('wished', async () => getWishesData(Number(wishesId)), {
-  //     onError: (error: any) => {
-  //       console.error("에러 발생:", error);
-  //       alert("해당 소원의 펀딩이 아직 가능하지 않습니다. 펀딩 기간을 확인해주세요.");
-  //       router.back();
-  //     },
-  //     enabled: wishesId !== '',
-  //   });
+  const { wishData } = useGetSingleWishInfo(wishesId);
 
   const handleMoveToCakes = () => {
     router.push(`/cakes/${wishesId}`);
@@ -36,7 +27,7 @@ export default function WishesContainer() {
 
   return (
     <Styled.Container>
-      <MainView text={`${data?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
+      <MainView text={`${wishData?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
         <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleMoveToCakes}>
           소원 들어주러 가기
