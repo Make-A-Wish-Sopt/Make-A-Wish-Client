@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
 import Button from '../common/button';
 import MainView from '../common/mainView';
 import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
+import { getPublicWishes } from '@/api/public';
+import { useGetPublicWishes } from '@/hooks/queries/public';
 
 export default function WishesContainer() {
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
@@ -15,7 +16,7 @@ export default function WishesContainer() {
     setWishesId(router.query.id);
   }, [router.isReady]);
 
-  const { wishData } = useGetSingleWishInfo(wishesId);
+  const { publicWishesData } = useGetPublicWishes(wishesId);
 
   const handleMoveToCakes = () => {
     router.push(`/cakes/${wishesId}`);
@@ -27,7 +28,7 @@ export default function WishesContainer() {
 
   return (
     <Styled.Container>
-      <MainView text={`${wishData?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
+      <MainView text={`${publicWishesData?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
         <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleMoveToCakes}>
           소원 들어주러 가기

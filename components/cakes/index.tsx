@@ -1,10 +1,7 @@
-import useRequestPayReady from '@/hooks/queries/cakes/useRequestPayReady';
 import { CakesData } from '@/recoil/cakes/cakesData';
 import { CakesDataType } from '@/types/cakes/cakesDataType';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useResetRecoilState } from 'recoil';
 import TextareaBox from '../common/input/textareaBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
@@ -16,12 +13,22 @@ import Input from '../common/input/input';
 import { useForm } from 'react-hook-form';
 import InputContainer from '../common/input/inputContainer';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
-import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
+import { useGetPublicWishes } from '@/hooks/queries/public';
+import { useRouter } from 'next/router';
+import { StyledBox } from '../common/box';
+import BackBtn from '../common/button/backBtn';
 
 export default function CakesContainer() {
   const { selectedCake, selectedIndex, selectCake } = useSelectCakes();
   const resetCakesData = useResetRecoilState(CakesData);
-  const [cakesData, setCakesData] = useRecoilState<CakesDataType>(CakesData);
+  const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setWishesId(router.query.id);
+  }, [router.isReady]);
 
   const methods = useForm<CakesDataInputType>({
     defaultValues: {
@@ -30,62 +37,50 @@ export default function CakesContainer() {
     },
   });
 
-  const router = useRouter();
+  // useEffect(() => {
+  //   if (!router.isReady) return;
+  //   setCakesData((prev) => ({
+  //     ...prev,
+  //     wishId: Number(router.query.id),
+  //   }));
+  // }, [router.isReady]);
 
-  const { data, mutate, isSuccess } = useRequestPayReady(cakesData.wishId, selectedCake.cakeNumber);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const nextLink = data?.data?.data.next_redirect_pc_url;
+  //     const tid = data?.data?.data.tid;
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    setCakesData((prev) => ({
-      ...prev,
-      wishId: Number(router.query.id),
-    }));
-  }, [router.isReady]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      const nextLink = data?.data?.data.next_redirect_pc_url;
-      const tid = data?.data?.data.tid;
-
-      setCakesData((prevData) => ({
-        ...prevData,
-        tid: tid,
-      }));
-      router.replace(nextLink);
-    }
-  }, [isSuccess]);
+  //     setCakesData((prevData) => ({
+  //       ...prevData,
+  //       tid: tid,
+  //     }));
+  //     router.replace(nextLink);
+  //   }
+  // }, [isSuccess]);
 
   useEffect(() => {
     resetCakesData();
   }, []);
 
-  const { wishData } = useGetSingleWishInfo(wishesId);
+  const { publicWishesData } = useGetPublicWishes(wishesId);
 
-  const saveRecoilData = () => {
-    // setCakesData((prevData) => ({
-    //   ...prevData,
-    //   giverName: giverName,
-    //   wishesName: wishesData?.name,
-    //   cake: selectedIndex,
-    //   message: letter,
-    //   selectedCake: selectedCake,
-    //   wishId: Number(router.query.id),
-    // }));
-  };
-
-  const sendCake = () => {
-    saveRecoilData();
-    selectedCake.cakeNumber === 1 ? router.push('/cakes/approve') : mutate();
-  };
+  const sendCake = () => {};
 
   return (
     <Styled.Container>
-      {/* <div>
-        <CakesHeader dayCount={wishesData?.dayCount} />
-        <Styled.Title>{wishesData?.title}</Styled.Title>
+      <div>
+        <Styled.Header>
+          <BackBtn />
+          {`D-${publicWishesData?.dayCount}`}
+        </Styled.Header>
 
-        <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
-          <TextareaBox value={'wishesData?.hint'} readOnly={true} />
+        <Styled.Title>{publicWishesData?.title}</Styled.Title>
+
+        <InputContainer title={`${publicWishesData?.name}님이 남긴 선물에 대한 힌트`}>
+          <Styled.HintBox className={'pastelBlue_darkBlue'}>
+            {publicWishesData?.hint}
+          </Styled.HintBox>
+          {/* <TextareaBox value={publicWishesData?.hint} readOnly /> */}
         </InputContainer>
 
         <InputContainer title={'본인의 실명 작성하기'}>
@@ -115,12 +110,22 @@ export default function CakesContainer() {
         <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={sendCake}>
           케이크 주문하기
         </Button>
-      </Styled.ButtonWrapper> */}
+      </Styled.ButtonWrapper>
     </Styled.Container>
   );
 }
 
 const Styled = {
+  Header: styled.header`
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    color: ${theme.colors.main_blue};
+    ${theme.fonts.headline20};
+  `,
+
   Container: styled.div`
     display: flex;
     flex-direction: column;
@@ -133,6 +138,15 @@ const Styled = {
     ${theme.fonts.headline24_100};
     color: ${theme.colors.main_blue};
     margin: 2.4rem 0 3rem;
+  `,
+
+  HintBox: styled(StyledBox)`
+    width: 100%;
+    height: 12.6rem;
+
+    ${theme.fonts.body14};
+
+    padding: 1.2rem 1rem 1.2rem 1.2rem;
   `,
 
   ButtonWrapper: styled.div`
