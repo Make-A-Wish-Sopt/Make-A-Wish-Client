@@ -11,12 +11,12 @@ import theme from '@/styles/theme';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import useSelectCakes from '@/hooks/cakes/useSelectCakes';
 import SelectCakes from './SelectCakes';
-import { getWishesData } from '@/api/cakes/cakesAPI';
 import Button from '../common/button';
 import Input from '../common/input/input';
 import { useForm } from 'react-hook-form';
 import InputContainer from '../common/input/inputContainer';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
+import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
 
 export default function CakesContainer() {
   const { selectedCake, selectedIndex, selectCake } = useSelectCakes();
@@ -59,7 +59,7 @@ export default function CakesContainer() {
     resetCakesData();
   }, []);
 
-  const { data: wishesData } = useQuery('wished', getWishesData);
+  const { wishData } = useGetSingleWishInfo(wishesId);
 
   const saveRecoilData = () => {
     // setCakesData((prevData) => ({
@@ -80,8 +80,8 @@ export default function CakesContainer() {
 
   return (
     <Styled.Container>
-      <div>
-        {/* <CakesHeader dayCount={wishesData?.dayCount} /> */}
+      {/* <div>
+        <CakesHeader dayCount={wishesData?.dayCount} />
         <Styled.Title>{wishesData?.title}</Styled.Title>
 
         <InputContainer title={`${wishesData?.name}님이 남긴 선물에 대한 힌트`}>
@@ -115,7 +115,7 @@ export default function CakesContainer() {
         <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={sendCake}>
           케이크 주문하기
         </Button>
-      </Styled.ButtonWrapper>
+      </Styled.ButtonWrapper> */}
     </Styled.Container>
   );
 }

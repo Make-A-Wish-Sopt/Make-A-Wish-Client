@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 import theme from '@/styles/theme';
 import { CloseSmallIc } from '@/public/assets/icons';
-import IconButton from '@/components/common/button/iconButton';
 import { MainCakeImg } from '@/public/assets/images';
 import Button from '../button';
 
@@ -24,7 +23,7 @@ export default function DeleteModal(props: DeleteModalProps) {
   return (
     <Styled.Container>
       <Styled.IconContainer>
-        <IconButton src={CloseSmallIc} alt="닫기" onClick={clickModal} />
+        <Image src={CloseSmallIc} alt="닫기" onClick={clickModal} />
       </Styled.IconContainer>
 
       <Styled.ContentContainer>

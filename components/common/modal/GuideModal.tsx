@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import IconButton from '@/components/common/button/iconButton';
 import { CloseWhiteIc } from '@/public/assets/icons';
 import { GuideContentImg, GuideBoxImg } from '@/public/assets/images';
-import Button from '../button';
 
 interface GuideModalProps {
   clickModal: () => void;
@@ -22,22 +20,13 @@ export default function GuideModal(props: GuideModalProps) {
     <Styled.Container>
       <Styled.Background2>
         <Styled.ButtonContainer onClick={clickModal}>
-          <IconButton src={CloseWhiteIc} alt="닫기" />
+          <Image src={CloseWhiteIc} alt="닫기" />
         </Styled.ButtonContainer>
 
         <Styled.Content>
           {
             <Styled.ScrollContent>
               <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
-              <Styled.ButtonContainer2>
-                <Button
-                  boxType="btn--large"
-                  colorSystem="mainBlue_white"
-                  handleClickFn={handleCustomerService}
-                >
-                  고객센터 문의하기
-                </Button>
-              </Styled.ButtonContainer2>
             </Styled.ScrollContent>
           }
         </Styled.Content>
@@ -103,10 +92,5 @@ const Styled = {
   ButtonContainer: styled.div`
     position: relative;
     margin: 2.3rem 0rem 2.9rem;
-  `,
-
-  ButtonContainer2: styled.div`
-    position: relative;
-    margin: 2.3rem 2.1rem 0;
   `,
 };

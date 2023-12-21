@@ -2,6 +2,7 @@
 export { default as MainLoginImg } from '../images/mainLoginImg.png';
 export { default as MainCakeImg } from '../images/mainCakeImg.png';
 export { default as LogoImg } from '../images/logoImg.svg';
+export { default as MainPageCakeImg } from '../images/mainPageCakeImg.png';
 
 export { default as BeefCakeDetailImg } from '../images/cakes/beefCakeDetailImg.png';
 export { default as ChickenCakeDetailImg } from '../images/cakes/chickenCakeDetailImg.png';

@@ -15,13 +15,11 @@ import { getDate } from '@/utils/common/getDate';
 interface CalendarProps {
   date: Date;
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
-  disable: boolean;
-  colorSystem: ColorSystemType;
-  readOnly: boolean;
+  readOnly?: boolean;
 }
 
 export default function Calendar(props: CalendarProps) {
-  const { date, methods, disable, colorSystem, readOnly } = props;
+  const { date, methods, readOnly } = props;
 
   const handleChangeDate = (selectedDate: Date) => {
     methods.setValue('startDate', selectedDate);
@@ -29,7 +27,10 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <InputBox boxType="inputBox--calendar" colorSystem={colorSystem}>
+    <InputBox
+      boxType="inputBox--calendar"
+      colorSystem={readOnly ? 'pastelBlue_gray2' : 'pastelBlue_darkBlue'}
+    >
       <Styled.Wrapper>
         <DatePicker
           renderCustomHeader={({ date, changeYear, changeMonth }) => (
@@ -46,7 +47,7 @@ export default function Calendar(props: CalendarProps) {
         />
         {/* <CustomDatePicker date={date} methods={methods} readOnly={readOnly} /> */}
       </Styled.Wrapper>
-      <Image src={disable ? CalendarGreyIc : CalendarIc} alt="캘린더 아이콘" />
+      <Image src={readOnly ? CalendarGreyIc : CalendarIc} alt="캘린더 아이콘" />
     </InputBox>
   );
 }

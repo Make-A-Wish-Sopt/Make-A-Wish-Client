@@ -4,14 +4,15 @@ import styled from 'styled-components';
 interface ModalProps {
   isOpen: boolean;
   handleToggle: () => void;
+  bgNone?: boolean;
 }
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
-  const { isOpen, handleToggle, children } = props;
+  const { isOpen, handleToggle, bgNone, children } = props;
   return (
     <>
       {isOpen && (
-        <Styled.ModalOverlay onClick={handleToggle}>
+        <Styled.ModalOverlay onClick={handleToggle} bgNone={bgNone}>
           <Styled.ModalContainer onClick={(e) => e.stopPropagation()}>
             {children}
           </Styled.ModalContainer>
@@ -22,7 +23,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
 }
 
 const Styled = {
-  ModalOverlay: styled.div`
+  ModalOverlay: styled.div<{ bgNone?: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,7 +35,7 @@ const Styled = {
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: ${(props) => (props.bgNone ? 'transparent' : 'rgba(0, 0, 0, 0.7)')};
     display: flex;
     justify-content: center;
     align-items: center;
