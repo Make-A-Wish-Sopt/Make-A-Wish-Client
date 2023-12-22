@@ -1,5 +1,5 @@
-import Layout from '@/components/layout';
-import Redirect from '@/components/login/redirect';
+import Layout from '@/components/Layout';
+import Redirect from '@/components/Login/Rredirect';
 
 export default function Kakao() {
   return (

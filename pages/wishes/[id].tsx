@@ -1,6 +1,5 @@
-
-import Layout from '@/components/layout';
-import WishesContainer from '@/components/wishes/[id]';
+import Layout from '@/components/Layout';
+import WishesContainer from '@/components/Wishes/[id]';
 
 export default function WishesPage() {
   return (

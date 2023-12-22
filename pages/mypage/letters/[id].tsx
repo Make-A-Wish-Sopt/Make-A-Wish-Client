@@ -1,6 +1,5 @@
-
-import Layout from '@/components/layout';
-import LettersMainContainer from '@/components/mypage/letters/lettersMain';
+import Layout from '@/components/Layout';
+import LettersMainContainer from '@/components/Mypage/Letters/LettersMain';
 
 export default function LettersMainPage() {
   return (

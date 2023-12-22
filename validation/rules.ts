@@ -1,5 +1,5 @@
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 
 export const RULES: Record<keyof WishesDataInputType, unknown> = {
   linkURL: {

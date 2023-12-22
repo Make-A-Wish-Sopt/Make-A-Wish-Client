@@ -1,5 +1,5 @@
-import Layout from '@/components/layout';
-import EditWishesContainer from '@/components/mypage/EditWishes';
+import Layout from '@/components/Layout';
+import EditWishesContainer from '@/components/Mypage/EditWishes';
 
 export default function EditWishespage() {
   return (

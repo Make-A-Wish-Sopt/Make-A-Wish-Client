@@ -2,8 +2,9 @@ import { getAccessToken } from '@/utils/common/token';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+
 import { UserAccountDataResponseType } from '@/types/api/response';
+import { WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
 

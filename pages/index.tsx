@@ -1,5 +1,5 @@
-import Layout from '@/components/layout';
-import LoginContainer from '@/components/login';
+import Layout from '@/components/Layout';
+import LoginContainer from '@/components/Login';
 
 export default function LoginPage() {
   return (
