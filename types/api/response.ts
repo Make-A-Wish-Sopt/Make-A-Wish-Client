@@ -23,3 +23,12 @@ export type PublicWishesDataResponseType = DefaultResponseType<{
   title: string;
   hint: string;
 }>;
+
+export type PostPublicCakesResponseType = DefaultResponseType<{
+  cakeId: number;
+  imageUrl: string;
+  hint: string;
+  initial: string;
+  contribute: string;
+  wisher: string;
+}>;
