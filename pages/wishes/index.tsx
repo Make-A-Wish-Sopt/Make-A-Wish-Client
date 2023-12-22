@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
-import WishesFormContainer from '@/components/wishes/wishesForm';
+import Layout from '@/components/Layout';
+import WishesFormContainer from '@/components/Wishes/WishesForm';
 
 export default function WishesFormPage() {
   return (
-    <Layout>
+    <Layout layoutKey="header">
       <WishesFormContainer />
     </Layout>
   );

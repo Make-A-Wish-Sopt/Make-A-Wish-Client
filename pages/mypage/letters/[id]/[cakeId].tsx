@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
-import LettersContainer from '@/components/mypage/letters/[id]';
+import Layout from '@/components/Layout';
+import LettersContainer from '@/components/Mypage/Letters/[id]';
 
 export default function LettersPage() {
   return (
-    <Layout>
+    <Layout layoutKey="header">
       <LettersContainer />
     </Layout>
   );

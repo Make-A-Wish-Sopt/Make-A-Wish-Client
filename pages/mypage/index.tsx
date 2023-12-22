@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
-import MyPageContainer from '@/components/mypage';
+import Layout from '@/components/Layout';
+import MyPageContainer from '@/components/Mypage';
 
 export default function MyPage() {
   return (
-    <Layout>
+    <Layout layoutKey="header">
       <MyPageContainer />
     </Layout>
   );

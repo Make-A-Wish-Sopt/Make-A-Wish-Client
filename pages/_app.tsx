@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import GlobalStyle from '../styles/GlobalStyle';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import Script from 'next/script';
@@ -79,12 +79,23 @@ export default function App({ Component, pageProps }: AppProps) {
           <Head>
             <title>조물주보다 생일선물주</title>
           </Head>
+
           <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <Component {...pageProps} />
+            <RootLayout>
+              <Component {...pageProps} />
+            </RootLayout>
           </ThemeProvider>
         </QueryClientProvider>
       </RecoilRoot>
     </>
   );
 }
+
+const RootLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+`;

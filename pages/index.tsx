@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
-import LoginContainer from '@/components/login';
+import Layout from '@/components/Layout';
+import LoginContainer from '@/components/Login';
 
 export default function LoginPage() {
   return (
-    <Layout footer>
+    <Layout layoutKey="empty">
       <LoginContainer />
     </Layout>
   );

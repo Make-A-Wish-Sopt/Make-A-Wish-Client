@@ -1,4 +1,4 @@
-import { getPresignedURL, uploadPresignedURL } from '@/api/wishes/wishesAPI';
+import { getPresignedURL, uploadPresignedURL } from '@/api/file';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { validation } from '@/validation/input';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,7 @@ import { useMutation, useQuery } from 'react-query';
 
 export default function useUploadItemInfo() {
   const [imageFile, setImageFile] = useState<File | Blob | null>(null);
-  const [preSignedImageURL, setPreSignedImageURL] = useState('');
+  const [preSignedImageUrl, setPreSignedImageUrl] = useState('');
 
   const { data, refetch } = useQuery(
     QUERY_KEY.PRE_SIGNED_URL,
@@ -21,8 +21,8 @@ export default function useUploadItemInfo() {
 
   const { mutate } = useMutation(() => uploadPresignedURL(data?.data?.data?.signedUrl, imageFile), {
     onSuccess: () => {
-      const s3URL = `https://wish-image-bucket.s3.ap-northeast-2.amazonaws.com/${data?.data?.data.filename}`;
-      setPreSignedImageURL(s3URL);
+      const S3_URL = `https://wish-image-bucket.s3.ap-northeast-2.amazonaws.com/${data?.data?.data.filename}`;
+      setPreSignedImageUrl(S3_URL);
     },
   });
 
@@ -39,5 +39,5 @@ export default function useUploadItemInfo() {
     imageFile && setImageFile(imageFile);
   }
 
-  return { imageFile, preSignedImageURL, setPreSignedImageURL, uploadImageFile };
+  return { imageFile, preSignedImageUrl, setPreSignedImageUrl, uploadImageFile };
 }

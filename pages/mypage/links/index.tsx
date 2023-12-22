@@ -1,9 +1,9 @@
-import Layout from '@/components/common/layout';
-import LinksMainContainer from '@/components/mypage/links';
+import Layout from '@/components/Layout';
+import LinksMainContainer from '@/components/Mypage/Links';
 
 export default function LinksMainPage() {
   return (
-    <Layout>
+    <Layout layoutKey="header">
       <LinksMainContainer />
     </Layout>
   );

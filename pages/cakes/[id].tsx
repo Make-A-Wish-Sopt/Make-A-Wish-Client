@@ -1,9 +1,9 @@
-import CakesContainer from '@/components/cakes';
-import Layout from '@/components/common/layout';
+import CakesContainer from '@/components/Cakes';
+import Layout from '@/components/Layout';
 
 export default function CakesPage() {
   return (
-    <Layout>
+    <Layout layoutKey="empty">
       <CakesContainer />
     </Layout>
   );
