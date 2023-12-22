@@ -1,5 +1,5 @@
-import Layout from '@/components/ayout';
-import LettersMainContainer from '@/components/ypage/etters/ettersMain';
+import Layout from '@/components/Layout';
+import LettersMainContainer from '@/components/Mypage/Letters/LettersMain';
 
 export default function LettersMainPage() {
   return (

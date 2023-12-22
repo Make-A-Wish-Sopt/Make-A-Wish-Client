@@ -1,5 +1,5 @@
-import Layout from '@/components/ayout';
-import MyPageContainer from '@/components/ypage';
+import Layout from '@/components/Layout';
+import MyPageContainer from '@/components/Mypage';
 
 export default function MyPage() {
   return (

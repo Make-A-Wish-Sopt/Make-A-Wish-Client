@@ -1,5 +1,5 @@
-import Layout from '@/components/ayout';
-import WishesContainer from '@/components/ishes/[id]';
+import Layout from '@/components/Layout';
+import WishesContainer from '@/components/Wishes/[id]';
 
 export default function WishesPage() {
   return (

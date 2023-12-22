@@ -1,5 +1,5 @@
-import Layout from '@/components/ayout';
-import ShareContainer from '@/components/ishes/hare';
+import Layout from '@/components/Layout';
+import ShareContainer from '@/components/Wishes/Share';
 
 export default function SharePage() {
   return (

@@ -1,5 +1,5 @@
-import CakesContainer from '@/components/akes';
-import Layout from '@/components/ayout';
+import CakesContainer from '@/components/Cakes';
+import Layout from '@/components/Layout';
 
 export default function CakesPage() {
   return (
