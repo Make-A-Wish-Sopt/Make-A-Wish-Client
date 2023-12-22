@@ -44,6 +44,7 @@ const StyledImageBox = styled(StyledBox)<{ width?: number; height: number }>`
     padding: 0;
 
     border-radius: 1.6rem;
+    background-color: ${theme.colors.pastel_blue};
 
     overflow: hidden;
   }

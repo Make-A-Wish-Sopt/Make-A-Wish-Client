@@ -1,34 +1,22 @@
-import { CakesData } from '@/recoil/cakes/cakesData';
-import { CakesDataType } from '@/types/cakes/cakesDataType';
-import { useEffect, useState } from 'react';
-import { useResetRecoilState } from 'recoil';
-import TextareaBox from '../common/input/textareaBox';
+import useWishesStep from '@/hooks/wishes/useWisehsStep';
+import CakesForm from './CakesForm';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { LIMIT_TEXT } from '@/constant/limitText';
-import useSelectCakes from '@/hooks/cakes/useSelectCakes';
-import SelectCakes from './SelectCakes';
-import Button from '../common/button';
-import Input from '../common/input/input';
+import CakesPay from './CakesPay';
 import { useForm } from 'react-hook-form';
-import InputContainer from '../common/input/inputContainer';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
-import { useGetPublicWishes } from '@/hooks/queries/public';
+import useSelectCakes from '@/hooks/cakes/useSelectCakes';
 import { useRouter } from 'next/router';
-import { StyledBox } from '../common/box';
-import BackBtn from '../common/button/backBtn';
+import { useEffect, useState } from 'react';
+import CakesResult from './CakesResult';
+import { usePostPublicCakes } from '@/hooks/queries/public';
 
 export default function CakesContainer() {
+  const wishesStep = { ...useWishesStep() };
   const { selectedCake, selectedIndex, selectCake } = useSelectCakes();
-  const resetCakesData = useResetRecoilState(CakesData);
   const [wishesId, setWishesId] = useState<string | string[] | undefined>('');
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (!router.isReady) return;
-    setWishesId(router.query.id);
-  }, [router.isReady]);
 
   const methods = useForm<CakesDataInputType>({
     defaultValues: {
@@ -37,95 +25,52 @@ export default function CakesContainer() {
     },
   });
 
-  // useEffect(() => {
-  //   if (!router.isReady) return;
-  //   setCakesData((prev) => ({
-  //     ...prev,
-  //     wishId: Number(router.query.id),
-  //   }));
-  // }, [router.isReady]);
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     const nextLink = data?.data?.data.next_redirect_pc_url;
-  //     const tid = data?.data?.data.tid;
-
-  //     setCakesData((prevData) => ({
-  //       ...prevData,
-  //       tid: tid,
-  //     }));
-  //     router.replace(nextLink);
-  //   }
-  // }, [isSuccess]);
+  const { postPublicCakesData, cakesResultData, isSuccess } = usePostPublicCakes({
+    name: methods.getValues('giverName'),
+    wishId: wishesId,
+    cakeId: selectedCake.cakeNumber,
+    message: methods.getValues('letter'),
+  });
 
   useEffect(() => {
-    resetCakesData();
-  }, []);
+    isSuccess && wishesStep.handleNextStep();
+  }, [isSuccess]);
 
-  const { publicWishesData } = useGetPublicWishes(wishesId);
-
-  const sendCake = () => {};
+  useEffect(() => {
+    if (!router.isReady) return;
+    setWishesId(router.query.id);
+  }, [router.isReady]);
 
   return (
     <Styled.Container>
-      <div>
-        <Styled.Header>
-          <BackBtn />
-          {`D-${publicWishesData?.dayCount}`}
-        </Styled.Header>
-
-        <Styled.Title>{publicWishesData?.title}</Styled.Title>
-
-        <InputContainer title={`${publicWishesData?.name}님이 남긴 선물에 대한 힌트`}>
-          <Styled.HintBox className={'pastelBlue_darkBlue'}>
-            {publicWishesData?.hint}
-          </Styled.HintBox>
-          {/* <TextareaBox value={publicWishesData?.hint} readOnly /> */}
-        </InputContainer>
-
-        <InputContainer title={'본인의 실명 작성하기'}>
-          <Input
-            placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
-            register={methods.register('giverName')}
-          />
-        </InputContainer>
-
-        <SelectCakes
-          selectedCake={selectedCake}
-          selectedIndex={selectedIndex}
-          selectCake={selectCake}
-        />
-
-        <InputContainer title={'친구에게 편지 남기기'}>
-          <TextareaBox
-            placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
-            inputLength={methods.watch('letter').length}
-            limitLength={LIMIT_TEXT.DESCRIPTION}
-            register={methods.register('letter')}
-          ></TextareaBox>
-        </InputContainer>
-      </div>
-
-      <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={sendCake}>
-          케이크 주문하기
-        </Button>
-      </Styled.ButtonWrapper>
+      {
+        {
+          1: (
+            <CakesForm
+              methods={methods}
+              selectedCake={selectedCake}
+              selectedIndex={selectedIndex}
+              selectCake={selectCake}
+              wishesId={wishesId}
+              postPublicCakesData={postPublicCakesData}
+            />
+          ),
+          2: (
+            <CakesPay
+              handlePrevStep={wishesStep.handlePrevStep}
+              handleNextStep={wishesStep.handleNextStep}
+              selectedCake={selectedCake}
+              wishesId={wishesId}
+            />
+          ),
+          3: <CakesResult cakesResultData={cakesResultData} selectedCake={selectedCake} />,
+        }[wishesStep.stepIndex]
+      }
     </Styled.Container>
   );
 }
 
 const Styled = {
-  Header: styled.header`
-    display: flex;
-    justify-content: space-between;
-
-    width: 100%;
-
-    color: ${theme.colors.main_blue};
-    ${theme.fonts.headline20};
-  `,
-
   Container: styled.div`
     display: flex;
     flex-direction: column;
@@ -134,19 +79,14 @@ const Styled = {
     height: 100svh;
   `,
 
-  Title: styled.h1`
-    ${theme.fonts.headline24_100};
-    color: ${theme.colors.main_blue};
-    margin: 2.4rem 0 3rem;
-  `,
+  Header: styled.header`
+    display: flex;
+    justify-content: space-between;
 
-  HintBox: styled(StyledBox)`
     width: 100%;
-    height: 12.6rem;
 
-    ${theme.fonts.body14};
-
-    padding: 1.2rem 1rem 1.2rem 1.2rem;
+    color: ${theme.colors.main_blue};
+    ${theme.fonts.headline20};
   `,
 
   ButtonWrapper: styled.div`

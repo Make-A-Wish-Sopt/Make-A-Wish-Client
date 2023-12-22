@@ -6,7 +6,7 @@ interface ButtonProps {
   width?: number;
   boxType: BtnBoxTypes;
   colorSystem: ColorSystemType;
-  handleClickFn: () => void | unknown;
+  handleClickFn: (parameter?: unknown) => void | unknown;
   children: ReactNode;
 }
 

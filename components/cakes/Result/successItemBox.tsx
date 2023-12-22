@@ -9,6 +9,7 @@ import ImageBox from '@/components/common/box/imageBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 
 export default function SuccessItemBox() {
+  
   const cakesData = useRecoilValue(CakesData);
 
   useEffect(() => {

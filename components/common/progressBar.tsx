@@ -39,7 +39,7 @@ const Styled = {
       `}
   `,
   Progress: styled.div<{ percent: number }>`
-    width: ${(props) => props.percent}%;
+    width: ${(props) => (props.percent > 100 ? 100 : props.percent)}%;
     height: 100%;
 
     background-color: ${theme.colors.main_blue};
