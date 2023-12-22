@@ -1,19 +1,19 @@
 import { UseFormReturn } from 'react-hook-form';
-import InputContainer from '@/components/Common/input/inputContainer';
-import BankInput from '@/components/Common/modal/BankInput';
+import InputContainer from '@/components/Common/Input/InputContainer';
+import BankInput from '@/components/Common/Modal/BankInput';
 import { WishesDataInputType } from '@/types/wishesType';
 import styled from 'styled-components';
-import CheckBox from '@/components/Common/heckBox';
+import CheckBox from '@/components/Common/CheckBox';
 import useCheckBox from '@/hooks/common/useCheckBox';
-import Input from '@/components/Common/input/input';
-import { StyledBox } from '@/components/Common/box';
-import WishesStepTitle from '../Common/ishesStepTitle';
-import WishesStepBtn from '../Common/ishesStepBtn';
+import Input from '@/components/Common/Input/Input';
+import { StyledBox } from '@/components/Common/Box';
+import WishesStepTitle from '../Common/WishesStepTitle';
+import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import { validation } from '@/validation/input';
-import AlertTextBox from '@/components/Common/alertTextBox';
+import AlertTextBox from '@/components/Common/AlertTextBox';
 import { useGetUserAccount, usePatchUserAccount } from '@/hooks/queries/user';
 import { usePostWishes } from '@/hooks/queries/wishes';
 

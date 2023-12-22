@@ -6,11 +6,11 @@ import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import Button from '@/components/Common/button';
+import Button from '@/components/Common/Button';
 import useModal from '@/hooks/common/useModal';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
-import ShareModal from '@/components/Common/modal/ShareModal';
-import Modal from '@/components/Common/modal';
+import ShareModal from '@/components/Common/Modal/ShareModal';
+import Modal from '@/components/Common/Modal';
 
 export default function ShareContainer() {
   const { isOpen, handleToggle } = useModal();

@@ -1,8 +1,8 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useModal from '@/hooks/common/useModal';
-import Modal from '@/components/Common/modal';
-import DeleteModal from '@/components/Common/modal/DeleteModal';
+import Modal from '@/components/Common/Modal';
+import DeleteModal from '@/components/Common/Modal/DeleteModal';
 import { useState } from 'react';
 import WishLists from './WishLists';
 import NoWishLists from './NoWishLists';

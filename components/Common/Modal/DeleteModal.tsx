@@ -4,7 +4,7 @@ import Image from 'next/image';
 import theme from '@/styles/theme';
 import { CloseSmallIc } from '@/public/assets/icons';
 import { MainCakeImg } from '@/public/assets/images';
-import Button from '../button';
+import Button from '../Button';
 
 interface DeleteModalProps {
   clickModal: () => void;

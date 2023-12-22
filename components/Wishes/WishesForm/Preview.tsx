@@ -1,15 +1,15 @@
-import InputContainer from '@/components/Common/input/inputContainer';
-import TextareaBox from '@/components/Common/input/textareaBox';
+import InputContainer from '@/components/Common/Input/InputContainer';
+import TextareaBox from '@/components/Common/Input/TextareaBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { convertDateToString } from '@/utils/common/getDate';
-import Input from '@/components/Common/input/input';
+import Input from '@/components/Common/Input/Input';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/wishesType';
-import ItemImageBox from '@/components/Common/box/itemImageBox';
-import WishesStepTitle from '../Common/ishesStepTitle';
-import WishesStepBtn from '../Common/ishesStepBtn';
+import ItemImageBox from '@/components/Common/Box/ItemImageBox';
+import WishesStepTitle from '../Common/WishesStepTitle';
+import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import { useEffect } from 'react';
 

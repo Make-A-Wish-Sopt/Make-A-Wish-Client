@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Loading from '../Common/oading';
+import Loading from '../Common/Loading/Loading';
 import { useAuthKakao } from '@/hooks/queries/auth';
 
 export default function Redirect() {

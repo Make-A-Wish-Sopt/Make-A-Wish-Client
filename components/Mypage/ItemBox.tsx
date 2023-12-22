@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { PropsWithChildren } from 'react';
-import { StyledBox } from '../Common/box';
+import { StyledBox } from '../Common/Box';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 
 interface ItemBoxProps {

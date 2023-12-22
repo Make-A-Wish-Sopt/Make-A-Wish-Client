@@ -7,10 +7,10 @@ import { QUERY_KEY } from '@/constant/queryKey';
 import { extractImageSrc, extractPrice } from '@/utils/common/extractItem';
 import { useQuery } from 'react-query';
 import { getSiteData } from '@/utils/common/getSiteData';
-import Input from '@/components/Common/input/input';
+import Input from '@/components/Common/Input/Input';
 import { UseFormReturn } from 'react-hook-form';
-import AlertTextBox from '@/components/Common/alertTextBox';
-import ItemImageBox from '@/components/Common/box/itemImageBox';
+import AlertTextBox from '@/components/Common/AlertTextBox';
+import ItemImageBox from '@/components/Common/Box/ItemImageBox';
 import { WishesDataInputType } from '@/types/wishesType';
 import { getPresentLinkInfo } from '@/api/wishes';
 

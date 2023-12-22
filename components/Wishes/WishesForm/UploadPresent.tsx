@@ -1,16 +1,16 @@
-import InputContainer from '@/components/Common/input/inputContainer';
+import InputContainer from '@/components/Common/Input/InputContainer';
 import styled from 'styled-components';
 import { ImageUploadIc } from '@/public/assets/icons';
 import Image from 'next/image';
-import InputLength from '@/components/Common/input/inputLength';
-import Input from '@/components/Common/input/input';
+import InputLength from '@/components/Common/Input/InputLength';
+import Input from '@/components/Common/Input/Input';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { ChangeEvent, useEffect } from 'react';
 import { validation } from '@/validation/input';
-import AlertTextBox from '@/components/Common/alertTextBox';
+import AlertTextBox from '@/components/Common/AlertTextBox';
 import { UseFormReturn } from 'react-hook-form';
-import ImageBox from '@/components/Common/box/imageBox';
-import ItemImageBox from '@/components/Common/box/itemImageBox';
+import ImageBox from '@/components/Common/Box/ImageBox';
+import ItemImageBox from '@/components/Common/Box/ItemImageBox';
 import { WishesDataInputType } from '@/types/wishesType';
 
 interface UploadPresentProps {

@@ -2,15 +2,18 @@ import useModal from '@/hooks/common/useModal';
 import Modal from '.';
 import BankModal from './BankModal';
 import styled from 'styled-components';
-import Button from '../button';
+
 import { UseFormReturn } from 'react-hook-form';
-import Input from '../input/input';
+
 import { WishesDataInputType } from '@/types/wishesType';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
-import { StyledBox } from '../box';
+
 import theme from '@/styles/theme';
-import AlertTextBox from '../alertTextBox';
+import Input from '../Input/Input';
+import Button from '../Button';
+import { StyledBox } from '../Box';
+import AlertTextBox from '../AlertTextBox';
 
 interface BankInputProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;

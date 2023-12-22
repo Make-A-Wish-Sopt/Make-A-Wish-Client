@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledBox } from '../box';
+import { StyledBox } from '../Box';
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import { BankListType } from '@/types/bankListType';

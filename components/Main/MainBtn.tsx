@@ -1,10 +1,10 @@
 import router from 'next/router';
-import Button from '../Common/button';
+import Button from '../Common/Button';
 import styled from 'styled-components';
 import useModal from '@/hooks/common/useModal';
-import Modal from '../Common/modal';
+import Modal from '../Common/Modal';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
-import MainShareModal from '../Common/modal/MainShareModal';
+import MainShareModal from '../Common/Modal/MainShareModal';
 
 export default function MainBtn() {
   const { progressData } = useGetMainProgressData();

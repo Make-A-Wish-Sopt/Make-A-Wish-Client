@@ -1,4 +1,4 @@
-import TextareaBox from '../Common/Input/textareaBox';
+import TextareaBox from '../Common/Input/TextareaBox';
 import styled from 'styled-components';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import SelectCakes from './SelectCakes';
@@ -12,6 +12,7 @@ import BackBtn from '../Common/Button/BackBtn';
 import { CakeListType } from '@/types/cakes/cakeListType';
 import { useGetPublicWishes } from '@/hooks/queries/public';
 import { UseMutateFunction } from 'react-query';
+import theme from '@/styles/theme';
 
 interface CakesFormProps {
   methods: UseFormReturn<CakesDataInputType, any, undefined>;
@@ -47,14 +48,13 @@ export default function CakesForm(props: CakesFormProps) {
     <>
       <Styled.HeaderWrapper>
         <BackBtn />
-        {`D-${publicWishesData?.dayCount}`}
+        <span>{`D-${publicWishesData?.dayCount}`}</span>
       </Styled.HeaderWrapper>
 
       <Styled.Title>{publicWishesData?.title}</Styled.Title>
 
       <InputContainer title={`${publicWishesData?.name}님이 남긴 선물에 대한 힌트`}>
         <Styled.HintBox className={'pastelBlue_darkBlue'}>{publicWishesData?.hint}</Styled.HintBox>
-        {/* <TextareaBox value={publicWishesData?.hint} readOnly /> */}
       </InputContainer>
 
       <InputContainer title={'본인의 실명 작성하기'}>

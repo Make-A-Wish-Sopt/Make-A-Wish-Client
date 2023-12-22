@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import ImageBox from './mageBox';
+import ImageBox from './ImageBox';
 
 interface ItemImageBoxProps {
   src: string;

@@ -3,8 +3,8 @@ import Image from 'next/image';
 import theme from '@/styles/theme';
 import { KakaoLoginIc, WideArrowDownIc } from '@/public/assets/icons';
 import { MainLoginImg } from '@/public/assets/images';
-import GuideModal from '@/components/Common/modal/GuideModal';
-import Modal from '@/components/Common/modal';
+import GuideModal from '@/components/Common/Modal/GuideModal';
+import Modal from '@/components/Common/Modal';
 import useModal from '@/hooks/common/useModal';
 
 interface MainViewProps {

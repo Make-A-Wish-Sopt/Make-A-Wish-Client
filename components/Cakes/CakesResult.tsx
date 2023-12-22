@@ -1,10 +1,10 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import ItemImageBox from '@/components/Common/box/itemImageBox';
-import Contribution from './Result/ontribution';
+import ItemImageBox from '@/components/Common/Box/ItemImageBox';
+import Contribution from './Result/Contribution';
 import { CakeListType } from '@/types/cakes/cakeListType';
 import Image from 'next/image';
-import Button from '../Common/button';
+import Button from '../Common/Button';
 import router from 'next/router';
 
 interface CakesResultProps {

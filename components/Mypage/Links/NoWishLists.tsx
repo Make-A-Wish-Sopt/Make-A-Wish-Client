@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { LinksPageChatImg, MainCakeImg } from '@/public/assets/images';
 import router from 'next/router';
-import Button from '@/components/Common/button';
+import Button from '@/components/Common/Button';
 
 export default function NoWishLists() {
   const handleMoveToMain = () => {

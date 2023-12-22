@@ -3,12 +3,13 @@ import { LinkCopyIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import styled from 'styled-components';
-import SNSBox from '../button/snsBox';
-import InputLink from '../input/inputLink';
+
 import { useEffect, useState } from 'react';
 import useKakaoShare from '@/hooks/common/useKakaoShare';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import SNSBox from '../Button/SnsBox';
+import InputLink from '../Input/InputLink';
 
 export default function ShareContent() {
   const [wishesLink, setWishesLink] = useState('');
@@ -95,5 +96,5 @@ const Styled = {
     width: 100%;
   `,
 
-  
+
 };

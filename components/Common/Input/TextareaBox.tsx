@@ -4,7 +4,7 @@ import InputLength from './InputLength';
 import { EmptyBox } from '../Box';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/wishesType';
-import ImageBox from '../box/imageBox';
+import ImageBox from '../Box/ImageBox';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
 
 interface TextareaBoxProps {

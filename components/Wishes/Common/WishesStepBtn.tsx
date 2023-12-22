@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Button from '../../Common/button';
+import Button from '../../Common/Button';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 
 interface WishesStepBtnProps {

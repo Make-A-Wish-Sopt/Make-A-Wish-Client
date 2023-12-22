@@ -1,15 +1,15 @@
-import Calendar from '@/components/Common/alendar/alendar';
-import Input from '@/components/Common/input/input';
-import InputContainer from '@/components/Common/input/inputContainer';
-import TextareaBox from '@/components/Common/input/textareaBox';
+import Calendar from '@/components/Common/Calendar/Calendar';
+import Input from '@/components/Common/Input/Input';
+import InputContainer from '@/components/Common/Input/InputContainer';
+import TextareaBox from '@/components/Common/Input/TextareaBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { WishesDataInputType } from '@/types/wishesType';
 import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import styled from 'styled-components';
-import WishesStepTitle from '../Common/ishesStepTitle';
-import WishesStepBtn from '../Common/ishesStepBtn';
+import WishesStepTitle from '../Common/WishesStepTitle';
+import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 
 interface WishesStep2Props {

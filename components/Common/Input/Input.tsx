@@ -3,10 +3,11 @@ import { WishesDataInputType } from '@/types/wishesType';
 import { PropsWithChildren } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';
-import InputBox from '../Box/inputBox';
+
 import { InputBoxTypes } from '@/types/common/box/boxStyleType';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
-import AlertTextBox from '../alertTextBox';
+import AlertTextBox from '../AlertTextBox';
+import InputBox from '../Box/InputBox';
 
 interface InputProps {
   width?: string;

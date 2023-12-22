@@ -1,19 +1,19 @@
-import Button from '@/components/Common/button';
-import Calendar from '@/components/Common/alendar/alendar';
-import InputContainer from '@/components/Common/input/inputContainer';
-import TextareaBox from '@/components/Common/input/textareaBox';
-import UploadTypeToggleBtn from '@/components/Common/ploadTypeToggleBtn';
+import Button from '@/components/Common/Button';
+import Calendar from '@/components/Common/Calendar/Calendar';
+import InputContainer from '@/components/Common/Input/InputContainer';
+import TextareaBox from '@/components/Common/Input/TextareaBox';
+import UploadTypeToggleBtn from '@/components/Common/UploadTypeToggleBtn';
 import ItemLink from '@/components/Wishes/WishesForm/ItemLink';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import UploadPresent from '@/components/Wishes/WishesForm/UploadPresent';
-import Input from '@/components/Common/input/input';
+import Input from '@/components/Common/Input/Input';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import { useForm } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/wishesType';
-import BankInput from '@/components/Common/modal/BankInput';
+import BankInput from '@/components/Common/Modal/BankInput';
 import {
   useGetMainProgressData,
   useGetWishesProgress,

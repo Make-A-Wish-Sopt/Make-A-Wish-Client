@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import VerticalProgressBar from '../Common/verticalProgressBar';
+import VerticalProgressBar from '../Common/VerticalProgressBar';
 import { MainCakeImg, MainChatImg, MainEndChatImg, MainWishChatImg } from '@/public/assets/images';
 import theme from '@/styles/theme';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';

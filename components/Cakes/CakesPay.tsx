@@ -7,7 +7,7 @@ import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import PaymentItemSelect from '../Common/Select/PaymentItemSelect';
 import { BANK_LIST } from '@/constant/bankList';
 import { BankListType } from '@/types/bankListType';
-import Button from '../Common/button';
+import Button from '../Common/Button';
 import { useState } from 'react';
 import { useGetPublicWishes } from '@/hooks/queries/public';
 

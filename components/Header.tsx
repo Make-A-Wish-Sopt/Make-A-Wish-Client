@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import BackBtn from './Common/button/backBtn';
+import BackBtn from './Common/Button/BackBtn';
 
 interface HeaderProps {
   width: string;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledBox } from '.';
+import { StyledBox } from './index';
 import theme from '@/styles/theme';
 import { ColorSystemType, ImageBoxTypes } from '@/types/common/box/boxStyleType';
 import { PropsWithChildren } from 'react';

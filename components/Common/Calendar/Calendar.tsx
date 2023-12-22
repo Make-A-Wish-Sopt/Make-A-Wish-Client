@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { ko } from 'date-fns/locale';
-import InputBox from '../box/inputBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { UseFormReturn } from 'react-hook-form';
@@ -8,8 +7,9 @@ import { WishesDataInputType } from '@/types/wishesType';
 import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import CalendarHeader from './alendarHeader';
+import CalendarHeader from './CalendarHeader';
 import { getDate } from '@/utils/common/getDate';
+import InputBox from '../Box/InputBox';
 
 interface CalendarProps {
   date: Date;

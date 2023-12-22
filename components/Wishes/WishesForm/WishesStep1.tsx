@@ -1,19 +1,19 @@
-import InputContainer from '@/components/Common/input/inputContainer';
+import InputContainer from '@/components/Common/Input/InputContainer';
 import ItemLink from './ItemLink';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { ChangeEvent, PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import UploadTypeToggleBtn from '@/components/Common/ploadTypeToggleBtn';
+import UploadTypeToggleBtn from '@/components/Common/UploadTypeToggleBtn';
 import { WishesDataInputType } from '@/types/wishesType';
 import { UseFormReturn } from 'react-hook-form';
-import Input from '@/components/Common/input/input';
-import InputLength from '@/components/Common/input/inputLength';
+import Input from '@/components/Common/Input/Input';
+import InputLength from '@/components/Common/Input/InputLength';
 import UploadGift from './UploadPresent';
 import SiteList from './SiteList';
 import { validation } from '@/validation/input';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
-import WishesStepTitle from '../Common/ishesStepTitle';
-import WishesStepBtn from '../Common/ishesStepBtn';
+import WishesStepTitle from '../Common/WishesStepTitle';
+import WishesStepBtn from '../Common/WishesStepBtn';
 import { rules_initial } from '@/validation/rules';
 
 interface WishesStep1Props {

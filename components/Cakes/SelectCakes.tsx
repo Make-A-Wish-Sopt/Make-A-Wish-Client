@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import ImageBox from '../Common/box/imageBox';
+import ImageBox from '../Common/Box/ImageBox';
 import { StyledBox } from '../Common/Box';
 
 interface SelectCakesProps {

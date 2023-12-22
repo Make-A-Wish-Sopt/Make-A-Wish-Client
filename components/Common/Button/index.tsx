@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { BoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
 import styled from 'styled-components';
-import { StyledBox } from '../box';
+import { StyledBox } from '../Box';
 import theme from '@/styles/theme';
 
 interface ButtonProps {
