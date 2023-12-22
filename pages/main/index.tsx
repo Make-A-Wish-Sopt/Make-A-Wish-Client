@@ -1,5 +1,5 @@
-import MainContainer from '@/components/Main';
-import Layout from '@/components/layout';
+import MainContainer from '@/components/ain';
+import Layout from '@/components/ayout';
 
 export default function MainPage() {
   return (

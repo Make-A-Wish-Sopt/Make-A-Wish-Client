@@ -1,5 +1,5 @@
-import Layout from '@/components/layout';
-import WishesFormContainer from '@/components/wishes/wishesForm';
+import Layout from '@/components/ayout';
+import WishesFormContainer from '@/components/ishes/ishesForm';
 
 export default function WishesFormPage() {
   return (

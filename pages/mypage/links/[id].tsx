@@ -1,6 +1,5 @@
-
-import Layout from '@/components/layout';
-import LinksContainer from '@/components/mypage/links/[id]';
+import Layout from '@/components/ayout';
+import LinksContainer from '@/components/ypage/inks/[id]';
 
 export default function LinksPage() {
   return (
