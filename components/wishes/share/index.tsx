@@ -5,14 +5,12 @@ import router from 'next/router';
 import theme from '@/styles/theme';
 import { CloseBlueIc } from '@/public/assets/icons';
 import { ShareChatImg, MainCakeImg } from '@/public/assets/images';
-import ShareModalContent from '@/components/common/modal/shareModal/ShareModalConent';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import Button from '@/components/common/button';
-import Modal from '@/components/common/modal';
 import useModal from '@/hooks/common/useModal';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
-import ModalContainer from '@/components/common/modal/ModalContainer';
-import ShareModal from '@/components/common/modal/shareModal';
+import ShareModal from '@/components/common/modal/ShareModal';
+import Modal from '@/components/common/modal';
 
 export default function ShareContainer() {
   const { isOpen, handleToggle } = useModal();
@@ -46,14 +44,18 @@ export default function ShareContainer() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      {showModal && <ShareModal handleModalClick={handleModalClick} />}
+      {isOpen && (
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <ShareModal handleToggle={handleToggle} />
+        </Modal>
+      )}
       <Styled.ButtonWrapper>
         <Button
-          boxType="btn--large"
+          boxType="large"
           colorSystem="mainBlue_white"
-          handleClickFn={status === 'while' ? handleModalClick : handleMoveToMain}
+          handleClickFn={progressData?.status === 'WHILE' ? handleToggle : handleMoveToMain}
         >
-          {status === 'while' ? '링크 공유하기' : '홈화면으로 이동하기'}
+          {progressData?.status === 'WHILE' ? '링크 공유하기' : '홈화면으로 이동하기'}
         </Button>
       </Styled.ButtonWrapper>
     </>

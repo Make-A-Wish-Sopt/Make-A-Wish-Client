@@ -6,7 +6,7 @@ import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import { convertDateToString } from '@/utils/common/getDate';
 import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import ItemImageBox from '@/components/common/box/itemImageBox';
 import WishesStepTitle from '../common/wishesStepTitle';
 import WishesStepBtn from '../common/wishesStepBtn';
@@ -48,7 +48,7 @@ export default function Preview(props: PreviewProps) {
           <InputContainer title={methods.getValues('title')}>
             <ItemImageBox src={methods.getValues('imageUrl')} alt="선물이미지 미리보기" />
             <Styled.PresentPrice>
-              가격 : {convertMoneyText(methods.getValues('price').toString())}
+              가격 : {convertMoneyText(methods.getValues('price').toString())}원
             </Styled.PresentPrice>
           </InputContainer>
 

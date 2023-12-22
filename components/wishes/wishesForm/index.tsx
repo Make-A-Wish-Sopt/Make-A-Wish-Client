@@ -7,7 +7,7 @@ import Preview from './Preview';
 import BankInfo from './BankInfo';
 
 import { useForm } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 

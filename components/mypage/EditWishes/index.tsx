@@ -4,7 +4,6 @@ import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
 import ItemLink from '@/components/wishes/wishesForm/itemLink';
-import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
@@ -13,7 +12,7 @@ import UploadPresent from '@/components/wishes/wishesForm/UploadPresent';
 import Input from '@/components/common/input/input';
 import useUploadItemInfo from '@/hooks/wishes/useUploadItemInfo';
 import { useForm } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import BankInput from '@/components/common/modal/BankInput';
 import {
   useGetMainProgressData,
@@ -118,7 +117,7 @@ export default function EditWishesContainer() {
             readOnly={progressData?.status !== 'BEFORE'}
           />
           {/* 종료일 */}
-          <Calendar date={methods.watch('endDate')} readOnly />
+          <Calendar date={methods.watch('endDate')} methods={methods} readOnly />
         </Styled.CalendarWrapper>
       </InputContainer>
 
@@ -142,7 +141,7 @@ export default function EditWishesContainer() {
 
       <Styled.ButtonWrapper>
         <Button
-          boxType="btn--large"
+          boxType="large"
           colorSystem="mainBlue_white"
           handleClickFn={() => {
             patchUserAccountData();

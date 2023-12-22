@@ -1,21 +1,33 @@
 import { ReactNode } from 'react';
-import { BtnBoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
-import BtnBox from '../box/btnBox';
+import { BoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
+import styled from 'styled-components';
+import { StyledBox } from '../box';
+import theme from '@/styles/theme';
 
 interface ButtonProps {
-  width?: number;
-  boxType: BtnBoxTypes;
+  boxType: BoxTypes;
   colorSystem: ColorSystemType;
-  handleClickFn: (parameter?: unknown) => void | unknown;
+  handleClickFn?: (parameter?: unknown) => void | unknown;
   children: ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
-  const { width, boxType, colorSystem, handleClickFn, children } = props;
+  const { boxType, colorSystem, handleClickFn, children } = props;
 
   return (
-    <BtnBox width={width} boxType={boxType} colorSystem={colorSystem} handleClickFn={handleClickFn}>
+    <StyledBtnBox as="button" className={`${boxType} ${colorSystem} `} onClick={handleClickFn}>
       {children}
-    </BtnBox>
+    </StyledBtnBox>
   );
 }
+
+const StyledBtnBox = styled(StyledBox)<{ width?: number }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 5rem;
+
+  ${theme.fonts.button18};
+`;

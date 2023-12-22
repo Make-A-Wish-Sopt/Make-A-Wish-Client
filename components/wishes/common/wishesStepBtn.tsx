@@ -29,14 +29,14 @@ export default function WishesStepBtn(props: WishesStepBtnProps) {
   return (
     <Styled.ButtonWrapper>
       <Button
-        boxType="btn--half"
+        boxType="half"
         colorSystem={wishesStep.getPrevBtnColor(wishesStep.prevState)}
         handleClickFn={wishesStep.handlePrevStep}
       >
         이전
       </Button>
       <Button
-        boxType="btn--half"
+        boxType="half"
         colorSystem={wishesStep.getNextBtnColor(wishesStep.nextState)}
         handleClickFn={handleNextClickFn}
       >

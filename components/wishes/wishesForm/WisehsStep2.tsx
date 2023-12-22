@@ -3,10 +3,8 @@ import Input from '@/components/common/input/input';
 import InputContainer from '@/components/common/input/inputContainer';
 import TextareaBox from '@/components/common/input/textareaBox';
 import { LIMIT_TEXT } from '@/constant/limitText';
-import { CalendarGreyIc, CalendarIc } from '@/public/assets/icons';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
-import { getDate } from '@/utils/common/getDate';
-import { useEffect, useState } from 'react';
+import { WishesDataInputType } from '@/types/wishesType';
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import styled from 'styled-components';
@@ -44,10 +42,8 @@ export default function WishesStep2(props: WishesStep2Props) {
     }
   }, [methods.watch()]);
 
-  const onSubmit = () => {};
-
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <form>
       <WishesStepTitle title="소원링크 생성하기" />
       <Styled.Container>
         <div>
@@ -69,7 +65,7 @@ export default function WishesStep2(props: WishesStep2Props) {
               {/* 시작일 */}
               <Calendar date={methods.getValues('startDate')} methods={methods} />
               {/* 종료일 */}
-              <Calendar date={methods.getValues('endDate')} readOnly />
+              <Calendar date={methods.getValues('endDate')} methods={methods} readOnly />
             </Styled.CalendarWrapper>
           </InputContainer>
         </div>

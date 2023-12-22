@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { BANK_LIST } from '@/constant/bankList';
-import { BankInfoInputsType } from '@/types/common/input/wishesInput';
 import { UseFormReturn } from 'react-hook-form';
+import { WishesDataInputType } from '@/types/wishesType';
 
 interface BankModalProps {
   handleToggle: () => void;
-  methods: UseFormReturn<BankInfoInputsType, any, undefined>;
+
+  methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
 export default function BankModal(props: BankModalProps) {

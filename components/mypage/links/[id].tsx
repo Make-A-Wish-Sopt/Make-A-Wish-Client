@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import { LinkBeefCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import { useGetOneWish } from '@/hooks/queries/links/useGetOneWish';
 import { convertDateFormat } from '@/hooks/common/useDate';
 import VerticalProgressBar from '@/components/common/verticalProgressBar';
+import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
 
 export default function LinksContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -17,7 +17,7 @@ export default function LinksContainer() {
     setWishId(router.query.id);
   }, [router.isReady]);
 
-  const { wishData } = useGetOneWish(wishId);
+  const { wishData } = useGetSingleWishInfo(wishId);
 
   const handleMovePage = () => {
     router.push(`/mypage/letters/${wishId}`);

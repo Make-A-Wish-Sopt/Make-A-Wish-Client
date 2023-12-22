@@ -1,5 +1,4 @@
-import { AccountInfoType } from '../common/input/wishesInput';
-import { MainProgressDataType, WishesProgressDataType } from '../wishesType';
+import { AccountInfoType, MainProgressDataType, WishesProgressDataType } from '../wishesType';
 
 export type DefaultResponseType<T = unknown> = {
   success: boolean;
@@ -14,7 +13,7 @@ export type WishesProgressDataResponseType = DefaultResponseType<WishesProgressD
 export type UserAccountDataResponseType = DefaultResponseType<{
   accountInfo: AccountInfoType;
   id: number;
-  phone: string | number;
+  phone: string;
 }>;
 
 export type PublicWishesDataResponseType = DefaultResponseType<{

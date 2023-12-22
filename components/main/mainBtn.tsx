@@ -21,7 +21,7 @@ export default function MainBtn() {
       {progressStatus ? (
         progressStatus !== 'END' && (
           <Button
-            boxType="btn--large"
+            boxType="large"
             colorSystem={progressStatus === 'BEFORE' ? 'gray1_gray2' : 'mainBlue_white'}
             handleClickFn={handleToggle}
           >
@@ -30,7 +30,7 @@ export default function MainBtn() {
         )
       ) : (
         <Button
-          boxType="btn--large"
+          boxType="large"
           colorSystem={'mainBlue_white'}
           handleClickFn={handleMoveWishesPage}
         >

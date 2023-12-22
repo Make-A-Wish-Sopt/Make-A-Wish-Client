@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from '../button';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '../input/input';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
 import { StyledBox } from '../box';
@@ -44,7 +44,7 @@ export default function BankInput(props: BankInputProps) {
             placeholder="계좌번호를 입력해주세요"
             register={methods.register('account')}
           />
-          <Button width={10.6} boxType="btn--custom" colorSystem="mainBlue_white">
+          <Button boxType="custom" colorSystem="mainBlue_white">
             {'계좌번호 확인'}
           </Button>
         </Styled.InputWrapper>

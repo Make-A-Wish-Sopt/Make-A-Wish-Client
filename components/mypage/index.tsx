@@ -34,6 +34,8 @@ export default function MyPageContainer() {
   };
 
   const handleCustomerService = () => {
+    if (progressData?.status === 'END' || progressData === undefined) return;
+
     if (window.Kakao && window.Kakao.Channel) {
       window.Kakao.Channel.chat({
         channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
@@ -63,7 +65,7 @@ export default function MyPageContainer() {
     <>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <GuideModal clickModal={handleToggle} />
+          <GuideModal handleToggle={handleToggle} />
         </Modal>
       )}
 

@@ -4,92 +4,56 @@ import { CloseWhiteIc } from '@/public/assets/icons';
 import { GuideContentImg, GuideBoxImg } from '@/public/assets/images';
 
 interface GuideModalProps {
-  clickModal: () => void;
+  handleToggle: () => void;
 }
 
 export default function GuideModal(props: GuideModalProps) {
-  const { clickModal } = props;
-
-  const handleCustomerService = () => {
-    window.Kakao.Channel.chat({
-      channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-    });
-  };
+  const { handleToggle } = props;
 
   return (
-    <Styled.Container>
-      <Styled.Background2>
-        <Styled.ButtonContainer onClick={clickModal}>
-          <Image src={CloseWhiteIc} alt="닫기" />
-        </Styled.ButtonContainer>
+    <>
+      <Styled.ButtonContainer onClick={handleToggle}>
+        <Image src={CloseWhiteIc} alt="닫기" />
+      </Styled.ButtonContainer>
 
-        <Styled.Content>
-          {
-            <Styled.ScrollContent>
-              <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
-            </Styled.ScrollContent>
-          }
-        </Styled.Content>
-      </Styled.Background2>
-    </Styled.Container>
+      <Styled.Content>
+        <Styled.ScrollContent>
+          <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
+        </Styled.ScrollContent>
+      </Styled.Content>
+    </>
   );
 }
 
 const Styled = {
-  Container: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  `,
-
-  Background: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000000;
-    opacity: 0.4;
-  `,
-
-  Background2: styled.div`
+  Content: styled.div`
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-  `,
 
-  Content: styled.div`
-    position: relative;
     width: 33rem;
     height: 61.4rem;
-    overflow: hidden;
+
     border-radius: 1.6rem;
-    display: flex;
-    flex-direction: column;
+
+    padding: 4rem 1.5rem 2rem;
+
     background-image: url(${GuideBoxImg.src});
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* max-height: 61.4rem;
-    overflow-y: auto;
-    padding: 4.5 0 2rem; */
   `,
 
   ScrollContent: styled.div`
-    /* flex: 1; */
-    overflow-y: auto;
-    position: relative;
-    margin: 4rem 1.5rem 2rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    overflow: scroll;
   `,
 
   ButtonContainer: styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+
     position: relative;
     margin: 2.3rem 0rem 2.9rem;
   `,

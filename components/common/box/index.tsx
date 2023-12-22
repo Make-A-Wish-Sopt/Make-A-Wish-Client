@@ -1,8 +1,9 @@
 import theme from '@/styles/theme';
 import { BoxTypes, ColorSystemType } from '@/types/common/box/boxStyleType';
-import styled, { CSSProperties } from 'styled-components';
+import styled from 'styled-components';
 
 interface BoxProps {
+  width?: number;
   boxType?: BoxTypes;
   colorSystem: ColorSystemType;
   children: React.ReactNode;
@@ -14,43 +15,27 @@ export default function Box(props: BoxProps) {
   return <StyledBox className={`${colorSystem} ${boxType}`}>{children}</StyledBox>;
 }
 
-type BoxSizeType = 'Small' | 'Half' | 'Large' | 'Image';
-export const BoxSize: Record<BoxSizeType, CSSProperties> = {
-  Small: {
-    width: '7.4rem',
-    height: '4.6rem',
-  },
-  Half: {
-    width: 'calc(100%/2)',
-    height: '5rem',
-  },
-  Large: {
-    width: '100%',
-    height: '5rem',
-  },
-  Image: {
-    width: '100%',
-    height: '15rem',
-  },
-};
-
 export const StyledBox = styled.div`
   border-radius: 1rem;
 
   .small {
-    ${BoxSize.Small}
+    width: 7.4rem;
+    height: 4.6rem;
   }
 
   .half {
-    ${BoxSize.Half}
+    width: calc(100% / 2);
+    height: 5rem;
   }
 
   .large {
-    ${BoxSize.Large}
+    width: 100%;
+    height: 5rem;
   }
 
   .image {
-    ${BoxSize.Image}
+    width: 100%;
+    height: 15rem;
   }
 
   // Color System

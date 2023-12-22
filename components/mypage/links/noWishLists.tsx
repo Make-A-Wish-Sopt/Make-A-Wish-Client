@@ -18,7 +18,7 @@ export default function NoWishLists() {
         </Styled.ImageContainer>
       </Styled.Container>
 
-      <Button handleClickFn={handleMoveToMain} colorSystem="mainBlue_white">
+      <Button boxType='large' handleClickFn={handleMoveToMain} colorSystem="mainBlue_white">
         소원 링크 생성하러 가기
       </Button>
     </>

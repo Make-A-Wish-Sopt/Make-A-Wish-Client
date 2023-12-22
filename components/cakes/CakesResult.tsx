@@ -59,7 +59,7 @@ export default function CakesResult(props: CakesResultProps) {
           </>
         ) : (
           <>
-            <ItemImageBox src={cakesResultData?.imageUrl} alt="실제 선물 이미지" />
+            <ItemImageBox src={cakesResultData?.imageUrl || ''} alt="실제 선물 이미지" />
             <Styled.WishText>사실 내가 갖고 싶었던 건...이거야❤</Styled.WishText>
           </>
         )}
@@ -68,7 +68,7 @@ export default function CakesResult(props: CakesResultProps) {
         )}
       </Styled.Container>
       <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleMoveHome}>
+        <Button boxType="large" colorSystem="mainBlue_white" handleClickFn={handleMoveHome}>
           {'당신도 받고 싶은 선물이 있나요?'}
         </Button>
       </Styled.ButtonWrapper>

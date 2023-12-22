@@ -90,7 +90,7 @@ export default function CakesPay(props: CakesPayProps) {
 
       <Styled.ButtonWrapper>
         <Button
-          boxType="btn--large"
+          boxType="large"
           colorSystem="mainBlue_white"
           handleClickFn={() => handleDeepLink(selectedPayment)}
         >

@@ -9,7 +9,7 @@ import Input from '../common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import InputContainer from '../common/input/inputContainer';
 import { CakesDataInputType } from '@/types/common/input/cakesInput';
-import { StyledBox } from '../common/box';
+import { EmptyBox, StyledBox } from '../common/box';
 import BackBtn from '../common/button/backBtn';
 import { CakeListType } from '@/types/cakes/cakeListType';
 import { useGetPublicWishes, usePostPublicCakes } from '@/hooks/queries/public';
@@ -41,51 +41,48 @@ export default function CakesForm(props: CakesFormProps) {
 
   const { publicWishesData } = useGetPublicWishes(wishesId);
 
+  const handleClickFn = () => {
+    postPublicCakesData();
+  };
+
   return (
     <>
-      <div>
-        <Styled.Header>
-          <BackBtn />
-          {`D-${publicWishesData?.dayCount}`}
-        </Styled.Header>
+      <Styled.HeaderWrapper>
+        <BackBtn />
+        {`D-${publicWishesData?.dayCount}`}
+      </Styled.HeaderWrapper>
 
-        <Styled.Title>{publicWishesData?.title}</Styled.Title>
+      <Styled.Title>{publicWishesData?.title}</Styled.Title>
 
-        <InputContainer title={`${publicWishesData?.name}님이 남긴 선물에 대한 힌트`}>
-          <Styled.HintBox className={'pastelBlue_darkBlue'}>
-            {publicWishesData?.hint}
-          </Styled.HintBox>
-          {/* <TextareaBox value={publicWishesData?.hint} readOnly /> */}
-        </InputContainer>
+      <InputContainer title={`${publicWishesData?.name}님이 남긴 선물에 대한 힌트`}>
+        <Styled.HintBox className={'pastelBlue_darkBlue'}>{publicWishesData?.hint}</Styled.HintBox>
+        {/* <TextareaBox value={publicWishesData?.hint} readOnly /> */}
+      </InputContainer>
 
-        <InputContainer title={'본인의 실명 작성하기'}>
-          <Input
-            placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
-            register={methods.register('giverName')}
-          />
-        </InputContainer>
-
-        <SelectCakes
-          selectedCake={selectedCake}
-          selectedIndex={selectedIndex}
-          selectCake={selectCake}
+      <InputContainer title={'본인의 실명 작성하기'}>
+        <Input
+          placeholder="이름을 정확하게 작성해주세요. ex. 홍길동"
+          register={methods.register('giverName')}
         />
+      </InputContainer>
 
-        <InputContainer title={'친구에게 편지 남기기'}>
-          <TextareaBox
-            placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
-            inputLength={methods.watch('letter').length}
-            limitLength={LIMIT_TEXT.DESCRIPTION}
-            register={methods.register('letter')}
-          ></TextareaBox>
-        </InputContainer>
-      </div>
+      <SelectCakes
+        selectedCake={selectedCake}
+        selectedIndex={selectedIndex}
+        selectCake={selectCake}
+      />
+
+      <InputContainer title={'친구에게 편지 남기기'}>
+        <TextareaBox
+          placeholder={`ex. 너 도대체 원하는 게 모야?\n나 넘 궁금해. 일단 몸보신 한우 케이크 보태겠어`}
+          inputLength={methods.watch('letter').length}
+          limitLength={LIMIT_TEXT.DESCRIPTION}
+          register={methods.register('letter')}
+        ></TextareaBox>
+      </InputContainer>
+
       <Styled.ButtonWrapper>
-        <Button
-          boxType="btn--large"
-          colorSystem="mainBlue_white"
-          handleClickFn={postPublicCakesData}
-        >
+        <Button boxType="large" colorSystem="mainBlue_white" handleClickFn={handleClickFn}>
           {'케이크 주문하기'}
         </Button>
       </Styled.ButtonWrapper>
@@ -94,7 +91,7 @@ export default function CakesForm(props: CakesFormProps) {
 }
 
 const Styled = {
-  Header: styled.header`
+  HeaderWrapper: styled.div`
     display: flex;
     justify-content: space-between;
 

@@ -20,8 +20,8 @@ export const validation = {
       return false;
     }
   },
-  isCorrectPhoneNumber(input: string) {
-    if (input) return REGEX.PHONE.test(input);
+  isCorrectPhoneNumber(input: string | number) {
+    if (input) return REGEX.PHONE.test(input.toString());
   },
 
   isIncludeHyphen(input: string) {
@@ -36,6 +36,3 @@ export const validation = {
     if (input) return input.length < 10 || input.length > 14;
   },
 };
-
-
-

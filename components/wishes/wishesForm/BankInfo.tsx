@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import InputContainer from '@/components/common/input/inputContainer';
 import BankInput from '@/components/common/modal/BankInput';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import styled from 'styled-components';
 import CheckBox from '@/components/common/checkBox';
 import useCheckBox from '@/hooks/common/useCheckBox';
@@ -56,6 +56,15 @@ export default function BankInfo(props: BankInfoProps) {
       wishesStep.changeNextState(false);
     }
   }, [methods.watch()]);
+
+  useEffect(() => {
+    if (userAccountData) {
+      methods.setValue('name', userAccountData.accountInfo.name);
+      methods.setValue('bank', userAccountData.accountInfo.bank);
+      methods.setValue('account', userAccountData.accountInfo.account);
+      methods.setValue('phone', userAccountData.phone);
+    }
+  }, [userAccountData]);
 
   return (
     <>

@@ -30,12 +30,12 @@ export default function WishesContainer() {
     <Styled.Container>
       <MainView text={`${publicWishesData?.name ?? '? '}님의 선물을\n고민중이셨다면?`} />
       <Styled.ButtonWrapper>
-        <Button boxType="btn--large" colorSystem="mainBlue_white" handleClickFn={handleMoveToCakes}>
+        <Button boxType="large" colorSystem="mainBlue_white" handleClickFn={handleMoveToCakes}>
           소원 들어주러 가기
         </Button>
 
         <Button
-          boxType="btn--large"
+          boxType="large"
           colorSystem="pastelBlue_mainBlue"
           handleClickFn={handleMoveToHome}
         >

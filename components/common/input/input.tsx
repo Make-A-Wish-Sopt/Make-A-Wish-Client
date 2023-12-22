@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { PropsWithChildren } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';

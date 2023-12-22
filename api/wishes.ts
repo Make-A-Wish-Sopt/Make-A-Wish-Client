@@ -2,9 +2,10 @@ import { MainProgressDataResponseType, WishesProgressDataResponseType } from '@/
 import { client } from './common/axios';
 import { getAccessToken } from '@/utils/common/token';
 import { API_VERSION_01, PATH_WISHES } from './path';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+
 import { UseFormReturn } from 'react-hook-form';
 import { SiteDataType } from '@/types/siteDataType';
+import { WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
 
@@ -51,6 +52,7 @@ export const postWishes = async (methods: UseFormReturn<WishesDataInputType, any
       title: methods.getValues('title'),
       hint: methods.getValues('hint'),
       initial: methods.getValues('initial'),
+      phone: methods.getValues('phone'),
       startDate: methods.getValues('startDate'),
       endDate: methods.getValues('endDate'),
     },

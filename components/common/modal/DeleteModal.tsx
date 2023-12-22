@@ -32,10 +32,14 @@ export default function DeleteModal(props: DeleteModalProps) {
       </Styled.ContentContainer>
 
       <Styled.ButtonContainer>
-        <Button boxType="btn--half" handleClickFn={clickModal}>
+        <Button boxType="half" colorSystem="white_mainBlue" handleClickFn={clickModal}>
           취소
         </Button>
-        <Button boxType="btn--half" handleClickFn={handleDeleteConfirm}>
+        <Button
+          boxType="half"
+          colorSystem="mainBlue_white"
+          handleClickFn={handleDeleteConfirm}
+        >
           확인
         </Button>
       </Styled.ButtonContainer>

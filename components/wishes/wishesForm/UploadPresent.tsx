@@ -11,7 +11,7 @@ import AlertTextBox from '@/components/common/alertTextBox';
 import { UseFormReturn } from 'react-hook-form';
 import ImageBox from '@/components/common/box/imageBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 
 interface UploadPresentProps {
   imageFile: File | Blob | null;

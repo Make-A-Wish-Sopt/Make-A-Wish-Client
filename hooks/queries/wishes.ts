@@ -9,7 +9,7 @@ import {
 } from '@/api/wishes';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { WishLinksType } from '@/types/links/wishLinksType';
 import router from 'next/router';
 import { useState } from 'react';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BoxSize, StyledBox } from '.';
+import { StyledBox } from '.';
 import theme from '@/styles/theme';
 import { ColorSystemType, InputBoxTypes } from '@/types/common/box/boxStyleType';
 import { PropsWithChildren } from 'react';
@@ -29,11 +29,11 @@ const StyledInputBox = styled(StyledBox)<{ width?: string }>`
 
   //InputBox Style System
   &.inputBox--half {
-    ${BoxSize.Half}
+    width: calc(100% / 2);
   }
 
   &.inputBox--large {
-    ${BoxSize.Large}
+    width: 100%;
 
     display: flex;
     align-items: center;

@@ -11,7 +11,7 @@ import Input from '@/components/common/input/input';
 import { UseFormReturn } from 'react-hook-form';
 import AlertTextBox from '@/components/common/alertTextBox';
 import ItemImageBox from '@/components/common/box/itemImageBox';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { getPresentLinkInfo } from '@/api/wishes';
 
 interface ItemLinkProps {
@@ -66,9 +66,8 @@ export default function ItemLink(props: ItemLinkProps) {
 
       {imageUrl && linkURL && isCorrectLinkURL && (
         <Styled.ItemImageWrapper>
-          <ItemImageBox src={imageUrl} alt="링크에서 불러온 선물이미지">
-            가격 : {convertMoneyText(price.toString())}원
-          </ItemImageBox>
+          <ItemImageBox src={imageUrl} alt="링크에서 불러온 선물이미지" />
+          {`가격 : ${convertMoneyText(price.toString())}원`}
         </Styled.ItemImageWrapper>
       )}
     </Styled.Container>

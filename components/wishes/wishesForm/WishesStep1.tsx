@@ -4,7 +4,7 @@ import { LIMIT_TEXT } from '@/constant/limitText';
 import { ChangeEvent, PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UploadTypeToggleBtn from '@/components/common/uploadTypeToggleBtn';
-import { WishesDataInputType } from '@/types/common/input/wishesInput';
+import { WishesDataInputType } from '@/types/wishesType';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '@/components/common/input/input';
 import InputLength from '@/components/common/input/inputLength';
@@ -66,10 +66,8 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
     }
   }, [methods.watch()]);
 
-  const onSubmit = () => {};
-
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <form>
       <WishesStepTitle title="소원링크 생성하기" />
       <Styled.Container>
         <div>

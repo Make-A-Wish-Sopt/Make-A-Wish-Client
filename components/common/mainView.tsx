@@ -19,7 +19,7 @@ export default function MainView(props: MainViewProps) {
     <>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
-          <GuideModal clickModal={handleToggle} />
+          <GuideModal handleToggle={handleToggle} />
         </Modal>
       )}
 

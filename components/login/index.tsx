@@ -15,7 +15,7 @@ export default function LoginContainer() {
       <MainView text={'매년 받는 기프티콘 선물 대신 \n 생일 펀딩 서비스로'} />
 
       <Styled.ButtonWrapper onClick={handleKaKaoLogin}>
-        <Button boxType="btn--large" colorSystem="yellow_black">
+        <Button boxType="large" colorSystem="yellow_black">
           <Styled.ButtonContentWrapper>
             <Styled.KakaoLoginIcon />
             카카오톡 로그인으로 시작하기
