@@ -55,6 +55,7 @@ export default function UploadPresent(props: UploadPresentProps) {
       <InputContainer title="선물 가격 입력하기">
         <Input
           inputType="number"
+          boxType="inputBox--large"
           placeholder="ex. 12,000,000"
           register={methods.register('price', { required: true })}
         >
