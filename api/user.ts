@@ -8,7 +8,7 @@ import { WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
 
-export const patchUserAccount = async (
+export const putUserAccount = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
 ) => {
   const data = await client.put(
@@ -19,6 +19,7 @@ export const patchUserAccount = async (
         bank: methods.getValues('bank'),
         account: methods.getValues('account'),
       },
+      phone: methods.getValues('phone'),
     },
     {
       headers: {

@@ -5,28 +5,34 @@ import { StyledBox } from '../Box';
 import theme from '@/styles/theme';
 
 interface ButtonProps {
-  boxType: BoxTypes;
+  width?: string;
+  boxType?: BoxTypes;
   colorSystem: ColorSystemType;
   handleClickFn?: (parameter?: unknown) => void | unknown;
   children: ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
-  const { boxType, colorSystem, handleClickFn, children } = props;
+  const { width, boxType, colorSystem, handleClickFn, children } = props;
 
   return (
-    <StyledBtnBox as="button" className={`${boxType} ${colorSystem} `} onClick={handleClickFn}>
+    <StyledBtnBox
+      as="button"
+      width={width}
+      className={`${boxType} ${colorSystem} `}
+      onClick={handleClickFn}
+    >
       {children}
     </StyledBtnBox>
   );
 }
 
-const StyledBtnBox = styled(StyledBox)<{ width?: number }>`
+export const StyledBtnBox = styled(StyledBox)<{ width?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : '100%')};
   height: 5rem;
 
   ${theme.fonts.button18};

@@ -11,17 +11,25 @@ import useModal from '@/hooks/common/useModal';
 import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import { deleteUserInfo } from '@/api/user';
-import { useGetMainProgressData } from '@/hooks/queries/wishes';
+import { useGetMainProgressData, usePatchProgressWishes } from '@/hooks/queries/wishes';
+import CancleWishesModal from '../Common/Modal/CancelWishesModal';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
+  const [cancleModalState, setCancleModalState] = useState(false);
   const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
+
   const { progressData } = useGetMainProgressData();
+  const { handlePatchProgressWishes } = usePatchProgressWishes();
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
+
+  const handleCancleModalState = () => {
+    setCancleModalState(!cancleModalState);
+  };
 
   const handleEditWish = () => {
     if (progressData?.status === 'END' || progressData === undefined) return;
@@ -34,17 +42,7 @@ export default function MyPageContainer() {
   };
 
   const handleCustomerService = () => {
-    if (progressData?.status === 'END' || progressData === undefined) return;
-
-    if (window.Kakao && window.Kakao.Channel) {
-      window.Kakao.Channel.chat({
-        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-      });
-    } else {
-      alert(
-        "채널 연결에 문제가 발생했습니다. 카카오톡에서 '조물주보다생일선물주'를 검색하여 문의해주세요.",
-      );
-    }
+    window.open('https://sunmulzu.notion.site/5c1945f34dd3440a984d09cf52f7a591');
   };
 
   const handleLogOut = () => {
@@ -58,6 +56,7 @@ export default function MyPageContainer() {
   const handleWithdrawal = () => {
     if (window.confirm('탈퇴를 진행하시겠습니까?')) {
       deleteUserInfo();
+      router.push('/');
     }
   };
 
@@ -66,6 +65,15 @@ export default function MyPageContainer() {
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
           <GuideModal handleToggle={handleToggle} />
+        </Modal>
+      )}
+
+      {cancleModalState && (
+        <Modal isOpen={cancleModalState} handleToggle={handleCancleModalState}>
+          <CancleWishesModal
+            handleToggle={handleCancleModalState}
+            handleCancleWishes={handlePatchProgressWishes}
+          />
         </Modal>
       )}
 
@@ -89,7 +97,7 @@ export default function MyPageContainer() {
             진행중인 소원 링크 정보 수정하기
           </ItemBox>
           <ItemBox
-            handleClickFn={handleCustomerService}
+            handleClickFn={handleCancleModalState}
             colorSystem={
               progressData?.status === 'END' || progressData === undefined
                 ? 'gray1_gray2'

@@ -133,7 +133,7 @@ export const getProgressWishInfo = async () => {
 /**
  * 진행중인 소원 정보 수정
  */
-export const patchProgressWishInfo = async (
+export const putProgressWishes = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
 ) => {
   const data = await client.put(
@@ -157,6 +157,20 @@ export const patchProgressWishInfo = async (
       },
     },
   );
+
+  return data.data.data;
+};
+
+/**
+ * 진행중인 소원 중단
+ */
+export const patchProgressWishes = async () => {
+  const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
 
   return data.data.data;
 };

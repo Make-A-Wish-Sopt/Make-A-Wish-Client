@@ -9,6 +9,7 @@ interface ModalProps {
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
   const { isOpen, handleToggle, bgNone, children } = props;
+
   return (
     <>
       {isOpen && (

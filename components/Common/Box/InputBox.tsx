@@ -6,7 +6,7 @@ import { PropsWithChildren } from 'react';
 
 interface InputBoxProps {
   width?: string;
-  boxType: InputBoxTypes;
+  boxType?: InputBoxTypes;
   colorSystem: ColorSystemType;
 }
 
@@ -21,6 +21,7 @@ export default function InputBox(props: PropsWithChildren<InputBoxProps>) {
 }
 
 const StyledInputBox = styled(StyledBox)<{ width?: string }>`
+  width: ${(props) => (props.width ? props.width : '100%')};
   height: 5rem;
 
   padding: 1rem 1rem 1rem 1.2rem;
@@ -47,10 +48,5 @@ const StyledInputBox = styled(StyledBox)<{ width?: string }>`
     align-items: center;
 
     ${theme.fonts.body14};
-  }
-
-  &.inputBox--custom {
-    width: ${(props) => props.width};
-    height: 5rem;
   }
 `;
