@@ -11,6 +11,7 @@ interface ShareModalProps {
 export default function ShareModal(props: ShareModalProps) {
   const { handleToggle } = props;
 
+
   return (
     <Styled.Container>
       <Styled.IconContainer>
@@ -25,9 +26,8 @@ export default function ShareModal(props: ShareModalProps) {
 const Styled = {
   Container: styled.div`
     width: 31.6rem;
-    height: 14.3rem;
+
     background-color: ${theme.colors.pastel_blue};
-    padding: 2.2rem 1.5rem 1.6rem;
     border-radius: 1.6rem;
 
     position: absolute;

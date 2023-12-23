@@ -4,6 +4,7 @@ import VerticalProgressBar from '../Common/VerticalProgressBar';
 import { MainCakeImg, MainChatImg, MainEndChatImg, MainWishChatImg } from '@/public/assets/images';
 import theme from '@/styles/theme';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 export default function MainCenterContent() {
   const { progressData } = useGetMainProgressData();
@@ -44,7 +45,9 @@ export default function MainCenterContent() {
         ) : (
           <>
             {'예상 케이크 금액 >\n'}
-            <Styled.CakeText>{`총 ${progressData.price}원`}</Styled.CakeText>
+            <Styled.CakeText>{`총 ${convertMoneyText(
+              progressData?.price.toString() || '0',
+            )}원`}</Styled.CakeText>
           </>
         )}
       </Styled.CakeTextWrapper>
