@@ -31,6 +31,7 @@ export default function Input(props: PropsWithChildren<InputProps>) {
       >
         <StyledInput
           type={inputType || 'text'}
+          pattern={inputType === 'number' ? '\\d*' : undefined}
           placeholder={placeholder}
           readOnly={readOnly}
           {...register}
