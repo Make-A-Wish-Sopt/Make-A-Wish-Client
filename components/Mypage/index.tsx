@@ -34,17 +34,7 @@ export default function MyPageContainer() {
   };
 
   const handleCustomerService = () => {
-    if (progressData?.status === 'END' || progressData === undefined) return;
-
-    if (window.Kakao && window.Kakao.Channel) {
-      window.Kakao.Channel.chat({
-        channelPublicId: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_ID,
-      });
-    } else {
-      alert(
-        "채널 연결에 문제가 발생했습니다. 카카오톡에서 '조물주보다생일선물주'를 검색하여 문의해주세요.",
-      );
-    }
+    window.open('https://sunmulzu.notion.site/5c1945f34dd3440a984d09cf52f7a591');
   };
 
   const handleLogOut = () => {
