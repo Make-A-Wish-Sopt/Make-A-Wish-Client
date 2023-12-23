@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import { WishesDataInputType } from '@/types/wishesType';
-import { PropsWithChildren } from 'react';
+import { HTMLInputTypeAttribute, PropsWithChildren } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -12,6 +12,7 @@ import InputBox from '../Box/InputBox';
 interface InputProps {
   width?: string;
   boxType?: InputBoxTypes;
+  inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
   readOnly?: boolean;
   register: UseFormRegisterReturn<keyof WishesDataInputType | keyof CakesDataInputType>;
@@ -19,7 +20,7 @@ interface InputProps {
 }
 
 export default function Input(props: PropsWithChildren<InputProps>) {
-  const { width, boxType, placeholder, readOnly, register, errors, children } = props;
+  const { width, inputType, boxType, placeholder, readOnly, register, errors, children } = props;
 
   return (
     <>
@@ -28,7 +29,12 @@ export default function Input(props: PropsWithChildren<InputProps>) {
         boxType={boxType || 'inputBox--large'}
         colorSystem="pastelBlue_darkBlue"
       >
-        <StyledInput placeholder={placeholder} readOnly={readOnly} {...register} />
+        <StyledInput
+          type={inputType || 'text'}
+          placeholder={placeholder}
+          readOnly={readOnly}
+          {...register}
+        />
         {children}
       </InputBox>
       {errors?.message && <AlertTextBox>{errors.message}</AlertTextBox>}
