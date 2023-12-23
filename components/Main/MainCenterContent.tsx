@@ -1,13 +1,21 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import VerticalProgressBar from '../Common/VerticalProgressBar';
-import { MainCakeImg, MainChatImg, MainEndChatImg, MainWishChatImg } from '@/public/assets/images';
+import {
+  MainCakeImg,
+  MainChatImg,
+  MainEndCakeImg,
+  MainEndChatImg,
+  MainWishChatImg,
+} from '@/public/assets/images';
 import theme from '@/styles/theme';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 export default function MainCenterContent() {
   const { progressData } = useGetMainProgressData();
+
+  console.log(progressData);
 
   const ChatImg = () => {
     if (!progressData) {
@@ -29,11 +37,16 @@ export default function MainCenterContent() {
         <Styled.ImageWrapper>
           <Image src={ChatImg()} alt="말풍선" />
           <Styled.CakeImageWrapper>
-            <Image src={MainCakeImg} alt="메인 케이크 이미지" width={219} />
+            <Image
+              src={progressData?.status === 'END' ? MainEndCakeImg : MainCakeImg}
+              alt="메인 케이크 이미지"
+              width={219}
+            />
           </Styled.CakeImageWrapper>
         </Styled.ImageWrapper>
         <Styled.ProgressBarWrapper>
-          <VerticalProgressBar percent={progressData?.percent || 0} />
+          {/* <VerticalProgressBar percent={progressData?.percent || 0} /> */}
+          <VerticalProgressBar percent={125} />
         </Styled.ProgressBarWrapper>
       </Styled.CenterContentWrapper>
       <Styled.CakeTextWrapper>

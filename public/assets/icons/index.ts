@@ -25,3 +25,4 @@ export { default as ArrowRightIc } from '@/public/assets/icons/arrowRightIc.svg'
 export { default as ArrowLargeDownIc } from '@/public/assets/icons/arrowLargeDownIc.svg';
 export { default as CheckedBoxIc } from '@/public/assets/icons/checkedBoxIc.svg';
 export { default as UnCheckedBoxIc } from '@/public/assets/icons/unCheckedBoxIc.svg';
+export { default as FireIcImg } from '@/public/assets/icons/fireIcImg.png';
