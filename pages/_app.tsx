@@ -1,3 +1,4 @@
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -8,6 +9,7 @@ import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
+import Loading from '@/components/Common/Loading/Loading';
 
 declare global {
   interface Window {
@@ -21,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
       queries: {
         retry: 0,
         refetchOnWindowFocus: false,
+        // suspense: true,
       },
     },
   });
@@ -75,18 +78,20 @@ export default function App({ Component, pageProps }: AppProps) {
       />
 
       <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Head>
-            <title>조물주보다 생일선물주</title>
-          </Head>
+        <React.Suspense fallback={<Loading />}>
+          <QueryClientProvider client={queryClient}>
+            <Head>
+              <title>조물주보다 생일선물주</title>
+            </Head>
 
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <RootLayout>
-              <Component {...pageProps} />
-            </RootLayout>
-          </ThemeProvider>
-        </QueryClientProvider>
+            <ThemeProvider theme={theme}>
+              <GlobalStyle />
+              <RootLayout>
+                <Component {...pageProps} />
+              </RootLayout>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </React.Suspense>
       </RecoilRoot>
     </>
   );

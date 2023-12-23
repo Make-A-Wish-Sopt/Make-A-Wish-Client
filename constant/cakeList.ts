@@ -30,7 +30,11 @@ import {
   FlowerCakeSmallImg,
   PerfumeCakeSmallImg,
   PoopCakeSmallImg,
-  CoffeeCakeSmallImg
+  CoffeeCakeSmallImg,
+  RudolphCakeImg,
+  RudolphCakeDetailImg,
+  RudolphCakeThanksImg,
+  RudolphCakeSmallImg,
 } from '@/public/assets/images';
 import { CakeListType } from '@/types/cakes/cakeListType';
 
@@ -98,13 +102,22 @@ export const CAKE_LIST: CakeListType[] = [
     smallImage: PerfumeCakeSmallImg,
     cakeNumber: 8,
   },
+  // {
+  //   name: '구리구리 똥 케이크',
+  //   price: 0,
+  //   cakeImage: PoopCakeImg,
+  //   detailImage: PoopCakeDetailImg,
+  //   thanksImage: PoopCakeThanksImg,
+  //   smallImage: PoopCakeSmallImg,
+  //   cakeNumber: 1,
+  // },
   {
-    name: '구리구리 똥 케이크',
+    name: '루돌프 사슴코 케이크',
     price: 0,
-    cakeImage: PoopCakeImg,
-    detailImage: PoopCakeDetailImg,
-    thanksImage: PoopCakeThanksImg,
-    smallImage: PoopCakeSmallImg,
+    cakeImage: RudolphCakeImg,
+    detailImage: RudolphCakeDetailImg,
+    thanksImage: RudolphCakeThanksImg,
+    smallImage: RudolphCakeSmallImg,
     cakeNumber: 1,
   },
 ];

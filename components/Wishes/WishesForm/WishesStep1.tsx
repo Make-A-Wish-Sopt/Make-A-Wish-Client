@@ -8,7 +8,7 @@ import { WishesDataInputType } from '@/types/wishesType';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '@/components/Common/Input/Input';
 import InputLength from '@/components/Common/Input/InputLength';
-import UploadGift from './UploadPresent';
+import UploadPresent from './UploadPresent';
 import SiteList from './SiteList';
 import { validation } from '@/validation/input';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
@@ -67,7 +67,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
   }, [methods.watch()]);
 
   return (
-    <form>
+    <>
       <WishesStepTitle title="소원링크 생성하기" />
       <Styled.Container>
         <div>
@@ -82,7 +82,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
               <ItemLink methods={methods} />
             </>
           ) : (
-            <UploadGift
+            <UploadPresent
               imageFile={imageFile}
               preSignedImageUrl={preSignedImageUrl}
               uploadImageFile={uploadImageFile}
@@ -109,7 +109,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
 
         <WishesStepBtn wishesStep={wishesStep} />
       </Styled.Container>
-    </form>
+    </>
   );
 }
 
