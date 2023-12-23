@@ -88,14 +88,15 @@ export default function BankInfo(props: BankInfoProps) {
 
             <InputContainer title="전화번호 입력하기">
               <Input
+                inputType="number"
                 placeholder="(-)없이 숫자만 입력해주세요"
                 register={methods.register('phone')}
               />
-              {!validation.isIncludeHyphen(methods.watch('phone')) ||
-                (!validation.isCorrectPhoneNumber(methods.watch('phone')) &&
-                  methods.watch('phone') !== '' && (
-                    <AlertTextBox>{'올바른 연락처를 입력해주세요'}</AlertTextBox>
-                  ))}
+
+              {methods.watch('phone') !== '' &&
+                !validation.isCorrectPhoneNumber(methods.watch('phone')) && (
+                  <AlertTextBox>{'올바른 연락처를 입력해주세요'}</AlertTextBox>
+                )}
             </InputContainer>
           </InputContainer>
         </div>

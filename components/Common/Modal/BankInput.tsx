@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 import theme from '@/styles/theme';
 import Input from '../Input/Input';
-import Button from '../Button';
+import { StyledBtnBox } from '../Button';
 import { StyledBox } from '../Box';
 import AlertTextBox from '../AlertTextBox';
 
@@ -34,7 +34,12 @@ export default function BankInput(props: BankInputProps) {
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
-        <Input placeholder="은행 선택" register={methods.register('bank')} readOnly>
+        <Input
+          boxType="inputBox--large"
+          placeholder="은행 선택"
+          register={methods.register('bank')}
+          readOnly
+        >
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>
       </Styled.ItemWrapper>
@@ -43,13 +48,13 @@ export default function BankInput(props: BankInputProps) {
         <Styled.InputWrapper>
           <Input
             width="calc(100% - 10.6rem)"
-            boxType="inputBox--custom"
+            inputType="number"
             placeholder="계좌번호를 입력해주세요"
             register={methods.register('account')}
           />
-          <Button boxType="custom" colorSystem="mainBlue_white">
+          <Styled.AccountAuthButton className="mainBlue_white">
             {'계좌번호 확인'}
-          </Button>
+          </Styled.AccountAuthButton>
         </Styled.InputWrapper>
 
         {/* 조건 기능 추가  */}
@@ -91,5 +96,11 @@ const Styled = {
 
     ${theme.fonts.body14};
     line-height: 140%;
+  `,
+
+  AccountAuthButton: styled(StyledBtnBox)`
+    width: 10.6rem;
+
+    ${theme.fonts.body14};
   `,
 };

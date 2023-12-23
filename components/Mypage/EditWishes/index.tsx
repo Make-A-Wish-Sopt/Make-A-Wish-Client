@@ -127,7 +127,11 @@ export default function EditWishesContainer() {
       </InputContainer>
 
       <InputContainer title="연락처 수정하기">
-        <Input placeholder="연락처는 (-)없이 입력해주세요" register={methods.register('phone')} />
+        <Input
+          inputType="number"
+          placeholder="연락처는 (-)없이 입력해주세요"
+          register={methods.register('phone')}
+        />
       </InputContainer>
 
       <InputContainer title="선물에 대한 힌트 수정하기">
