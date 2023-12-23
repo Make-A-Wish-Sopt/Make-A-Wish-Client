@@ -14,6 +14,7 @@ import Input from '../Input/Input';
 import { StyledBtnBox } from '../Button';
 import { StyledBox } from '../Box';
 import AlertTextBox from '../AlertTextBox';
+import { validation } from '@/validation/input';
 
 interface BankInputProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -56,6 +57,9 @@ export default function BankInput(props: BankInputProps) {
             {'계좌번호 확인'}
           </Styled.AccountAuthButton>
         </Styled.InputWrapper>
+        {validation.isIncludeHyphen(methods.watch('account')) && (
+          <AlertTextBox>{'(-)없이 숫자만 입력해주세요'}</AlertTextBox>
+        )}
 
         {/* 조건 기능 추가  */}
         {/* {<AlertTextBox>{true ? '정상 계좌입니다' : '존재하지 않는 계좌번호입니다'}</AlertTextBox>} */}
