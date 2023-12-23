@@ -10,13 +10,16 @@ import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
 import SNSBox from '../Button/SnsBox';
 import InputLink from '../Input/InputLink';
+import { useGetMainProgressData } from '@/hooks/queries/wishes';
 
 export default function ShareContent() {
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
+  const { progressData } = useGetMainProgressData();
+
   useEffect(() => {
-    setWishesLink(`https://sunmulzu.store/wishes/${loginUserInfo.wishesId}`);
+    progressData && setWishesLink(`https://sunmulzu.store/wishes/${progressData.wishId}`);
   }, []);
 
   const handleShareSNS = (name: string) => {
@@ -95,6 +98,4 @@ const Styled = {
     color: ${theme.colors.white};
     width: 100%;
   `,
-
-
 };

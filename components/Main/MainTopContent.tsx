@@ -23,7 +23,9 @@ export default function MainTopContent() {
     if (progressData?.dayCount === 0) {
       return 'D-Day';
     } else {
-      return `D-${progressData?.dayCount}`;
+      return progressData.dayCount < 0
+        ? `D${progressData?.dayCount}`
+        : `D+${progressData?.dayCount}`;
     }
   };
 

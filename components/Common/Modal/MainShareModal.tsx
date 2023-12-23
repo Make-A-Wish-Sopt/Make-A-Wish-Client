@@ -5,6 +5,7 @@ import { useGetMainProgressData } from '@/hooks/queries/wishes';
 import Image from 'next/image';
 import { MainCakeImg, MainWishChatImg } from '@/public/assets/images';
 import { CloseWhiteIc } from '@/public/assets/icons';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 interface MainShareModalProps {
   handleToggle: () => void;
@@ -27,7 +28,9 @@ export default function MainShareModal(props: MainShareModalProps) {
         <Image src={MainCakeImg} alt="메인 케이크 이미지" width={219} />
         <Styled.PriceTextWrapper>
           {'예상 케이크 금액\n'}
-          <Styled.PriceText>{`총 ${progressData?.price}원`}</Styled.PriceText>
+          <Styled.PriceText>{`총 ${convertMoneyText(
+            progressData?.price.toString() || '0',
+          )}원`}</Styled.PriceText>
         </Styled.PriceTextWrapper>
 
         <Styled.DivisionLine />
