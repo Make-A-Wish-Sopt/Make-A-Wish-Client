@@ -12,7 +12,7 @@ export default function WishesStepTitle(props: WishesStepTitleProps) {
   return (
     <Styled.TitleWrapper>
       <Image src={WishesFormPresentIc} alt="선물 이미지" />
-      <Styled.Title>{title}</Styled.Title>,
+      <Styled.Title>{title}</Styled.Title>
     </Styled.TitleWrapper>
   );
 }
