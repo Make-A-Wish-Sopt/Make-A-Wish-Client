@@ -19,6 +19,7 @@ export const patchUserAccount = async (
         bank: methods.getValues('bank'),
         account: methods.getValues('account'),
       },
+      phone: methods.getValues('phone'),
     },
     {
       headers: {
