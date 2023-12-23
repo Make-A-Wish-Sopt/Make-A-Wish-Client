@@ -24,11 +24,7 @@ export default function Input(props: PropsWithChildren<InputProps>) {
 
   return (
     <>
-      <InputBox
-        width={width}
-        boxType={boxType || 'inputBox--large'}
-        colorSystem="pastelBlue_darkBlue"
-      >
+      <InputBox width={width} boxType={boxType} colorSystem="pastelBlue_darkBlue">
         <StyledInput
           type={inputType || 'text'}
           pattern={inputType === 'number' ? '\\d*' : undefined}
