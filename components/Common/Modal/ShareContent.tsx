@@ -16,6 +16,7 @@ export default function ShareContent() {
   const [wishesLink, setWishesLink] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
+  const { progressData } = useGetMainProgressData();
 
   useEffect(() => {
     progressData && setWishesLink(`https://sunmulzu.store/wishes/${progressData.wishId}`);

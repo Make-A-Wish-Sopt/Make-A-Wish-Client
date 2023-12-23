@@ -10,7 +10,6 @@ import { BankListType } from '@/types/bankListType';
 import Button from '../Common/Button';
 import { useState } from 'react';
 import { useGetPublicWishes } from '@/hooks/queries/public';
-import { getMainProgressData } from '@/api/wishes';
 
 interface CakesPayProps {
   handlePrevStep: () => void;
