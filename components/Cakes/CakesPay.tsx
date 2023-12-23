@@ -10,6 +10,7 @@ import { BankListType } from '@/types/bankListType';
 import Button from '../Common/Button';
 import { useState } from 'react';
 import { useGetPublicWishes } from '@/hooks/queries/public';
+import { getMainProgressData } from '@/api/wishes';
 
 interface CakesPayProps {
   handlePrevStep: () => void;
@@ -30,6 +31,32 @@ export default function CakesPay(props: CakesPayProps) {
     setSelected(payment);
   };
 
+  const handleTextCopy = async () => {
+    if (!publicWishesData?.accountNumber || !publicWishesData.bank) {
+      alert('계좌번호에 오류가 있습니다!');
+      return;
+    }
+    const accountInfoText = `${publicWishesData.bank} ${publicWishesData.accountNumber}`;
+    const isClipboardSupported = () => navigator?.clipboard != null;
+
+    try {
+      if (isClipboardSupported()) {
+        await navigator.clipboard.writeText(accountInfoText);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = accountInfoText;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+      alert('계좌번호가 복사되었습니다.');
+    } catch (error) {
+      alert('복사하기가 지원되지 않는 환경입니다.');
+    }
+  };
+
   const handleDeepLink = (payment: BankListType | undefined) => {
     const ua = navigator.userAgent.toLowerCase();
 
@@ -37,6 +64,8 @@ export default function CakesPay(props: CakesPayProps) {
       alert('결제수단을 선택해주세요!');
       return;
     }
+
+    handleTextCopy();
 
     if (window.confirm(`${payment?.name}(으)로 이동할까요?`)) {
       if (payment?.name === '토스뱅크') {
@@ -54,6 +83,7 @@ export default function CakesPay(props: CakesPayProps) {
             : 'https://apps.apple.com/app/id1258016944',
         );
       }
+
       handleNextStep();
     }
   };
@@ -91,7 +121,9 @@ export default function CakesPay(props: CakesPayProps) {
         <Button
           boxType="large"
           colorSystem="mainBlue_white"
-          handleClickFn={() => handleDeepLink(selectedPayment)}
+          handleClickFn={() => {
+            handleDeepLink(selectedPayment);
+          }}
         >
           {'친구 계좌로 케이크 쏘기'}
         </Button>

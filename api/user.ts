@@ -8,7 +8,7 @@ import { WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
 
-export const patchUserAccount = async (
+export const putUserAccount = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
 ) => {
   const data = await client.put(

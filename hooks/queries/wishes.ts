@@ -31,14 +31,14 @@ export function useGetWishes() {
  * 진행중인 소원 정보 수정
  */
 export function usePutProgressWishes(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
-  const { mutate: patchWishesData } = useMutation(() => putProgressWishes(methods), {
+  const { mutate: handlePutProgressWishes } = useMutation(() => putProgressWishes(methods), {
     onSuccess: () => {
       alert('소원정보를 수정했어요!');
       router.back();
     },
   });
 
-  return { patchWishesData };
+  return { handlePutProgressWishes };
 }
 
 /**

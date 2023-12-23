@@ -14,8 +14,7 @@ import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/Common/AlertTextBox';
-import { useGetUserAccount, usePatchUserAccount } from '@/hooks/queries/user';
-import { usePostWishes } from '@/hooks/queries/wishes';
+import { useGetUserAccount, usePutUserAccount } from '@/hooks/queries/user';
 
 interface BankInfoProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -34,13 +33,9 @@ interface BankInfoProps {
 
 export default function BankInfo(props: BankInfoProps) {
   const { methods, wishesStep } = props;
-
   const { userAccountData } = useGetUserAccount();
-
   const { checkBoxState, handleChangeCheckBoxState } = useCheckBox();
-
-  const { postWishesData } = usePostWishes(methods);
-  const { patchUserAccountData } = usePatchUserAccount(methods);
+  const { handlePutUserAccount } = usePutUserAccount(methods);
 
   useEffect(() => {
     if (
@@ -104,8 +99,7 @@ export default function BankInfo(props: BankInfoProps) {
         <WishesStepBtn
           wishesStep={wishesStep}
           handleClickFn={() => {
-            postWishesData();
-            patchUserAccountData();
+            handlePutUserAccount();
           }}
         />
       </Styled.Container>

@@ -56,6 +56,7 @@ export default function MyPageContainer() {
   const handleWithdrawal = () => {
     if (window.confirm('탈퇴를 진행하시겠습니까?')) {
       deleteUserInfo();
+      router.push('/');
     }
   };
 

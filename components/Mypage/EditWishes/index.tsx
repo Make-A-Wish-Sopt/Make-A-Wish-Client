@@ -17,10 +17,10 @@ import BankInput from '@/components/Common/Modal/BankInput';
 import {
   useGetMainProgressData,
   useGetWishesProgress,
-  usePatchWishes,
+  usePutProgressWishes,
 } from '@/hooks/queries/wishes';
 import SiteList from '@/components/Wishes/WishesForm/SiteList';
-import { usePatchUserAccount } from '@/hooks/queries/user';
+import { usePutUserAccount } from '@/hooks/queries/user';
 import { LIMIT_TEXT } from '@/constant/limitText';
 import { getDate } from '@/utils/common/getDate';
 
@@ -48,16 +48,12 @@ export default function EditWishesContainer() {
   const { wishesProgressData } = useGetWishesProgress();
   const { progressData } = useGetMainProgressData();
 
-  const { patchUserAccountData } = usePatchUserAccount(methods);
-  const { patchWishesData } = usePatchWishes(methods);
+
+  const { handlePutUserAccount } = usePutUserAccount(methods);
+  const { handlePutProgressWishes } = usePutProgressWishes(methods);
 
   useEffect(() => {
     if (wishesProgressData) {
-      methods.setValue('account', wishesProgressData?.accountInfo.account);
-      methods.setValue('name', wishesProgressData?.accountInfo.name);
-      methods.setValue('bank', wishesProgressData?.accountInfo.bank);
-      methods.setValue('phone', wishesProgressData.phone);
-
       methods.setValue('title', wishesProgressData.title);
       methods.setValue('imageUrl', wishesProgressData.imageUrl);
       methods.setValue('hint', wishesProgressData.hint);
@@ -66,6 +62,13 @@ export default function EditWishesContainer() {
 
       methods.setValue('startDate', new Date(wishesProgressData.startDate));
       methods.setValue('endDate', new Date(wishesProgressData.endDate));
+
+      if (wishesProgressData.accountInfo) {
+        methods.setValue('account', wishesProgressData?.accountInfo.account);
+        methods.setValue('name', wishesProgressData?.accountInfo.name);
+        methods.setValue('bank', wishesProgressData?.accountInfo.bank);
+        methods.setValue('phone', wishesProgressData.phone);
+      }
     }
   }, [wishesProgressData]);
 
@@ -148,8 +151,8 @@ export default function EditWishesContainer() {
           boxType="large"
           colorSystem="mainBlue_white"
           handleClickFn={() => {
-            patchUserAccountData();
-            patchWishesData();
+            handlePutUserAccount();
+            handlePutProgressWishes();
           }}
         >
           수정 완료
