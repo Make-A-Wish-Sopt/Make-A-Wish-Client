@@ -45,8 +45,7 @@ export default function MainCenterContent() {
           </Styled.CakeImageWrapper>
         </Styled.ImageWrapper>
         <Styled.ProgressBarWrapper>
-          {/* <VerticalProgressBar percent={progressData?.percent || 0} /> */}
-          <VerticalProgressBar percent={125} />
+          <VerticalProgressBar percent={progressData?.percent || 0} />
         </Styled.ProgressBarWrapper>
       </Styled.CenterContentWrapper>
       <Styled.CakeTextWrapper>
