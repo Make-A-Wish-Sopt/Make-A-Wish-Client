@@ -4,8 +4,9 @@ import {
   getProgressWishInfo,
   getSingleWishInfo,
   getWishes,
-  patchProgressWishInfo,
+  putProgressWishes,
   postWishes,
+  patchProgressWishes,
 } from '@/api/wishes';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
@@ -29,15 +30,29 @@ export function useGetWishes() {
 /**
  * 진행중인 소원 정보 수정
  */
-export function usePatchWishes(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
-  const { mutate: patchWishesData } = useMutation(() => patchProgressWishInfo(methods), {
+export function usePutProgressWishes(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
+  const { mutate: patchWishesData } = useMutation(() => putProgressWishes(methods), {
     onSuccess: () => {
-      alert('수정성공');
+      alert('소원정보를 수정했어요!');
       router.back();
     },
   });
 
   return { patchWishesData };
+}
+
+/**
+ * 진행중인 소원 중단
+ */
+export function usePatchProgressWishes() {
+  const { mutate: handlePatchProgressWishes } = useMutation(patchProgressWishes, {
+    onSuccess: () => {
+      alert('진행중인 소원을 중단했어요!');
+      router.back();
+    },
+  });
+
+  return { handlePatchProgressWishes };
 }
 
 /**

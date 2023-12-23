@@ -11,17 +11,25 @@ import useModal from '@/hooks/common/useModal';
 import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
 import { deleteUserInfo } from '@/api/user';
-import { useGetMainProgressData } from '@/hooks/queries/wishes';
+import { useGetMainProgressData, usePatchProgressWishes } from '@/hooks/queries/wishes';
+import CancleWishesModal from '../Common/Modal/CancelWishesModal';
 
 export default function MyPageContainer() {
   const { isOpen, handleToggle } = useModal();
+  const [cancleModalState, setCancleModalState] = useState(false);
   const [nickName, setNicknameState] = useState('');
   const loginUserInfo = useRecoilValue(LoginUserInfo);
+
   const { progressData } = useGetMainProgressData();
+  const { handlePatchProgressWishes } = usePatchProgressWishes();
 
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);
+
+  const handleCancleModalState = () => {
+    setCancleModalState(!cancleModalState);
+  };
 
   const handleEditWish = () => {
     if (progressData?.status === 'END' || progressData === undefined) return;
@@ -59,6 +67,15 @@ export default function MyPageContainer() {
         </Modal>
       )}
 
+      {cancleModalState && (
+        <Modal isOpen={cancleModalState} handleToggle={handleCancleModalState}>
+          <CancleWishesModal
+            handleToggle={handleCancleModalState}
+            handleCancleWishes={handlePatchProgressWishes}
+          />
+        </Modal>
+      )}
+
       <Styled.Container>
         <Styled.TitleContainer>
           <Styled.ProfileImgContainer>
@@ -79,7 +96,7 @@ export default function MyPageContainer() {
             진행중인 소원 링크 정보 수정하기
           </ItemBox>
           <ItemBox
-            handleClickFn={handleCustomerService}
+            handleClickFn={handleCancleModalState}
             colorSystem={
               progressData?.status === 'END' || progressData === undefined
                 ? 'gray1_gray2'
