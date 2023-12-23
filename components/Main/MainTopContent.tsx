@@ -42,7 +42,6 @@ export default function MainTopContent() {
               {`부터 소원링크를\n공유할 수 있어요!`}
             </>
           ) : (
-            //소원 진행 중
             <>
               {`${nickName}님에게\n`}
               <Styled.Text>{`${progressData.cakeCount}개 `}</Styled.Text>

@@ -33,7 +33,14 @@ export default function CakesContainer() {
   });
 
   useEffect(() => {
-    isSuccess && wishesStep.handleNextStep();
+    if (isSuccess) {
+      if (selectedCake.cakeNumber === 1) {
+        wishesStep.handleNextStep();
+        wishesStep.handleNextStep();
+      } else {
+        wishesStep.handleNextStep();
+      }
+    }
   }, [isSuccess]);
 
   useEffect(() => {

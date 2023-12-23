@@ -8,7 +8,7 @@ import { WishesDataInputType } from '@/types/wishesType';
 import { UseFormReturn } from 'react-hook-form';
 import Input from '@/components/Common/Input/Input';
 import InputLength from '@/components/Common/Input/InputLength';
-import UploadGift from './UploadPresent';
+import UploadPresent from './UploadPresent';
 import SiteList from './SiteList';
 import { validation } from '@/validation/input';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
@@ -36,7 +36,7 @@ interface WishesStep1Props {
 
 export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) {
   const { methods, wishesStep, imageFile, preSignedImageUrl, uploadImageFile } = props;
-  const [isLinkLoadType, setIsLinkLoadType] = useState(true); //false : 링크 불러오기 true : 직접 불러오기
+  const [isLinkLoadType, setIsLinkLoadType] = useState(false); //false : 링크 불러오기 true : 직접 불러오기
 
   const handleLoadTypeToggle = (state: boolean) => {
     setIsLinkLoadType(state);
@@ -67,14 +67,14 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
   }, [methods.watch()]);
 
   return (
-    <form>
+    <>
       <WishesStepTitle title="소원링크 생성하기" />
       <Styled.Container>
         <div>
-          <UploadTypeToggleBtn
+          {/* <UploadTypeToggleBtn
             isLinkLoadType={isLinkLoadType}
             handleLoadTypeToggle={handleLoadTypeToggle}
-          />
+          /> */}
 
           {isLinkLoadType ? (
             <>
@@ -82,7 +82,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
               <ItemLink methods={methods} />
             </>
           ) : (
-            <UploadGift
+            <UploadPresent
               imageFile={imageFile}
               preSignedImageUrl={preSignedImageUrl}
               uploadImageFile={uploadImageFile}
@@ -109,7 +109,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
 
         <WishesStepBtn wishesStep={wishesStep} />
       </Styled.Container>
-    </form>
+    </>
   );
 }
 

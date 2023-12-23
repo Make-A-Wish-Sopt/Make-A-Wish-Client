@@ -7,7 +7,6 @@ import { WishesDataInputType } from '@/types/wishesType';
 
 interface BankModalProps {
   handleToggle: () => void;
-
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
 }
 
@@ -59,7 +58,7 @@ const Styled = {
 
   BankContainer: styled.ul`
     height: 91.4%;
-    overflow: auto;
+    overflow: scroll;
     ::-webkit-scrollbar {
       display: none;
     }

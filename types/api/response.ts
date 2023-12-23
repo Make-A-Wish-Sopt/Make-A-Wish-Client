@@ -17,6 +17,8 @@ export type UserAccountDataResponseType = DefaultResponseType<{
 }>;
 
 export type PublicWishesDataResponseType = DefaultResponseType<{
+  accountNumber: string;
+  bank: string;
   name: string;
   dayCount: number;
   title: string;
