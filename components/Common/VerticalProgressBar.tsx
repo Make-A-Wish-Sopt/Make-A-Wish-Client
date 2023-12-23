@@ -1,4 +1,6 @@
+import { FireIcImg } from '@/public/assets/icons';
 import theme from '@/styles/theme';
+import Image from 'next/image';
 import styled, { css } from 'styled-components';
 
 interface ProgressBarProps {
@@ -15,7 +17,21 @@ export default function VerticalProgressBar(props: ProgressBarProps) {
         <Styled.PercentWrapper percent={Number(percent)}></Styled.PercentWrapper>
       </Styled.ProgressBox>
 
+      {/* 리팩토링 1순위 ㅋㅋㅋ */}
       <Styled.BarContainer>
+        {percent && percent >= 100 && (
+          <Image
+            src={FireIcImg}
+            alt="불꽃 아이콘"
+            width={59}
+            style={{
+              position: 'absolute',
+              top: '26rem',
+              right: '-2.5rem',
+              transform: 'rotate(180deg)',
+            }}
+          />
+        )}
         <Styled.Progress percent={Number(percent)} />
       </Styled.BarContainer>
     </>
@@ -68,11 +84,20 @@ const Styled = {
     max-height: 100%;
     width: 100%;
 
-    background-color: ${theme.colors.main_blue};
+    ${(props) =>
+      props.percent > 100
+        ? css`
+            background: linear-gradient(#3ea2ff, #e63323);
+          `
+        : css`
+            background-color: ${theme.colors.main_blue};
+          `}
 
     border-bottom-right-radius: 5rem;
     border-bottom-left-radius: 5rem;
     border-top-right-radius: 5rem;
     border-top-left-radius: 5rem;
   `,
+
+  FireIconWrapper: styled.div``,
 };
