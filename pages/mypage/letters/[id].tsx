@@ -3,7 +3,7 @@ import LettersMainContainer from '@/components/Mypage/Letters/LettersMain';
 
 export default function LettersMainPage() {
   return (
-    <Layout layoutKey="empty">
+    <Layout layoutKey="header">
       <LettersMainContainer />
     </Layout>
   );

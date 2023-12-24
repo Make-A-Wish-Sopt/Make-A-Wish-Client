@@ -13,6 +13,7 @@ import { CakeListType } from '@/types/cakes/cakeListType';
 import { useGetPublicWishes } from '@/hooks/queries/public';
 import { UseMutateFunction } from 'react-query';
 import theme from '@/styles/theme';
+import { useEffect, useState } from 'react';
 
 interface CakesFormProps {
   methods: UseFormReturn<CakesDataInputType, any, undefined>;
@@ -39,10 +40,24 @@ export default function CakesForm(props: CakesFormProps) {
   const { methods, selectedCake, selectedIndex, selectCake, wishesId, postPublicCakesData } = props;
 
   const { publicWishesData } = useGetPublicWishes(wishesId);
+  const [btnState, setBtnState] = useState(false);
 
   const handleClickFn = () => {
+    if (!btnState) return;
     postPublicCakesData();
   };
+
+  useEffect(() => {
+    if (
+      methods.watch('letter') !== '' &&
+      methods.watch('letter').length <= 300 &&
+      methods.watch('giverName')
+    ) {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [methods.watch()]);
 
   return (
     <>
@@ -80,7 +95,11 @@ export default function CakesForm(props: CakesFormProps) {
       </InputContainer>
 
       <Styled.ButtonWrapper>
-        <Button boxType="large" colorSystem="mainBlue_white" handleClickFn={handleClickFn}>
+        <Button
+          boxType="large"
+          colorSystem={btnState ? 'mainBlue_white' : 'gray1_gray2'}
+          handleClickFn={handleClickFn}
+        >
           {'케이크 주문하기'}
         </Button>
       </Styled.ButtonWrapper>
@@ -107,7 +126,10 @@ const Styled = {
 
   HintBox: styled(StyledBox)`
     width: 100%;
-    height: 12.6rem;
+    min-height: 12.6rem;
+    max-height: 16rem;
+
+    overflow: scroll;
 
     ${theme.fonts.body14};
 

@@ -12,15 +12,21 @@ interface TextareaBoxProps {
   inputLength?: number;
   limitLength?: number;
   readOnly?: boolean;
+  disabled?: boolean;
   register: UseFormRegisterReturn<keyof WishesDataInputType | keyof CakesDataInputType>;
 }
 
 export default function TextareaBox(props: TextareaBoxProps) {
-  const { placeholder, inputLength, limitLength, readOnly, register } = props;
+  const { placeholder, inputLength, limitLength, readOnly, disabled, register } = props;
 
   return (
     <ImageBox boxType="imageBox--textarea" colorSystem="pastelBlue_darkBlue">
-      <Styled.Textarea placeholder={placeholder} readOnly={readOnly} {...register} />
+      <Styled.Textarea
+        placeholder={placeholder}
+        readOnly={readOnly}
+        disabled={disabled}
+        {...register}
+      />
       <Styled.InputLengthWrapper>
         <EmptyBox />
         {limitLength && <InputLength inputLength={inputLength || 0} limitLength={limitLength} />}
@@ -35,11 +41,12 @@ const Styled = {
     justify-content: space-between;
   `,
 
-  Textarea: styled.textarea`
+  Textarea: styled.textarea<{ disabled?: boolean }>`
     width: 100%;
     height: 10.5rem;
 
     ${theme.fonts.body12};
+    color: ${(props) => (props.disabled ? theme.colors.gray1 : theme.colors.dark_blue)};
 
     resize: none;
   `,

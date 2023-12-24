@@ -76,8 +76,6 @@ export default function LettersMainContainer() {
                   : undefined
               }
               backgroundColor={theme.colors.pastel_blue}
-              fontColor={theme.colors.gray4}
-              fonts={theme.fonts.button18}
               image={cake.smallImage}
               cakeName={cake.name}
               cakeNum={getCakeNum(cake.cakeNumber, cakesCount)}
