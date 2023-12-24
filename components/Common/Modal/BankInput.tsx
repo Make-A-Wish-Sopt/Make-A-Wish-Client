@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { UseFormReturn } from 'react-hook-form';
 
-import { WishesDataInputType } from '@/types/wishesType';
+import { MainProgressDataType, WishesDataInputType } from '@/types/wishesType';
 import { ArrowDownIc } from '@/public/assets/icons';
 import Image from 'next/image';
 
@@ -18,6 +18,7 @@ import { validation } from '@/validation/input';
 
 interface BankInputProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
+  progressData?: MainProgressDataType;
 }
 
 export default function BankInput(props: BankInputProps) {
@@ -39,7 +40,6 @@ export default function BankInput(props: BankInputProps) {
           boxType="inputBox--large"
           placeholder="은행 선택"
           register={methods.register('bank')}
-          readOnly
         >
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>

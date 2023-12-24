@@ -35,11 +35,12 @@ const Styled = {
     justify-content: space-between;
   `,
 
-  Textarea: styled.textarea`
+  Textarea: styled.textarea<{ readOnly?: boolean }>`
     width: 100%;
     height: 10.5rem;
 
     ${theme.fonts.body12};
+    color: ${(props) => (props.readOnly ? theme.colors.gray1 : theme.colors.dark_blue)};
 
     resize: none;
   `,

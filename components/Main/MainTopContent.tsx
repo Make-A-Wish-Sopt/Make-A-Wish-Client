@@ -24,8 +24,8 @@ export default function MainTopContent() {
       return 'D-Day';
     } else {
       return progressData.dayCount < 0
-        ? `D${progressData?.dayCount}`
-        : `D+${progressData?.dayCount}`;
+        ? `D+${Math.abs(progressData?.dayCount)}`
+        : `D-${progressData?.dayCount}`;
     }
   };
 

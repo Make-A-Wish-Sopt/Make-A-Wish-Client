@@ -18,10 +18,11 @@ interface UploadPresentProps {
   preSignedImageUrl: string;
   uploadImageFile: (e: ChangeEvent<HTMLInputElement>) => void;
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
+  progressStatus?: 'WHILE' | 'BEFORE' | 'END';
 }
 
 export default function UploadPresent(props: UploadPresentProps) {
-  const { imageFile, preSignedImageUrl, uploadImageFile, methods } = props;
+  const { imageFile, preSignedImageUrl, uploadImageFile, methods, progressStatus } = props;
 
   useEffect(() => {
     if (preSignedImageUrl) methods.setValue('imageUrl', preSignedImageUrl);
@@ -58,6 +59,7 @@ export default function UploadPresent(props: UploadPresentProps) {
           boxType="inputBox--large"
           placeholder="ex. 12,000,000"
           register={methods.register('price', { required: true })}
+          readOnly={progressStatus === 'WHILE'}
         >
           <InputLength
             inputLength={Number(methods.watch('price').toString().length)}

@@ -33,6 +33,7 @@ export default function WishesStep2(props: WishesStep2Props) {
   useEffect(() => {
     if (
       methods.getValues('title') &&
+      methods.getValues('title').length <= 20 &&
       methods.getValues('hint').length !== 0 &&
       methods.getValues('hint').length <= 300
     ) {

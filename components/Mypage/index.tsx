@@ -23,8 +23,6 @@ export default function MyPageContainer() {
   const { progressData } = useGetMainProgressData();
   const { handlePatchProgressWishes } = usePatchProgressWishes();
 
-  console.log();
-
   useEffect(() => {
     setNicknameState(loginUserInfo.nickName);
   }, [loginUserInfo]);

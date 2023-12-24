@@ -3,7 +3,7 @@ import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
 
-import { UserAccountDataResponseType } from '@/types/api/response';
+import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
@@ -11,7 +11,7 @@ const ACCESS_TOKEN = getAccessToken();
 export const putUserAccount = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
 ) => {
-  const data = await client.put(
+  const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {

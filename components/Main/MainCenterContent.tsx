@@ -15,8 +15,6 @@ import { convertMoneyText } from '@/utils/common/convertMoneyText';
 export default function MainCenterContent() {
   const { progressData } = useGetMainProgressData();
 
-  console.log(progressData);
-
   const ChatImg = () => {
     if (!progressData) {
       return MainChatImg;
