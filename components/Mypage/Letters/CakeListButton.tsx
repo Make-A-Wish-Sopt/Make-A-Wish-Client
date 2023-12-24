@@ -17,8 +17,8 @@ export default function CakeListButton(props: CakeListButtonProps) {
   return (
     <Styled.Container backgroundColor={backgroundColor} onClick={handleClick}>
       {image && <Image src={image} alt="케이크 이미지" width={35} height={35} />}
-      {/* <Styled.TextContainer fonts={fonts} fontColor={fontColor}> */}
-      <Styled.TextContainer fontColor={fontColor}>
+
+      <Styled.TextContainer fonts={fonts} fontColor={fontColor}>
         {cakeName} X <Styled.NumText> {cakeNum}개</Styled.NumText>
       </Styled.TextContainer>
     </Styled.Container>
@@ -43,14 +43,10 @@ const Styled = {
     margin: 0 0 1rem;
   `,
 
-  // TextContainer: styled.div<{ fonts: string; fontColor: string }>`
-  // padding: 0.2rem 0.5rem 0 1rem;
-  // ${(props) => props.fonts}
-
-  // `,
-
-  TextContainer: styled.div<{ fontColor: string }>`
+  TextContainer: styled.div<{ fonts: string; fontColor: string }>`
+    width: 30rem;
     padding: 0.2rem 0.5rem 0 1rem;
+    ${theme.fonts.button18}
   `,
 
   NumText: styled.span`

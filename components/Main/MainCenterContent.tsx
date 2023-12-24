@@ -11,6 +11,7 @@ import {
 import theme from '@/styles/theme';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import router from 'next/router';
 
 export default function MainCenterContent() {
   const { progressData } = useGetMainProgressData();
@@ -27,6 +28,10 @@ export default function MainCenterContent() {
     if (progressData?.status === 'END') {
       return MainEndChatImg;
     }
+  };
+
+  const handleMoveLetterPage = () => {
+    progressData && router.push(`mypage/letters/${progressData?.wishId}`);
   };
 
   return (
@@ -53,12 +58,12 @@ export default function MainCenterContent() {
             <Styled.CakeText>총 ???개</Styled.CakeText>
           </>
         ) : (
-          <>
+          <div onClick={handleMoveLetterPage}>
             {'예상 케이크 금액 >\n'}
             <Styled.CakeText>{`총 ${convertMoneyText(
               progressData?.price.toString() || '0',
             )}원`}</Styled.CakeText>
-          </>
+          </div>
         )}
       </Styled.CakeTextWrapper>
     </Styled.Container>
