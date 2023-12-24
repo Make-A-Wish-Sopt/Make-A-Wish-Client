@@ -35,7 +35,8 @@ export default function CakesPay(props: CakesPayProps) {
       alert('계좌번호에 오류가 있습니다!');
       return;
     }
-    const accountInfoText = `${publicWishesData.bank} ${publicWishesData.accountNumber}` || '';
+    const accountInfoText =
+      `${publicWishesData.bank} ${publicWishesData.accountNumber} ${selectedCake.price}원` || '';
     const isClipboardSupported = () => navigator?.clipboard != null;
 
     try {
