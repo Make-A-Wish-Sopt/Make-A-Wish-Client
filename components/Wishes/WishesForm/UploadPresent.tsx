@@ -59,7 +59,7 @@ export default function UploadPresent(props: UploadPresentProps) {
           boxType="inputBox--large"
           placeholder="ex. 12,000,000"
           register={methods.register('price', { required: true })}
-          readOnly={progressStatus === 'WHILE'}
+          disabled={progressStatus === 'WHILE'}
         >
           <InputLength
             inputLength={Number(methods.watch('price').toString().length)}

@@ -52,7 +52,6 @@ export default function LettersContainer() {
     <>
       <CakeListButton
         backgroundColor={'transparent'}
-        fontColor={theme.colors.black}
         image={cakeData ? cakeData.smallImage : ''}
         cakeName={cakeData?.name}
         cakeNum={Number(cake)}

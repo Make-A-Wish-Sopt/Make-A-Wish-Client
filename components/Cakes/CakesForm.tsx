@@ -126,7 +126,10 @@ const Styled = {
 
   HintBox: styled(StyledBox)`
     width: 100%;
-    height: 12.6rem;
+    min-height: 12.6rem;
+    max-height: 16rem;
+
+    overflow: scroll;
 
     ${theme.fonts.body14};
 

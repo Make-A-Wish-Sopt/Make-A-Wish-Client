@@ -1,5 +1,4 @@
 import InputContainer from '@/components/Common/Input/InputContainer';
-import TextareaBox from '@/components/Common/Input/TextareaBox';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
@@ -13,6 +12,8 @@ import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import { useEffect } from 'react';
 import { usePostWishes } from '@/hooks/queries/wishes';
+import ImageBox, { StyledImageBox } from '@/components/Common/Box/ImageBox';
+import { StyledBox } from '@/components/Common/Box';
 
 interface PreviewProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -56,7 +57,9 @@ export default function Preview(props: PreviewProps) {
           </InputContainer>
 
           <InputContainer>
-            <TextareaBox register={methods.register('hint')} readOnly />
+            <Styled.PreviewBox className="pastelBlue_darkBlue">
+              {methods.getValues('hint')}
+            </Styled.PreviewBox>
           </InputContainer>
 
           <InputContainer title="선물의 초성">
@@ -100,5 +103,17 @@ const Styled = {
 
   ButtonWrapper: styled.div`
     padding-bottom: 4.6rem;
+  `,
+
+  PreviewBox: styled(StyledBox)`
+    width: 100%;
+    height: 15rem;
+
+    padding: 1rem 1rem 1rem 1.2rem;
+
+    ${theme.fonts.body14}
+    border: 0.1rem solid ${theme.colors.main_blue};
+
+    overflow: scroll;
   `,
 };

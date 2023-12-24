@@ -44,7 +44,7 @@ export default function WishesStep2(props: WishesStep2Props) {
   }, [methods.watch()]);
 
   return (
-    <form>
+    <>
       <WishesStepTitle title="소원링크 생성하기" />
       <Styled.Container>
         <div>
@@ -73,7 +73,7 @@ export default function WishesStep2(props: WishesStep2Props) {
 
         <WishesStepBtn wishesStep={wishesStep} />
       </Styled.Container>
-    </form>
+    </>
   );
 }
 

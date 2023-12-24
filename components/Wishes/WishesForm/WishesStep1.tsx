@@ -59,6 +59,7 @@ export default function WishesStep1(props: PropsWithChildren<WishesStep1Props>) 
         methods.getValues('initial').length <= 15 &&
         imageFile &&
         methods.getValues('price') !== '' &&
+        Number(methods.getValues('price')) > 0 &&
         Number(methods.getValues('price')) <= 12000000
       ) {
         wishesStep.changeNextState(true);
