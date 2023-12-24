@@ -52,8 +52,6 @@ export default function LettersContainer() {
     <>
       <CakeListButton
         backgroundColor={'transparent'}
-        fontColor={theme.colors.black}
-        fonts={theme.fonts.headline20}
         image={cakeData ? cakeData.smallImage : ''}
         cakeName={cakeData?.name}
         cakeNum={Number(cake)}
@@ -109,16 +107,17 @@ const Styled = {
   `,
 
   LetterContainer: styled.div`
-    margin: 0 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    margin: 0 0 1rem 0;
   `,
 
   ArrowButton: styled.button``,
 
   TextareaText: styled.textarea`
-    width: 100%;
+    width: 30rem;
     height: 15rem;
     color: ${theme.colors.dark_blue};
     ${theme.fonts.body14};

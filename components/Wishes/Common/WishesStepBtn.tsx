@@ -23,7 +23,8 @@ export default function WishesStepBtn(props: WishesStepBtnProps) {
 
   const handleNextClickFn = () => {
     if (handleClickFn) handleClickFn();
-    wishesStep.handleNextStep();
+
+    wishesStep.nextState && wishesStep.handleNextStep();
   };
 
   return (

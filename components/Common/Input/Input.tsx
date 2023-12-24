@@ -15,12 +15,14 @@ interface InputProps {
   inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
   readOnly?: boolean;
+  disabled?: boolean;
   register: UseFormRegisterReturn<keyof WishesDataInputType | keyof CakesDataInputType>;
   errors?: FieldError;
 }
 
 export default function Input(props: PropsWithChildren<InputProps>) {
-  const { width, inputType, boxType, placeholder, readOnly, register, errors, children } = props;
+  const { width, inputType, boxType, placeholder, readOnly, disabled, register, errors, children } =
+    props;
 
   return (
     <>
@@ -30,6 +32,7 @@ export default function Input(props: PropsWithChildren<InputProps>) {
           pattern={inputType === 'number' ? '\\d*' : undefined}
           placeholder={placeholder}
           readOnly={readOnly}
+          disabled={disabled}
           {...register}
         />
         {children}
@@ -39,10 +42,10 @@ export default function Input(props: PropsWithChildren<InputProps>) {
   );
 }
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<{ disabled?: boolean }>`
   width: 100%;
   height: 100%;
 
   ${theme.fonts.body12};
-  color: ${theme.colors.dark_blue};
+  color: ${(props) => (props.disabled ? theme.colors.gray1 : theme.colors.dark_blue)};
 `;

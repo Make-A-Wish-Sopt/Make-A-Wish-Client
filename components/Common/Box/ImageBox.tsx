@@ -15,7 +15,7 @@ export default function ImageBox(props: PropsWithChildren<ImageBoxProps>) {
   return <StyledImageBox className={`${colorSystem} ${boxType}`}>{children}</StyledImageBox>;
 }
 
-const StyledImageBox = styled(StyledBox)`
+export const StyledImageBox = styled(StyledBox)`
   width: 100%;
   height: 15rem;
 

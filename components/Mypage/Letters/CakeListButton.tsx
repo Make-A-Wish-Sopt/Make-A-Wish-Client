@@ -5,20 +5,18 @@ import Image, { StaticImageData } from 'next/image';
 interface CakeListButtonProps {
   image?: string | StaticImageData;
   backgroundColor: string;
-  fontColor: string;
-  fonts: string;
   handleClick?: () => void;
   cakeName?: string;
   cakeNum?: number;
 }
 
 export default function CakeListButton(props: CakeListButtonProps) {
-  const { image, backgroundColor, fonts, fontColor, handleClick, cakeName, cakeNum } = props;
+  const { image, backgroundColor, handleClick, cakeName, cakeNum } = props;
   return (
     <Styled.Container backgroundColor={backgroundColor} onClick={handleClick}>
       {image && <Image src={image} alt="케이크 이미지" width={35} height={35} />}
-      {/* <Styled.TextContainer fonts={fonts} fontColor={fontColor}> */}
-      <Styled.TextContainer fontColor={fontColor}>
+
+      <Styled.TextContainer>
         {cakeName} X <Styled.NumText> {cakeNum}개</Styled.NumText>
       </Styled.TextContainer>
     </Styled.Container>
@@ -43,14 +41,10 @@ const Styled = {
     margin: 0 0 1rem;
   `,
 
-  // TextContainer: styled.div<{ fonts: string; fontColor: string }>`
-  // padding: 0.2rem 0.5rem 0 1rem;
-  // ${(props) => props.fonts}
-
-  // `,
-
-  TextContainer: styled.div<{ fontColor: string }>`
+  TextContainer: styled.div`
     padding: 0.2rem 0.5rem 0 1rem;
+    margin-left: 2rem;
+    ${theme.fonts.button18};
   `,
 
   NumText: styled.span`

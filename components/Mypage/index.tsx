@@ -28,6 +28,7 @@ export default function MyPageContainer() {
   }, [loginUserInfo]);
 
   const handleCancleModalState = () => {
+    if (progressData?.status === 'END' || progressData === undefined) return;
     setCancleModalState(!cancleModalState);
   };
 
@@ -53,12 +54,12 @@ export default function MyPageContainer() {
     useResetRecoilState(LoginUserInfo);
   };
 
-  const handleWithdrawal = () => {
-    if (window.confirm('탈퇴를 진행하시겠습니까?')) {
-      deleteUserInfo();
-      router.push('/');
-    }
-  };
+  // const handleWithdrawal = () => {
+  //   if (window.confirm('탈퇴를 진행하시겠습니까?')) {
+  //     deleteUserInfo();
+  //     router.push('/');
+  //   }
+  // };
 
   return (
     <>
@@ -106,6 +107,7 @@ export default function MyPageContainer() {
           >
             진행중인 펀딩 중단하기
           </ItemBox>
+          {}
           <ItemBox handleClickFn={handleWishLinks} colorSystem="pastelBlue_mainBlue">
             지난 소원 링크 모음
           </ItemBox>
@@ -119,7 +121,7 @@ export default function MyPageContainer() {
 
         <Styled.TextButtonWrapper>
           <Styled.TextButton onClick={handleLogOut}>로그아웃</Styled.TextButton>
-          <Styled.TextButton onClick={handleWithdrawal}>회원탈퇴</Styled.TextButton>
+          {/* <Styled.TextButton onClick={handleWithdrawal}>회원탈퇴</Styled.TextButton> */}
         </Styled.TextButtonWrapper>
       </Styled.Container>
     </>
