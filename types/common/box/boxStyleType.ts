@@ -1,4 +1,4 @@
-export type BoxTypes = 'half' | 'large' | 'iamge' | 'custom';
+export type BoxTypes = 'half' | 'large' | 'image' | 'custom';
 export type InputBoxTypes = 'inputBox--half' | 'inputBox--large' | 'inputBox--calendar';
 export type BtnBoxTypes = 'btn--half' | 'btn--large' | 'btn--custom';
 export type ImageBoxTypes = 'imageBox--textarea' | 'imageBox--image';
