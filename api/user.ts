@@ -1,10 +1,11 @@
+import { BANK_LIST } from '@/constant/bankList';
 import { getAccessToken } from '@/utils/common/token';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
 
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
-import { WishesDataInputType } from '@/types/wishesType';
+import { AccountInfoType, WishesDataInputType } from '@/types/wishesType';
 
 const ACCESS_TOKEN = getAccessToken();
 
@@ -53,4 +54,25 @@ export const deleteUserInfo = async () => {
   });
 
   return data;
+};
+
+export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
+  const bankCode = BANK_LIST.find((bank) => bank.name === accountInfo.bank)?.bankCode;
+
+  const response = await client.post<DefaultResponseType<number>>(
+    `${API_VERSION_01}${PATH_USER.ACCOUNT_VERIFY}`,
+    {
+      bankCode,
+      accountNumber: accountInfo.account,
+      name: accountInfo.name,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    },
+  );
+
+  return response.data;
 };
