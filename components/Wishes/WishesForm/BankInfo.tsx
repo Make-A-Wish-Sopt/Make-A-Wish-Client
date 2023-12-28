@@ -81,7 +81,7 @@ export default function BankInfo(props: BankInfoProps) {
           <InputContainer title="계좌번호 입력하기">
             <BankInput methods={methods} />
 
-            <InputContainer title="전화번호 입력하기">
+            <InputContainer title="휴대폰번호 입력하기">
               <Input
                 inputType="number"
                 placeholder="(-)없이 숫자만 입력해주세요"
