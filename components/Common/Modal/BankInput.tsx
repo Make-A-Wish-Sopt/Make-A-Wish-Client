@@ -15,6 +15,8 @@ import { StyledBtnBox } from '../Button';
 import { StyledBox } from '../Box';
 import AlertTextBox from '../AlertTextBox';
 import { validation } from '@/validation/input';
+import { usePostVerifyAccount } from '@/hooks/queries/user';
+import { useEffect, useState } from 'react';
 
 interface BankInputProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -24,6 +26,32 @@ interface BankInputProps {
 export default function BankInput(props: BankInputProps) {
   const { methods } = props;
   const { isOpen, handleToggle } = useModal();
+  const [btnState, setBtnState] = useState(false);
+
+  const { handleVerifyAccount, isSuccess, isReady, isAbused } = usePostVerifyAccount({
+    name: methods.getValues('name'),
+    bank: methods.getValues('bank'),
+    account: methods.getValues('account'),
+  });
+
+  const handleClick = () => {
+    if (!btnState) return;
+    handleVerifyAccount();
+  };
+
+  useEffect(() => {
+    if (
+      methods.watch('name') !== '' &&
+      methods.watch('bank') !== '' &&
+      methods.watch('account') !== '' &&
+      !isSuccess &&
+      !isAbused
+    ) {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [methods.watch(), isSuccess, isAbused]); // isSuccess 추가 안해도 되네? 왜 이러지..
 
   return (
     <Styled.Container>
@@ -32,7 +60,11 @@ export default function BankInput(props: BankInputProps) {
       </Styled.GuideBox>
 
       <Styled.ItemWrapper>
-        <Input placeholder="예금주명" register={methods.register('name')} />
+        <Input
+          placeholder="예금주명"
+          register={methods.register('name')}
+          disabled={isSuccess || isAbused}
+        />
       </Styled.ItemWrapper>
 
       <Styled.ItemWrapper onClick={handleToggle}>
@@ -40,6 +72,7 @@ export default function BankInput(props: BankInputProps) {
           boxType="inputBox--large"
           placeholder="은행 선택"
           register={methods.register('bank')}
+          disabled={isSuccess || isAbused}
         >
           <Image src={ArrowDownIc} alt="더 보기" />
         </Input>
@@ -52,17 +85,27 @@ export default function BankInput(props: BankInputProps) {
             inputType="number"
             placeholder="계좌번호를 입력해주세요"
             register={methods.register('account')}
+            disabled={isSuccess || isAbused}
           />
-          <Styled.AccountAuthButton className="mainBlue_white">
+          <Styled.AccountAuthButton
+            className={!btnState ? 'gray1_white' : 'mainBlue_white'}
+            onClick={handleClick}
+          >
             {'계좌번호 확인'}
           </Styled.AccountAuthButton>
         </Styled.InputWrapper>
         {validation.isIncludeHyphen(methods.watch('account')) && (
           <AlertTextBox>{'(-)없이 숫자만 입력해주세요'}</AlertTextBox>
         )}
-
-        {/* 조건 기능 추가  */}
-        {/* {<AlertTextBox>{true ? '정상 계좌입니다' : '존재하지 않는 계좌번호입니다'}</AlertTextBox>} */}
+        {isReady && (
+          <AlertTextBox alertSuccess={isSuccess}>
+            {isSuccess
+              ? '정상 계좌입니다'
+              : isAbused
+              ? '4회 이상부터는 이용할 수 없습니다'
+              : '존재하지 않는 계좌번호입니다'}
+          </AlertTextBox>
+        )}
       </Styled.ItemWrapper>
 
       {isOpen && (
