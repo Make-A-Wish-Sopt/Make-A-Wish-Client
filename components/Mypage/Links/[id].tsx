@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { convertDateFormat } from '@/hooks/common/useDate';
 import VerticalProgressBar from '@/components/Common/VerticalProgressBar';
 import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
+import { convertMoneyText } from '@/utils/common/convertMoneyText';
 
 export default function LinksContainer() {
   const [wishId, setWishId] = useState<string | string[] | undefined>('');
@@ -36,7 +37,7 @@ export default function LinksContainer() {
             <Image src={LinkBeefCakeImg} alt="케이크" width={152} height={169} />
           </Styled.ImageContainer>
           <Styled.About onClick={handleMovePage}>모인 케이크 보러가기 {'>'} </Styled.About>
-          <Styled.AboutSmall>총 {wishData?.price}원</Styled.AboutSmall>
+          <Styled.AboutSmall>총 {convertMoneyText(String(wishData?.price))}원</Styled.AboutSmall>
         </Styled.ContentContainer>
 
         <VerticalProgressBar percent={wishData?.percent} />
