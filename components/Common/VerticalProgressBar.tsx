@@ -19,7 +19,7 @@ export default function VerticalProgressBar(props: ProgressBarProps) {
 
       {/* 리팩토링 1순위 ㅋㅋㅋ */}
       <Styled.BarContainer>
-        {percent && percent >= 100 && (
+        {percent && percent > 0 && percent >= 100 ? (
           <Image
             src={FireIcImg}
             alt="불꽃 아이콘"
@@ -31,6 +31,8 @@ export default function VerticalProgressBar(props: ProgressBarProps) {
               transform: 'rotate(180deg)',
             }}
           />
+        ) : (
+          ''
         )}
         <Styled.Progress percent={Number(percent)} />
       </Styled.BarContainer>
