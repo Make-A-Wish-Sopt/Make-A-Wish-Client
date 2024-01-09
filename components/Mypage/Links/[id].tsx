@@ -69,6 +69,10 @@ const Styled = {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    width: 100%;
+
+    margin-left: 4.3rem;
   `,
 
   BarContainer: styled.div`
@@ -79,7 +83,6 @@ const Styled = {
   ImageContainer: styled.div`
     width: 100%;
     text-align: center;
-    padding: 4rem 0 0;
   `,
 
   About: styled.div`
