@@ -15,7 +15,7 @@ import { WishLinksType } from '@/types/links/wishLinksType';
 import router from 'next/router';
 import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 
 /**
@@ -77,9 +77,17 @@ export function usePostWishes(methods: UseFormReturn<WishesDataInputType, any, u
  * 소원링크 삭제
  */
 export function useDeleteWishes() {
-  const mutation = useMutation((wishesData: number[]) => deleteWishes(wishesData));
+  const queryClient = useQueryClient();
+  const { data, mutate: handleDeleteWishes } = useMutation(
+    (wishesData: number[]) => deleteWishes(wishesData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEY.WISH_LINKS);
+      },
+    },
+  );
 
-  return mutation;
+  return { data, handleDeleteWishes };
 }
 
 /**

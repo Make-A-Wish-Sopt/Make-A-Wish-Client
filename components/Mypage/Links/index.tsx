@@ -6,16 +6,15 @@ import DeleteModal from '@/components/Common/Modal/DeleteModal';
 import { useState } from 'react';
 import WishLists from './WishLists';
 import NoWishLists from './NoWishLists';
-import { useQueryClient } from 'react-query';
-import { QUERY_KEY } from '@/constant/queryKey';
 import { useDeleteWishes, useGetWishLinks } from '@/hooks/queries/wishes';
+import Image from 'next/image';
+import { DeleteBtnIc } from '@/public/assets/icons';
 
 export default function LinksMainContainer() {
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const { isOpen, handleToggle } = useModal();
-  const queryClient = useQueryClient();
 
-  const deleteWishesMutation = useDeleteWishes();
+  const { handleDeleteWishes } = useDeleteWishes();
 
   const { wishLinks, noWishes } = useGetWishLinks();
 
@@ -29,11 +28,7 @@ export default function LinksMainContainer() {
 
   const handleDeleteConfirm = () => {
     if (selectedLinks.length > 0) {
-      deleteWishesMutation.mutate(selectedLinks, {
-        onSuccess: () => {
-          queryClient.invalidateQueries(QUERY_KEY.WISH_LINKS);
-        },
-      });
+      handleDeleteWishes(selectedLinks);
     }
   };
 
@@ -48,6 +43,9 @@ export default function LinksMainContainer() {
           />
         </Modal>
       )}
+      <Styled.DeleteIconButton onClick={() => selectedLinks.length > 0 && handleToggle()}>
+        <Image src={DeleteBtnIc} alt="삭제 아이콘" />
+      </Styled.DeleteIconButton>
 
       <Styled.Title>지난 소원 링크 모음</Styled.Title>
       <Styled.Container>
@@ -76,5 +74,11 @@ const Styled = {
     ${theme.fonts.headline24_130};
     color: ${theme.colors.gray4};
     margin: 2rem 1rem 2rem;
+  `,
+
+  DeleteIconButton: styled.button`
+    position: fixed;
+    top: 1.9rem;
+    right: 2.2rem;
   `,
 };
