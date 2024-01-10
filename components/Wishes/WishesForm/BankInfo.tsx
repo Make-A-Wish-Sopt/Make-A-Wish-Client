@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { validation } from '@/validation/input';
 import AlertTextBox from '@/components/Common/AlertTextBox';
 import { useGetUserAccount, usePutUserAccount } from '@/hooks/queries/user';
+import { usePostWishes } from '@/hooks/queries/wishes';
 
 interface BankInfoProps {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -35,7 +36,12 @@ export default function BankInfo(props: BankInfoProps) {
   const { methods, wishesStep } = props;
   const { userAccountData } = useGetUserAccount();
   const { checkBoxState, handleChangeCheckBoxState } = useCheckBox();
-  const { handlePutUserAccount } = usePutUserAccount(methods);
+  const { handlePutUserAccount, isSuccess } = usePutUserAccount(methods);
+  const { handlePostWishes } = usePostWishes(methods);
+
+  useEffect(() => {
+    isSuccess && handlePostWishes();
+  }, [isSuccess]);
 
   useEffect(() => {
     if (

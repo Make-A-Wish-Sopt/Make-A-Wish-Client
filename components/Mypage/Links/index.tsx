@@ -9,6 +9,7 @@ import NoWishLists from './NoWishLists';
 import { useDeleteWishes, useGetWishLinks } from '@/hooks/queries/wishes';
 import Image from 'next/image';
 import { DeleteBtnIc } from '@/public/assets/icons';
+import BackBtn from '@/components/Common/Button/BackBtn';
 
 export default function LinksMainContainer() {
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
@@ -43,9 +44,12 @@ export default function LinksMainContainer() {
           />
         </Modal>
       )}
-      <Styled.DeleteIconButton onClick={() => selectedLinks.length > 0 && handleToggle()}>
-        <Image src={DeleteBtnIc} alt="삭제 아이콘" />
-      </Styled.DeleteIconButton>
+      <Styled.Hedaer>
+        <BackBtn />
+        <Styled.DeleteIconButton onClick={() => selectedLinks.length > 0 && handleToggle()}>
+          <Image src={DeleteBtnIc} alt="삭제 아이콘" />
+        </Styled.DeleteIconButton>
+      </Styled.Hedaer>
 
       <Styled.Title>지난 소원 링크 모음</Styled.Title>
       <Styled.Container>
@@ -64,7 +68,16 @@ export default function LinksMainContainer() {
 }
 
 const Styled = {
+  Hedaer: styled.header`
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+  `,
+
   Container: styled.div`
+    position: relative;
+
     margin: 0 1rem 0;
     overflow: auto;
     max-height: 80vh;
@@ -76,9 +89,5 @@ const Styled = {
     margin: 2rem 1rem 2rem;
   `,
 
-  DeleteIconButton: styled.button`
-    position: fixed;
-    top: 1.9rem;
-    right: 2.2rem;
-  `,
+  DeleteIconButton: styled.button``,
 };
