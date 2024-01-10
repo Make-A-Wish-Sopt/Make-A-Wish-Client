@@ -11,8 +11,6 @@ import WishesStepTitle from '../Common/WishesStepTitle';
 import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import { useEffect } from 'react';
-import { usePostWishes } from '@/hooks/queries/wishes';
-import ImageBox, { StyledImageBox } from '@/components/Common/Box/ImageBox';
 import { StyledBox } from '@/components/Common/Box';
 
 interface PreviewProps {
@@ -32,8 +30,6 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const { methods, wishesStep } = props;
-
-  const { postWishesData } = usePostWishes(methods);
 
   useEffect(() => {
     wishesStep.changeNextState(true);
@@ -67,12 +63,7 @@ export default function Preview(props: PreviewProps) {
           </InputContainer>
         </div>
 
-        <WishesStepBtn
-          wishesStep={wishesStep}
-          handleClickFn={() => {
-            postWishesData();
-          }}
-        />
+        <WishesStepBtn wishesStep={wishesStep} />
       </Styled.Container>
     </>
   );

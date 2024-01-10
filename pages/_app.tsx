@@ -8,7 +8,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import Script from 'next/script';
-import { useRouter } from 'next/router';
 import Loading from '@/components/Common/Loading/Loading';
 
 declare global {
@@ -23,37 +22,15 @@ export default function App({ Component, pageProps }: AppProps) {
       queries: {
         retry: 0,
         refetchOnWindowFocus: false,
-        // suspense: true,
       },
     },
   });
-
-  const router = useRouter();
-
-  // const setVh = () => {
-  //   document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
-  // };
 
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
     }
-    //높이 resize
-    // window.addEventListener('resize', setVh);
-    // setVh();
   }, []);
-
-  // useEffect(() => {
-  //   const handleRouteChange = (url: string) => {
-  //     gtag.pageview(url);
-  //   };
-  //   router.events.on('routeChangeComplete', handleRouteChange);
-  //   router.events.on('hashChangeComplete', handleRouteChange);
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange);
-  //     router.events.off('hashChangeComplete', handleRouteChange);
-  //   };
-  // }, [router.events]);
 
   return (
     <>

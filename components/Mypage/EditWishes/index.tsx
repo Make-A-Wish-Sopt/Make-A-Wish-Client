@@ -27,7 +27,7 @@ import InputLength from '@/components/Common/Input/InputLength';
 
 export default function EditWishesContainer() {
   const { imageFile, preSignedImageUrl, uploadImageFile } = useUploadItemInfo();
-  const [isLinkLoadType, setIsLinkLoadType] = useState(false); //false : 링크 불러오기 true : 직접
+  // const [isLinkLoadType, setIsLinkLoadType] = useState(false); //false : 링크 불러오기 true : 직접
 
   const [editState, setEditState] = useState(false);
 

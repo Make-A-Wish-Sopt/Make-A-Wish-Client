@@ -4,7 +4,7 @@ import CakeListButton from './CakeListButton';
 import Image from 'next/image';
 import { BorderImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import { ArrowLeftIc, ArrowRightIc, BackBtnIc } from '@/public/assets/icons';
+import { ArrowLeftIc, ArrowRightIc } from '@/public/assets/icons';
 import { useRouter } from 'next/router';
 import { CAKE_LIST } from '@/constant/cakeList';
 import { useGetCakesInfo } from '@/hooks/queries/cakes';
@@ -42,10 +42,6 @@ export default function LettersContainer() {
     }
 
     setClickedBox(movedBox);
-  };
-
-  const handleMoveBack = () => {
-    window.history.back();
   };
 
   return (
