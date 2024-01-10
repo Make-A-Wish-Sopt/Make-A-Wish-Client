@@ -3,7 +3,7 @@ import LinksMainContainer from '@/components/Mypage/Links';
 
 export default function LinksMainPage() {
   return (
-    <Layout layoutKey="header">
+    <Layout layoutKey="empty">
       <LinksMainContainer />
     </Layout>
   );
