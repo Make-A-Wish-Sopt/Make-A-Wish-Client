@@ -6,13 +6,16 @@ import { UseFormReturn } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
 
 export function usePutUserAccount(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
-  const { mutate: handlePutUserAccount } = useMutation(() => putUserAccount(methods), {
-    onSuccess: () => {
-      router.push('/wishes/share');
+  const { mutate: handlePutUserAccount, ...restProps } = useMutation(
+    () => putUserAccount(methods),
+    {
+      onSuccess: () => {
+        router.push('/wishes/share');
+      },
     },
-  });
+  );
 
-  return { handlePutUserAccount };
+  return { handlePutUserAccount, ...restProps };
 }
 
 export function useGetUserAccount() {

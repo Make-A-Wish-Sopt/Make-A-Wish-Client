@@ -40,7 +40,9 @@ export default function MainTopContent() {
           progressData.status === 'BEFORE' ? (
             <>
               {`${nickName}님\n`}
-              <Styled.Text>{`${progressData.dayCount}일 뒤 `}</Styled.Text>
+              <Styled.Text>{`${
+                progressData.dayCount < 1 ? 1 : progressData.dayCount
+              }일 뒤 `}</Styled.Text>
               {`부터 소원링크를\n공유할 수 있어요!`}
             </>
           ) : (

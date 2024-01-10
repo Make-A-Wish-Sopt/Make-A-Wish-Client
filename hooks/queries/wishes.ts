@@ -61,7 +61,7 @@ export function usePatchProgressWishes() {
 export function usePostWishes(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
 
-  const { mutate: postWishesData } = useMutation(() => postWishes(methods), {
+  const { mutate: handlePostWishes } = useMutation(() => postWishes(methods), {
     onSuccess: (data) => {
       setLoginUserInfo((prevData) => ({
         ...prevData,
@@ -70,7 +70,7 @@ export function usePostWishes(methods: UseFormReturn<WishesDataInputType, any, u
     },
   });
 
-  return { postWishesData };
+  return { handlePostWishes };
 }
 
 /**

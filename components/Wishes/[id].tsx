@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Button from '../Common/Button';
 import MainView from '../Common/mainView';
-import { useGetSingleWishInfo } from '@/hooks/queries/wishes';
-import { getPublicWishes } from '@/api/public';
 import { useGetPublicWishes } from '@/hooks/queries/public';
 
 export default function WishesContainer() {
