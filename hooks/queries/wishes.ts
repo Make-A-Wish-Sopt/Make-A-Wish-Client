@@ -106,7 +106,7 @@ export function useGetWishesProgress() {
  * 진행중인 소원 조회(메인화면)
  */
 export function useGetMainProgressData() {
-  const { data: progressData, ...restProps } = useQuery(QUERY_KEY.PROGRESS, getMainProgressData);
+  const { data: progressData, ...restProps } = useQuery(QUERY_KEY.MAIN, getMainProgressData);
 
   return { progressData, ...restProps };
 }
