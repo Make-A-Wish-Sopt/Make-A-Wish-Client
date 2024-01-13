@@ -4,6 +4,7 @@ export const QUERY_KEY = {
   PAYREADY: 'payReady',
   PG_TOKEN: 'pgToken',
   USER: 'user',
+  MAIN: 'main',
   ACCOUNT: 'account',
   PROGRESS: 'progress',
   CAKES_COUNT: 'cakesCount',
