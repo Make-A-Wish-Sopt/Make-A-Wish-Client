@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import WishesStepTitle from '../Common/WishesStepTitle';
 import WishesStepBtn from '../Common/WishesStepBtn';
 import { ColorSystemType } from '@/types/common/box/boxStyleType';
+import InputLength from '@/components/Common/Input/InputLength';
 
 interface WishesStep2Props {
   methods: UseFormReturn<WishesDataInputType, any, undefined>;
@@ -49,7 +50,16 @@ export default function WishesStep2(props: WishesStep2Props) {
       <Styled.Container>
         <div>
           <InputContainer title="소원 링크 제목 작성하기">
-            <Input placeholder="ex. ㅇㅇ이의 앙큼 벌스데이" register={methods.register('title')} />
+            <Input
+              boxType="inputBox--large"
+              placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
+              register={methods.register('title')}
+            >
+              <InputLength
+                inputLength={methods.watch('title').length}
+                limitLength={LIMIT_TEXT[20]}
+              />
+            </Input>
           </InputContainer>
 
           <InputContainer title="선물에 대한 힌트 자유롭게 적어보기">
