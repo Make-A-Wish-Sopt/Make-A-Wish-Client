@@ -8,13 +8,13 @@ import { PropsWithChildren } from 'react';
 
 interface ConfirmCancleModalPrpos {
   handleToggle: () => void;
-  handleDelete: () => void;
+  handleConfirmFn: () => void;
   leftText?: string;
   rightText?: string;
 }
 
 export default function ConfirmCancleModal(props: PropsWithChildren<ConfirmCancleModalPrpos>) {
-  const { handleToggle, handleDelete, leftText, rightText, children } = props;
+  const { handleToggle, handleConfirmFn, leftText, rightText, children } = props;
   return (
     <Styled.Container>
       <Styled.IconContainer>
@@ -31,7 +31,7 @@ export default function ConfirmCancleModal(props: PropsWithChildren<ConfirmCancl
           boxType="half"
           colorSystem="mainBlue_white"
           handleClickFn={() => {
-            handleDelete();
+            handleConfirmFn();
             handleToggle();
           }}
         >
