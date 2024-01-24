@@ -44,12 +44,11 @@ export default function ConfirmCancleModal(props: PropsWithChildren<ConfirmCancl
 
 const Styled = {
   Container: styled.div`
-    width: 31.6rem;
+    width: 32.8rem;
 
     background-color: ${theme.colors.pastel_blue};
     padding: 2rem;
     border-radius: 1.6rem;
-    margin: 0 1rem 0;
 
     position: absolute;
     top: 50%;
