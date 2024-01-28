@@ -14,7 +14,7 @@ export default function CancleWishesModal(props: CancleWishesModalProps) {
   return (
     <ConfirmCancleModal
       handleToggle={handleToggle}
-      handleDelete={handleCancleWishes}
+      handleConfirmFn={handleCancleWishes}
       rightText="중단하기"
     >
       <Image src={MainCakeImg} alt={'케이크'} width={60} height={60} />
