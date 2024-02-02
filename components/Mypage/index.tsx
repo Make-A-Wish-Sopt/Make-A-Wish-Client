@@ -179,6 +179,7 @@ const Styled = {
 
   TextButton: styled.li`
     line-height: 30px;
+    margin-bottom: 3rem;
 
     cursor: pointer;
   `,
