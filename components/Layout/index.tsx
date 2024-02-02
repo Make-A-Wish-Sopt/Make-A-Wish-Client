@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import EmptyLayout from './EmptyLayout';
 import HeaderLayout from './HeaderLayout';
+import Footer from '../footer';
 
 const layouts = {
   header: HeaderLayout,
@@ -16,5 +17,10 @@ export default function Layout(props: PropsWithChildren<LayoutProps>) {
 
   const LayoutContainer = layouts[layoutKey];
 
-  return <LayoutContainer>{children}</LayoutContainer>;
+  return (
+    <>
+      <LayoutContainer>{children}</LayoutContainer>
+      <Footer />
+    </>
+  );
 }
