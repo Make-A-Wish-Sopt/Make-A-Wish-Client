@@ -8,7 +8,7 @@ export default function EmptyLayout(props: PropsWithChildren) {
 
 const Container = styled.main`
   width: 37.5rem;
-  height: 100svh;
+  height: 100%;
 
   padding: 2.2rem 2.2rem 0 2.2rem;
 `;
