@@ -90,6 +90,7 @@ export default function LettersMainContainer() {
 const Styled = {
   Container: styled.div`
     margin: 0 1rem 0;
+    padding-bottom: 3rem;
   `,
 
   Title: styled.h1`

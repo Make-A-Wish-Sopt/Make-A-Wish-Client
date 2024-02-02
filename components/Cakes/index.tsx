@@ -83,7 +83,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-between;
 
-    height: 100svh;
+    height: 100%;
   `,
 
   Header: styled.header`

@@ -60,7 +60,7 @@ export default function CakesForm(props: CakesFormProps) {
   }, [methods.watch()]);
 
   return (
-    <>
+    <Styled.SectionContainer>
       <Styled.HeaderWrapper>
         <BackBtn />
         <span>{`D-${publicWishesData?.dayCount}`}</span>
@@ -103,11 +103,16 @@ export default function CakesForm(props: CakesFormProps) {
           {'케이크 주문하기'}
         </Button>
       </Styled.ButtonWrapper>
-    </>
+    </Styled.SectionContainer>
   );
 }
 
 const Styled = {
+  SectionContainer: styled.section`
+    width: 100%;
+    height: 100%;
+  `,
+
   HeaderWrapper: styled.div`
     display: flex;
     justify-content: space-between;
