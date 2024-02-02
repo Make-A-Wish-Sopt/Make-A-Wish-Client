@@ -44,9 +44,12 @@ footer, header, hgroup, menu, nav, section {
     --vh: 100%;
   }
 
+  html, body {
+    height: 100%;
+  }
+
 	html {
     -webkit-touch-callout: none;
-    /* -webkit-user-select:none; */
     -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
 
     scroll-behavior: smooth;

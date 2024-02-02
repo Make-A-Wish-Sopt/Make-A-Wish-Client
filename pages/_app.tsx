@@ -9,6 +9,7 @@ import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import Script from 'next/script';
 import Loading from '@/components/Common/Loading/Loading';
+import Footer from '@/components/footer';
 
 declare global {
   interface Window {
@@ -75,9 +76,12 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const RootLayout = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 100%;
+  min-height: 100%;
 `;

@@ -11,7 +11,7 @@ export default function GuideModal(props: GuideModalProps) {
   const { handleToggle } = props;
 
   return (
-    <>
+    <Styled.Container>
       <Styled.ButtonContainer onClick={handleToggle}>
         <Image src={CloseWhiteIc} alt="닫기" />
       </Styled.ButtonContainer>
@@ -21,11 +21,14 @@ export default function GuideModal(props: GuideModalProps) {
           <Image src={GuideContentImg} alt="서비스 가이드 설명" width="300" />
         </Styled.ScrollContent>
       </Styled.Content>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    padding-top: 4rem;
+  `,
   Content: styled.div`
     display: flex;
     flex-direction: column;
