@@ -14,12 +14,13 @@ export default function DeleteModal(props: DeleteModalProps) {
   const { clickModal, handleDelete, linksCount } = props;
 
   return (
-    <ConfirmCancleModal handleToggle={clickModal} handleDelete={handleDelete}>
+    <ConfirmCancleModal handleToggle={clickModal} handleConfirmFn={handleDelete}>
       <Image src={MainCakeImg} alt={'케이크'} width={60} height={60} />
       <Styled.DeleteText>총 {linksCount}개의 소원링크를 삭제합니다.</Styled.DeleteText>
     </ConfirmCancleModal>
   );
 }
+
 
 const Styled = {
   DeleteText: styled.div`

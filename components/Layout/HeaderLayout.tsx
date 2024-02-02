@@ -17,7 +17,7 @@ export default function HeaderLayout(props: PropsWithChildren) {
 
 const Container = styled.main<{ width: string }>`
   width: ${(props) => props.width};
-  height: 100%;
+  height: 100svh;
 
   padding: 0 2.2rem;
 `;

@@ -10,6 +10,10 @@ import { BankListType } from '@/types/bankListType';
 import Button from '../Common/Button';
 import { useState } from 'react';
 import { useGetPublicWishes } from '@/hooks/queries/public';
+import ConfirmCancleModal from '../Common/Modal/ModalForm/ConfirmCancleModal';
+import useModal from '@/hooks/common/useModal';
+import { MainCakeImg } from '@/public/assets/images';
+import Modal from '../Common/Modal';
 
 interface CakesPayProps {
   handlePrevStep: () => void;
@@ -25,6 +29,8 @@ export default function CakesPay(props: CakesPayProps) {
 
   const PAYMENTS: BankListType[] = [BANK_LIST[5], BANK_LIST[1]];
   const [selectedPayment, setSelected] = useState<BankListType>();
+
+  const { isOpen, handleToggle } = useModal();
 
   const handlePaymentSelect = (payment: BankListType) => {
     setSelected(payment);
@@ -82,13 +88,29 @@ export default function CakesPay(props: CakesPayProps) {
             : 'https://apps.apple.com/app/id1258016944',
         );
       }
-
-      handleNextStep();
     }
+    handleToggle();
   };
 
   return (
     <>
+      {isOpen && (
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <ConfirmCancleModal
+            handleToggle={handleToggle}
+            handleConfirmFn={handleNextStep}
+            leftText="송금 안했어요"
+            rightText="송금했어요"
+          >
+            <Image src={MainCakeImg} alt={'케이크'} width={60} height={60} />
+            <Styled.DeleteText>
+              {
+                '친구 계좌로 돈을 송금하셨나요?\n\n※ 연결된 은행으로 직접 송금하지 않았다면,\n실제로 돈이 보내진 게 아니니 안심하세요!'
+              }
+            </Styled.DeleteText>
+          </ConfirmCancleModal>
+        </Modal>
+      )}
       <Styled.Header>
         <Image src={BackBtnIc} alt="뒤로가기" onClick={handlePrevStep} />
       </Styled.Header>
@@ -177,5 +199,16 @@ const Styled = {
 
   ButtonWrapper: styled.div`
     padding-bottom: 4.6rem;
+  `,
+
+  DeleteText: styled.span`
+    ${theme.fonts.body14};
+    color: ${theme.colors.dark_blue};
+    margin: 0.7rem 0 1rem;
+
+    line-height: 140%;
+    text-align: center;
+
+    white-space: pre-line;
   `,
 };
