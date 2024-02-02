@@ -34,7 +34,7 @@ export default function LinksMainContainer() {
   };
 
   return (
-    <>
+    <Styled.Container>
       {isOpen && (
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
           <DeleteModal
@@ -52,7 +52,7 @@ export default function LinksMainContainer() {
       </Styled.Hedaer>
 
       <Styled.Title>지난 소원 링크 모음</Styled.Title>
-      <Styled.Container>
+      <Styled.SectionContainer>
         {noWishes ? (
           <NoWishLists />
         ) : (
@@ -62,12 +62,16 @@ export default function LinksMainContainer() {
             handleCheckbox={handleCheckbox}
           />
         )}
-      </Styled.Container>
-    </>
+      </Styled.SectionContainer>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.div`
+    width: 100%;
+    height: 100vh;
+  `,
   Hedaer: styled.header`
     display: flex;
     justify-content: space-between;
@@ -75,7 +79,7 @@ const Styled = {
     width: 100%;
   `,
 
-  Container: styled.div`
+  SectionContainer: styled.section`
     position: relative;
 
     margin: 0 1rem 0;

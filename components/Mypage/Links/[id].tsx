@@ -25,7 +25,7 @@ export default function LinksContainer() {
   };
 
   return (
-    <>
+    <Styled.Container>
       <Styled.Title>{wishData?.title}</Styled.Title>
       <Styled.Date>{`${convertDateFormat(wishData?.startAt)} ~ ${convertDateFormat(
         wishData?.endAt,
@@ -42,11 +42,15 @@ export default function LinksContainer() {
 
         <VerticalProgressBar percent={wishData?.percent} />
       </Styled.CenterContainer>
-    </>
+    </Styled.Container>
   );
 }
 
 const Styled = {
+  Container: styled.section`
+    width: 100%;
+    height: 100%;
+  `,
   Title: styled.div`
     ${theme.fonts.headline24_130};
     color: ${theme.colors.gray4};

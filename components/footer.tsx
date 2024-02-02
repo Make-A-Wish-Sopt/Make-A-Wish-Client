@@ -61,7 +61,7 @@ const Styled = {
 
   Logo: styled.h1`
     color: ${theme.colors.white};
-    color: ${theme.fonts.headline24_130};
+    ${theme.fonts.headline24_130};
   `,
 
   HorizontalLine: styled.hr`
