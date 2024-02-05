@@ -40,6 +40,7 @@ export default function WishesStepBtn(props: WishesStepBtnProps) {
         boxType="half"
         colorSystem={wishesStep.getNextBtnColor(wishesStep.nextState)}
         handleClickFn={handleNextClickFn}
+        gaTagId={`step${wishesStep.stepIndex}`}
       >
         {wishesStep.stepIndex < 4 ? '다음' : '링크 생성 완료!'}
       </Button>
