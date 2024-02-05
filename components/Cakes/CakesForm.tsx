@@ -99,6 +99,7 @@ export default function CakesForm(props: CakesFormProps) {
           boxType="large"
           colorSystem={btnState ? 'mainBlue_white' : 'gray1_gray2'}
           handleClickFn={handleClickFn}
+          gaTagId={selectedCake.name}
         >
           {'케이크 주문하기'}
         </Button>
