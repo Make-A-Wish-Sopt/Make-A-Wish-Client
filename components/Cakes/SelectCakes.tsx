@@ -27,6 +27,7 @@ export default function SelectCakes(props: SelectCakesProps) {
             index={index}
             selectedIndex={selectedIndex}
             key={cake.name}
+            id={cake.name}
           >
             <Image src={cake.cakeImage} alt={`${cake.name}이미지`} width={44} />
           </Styled.CakeBox>

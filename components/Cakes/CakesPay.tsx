@@ -101,6 +101,7 @@ export default function CakesPay(props: CakesPayProps) {
             handleConfirmFn={handleNextStep}
             leftText="송금 안했어요"
             rightText="송금했어요"
+            gaTagId={`${selectedCake.name} 보내기`}
           >
             <Image src={MainCakeImg} alt={'케이크'} width={60} height={60} />
             <Styled.DeleteText>
