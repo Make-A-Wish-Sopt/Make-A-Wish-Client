@@ -9,11 +9,12 @@ interface ButtonProps {
   boxType?: BoxTypes;
   colorSystem: ColorSystemType;
   handleClickFn?: (parameter?: unknown) => void | unknown;
+  gaTagId?: string;
   children: ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
-  const { width, boxType, colorSystem, handleClickFn, children } = props;
+  const { width, boxType, colorSystem, handleClickFn, gaTagId, children } = props;
 
   return (
     <StyledBtnBox
@@ -21,6 +22,7 @@ export default function Button(props: ButtonProps) {
       width={width}
       className={`${boxType} ${colorSystem} `}
       onClick={handleClickFn}
+      id={gaTagId}
     >
       {children}
     </StyledBtnBox>

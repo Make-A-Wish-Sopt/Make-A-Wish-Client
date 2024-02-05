@@ -11,10 +11,11 @@ interface ConfirmCancleModalPrpos {
   handleConfirmFn: () => void;
   leftText?: string;
   rightText?: string;
+  gaTagId?: string;
 }
 
 export default function ConfirmCancleModal(props: PropsWithChildren<ConfirmCancleModalPrpos>) {
-  const { handleToggle, handleConfirmFn, leftText, rightText, children } = props;
+  const { handleToggle, handleConfirmFn, leftText, rightText, gaTagId, children } = props;
   return (
     <Styled.Container>
       <Styled.IconContainer>
@@ -34,6 +35,7 @@ export default function ConfirmCancleModal(props: PropsWithChildren<ConfirmCancl
             handleConfirmFn();
             handleToggle();
           }}
+          gaTagId={gaTagId}
         >
           {rightText || '확인'}
         </Button>

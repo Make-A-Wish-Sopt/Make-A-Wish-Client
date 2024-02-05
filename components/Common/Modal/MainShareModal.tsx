@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import ShareContent from './ShareContent';
-import { useGetWishesProgress } from '@/hooks/queries/wishes';
+import { useGetMainProgressData, useGetWishesProgress } from '@/hooks/queries/wishes';
 import Image from 'next/image';
 import { MainCakeImg, MainWishChatImg } from '@/public/assets/images';
 import { CloseWhiteIc } from '@/public/assets/icons';
@@ -14,6 +14,7 @@ interface MainShareModalProps {
 export default function MainShareModal(props: MainShareModalProps) {
   const { handleToggle } = props;
   const { wishesProgressData } = useGetWishesProgress();
+  const { progressData } = useGetMainProgressData();
 
   return (
     <>
@@ -28,7 +29,7 @@ export default function MainShareModal(props: MainShareModalProps) {
         <Styled.PriceTextWrapper>
           {'예상 케이크 금액\n'}
           <Styled.PriceText>{`총 ${convertMoneyText(
-            wishesProgressData?.price.toString() || '0',
+            progressData?.price.toString() || '0',
           )}원`}</Styled.PriceText>
         </Styled.PriceTextWrapper>
 
