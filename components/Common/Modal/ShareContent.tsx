@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import useKakaoShare from '@/hooks/common/useKakaoShare';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
-import SNSBox from '../Button/SnsBox';
 import InputLink from '../Input/InputLink';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
 
@@ -65,9 +64,9 @@ export default function ShareContent() {
     <Styled.ContentWrapper>
       <Styled.SNSContainer>
         {SNS_LIST.map((sns) => (
-          <SNSBox key={sns.name} handleClick={() => handleShareSNS(sns.name)} id={sns.name}>
+          <Styled.SNSBox key={sns.name} onClick={() => handleShareSNS(sns.name)} id={sns.name}>
             <Image src={sns.logo} alt={`${sns.name}`} />
-          </SNSBox>
+          </Styled.SNSBox>
         ))}
       </Styled.SNSContainer>
 
@@ -97,5 +96,10 @@ const Styled = {
     ${theme.fonts.body12};
     color: ${theme.colors.white};
     width: 100%;
+  `,
+
+  SNSBox: styled.div`
+    margin: 0 0.5rem 0;
+    cursor: pointer;
   `,
 };
