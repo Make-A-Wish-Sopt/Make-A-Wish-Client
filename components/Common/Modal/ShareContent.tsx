@@ -32,11 +32,11 @@ export default function ShareContent() {
     if (name === 'KakaoTalk') {
       useKakaoShare(loginUserInfo.nickName, wishesLink);
     } else if (name === 'FaceBook') {
-      if (name === 'FaceBook') {
-        window.open(`http://www.facebook.com/sharer/sharer.php?u=${link}&hashtag=${hashtag}`);
-      }
+      window.open(`http://www.facebook.com/sharer/sharer.php?u=${link}&hashtag=${hashtag}`);
     } else if (name === 'Twitter') {
       window.open(`https://twitter.com/intent/tweet?text=${text + link}`);
+    } else if (name === 'Instagram') {
+      window.open(`https://instagram.com`);
     }
   };
 
@@ -65,7 +65,7 @@ export default function ShareContent() {
     <Styled.ContentWrapper>
       <Styled.SNSContainer>
         {SNS_LIST.map((sns) => (
-          <SNSBox key={sns.name} handleClick={() => handleShareSNS(sns.name)}>
+          <SNSBox key={sns.name} handleClick={() => handleShareSNS(sns.name)} id={sns.name}>
             <Image src={sns.logo} alt={`${sns.name}`} />
           </SNSBox>
         ))}
