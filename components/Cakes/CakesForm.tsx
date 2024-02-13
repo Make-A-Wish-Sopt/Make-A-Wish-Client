@@ -21,30 +21,18 @@ interface CakesFormProps {
   selectedIndex: number;
   selectCake: (index: number) => void;
   wishesId: string | string[] | undefined;
-  postPublicCakesData: UseMutateFunction<
-    {
-      cakeId: number;
-      imageUrl: string;
-      hint: string;
-      initial: string;
-      contribute: string;
-      wisher: string;
-    },
-    unknown,
-    void,
-    unknown
-  >;
+  handleNextStep: () => void;
 }
 
 export default function CakesForm(props: CakesFormProps) {
-  const { methods, selectedCake, selectedIndex, selectCake, wishesId, postPublicCakesData } = props;
+  const { methods, selectedCake, selectedIndex, selectCake, wishesId, handleNextStep } = props;
 
   const { publicWishesData } = useGetPublicWishes(wishesId);
   const [btnState, setBtnState] = useState(false);
 
   const handleClickFn = () => {
     if (!btnState) return;
-    postPublicCakesData();
+    handleNextStep();
   };
 
   useEffect(() => {
