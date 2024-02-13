@@ -46,7 +46,7 @@ const Styled = {
     height: 10.5rem;
 
     ${theme.fonts.body12};
-    color: ${(props) => (props.disabled ? theme.colors.gray1 : theme.colors.dark_blue)};
+    color: ${(props) => (props.disabled ? theme.colors.gray2 : theme.colors.dark_blue)};
 
     resize: none;
   `,
