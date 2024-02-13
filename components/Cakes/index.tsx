@@ -59,7 +59,7 @@ export default function CakesContainer() {
               selectedIndex={selectedIndex}
               selectCake={selectCake}
               wishesId={wishesId}
-              postPublicCakesData={postPublicCakesData}
+              handleNextStep={wishesStep.handleNextStep}
             />
           ),
           2: (
@@ -68,6 +68,7 @@ export default function CakesContainer() {
               handleNextStep={wishesStep.handleNextStep}
               selectedCake={selectedCake}
               wishesId={wishesId}
+              postPublicCakesData={postPublicCakesData}
             />
           ),
           3: <CakesResult cakesResultData={cakesResultData} selectedCake={selectedCake} />,

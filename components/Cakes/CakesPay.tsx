@@ -14,16 +14,30 @@ import ConfirmCancleModal from '../Common/Modal/ModalForm/ConfirmCancleModal';
 import useModal from '@/hooks/common/useModal';
 import { MainCakeImg } from '@/public/assets/images';
 import Modal from '../Common/Modal';
+import { UseMutateFunction } from 'react-query';
 
 interface CakesPayProps {
   handlePrevStep: () => void;
   handleNextStep: () => void;
   selectedCake: CakeListType;
   wishesId: string | string[] | undefined;
+  postPublicCakesData: UseMutateFunction<
+    {
+      cakeId: number;
+      imageUrl: string;
+      hint: string;
+      initial: string;
+      contribute: string;
+      wisher: string;
+    },
+    unknown,
+    void,
+    unknown
+  >;
 }
 
 export default function CakesPay(props: CakesPayProps) {
-  const { handlePrevStep, handleNextStep, selectedCake, wishesId } = props;
+  const { handlePrevStep, handleNextStep, selectedCake, wishesId, postPublicCakesData } = props;
 
   const { publicWishesData } = useGetPublicWishes(wishesId);
 
@@ -98,7 +112,7 @@ export default function CakesPay(props: CakesPayProps) {
         <Modal isOpen={isOpen} handleToggle={handleToggle}>
           <ConfirmCancleModal
             handleToggle={handleToggle}
-            handleConfirmFn={handleNextStep}
+            handleConfirmFn={postPublicCakesData}
             leftText="송금 안했어요"
             rightText="송금했어요"
             gaTagId={`${selectedCake.name} 보내기`}
