@@ -11,6 +11,7 @@ import { StyledBox } from '../Common/Box';
 import BackBtn from '../Common/Button/BackBtn';
 import { CakeListType } from '@/types/cakes/cakeListType';
 import { useGetPublicWishes } from '@/hooks/queries/public';
+import { UseMutateFunction } from 'react-query';
 import theme from '@/styles/theme';
 import { useEffect, useState } from 'react';
 

@@ -9,6 +9,7 @@ import theme from '@/styles/theme';
 import { useEffect } from 'react';
 import Script from 'next/script';
 import Loading from '@/components/Common/Loading/Loading';
+import Footer from '@/components/footer';
 
 declare global {
   interface Window {
