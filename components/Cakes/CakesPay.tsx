@@ -37,7 +37,7 @@ interface CakesPayProps {
 }
 
 export default function CakesPay(props: CakesPayProps) {
-  const { handlePrevStep, handleNextStep, selectedCake, wishesId, postPublicCakesData } = props;
+  const { handlePrevStep, selectedCake, wishesId, postPublicCakesData } = props;
 
   const { publicWishesData } = useGetPublicWishes(wishesId);
 

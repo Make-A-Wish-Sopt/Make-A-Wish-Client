@@ -1,11 +1,9 @@
-import { LogoImg } from '@/public/assets/images';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import Image from 'next/image';
 
 export default function Footer() {
   const handleTermsOfUse = () => {
-    window.open('https://mercurial-fuschia-8f2.notion.site/7e827f42eecb46f382ac46cf183245d3');
+    window.open('https://hwajeonglee.notion.site/080d632659a94e1b9131567947f679a3');
   };
 
   const handlePrivacyPolicy = () => {

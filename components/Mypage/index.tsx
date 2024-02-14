@@ -10,7 +10,6 @@ import Modal from '@/components/Common/Modal';
 import useModal from '@/hooks/common/useModal';
 import { MypageCakeImg } from '@/public/assets/images';
 import { useEffect, useState } from 'react';
-import { deleteUserInfo } from '@/api/user';
 import { useGetMainProgressData, usePatchProgressWishes } from '@/hooks/queries/wishes';
 import CancleWishesModal from '../Common/Modal/CancelWishesModal';
 
