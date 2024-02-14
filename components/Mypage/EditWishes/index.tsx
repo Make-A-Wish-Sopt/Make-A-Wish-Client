@@ -102,6 +102,8 @@ export default function EditWishesContainer() {
     handlePutProgressWishes();
   };
 
+  console.log(progressData);
+
   return (
     <>
       <Styled.TitleWrapper>
