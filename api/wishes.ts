@@ -149,6 +149,7 @@ export const putProgressWishes = async (
       name: methods.getValues('name'),
       startDate: methods.getValues('startDate'),
       endDate: methods.getValues('endDate'),
+      price: methods.getValues('price'),
     },
     {
       headers: {

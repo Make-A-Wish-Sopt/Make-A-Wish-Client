@@ -127,7 +127,6 @@ export default function EditWishesContainer() {
             preSignedImageUrl={preSignedImageUrl}
             uploadImageFile={uploadImageFile}
             methods={methods}
-            progressStatus={progressData?.status}
           />
         </>
       )}
@@ -137,7 +136,6 @@ export default function EditWishesContainer() {
           boxType="inputBox--large"
           placeholder="ex. 애플워치 -> ㅇㅍㅇㅊ"
           register={methods.register('initial')}
-          disabled={progressData?.status === 'WHILE'}
         >
           <InputLength inputLength={methods.watch('initial').length} limitLength={LIMIT_TEXT[15]} />
         </Input>
@@ -148,7 +146,6 @@ export default function EditWishesContainer() {
           boxType="inputBox--large"
           placeholder="ex. ㅇㅇ이의 앙큼 벌스데이"
           register={methods.register('title')}
-          disabled={progressData?.status === 'WHILE'}
         >
           <InputLength inputLength={methods.watch('title').length} limitLength={LIMIT_TEXT[20]} />
         </Input>
@@ -186,7 +183,6 @@ export default function EditWishesContainer() {
           inputLength={methods.watch('hint').length}
           limitLength={LIMIT_TEXT.DESCRIPTION}
           register={methods.register('hint')}
-          disabled={progressData?.status === 'WHILE'}
         />
       </InputContainer>
 
