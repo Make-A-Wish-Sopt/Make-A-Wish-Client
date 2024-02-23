@@ -11,17 +11,22 @@ import useModal from '@/hooks/common/useModal';
 import { useGetMainProgressData } from '@/hooks/queries/wishes';
 import ShareModal from '@/components/Common/Modal/ShareModal';
 import Modal from '@/components/Common/Modal';
+import { useEffect } from 'react';
 
 export default function ShareContainer() {
   const { isOpen, handleToggle } = useModal();
 
-  const { progressData } = useGetMainProgressData();
+  const { progressData, refetch } = useGetMainProgressData();
 
   const loginUserInfo = useRecoilValue(LoginUserInfo);
 
   const handleMoveToMain = () => {
     router.push('/main');
   };
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <>
@@ -68,7 +73,7 @@ const Styled = {
     flex-direction: row-reverse;
   `,
 
-  Title: styled.div`
+  Title: styled.h1`
     display: flex;
     justify-content: center;
     margin: 0 0 2rem;
