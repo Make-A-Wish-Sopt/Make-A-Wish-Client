@@ -76,7 +76,7 @@ export const StyledCommon = styled.div<{ size?: ButtonSizeType }>`
   }
 `;
 
-export type ButtonSizeType = 'small' | 'medium' | 'large';
+export type ButtonSizeType = 'small' | 'medium' | 'large' | 'full' | 'half';
 
 const getButtonSize = (size?: ButtonSizeType): ReturnType<typeof css> => {
   switch (size) {
@@ -91,6 +91,16 @@ const getButtonSize = (size?: ButtonSizeType): ReturnType<typeof css> => {
     case 'large':
       return css`
         width: 30rem;
+      `;
+
+    case 'full':
+      return css`
+        width: 100%;
+      `;
+
+    case 'half':
+      return css`
+        width: 50%;
       `;
 
     default:

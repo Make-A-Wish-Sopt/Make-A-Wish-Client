@@ -16,6 +16,9 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
   swcMinify: true,
   images: {
     remotePatterns: [

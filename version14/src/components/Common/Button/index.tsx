@@ -1,32 +1,49 @@
+'use client';
+
 import React, { PropsWithChildren, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { ButtonSizeType, ColorSystemType, StyledCommon } from '../CommonStyle';
+import { useRouter } from 'next/navigation';
 
-interface ButtonProps {
+export interface ButtonProps {
   size?: ButtonSizeType;
   icon?: ReactNode;
   color: ColorSystemType;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  routePath?: string;
 }
 
-export const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { size, color, disabled, onClick, icon, children } = props;
+const Button = (props: PropsWithChildren<ButtonProps>) => {
+  const { size, color, disabled, onClick, icon, routePath, children } = props;
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (routePath) {
+      router.push(routePath);
+      return;
+    }
+
+    return onClick;
+  };
 
   return (
     <StyledButton
       as="button"
       className={color}
-      size={size}
+      size={size || 'full'}
       disabled={disabled}
       icon={icon}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {icon && icon}
       {children}
     </StyledButton>
   );
 };
+
+export default Button;
 
 const StyledButton = styled(StyledCommon)<{ icon?: ReactNode }>`
   display: flex;

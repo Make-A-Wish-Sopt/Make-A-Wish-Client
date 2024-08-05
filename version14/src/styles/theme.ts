@@ -53,7 +53,7 @@ const fonts = {
   body12_2: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
 };
 
-export type FontsTypes = typeof fonts;
+export type FontsTypes =  typeof fonts;
 
 const theme = {
   colors,
