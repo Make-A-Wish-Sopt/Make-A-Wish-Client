@@ -31,11 +31,11 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
   return (
     <StyledButton
       as="button"
-      className={color}
+      className={disabled ? 'gray1_white' : color}
       size={size || 'full'}
       disabled={disabled}
       icon={icon}
-      onClick={handleClick}
+      onClick={onClick}
     >
       {icon && icon}
       {children}
