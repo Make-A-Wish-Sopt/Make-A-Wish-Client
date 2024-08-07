@@ -18,7 +18,7 @@ export default function ShareContent() {
   const { progressData } = useGetMainProgressData();
 
   useEffect(() => {
-    progressData && setWishesLink(`https://sunmulzu.store/wishes/${progressData.wishId}`);
+    progressData && setWishesLink(`https://sunmulzu.com/wishes/${progressData.wishId}`);
   }, []);
 
   const handleShareSNS = (name: string) => {
