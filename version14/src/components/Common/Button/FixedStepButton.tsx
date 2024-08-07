@@ -10,7 +10,6 @@ interface FixedStepButtonProps {}
 export default function FixedStepButton(props: PropsWithChildren<FixedStepButtonProps>) {
   const { step, nextStep, prevStep } = useStepInputContext();
 
-  console.log(step === 1);
 
   return (
     <StFixedStepButtonWrapper>
