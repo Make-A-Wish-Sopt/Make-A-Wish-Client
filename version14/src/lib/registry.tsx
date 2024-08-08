@@ -30,8 +30,7 @@ export default function GlobalRegistry({ children }: { children: React.ReactNode
       <ThemeProvider theme={theme}>
         <Suspense fallback={<Loading />}>
           <GlobalStyle />
-          {children}
-          {/* <StyledComponentsRegistry>{children}</StyledComponentsRegistry> */}
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         </Suspense>
       </ThemeProvider>
     </RecoilRoot>

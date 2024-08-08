@@ -29,10 +29,10 @@ function Text<Element extends keyof JSX.IntrinsicElements = 'span'>(
 }
 
 export const StText = styled.span<{
-  font: keyof FontsTypes;
+  font?: keyof FontsTypes;
   color: keyof ColorsTypes;
 }>`
-  ${({ theme, font }) => theme.fonts[font]};
+  ${({ theme, font }) => font && theme.fonts[font]};
   color: ${({ theme, color }) => theme.colors[color]};
 
   white-space: pre-wrap;

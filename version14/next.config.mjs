@@ -1,23 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-// module.exports = withBundleAnalyzer({
-//   compress: true,
-//   webpack(config, { webpack }) {
-//     const prod = process.env.NODE_ENV === 'production';
-//     const plugins = [...config.plugins];
-//     return {
-//       ...config,
-//       mode: prod ? 'producton' : 'development',
-//       devtool: prod ? 'hidden-source-map' : 'eval',
-//       plugins,
-//     };
-//   },
-// });
-
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      ssr: true,
+    },
   },
   swcMinify: true,
   images: {
