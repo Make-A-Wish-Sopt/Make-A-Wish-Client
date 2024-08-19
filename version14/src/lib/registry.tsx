@@ -27,12 +27,14 @@ function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
 export default function GlobalRegistry({ children }: { children: React.ReactNode }) {
   return (
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <Suspense fallback={<Loading />}>
-          <GlobalStyle />
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-        </Suspense>
-      </ThemeProvider>
+      <Suspense fallback={<Loading />}>
+        <StyledComponentsRegistry>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            {children}
+          </ThemeProvider>
+        </StyledComponentsRegistry>
+      </Suspense>
     </RecoilRoot>
   );
 }

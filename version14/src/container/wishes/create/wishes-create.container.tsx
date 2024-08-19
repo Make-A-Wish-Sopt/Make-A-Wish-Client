@@ -62,6 +62,7 @@ export default function WishesCreateContainer() {
       <Text as="h2" color="main_blue" font="headline24_100" style={{ margin: '2.4rem 0 2rem' }}>
         소원 링크 생성하기
       </Text>
+
       {
         {
           1: <WishesCreateStep1Input methods={methods} />,

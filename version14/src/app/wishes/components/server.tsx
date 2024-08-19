@@ -32,6 +32,7 @@ export function MainContent() {
   return (
     <>
       <MainContentClient progressData={progressData} />
+      
     </>
   );
 }

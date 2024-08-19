@@ -30,6 +30,9 @@ const nextConfig = {
     test: /\.svg$/,
     use: ['@svgr/webpack'],
   },
+  eslint: {
+    dirs: ['__test__'],
+  },
 };
 
 export default nextConfig;

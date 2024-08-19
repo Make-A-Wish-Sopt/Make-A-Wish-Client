@@ -1,14 +1,6 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended",
-    "plugin:storybook/recommended"
-  ]
+  // "env": {
+  //   "jest": true
+  // },
+  "extends": ["next/core-web-vitals"]
 }

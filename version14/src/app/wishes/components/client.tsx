@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import VerticalProgressBar from '@/components/UI/VerticalProgressBar';
+import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 
 interface WishesMessageClientProps {
   progressData: MainProgressDataType | undefined;
@@ -44,7 +45,9 @@ export function WishesMessageClient(props: WishesMessageClientProps) {
           <div>
             <Text color="black">{`${nickName}님\n`}</Text>
             <Text color="main_blue">
-              {`${progressData.dayCount < 1 ? 1 : progressData.dayCount}일 뒤 부터 소원링크를\n공유할 수 있어요!`}
+              {`${
+                progressData.dayCount < 1 ? 1 : progressData.dayCount
+              }일 뒤 부터 소원링크를\n공유할 수 있어요!`}
             </Text>
           </div>
         ) : (
@@ -108,19 +111,25 @@ export function MainContentClient(props: MainContentClienProps) {
   };
 
   return (
-    <StContentWrapper>
-      <Image src={getCakeImage()} alt={'메인 케이크 이미지'} />
-      <Image
-        src={progressData?.status === 'END' ? MainEndCakeImg : MainCakeImg}
-        alt="메인 케이크 이미지"
-        width={219}
-      />
-      <FixedProgressBar>
-        <VerticalProgressBar percent={progressData?.percent} />
-      </FixedProgressBar>
-      <Text color="main_blue">모인케이크</Text>
-      <Text color="black">{`총 ${progressData?.cakeCount}개`}</Text>
-    </StContentWrapper>
+    <>
+      <StContentWrapper>
+        <Image src={getCakeImage()} alt={'메인 케이크 이미지'} />
+        <Image
+          src={progressData?.status === 'END' ? MainEndCakeImg : MainCakeImg}
+          alt="메인 케이크 이미지"
+          width={219}
+        />
+        <FixedProgressBar>
+          <VerticalProgressBar percent={progressData?.percent} />
+        </FixedProgressBar>
+        <Text color="main_blue">모인케이크</Text>
+        <Text color="black">{`총 ${progressData?.cakeCount}개`}</Text>
+      </StContentWrapper>
+
+      <FixedBottomButton color="mainBlue_white" onClick={() => router.push('wishes/create')}>
+        소원링크 생성하기
+      </FixedBottomButton>
+    </>
   );
 }
 

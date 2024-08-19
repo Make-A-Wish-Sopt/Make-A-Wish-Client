@@ -24,17 +24,15 @@ interface Font {
   size: number;
   lineHeight: string;
   letterSpacing?: number;
-  textStroke?: number;
 }
 
-function FONT({ family, weight, size, lineHeight, letterSpacing, textStroke }: Font): string {
+function FONT({ family, weight, size, lineHeight, letterSpacing }: Font): string {
   return `
       font-family: ${family ? 'bitbit' : 'Galmuri11'};
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight};
       ${letterSpacing && `letter-spacing: -${letterSpacing}rem;`}
-      ${textStroke && `-webkit-text-stroke: 0.01rem`}
       }`;
 }
 
@@ -53,7 +51,7 @@ const fonts = {
   body12_2: FONT({ family: false, weight: 400, size: 1.2, lineHeight: '2.2rem' }),
 };
 
-export type FontsTypes =  typeof fonts;
+export type FontsTypes = typeof fonts;
 
 const theme = {
   colors,

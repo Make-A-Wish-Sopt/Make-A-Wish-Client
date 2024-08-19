@@ -3,13 +3,17 @@
 import { ComponentProps, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import Button from '.';
+import { useRouter } from 'next/navigation';
 
 type FixedBottomButtonProps = ComponentProps<typeof Button>;
 
 export default function FixedBottomButton(props: PropsWithChildren<FixedBottomButtonProps>) {
+  const router = useRouter();
+
+
   return (
     <StFixedBottomButtonWrapper>
-      <Button {...props} />
+      <Button {...props}  />
     </StFixedBottomButtonWrapper>
   );
 }

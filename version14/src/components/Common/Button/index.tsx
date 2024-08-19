@@ -11,21 +11,20 @@ export interface ButtonProps {
   color: ColorSystemType;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  routePath?: string;
+  handleRouter?: (path: string) => void;
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { size, color, disabled, onClick, icon, routePath, children } = props;
+  const { size, color, disabled, onClick, icon, handleRouter, children } = props;
 
   const router = useRouter();
 
   const handleClick = () => {
-    if (routePath) {
-      router.push(routePath);
-      return;
+    if (handleRouter) {
+      return handleRouter;
+    } else {
+      return onClick;
     }
-
-    return onClick;
   };
 
   return (

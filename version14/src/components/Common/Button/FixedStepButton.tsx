@@ -8,7 +8,7 @@ import { useStepInputContext } from '@/context/stepInputContext';
 interface FixedStepButtonProps {}
 
 export default function FixedStepButton(props: PropsWithChildren<FixedStepButtonProps>) {
-  const { step, nextStep, prevStep,nextBtnDisabled,prevBtnDisabled } = useStepInputContext();
+  const {  nextStep, prevStep,nextBtnDisabled,prevBtnDisabled } = useStepInputContext();
 
   return (
     <StFixedStepButtonWrapper>
