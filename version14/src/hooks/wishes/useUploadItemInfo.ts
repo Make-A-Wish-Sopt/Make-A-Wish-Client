@@ -1,21 +1,20 @@
 import { getPresignedURL, uploadPresignedURL } from '@/api/file';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { validation } from '@/validation/input';
+
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
 export default function useUploadItemInfo() {
-  const [imageFile, setImageFile] = useState<File | Blob | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [preSignedImageUrl, setPreSignedImageUrl] = useState('');
 
   const { data, refetch } = useQuery(
     QUERY_KEY.PRE_SIGNED_URL,
     () => getPresignedURL(imageFile?.name),
     {
-      enabled:
-        imageFile !== null &&
-        validation.checkImageFileSize(imageFile.size) &&
-        imageFile?.name !== '',
+      enabled: imageFile !== null && validation.checkImageFileSize(imageFile.size),
+      // imageFile?.name !== '',
     },
   );
 

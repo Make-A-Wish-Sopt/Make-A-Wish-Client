@@ -29,9 +29,10 @@ const StTextareaBox = styled.div`
 
   padding: 1rem 1rem 1rem 1.2rem;
 
-  background-color: ${({ theme }) => theme.colors.pastel_blue};
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.dark_green};
 
-  border: 0.1rem solid ${({ theme }) => theme.colors.main_blue};
+  /* border: 0.1rem solid ${({ theme }) => theme.colors.main_blue}; */
   border-radius: 1rem;
 `;
 

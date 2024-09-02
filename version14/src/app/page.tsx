@@ -33,13 +33,6 @@ export default function Home() {
           <Text as="h1" font="title56" color="main_blue" style={MainTextStyle}>
             {'조물주보다\n생일선물주'}
           </Text>
-
-          <Image
-            src={MainLoginImg}
-            alt="사용 설명 케이크 이미지"
-            width={252}
-            onClick={handleToggle}
-          />
         </Suspense>
         <FixedBottomButton
           color="yellow_black"

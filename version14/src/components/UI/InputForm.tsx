@@ -12,7 +12,7 @@ export default function InputForm(props: PropsWithChildren<InputFormProps>) {
 
   return (
     <>
-      <Text as="h3" font="body16" color="main_blue" style={{ marginBottom: '1.2rem' }}>
+      <Text as="h3" font="headline20" color="white" style={{ marginBottom: '1.2rem' }}>
         {title}
       </Text>
       {children}

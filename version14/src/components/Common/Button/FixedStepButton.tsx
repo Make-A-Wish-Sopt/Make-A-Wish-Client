@@ -8,14 +8,14 @@ import { useStepInputContext } from '@/context/stepInputContext';
 interface FixedStepButtonProps {}
 
 export default function FixedStepButton(props: PropsWithChildren<FixedStepButtonProps>) {
-  const {  nextStep, prevStep,nextBtnDisabled,prevBtnDisabled } = useStepInputContext();
+  const { nextStep, prevStep, nextBtnDisabled, prevBtnDisabled } = useStepInputContext();
 
   return (
     <StFixedStepButtonWrapper>
       <Button size="half" color="mainBlue_white" onClick={prevStep} disabled={prevBtnDisabled}>
         이전
       </Button>
-      <Button size="half" color="mainBlue_white" onClick={nextStep} disabled={ nextBtnDisabled}>
+      <Button size="half" color="mainBlue_white" onClick={nextStep} disabled={nextBtnDisabled}>
         다음
       </Button>
     </StFixedStepButtonWrapper>
@@ -23,9 +23,9 @@ export default function FixedStepButton(props: PropsWithChildren<FixedStepButton
 }
 
 const StFixedStepButtonWrapper = styled.div`
-  position: fixed;
+  /* position: fixed;
   left: 0;
-  bottom: 10.4rem;
+  bottom: 10.4rem; */
 
   display: flex;
 
@@ -35,7 +35,7 @@ const StFixedStepButtonWrapper = styled.div`
   width: 100%;
 
   margin-top: 2rem;
-  padding: 0 2.2rem;
+  /* padding: 0 2.2rem; */
 
-  ${({ theme }) => theme.fonts.button18};
+  ${({ theme }) => theme.fonts.button18}
 `;
