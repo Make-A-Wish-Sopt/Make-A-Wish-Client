@@ -22,9 +22,9 @@ function Text<Element extends keyof JSX.IntrinsicElements = 'span'>(
   const { as: Component, children, font, color, style, ...rest } = props as TextProps;
 
   return (
-    <StText as={Component} ref={ref} font={font} color={color} style={style} {...rest}>
+    <span ref={ref} color={color} style={style} {...rest}>
       {children}
-    </StText>
+    </span>
   );
 }
 

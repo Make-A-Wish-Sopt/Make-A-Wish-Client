@@ -1,21 +1,24 @@
 'use client';
 
-import React, { PropsWithChildren, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
-import { ButtonSizeType, ColorSystemType, StyledCommon } from '../CommonStyle';
+import React, { CSSProperties, PropsWithChildren, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { ColorsTypes, FontsTypes, SizesTypes } from '@/styles/styles';
+
 export interface ButtonProps {
-  size?: ButtonSizeType;
   icon?: ReactNode;
-  color: ColorSystemType;
   disabled?: boolean;
+  bgColor?: keyof ColorsTypes;
+  fontColor?: keyof ColorsTypes;
+  font?: keyof FontsTypes;
   onClick?: React.MouseEventHandler<HTMLElement>;
   handleRouter?: (path: string) => void;
+  styles?: CSSProperties;
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { size, color, disabled, onClick, icon, handleRouter, children } = props;
+  const { disabled, bgColor, fontColor, font, styles, onClick, icon, handleRouter, children } =
+    props;
 
   const router = useRouter();
 
@@ -28,30 +31,20 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
   };
 
   return (
-    <StyledButton
-      as="button"
-      className={disabled ? 'gray1_white' : color}
-      size={size || 'full'}
+    <button
+      className={`flex justify-center items-center ${
+        icon ? 'gap-10px' : 'gap-0'
+      } w-full h-50 font-${font ? font : 'bitbit'} text-[20px] bg-${
+        bgColor ? bgColor : 'main_blue'
+      } text-${fontColor ? fontColor : 'black'} rounded-xl`}
       disabled={disabled}
-      icon={icon}
       onClick={onClick}
+      style={styles}
     >
       {icon && icon}
       {children}
-    </StyledButton>
+    </button>
   );
 };
 
 export default Button;
-
-const StyledButton = styled(StyledCommon)<{ icon?: ReactNode }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ${(props) =>
-    props.icon !== undefined &&
-    css`
-      gap: 1rem;
-    `}
-`;

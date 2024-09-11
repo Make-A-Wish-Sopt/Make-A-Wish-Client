@@ -4,3 +4,4 @@
   // },
   "extends": ["next/core-web-vitals"]
 }
+.prettierrc.json

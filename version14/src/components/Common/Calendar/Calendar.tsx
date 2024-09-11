@@ -1,19 +1,16 @@
 import Image from 'next/image';
 import { ko } from 'date-fns/locale';
-import styled from 'styled-components';
-import theme from '@/styles/theme';
 import { UseFormReturn } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarHeader from './CalendarHeader';
 import { getDate } from '@/utils/common/getDate';
 import { CalendarGreyIc, CalendarIc } from '../../../../public/assets/icons';
-import Box, { LargeBoxStyle } from '../Box';
-import { WishesDataType } from '@/types/wishes/create/wishesCreateDataType';
+import { WishesLinkDataType } from '@/types/wishes/create/wishesCreateDataType';
 
 interface CalendarProps {
   date: Date;
-  methods: UseFormReturn<WishesDataType, any, undefined>;
+  methods: UseFormReturn<WishesLinkDataType, any, undefined>;
   readOnly?: boolean;
 }
 
@@ -26,8 +23,12 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <Box style={LargeBoxStyle} colorSystem={readOnly ? 'darkGreen_gray2' : 'darkGreen_white'}>
-      <Styled.Wrapper>
+    <div
+      className={`w-full h-50 text-${
+        readOnly ? 'gray2' : 'white'
+      } bg-dark_green rounded-xl p-10 pl-12`}
+    >
+      <div className="flex justify-between items-center w-full h-full text-[12px] font-galmuri">
         <DatePicker
           renderCustomHeader={({ date, changeYear, changeMonth }) => (
             <CalendarHeader date={date} changeYear={changeYear} changeMonth={changeMonth} />
@@ -41,21 +42,8 @@ export default function Calendar(props: CalendarProps) {
           readOnly={readOnly}
           className="react-datepicker__input-container"
         />
-      </Styled.Wrapper>
-      <Image src={readOnly ? CalendarGreyIc : CalendarIc} alt="캘린더 아이콘" />
-    </Box>
+        <Image src={readOnly ? CalendarGreyIc : CalendarIc} alt="캘린더 아이콘" />
+      </div>
+    </div>
   );
 }
-
-const Styled = {
-  Wrapper: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 100%;
-    height: 100%;
-
-    ${theme.fonts.body12};
-  `,
-};

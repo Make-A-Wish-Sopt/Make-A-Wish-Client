@@ -1,4 +1,4 @@
-//명명규칙 : 1. 첫글자는 대문자 2. ~~Ic으로 끝내기
+//네이밍규칙 : 1. 첫글자는 대문자 2. ~~Ic으로 끝내기
 
 export { default as BackBtnIc } from '/public/assets/icons/backBtnIc.svg';
 export { default as GuideBtnIc } from '/public/assets/icons/guideBtnIc.svg';
@@ -26,3 +26,7 @@ export { default as ArrowLargeDownIc } from '/public/assets/icons/arrowLargeDown
 export { default as CheckedBoxIc } from '/public/assets/icons/checkedBoxIc.svg';
 export { default as UnCheckedBoxIc } from '/public/assets/icons/unCheckedBoxIc.svg';
 export { default as FireIcImg } from '/public/assets/icons/fireIcImg.png';
+export { default as UploadImageLogoIc } from '/public/assets/icons/uploadImageLogoIc.svg';
+export { default as SelectRadioIc } from './selectRadioIc.svg';
+export { default as UnSelectRadioIc } from './unSelectRadioIc.svg';
+export { default as MainBlueArrowIc } from './mainBlueArrowIc.svg';

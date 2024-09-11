@@ -1,5 +1,6 @@
 import GlobalRegistry from '@/lib/registry';
 import { Metadata } from 'next';
+import '../styles/global.css';
 
 export const metadata: Metadata = {
   title: '조물주 보다 생일 선물주',
@@ -9,8 +10,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      {/* <link href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css" rel="stylesheet" /> */}
+    <html lang="en" className="bg-background">
       <body>
         <GlobalRegistry>{children}</GlobalRegistry>
       </body>

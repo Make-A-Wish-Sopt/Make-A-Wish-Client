@@ -5,7 +5,7 @@ import { validation } from '@/validation/input';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
-export default function useUploadItemInfo() {
+export function useUploadItemInfo() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [preSignedImageUrl, setPreSignedImageUrl] = useState('');
 
@@ -14,7 +14,6 @@ export default function useUploadItemInfo() {
     () => getPresignedURL(imageFile?.name),
     {
       enabled: imageFile !== null && validation.checkImageFileSize(imageFile.size),
-      // imageFile?.name !== '',
     },
   );
 

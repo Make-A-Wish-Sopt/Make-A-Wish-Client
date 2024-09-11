@@ -1,13 +1,22 @@
 'use client';
 
-import { PropsWithChildren, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '.';
 import { useStepInputContext } from '@/context/stepInputContext';
 
-interface FixedStepButtonProps {}
+export function FixedStepButton() {
+  const { nextStep, nextBtnDisabled } = useStepInputContext();
 
-export default function FixedStepButton(props: PropsWithChildren<FixedStepButtonProps>) {
+  return (
+    <StFixedStepButtonWrapper>
+      <Button size="full" color="mainBlue_white" onClick={nextStep} disabled={nextBtnDisabled}>
+        다음
+      </Button>
+    </StFixedStepButtonWrapper>
+  );
+}
+
+export function FixedStepPrevNextButton() {
   const { nextStep, prevStep, nextBtnDisabled, prevBtnDisabled } = useStepInputContext();
 
   return (

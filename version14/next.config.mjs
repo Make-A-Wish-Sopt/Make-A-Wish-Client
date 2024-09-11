@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   compiler: {
     styledComponents: {
       ssr: true,
@@ -25,10 +25,6 @@ const nextConfig = {
       'wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
       'shopping-phinf.pstatic.net',
     ],
-  },
-  rules: {
-    test: /\.svg$/,
-    use: ['@svgr/webpack'],
   },
   eslint: {
     dirs: ['__test__'],

@@ -1,0 +1,31 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_2394)">
+<rect x="5.45312" y="18.6362" width="9.09091" height="1.36364" fill="#00C2FF"/>
+<rect x="5.45312" width="9.09091" height="1.36364" fill="#00C2FF"/>
+<rect x="20" y="6.36377" width="7.27273" height="1.36364" transform="rotate(90 20 6.36377)" fill="#00C2FF"/>
+<rect x="15.9102" y="1.36377" width="1.36364" height="1.36364" transform="rotate(90 15.9102 1.36377)" fill="#00C2FF"/>
+<rect x="15.9102" y="17.2729" width="1.36364" height="1.36364" transform="rotate(90 15.9102 17.2729)" fill="#00C2FF"/>
+<rect x="17.2695" y="15.9092" width="1.36364" height="1.36364" transform="rotate(90 17.2695 15.9092)" fill="#00C2FF"/>
+<rect x="17.2695" y="2.72705" width="1.36364" height="1.36364" transform="rotate(90 17.2695 2.72705)" fill="#00C2FF"/>
+<rect x="18.6367" y="13.6362" width="2.27273" height="1.36364" transform="rotate(90 18.6367 13.6362)" fill="#00C2FF"/>
+<rect x="18.6367" y="4.09082" width="2.27273" height="1.36364" transform="rotate(90 18.6367 4.09082)" fill="#00C2FF"/>
+<rect width="7.27273" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 0 6.36377)" fill="#00C2FF"/>
+<rect width="1.36364" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 4.08984 1.36377)" fill="#00C2FF"/>
+<rect width="1.36364" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 4.08984 17.2729)" fill="#00C2FF"/>
+<rect width="1.36364" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 2.73047 15.9092)" fill="#00C2FF"/>
+<rect width="1.36364" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 2.73047 2.72705)" fill="#00C2FF"/>
+<rect width="2.27273" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 1.36328 13.6362)" fill="#00C2FF"/>
+<rect width="2.27273" height="1.36364" transform="matrix(4.37114e-08 1 1 -4.37114e-08 1.36328 4.09082)" fill="#00C2FF"/>
+<rect width="9.99929" height="2.46094" transform="matrix(4.37114e-08 1 1 -4.37114e-08 8.125 5.00049)" fill="#00C2FF"/>
+<rect width="9.99929" height="1.87487" transform="matrix(4.37114e-08 1 1 -4.37114e-08 10.0039 5.00049)" fill="#00C2FF"/>
+<rect width="9.99929" height="1.87487" transform="matrix(-1 0 0 1 15 8.125)" fill="#00C2FF"/>
+<rect width="7.49947" height="1.87487" transform="matrix(-1 0 0 1 13.75 6.25049)" fill="#00C2FF"/>
+<rect width="7.49947" height="1.87487" transform="matrix(-1 0 0 1 13.75 11.875)" fill="#00C2FF"/>
+<rect width="9.99929" height="1.87487" transform="matrix(-1 0 0 1 15 10)" fill="#00C2FF"/>
+</g>
+<defs>
+<clipPath id="clip0_1_2394">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>

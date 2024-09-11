@@ -3,6 +3,15 @@ export { default as MainLoginImg } from '../images/mainLoginImg.png';
 export { default as MainCakeImg } from '../images/mainCakeImg.png';
 export { default as LogoImg } from '../images/logoImg.svg';
 export { default as MainPageCakeImg } from '../images/mainPageCakeImg.png';
+export { default as MainCakeListImg } from '../images/mainCakeListImg.png';
+
+//PresentItem
+export { default as PresentItem1Img } from './presentItem/presentItem1Img.png';
+export { default as PresentItem2Img } from './presentItem/presentItem2Img.png';
+export { default as PresentItem3Img } from './presentItem/presentItem3Img.png';
+export { default as PresentItem4Img } from './presentItem/presentItem4Img.png';
+export { default as PresentItem5Img } from './presentItem/presentItem5Img.png';
+export { default as PresentItem6Img } from './presentItem/presentItem6Img.png';
 
 export { default as BeefCakeDetailImg } from '../images/cakes/beefCake/beefCakeDetailImg.png';
 export { default as ChickenCakeDetailImg } from '../images/cakes/chickenCake/chickenCakeDetailImg.png';

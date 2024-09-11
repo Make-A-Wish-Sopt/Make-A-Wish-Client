@@ -4,7 +4,7 @@ import { ColorSystemType } from '@/types/common/box/boxStyleType';
 import { useEffect, useState } from 'react';
 
 export default function useWishesStep() {
-  const [stepIndex, setStepIndex] = useState(1);
+  const [stepIndex, setStepIndex] = useState(2);
   const [prevState, setPrevState] = useState(false);
   const [nextState, setNextState] = useState(false);
 

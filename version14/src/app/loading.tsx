@@ -1,29 +1,19 @@
 'use client';
-import theme from '@/styles/theme';
+
+import { colors } from '@/styles/styles';
 import ClipLoader from 'react-spinners/ClipLoader';
-import styled from 'styled-components';
 
 export default function Loading() {
   return (
-    <Styled.Container>
-      <ClipLoader color={theme.colors.main_blue} />
-      <Styled.Title>로딩중입니다</Styled.Title>
-    </Styled.Container>
+    <>
+      <div className="flex flex-col items-center justify-center h-[100vh]">
+        <ClipLoader color={colors.main_blue} />
+        <h1 className="font-bitbit text-[24px] text-main_blue mt-24 mb-30">로딩중 입니다</h1>
+      </div>
+      {/* <Styled.Container>
+        <ClipLoader color={theme.colors.main_blue} />
+        <Styled.Title>로딩중입니다</Styled.Title>
+      </Styled.Container> */}
+    </>
   );
 }
-
-const Styled = {
-  Container: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  `,
-
-  Title: styled.h1`
-    ${theme.fonts.headline24_100};
-    color: ${theme.colors.main_blue};
-    margin: 2.4rem 0 3rem;
-  `,
-};

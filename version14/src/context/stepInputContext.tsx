@@ -8,32 +8,32 @@ interface StepInputContextType {
   prevStep: () => void;
   nextBtnDisabled: boolean;
   prevBtnDisabled: boolean;
-  changeNextBtnDisabledState: (state: boolean) => void
-  changePrevBtnDisabledState: (state: boolean)=> void
+  changeNextBtnDisabledState: (state: boolean) => void;
+  changePrevBtnDisabledState: (state: boolean) => void;
 }
 
 export const StepInputContext = createContext<StepInputContextType>({
   step: 1,
   nextStep: () => {},
-  prevStep: () => { },
+  prevStep: () => {},
   nextBtnDisabled: true,
   prevBtnDisabled: true,
-  changeNextBtnDisabledState: () => { },
-  changePrevBtnDisabledState: () => { }
+  changeNextBtnDisabledState: () => {},
+  changePrevBtnDisabledState: () => {},
 });
 
 export default function StepInputProvider({ children }: PropsWithChildren) {
   const [step, setStep] = useState(1);
-  const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
-  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
 
   useEffect(() => {
     if (step === 1) {
-      setPrevBtnDisabled(true)
+      setPrevBtnDisabled(true);
     } else {
-      setPrevBtnDisabled(false)
+      setPrevBtnDisabled(false);
     }
-  }, [step])
+  }, [step]);
 
   function nextStep() {
     setStep(step + 1);
@@ -46,15 +46,25 @@ export default function StepInputProvider({ children }: PropsWithChildren) {
   }
 
   function changeNextBtnDisabledState(state: boolean) {
-    setNextBtnDisabled(state)
+    setNextBtnDisabled(state);
   }
 
   function changePrevBtnDisabledState(state: boolean) {
-    setPrevBtnDisabled(state)
+    setPrevBtnDisabled(state);
   }
 
   return (
-    <StepInputContext.Provider value={{ step, nextStep, prevStep,nextBtnDisabled,prevBtnDisabled,changeNextBtnDisabledState,changePrevBtnDisabledState }}>
+    <StepInputContext.Provider
+      value={{
+        step,
+        nextStep,
+        prevStep,
+        nextBtnDisabled,
+        prevBtnDisabled,
+        changeNextBtnDisabledState,
+        changePrevBtnDisabledState,
+      }}
+    >
       {children}
     </StepInputContext.Provider>
   );

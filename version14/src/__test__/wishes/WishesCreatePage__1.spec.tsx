@@ -1,4 +1,4 @@
-import WishesCreateContainer from '@/container/wishes/create/wishes-create.container';
+import WishesCreateContainer from '@/container/wishes/create/ishes-create-container.server';
 import { render, screen } from '@testing-library/react';
 
 describe('이미지 & 가격 & 초성 입력 >> 데이터 입력', () => {
@@ -6,8 +6,6 @@ describe('이미지 & 가격 & 초성 입력 >> 데이터 입력', () => {
 
   it('가격 표시가 되어있는지', () => {
     render(<WishesCreateContainer />);
-
-    
   });
 });
 

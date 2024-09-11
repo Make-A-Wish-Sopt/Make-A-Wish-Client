@@ -1,3 +1,5 @@
+'use client';
+
 import { getUserAccount, postVerifyAccount, putUserAccount } from '@/api/user';
 import { QUERY_KEY } from '@/constant/queryKey';
 import { AccountInfoType, WishesDataInputType } from '@/types/wishesType';

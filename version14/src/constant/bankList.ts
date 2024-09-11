@@ -1,6 +1,6 @@
-import bankImgs from '@/public/assets/images';
 import { BankListType } from '@/types/bankListType';
 import { StaticImageData } from 'next/image';
+import bankImgs from '../../public/assets/images';
 
 export const BANK_LIST: BankListType[] = [];
 
