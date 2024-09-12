@@ -1,15 +1,20 @@
-import theme, { ColorsTypes } from '@/styles/theme';
-import { ColorSystemType } from '@/types/common/box/boxStyleType';
+import { ColorsTypes, FontsTypes } from '@/styles/styles';
+
 import { CSSProperties, PropsWithChildren } from 'react';
 
 interface BoxProps {
   bgColor: keyof ColorsTypes;
   fontColor: keyof ColorsTypes;
-  style: CSSProperties;
+  font?: keyof FontsTypes;
+  styles: CSSProperties;
 }
 
 export default function Box(props: PropsWithChildren<BoxProps>) {
-  const { bgColor, fontColor, children } = props;
+  const { bgColor, fontColor, styles, children } = props;
 
-  return <div className={`w-full h-50 bg-${bgColor} text-${fontColor}`}>{children}</div>;
+  return (
+    <div className={`w-full h-50 bg-${bgColor} text-${fontColor} rounded-xl`} style={styles}>
+      {children}
+    </div>
+  );
 }

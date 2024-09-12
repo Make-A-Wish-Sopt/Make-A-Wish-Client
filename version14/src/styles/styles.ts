@@ -26,7 +26,10 @@ for (let i = 1; i <= 200; i++) {
 export const sizes = {
   ...sizeList,
   220: '22rem',
+  235: '23.5rem',
+  300: '30rem',
   331: '33.1rem',
+  350: '35rem',
   375: '37.5rem',
   500: '50rem',
 

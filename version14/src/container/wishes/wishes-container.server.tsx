@@ -1,18 +1,23 @@
-import { WishesCreateBeforeCakesList, WishesCreateButton } from './wishes-continaer.client';
+import {
+  WishesCreateBeforeCakesList,
+  WishesCreateBeforeCakesMessage,
+  WishesCreateButton,
+} from './wishes-continaer.client';
 
 function WishesCreateBefore() {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-right">
+    <>
+      <div className="w-full text-right px-5 mt-8">
         <span className="text-[20px] font-bitbit text-main_blue">D-?</span>
       </div>
-      <h1 className="text-[24px] font-bitbit text-white mt-10 mb-20">
-        ㅇㅇ님, 친구들을 초대해
-        <br /> 케이크 접시를 꾸며봐요!
-      </h1>
-      <WishesCreateBeforeCakesList />
-      <WishesCreateButton />
-    </div>
+      <div className="flex flex-col items-center">
+        <WishesCreateBeforeCakesMessage />
+        <WishesCreateBeforeCakesList />
+        <WishesCreateButton />
+        <div className="fixed bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]"></div>
+        <div className="w-full h-300 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]"></div>
+      </div>
+    </>
   );
 }
 

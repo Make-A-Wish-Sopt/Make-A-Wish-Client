@@ -23,15 +23,15 @@ export { default as SushiCakeDetailImg } from '../images/cakes/sushiCake/sushiCa
 export { default as VitaminCakeDetailImg } from '../images/cakes/vitaminCake/vitaminCakeDetailImg.png';
 export { default as RudolphCakeDetailImg } from '../images/cakes/rudolphCake/rudolphCakeDetailImg.png';
 
-export { default as BeefCakeImg } from '../images/cakes/beefCake/beefCakeImg.svg';
-export { default as ChickenCakeImg } from '../images/cakes/chickenCake/chickenCakeImg.svg';
+// export { default as BeefCakeImg } from '../images/cakes/beefCake/beefCakeImg.svg';
+// export { default as ChickenCakeImg } from '../images/cakes/chickenCake/chickenCakeImg.svg';
 export { default as CoffeeCakeImg } from '../images/cakes/coffeeCake/coffeeCakeImg.svg';
-export { default as FlowerCakeImg } from '../images/cakes/flowerCake/flowerCakeImg.svg';
-export { default as PerfumeCakeImg } from '../images/cakes/perfumeCake/perfumeCakeImg.svg';
+// export { default as FlowerCakeImg } from '../images/cakes/flowerCake/flowerCakeImg.svg';
+// export { default as PerfumeCakeImg } from '../images/cakes/perfumeCake/perfumeCakeImg.svg';
 export { default as PoopCakeImg } from '../images/cakes/poopCake/poopCakeImg.svg';
-export { default as SushiCakeImg } from '../images/cakes/sushiCake/sushiCakeImg.svg';
-export { default as VitaminCakeImg } from '../images/cakes/vitaminCake/vitaminCakeImg.svg';
-export { default as RudolphCakeImg } from '../images/cakes/rudolphCake/rudolphCakeImg.svg';
+// export { default as SushiCakeImg } from '../images/cakes/sushiCake/sushiCakeImg.svg';
+// export { default as VitaminCakeImg } from '../images/cakes/vitaminCake/vitaminCakeImg.svg';
+// export { default as RudolphCakeImg } from '../images/cakes/rudolphCake/rudolphCakeImg.svg';
 
 export { default as BeefCakeThanksImg } from '../images/cakes/beefCake/beefCakeThanksImg.svg';
 export { default as ChickenCakeThanksImg } from '../images/cakes/chickenCake/chickenCakeThanksImg.svg';
@@ -78,6 +78,20 @@ export { default as KaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';
 export { default as InstaLogoImg } from '../images/sns/instaLogoImg.svg';
 export { default as FacebookLogoImg } from '../images/sns/facebookLogoImg.svg';
 export { default as TwitterLogoImg } from '../images/sns/twitterLogoImg.svg';
+
+export { default as StarImg } from '../images/starImg.png';
+
+// New Cake List
+export { default as BeefCakeImg } from '../images/CakeList/beefCakeImg.svg';
+export { default as ChickenCakeImg } from '../images/CakeList/chickenCakeImg.svg';
+export { default as FlowerCakeImg } from '../images/CakeList/flowerCakeImg.svg';
+export { default as LpCakeImg } from '../images/CakeList/lpCakeImg.svg';
+export { default as PerfumeCakeImg } from '../images/CakeList/perfumeCakeImg.svg';
+export { default as RudolphCakeImg } from '../images/CakeList/rudolphCakeImg.svg';
+export { default as SantaCakeImg } from '../images/CakeList/santaCakeImg.svg';
+export { default as SnowCakeImg } from '../images/CakeList/snowCakeImg.svg';
+export { default as SushiCakeImg } from '../images/CakeList/sushiCakeImg.svg';
+export { default as VitaminCakeImg } from '../images/CakeList/vitaminCakeImg.svg';
 
 // bank
 const bankImgs: Record<string, any> = {};

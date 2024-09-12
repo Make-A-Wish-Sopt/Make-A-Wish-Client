@@ -1,25 +1,39 @@
-import theme from '@/styles/theme';
-import { PropsWithChildren } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { CSSProperties } from 'styled-components';
 
-interface InputTextProps {
+interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
-  register: UseFormRegisterReturn;
-  boxStyle?: CSSProperties;
-  inputStyle?: CSSProperties;
+  register?: UseFormRegisterReturn;
+  styles?: React.CSSProperties;
+  onClick?: () => void;
+  readOnly?: boolean;
   disabled?: boolean;
+  children?: ReactNode;
 }
 
-export default function InputText(props: PropsWithChildren<InputTextProps>) {
-  const { placeholder, register, boxStyle, inputStyle, disabled, children } = props;
+export default function InputText({
+  placeholder,
+  register,
+  styles,
+  onClick,
+  readOnly,
+  disabled,
+  children,
+  ...rest
+}: InputTextProps) {
   return (
-    <div className="flex justify-between items-center w-full h-50 p-10 pl-12 text-white bg-dark_green rounded-xl">
+    <div
+      className="flex justify-between items-center w-full h-50 p-10 pl-12 text-white bg-dark_green rounded-xl"
+      style={styles}
+    >
       <input
         className="w-full h-full font-galmuri text-[14px] plachoder-gray2"
         placeholder={placeholder}
         {...register}
+        onClick={onClick}
+        readOnly={readOnly}
         disabled={disabled}
+        {...rest}
       ></input>
       {children}
     </div>

@@ -31,7 +31,7 @@ export default function BankModal(props: BankModalProps) {
             id="bankItem"
             className="w-90 h-66 py-10 bg-dark_green rounded-xl cursor-pointer"
             onClick={() => handleChangeBank(bank.name)}
-            key={bank.bankCode}
+            key={bank.name}
           >
             <div id="bankItem-wrppaer" className="flex flex-col w-full h-ful items-center">
               <div

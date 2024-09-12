@@ -34,6 +34,7 @@ import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import useToggle from '@/hooks/common/useToggle';
 import Modal from '@/components/Common/Modal';
+import { colors } from '@/styles/styles';
 
 export default function WishesCreate() {
   const { step } = useStepInputContext();
@@ -62,11 +63,10 @@ export default function WishesCreate() {
   return (
     <>
       {
-        // {
-        //   1: <WishesLinkCreate methods={wishesLinkMethods} />,
-        //   2: <WishesAccountCreate methods={wishesAccountMethods} />,
-        // }[step]
-        <WishesAccountCreate methods={wishesAccountMethods} />
+        {
+          1: <WishesLinkCreate methods={wishesLinkMethods} />,
+          2: <WishesAccountCreate methods={wishesAccountMethods} />,
+        }[step]
       }
     </>
   );
@@ -80,15 +80,15 @@ function WishesLinkCreate({
   const { nextBtnDisabled, nextStep, changeNextBtnDisabledState } = useStepInputContext();
   const { preSignedImageUrl, uploadImageFile } = useUploadItemInfo();
 
-  const { isOpen, handleToggle } = useToggle();
+  const { isOpen, handleToggle, changeOpenState } = useToggle();
 
   useEffect(() => {
-    if (methods.formState.isValid) {
+    if (methods.formState.isValid && preSignedImageUrl) {
       changeNextBtnDisabledState(false);
     } else {
       changeNextBtnDisabledState(true);
     }
-  }, [methods.formState.isValid]);
+  }, [methods.formState.isValid, preSignedImageUrl]);
 
   useEffect(() => {
     if (preSignedImageUrl) {
@@ -178,6 +178,7 @@ function WishesLinkCreate({
             className="flex items-center gap-8 w-full h-50 font-galmuri text-white text-[14px] bg-dark_green round-xl px-10 py-14 rounded-xl"
             onClick={() => {
               methods.setValue('wishesType', false);
+              changeOpenState(false);
             }}
           >
             <RadioSelect isSelect={!methods.watch('wishesType')} />
@@ -220,6 +221,9 @@ export function WishesAccountCreateInput({
     bank: methods.getValues('bank'),
     account: methods.getValues('account'),
   });
+
+  console.log(btnDisalbed);
+  console.log(isSuccess, isReady, isAbused);
 
   useEffect(() => {
     if (isAbused) {
@@ -300,10 +304,21 @@ export function WishesAccountCreateInput({
       <InputForm title="계좌번호 입력하기">
         <div className="flex flex-col gap-12">
           <InputText
+            value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
+            styles={{ backgroundColor: '#3C0F0F', color: colors.warning_red }}
+            readOnly
+          />
+          <InputText
             placeholder="예금주명"
             register={methods.register('name', wishesAccountDataValidate.name)}
           />
-          <InputText placeholder="은행선택" register={methods.register('bank')} />
+
+          <InputText
+            placeholder="은행선택"
+            register={methods.register('bank')}
+            onClick={handleToggle}
+            readOnly
+          />
 
           <div className="flex justify-between gap-6">
             <div className="flex-grow-3">
@@ -314,7 +329,7 @@ export function WishesAccountCreateInput({
             </div>
             <div className="flex-grow-1">
               <div className="w-115 h-50 font-galmuri">
-                {/* <Button
+                <Button
                   bgColor="main_blue"
                   fontColor="white"
                   font="galmuri"
@@ -323,7 +338,7 @@ export function WishesAccountCreateInput({
                   styles={{ fontSize: '14px' }}
                 >
                   계좌번호 확인
-                </Button> */}
+                </Button>
               </div>
             </div>
           </div>
@@ -351,9 +366,11 @@ export function WishesAccountCreateInput({
         생일잔치에 친구 초대하기
       </Button>
 
-      <Modal isOpen={isOpen} handleToggle={handleToggle}>
-        <BankModal methods={methods} handleToggle={handleToggle} />
-      </Modal>
+      {isOpen && (
+        <Modal isOpen={isOpen} handleToggle={handleToggle}>
+          <BankModal methods={methods} handleToggle={handleToggle} />
+        </Modal>
+      )}
     </>
   );
 }

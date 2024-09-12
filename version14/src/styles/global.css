@@ -16,10 +16,11 @@
   font-style: normal;
 }
 
-* {
-  -moz-box-sizing: border-box !important; /* Firefox */
-  -webkit-box-sizing: border-box !important; /* Safari */
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*아이폰 버튼 클릭 깜박임 해제 */
+@layer utilities {
+  .custom-grid li:nth-child(3n + 2) {
+    position: relative;
+    transform: translateY(-13px);
+  }
 }
 
 html,
