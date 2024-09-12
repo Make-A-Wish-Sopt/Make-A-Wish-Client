@@ -9,7 +9,7 @@ export default function IndexContainer() {
         조물주보다 <br />
         생일선물주
       </h1>
-      <Image src={MainCakeListImg} alt="케이크 리스트 이미지"></Image>
+      <Image src={MainCakeListImg} alt="케이크 리스트 이미지" priority></Image>
       <span className="text-[24px] text-main_blue mt-[31px] font-bitbit">
         현금으로 선물 받는 생일잔치
       </span>

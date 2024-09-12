@@ -93,6 +93,18 @@ export { default as SnowCakeImg } from '../images/CakeList/snowCakeImg.svg';
 export { default as SushiCakeImg } from '../images/CakeList/sushiCakeImg.svg';
 export { default as VitaminCakeImg } from '../images/CakeList/vitaminCakeImg.svg';
 
+// New Cake List
+export { default as BeefCakeSelectImg } from '../images/CakeSelectList/beefCakeSelectImg.svg';
+export { default as ChickenCakeSelectImg } from '../images/CakeSelectList/chickenCakeSelectImg.svg';
+export { default as FlowerCakeSelectImg } from '../images/CakeSelectList/flowerCakeSelectImg.svg';
+export { default as LpCakeSelectImg } from '../images/CakeSelectList/lpCakeSelectImg.svg';
+export { default as PerfumeCakeSelectImg } from '../images/CakeSelectList/perfumeCakeSelectImg.svg';
+export { default as RudolphCakeSelectImg } from '../images/CakeSelectList/rudolphCakeSelectImg.svg';
+export { default as SantaCakeSelectImg } from '../images/CakeSelectList/santaCakeSelectImg.svg';
+export { default as SnowCakeSelectImg } from '../images/CakeSelectList/snowCakeSelectImg.svg';
+export { default as SushiCakeSelectImg } from '../images/CakeSelectList/sushiCakeSelectImg.svg';
+export { default as VitaminCakeSelectImg } from '../images/CakeSelectList/vitaminCakeSelectImg.svg';
+
 // bank
 const bankImgs: Record<string, any> = {};
 for (let i = 1; i <= 33; i++) {

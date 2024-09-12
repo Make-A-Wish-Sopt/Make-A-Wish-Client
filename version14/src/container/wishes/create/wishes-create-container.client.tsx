@@ -22,7 +22,6 @@ import Button from '@/components/Common/Button';
 import { WishesAccountCreate } from './wishes-create-container.server';
 import { AccountInfoType } from '@/types/wishesType';
 import InputText from '@/components/Common/Input/inputText';
-import Box from '@/components/Common/Box';
 import useCheckBox from '@/hooks/common/useCheckBox';
 import CheckBox from '@/components/UI/CheckBox';
 import { usePostVerifyAccount } from '@/hooks/queries/user';
@@ -93,7 +92,7 @@ function WishesLinkCreate({
   useEffect(() => {
     if (preSignedImageUrl) {
       methods.setValue('image', preSignedImageUrl);
-      methods.register('image', { ...wishesLinkDataValidate.image });
+      // methods.register('image', { ...wishesLinkDataValidate.image });
     }
   }, [preSignedImageUrl]);
 
@@ -156,9 +155,9 @@ function WishesLinkCreate({
                   6개 중 하나를 선택해 선물할 수 있어요
                 </div>
 
-                <ul className="flex w-full flex-wrap gap-5 justify-between">
+                <div className="flex w-full flex-wrap gap-5 justify-between">
                   {presentList.map((item) => (
-                    <li
+                    <div
                       className="flex flex-col items-center p-9 flex-grow flex-shrink basis-[calc(33%-10px)] bg-dark_green rounded-xl"
                       key={item.id}
                     >
@@ -167,9 +166,9 @@ function WishesLinkCreate({
                       <span className="font-bitbit text-white text-[12px]">
                         {convertMoneyText(item.price.toString())}원
                       </span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
           </li>
@@ -221,9 +220,6 @@ export function WishesAccountCreateInput({
     bank: methods.getValues('bank'),
     account: methods.getValues('account'),
   });
-
-  console.log(btnDisalbed);
-  console.log(isSuccess, isReady, isAbused);
 
   useEffect(() => {
     if (isAbused) {

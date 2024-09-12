@@ -2,8 +2,6 @@ import { API_VERSION_01, PATH_AUTH } from './path';
 import { client } from './common/axios';
 
 export const postAuthKakao = async (code: string) => {
-  console.log(code);
-
   const data = await client.post(
     `${API_VERSION_01}${PATH_AUTH.KAKAO}?redirectUri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
     {},

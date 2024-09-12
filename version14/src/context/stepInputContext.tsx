@@ -23,7 +23,7 @@ export const StepInputContext = createContext<StepInputContextType>({
 });
 
 export default function StepInputProvider({ children }: PropsWithChildren) {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
 

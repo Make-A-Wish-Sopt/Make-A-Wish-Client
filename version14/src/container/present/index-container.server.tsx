@@ -1,0 +1,22 @@
+import { PresentButton, SelectCakes } from './index-container.client';
+import { cakeSelectList } from '@/constant/cakeData';
+import { CakeItemType, CakeSelectItemType } from '@/types/carousel';
+
+export default function PresentContainer() {
+  return (
+    <div className="flex flex-col items-center">
+      <h1 className="text-[56px] text-main_blue mt-[91px] font-bitbit ">
+        조물주보다 <br />
+        생일선물주
+      </h1>
+
+      <span className="font-galmuri text-white text-[18px] text-center">
+        당신을 대표할
+        <br /> 케이크를 고른 후, 입장해주세요!
+      </span>
+
+      <SelectCakes<CakeSelectItemType> itemList={cakeSelectList} />
+      <PresentButton />
+    </div>
+  );
+}

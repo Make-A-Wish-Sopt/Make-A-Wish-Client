@@ -1,10 +1,9 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import { RecoilRoot } from 'recoil';
-import theme from '@/styles/theme';
 import Loading from '@/app/loading';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import AuthProvider from '@/context/authContext';
 
 export default function GlobalRegistry({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
@@ -17,13 +16,13 @@ export default function GlobalRegistry({ children }: { children: React.ReactNode
   });
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
         <Suspense fallback={<Loading />}>
           {/* <GlobalStyle /> */}
           {children}
         </Suspense>
-      </QueryClientProvider>
-    </RecoilRoot>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

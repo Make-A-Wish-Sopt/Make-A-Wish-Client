@@ -2,17 +2,17 @@
 
 import { postAuthKakao } from '@/api/auth';
 import Loading from '@/app/loading';
-import { useAuthKakao } from '@/hooks/queries/auth';
-import { LoginUserInfo } from '@/recoil/auth/loginUserInfo';
+import { useAuthContext } from '@/context/authContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
-import { useSetRecoilState } from 'recoil';
 
 export default function Kakao() {
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
   const router = useRouter();
+
+  const { onLogin } = useAuthContext();
 
   if (!code) {
     alert('code error');
@@ -20,19 +20,15 @@ export default function Kakao() {
     return;
   }
 
-  const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
-
   const { mutate: kakaoLoginMutate } = useMutation((code: string) => postAuthKakao(code), {
     onSuccess: (data) => {
-      const { accessToken, nickName, refreshToken } = data;
-      setLoginUserInfo((prev) => ({
-        ...prev,
-        nickName: nickName,
+      const { accessToken, nickName } = data;
+      onLogin({
         accessToken: accessToken,
-        refreshToken: refreshToken,
-      }));
+        nickName: nickName,
+        wishesId: '',
+      });
 
-      localStorage.setItem('accessToken', accessToken);
       router.push('/wishes');
     },
     onError: (error) => {
@@ -47,5 +43,5 @@ export default function Kakao() {
     }
   }, []);
 
-  return <Loading></Loading>;
+  return <Loading />;
 }
