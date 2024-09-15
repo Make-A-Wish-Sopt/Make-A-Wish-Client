@@ -1,7 +1,7 @@
 import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { RegisterOptions } from 'react-hook-form';
 
-export const wishesLinkDataValidate: Partial<Record<keyof WishesLinkDataType, RegisterOptions>> = {
+export const wishesLinkDataValidate: Record<keyof WishesLinkDataType, RegisterOptions> = {
   image: {
     required: '필수 입력 항목입니다.',
   },
@@ -12,6 +12,9 @@ export const wishesLinkDataValidate: Partial<Record<keyof WishesLinkDataType, Re
       message: '최대 300자 까지 입력이 가능합니다.',
     },
   },
+  startDate: {},
+  endDate: {},
+  wishesType: {},
 };
 
 export const wishesAccountDataValidate: Record<keyof WishesAccountDataType, RegisterOptions> = {

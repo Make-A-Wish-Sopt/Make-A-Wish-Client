@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import { BANK_LIST } from '@/constant/bankList';
 import { UseFormReturn } from 'react-hook-form';
+import { WishesAccountDataType } from '@/types/input';
 
-import { WishesAccountDataType } from '@/types/wishes/create/wishesCreateDataType';
+
 
 interface BankModalProps {
   handleToggle: () => void;

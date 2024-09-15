@@ -112,9 +112,7 @@ function WishesLinkCreate({
       </InputForm>
 
       <InputForm title="친구에게 남기고 싶은 한마디">
-        <InputTextarea
-          register={methods.register('message', { ...wishesLinkDataValidate.message })}
-        >
+        <InputTextarea register={methods.register('message')}>
           <span className="font-galmuri text-[12px] text-gray2">{`${
             methods.watch('message').toString().length
           }/${MAX_HINT_LENGHT}`}</span>
@@ -275,10 +273,7 @@ export function WishesAccountCreateInput({
             styles={{ backgroundColor: '#3C0F0F', color: colors.warning_red }}
             readOnly
           />
-          <InputText
-            placeholder="예금주명"
-            register={methods.register('name', wishesAccountDataValidate.name)}
-          />
+          <InputText placeholder="예금주명" register={methods.register('name')} />
 
           <InputText
             placeholder="은행선택"
@@ -291,7 +286,7 @@ export function WishesAccountCreateInput({
             <div className="flex-grow-3">
               <InputText
                 placeholder="계좌번호를 입력해주세요"
-                register={methods.register('account', wishesAccountDataValidate.account)}
+                register={methods.register('account')}
               />
             </div>
             <div className="flex-grow-1">
@@ -314,7 +309,7 @@ export function WishesAccountCreateInput({
 
       <InputForm title="휴대폰번호 입력하기">
         <div className="flex flex-col gap-24">
-          <InputText register={methods.register('phone', wishesAccountDataValidate.phone)} />
+          <InputText register={methods.register('phone')} />
 
           <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl ">
             {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}

@@ -2,7 +2,6 @@ import { MainProgressDataResponseType, WishesProgressDataResponseType } from '@/
 import { client } from './common/axios';
 import { getAccessToken } from '@/utils/common/token';
 import { API_VERSION_01, PATH_WISHES } from './path';
-
 import { UseFormReturn } from 'react-hook-form';
 import { SiteDataType } from '@/types/siteDataType';
 import { WishesDataInputType } from '@/types/wishesType';

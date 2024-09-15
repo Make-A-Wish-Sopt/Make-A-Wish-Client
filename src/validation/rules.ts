@@ -1,4 +1,3 @@
-import { LIMIT_TEXT } from '@/constant/limitText';
 import { WishesDataInputType } from '@/types/wishesType';
 
 export const RULES: Record<keyof WishesDataInputType, unknown> = {
@@ -17,7 +16,7 @@ export const RULES: Record<keyof WishesDataInputType, unknown> = {
       value: 0,
     },
     maxLength: {
-      value: LIMIT_TEXT[15],
+      value: 15,
       message: '15자 까지 입력이 가능합니다!',
     },
   },

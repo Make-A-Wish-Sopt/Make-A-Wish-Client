@@ -1,9 +1,10 @@
 import WishesCreate, { WishesAccountCreateInput } from './wishes-create-container.client';
 import { UseFormReturn } from 'react-hook-form';
-import { WishesAccountDataType } from '@/types/wishes/create/wishesCreateDataType';
+
 import { useGetUserAccount } from '@/hooks/queries/user';
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
+import { WishesAccountDataType } from '@/types/input';
 
 export default function WishesCreateContainer() {
   return (

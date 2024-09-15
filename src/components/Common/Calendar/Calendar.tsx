@@ -34,7 +34,7 @@ export default function Calendar(props: CalendarProps) {
           locale={ko}
           dateFormat="yyyy.MM.dd"
           selected={new Date(date)}
-          onChange={handleChangeDate}
+          onChange={() => handleChangeDate(date)}
           minDate={new Date()}
           selectsEnd
           readOnly={readOnly}
