@@ -30,6 +30,7 @@ import Modal from '@/components/Common/Modal';
 import { colors } from '@/styles/styles';
 import dynamic from 'next/dynamic';
 import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
+import Box from '@/components/Common/Box';
 
 export default function WishesCreate() {
   const { step } = useStepInputContext();
@@ -129,9 +130,9 @@ function WishesLinkCreate({
       </InputForm>
 
       <InputForm title="생일 선물도 받고 싶어요!">
-        <ul className="flex flex-col gap-12">
+        <ul className="flex flex-col gap-12 font-galmuri text-white">
           <li
-            className="w-full  bg-dark_green px-12 py-14 rounded-xl"
+            className="w-full bg-dark_green px-12 py-14 rounded-xl"
             onClick={() => {
               methods.setValue('wishesType', true);
             }}
@@ -144,7 +145,7 @@ function WishesLinkCreate({
           </li>
 
           <li
-            className="flex items-center gap-8 w-full h-50 font-galmuri text-white text-[14px] bg-dark_green round-xl px-10 py-14 rounded-xl"
+            className="flex items-center gap-8 w-full h-50 text-[14px] bg-dark_green round-xl px-10 py-14 rounded-xl"
             onClick={() => {
               methods.setValue('wishesType', false);
               changeOpenState(false);
@@ -153,6 +154,39 @@ function WishesLinkCreate({
             <RadioSelect isSelect={!methods.watch('wishesType')} />
             아니요. 편지만 받을래요!
           </li>
+
+          {/* <li className="bg-dark_blue">
+            <Box
+              bgColor="dark_green"
+              fontColor="white"
+              font="galmuri"
+              onClick={() => {
+                methods.setValue('wishesType', true);
+              }}
+            >
+              <DropDwonBox isOpen={toggleState} handleToggle={handleToggle}>
+                <RadioSelect isSelect={methods.watch('wishesType')} />
+                <span className="w-full">네! 생일 선물도 받아볼래요</span>
+              </DropDwonBox>
+              {toggleState && <DropDownContent />}
+            </Box>
+          </li>
+
+          <li>
+            <Box
+              bgColor="dark_green"
+              fontColor="white"
+              font="galmuri"
+              onClick={() => {
+                methods.setValue('wishesType', false);
+                changeOpenState(false);
+              }}
+              styles={{ display: 'flex', alignItems: 'center' }}
+            >
+              <RadioSelect isSelect={!methods.watch('wishesType')} />
+              <span>아니요. 편지만 받을래요!</span>
+            </Box>
+          </li> */}
         </ul>
       </InputForm>
 
@@ -270,7 +304,8 @@ export function WishesAccountCreateInput({
         <div className="flex flex-col gap-12">
           <InputText
             value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
-            styles={{ backgroundColor: '#3C0F0F', color: colors.warning_red }}
+            boxStyles={{ backgroundColor: '#3C0F0F' }}
+            styles={{ color: colors.warning_red }}
             readOnly
           />
           <InputText placeholder="예금주명" register={methods.register('name')} />

@@ -25,7 +25,7 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <Box bgColor="dark_blue" fontColor={readOnly ? 'gray2' : 'white'}>
+    <Box bgColor="dark_green" fontColor={readOnly ? 'gray2' : 'white'}>
       <div className="flex justify-between items-center w-full h-full text-[12px] font-galmuri">
         <DatePicker
           renderCustomHeader={({ date, changeYear, changeMonth }) => (
