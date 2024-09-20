@@ -131,3 +131,8 @@ BANK_LIST[29].bankCode = '0055'; //도이치
 BANK_LIST[30].bankCode = '0057'; //JP모간
 BANK_LIST[31].bankCode = '0061'; //BNP파리바
 BANK_LIST[31].bankCode = '0067'; //중국건설
+
+export const PAY_LIST = [
+  { id: 1, name: '토스뱅크' },
+  { id: 2, name: '카카오뱅크' },
+];

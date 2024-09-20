@@ -8,9 +8,9 @@ export default function WishesCreatePage() {
     <>
       <Header backBtn />
       <MainLayout>
-        <StepInputProvider>
-          <WishesCreateContainer />
-        </StepInputProvider>
+        {/* <StepInputProvider> */}
+        <WishesCreateContainer />
+        {/* </StepInputProvider> */}
       </MainLayout>
     </>
   );

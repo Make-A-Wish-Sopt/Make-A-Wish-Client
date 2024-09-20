@@ -3,9 +3,10 @@
 import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 import { CarouselType } from '@/types/carousel';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeftIc, ArrowRightIc } from '../../../../public/assets/icons';
 import useCarousel from '@/hooks/common/useCarousel';
+import { ParamsIdType } from '@/types/params';
 
 export function SelectCakes<T extends CarouselType>({ itemList }: { itemList: Array<T> }) {
   const { center, left, right, next, prev } = useCarousel(itemList.length - 1);
@@ -36,8 +37,10 @@ export function SelectCakes<T extends CarouselType>({ itemList }: { itemList: Ar
 export function PresentButton() {
   const router = useRouter();
 
+  const { id } = useParams<ParamsIdType>();
+
   const handleClick = () => {
-    router.push('/');
+    router.push(`/present/${id}`);
   };
 
   return (

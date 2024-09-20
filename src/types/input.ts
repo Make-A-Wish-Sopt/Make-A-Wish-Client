@@ -1,6 +1,7 @@
 export interface PresentDatType {
   name: string;
   message: string;
+  check: boolean;
 }
 
 export interface WishesLinkDataType {

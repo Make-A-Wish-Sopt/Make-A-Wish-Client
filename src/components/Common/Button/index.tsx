@@ -1,9 +1,9 @@
 'use client';
 
-import React, { CSSProperties, PropsWithChildren, ReactNode } from 'react';
+import React, { ButtonHTMLAttributes, CSSProperties, PropsWithChildren, ReactNode } from 'react';
 import { colors, ColorsTypes, FontsTypes } from '@/styles/styles';
 
-export interface ButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   disabled?: boolean;
   bgColor?: keyof ColorsTypes;

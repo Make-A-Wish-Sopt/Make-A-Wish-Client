@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import Loading from '@/app/loading';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthProvider from '@/context/authContext';
+import StepInputProvider from '@/context/stepInputContext';
 
 export default function GlobalRegistry({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
@@ -17,9 +18,11 @@ export default function GlobalRegistry({ children }: { children: React.ReactNode
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Suspense fallback={<Loading />}>{children}</Suspense>
-      </AuthProvider>
+      <StepInputProvider>
+        <AuthProvider>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </AuthProvider>
+      </StepInputProvider>
     </QueryClientProvider>
   );
 }

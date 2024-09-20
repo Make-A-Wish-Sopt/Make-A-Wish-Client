@@ -1,19 +1,17 @@
+'use client';
+
 import { presentList } from '@/constant/presentList';
+import useSelectItem from '@/hooks/common/useSelectItem';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function PresentList({ readonly }: { readonly?: boolean }) {
-  const [selectedId, setSelectedId] = useState(0);
+  const { selectedId, isSelected, handleSelectOne } = useSelectItem();
 
   function handleClick(id: number) {
     if (readonly) return;
 
-    setSelectedId(id);
-  }
-
-  function isSelected(id: number) {
-    return selectedId === id;
+    handleSelectOne(id);
   }
 
   return (

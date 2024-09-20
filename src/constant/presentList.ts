@@ -1,3 +1,4 @@
+import { StaticImageData } from 'next/image';
 import {
   PresentItem1Img,
   PresentItem2Img,
@@ -7,7 +8,14 @@ import {
   PresentItem6Img,
 } from '../../public/assets/images';
 
-export const presentList = [
+export interface PresentItemType {
+  id: number;
+  itemName: string;
+  price: number;
+  image: StaticImageData;
+}
+
+export const presentList: Array<PresentItemType> = [
   { id: 1, itemName: '커피였던', price: 4900, image: PresentItem1Img },
   { id: 2, itemName: '비타민이었던', price: 9900, image: PresentItem2Img },
   { id: 3, itemName: '핸드크림이었던', price: 17900, image: PresentItem3Img },
