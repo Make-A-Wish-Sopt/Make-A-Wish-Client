@@ -136,12 +136,15 @@ function SelectPayment() {
 
     if (window.confirm(`${payment?.name}(으)로 이동할까요?`)) {
       if (payment?.name === '토스뱅크') {
-        // window.open(
-        //   ua.indexOf('android') > -1
-        //     ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-        //     : 'https://apps.apple.com/app/id839333328',
-        // );
-        window.open('toss://');
+        window.open('supertoss://toss/pay');
+
+        setTimeout(() => {
+          window.open(
+            ua.indexOf('android') > -1
+              ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
+              : 'https://apps.apple.com/app/id839333328',
+          );
+        }, 2000);
       }
 
       if (payment?.name === '카카오뱅크') {
@@ -173,6 +176,9 @@ function SelectPayment() {
           ))}
         </ul>
       </InputForm>
+      <a className="text-white" href="toss://transfer?amount=10000">
+        10,000원 송금하기
+      </a>
       <Button onClick={() => handleDeepLink(BANK_LIST[5])}>친구 계좌로 선물하기</Button>
     </>
   );
