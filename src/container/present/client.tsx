@@ -136,19 +136,21 @@ function SelectPayment() {
 
     if (window.confirm(`${payment?.name}(으)로 이동할까요?`)) {
       if (payment?.name === '토스뱅크') {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-            : 'https://apps.apple.com/app/id839333328',
-        );
+        // window.open(
+        //   ua.indexOf('android') > -1
+        //     ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
+        //     : 'https://apps.apple.com/app/id839333328',
+        // );
+        window.open('toss://');
       }
 
       if (payment?.name === '카카오뱅크') {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
-            : 'https://apps.apple.com/app/id1258016944',
-        );
+        // window.open(
+        //   ua.indexOf('android') > -1
+        //     ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
+        //     : 'https://apps.apple.com/app/id1258016944',
+        // );
+        window.open('kakaobank://');
       }
     }
   };
