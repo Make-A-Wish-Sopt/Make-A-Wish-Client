@@ -5,7 +5,7 @@ import { useForm, UseFormReturn } from 'react-hook-form';
 
 import InputForm from '@/components/UI/InputForm';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
-import { MAX_HINT_LENGHT } from '@/constant/input';
+
 import Calendar from '@/components/Common/Calendar/Calendar';
 import { getDate } from '@/utils/common/getDate';
 import { useEffect, useState } from 'react';
@@ -31,6 +31,7 @@ import { colors } from '@/styles/styles';
 import dynamic from 'next/dynamic';
 import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import Box from '@/components/Common/Box';
+import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 
 export default function WishesCreate() {
   const { step } = useStepInputContext();
@@ -116,7 +117,7 @@ function WishesLinkCreate({
         <InputTextarea register={methods.register('message')}>
           <span className="font-galmuri text-[12px] text-gray2">{`${
             methods.watch('message').toString().length
-          }/${MAX_HINT_LENGHT}`}</span>
+          }/${MAX_TEXTAREA_LENGTH}`}</span>
         </InputTextarea>
       </InputForm>
 

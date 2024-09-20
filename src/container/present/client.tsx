@@ -10,7 +10,7 @@ import InputTextForm, { TextCount } from '@/components/UI/InputTextForm';
 import PresentList from '@/components/UI/PresentList';
 import Box from '@/components/Common/Box';
 import CheckBox from '@/components/UI/CheckBox';
-import { MAX_MESSGE_TO_WISHES_LENGHT } from '@/constant/input';
+import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import Button from '@/components/Common/Button';
 import { BANK_LIST, PAY_LIST } from '@/constant/bankList';
 import useSelectItem from '@/hooks/common/useSelectItem';
@@ -106,7 +106,7 @@ function GiverInfoInputForm() {
           registerName="message"
           placeholder="ex.) 생일을 축하합니다~"
         >
-          <TextCount textLength={messageCount.length} maxLength={MAX_MESSGE_TO_WISHES_LENGHT} />
+          <TextCount textLength={messageCount.length} maxLength={MAX_TEXTAREA_LENGTH} />
         </InputTextForm>
 
         <Button
