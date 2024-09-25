@@ -9,7 +9,7 @@ export default function PresentList<T>({
   registerName,
   readonly,
 }: {
-  registerName: keyof T;
+  registerName?: keyof T;
   readonly?: boolean;
 }) {
   const { setValue, control } = useFormContext();

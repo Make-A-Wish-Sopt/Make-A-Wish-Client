@@ -55,4 +55,5 @@ export const wishesAccountDataValidate: Record<keyof WishesAccountDataType, Regi
       message: '휴대폰 번호는 최대 11자리여야 합니다.',
     },
   },
+  noticeAgree: {},
 };
