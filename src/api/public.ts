@@ -6,9 +6,9 @@ import { getAccessToken } from '@/utils/common/token';
 
 const ACCESS_TOKEN = getAccessToken();
 
-export const getPublicWishes = async (wishId: string | string[] | undefined) => {
+export const getPublicWishes = async (wishId: string) => {
   const data = await client.get<PublicWishesDataResponseType>(
-    `${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(wishId)}`,
+    `${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(Number(wishId))}`,
   );
 
   return data.data.data;

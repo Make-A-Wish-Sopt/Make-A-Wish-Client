@@ -15,7 +15,8 @@ import { WishLinksType } from '@/types/links/wishLinksType';
 import router from 'next/router';
 import { UseFormReturn } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useSetRecoilState } from 'recoil';
+import { useAuthContext } from '@/context/authContext';
+import { WishesLinkDataType } from '@/types/input';
 
 // /**
 //  * 모든 소원리스트 조회
@@ -43,34 +44,34 @@ import { useSetRecoilState } from 'recoil';
 // /**
 //  * 진행중인 소원 중단
 //  */
-// export function usePatchProgressWishes() {
-//   const { mutate: handlePatchProgressWishes } = useMutation(patchProgressWishes, {
-//     onSuccess: () => {
-//       alert('진행중인 소원을 중단했어요!');
-//       router.back();
-//     },
-//   });
+export function usePatchProgressWishes() {
+  const { mutate: handlePatchProgressWishes } = useMutation(patchProgressWishes, {
+    onSuccess: () => {
+      alert('진행중인 소원을 중단했어요!');
+      router.back();
+    },
+  });
 
-//   return { handlePatchProgressWishes };
-// }
+  return { handlePatchProgressWishes };
+}
 
 // /**
 //  * 소원링크 생성
 //  */
-// export function usePostWishes(methods: UseFormReturn<WishesDataInputType, any, undefined>) {
-//   const setLoginUserInfo = useSetRecoilState(LoginUserInfo);
+export function usePostWishes(methods: UseFormReturn<WishesLinkDataType, any, undefined>) {
+  const { setLoginUserInfo } = useAuthContext();
 
-//   const { mutate: handlePostWishes } = useMutation(() => postWishes(methods), {
-//     onSuccess: (data) => {
-//       setLoginUserInfo((prevData) => ({
-//         ...prevData,
-//         wishesId: data.data.data,
-//       }));
-//     },
-//   });
+  const { mutate: handlePostWishes } = useMutation(() => postWishes(methods), {
+    onSuccess: (data) => {
+      setLoginUserInfo((prevData) => ({
+        ...prevData,
+        wishId: data.data.data,
+      }));
+    },
+  });
 
-//   return { handlePostWishes };
-// }
+  return { handlePostWishes };
+}
 
 // /**
 //  * 소원링크 삭제
@@ -92,22 +93,19 @@ import { useSetRecoilState } from 'recoil';
 // /**
 //  * 진행중인 소원 정보 조회
 //  */
-// export function useGetWishesProgress() {
-//   const { data: wishesProgressData, ...restProps } = useQuery(
-//     QUERY_KEY.PROGRESS,
-//     getProgressWishInfo,
-//   );
+export function useGetWishesProgress() {
+  const { data: wishesProgressData, ...rest } = useQuery(QUERY_KEY.PROGRESS, getProgressWishInfo);
 
-//   return { wishesProgressData, ...restProps };
-// }
+  return { wishesProgressData, ...rest };
+}
 
 /**
  * 진행중인 소원 조회(메인화면)
  */
 export function useGetMainProgressData() {
-  const { data: progressData, ...restProps } = useQuery(QUERY_KEY.MAIN, getMainProgressData);
+  const { data: progressData, ...rest } = useQuery(QUERY_KEY.MAIN, getMainProgressData);
 
-  return { progressData, ...restProps };
+  return { progressData, ...rest };
 }
 
 // /**

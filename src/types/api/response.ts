@@ -1,3 +1,4 @@
+import { CakeItemType } from '../model';
 import { AccountInfoType, MainProgressDataType, WishesProgressDataType } from '../wishesType';
 
 export type DefaultResponseType<T = unknown> = {
@@ -33,3 +34,5 @@ export type PostPublicCakesResponseType = DefaultResponseType<{
   contribute: string;
   wisher: string;
 }>;
+
+export type GetCakesResultResponseType = DefaultResponseType<Array<CakeItemType>>;

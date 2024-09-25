@@ -1,7 +1,15 @@
 'use client';
 
 import { LoginUserInfoType } from '@/types/common/loginUserType';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -9,12 +17,13 @@ interface AuthContextType {
   getAccessToken: () => void;
   onLogin: (loginUserInfo: LoginUserInfoType) => void;
   onLogout: () => void;
+  setLoginUserInfo: Dispatch<SetStateAction<LoginUserInfoType>>;
 }
 
 const LOCAL_STORAGE_KEY = {
   TOKEN: 'accessToken',
   NAME: 'nickName',
-  ID: 'wishesId',
+  ID: 'wishId',
 } as const;
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -22,7 +31,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginUserInfo, setLoginUserInfo] = useState<LoginUserInfoType>({
     nickName: '',
-    wishesId: '',
+    wishId: '',
     accessToken: '',
   });
 
@@ -32,7 +41,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     setLoginUserInfo({
       accessToken: getAccessToken() as string,
       nickName: localStorage.getItem(LOCAL_STORAGE_KEY.NAME) as string,
-      wishesId: localStorage.getItem(LOCAL_STORAGE_KEY.ID) as string,
+      wishId: localStorage.getItem(LOCAL_STORAGE_KEY.ID) as string,
     });
   }, []);
 
@@ -48,14 +57,15 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   function onLogin(loginUserInfo: LoginUserInfoType) {
     localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, loginUserInfo.accessToken);
-    localStorage.setItem(LOCAL_STORAGE_KEY.ID, loginUserInfo.wishesId);
+    localStorage.setItem(LOCAL_STORAGE_KEY.ID, loginUserInfo.wishId);
     localStorage.setItem(LOCAL_STORAGE_KEY.NAME, loginUserInfo.nickName);
 
     setLoginUserInfo({
       accessToken: loginUserInfo.accessToken,
       nickName: loginUserInfo.nickName,
-      wishesId: loginUserInfo.wishesId,
+      wishId: loginUserInfo.wishId,
     });
+    setIsLoggedIn(true);
   }
 
   function onLogout() {
@@ -64,12 +74,16 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     setLoginUserInfo({
       accessToken: '',
       nickName: '',
-      wishesId: '',
+      wishId: '',
     });
+
+    setIsLoggedIn(false);
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, loginUserInfo, getAccessToken, onLogin, onLogout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, loginUserInfo, getAccessToken, onLogin, onLogout, setLoginUserInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );

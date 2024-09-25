@@ -1,13 +1,18 @@
+'use client';
+
 import { getPublicWishes, postPublicCakes } from '@/api/public';
 import { PostPublicCakesRequestType } from '@/types/api/request';
+import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from 'react-query';
 
-export function useGetPublicWishes(wishId: string | string[] | undefined) {
-  const { data: publicWishesData } = useQuery('publicWishes', () => getPublicWishes(wishId), {
-    enabled: wishId !== '',
-  });
+export function useGetPublicWishes(wishId: string) {
+  const { data: publicWishesData, ...rest } = useQuery(
+    'publicWishes',
+    () => getPublicWishes(wishId),
+    { enabled: wishId !== '' },
+  );
 
-  return { publicWishesData };
+  return { publicWishesData, ...rest };
 }
 
 export function usePostPublicCakes(parameter: PostPublicCakesRequestType) {

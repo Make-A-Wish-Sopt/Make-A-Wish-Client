@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ko } from 'date-fns/locale';
-import { UseFormReturn } from 'react-hook-form';
+import { UseFormReturn, useWatch } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarHeader from './CalendarHeader';
@@ -18,6 +18,18 @@ interface CalendarProps {
 
 export default function Calendar(props: CalendarProps) {
   const { date, methods, readOnly } = props;
+
+  const control = methods.control;
+
+  const watchStartDateData = useWatch({
+    control,
+    name: 'startDate',
+  });
+
+  const watchEndDateData = useWatch({
+    control,
+    name: 'endDate',
+  });
 
   const handleChangeDate = (selectedDate: Date) => {
     methods.setValue('startDate', selectedDate);

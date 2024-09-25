@@ -26,7 +26,7 @@ export default function Kakao() {
       onLogin({
         accessToken: accessToken,
         nickName: nickName,
-        wishesId: '',
+        wishId: '',
       });
 
       router.push('/wishes');

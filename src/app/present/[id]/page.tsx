@@ -1,13 +1,13 @@
 import Header from '@/components/Common/Hedaer';
-import PresentContainer from '@/container/present/server';
+import GivePresentPageContainer from '@/container/present/container';
 import MainLayout from '@/layouts/MainLayout';
 
-export default function PresentPage() {
+export default function GivePresentPage() {
   return (
     <>
       <Header backBtn />
       <MainLayout>
-        <PresentContainer />
+        <GivePresentPageContainer />
       </MainLayout>
     </>
   );

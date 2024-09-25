@@ -1,5 +1,5 @@
 import Header from '@/components/Common/Hedaer';
-import WishesCreateContainer from '@/container/wishes/create/wishes-create-container.server';
+import WishesCreateContainer from '@/container/wishes/create/server';
 import StepInputProvider from '@/context/stepInputContext';
 import MainLayout from '@/layouts/MainLayout';
 

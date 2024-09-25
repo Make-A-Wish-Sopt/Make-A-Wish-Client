@@ -2,11 +2,11 @@
 
 import { ReactNode } from 'react';
 import { useStepInputContext } from '@/context/stepInputContext';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { PresentDatType } from '@/types/input';
 import useToggle from '@/hooks/common/useToggle';
 import InputForm from '@/components/UI/InputForm';
-import InputTextForm, { TextCount } from '@/components/UI/InputTextForm';
+import InputTextForm from '@/components/UI/InputTextForm';
 import PresentList from '@/components/UI/PresentList';
 import Box from '@/components/Common/Box';
 import CheckBox from '@/components/UI/CheckBox';
@@ -19,22 +19,29 @@ import { CheckPresentItem, MessageFromWisheMaker } from './server';
 import { presentList } from '@/constant/presentList';
 import { BankListType } from '@/types/bankListType';
 
-export default function PresentForm({ children }: { children?: ReactNode }) {
+export function GivePresentForm({
+  StepOne,
+  StepTwo,
+}: {
+  StepOne: JSX.Element;
+  StepTwo: JSX.Element;
+}) {
   const { step } = useStepInputContext();
 
   return (
     <>
       {
         {
-          2: (
+          1: (
             <>
-              <MessageFromWisheMaker />
+              {StepOne}
               <GiverInfoInputForm />
             </>
           ),
-          1: (
+          2: (
             <>
-              <CheckPresentItem item={presentList[1]} />
+              {StepTwo}
+              {/* <CheckPresentItem item={presentList[1]} /> */}
               <SelectPayment />
             </>
           ),
@@ -44,24 +51,16 @@ export default function PresentForm({ children }: { children?: ReactNode }) {
   );
 }
 
-function GiverInfoInputForm() {
+export function GiverInfoInputForm() {
   const methods = useForm<PresentDatType>({
     mode: 'onChange',
     defaultValues: {
       name: '',
       message: '',
+      messageOnly: false,
     },
   });
 
-  // const { register, handleSubmit } = useForm<PresentDatType>({
-  //   mode: 'onChange',
-  //   defaultValues: {
-  //     name: '',
-  //     message: '',
-  //   },
-  // });
-
-  const { toggleState, handleToggle } = useToggle();
   const { nextBtnDisabled } = useStepInputContext();
 
   function onSubmit() {
@@ -71,13 +70,6 @@ function GiverInfoInputForm() {
     //   nextStep();
     // }
   }
-
-  const control = methods.control;
-
-  const messageCount = useWatch({
-    control,
-    name: 'message',
-  });
 
   return (
     <FormProvider {...methods}>
@@ -92,11 +84,7 @@ function GiverInfoInputForm() {
         <InputForm title="선물하고 싶은 항목 선택하기">
           <PresentList />
           <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-            <CheckBox
-              checkBoxState={toggleState}
-              checkBoxText="편지만 보낼게요"
-              handleClickFn={handleToggle}
-            />
+            <CheckBox<PresentDatType> checkBoxText="편지만 보낼게요" registerName="messageOnly" />
           </Box>
         </InputForm>
 
@@ -105,9 +93,8 @@ function GiverInfoInputForm() {
           inputTitle="친구에게 편지 남기기"
           registerName="message"
           placeholder="ex.) 생일을 축하합니다~"
-        >
-          <TextCount textLength={messageCount.length} maxLength={MAX_TEXTAREA_LENGTH} />
-        </InputTextForm>
+          maxLength={MAX_TEXTAREA_LENGTH}
+        />
 
         <Button
           type="submit"
@@ -134,27 +121,29 @@ function SelectPayment() {
     //   return;
     // }
 
-    if (window.confirm(`${payment?.name}(으)로 이동할까요?`)) {
-      if (payment?.name === '토스뱅크') {
-        window.open('supertoss://toss/pay');
+    if (payment?.name === '토스뱅크') {
+      window.open('supertoss://toss/pay');
 
-        setTimeout(() => {
-          window.open(
-            ua.indexOf('android') > -1
-              ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-              : 'https://apps.apple.com/app/id839333328',
-          );
-        }, 2000);
-      }
+      setTimeout(() => {
+        window.open(
+          ua.indexOf('android') > -1
+            ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
+            : 'https://apps.apple.com/app/id839333328',
+        );
+      }, 2000);
+    }
 
-      if (payment?.name === '카카오뱅크') {
-        // window.open(
-        //   ua.indexOf('android') > -1
-        //     ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
-        //     : 'https://apps.apple.com/app/id1258016944',
-        // );
-        window.open('kakaobank://');
-      }
+    if (payment?.name === '카카오뱅크') {
+      window.open('kakaobank://');
+      window.open('kakaopay://');
+
+      setTimeout(() => {
+        window.open(
+          ua.indexOf('android') > -1
+            ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
+            : 'https://apps.apple.com/app/id1258016944',
+        );
+      }, 2000);
     }
   };
 
@@ -176,9 +165,6 @@ function SelectPayment() {
           ))}
         </ul>
       </InputForm>
-      <a className="text-white" href="toss://transfer?amount=10000">
-        10,000원 송금하기
-      </a>
       <Button onClick={() => handleDeepLink(BANK_LIST[5])}>친구 계좌로 선물하기</Button>
     </>
   );

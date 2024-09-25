@@ -2,19 +2,20 @@ import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { RegisterOptions } from 'react-hook-form';
 
 export const wishesLinkDataValidate: Record<keyof WishesLinkDataType, RegisterOptions> = {
-  image: {
+  imageUrl: {
     required: '필수 입력 항목입니다.',
   },
-  message: {
+  hint: {
     required: '필수 입력 항목입니다.',
     maxLength: {
       value: 300,
       message: '최대 300자 까지 입력이 가능합니다.',
     },
   },
+  title: {},
   startDate: {},
   endDate: {},
-  wishesType: {},
+  wantsGift: {},
 };
 
 export const wishesAccountDataValidate: Record<keyof WishesAccountDataType, RegisterOptions> = {

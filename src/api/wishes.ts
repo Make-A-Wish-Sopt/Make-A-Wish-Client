@@ -5,6 +5,7 @@ import { API_VERSION_01, PATH_WISHES } from './path';
 import { UseFormReturn } from 'react-hook-form';
 import { SiteDataType } from '@/types/siteDataType';
 import { WishesDataInputType } from '@/types/wishesType';
+import { WishesLinkDataType } from '@/types/input';
 
 const ACCESS_TOKEN = getAccessToken();
 
@@ -12,6 +13,8 @@ const ACCESS_TOKEN = getAccessToken();
  * 진행중인 소원 조회
  */
 export const getMainProgressData = async () => {
+  if (!ACCESS_TOKEN) return;
+
   const data = await client.get<MainProgressDataResponseType>(
     `${API_VERSION_01}${PATH_WISHES.MAIN}`,
     {
@@ -42,18 +45,11 @@ export const getWishes = async () => {
 /**
  * 소원링크 생성
  */
-export const postWishes = async (methods: UseFormReturn<WishesDataInputType, any, undefined>) => {
+export const postWishes = async (methods: UseFormReturn<WishesLinkDataType, any, undefined>) => {
   const data = await client.post(
     `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
     {
-      imageUrl: methods.getValues('imageUrl'),
-      price: methods.getValues('price'),
-      title: methods.getValues('title'),
-      hint: methods.getValues('hint'),
-      initial: methods.getValues('initial'),
-      phone: methods.getValues('phone'),
-      startDate: methods.getValues('startDate'),
-      endDate: methods.getValues('endDate'),
+      ...methods.getValues(),
     },
     {
       headers: {

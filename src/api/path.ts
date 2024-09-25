@@ -30,12 +30,10 @@ export const PATH_WISHES = {
 
 export const PATH_PUBLIC = {
   CAKES: `${PATH.public}/cakes`,
-  GET_WISHES_INFO: (wishId: string | string[] | undefined) =>
-    `${PATH.public}${PATH.wishes}/${wishId}`,
+  GET_WISHES_INFO: (wishId: number) => `${PATH.public}${PATH.wishes}/${wishId}`,
 };
 
 export const PATH_CAKES = {
-  GET_CAKES_RESULT: (wishId: string | string[] | undefined) => `${PATH.cakes}/${wishId}`,
-  GET_CAKES_INFO: (wishId: string | string[] | undefined, cakeId: string | string[] | undefined) =>
-    `${PATH.cakes}/${wishId}/${cakeId}`,
+  GET_CAKES_RESULT: (wishId: string | number) => `${PATH.cakes}/${wishId}`,
+  GET_CAKES_INFO: (wishId: number, cakeId: number) => `${PATH.cakes}/${wishId}/${cakeId}`,
 };

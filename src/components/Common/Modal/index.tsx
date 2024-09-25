@@ -1,13 +1,15 @@
+import { ColorsTypes } from '@/styles/styles';
 import { PropsWithChildren } from 'react';
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
   handleToggle: () => void;
   bgNone?: boolean;
+  bgColor?: keyof ColorsTypes;
 }
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
-  const { isOpen, handleToggle, bgNone, children } = props;
+  const { isOpen, handleToggle, bgNone, bgColor, children } = props;
 
   return (
     <>
@@ -15,11 +17,13 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
         <div
           id="modal-overlay"
           className={`fixed top-0 left-0 flex justify-center items-center w-full h-[100svh] z-[9999] ${
-            bgNone ? 'bg-transparent' : 'bg-black/70'
+            bgColor ? `bg-${bgColor}` : 'bg-black/70'
           }`}
           onClick={handleToggle}
         >
-          <div onClick={(e) => e.stopPropagation()}>{children}</div>
+          <div className="w-full h-full" onClick={(e) => e.stopPropagation()}>
+            {children}
+          </div>
         </div>
       )}
     </>

@@ -24,6 +24,7 @@ export function UploadImageBox({
         type="file"
         accept=".jpg,.jpeg,.png"
         onChange={handleUploadImageFile}
+        disabled={handleUploadImageFile === undefined}
         readOnly
         style={{ display: 'none' }}
       ></input>

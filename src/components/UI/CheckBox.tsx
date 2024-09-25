@@ -1,24 +1,36 @@
 'use client';
 
-import Image from 'next/image';
 import { PropsWithChildren } from 'react';
-import { CheckedBoxIc, UnCheckedBoxIc } from '../../../public/assets/icons';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-interface CheckBoxProps {
-  checkBoxState: boolean;
+interface CheckBoxProps<T> {
   checkBoxText: string;
-  handleClickFn: () => void;
+  registerName?: keyof T;
 }
 
-export default function CheckBox(props: PropsWithChildren<CheckBoxProps>) {
-  const { checkBoxState, checkBoxText, handleClickFn } = props;
+export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) {
+  const { register, control } = useFormContext();
+  const { checkBoxText, registerName } = props;
+
+  const checkState = useWatch({
+    control,
+    name: registerName as string,
+  });
+
   return (
     <div className="flex items-center h-full">
-      {checkBoxState ? (
-        <Image src={CheckedBoxIc} alt="체크박스 아이콘" onClick={handleClickFn} />
-      ) : (
-        <Image src={UnCheckedBoxIc} alt="체크박스 아이콘" onClick={handleClickFn} />
-      )}
+      <input
+        className="w-20 h-20"
+        type="checkbox"
+        {...register(registerName as string)}
+        style={{
+          backgroundImage: `url(${
+            checkState ? '/assets/icons/checkedBoxIc.svg' : '/assets/icons/unCheckedBoxIc.svg'
+          })`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      />
       <span className="font-galmuri text-[14px] ml-8">{checkBoxText}</span>
     </div>
   );

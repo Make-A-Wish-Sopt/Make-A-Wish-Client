@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import InputForm from './InputForm';
 import InputText from '../Common/Input/inputText';
 import InputTextarea from '../Common/Input/inputTextarea';
@@ -9,36 +9,42 @@ export default function InputTextForm<T>({
   inputTitle,
   registerName,
   placeholder,
+  maxLength,
   children,
 }: {
   inputType: 'text' | 'textarea';
   inputTitle: string;
   registerName: keyof T;
   placeholder?: string;
+  maxLength?: number;
   children?: ReactNode;
 }) {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
+
+  const text = useWatch({
+    control,
+    name: registerName as string,
+  }) as string;
+
   return (
     <InputForm title={inputTitle}>
       {inputType === 'text' ? (
         <InputText register={register(registerName as string)} placeholder={placeholder}>
           {children}
+          {maxLength && <TextCount textLength={text.length} maxLength={maxLength} />}
         </InputText>
       ) : (
         <InputTextarea register={register(registerName as string)} placeholder={placeholder}>
           {children}
+          {maxLength && <TextCount textLength={text.length} maxLength={maxLength} />}
         </InputTextarea>
       )}
     </InputForm>
   );
 }
 
-// export default memo(InputTextForm);
-
-export const TextCount = memo(
-  ({ textLength, maxLength }: { textLength: number; maxLength: number }) => {
-    return (
-      <span className="font-galmuri text-[12px] text-gray2">{`${textLength}/${maxLength}`}</span>
-    );
-  },
-);
+export function TextCount({ textLength, maxLength }: { textLength: number; maxLength: number }) {
+  return (
+    <span className="font-galmuri text-[12px] text-gray2">{`${textLength}/${maxLength}`}</span>
+  );
+}

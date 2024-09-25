@@ -11,7 +11,9 @@ export default function InputForm(props: PropsWithChildren<InputFormProps>) {
 
   return (
     <div className="mb-30">
-      <h3 className="font-bitbit text-white text-[20px] mb-12 whitespace-pre-line">{title}</h3>
+      <h3 className="font-bitbit text-white text-[20px] leading-tight mb-12 whitespace-pre-line">
+        {title}
+      </h3>
       {children}
     </div>
   );

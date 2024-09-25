@@ -1,15 +1,16 @@
 export interface PresentDatType {
   name: string;
   message: string;
-  check: boolean;
+  messageOnly: boolean;
 }
 
 export interface WishesLinkDataType {
-  image: string;
-  message: string;
+  imageUrl: string;
+  title: string;
+  hint: string;
   startDate: Date;
   endDate: Date;
-  wishesType: boolean;
+  wantsGift: boolean;
 }
 
 export interface WishesAccountDataType extends AccountDataType {
