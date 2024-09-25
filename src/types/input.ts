@@ -1,7 +1,9 @@
-export interface PresentDatType {
+export interface PresentDataType {
   name: string;
   message: string;
   messageOnly: boolean;
+  avatarCakeId: number;
+  presentId: number;
 }
 
 export interface WishesLinkDataType {
@@ -15,6 +17,7 @@ export interface WishesLinkDataType {
 
 export interface WishesAccountDataType extends AccountDataType {
   phone: string;
+  noticeAgree: boolean;
 }
 
 export interface AccountDataType {

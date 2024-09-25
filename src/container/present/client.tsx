@@ -1,10 +1,8 @@
 'use client';
 
-import { ReactNode } from 'react';
 import { useStepInputContext } from '@/context/stepInputContext';
-import { FormProvider, useForm } from 'react-hook-form';
-import { PresentDatType } from '@/types/input';
-import useToggle from '@/hooks/common/useToggle';
+import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
+import { PresentDataType } from '@/types/input';
 import InputForm from '@/components/UI/InputForm';
 import InputTextForm from '@/components/UI/InputTextForm';
 import PresentList from '@/components/UI/PresentList';
@@ -15,98 +13,116 @@ import Button from '@/components/Common/Button';
 import { BANK_LIST, PAY_LIST } from '@/constant/bankList';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import RadioSelect from '@/components/UI/RadioSelect';
-import { CheckPresentItem, MessageFromWisheMaker } from './server';
-import { presentList } from '@/constant/presentList';
 import { BankListType } from '@/types/bankListType';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
+
+const CheckPresentItem = dynamic(() => import('./checkPresentItem'));
 
 export function GivePresentForm({
-  StepOne,
-  StepTwo,
+  wantsGift,
+  avatarCakeId,
+  MessageFromWisheMaker,
 }: {
-  StepOne: JSX.Element;
-  StepTwo: JSX.Element;
+  wantsGift?: boolean;
+  avatarCakeId: string;
+  MessageFromWisheMaker: JSX.Element;
 }) {
-  const { step } = useStepInputContext();
+  const { step, changeNextBtnDisabledState } = useStepInputContext();
 
-  return (
-    <>
-      {
-        {
-          1: (
-            <>
-              {StepOne}
-              <GiverInfoInputForm />
-            </>
-          ),
-          2: (
-            <>
-              {StepTwo}
-              {/* <CheckPresentItem item={presentList[1]} /> */}
-              <SelectPayment />
-            </>
-          ),
-        }[step]
-      }
-    </>
-  );
-}
-
-export function GiverInfoInputForm() {
-  const methods = useForm<PresentDatType>({
+  const methods = useForm<PresentDataType>({
     mode: 'onChange',
     defaultValues: {
       name: '',
       message: '',
       messageOnly: false,
+      avatarCakeId: Number(avatarCakeId),
+      presentId: 0,
     },
   });
 
-  const { nextBtnDisabled } = useStepInputContext();
-
-  function onSubmit() {
-    // if (publicWishesData.wishesType) {
-    //   nextStep();
-    // } else {
-    //   nextStep();
-    // }
-  }
+  useEffect(() => {
+    if (methods.formState.isValid) {
+      changeNextBtnDisabledState(false);
+    }
+  }, [methods.formState]);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <InputTextForm<PresentDatType>
-          inputType="text"
-          inputTitle="본인의 닉네임 작성하기"
-          registerName="name"
-          placeholder="당신의 이름이나 별명을 편하게 작성해주세요"
-        />
+      {
+        {
+          1: (
+            <>
+              {MessageFromWisheMaker}
+              <PresentGiverInfoInputForm wantsGift={wantsGift} />
+            </>
+          ),
+          2: (
+            <>
+              <CheckPresentItem presentId={methods.getValues('presentId')} />
+              <SelectPayment />
+            </>
+          ),
+        }[step]
+      }
+    </FormProvider>
+  );
+}
 
+export function PresentGiverInfoInputForm({ wantsGift }: { wantsGift?: boolean }) {
+  const { nextBtnDisabled, nextStep } = useStepInputContext();
+  const { control, handleSubmit } = useFormContext();
+
+  const watchMessageOnly = useWatch({
+    control,
+    name: 'messageOnly' as string,
+  });
+
+  function onSubmit() {
+    if (wantsGift && !watchMessageOnly) {
+      nextStep();
+    } else {
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputTextForm<Pick<PresentDataType, 'name'>>
+        inputType="text"
+        inputTitle="본인의 닉네임 작성하기"
+        registerName="name"
+        placeholder="당신의 이름이나 별명을 편하게 작성해주세요"
+      />
+
+      {wantsGift && (
         <InputForm title="선물하고 싶은 항목 선택하기">
-          <PresentList />
+          {!watchMessageOnly && (
+            <PresentList<Pick<PresentDataType, 'presentId'>> registerName={'presentId'} />
+          )}
           <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-            <CheckBox<PresentDatType> checkBoxText="편지만 보낼게요" registerName="messageOnly" />
+            <CheckBox<PresentDataType> checkBoxText="편지만 보낼게요" registerName="messageOnly" />
           </Box>
         </InputForm>
+      )}
 
-        <InputTextForm<PresentDatType>
-          inputType="textarea"
-          inputTitle="친구에게 편지 남기기"
-          registerName="message"
-          placeholder="ex.) 생일을 축하합니다~"
-          maxLength={MAX_TEXTAREA_LENGTH}
-        />
+      <InputTextForm<Pick<PresentDataType, 'message'>>
+        inputType="textarea"
+        inputTitle="친구에게 편지 남기기"
+        registerName="message"
+        placeholder="ex.) 생일을 축하합니다~"
+        maxLength={MAX_TEXTAREA_LENGTH}
+      />
 
-        <Button
-          type="submit"
-          bgColor="main_blue"
-          fontColor="white"
-          styles={{ marginBottom: '5.8rem' }}
-          disabled={nextBtnDisabled}
-        >
-          친구 생일 축하해주기
-        </Button>
-      </form>
-    </FormProvider>
+      <Button
+        type="submit"
+        bgColor="main_blue"
+        fontColor="white"
+        styles={{ marginBottom: '5.8rem' }}
+        disabled={nextBtnDisabled}
+      >
+        친구 생일 축하해주기
+      </Button>
+    </form>
   );
 }
 

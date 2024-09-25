@@ -2,7 +2,6 @@
 
 import { getPublicWishes, postPublicCakes } from '@/api/public';
 import { PostPublicCakesRequestType } from '@/types/api/request';
-import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from 'react-query';
 
 export function useGetPublicWishes(wishId: string) {

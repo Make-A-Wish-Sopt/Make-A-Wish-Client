@@ -4,7 +4,6 @@ import { getAccessToken } from '@/utils/common/token';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_CAKES } from './path';
 import { GetCakesResultResponseType } from '@/types/api/response';
-import { useAuthContext } from '@/context/authContext';
 
 const ACCESS_TOKEN = getAccessToken();
 
@@ -37,4 +36,3 @@ export const getCakesResult = async (wishId: string) => {
   );
   return data.data.data;
 };
-

@@ -3,16 +3,10 @@
 import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
-import { PresentItemType } from '@/constant/presentList';
-import { convertMoneyText } from '@/utils/common/convertMoneyText';
-import Image from 'next/image';
 import { useGetPublicWishes } from '@/hooks/queries/public';
-import { useRouter } from 'next/navigation';
 
-export function MessageFromWisheMaker() {
-  const { publicWishesData } = useGetPublicWishes();
-
-  //
+export function MessageFromWisheMaker({ wishId }: { wishId: string }) {
+  const { publicWishesData } = useGetPublicWishes(wishId);
 
   return (
     <>
@@ -46,23 +40,5 @@ export function MessageFromWisheMaker() {
         <UploadImageBox preSignedImageUrl={''} />
       </div>
     </>
-  );
-}
-
-export function CheckPresentItem({ item }: { item?: PresentItemType }) {
-  return (
-    <div className="flex flex-col items-center">
-      <h3 className="font-bitbit text-main_blue text-[24px] mt-33 whitespace-pre-line">
-        주문 확인 내역
-      </h3>
-
-      {/* <span className="font-bitbit text-center text-white text-[24px] mt-33 whitespace-pre-line">
-        {`${item.itemName} ${convertMoneyText(item.price.toString())}원을\n선물하시겠어요?`}
-      </span>
-
-      <div>
-        <Image src={item.image} alt="선택한 선물 이미지" />
-      </div> */}
-    </div>
   );
 }

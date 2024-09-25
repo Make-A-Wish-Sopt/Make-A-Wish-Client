@@ -4,6 +4,7 @@ import { createContext, PropsWithChildren, useContext, useEffect, useState } fro
 
 interface StepInputContextType {
   step: number;
+  resetStep: () => void;
   nextStep: () => void;
   prevStep: () => void;
   nextBtnDisabled: boolean;
@@ -14,6 +15,7 @@ interface StepInputContextType {
 
 export const StepInputContext = createContext<StepInputContextType>({
   step: 1,
+  resetStep: () => {},
   nextStep: () => {},
   prevStep: () => {},
   nextBtnDisabled: true,
@@ -34,6 +36,10 @@ export default function StepInputProvider({ children }: PropsWithChildren) {
       setPrevBtnDisabled(false);
     }
   }, [step]);
+
+  function resetStep() {
+    setStep(1);
+  }
 
   function nextStep() {
     setStep(step + 1);
@@ -57,6 +63,7 @@ export default function StepInputProvider({ children }: PropsWithChildren) {
     <StepInputContext.Provider
       value={{
         step,
+        resetStep,
         nextStep,
         prevStep,
         nextBtnDisabled,

@@ -1,13 +1,13 @@
 import Header from '@/components/Common/Hedaer';
-import WishesInviteContainer from '@/container/wishes/[id]/server';
+import InvitedWishesPageContainer from '@/container/wishes/[id]/container';
 import MainLayout from '@/layouts/MainLayout';
 
-export default function WishesInvitePage() {
+export default function InvitedWishesPage() {
   return (
     <>
       <Header />
       <MainLayout>
-        <WishesInviteContainer />
+        <InvitedWishesPageContainer />
       </MainLayout>
     </>
   );

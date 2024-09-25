@@ -1,17 +1,27 @@
 'use client';
 
 import { presentList } from '@/constant/presentList';
-import useSelectItem from '@/hooks/common/useSelectItem';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import Image from 'next/image';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-export default function PresentList({ readonly }: { readonly?: boolean }) {
-  const { selectedId, isSelected, handleSelectOne } = useSelectItem();
+export default function PresentList<T>({
+  registerName,
+  readonly,
+}: {
+  registerName: keyof T;
+  readonly?: boolean;
+}) {
+  const { setValue, control } = useFormContext();
+  const watchPresentId = useWatch({
+    control,
+    name: registerName as string,
+  });
 
   function handleClick(id: number) {
     if (readonly) return;
 
-    handleSelectOne(id);
+    setValue(registerName as string, id);
   }
 
   return (
@@ -19,7 +29,7 @@ export default function PresentList({ readonly }: { readonly?: boolean }) {
       {presentList.map((item) => (
         <div
           className={`flex flex-col items-center p-9 flex-grow flex-shrink basis-[calc(33%-10px)] ${
-            isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
+            watchPresentId === item.id ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
           }
             font-bitbit rounded-xl`}
           onClick={() => handleClick(item.id)}

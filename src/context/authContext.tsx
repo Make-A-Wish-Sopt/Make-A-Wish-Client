@@ -1,6 +1,7 @@
 'use client';
 
 import { LoginUserInfoType } from '@/types/common/loginUserType';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
   Dispatch,
@@ -35,6 +36,9 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     accessToken: '',
   });
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   useEffect(() => {
     setIsLoggedIn(!!getAccessToken());
 
@@ -44,6 +48,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       wishId: localStorage.getItem(LOCAL_STORAGE_KEY.ID) as string,
     });
   }, []);
+
+  useEffect(() => {
+    if (pathname === '/' && isLoggedIn) {
+      router.push('/wishes');
+    }
+  }, [pathname, isLoggedIn]);
 
   function getAccessToken() {
     return localStorage.getItem(LOCAL_STORAGE_KEY.TOKEN);

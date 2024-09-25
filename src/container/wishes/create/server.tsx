@@ -1,3 +1,5 @@
+'use client';
+
 import WishesCreate, { WishesAccountCreateInput } from './client';
 import { UseFormReturn } from 'react-hook-form';
 

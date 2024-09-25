@@ -24,6 +24,7 @@ export type PublicWishesDataResponseType = DefaultResponseType<{
   dayCount: number;
   title: string;
   hint: string;
+  wantsGift: boolean;
 }>;
 
 export type PostPublicCakesResponseType = DefaultResponseType<{

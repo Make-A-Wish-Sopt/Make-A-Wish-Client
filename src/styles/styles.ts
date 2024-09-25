@@ -27,6 +27,7 @@ export const sizes = {
   ...sizeList,
   220: '22rem',
   235: '23.5rem',
+  250: '25rem',
   300: '30rem',
   331: '33.1rem',
   350: '35rem',

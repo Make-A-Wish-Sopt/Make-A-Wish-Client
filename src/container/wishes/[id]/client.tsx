@@ -1,55 +1,74 @@
 'use client';
 
-import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
-
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeftIc, ArrowRightIc } from '../../../../public/assets/icons';
 import useCarousel from '@/hooks/common/useCarousel';
-import { CakeItemType, CakeSelectItemType } from '@/types/model';
+import { CakeItemType, AvatarCakeType } from '@/types/model';
+import Button from '@/components/Common/Button';
 
-export function SelectCakes<T extends CakeItemType | CakeSelectItemType>({
-  itemList,
+export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
+  avatarCakeList,
 }: {
-  itemList: Array<T>;
+  avatarCakeList: Array<T>;
 }) {
-  const { center, left, right, next, prev } = useCarousel(itemList.length - 1);
+  const { center, left, right, next, prev } = useCarousel(avatarCakeList.length - 1);
 
-  return (
-    <>
-      <ul className="flex justify-between items-center gap-20 w-full h-300 ">
-        <li className="-ml-120 w-220 h-220 opacity-50">
-          <Image src={itemList[left].image} alt="이미지" priority />
-        </li>
-        <div className="flex justify-center items-center w-30 h-30" onClick={prev}>
-          <Image src={ArrowLeftIc} alt="왼쪽 화살표" width={10} priority></Image>
-        </div>
-        <li className="w-220 h-220">
-          <Image src={itemList[center].image} alt="이미지" priority />
-        </li>
-        <div className="flex justify-center items-center w-30 h-30" onClick={next}>
-          <Image src={ArrowRightIc} alt="오른쪽 화살표" priority></Image>
-        </div>
-        <li className="-mr-120 w-220 h-220 opacity-50">
-          <Image src={itemList[right].image} alt="이미지" priority />
-        </li>
-      </ul>
-    </>
-  );
-}
-
-export function PresentButton() {
   const router = useRouter();
 
   const { id } = useParams<{ id: string }>();
 
   const handleClick = () => {
-    router.push(`/present/${id}`);
+    router.push(`/present/${id}?avatarCakeId=${center}`);
   };
 
   return (
-    <FixedBottomButton bgColor="main_blue" fontColor="black" onClick={handleClick}>
-      친구 생일잔치 입장하기
-    </FixedBottomButton>
+    <>
+      <ul className="relative flex justify-center w-full h-300 mb-46">
+        <li className="absolute opacity-50" style={{ top: 0, left: '-50%' }}>
+          <Image src={avatarCakeList[left].image} alt="이전 케이크 이미지" width={250} priority />
+        </li>
+
+        <li
+          className="absolute flex justify-center items-center  top w-30 h-30"
+          onClick={prev}
+          style={{
+            top: '50%',
+            left: '15%',
+            zIndex: 1,
+          }}
+        >
+          <Image src={ArrowLeftIc} alt="왼쪽 화살표" width={10} priority></Image>
+        </li>
+
+        <li>
+          <Image
+            src={avatarCakeList[center].image}
+            alt="선택한 케이크 이미지"
+            width={250}
+            priority
+          />
+        </li>
+
+        <li
+          className="absolute flex justify-center items-center w-30 h-30"
+          onClick={next}
+          style={{
+            top: '50%',
+            left: 'calc(85% + -15px)',
+            zIndex: 1,
+          }}
+        >
+          <Image src={ArrowRightIc} alt="오른쪽 화살표" priority></Image>
+        </li>
+
+        <li className="absolute opacity-50" style={{ top: 0, right: '-50%' }}>
+          <Image src={avatarCakeList[right].image} alt="이미지" width={250} priority />
+        </li>
+      </ul>
+      <Button bgColor="main_blue" fontColor="black" onClick={handleClick}>
+        친구 생일잔치 입장하기
+      </Button>
+    </>
   );
 }

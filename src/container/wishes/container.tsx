@@ -14,10 +14,7 @@ export default function WishesPageContainer() {
   const { publicWishesData, isLoading } = useGetPublicWishes(wishId);
   const { receivedCakeList, receivedCakeListTotalCount } = useGetCakesResult(wishId);
 
-  console.log(progressData);
-  console.log(wishId);
-  console.log(publicWishesData);
-  console.log(receivedCakeList);
+  
 
   return (
     <>

@@ -31,9 +31,14 @@ import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import InputTextForm from '@/components/UI/InputTextForm';
 import { usePostWishes } from '@/hooks/queries/wishes';
+import { useRouter } from 'next/navigation';
 
 export default function WishesCreate() {
-  const { step } = useStepInputContext();
+  const { step, resetStep } = useStepInputContext();
+
+  useEffect(() => {
+    resetStep();
+  }, []);
 
   const wishesLinkMethods = useForm<WishesLinkDataType>({
     mode: 'onChange',
@@ -54,8 +59,10 @@ export default function WishesCreate() {
       account: '',
       bank: '',
       phone: '',
+      noticeAgree: false,
     },
   });
+  console.log(wishesLinkMethods.watch(), wishesAccountMethods.watch());
 
   return (
     <>
@@ -81,6 +88,7 @@ function WishesLinkCreate({
 
   const { toggleState, handleToggle, changeOpenState } = useToggle();
   const { handlePostWishes } = usePostWishes(methods);
+  const router = useRouter();
 
   useEffect(() => {
     if (methods.formState.isValid && preSignedImageUrl) {
@@ -102,6 +110,7 @@ function WishesLinkCreate({
       nextStep();
     } else {
       handlePostWishes();
+      router.push('/wishes/share');
     }
   }
 
@@ -273,71 +282,78 @@ export function WishesAccountCreateInput({
   }, [methods.formState.isValid, checkBoxState]);
 
   return (
-    <>
-      <InputForm title="계좌번호 입력하기">
-        <div className="flex flex-col gap-12">
-          <InputText
-            value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
-            boxStyles={{ backgroundColor: '#3C0F0F' }}
-            styles={{ color: colors.warning_red }}
-            readOnly
-          />
-          <InputText placeholder="예금주명" register={methods.register('name')} />
+    <FormProvider {...methods}>
+      <form>
+        <InputForm title="계좌번호 입력하기">
+          <div className="flex flex-col gap-12">
+            <InputText
+              value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
+              boxStyles={{ backgroundColor: '#3C0F0F' }}
+              styles={{ color: colors.warning_red }}
+              readOnly
+            />
+            <InputText placeholder="예금주명" register={methods.register('name')} />
 
-          <InputText
-            placeholder="은행선택"
-            register={methods.register('bank')}
-            onClick={handleToggle}
-            readOnly
-          />
+            <InputText
+              placeholder="은행선택"
+              register={methods.register('bank')}
+              onClick={handleToggle}
+              readOnly
+            />
 
-          <div className="flex justify-between gap-6">
-            <div className="flex-grow-3">
-              <InputText
-                placeholder="계좌번호를 입력해주세요"
-                register={methods.register('account')}
-              />
-            </div>
-            <div className="flex-grow-1">
-              <div className="w-115 h-50 font-galmuri">
-                <Button
-                  bgColor="main_blue"
-                  fontColor="white"
-                  font="galmuri"
-                  onClick={handleClick}
-                  disabled={btnDisalbed}
-                  styles={{ fontSize: '14px' }}
-                >
-                  계좌번호 확인
-                </Button>
+            <div className="flex justify-between gap-6">
+              <div className="flex-grow-3">
+                <InputText
+                  placeholder="계좌번호를 입력해주세요"
+                  register={methods.register('account')}
+                />
+              </div>
+              <div className="flex-grow-1">
+                <div className="w-115 h-50 font-galmuri">
+                  <Button
+                    bgColor="main_blue"
+                    fontColor="white"
+                    font="galmuri"
+                    onClick={handleClick}
+                    disabled={btnDisalbed}
+                    styles={{ fontSize: '14px' }}
+                  >
+                    계좌번호 확인
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </InputForm>
+        </InputForm>
 
-      <InputForm title="휴대폰번호 입력하기">
-        <div className="flex flex-col gap-24">
-          <InputText register={methods.register('phone')} />
+        <InputForm title="휴대폰번호 입력하기">
+          <div className="flex flex-col gap-24">
+            <InputText register={methods.register('phone')} />
 
-          <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl ">
-            {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
-            <div className="flex justify-end w-full h-20">
-              <CheckBox checkBoxText={'동의함'} />
+            <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl ">
+              {
+                '※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'
+              }
+              <div className="flex justify-end w-full h-20">
+                <CheckBox<Pick<WishesAccountDataType, 'noticeAgree'>>
+                  checkBoxText={'동의함'}
+                  registerName={'noticeAgree'}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </InputForm>
+        </InputForm>
 
-      <Button bgColor="main_blue" fontColor="black" onClick={() => {}} disabled={nextBtnDisabled}>
-        생일잔치에 친구 초대하기
-      </Button>
+        <Button bgColor="main_blue" fontColor="black" onClick={() => {}} disabled={nextBtnDisabled}>
+          생일잔치에 친구 초대하기
+        </Button>
 
-      {toggleState && (
-        <Modal isOpen={toggleState} handleToggle={handleToggle}>
-          <BankModal methods={methods} handleToggle={handleToggle} />
-        </Modal>
-      )}
-    </>
+        {toggleState && (
+          <Modal isOpen={toggleState} handleToggle={handleToggle}>
+            <BankModal methods={methods} handleToggle={handleToggle} />
+          </Modal>
+        )}
+      </form>
+    </FormProvider>
   );
 }

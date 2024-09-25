@@ -8,7 +8,7 @@ export type CakeItemType = {
   image: StaticImageData;
 };
 
-export type CakeSelectItemType = {
+export type AvatarCakeType = {
   cakeId: number;
   image: StaticImageData;
 };
