@@ -1,6 +1,6 @@
-import { AvatarCakeType } from '@/types/model';
+
 import { SelectCakes } from './client';
-import { avatarCakeList } from '@/constant/cakeData';
+import { avatarCakeList, AvatarCakeType } from '@/constant/model/cakes';
 
 export default function InvitedWishesPageContainer() {
   return (

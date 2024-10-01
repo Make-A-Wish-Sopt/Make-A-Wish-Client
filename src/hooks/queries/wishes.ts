@@ -1,6 +1,5 @@
 import {
   deleteWishes,
-  getMainProgressData,
   getProgressWishInfo,
   getSingleWishInfo,
   getWishes,
@@ -15,7 +14,6 @@ import { WishLinksType } from '@/types/links/wishLinksType';
 import router from 'next/router';
 import { UseFormReturn } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useAuthContext } from '@/context/authContext';
 import { WishesLinkDataType } from '@/types/input';
 
 // /**
@@ -59,15 +57,8 @@ export function usePatchProgressWishes() {
 //  * 소원링크 생성
 //  */
 export function usePostWishes(methods: UseFormReturn<WishesLinkDataType, any, undefined>) {
-  const { setLoginUserInfo } = useAuthContext();
-
   const { mutate: handlePostWishes } = useMutation(() => postWishes(methods), {
-    onSuccess: (data) => {
-      setLoginUserInfo((prevData) => ({
-        ...prevData,
-        wishId: data.data.data,
-      }));
-    },
+    onSuccess: (data) => {},
   });
 
   return { handlePostWishes };

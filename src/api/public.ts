@@ -2,16 +2,17 @@ import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/typ
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 import { PostPublicCakesRequestType } from '@/types/api/request';
-import { getAccessToken } from '@/utils/common/token';
-
-const ACCESS_TOKEN = getAccessToken();
 
 export const getPublicWishes = async (wishId: string) => {
-  const data = await client.get<PublicWishesDataResponseType>(
-    `${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(Number(wishId))}`,
-  );
+  if (wishId) {
+    try {
+      const data = await client.get<PublicWishesDataResponseType>(
+        `${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(Number(wishId))}`,
+      );
 
-  return data.data.data;
+      return data.data.data;
+    } catch (error) {}
+  }
 };
 
 export const postPublicCakes = async (parameter: PostPublicCakesRequestType) => {
@@ -21,7 +22,7 @@ export const postPublicCakes = async (parameter: PostPublicCakesRequestType) => 
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );

@@ -1,13 +1,11 @@
 import { BANK_LIST } from '@/constant/bankList';
-import { getAccessToken } from '@/utils/common/token';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
 
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType, WishesDataInputType } from '@/types/wishesType';
-
-const ACCESS_TOKEN = getAccessToken();
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 export const putUserAccount = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
@@ -25,7 +23,7 @@ export const putUserAccount = async (
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
@@ -33,23 +31,29 @@ export const putUserAccount = async (
 };
 
 export const getUserAccount = async () => {
-  const data = await client.get<UserAccountDataResponseType>(
-    `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+  const loginUserCookiesData = await getLoginUserCookiesData();
+  const accessToken = loginUserCookiesData?.accessToken;
+
+  try {
+    const data = await client.get<UserAccountDataResponseType>(
+      `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    },
-  );
-  return data?.data.data;
+    );
+
+    return data?.data.data;
+  } catch (error) {}
 };
 
 export const deleteUserInfo = async () => {
   const data = await client.delete(`${API_VERSION_01}${PATH_USER.DEFAULT}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
   });
 
@@ -69,7 +73,7 @@ export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );

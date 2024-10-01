@@ -1,31 +1,37 @@
-import { MainProgressDataResponseType, WishesProgressDataResponseType } from '@/types/api/response';
+import {
+  DefaultResponseType,
+  MainProgressDataResponseType,
+  WishesCreateResponseType,
+  WishesProgressDataResponseType,
+} from '@/types/api/response';
 import { client } from './common/axios';
-import { getAccessToken } from '@/utils/common/token';
 import { API_VERSION_01, PATH_WISHES } from './path';
 import { UseFormReturn } from 'react-hook-form';
 import { SiteDataType } from '@/types/siteDataType';
 import { WishesDataInputType } from '@/types/wishesType';
 import { WishesLinkDataType } from '@/types/input';
-
-const ACCESS_TOKEN = getAccessToken();
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 /**
  * 진행중인 소원 조회
  */
-export const getMainProgressData = async () => {
-  if (!ACCESS_TOKEN) return;
+export const getMainProgressWishesData = async () => {
+  const loginUserCookiesData = await getLoginUserCookiesData();
+  const accessToken = loginUserCookiesData?.accessToken;
 
-  const data = await client.get<MainProgressDataResponseType>(
-    `${API_VERSION_01}${PATH_WISHES.MAIN}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+  try {
+    const data = await client.get<MainProgressDataResponseType>(
+      `${API_VERSION_01}${PATH_WISHES.MAIN}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    },
-  );
+    );
 
-  return data.data.data;
+    return data.data.data;
+  } catch (error) {}
 };
 
 /**
@@ -35,7 +41,7 @@ export const getWishes = async () => {
   const data = await client.get(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
   });
 
@@ -46,7 +52,7 @@ export const getWishes = async () => {
  * 소원링크 생성
  */
 export const postWishes = async (methods: UseFormReturn<WishesLinkDataType, any, undefined>) => {
-  const data = await client.post(
+  const data = await client.post<WishesCreateResponseType>(
     `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
     {
       ...methods.getValues(),
@@ -54,7 +60,7 @@ export const postWishes = async (methods: UseFormReturn<WishesLinkDataType, any,
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
@@ -68,7 +74,7 @@ export const deleteWishes = async (wishesData: number[]) => {
   const data = await client.delete(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
     data: {
       wishes: wishesData,
@@ -89,7 +95,7 @@ export const getPresentLinkInfo = async (link: string, siteData: SiteDataType | 
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          // Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       },
     ));
@@ -101,7 +107,7 @@ export const getPresentLinkInfo = async (link: string, siteData: SiteDataType | 
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          // Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       },
     ));
@@ -117,7 +123,7 @@ export const getProgressWishInfo = async () => {
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
@@ -149,7 +155,7 @@ export const putProgressWishes = async (
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
@@ -164,7 +170,7 @@ export const patchProgressWishes = async () => {
   const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
   });
 
@@ -178,7 +184,7 @@ export const getSingleWishInfo = async (wishId: string | string[] | undefined) =
   const data = await client.get(`${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
   });
 

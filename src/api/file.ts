@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { client } from './common/axios';
 import { API_VERSION_01 } from './path';
-import { getAccessToken } from '@/utils/common/token';
+import { PresingedURLResponseType } from '@/types/api/response';
 
 export const uploadPresignedURL = async (signedURL: string, file: File | Blob | null) => {
   const data = await axios.put(signedURL, file, {
@@ -14,12 +14,15 @@ export const uploadPresignedURL = async (signedURL: string, file: File | Blob | 
 };
 
 export const getPresignedURL = async (fileName: string | undefined) => {
-  const data = await client.get(`${API_VERSION_01}/file?fileName=${fileName}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
+  const data = await client.get<PresingedURLResponseType>(
+    `${API_VERSION_01}/file?fileName=${fileName}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${getAccessToken()}`,
+      },
     },
-  });
+  );
 
   return data;
 };

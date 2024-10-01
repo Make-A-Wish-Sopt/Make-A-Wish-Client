@@ -1,7 +1,7 @@
 import { AlimTalkReceiveButton, KakaoLoginButton } from './client';
 import { MainPageContent } from './server';
 
-function MainPageContainer() {
+export default function MainPageContainer() {
   return (
     <>
       <MainPageContent />
@@ -12,5 +12,3 @@ function MainPageContainer() {
     </>
   );
 }
-
-export default MainPageContainer;

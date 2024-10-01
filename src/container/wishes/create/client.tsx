@@ -1,10 +1,8 @@
 'use client';
 
 import { useStepInputContext } from '@/context/stepInputContext';
-import { FormProvider, useForm, UseFormReturn } from 'react-hook-form';
+import { FormProvider, useForm, UseFormReturn, useWatch } from 'react-hook-form';
 import InputForm from '@/components/UI/InputForm';
-import InputTextarea from '@/components/Common/Input/inputTextarea';
-
 import Calendar from '@/components/Common/Calendar/Calendar';
 import { getDate } from '@/utils/common/getDate';
 import { useEffect, useState } from 'react';
@@ -15,11 +13,9 @@ import {
   wishesLinkDataValidate,
 } from '@/validation/wishes-register-options';
 import Button from '@/components/Common/Button';
-import { WishesAccountCreate } from './server';
 import { AccountInfoType } from '@/types/wishesType';
 import InputText from '@/components/Common/Input/inputText';
 import CheckBox from '@/components/UI/CheckBox';
-import { usePostVerifyAccount } from '@/hooks/queries/user';
 import BankModal from '@/components/Common/Modal/BankModal';
 import RadioSelect from '@/components/UI/RadioSelect';
 import DropDwonBox from '@/components/UI/DropDwonBox';
@@ -30,17 +26,27 @@ import dynamic from 'next/dynamic';
 import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import InputTextForm from '@/components/UI/InputTextForm';
-import { usePostWishes } from '@/hooks/queries/wishes';
 import { useRouter } from 'next/navigation';
+import { WishesCreateStepType } from '@/app/wishes/create/page';
+import { postVerifyAccount } from '@/api/user';
+import { postWishes } from '@/api/wishes';
 
-export default function WishesCreate() {
-  const { step, resetStep } = useStepInputContext();
+const WISHES_LINK_DATA_LOCAL_STORAGE_KEY = 'wishesLinkData';
+
+export default function WishesCreate({ createStep }: { createStep: WishesCreateStepType }) {
+  const { resetStep } = useStepInputContext();
 
   useEffect(() => {
     resetStep();
   }, []);
 
-  const wishesLinkMethods = useForm<WishesLinkDataType>({
+  return <>{}</>;
+}
+
+const DropDownContent = dynamic(() => import('./dropdownContent'));
+
+export function WishesLinkInputForm() {
+  const methods = useForm<WishesLinkDataType>({
     mode: 'onChange',
     defaultValues: {
       imageUrl: '',
@@ -52,43 +58,32 @@ export default function WishesCreate() {
     },
   });
 
-  const wishesAccountMethods = useForm<WishesAccountDataType>({
-    mode: 'onChange',
-    defaultValues: {
-      name: '',
-      account: '',
-      bank: '',
-      phone: '',
-      noticeAgree: false,
-    },
-  });
-  console.log(wishesLinkMethods.watch(), wishesAccountMethods.watch());
-
-  return (
-    <>
-      {
-        {
-          1: <WishesLinkCreate methods={wishesLinkMethods} />,
-          2: <WishesAccountCreate methods={wishesAccountMethods} />,
-        }[step]
-      }
-    </>
-  );
-}
-
-const DropDownContent = dynamic(() => import('./dropdownContent'));
-
-function WishesLinkCreate({
-  methods,
-}: {
-  methods: UseFormReturn<WishesLinkDataType, any, undefined>;
-}) {
   const { nextBtnDisabled, nextStep, changeNextBtnDisabledState } = useStepInputContext();
-  const { preSignedImageUrl, uploadImageFile } = useUploadItemInfo();
+  const { preSignedImageUrl, setPreSignedImageUrl, uploadImageFile } = useUploadItemInfo();
 
-  const { toggleState, handleToggle, changeOpenState } = useToggle();
-  const { handlePostWishes } = usePostWishes(methods);
+  const { toggleState: dropDownState, handleToggle, changeOpenState } = useToggle();
+
   const router = useRouter();
+
+  const control = methods.control;
+
+  const watchWantsGift = useWatch({
+    control,
+    name: 'wantsGift',
+  });
+
+  useEffect(() => {
+    const storedWishesLinkData = localStorage.getItem(WISHES_LINK_DATA_LOCAL_STORAGE_KEY);
+
+    if (storedWishesLinkData) {
+      const parseData = JSON.parse(storedWishesLinkData) as WishesLinkDataType;
+
+      methods.reset({
+        ...parseData,
+      });
+      setPreSignedImageUrl(parseData.imageUrl);
+    }
+  }, []);
 
   useEffect(() => {
     if (methods.formState.isValid && preSignedImageUrl) {
@@ -106,11 +101,20 @@ function WishesLinkCreate({
   }, [preSignedImageUrl]);
 
   function handleNextStep() {
-    if (methods.watch('wantsGift')) {
+    if (watchWantsGift) {
+      router.push('/wishes/create?step=account');
+      localStorage.setItem(WISHES_LINK_DATA_LOCAL_STORAGE_KEY, JSON.stringify(methods.getValues()));
       nextStep();
     } else {
-      handlePostWishes();
-      router.push('/wishes/share');
+      try {
+        postWishes(methods).then((response) => {
+          if (response.data.success) {
+            router.push('/wishes/share');
+          }
+        });
+
+        localStorage.removeItem(WISHES_LINK_DATA_LOCAL_STORAGE_KEY);
+      } catch (error) {}
     }
   }
 
@@ -135,9 +139,7 @@ function WishesLinkCreate({
 
           <InputForm title="내 생일 주간 설정하기">
             <div className="flex justify-between gap-10">
-              {/* 시작일 */}
               <Calendar date={methods.watch('startDate')} methods={methods} />
-              {/* 종료일 */}
               <Calendar date={methods.watch('endDate')} methods={methods} readOnly />
             </div>
           </InputForm>
@@ -150,11 +152,11 @@ function WishesLinkCreate({
                   methods.setValue('wantsGift', true);
                 }}
               >
-                <DropDwonBox isOpen={toggleState} handleToggle={handleToggle}>
-                  <RadioSelect isSelect={methods.watch('wantsGift')} />
+                <DropDwonBox isOpen={dropDownState} handleToggle={handleToggle}>
+                  <RadioSelect isSelect={watchWantsGift} />
                   <span className="w-full">네! 생일 선물도 받아볼래요</span>
                 </DropDwonBox>
-                {toggleState && <DropDownContent />}
+                {dropDownState && <DropDownContent />}
               </li>
 
               <li
@@ -164,59 +166,93 @@ function WishesLinkCreate({
                   changeOpenState(false);
                 }}
               >
-                <RadioSelect isSelect={!methods.watch('wantsGift')} />
+                <RadioSelect isSelect={!watchWantsGift} />
                 아니요. 편지만 받을래요!
               </li>
             </ul>
           </InputForm>
 
-          <Button
-            type="submit"
-            bgColor="main_blue"
-            fontColor="white"
-            onClick={handleNextStep}
-            disabled={nextBtnDisabled}
-            styles={{ marginBottom: '5.8rem' }}
-          >
-            {methods.watch('wantsGift') ? '다음으로' : '소원링크 생성'}
-          </Button>
+          <div className="flex justify-between gap-10">
+            {watchWantsGift && (
+              <Button
+                type="submit"
+                bgColor="main_blue"
+                fontColor="white"
+                onClick={handleNextStep}
+                disabled={true}
+                styles={{ marginBottom: '5.8rem' }}
+              >
+                이전
+              </Button>
+            )}
+
+            <Button
+              type="submit"
+              bgColor="main_blue"
+              fontColor="white"
+              onClick={handleNextStep}
+              disabled={nextBtnDisabled}
+              styles={{ marginBottom: '5.8rem' }}
+            >
+              {methods.watch('wantsGift') ? '다음으로' : '소원링크 생성'}
+            </Button>
+          </div>
         </form>
       </FormProvider>
     </>
   );
 }
 
-export function WishesAccountCreateInput({
-  methods,
+export function WishesAccountInput({
   accountData,
   phone,
 }: {
-  methods: UseFormReturn<WishesAccountDataType, any, undefined>;
   accountData?: AccountInfoType;
   phone?: string;
 }) {
+  const methods = useForm<WishesAccountDataType>({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      account: '',
+      bank: '',
+      phone: '',
+      noticeAgree: false,
+    },
+  });
   const { toggleState: checkBoxState, handleToggle: handleChangeCheckBoxState } = useToggle();
   const { nextBtnDisabled, changeNextBtnDisabledState } = useStepInputContext();
   const [btnDisalbed, setBtnDisabled] = useState(true);
 
-  const { toggleState, handleToggle } = useToggle();
+  const { toggleState: modalState, handleToggle } = useToggle();
 
-  const { handleVerifyAccount, isSuccess, isReady, isAbused } = usePostVerifyAccount({
-    name: methods.getValues('name'),
-    bank: methods.getValues('bank'),
-    account: methods.getValues('account'),
+  const router = useRouter();
+
+  const control = methods.control;
+
+  const watchAccount = useWatch({
+    control,
+    name: 'account',
+  });
+  const watchName = useWatch({
+    control,
+    name: 'name',
+  });
+  const watchBank = useWatch({
+    control,
+    name: 'bank',
   });
 
   useEffect(() => {
-    if (isAbused) {
-      setBtnDisabled(true);
-      return;
-    }
+    // if (isAbused) {
+    //   setBtnDisabled(true);
+    //   return;
+    // }
 
     if (
-      methods.watch('account') === accountData?.account &&
-      methods.watch('name') === accountData?.name &&
-      methods.watch('bank') === accountData?.bank
+      watchAccount === accountData?.account &&
+      watchName === accountData?.name &&
+      watchBank === accountData?.bank
     ) {
       setBtnDisabled(true);
       return;
@@ -231,21 +267,16 @@ export function WishesAccountCreateInput({
       return;
     }
 
-    if (isSuccess) {
-      setBtnDisabled(true);
-    } else {
-      setBtnDisabled(false);
-    }
+    // if (isSuccess) {
+    //   setBtnDisabled(true);
+    // } else {
+    //   setBtnDisabled(false);
+    // }
 
     if (methods.formState.isDirty) {
       setBtnDisabled(false);
     }
-  }, [methods.formState, isSuccess, isAbused]);
-
-  const handleClick = () => {
-    if (btnDisalbed) return;
-    handleVerifyAccount();
-  };
+  }, [methods.formState]);
 
   useEffect(() => {
     if (accountData) {
@@ -267,7 +298,8 @@ export function WishesAccountCreateInput({
         changeNextBtnDisabledState(true);
       }
     } else {
-      if (methods.formState.isValid && isSuccess && !isAbused && checkBoxState) {
+      // if (methods.formState.isValid && isSuccess && !isAbused && checkBoxState) {
+      if (methods.formState.isValid && checkBoxState) {
         changeNextBtnDisabledState(false);
       } else {
         changeNextBtnDisabledState(true);
@@ -281,9 +313,20 @@ export function WishesAccountCreateInput({
     }
   }, [methods.formState.isValid, checkBoxState]);
 
+  const handleClick = () => {
+    if (btnDisalbed) return;
+
+    const accountInfo: AccountInfoType = {
+      account: watchAccount,
+      bank: watchBank,
+      name: watchName,
+    };
+    postVerifyAccount(accountInfo);
+  };
+
   return (
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={methods.handleSubmit(() => {})}>
         <InputForm title="계좌번호 입력하기">
           <div className="flex flex-col gap-12">
             <InputText
@@ -344,12 +387,30 @@ export function WishesAccountCreateInput({
           </div>
         </InputForm>
 
-        <Button bgColor="main_blue" fontColor="black" onClick={() => {}} disabled={nextBtnDisabled}>
-          생일잔치에 친구 초대하기
-        </Button>
+        <div className="flex justify-between gap-10">
+          <Button
+            bgColor="main_blue"
+            fontColor="white"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            이전
+          </Button>
 
-        {toggleState && (
-          <Modal isOpen={toggleState} handleToggle={handleToggle}>
+          <Button
+            type="submit"
+            bgColor="main_blue"
+            fontColor="white"
+            onClick={() => {}}
+            // disabled={nextBtnDisabled}
+          >
+            다음
+          </Button>
+        </div>
+
+        {modalState && (
+          <Modal isOpen={modalState} handleToggle={handleToggle}>
             <BankModal methods={methods} handleToggle={handleToggle} />
           </Modal>
         )}

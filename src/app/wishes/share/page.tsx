@@ -1,3 +1,14 @@
-export default function SharePage() {
-  return <h1>SharePage</h1>;
+import MainLayout from '@/layouts/MainLayout';
+import Header from '@/components/Common/Hedaer';
+import WishesSharePageContainer from '@/container/wishes/share/container';
+
+export default async function WishesSharePage() {
+  return (
+    <>
+      <Header />
+      <MainLayout>
+        <WishesSharePageContainer />
+      </MainLayout>
+    </>
+  );
 }

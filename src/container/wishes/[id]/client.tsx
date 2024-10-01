@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeftIc, ArrowRightIc } from '../../../../public/assets/icons';
 import useCarousel from '@/hooks/common/useCarousel';
-import { CakeItemType, AvatarCakeType } from '@/types/model';
 import Button from '@/components/Common/Button';
+import { AvatarCakeType, CakeItemType } from '@/constant/model/cakes';
 
 export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
   avatarCakeList,

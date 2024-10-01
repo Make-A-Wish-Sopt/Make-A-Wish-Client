@@ -1,4 +1,3 @@
-import { CakeItemType, AvatarCakeType } from '@/types/model';
 import {
   BeefCakeImg,
   ChickenCakeImg,
@@ -24,7 +23,7 @@ import {
   VitaminCakeAvatarImg,
   CoffeeCakeAvatarImg,
   DdongCakeAvatarImg,
-} from '../../public/assets/images';
+} from '../../../public/assets/images';
 import { StaticImageData } from 'next/image';
 
 const CAKE_ID = {
@@ -40,6 +39,14 @@ const CAKE_ID = {
   snowCakeId: 10,
   santaCakeId: 11,
   rudolphCakeId: 12,
+};
+
+export type CakeItemType = {
+  cakeId: number;
+  name: string;
+  presentId: number;
+  price: number;
+  image: StaticImageData;
 };
 
 export const defaultCakeListData: Array<CakeItemType> = [
@@ -121,6 +128,11 @@ export const cakeImageWithId = defaultCakeListData.reduce((acc, { cakeId, image 
   acc[cakeId] = image;
   return acc;
 }, {} as Record<number, StaticImageData>);
+
+export type AvatarCakeType = {
+  cakeId: number;
+  image: StaticImageData;
+};
 
 export const avatarCakeList: Array<AvatarCakeType> = [
   { cakeId: CAKE_ID.beefCakeId, image: BeefCakeAvatarImg },

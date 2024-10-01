@@ -4,10 +4,8 @@ import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CakeDishTopRibbonImg } from '../../../public/assets/images';
-import { useAuthContext } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { CakeItemType } from '@/types/model';
-import { cakeImageWithId } from '@/constant/cakeData';
+import { cakeImageWithId, CakeItemType } from '@/constant/model/cakes';
 import { useGetCakesInfo } from '@/hooks/queries/cakes';
 import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import useToggle from '@/hooks/common/useToggle';
@@ -15,7 +13,6 @@ import useSelectItem from '@/hooks/common/useSelectItem';
 
 export function CakeTree({ cakeList }: { cakeList: CakeItemType[] }) {
   const numberOfRows = Math.max(3, Math.ceil(cakeList.length / 3));
-  const { loginUserInfo } = useAuthContext();
 
   const { toggleState, handleToggle } = useToggle();
 
@@ -69,7 +66,8 @@ export function CakeTree({ cakeList }: { cakeList: CakeItemType[] }) {
       </div>
       {toggleState && selectedPresentId > 0 && (
         <CakeMessageModal
-          wishId={loginUserInfo.wishId}
+          // wishId={loginUserInfo.wishId}
+          wishId={'205'}
           presentId={selectedPresentId}
           toggleState={toggleState}
           handleToggle={handleToggle}
@@ -84,8 +82,9 @@ export function WishesCreateButton({ isWishesCreateBefore }: { isWishesCreateBef
 
   function handleClick() {
     if (isWishesCreateBefore) {
-      router.push('/wishes/create');
+      router.push('/wishes/create?step=link');
     } else {
+      // 소원 공유 동작
     }
   }
 
@@ -96,28 +95,20 @@ export function WishesCreateButton({ isWishesCreateBefore }: { isWishesCreateBef
   );
 }
 
-export function CenteredGuideMessage({ message }: { message?: string }) {
-  const { loginUserInfo } = useAuthContext();
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (loginUserInfo.nickName) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    }
-  }, [loginUserInfo]);
-
+export function CenteredGuideMessage({
+  nickName,
+  message,
+}: {
+  nickName?: string;
+  message?: string;
+}) {
   return (
     <div className="text-[24px] font-bitbit text-center text-white mt-10 whitespace-pre-wrap">
-      {isLoading ? (
-        <div className="text-white transition-opacity duration-500 opacity-80">로딩 중...</div>
-      ) : message ? (
+      {message ? (
         <span className="transition-opacity duration-500 opacity-100 leading-tight">{message}</span>
       ) : (
         <span className="transition-opacity duration-500 opacity-100 leading-tight">{`${
-          isLoading ? 'ㅇㅇ' : loginUserInfo.nickName
+          nickName ? nickName : 'ㅇㅇ'
         }님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</span>
       )}
     </div>
@@ -135,7 +126,7 @@ function CakeMessageModal({
   toggleState: boolean;
   handleToggle: () => void;
 }) {
-  const {} = useGetCakesInfo(presentId, Number(wishId));
+  // const {} = useGetCakesInfo(presentId, Number(wishId));
   return (
     <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
       <div className="flex flex-col items-center w-full h-full">

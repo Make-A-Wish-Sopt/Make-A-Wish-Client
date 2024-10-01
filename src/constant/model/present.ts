@@ -6,7 +6,7 @@ import {
   PresentItem4Img,
   PresentItem5Img,
   PresentItem6Img,
-} from '../../public/assets/images';
+} from '../../../public/assets/images';
 
 export interface PresentItemType {
   id: number;

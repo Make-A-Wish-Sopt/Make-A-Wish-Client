@@ -1,11 +1,18 @@
-import { CakeItemType } from '../model';
+import { CakeItemType } from '@/constant/model/cakes';
 import { AccountInfoType, MainProgressDataType, WishesProgressDataType } from '../wishesType';
+import { LoginUserDataType } from '@/utils/common/cookies';
 
 export type DefaultResponseType<T = unknown> = {
   success: boolean;
   message: string;
   data: T;
 };
+
+export type WishesCreateResponseType = DefaultResponseType<number>; //소원아이디
+
+export type LoginResponseType = DefaultResponseType<LoginUserDataType>;
+
+export type PresingedURLResponseType = DefaultResponseType<{ filename: string; signedUrl: string }>;
 
 export type MainProgressDataResponseType = DefaultResponseType<MainProgressDataType>;
 

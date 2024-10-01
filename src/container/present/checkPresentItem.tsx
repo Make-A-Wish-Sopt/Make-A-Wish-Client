@@ -1,4 +1,4 @@
-import { PresentItemType, presentList } from '@/constant/presentList';
+import { PresentItemType, presentList } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convertMoneyText';
 import Image from 'next/image';
 

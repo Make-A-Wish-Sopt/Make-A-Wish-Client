@@ -7,12 +7,17 @@ import { BackBtnIc, MenuIc } from '../../../public/assets/icons';
 interface HeaderProps {
   backBtn?: boolean;
   mypageBtn?: boolean;
+  isLoggedIn?: boolean;
 }
 
 export default function Header(props: HeaderProps) {
-  const { backBtn, mypageBtn } = props;
+  const { backBtn, mypageBtn, isLoggedIn } = props;
   const pathname = usePathname();
   const router = useRouter();
+
+  // if (pathname === '/' && isLoggedIn) {
+  //   router.push('/wishes');
+  // }
 
   return (
     <header className="flex justify-center w-full">

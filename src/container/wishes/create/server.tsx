@@ -1,41 +1,36 @@
-'use client';
-
-import WishesCreate, { WishesAccountCreateInput } from './client';
-import { UseFormReturn } from 'react-hook-form';
-
-import { useGetUserAccount } from '@/hooks/queries/user';
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
-import { WishesAccountDataType } from '@/types/input';
+import { ReactNode } from 'react';
+import { getUserAccount } from '@/api/user';
+import { WishesAccountInput } from './client';
 
-export default function WishesCreateContainer() {
+export async function WishesAccountInputForm() {
+  const userAccountData = await getUserAccount();
+
   return (
     <>
-      <div className="flex items-center gap-10 mt-26 mb-20">
-        <Image src={WishesFormPresentIc} alt="선물 아이콘 이미지"></Image>
-        <h1 className="font-bitbit text-main_blue text-[24px]">생일잔치 링크 생성하기</h1>
-      </div>
-
-      <WishesCreate />
+      <WishesAccountInput
+        accountData={userAccountData?.accountInfo}
+        phone={userAccountData?.phone}
+      />
     </>
   );
 }
 
-export function WishesAccountCreate({
-  methods,
+export function WishesCreateStepTitle({
+  stepTitle,
+  children,
 }: {
-  methods: UseFormReturn<WishesAccountDataType, any, undefined>;
+  stepTitle: string;
+  children?: ReactNode;
 }) {
-  const { userAccountData } = useGetUserAccount();
-
   return (
     <>
-      <h1>생일선물함 생성하기</h1>
-      <WishesAccountCreateInput
-        methods={methods}
-        accountData={userAccountData?.accountInfo}
-        phone={userAccountData?.phone}
-      />
+      <div className="flex items-center gap-10 mt-26 mb-20">
+        <Image src={WishesFormPresentIc} alt="선물 아이콘 이미지"></Image>
+        <h1 className="font-bitbit text-main_blue text-[24px]">{stepTitle}</h1>
+      </div>
+      {children}
     </>
   );
 }
