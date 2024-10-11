@@ -8,7 +8,7 @@ export async function WishesMessageToCreateUser({
 }: {
   publicWishesData?: PublicWishesDataType;
 }) {
-  const loginUserData = await getLoginUserCookiesData();
+  const { nickName } = await getLoginUserCookiesData();
 
   return (
     <>
@@ -17,7 +17,7 @@ export async function WishesMessageToCreateUser({
           <span className="transition-opacity duration-500 opacity-100 leading-tight"></span>
         ) : (
           <span className="transition-opacity duration-500 opacity-100 leading-tight">{`${
-            loginUserData?.nickName ? loginUserData.nickName : 'ㅇㅇ'
+            nickName ? nickName : 'ㅇㅇ'
           }님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</span>
         )}
       </div>

@@ -16,8 +16,9 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
  * 진행중인 소원 조회
  */
 export const getMainProgressWishesData = async () => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   try {
     const data = await client.get<MainProgressDataResponseType>(
@@ -38,8 +39,9 @@ export const getMainProgressWishesData = async () => {
  * 모든 소원리스트 조회
  */
 export const getWishes = async () => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.get(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
     headers: {
@@ -55,8 +57,9 @@ export const getWishes = async () => {
  * 소원링크 생성
  */
 export const postWishes = async (methods: UseFormReturn<WishesLinkDataType, any, undefined>) => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.post<WishesCreateResponseType>(
     `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
@@ -77,8 +80,9 @@ export const postWishes = async (methods: UseFormReturn<WishesLinkDataType, any,
  * 소원링크 삭제
  */
 export const deleteWishes = async (wishesData: number[]) => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.delete(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
     headers: {
@@ -97,8 +101,9 @@ export const deleteWishes = async (wishesData: number[]) => {
  * 29cm에서 파싱한 데이터
  */
 export const getPresentLinkInfo = async (link: string, siteData: SiteDataType | undefined) => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const imageTag =
     siteData &&
@@ -152,8 +157,9 @@ export const getProgressWishLinkData = async () => {
 export const putProgressWishes = async (
   methods: UseFormReturn<WishesDataInputType, any, undefined>,
 ) => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.put(
     `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
@@ -185,8 +191,9 @@ export const putProgressWishes = async (
  * 진행중인 소원 중단
  */
 export const patchProgressWishes = async () => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
     headers: {
@@ -202,8 +209,9 @@ export const patchProgressWishes = async () => {
  * 소원 단건 조회
  */
 export const getSingleWishInfo = async (wishId: string | string[] | undefined) => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   const data = await client.get(`${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`, {
     headers: {

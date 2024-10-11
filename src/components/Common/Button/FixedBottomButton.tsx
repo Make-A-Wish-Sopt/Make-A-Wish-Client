@@ -1,14 +1,9 @@
 'use client';
 
-import { ComponentProps, PropsWithChildren } from 'react';
-import Button from '.';
+import { ReactNode } from 'react';
 
-type FixedBottomButtonProps = ComponentProps<typeof Button>;
-
-export default function FixedBottomButton(props: PropsWithChildren<FixedBottomButtonProps>) {
+export default function FixedBottomButton({ children }: { children: ReactNode }) {
   return (
-    <div className={`fixed left-0 bottom-fixed-bottom w-full h-50 px-22 z-10`}>
-      <Button {...props} />
-    </div>
+    <div className={`fixed left-0 bottom-fixed-bottom w-full h-50 px-22 z-10`}>{children}</div>
   );
 }

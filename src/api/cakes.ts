@@ -23,8 +23,10 @@ export const getCakesInfo = async (wishId: number, cakeId: number) => {
 export const getCakesResult = async (wishId?: string) => {
   if (!wishId) return;
 
-  const loginUserData = await getLoginUserCookiesData();
-  const accessToken = loginUserData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
+
   try {
     const data = await client.get<GetCakesResultResponseType>(
       `${API_VERSION_01}${PATH_CAKES.GET_CAKES_RESULT(Number(wishId))}`,

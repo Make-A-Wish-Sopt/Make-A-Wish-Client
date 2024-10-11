@@ -21,7 +21,7 @@ export async function getLoginUserCookiesData(): Promise<LoginUserDataType | und
 
   const loginUserData: LoginUserDataType = JSON.parse(loginUserCookiesData);
 
-  return loginUserData;
+  return { ...loginUserData };
 }
 
 export async function setLoginUserCookiesData(loginUserData: LoginUserDataType) {

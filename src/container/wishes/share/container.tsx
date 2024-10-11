@@ -1,3 +1,10 @@
+import WishesSharePageStateContainer from './client';
+import { CenteredContent } from './server';
+
 export default function WishesSharePageContainer() {
-  return <></>;
+  return (
+    <WishesSharePageStateContainer>
+      <CenteredContent />
+    </WishesSharePageStateContainer>
+  );
 }

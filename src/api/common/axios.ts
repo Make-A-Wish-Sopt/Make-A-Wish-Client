@@ -8,16 +8,17 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use(async function (config: any) {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const token = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
 
-  if (!token) {
+  if (!accessToken) return;
+
+  if (!accessToken) {
     config.headers['accessToken'] = '';
     return config;
   }
 
-  if (config.headers && token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
+  if (config.headers && accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
     return config;
   }
   return config;

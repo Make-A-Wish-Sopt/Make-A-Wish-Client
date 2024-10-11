@@ -65,8 +65,10 @@ export function WishesCreateOrShareButton({
   }
 
   return (
-    <FixedBottomButton bgColor="main_blue" fontColor="black" onClick={handleClick}>
-      {isWishesProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+    <FixedBottomButton>
+      <Button onClick={handleClick}>
+        {isWishesProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+      </Button>
     </FixedBottomButton>
   );
 }

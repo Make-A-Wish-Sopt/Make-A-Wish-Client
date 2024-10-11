@@ -31,8 +31,9 @@ export const putUserAccount = async (
 };
 
 export const getUserAccount = async () => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const accessToken = loginUserCookiesData?.accessToken;
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
 
   try {
     const data = await client.get<UserAccountDataResponseType>(

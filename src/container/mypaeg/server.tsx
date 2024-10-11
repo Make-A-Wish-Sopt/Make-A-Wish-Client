@@ -3,7 +3,7 @@ import { MypageDefaultCakeImg } from '../../../public/assets/images';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 export async function MypageUserName() {
-  const loginUserData = await getLoginUserCookiesData();
+  const { nickName } = await getLoginUserCookiesData();
 
   return (
     <div className="flex gap-10 items-center mt-11 mb-20">
@@ -13,7 +13,7 @@ export async function MypageUserName() {
         width={50}
         height={50}
       />
-      <span className="font-bitbit text-[24px] text-white">{loginUserData?.nickName}님</span>
+      <span className="font-bitbit text-[24px] text-white">{nickName}님</span>
     </div>
   );
 }

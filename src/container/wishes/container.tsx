@@ -11,12 +11,7 @@ export default async function WishesPageContainer() {
   const receivedCakeList = await getCakesResult(progressWishesData?.wishId);
 
   return (
-    <WishesPageStateContainer
-      // DayCountText={<DayCountText dayCount={progressWishesData?.dayCount} />}
-      // WishesMessageToCreateUser={<WishesMessageToCreateUser publicWishesData={publicWishesData} />}
-      // ReceivedCakeTree={<ReceivedCakeTree receivedCakeList={receivedCakeList} />}
-      isWishesProgress={progressWishesData !== undefined}
-    >
+    <WishesPageStateContainer isWishesProgress={progressWishesData !== undefined}>
       <DayCountText dayCount={progressWishesData?.dayCount} />
       <WishesMessageToCreateUser publicWishesData={publicWishesData} />
 

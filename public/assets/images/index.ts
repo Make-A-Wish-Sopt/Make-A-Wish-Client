@@ -59,6 +59,8 @@ export { default as VitaminCakeAvatarImg } from '../images/AvatarCakeList/Vitami
 export { default as CoffeeCakeAvatarImg } from '../images/AvatarCakeList/CoffeeCakeAvatarImg.png';
 export { default as DdongCakeAvatarImg } from '../images/AvatarCakeList/DdongCakeAvatarImg.png';
 
+export { default as SharePageCakeImg } from '../images/SharePageCakeImg.png';
+
 // bank
 const bankImgs: Record<string, any> = {};
 for (let i = 1; i <= 33; i++) {

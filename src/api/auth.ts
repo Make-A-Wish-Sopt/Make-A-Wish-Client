@@ -21,17 +21,18 @@ export const postAuthKakao = async (code: string) => {
 };
 
 export const updateAccessToken = async () => {
-  const loginUserCookiesData = await getLoginUserCookiesData();
-  const refreshToken = loginUserCookiesData?.refreshToken;
+  const { refreshToken } = await getLoginUserCookiesData();
 
-  try {
-    const data = await client.post<DefaultResponseType>(`${API_VERSION_01}${PATH_AUTH.TOKEN}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${refreshToken}`,
-      },
-    });
+  if (refreshToken) {
+    try {
+      const data = await client.post<DefaultResponseType>(`${API_VERSION_01}${PATH_AUTH.TOKEN}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      });
 
-    return data;
-  } catch (error) {}
+      return data;
+    } catch (error) {}
+  }
 };
