@@ -1,6 +1,12 @@
 import { CakeItemType } from '@/constant/model/cakes';
-import { AccountInfoType, MainProgressDataType, WishesProgressDataType } from '../wishesType';
+import {
+  AccountInfoType,
+  MainProgressDataType,
+  WishesProgressDataType,
+  WishStatusType,
+} from '../wishesType';
 import { LoginUserDataType } from '@/utils/common/cookies';
+import { WishesLinkDataType } from '../input';
 
 export type DefaultResponseType<T = unknown> = {
   success: boolean;
@@ -16,7 +22,9 @@ export type PresingedURLResponseType = DefaultResponseType<{ filename: string; s
 
 export type MainProgressDataResponseType = DefaultResponseType<MainProgressDataType>;
 
-export type WishesProgressDataResponseType = DefaultResponseType<WishesProgressDataType>;
+export type WishesProgressDataResponseType = DefaultResponseType<
+  WishesLinkDataType & { status: WishStatusType }
+>;
 
 export type UserAccountDataResponseType = DefaultResponseType<{
   accountInfo: AccountInfoType;
@@ -24,7 +32,7 @@ export type UserAccountDataResponseType = DefaultResponseType<{
   phone: string;
 }>;
 
-export type PublicWishesDataResponseType = DefaultResponseType<{
+export type PublicWishesDataType = {
   accountNumber: string;
   bank: string;
   name: string;
@@ -32,7 +40,9 @@ export type PublicWishesDataResponseType = DefaultResponseType<{
   title: string;
   hint: string;
   wantsGift: boolean;
-}>;
+};
+
+export type PublicWishesDataResponseType = DefaultResponseType<PublicWishesDataType>;
 
 export type PostPublicCakesResponseType = DefaultResponseType<{
   cakeId: number;

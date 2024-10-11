@@ -12,11 +12,11 @@ export interface LoginUserDataType {
   wishId: string;
 }
 
-export async function getLoginUserCookiesData(): Promise<LoginUserDataType | null> {
+export async function getLoginUserCookiesData(): Promise<LoginUserDataType | undefined> {
   const loginUserCookiesData = cookie.get(LOGIN_USER_COOKIE_KEY)?.value;
 
   if (!loginUserCookiesData) {
-    return null;
+    return undefined;
   }
 
   const loginUserData: LoginUserDataType = JSON.parse(loginUserCookiesData);

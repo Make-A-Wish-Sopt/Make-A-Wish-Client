@@ -4,8 +4,10 @@ import { WishesAccountInputForm, WishesCreateStepTitle } from './server';
 
 export default function WishesCreatePageContainer({
   createStep,
+  wishTitle,
 }: {
   createStep: WishesCreateStepType;
+  wishTitle: string;
 }) {
   return (
     <>

@@ -2,22 +2,27 @@ import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
 import WishesCreatePageContainer from '@/container/wishes/create/container';
 import MainLayout from '@/layouts/MainLayout';
+import { convertDecodeBase64 } from '@/utils/common/convert';
 
 export type WishesCreateStepType = 'link' | 'account';
 
 export default function WishesCreatePage({
   searchParams,
 }: {
-  searchParams: { step: WishesCreateStepType };
+  searchParams: { step: WishesCreateStepType; wishTitle: string };
 }) {
-  if (searchParams.step !== 'link' && searchParams.step !== 'account') {
+  const { step, wishTitle } = searchParams;
+  if ((step !== 'link' && step !== 'account') || wishTitle === '') {
     return <ErrorPage />;
   }
+
+  const decodeWishTitle = convertDecodeBase64(wishTitle);
+
   return (
     <>
       <Header backBtn />
       <MainLayout>
-        <WishesCreatePageContainer createStep={searchParams.step} />
+        <WishesCreatePageContainer createStep={searchParams.step} wishTitle={decodeWishTitle} />
       </MainLayout>
     </>
   );

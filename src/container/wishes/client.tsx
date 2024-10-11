@@ -3,147 +3,151 @@
 import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { CakeDishTopRibbonImg } from '../../../public/assets/images';
-import { useEffect, useState } from 'react';
-import { cakeImageWithId, CakeItemType } from '@/constant/model/cakes';
-import { useGetCakesInfo } from '@/hooks/queries/cakes';
-import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
+import { CakeDishTopRibbonImg, VitaminCakeImg } from '../../../public/assets/images';
 import useToggle from '@/hooks/common/useToggle';
-import useSelectItem from '@/hooks/common/useSelectItem';
+import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
+import { ReactNode } from 'react';
+import InputText from '@/components/Common/Input/inputText';
+import Button from '@/components/Common/Button';
+import { useForm } from 'react-hook-form';
+import { convertEncodeBase64 } from '@/utils/common/convert';
 
-export function CakeTree({ cakeList }: { cakeList: CakeItemType[] }) {
-  const numberOfRows = Math.max(3, Math.ceil(cakeList.length / 3));
+export default function WishesPageStateContainer({
+  DayCountText,
+  WishesMessageToCreateUser,
+  ReceivedCakeTree,
+  isWishesProgress,
+  children,
+}: {
+  DayCountText?: JSX.Element;
+  WishesMessageToCreateUser?: JSX.Element;
+  ReceivedCakeTree?: JSX.Element;
+  isWishesProgress: boolean;
+  children?: ReactNode;
+}) {
+  const { toggleState: wishesTitleModalState, handleToggle: handleOpenWishesTitleModal } =
+    useToggle();
 
-  const { toggleState, handleToggle } = useToggle();
-
-  const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   return (
     <>
-      <div className="relative w-375 h-screen mt-40">
-        <Image
-          src={CakeDishTopRibbonImg}
-          alt="케이크 꾸미기 리본 이미지"
-          width={96}
-          height={68}
-          style={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            marginTop: '2rem',
-            zIndex: 5,
-          }}
-        />
-        {Array.from({ length: numberOfRows }).map((_, rowIndex) => (
-          <div
-            className="absolute top-128 w-375 bg-cover bg-no-repeat bg-[url('/assets/images/cakeDishImg.png')] "
-            key={rowIndex}
-            style={{
-              top: `${rowIndex * 165}px`,
-              height: '222px',
-              backgroundPosition: 'center 1px',
-            }}
-          >
-            <ul className="grid grid-cols-3 justify-center gap-x-[1px] custom-grid w-full h-full mt-70 px-50">
-              {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake) => (
-                <li
-                  className="z-5 flex flex-col items-center aspect-square p-4 transform translate-y-[-30px] justify-self-center"
-                  key={cake.name}
-                  onClick={() => {
-                    handleSelectOne(cake.presentId);
-                    handleToggle();
-                  }}
-                  style={{ width: '105%' }}
-                >
-                  <Image src={cakeImageWithId[cake.cakeId]} alt="선물 이미지" />
-                  <span className="font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl">
-                    {cake.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      {toggleState && selectedPresentId > 0 && (
-        <CakeMessageModal
-          // wishId={loginUserInfo.wishId}
-          wishId={'205'}
-          presentId={selectedPresentId}
-          toggleState={toggleState}
-          handleToggle={handleToggle}
+      {/* {DayCountText}
+      {WishesMessageToCreateUser}
+      {ReceivedCakeTree} */}
+      {children}
+      <WishesCreateOrShareButton
+        isWishesProgress={isWishesProgress}
+        handleOpenWishesTitleModal={handleOpenWishesTitleModal}
+      />
+      {wishesTitleModalState && (
+        <WishesCreateTitleInputModal
+          isOpen={wishesTitleModalState}
+          handleToggle={handleOpenWishesTitleModal}
         />
       )}
+      {/* <WishesCreateTitleInputModal /> */}
     </>
   );
 }
 
-export function WishesCreateButton({ isWishesCreateBefore }: { isWishesCreateBefore: boolean }) {
-  const router = useRouter();
-
+export function WishesCreateOrShareButton({
+  isWishesProgress,
+  handleOpenWishesTitleModal,
+}: {
+  isWishesProgress: boolean;
+  handleOpenWishesTitleModal: () => void;
+}) {
   function handleClick() {
-    if (isWishesCreateBefore) {
-      router.push('/wishes/create?step=link');
-    } else {
+    if (isWishesProgress) {
       // 소원 공유 동작
+    } else {
+      handleOpenWishesTitleModal();
     }
   }
 
   return (
     <FixedBottomButton bgColor="main_blue" fontColor="black" onClick={handleClick}>
-      {isWishesCreateBefore ? '생일잔치 링크 생성하기' : '생일잔치 링크 공유하기'}
+      {isWishesProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
     </FixedBottomButton>
   );
 }
 
-export function CenteredGuideMessage({
-  nickName,
-  message,
-}: {
-  nickName?: string;
-  message?: string;
-}) {
-  return (
-    <div className="text-[24px] font-bitbit text-center text-white mt-10 whitespace-pre-wrap">
-      {message ? (
-        <span className="transition-opacity duration-500 opacity-100 leading-tight">{message}</span>
-      ) : (
-        <span className="transition-opacity duration-500 opacity-100 leading-tight">{`${
-          nickName ? nickName : 'ㅇㅇ'
-        }님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</span>
-      )}
-    </div>
-  );
-}
-
-function CakeMessageModal({
-  presentId,
-  wishId,
-  toggleState,
+function WishesCreateTitleInputModal({
+  isOpen,
   handleToggle,
 }: {
-  presentId: number;
-  wishId: string;
-  toggleState: boolean;
+  isOpen: boolean;
   handleToggle: () => void;
 }) {
-  // const {} = useGetCakesInfo(presentId, Number(wishId));
-  return (
-    <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
-      <div className="flex flex-col items-center w-full h-full">
-        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`선물주 운영자님이\n님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
-        <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
-          <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
-            테스트
-          </span>
-          {/* <Image></Image> */}
-          <span className="text-[14px]">안녕하세요 조물주보다 생일선물주</span>
+  const { getValues, watch, register } = useForm({
+    defaultValues: {
+      wishTitle: '',
+    },
+  });
 
-          <div className="flex justify-between items-center w-full h-54 p-12 rounded-xl border border-main_blue">
-            <span className="text-[16px]">선물한 항목</span>
-            <span className="font-bitbit">정성담은 편지</span>
-          </div>
+  const router = useRouter();
+
+  function handleClick() {
+    const wishTitle = watch('wishTitle');
+
+    if (wishTitle) {
+      const encodeWishTitle = convertEncodeBase64(wishTitle);
+      router.push(`/wishes/create?step=link&wishTitle=${encodeWishTitle}`);
+    }
+  }
+
+  return (
+    <CloseIconInModal isOpen={isOpen} handleToggle={handleToggle}>
+      <div className="flex flex-col items-center gap-20 w-full">
+        <div className="flex flex-col items-center w-full">
+          <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
+          <h2 className="font-bitbit text-[24px] text-background">생일 잔치상 만들기</h2>
         </div>
+        <div className="w-full">
+          <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>
+          <InputText register={register('wishTitle')} placeholder="ex) 에어팟맥스 받게 해주세요" />
+        </div>
+        <Button
+          bgColor="dark_green"
+          fontColor="white"
+          styles={{ width: '13.8rem' }}
+          onClick={handleClick}
+        >
+          입장하기
+        </Button>
       </div>
-    </CloseTopModal>
+    </CloseIconInModal>
   );
 }
+
+// function CakeMessageModal({
+//   presentId,
+//   wishId,
+//   toggleState,
+//   handleToggle,
+// }: {
+//   presentId: number;
+//   wishId: string;
+//   toggleState: boolean;
+//   handleToggle: () => void;
+// }) {
+//   // const {} = useGetCakesInfo(presentId, Number(wishId));
+//   return (
+//     <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
+//       <div className="flex flex-col items-center w-full h-full">
+//         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`선물주 운영자님이\n님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
+//         <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
+//           <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
+//             테스트
+//           </span>
+//           {/* <Image></Image> */}
+//           <span className="text-[14px]">안녕하세요 조물주보다 생일선물주</span>
+
+//           <div className="flex justify-between items-center w-full h-54 p-12 rounded-xl border border-main_blue">
+//             <span className="text-[16px]">선물한 항목</span>
+//             <span className="font-bitbit">정성담은 편지</span>
+//           </div>
+//         </div>
+//       </div>
+//     </CloseTopModal>
+//   );
+// }

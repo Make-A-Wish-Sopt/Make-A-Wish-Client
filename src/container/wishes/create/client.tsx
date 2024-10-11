@@ -40,12 +40,16 @@ export default function WishesCreate({ createStep }: { createStep: WishesCreateS
     resetStep();
   }, []);
 
-  return <>{}</>;
+  return <></>;
 }
 
 const DropDownContent = dynamic(() => import('./dropdownContent'));
 
-export function WishesLinkInputForm() {
+export function WishesLinkInputForm({
+  progressWishesLinkData,
+}: {
+  progressWishesLinkData?: WishesLinkDataType;
+}) {
   const methods = useForm<WishesLinkDataType>({
     mode: 'onChange',
     defaultValues: {
@@ -73,6 +77,13 @@ export function WishesLinkInputForm() {
   });
 
   useEffect(() => {
+    if (progressWishesLinkData) {
+      methods.reset({
+        ...progressWishesLinkData,
+      });
+      return;
+    }
+
     const storedWishesLinkData = localStorage.getItem(WISHES_LINK_DATA_LOCAL_STORAGE_KEY);
 
     if (storedWishesLinkData) {
@@ -103,6 +114,8 @@ export function WishesLinkInputForm() {
   function handleNextStep() {
     if (watchWantsGift) {
       router.push('/wishes/create?step=account');
+
+      // 만료기간 설정해주기
       localStorage.setItem(WISHES_LINK_DATA_LOCAL_STORAGE_KEY, JSON.stringify(methods.getValues()));
       nextStep();
     } else {

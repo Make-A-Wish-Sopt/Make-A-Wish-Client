@@ -4,12 +4,11 @@ import { PropsWithChildren } from 'react';
 export interface ModalProps {
   isOpen: boolean;
   handleToggle: () => void;
-  bgNone?: boolean;
   bgColor?: keyof ColorsTypes;
 }
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
-  const { isOpen, handleToggle, bgNone, bgColor, children } = props;
+  const { isOpen, handleToggle, bgColor, children } = props;
 
   return (
     <>

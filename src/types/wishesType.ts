@@ -1,10 +1,12 @@
+export type WishStatusType = 'WHILE' | 'BEFORE' | 'END';
+
 export type MainProgressDataType = {
   wishId: string;
   cakeCount: number;
   dayCount: number;
   price: number;
   percent: number;
-  status: 'WHILE' | 'BEFORE' | 'END';
+  status: WishStatusType;
 };
 
 export interface WishesProgressDataType extends WishesDataInputType {

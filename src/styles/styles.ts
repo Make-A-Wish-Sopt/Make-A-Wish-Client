@@ -19,7 +19,7 @@ export const colors = {
 export type ColorsTypes = typeof colors;
 
 const sizeList: { [key: number]: string } = {};
-for (let i = 1; i <= 200; i++) {
+for (let i = 1; i <= 400; i++) {
   sizeList[i] = `${i * 0.1}rem`;
 }
 

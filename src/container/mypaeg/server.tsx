@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { MypageDefaultCakeImg } from '../../../public/assets/images';
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
-export function MypageUserName() {
+export async function MypageUserName() {
+  const loginUserData = await getLoginUserCookiesData();
+
   return (
     <div className="flex gap-10 items-center mt-11 mb-20">
       <Image
@@ -10,10 +13,7 @@ export function MypageUserName() {
         width={50}
         height={50}
       />
-      <span className="font-bitbit text-[24px] text-white">
-        이화정님
-        {/* 전달받은 데이터 */}
-      </span>
+      <span className="font-bitbit text-[24px] text-white">{loginUserData?.nickName}님</span>
     </div>
   );
 }

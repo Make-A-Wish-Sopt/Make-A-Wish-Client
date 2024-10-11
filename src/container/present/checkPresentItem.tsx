@@ -1,5 +1,5 @@
 import { PresentItemType, presentList } from '@/constant/model/present';
-import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import { convertMoneyText } from '@/utils/common/convert';
 import Image from 'next/image';
 
 export default function CheckPresentItem({ presentId }: { presentId: number }) {

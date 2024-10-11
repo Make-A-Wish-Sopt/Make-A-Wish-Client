@@ -1,7 +1,7 @@
 'use client';
 
 import { presentList } from '@/constant/model/present';
-import { convertMoneyText } from '@/utils/common/convertMoneyText';
+import { convertMoneyText } from '@/utils/common/convert';
 import Image from 'next/image';
 import { useFormContext, useWatch } from 'react-hook-form';
 
