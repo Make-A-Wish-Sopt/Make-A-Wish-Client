@@ -1,15 +1,41 @@
 'use client';
 
-import { cakeImageWithId, CakeItemType } from '@/constant/model/cakes';
+import { cakeImageWithId, CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 import Image from 'next/image';
 import { CakeDishTopRibbonImg } from '../../../public/assets/images';
 import useToggle from '@/hooks/common/useToggle';
 import useSelectItem from '@/hooks/common/useSelectItem';
+import { Suspense, useEffect, useState } from 'react';
+import { CakePresentMessageDataType } from '@/types/api/response';
+import { getCakePresentMessage } from '@/api/cakes';
+import CloseTopModal from '../Common/Modal/CloseTopModal';
+import FixedBottomButton from '../Common/Button/FixedBottomButton';
+import Button from '../Common/Button';
+import Loading from '@/app/loading';
 
-export function CakesTree({ cakeList }: { cakeList: CakeItemType[] }) {
+export function CakesTree({
+  cakeList,
+  wishId,
+  nickName,
+}: {
+  cakeList: CakeItemType[];
+  wishId: string;
+  nickName: string;
+}) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3));
-  const { toggleState, handleToggle } = useToggle();
+
+  const { toggleState, handleToggle, changeOpenState } = useToggle();
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
+  const [cakePresentMessageData, setCakePresentMessageData] =
+    useState<CakePresentMessageDataType | null>(null);
+
+  useEffect(() => {
+    if (selectedPresentId > 0) {
+      getCakePresentMessage(wishId, selectedPresentId).then((response) => {
+        setCakePresentMessageData(response);
+      });
+    }
+  }, [selectedPresentId]);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -35,7 +61,7 @@ export function CakesTree({ cakeList }: { cakeList: CakeItemType[] }) {
                   key={cake.name}
                   onClick={() => {
                     handleSelectOne(cake.presentId);
-                    handleToggle();
+                    changeOpenState(true);
                   }}
                   style={{ width: '105%' }}
                 >
@@ -50,16 +76,59 @@ export function CakesTree({ cakeList }: { cakeList: CakeItemType[] }) {
         ))}
       </div>
 
-      {/* {toggleState && selectedPresentId > 0 && (
-        <CakeMessageModal
-          // wishId={loginUserInfo.wishId}
-          wishId={'205'}
-          presentId={selectedPresentId}
-          toggleState={toggleState}
-          handleToggle={handleToggle}
-        />
-      )} */}
+      {toggleState && selectedPresentId > 0 && cakePresentMessageData && (
+        <Suspense fallback={<Loading />}>
+          <CakeMessageModal
+            toggleState={toggleState}
+            handleToggle={handleToggle}
+            cakePresentMessageData={cakePresentMessageData}
+            nickName={nickName}
+          />
+        </Suspense>
+      )}
     </div>
+  );
+}
+
+export function CakeMessageModal({
+  toggleState,
+  handleToggle,
+  cakePresentMessageData,
+  nickName,
+}: {
+  toggleState: boolean;
+  handleToggle: () => void;
+  cakePresentMessageData: CakePresentMessageDataType;
+  nickName: string;
+}) {
+  const { cakeId, giftMenuId, message, name } = cakePresentMessageData;
+  console.log(cakePresentMessageData);
+
+  return (
+    <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
+      <div className="flex flex-col items-center w-full h-full">
+        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`선물주 운영자님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
+        <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
+          <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
+            {name}
+          </span>
+          <Image
+            src={defaultCakeListData[cakeId].image}
+            alt="보낸 케이크 아바타 이미지"
+            width={160}
+          />
+          <span className="text-[14px] mb-13">{message}</span>
+
+          <div className="flex justify-between items-center w-full h-54 p-12 rounded-xl border border-main_blue font-bitbit text-[16px] text-white">
+            <span className="font-galmuri">선물한 항목</span>
+            <span>정성담은 편지</span>
+          </div>
+        </div>
+      </div>
+      <FixedBottomButton>
+        <Button>이미지 저장하기</Button>
+      </FixedBottomButton>
+    </CloseTopModal>
   );
 }
 

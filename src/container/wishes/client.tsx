@@ -3,7 +3,7 @@
 import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { CakeDishTopRibbonImg, VitaminCakeImg } from '../../../public/assets/images';
+import { VitaminCakeImg } from '../../../public/assets/images';
 import useToggle from '@/hooks/common/useToggle';
 import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
 import { ReactNode } from 'react';
@@ -13,9 +13,6 @@ import { useForm } from 'react-hook-form';
 import { convertEncodeBase64 } from '@/utils/common/convert';
 
 export default function WishesPageStateContainer({
-  DayCountText,
-  WishesMessageToCreateUser,
-  ReceivedCakeTree,
   isWishesProgress,
   children,
 }: {
@@ -30,9 +27,6 @@ export default function WishesPageStateContainer({
 
   return (
     <>
-      {/* {DayCountText}
-      {WishesMessageToCreateUser}
-      {ReceivedCakeTree} */}
       {children}
       <WishesCreateOrShareButton
         isWishesProgress={isWishesProgress}
@@ -44,7 +38,6 @@ export default function WishesPageStateContainer({
           handleToggle={handleOpenWishesTitleModal}
         />
       )}
-      {/* <WishesCreateTitleInputModal /> */}
     </>
   );
 }
@@ -120,36 +113,3 @@ function WishesCreateTitleInputModal({
     </CloseIconInModal>
   );
 }
-
-// function CakeMessageModal({
-//   presentId,
-//   wishId,
-//   toggleState,
-//   handleToggle,
-// }: {
-//   presentId: number;
-//   wishId: string;
-//   toggleState: boolean;
-//   handleToggle: () => void;
-// }) {
-//   // const {} = useGetCakesInfo(presentId, Number(wishId));
-//   return (
-//     <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
-//       <div className="flex flex-col items-center w-full h-full">
-//         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`선물주 운영자님이\n님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
-//         <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
-//           <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
-//             테스트
-//           </span>
-//           {/* <Image></Image> */}
-//           <span className="text-[14px]">안녕하세요 조물주보다 생일선물주</span>
-
-//           <div className="flex justify-between items-center w-full h-54 p-12 rounded-xl border border-main_blue">
-//             <span className="text-[16px]">선물한 항목</span>
-//             <span className="font-bitbit">정성담은 편지</span>
-//           </div>
-//         </div>
-//       </div>
-//     </CloseTopModal>
-//   );
-// }

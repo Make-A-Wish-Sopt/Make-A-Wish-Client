@@ -12,7 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="bg-background">
       <body>
-        <RootProvider>{children}</RootProvider>
+        {/* <RootProvider>{children}</RootProvider> */}
+        {children}
       </body>
     </html>
   );

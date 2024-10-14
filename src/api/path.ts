@@ -35,5 +35,6 @@ export const PATH_PUBLIC = {
 
 export const PATH_CAKES = {
   GET_CAKES_RESULT: (wishId: string | number) => `${PATH.cakes}/${wishId}`,
-  GET_CAKES_INFO: (wishId: number, cakeId: number) => `${PATH.cakes}/${wishId}/${cakeId}`,
+  GET_CAKES_INFO: (wishId: string | number, cakeId: string | number) =>
+    `${PATH.cakes}/${wishId}/${cakeId}`,
 };

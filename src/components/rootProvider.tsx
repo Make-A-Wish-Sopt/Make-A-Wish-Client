@@ -7,7 +7,7 @@ import StepInputProvider from '@/context/stepInputContext';
 export default function RootProvider({ children }: { children: React.ReactNode }) {
   return (
     <StepInputProvider>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
     </StepInputProvider>
   );
 }

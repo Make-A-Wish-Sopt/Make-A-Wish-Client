@@ -4,7 +4,6 @@ import { WishesAccountInputForm, WishesCreateStepTitle } from '@/container/wishe
 
 export default async function WishesEditPageContainer() {
   const progressWishLinkData = await getProgressWishLinkData();
-  console.log(progressWishLinkData);
 
   return (
     <>

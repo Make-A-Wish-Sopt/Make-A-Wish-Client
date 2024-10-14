@@ -1,18 +1,28 @@
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_CAKES } from './path';
-import { GetCakesResultResponseType } from '@/types/api/response';
+import { CakePresentMessageResponseType, GetCakesResultResponseType } from '@/types/api/response';
 
 /**
  * 해당 소원에 대한 케이크 조회
  */
-export const getCakesInfo = async (wishId: number, cakeId: number) => {
-  const data = await client.get(`${API_VERSION_01}${PATH_CAKES.GET_CAKES_INFO(wishId, cakeId)}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      // Authorization: `Bearer ${ACCESS_TOKEN}`,
+
+export const getCakePresentMessage = async (wishId: string, presentId: number) => {
+  if (!wishId || !presentId) return;
+
+  const { accessToken } = await getLoginUserCookiesData();
+
+  if (!accessToken) return;
+
+  const data = await client.get<CakePresentMessageResponseType>(
+    `${API_VERSION_01}${PATH_CAKES.GET_CAKES_INFO(wishId, presentId)}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
-  });
+  );
 
   return data.data.data;
 };

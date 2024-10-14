@@ -32,18 +32,18 @@ export { default as CakeDishTopRibbonImg } from '../images/cakeDishTopRibbonImg.
 export { default as WishesCreateDefaultImg } from '../images/wishesCreateDefaultImg.png';
 
 // 트리에 올라가는 케이크 이미지
-export { default as BeefCakeImg } from './CakeList/beefCakeImg.png';
-export { default as ChickenCakeImg } from './CakeList/chickenCakeImg.png';
-export { default as FlowerCakeImg } from './CakeList/flowerCakeImg.png';
-export { default as LpCakeImg } from './CakeList/lpCakeImg.png';
-export { default as PerfumeCakeImg } from './CakeList/perfumeCakeImg.png';
-export { default as RudolphCakeImg } from './CakeList/rudolphCakeImg.png';
-export { default as SantaCakeImg } from './CakeList/santaCakeImg.png';
-export { default as SnowCakeImg } from './CakeList/snowCakeImg.png';
-export { default as SushiCakeImg } from './CakeList/sushiCakeImg.png';
-export { default as VitaminCakeImg } from './CakeList/vitaminCakeImg.png';
-export { default as CoffeeCakeImg } from './CakeList/coffeeCakeImg.png';
-export { default as DdongCakeImg } from './CakeList/ddongCakeImg.png';
+export { default as BeefCakeImg } from './CakeList/BeefCakeImg.png';
+export { default as ChickenCakeImg } from './CakeList/ChickenCakeImg.png';
+export { default as FlowerCakeImg } from './CakeList/FlowerCakeImg.png';
+export { default as LpCakeImg } from './CakeList/LpCakeImg.png';
+export { default as PerfumeCakeImg } from './CakeList/PerfumeCakeImg.png';
+export { default as RudolphCakeImg } from './CakeList/RudolphCakeImg.png';
+export { default as SantaCakeImg } from './CakeList/SantaCakeImg.png';
+export { default as SnowCakeImg } from './CakeList/SnowCakeImg.png';
+export { default as SushiCakeImg } from './CakeList/SushiCakeImg.png';
+export { default as VitaminCakeImg } from './CakeList/VitaminCakeImg.png';
+export { default as CoffeeCakeImg } from './CakeList/CoffeeCakeImg.png';
+export { default as DdongCakeImg } from './CakeList/DdongCakeImg.png';
 
 //자신을 대표하는 아바타 케이크 이미지
 export { default as BeefCakeAvatarImg } from '../images/AvatarCakeList/BeefCakeAvatarImg.png';

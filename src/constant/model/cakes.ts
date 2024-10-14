@@ -116,7 +116,7 @@ export const defaultCakeListData: Array<CakeItemType> = [
     presentId: 0,
   },
   {
-    cakeId: CAKE_ID.vitaminCakeId,
+    cakeId: CAKE_ID.coffeeCakeId,
     name: '달콤커피 케이크님',
     price: 32900,
     image: CoffeeCakeImg,
