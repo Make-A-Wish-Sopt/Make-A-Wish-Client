@@ -1,7 +1,12 @@
 import { API_VERSION_01, PATH_AUTH } from './path';
 import { client } from './common/axios';
-import { DefaultResponseType, LoginResponseType } from '@/types/api/response';
+import {
+  DefaultResponseType,
+  LoginResponseType,
+  UpdateTokenResponseType,
+} from '@/types/api/response';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import axios from 'axios';
 
 export const postAuthKakao = async (code: string) => {
   try {
@@ -23,16 +28,19 @@ export const postAuthKakao = async (code: string) => {
 export const updateAccessToken = async () => {
   const { refreshToken } = await getLoginUserCookiesData();
 
-  if (refreshToken) {
-    try {
-      const data = await client.post<DefaultResponseType>(`${API_VERSION_01}${PATH_AUTH.TOKEN}`, {
+  if (!refreshToken) return;
+
+  try {
+    const data = await axios.post<UpdateTokenResponseType>(
+      `${process.env.NEXT_PUBLIC_BASE_URL}${API_VERSION_01}${PATH_AUTH.TOKEN}`,
+      {},
+      {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${refreshToken}`,
         },
-      });
+      },
+    );
 
-      return data;
-    } catch (error) {}
-  }
+    return data.data.data;
+  } catch (error) {}
 };

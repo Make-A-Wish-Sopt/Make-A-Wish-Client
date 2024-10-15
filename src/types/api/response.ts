@@ -57,3 +57,8 @@ export type CakePresentMessageDataType = {
 
 export type CakePresentMessageResponseType = DefaultResponseType<CakePresentMessageDataType>;
 export type GetCakesResultResponseType = DefaultResponseType<Array<CakeItemType>>;
+
+export type UpdateTokenResponseType = DefaultResponseType<{
+  accessToken: string;
+  refreshToken: string;
+}>;

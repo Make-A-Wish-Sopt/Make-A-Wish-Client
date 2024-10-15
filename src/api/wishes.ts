@@ -16,17 +16,12 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
  * 진행중인 소원 조회
  */
 export const getMainProgressWishesData = async () => {
-  const { accessToken } = await getLoginUserCookiesData();
-
-  if (!accessToken) return;
-
   try {
     const data = await client.get<MainProgressDataResponseType>(
       `${API_VERSION_01}${PATH_WISHES.MAIN}`,
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

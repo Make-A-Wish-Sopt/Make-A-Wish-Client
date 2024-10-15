@@ -5,13 +5,12 @@ import Image from 'next/image';
 import { CakeDishTopRibbonImg } from '../../../public/assets/images';
 import useToggle from '@/hooks/common/useToggle';
 import useSelectItem from '@/hooks/common/useSelectItem';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CakePresentMessageDataType } from '@/types/api/response';
 import { getCakePresentMessage } from '@/api/cakes';
 import CloseTopModal from '../Common/Modal/CloseTopModal';
 import FixedBottomButton from '../Common/Button/FixedBottomButton';
 import Button from '../Common/Button';
-import Loading from '@/app/loading';
 
 export function CakesTree({
   cakeList,
@@ -77,14 +76,12 @@ export function CakesTree({
       </div>
 
       {toggleState && selectedPresentId > 0 && cakePresentMessageData && (
-        <Suspense fallback={<Loading />}>
-          <CakeMessageModal
-            toggleState={toggleState}
-            handleToggle={handleToggle}
-            cakePresentMessageData={cakePresentMessageData}
-            nickName={nickName}
-          />
-        </Suspense>
+        <CakeMessageModal
+          toggleState={toggleState}
+          handleToggle={handleToggle}
+          cakePresentMessageData={cakePresentMessageData}
+          nickName={nickName}
+        />
       )}
     </div>
   );
@@ -102,7 +99,6 @@ export function CakeMessageModal({
   nickName: string;
 }) {
   const { cakeId, giftMenuId, message, name } = cakePresentMessageData;
-  console.log(cakePresentMessageData);
 
   return (
     <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>

@@ -32,3 +32,7 @@ export async function setLoginUserCookiesData(loginUserData: LoginUserDataType) 
     sameSite: 'strict',
   });
 }
+
+export async function resetLoginUserCookiesData() {
+  cookie.delete(LOGIN_USER_COOKIE_KEY);
+}

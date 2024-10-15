@@ -10,6 +10,7 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 export default async function WishesPageContainer() {
   const progressWishesData = await getMainProgressWishesData();
+
   const { wishId, dayCount } = progressWishesData;
   const publicWishesData = await getPublicWishes(wishId);
   const receivedCakeList = await getCakesResult(wishId);
