@@ -28,7 +28,6 @@ import InputTextForm from '@/components/UI/InputTextForm';
 import { useRouter } from 'next/navigation';
 import { postVerifyAccount } from '@/api/user';
 import { postWishes } from '@/api/wishes';
-import { checkComp } from '@/utils/common/checkComponent';
 
 const DropDownContent = dynamic(() => import('./dropdownContent'));
 
@@ -39,7 +38,7 @@ export function WishesLinkInputForm({
   methods: UseFormReturn<WishesLinkDataType, any, undefined>;
   progressWishesLinkData?: WishesLinkDataType;
 }) {
-  const { preSignedImageUrl, uploadImageFile } = useUploadItemInfo();
+  const { imageURL, setImageURL, uploadImageFile } = useUploadItemInfo();
   const { toggleState: dropDownState, handleToggle, changeOpenState } = useToggle();
   const router = useRouter();
   const control = methods.control;
@@ -69,13 +68,13 @@ export function WishesLinkInputForm({
     //   changeNextBtnDisabledState(true);
     // }
     // changeNextBtnDisabledState(false);
-  }, [methods.formState.isValid, preSignedImageUrl]);
+  }, [methods.formState.isValid, imageURL]);
 
   useEffect(() => {
-    if (preSignedImageUrl) {
-      methods.setValue('imageUrl', preSignedImageUrl);
+    if (imageURL) {
+      methods.setValue('imageUrl', imageURL);
     }
-  }, [preSignedImageUrl]);
+  }, [imageURL]);
 
   function handleNextStep() {
     const wishTitle = methods.getValues('title');
@@ -99,18 +98,17 @@ export function WishesLinkInputForm({
     } catch (error) {}
   }
 
+  console.log(imageURL);
+
   return (
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(() => {})}>
           <InputForm title={`링크에 들어온 친구가 보게 될\n 재밌는 이미지를 등록해보세요!`}>
-            <UploadImageBox
-              preSignedImageUrl={watchImageUrl}
-              handleUploadImageFile={uploadImageFile}
-            />
+            <UploadImageBox imageURL={imageURL} handleUploadImageFile={uploadImageFile} />
           </InputForm>
 
-          <InputTextForm<WishesLinkDataType>
+          {/* <InputTextForm<WishesLinkDataType>
             inputType="textarea"
             inputTitle="친구에게 남기고 싶은 한마디"
             registerName="hint"
@@ -176,7 +174,7 @@ export function WishesLinkInputForm({
             >
               {watchWantsGift ? '다음으로' : '소원링크 생성'}
             </Button>
-          </div>
+          </div> */}
         </form>
       </FormProvider>
     </>

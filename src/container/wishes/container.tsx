@@ -17,7 +17,7 @@ export default async function WishesPageContainer() {
   const { wishId, dayCount } = progressWishesData;
   const publicWishesData = await getPublicWishes(wishId);
   const receivedCakeList = (await getCakesResult(wishId)) || defaultCakeListData;
-  const { nickName } = await getLoginUserCookiesData();
+  const { nickName } = (await getLoginUserCookiesData()) || { nickName: '' };
 
   return (
     <WishesPageStateContainer isWishesProgress={wishId !== undefined}>

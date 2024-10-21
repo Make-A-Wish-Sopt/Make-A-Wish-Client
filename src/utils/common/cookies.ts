@@ -27,8 +27,6 @@ export async function getLoginUserCookiesData(): Promise<any | undefined> {
 export async function setLoginUserCookiesData(loginUserData: LoginUserDataType) {
   cookie.delete(LOGIN_USER_COOKIE_KEY);
 
-  console.log(loginUserData);
-
   cookie.set(LOGIN_USER_COOKIE_KEY, JSON.stringify(loginUserData), {
     httpOnly: true,
     sameSite: 'strict',

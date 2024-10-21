@@ -21,13 +21,11 @@ export default function WishesCreatePage({
   const decodeWishTitle = convertDecodeBase64(wishTitle);
 
   return (
-    <>
-      <Suspense fallback={<Loading />}>
-        <Header backBtn />
-        <MainLayout>
-          <WishesCreatePageContainer createStep={searchParams.step} wishTitle={decodeWishTitle} />
-        </MainLayout>
-      </Suspense>
-    </>
+    <Suspense fallback={<Loading />}>
+      <Header backBtn />
+      <MainLayout>
+        <WishesCreatePageContainer createStep={searchParams.step} wishTitle={decodeWishTitle} />
+      </MainLayout>
+    </Suspense>
   );
 }

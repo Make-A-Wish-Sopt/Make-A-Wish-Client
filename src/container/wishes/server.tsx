@@ -8,7 +8,7 @@ export async function WishesMessageToCreateUser({
   publicWishesData?: PublicWishesDataType;
   cakeMessageOnlyOne: boolean;
 }) {
-  const { nickName } = await getLoginUserCookiesData();
+  const { nickName } = (await getLoginUserCookiesData()) || { nickName: '' };
 
   return (
     <>

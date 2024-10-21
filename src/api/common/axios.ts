@@ -6,12 +6,12 @@ import { updateAccessToken } from '../auth';
 export const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
-    'Content-Type': 'aplication/json',
+    'Content-Type': 'application/json',
   },
 });
 
 // 요청 인터셉터
-client.interceptors.request.use(async function (config: any) {
+client.interceptors.request.use(async function (config) {
   const loginUserCookiesData = await getLoginUserCookiesData();
 
   if (!loginUserCookiesData) return config;
@@ -20,7 +20,7 @@ client.interceptors.request.use(async function (config: any) {
 
   if (!accessToken) return config;
 
-  if (!config.headers) {
+  if (config.headers) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
   }
 

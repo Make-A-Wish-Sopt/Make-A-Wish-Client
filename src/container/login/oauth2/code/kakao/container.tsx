@@ -1,26 +1,30 @@
+'use client';
+
 import Loading from '@/app/loading';
 import { LoginUserDataType } from '@/utils/common/cookies';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default async function LoginContainer({
-  loginUserData,
-}: {
-  loginUserData?: LoginUserDataType;
-}) {
+export default function LoginContainer({ loginUserData }: { loginUserData?: LoginUserDataType }) {
+  const router = useRouter();
+
   if (!loginUserData) {
     alert('카카오 로그인 에러');
-    redirect('/');
+    router.push('/');
+    return <Loading />;
   }
 
-  await fetch('http://localhost:8080/api/set-cookies', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginUserData),
-  }).then(() => {
-    redirect('/wishes');
-  });
+  useEffect(() => {
+    fetch('http://localhost:8080/api/set-cookies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginUserData),
+    }).then(() => {
+      router.push('/wishes');
+    });
+  }, []);
 
-  return <></>;
+  return <Loading />;
 }
