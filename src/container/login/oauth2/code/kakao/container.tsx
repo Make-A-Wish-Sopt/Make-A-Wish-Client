@@ -8,8 +8,8 @@ export default function LoginContainer({ loginUserData }: { loginUserData?: Logi
   const router = useRouter();
 
   if (!loginUserData) {
-    alert('카카오 로그인 에러');
-    router.push('/');
+    // alert('카카오 로그인 에러');
+    // router.push('/');
     return <Loading />;
   }
 
@@ -18,7 +18,7 @@ export default function LoginContainer({ loginUserData }: { loginUserData?: Logi
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ loginUserData }),
+    body: JSON.stringify(loginUserData),
   });
 
   router.push('/wishes');

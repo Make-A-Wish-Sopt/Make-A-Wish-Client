@@ -5,15 +5,20 @@ import { updateAccessToken } from '../auth';
 //client 객체 정의
 export const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    'Content-Type': 'aplication/json',
+  },
 });
 
 // 요청 인터셉터
 client.interceptors.request.use(async function (config: any) {
-  const { accessToken } = await getLoginUserCookiesData();
+  const loginUserCookiesData = await getLoginUserCookiesData();
 
-  if (!accessToken) {
-    config.headers['accessToken'] = '';
-  }
+  if (!loginUserCookiesData) return config;
+
+  const { accessToken } = loginUserCookiesData;
+
+  if (!accessToken) return config;
 
   if (!config.headers) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -30,15 +35,8 @@ client.interceptors.response.use(
   async function (error: any) {
     const originalRequest = error.config;
 
-    // 무한 재시도를 방지하기 위해 재시도 여부 플래그를 추가
-    if (originalRequest._retry) {
-      return Promise.reject(error); // 이미 재시도된 요청이면 에러 반환
-    }
-
     // 토큰 만료 시 처리
     if (error.response && error.response.data.message === '유효하지 않은 토큰입니다.') {
-      originalRequest._retry = true; // 재시도 여부 플래그 설정
-
       try {
         // 1. accessToken 및 refreshToken 갱신
         const { accessToken, refreshToken } = await updateAccessToken();

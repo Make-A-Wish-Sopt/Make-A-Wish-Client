@@ -16,9 +16,6 @@ export default function WishesPageStateContainer({
   isWishesProgress,
   children,
 }: {
-  DayCountText?: JSX.Element;
-  WishesMessageToCreateUser?: JSX.Element;
-  ReceivedCakeTree?: JSX.Element;
   isWishesProgress: boolean;
   children?: ReactNode;
 }) {

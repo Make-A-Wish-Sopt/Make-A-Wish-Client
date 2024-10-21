@@ -1,6 +1,5 @@
 'use client';
 
-import { useStepInputContext } from '@/context/stepInputContext';
 import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
 import { PresentDataType } from '@/types/input';
 import InputForm from '@/components/UI/InputForm';
@@ -28,8 +27,6 @@ export function GivePresentForm({
   avatarCakeId: string;
   MessageFromWisheMaker: JSX.Element;
 }) {
-  const { step, changeNextBtnDisabledState } = useStepInputContext();
-
   const methods = useForm<PresentDataType>({
     mode: 'onChange',
     defaultValues: {
@@ -43,13 +40,13 @@ export function GivePresentForm({
 
   useEffect(() => {
     if (methods.formState.isValid) {
-      changeNextBtnDisabledState(false);
+      // changeNextBtnDisabledState(false);
     }
   }, [methods.formState]);
 
   return (
     <FormProvider {...methods}>
-      {
+      {/* {
         {
           1: (
             <>
@@ -64,13 +61,13 @@ export function GivePresentForm({
             </>
           ),
         }[step]
-      }
+      } */}
+      <></>
     </FormProvider>
   );
 }
 
 export function PresentGiverInfoInputForm({ wantsGift }: { wantsGift?: boolean }) {
-  const { nextBtnDisabled, nextStep } = useStepInputContext();
   const { control, handleSubmit } = useFormContext();
 
   const watchMessageOnly = useWatch({
@@ -80,7 +77,7 @@ export function PresentGiverInfoInputForm({ wantsGift }: { wantsGift?: boolean }
 
   function onSubmit() {
     if (wantsGift && !watchMessageOnly) {
-      nextStep();
+      // nextStep();
     } else {
     }
   }
@@ -118,7 +115,6 @@ export function PresentGiverInfoInputForm({ wantsGift }: { wantsGift?: boolean }
         bgColor="main_blue"
         fontColor="white"
         styles={{ marginBottom: '5.8rem' }}
-        disabled={nextBtnDisabled}
       >
         친구 생일 축하해주기
       </Button>

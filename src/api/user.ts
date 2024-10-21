@@ -31,17 +31,12 @@ export const putUserAccount = async (
 };
 
 export const getUserAccount = async () => {
-  const { accessToken } = await getLoginUserCookiesData();
-
-  if (!accessToken) return;
-
   try {
     const data = await client.get<UserAccountDataResponseType>(
       `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

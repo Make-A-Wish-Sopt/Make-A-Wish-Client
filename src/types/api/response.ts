@@ -21,11 +21,13 @@ export type WishesProgressDataResponseType = DefaultResponseType<
   WishesLinkDataType & { status: WishStatusType }
 >;
 
-export type UserAccountDataResponseType = DefaultResponseType<{
+export type UserAccountDataType = {
   accountInfo: AccountInfoType;
   id: number;
   phone: string;
-}>;
+};
+
+export type UserAccountDataResponseType = DefaultResponseType<UserAccountDataType>;
 
 export type PublicWishesDataType = {
   accountNumber: string;

@@ -12,7 +12,7 @@ export interface LoginUserDataType {
   wishId: string;
 }
 
-export async function getLoginUserCookiesData(): Promise<LoginUserDataType | undefined> {
+export async function getLoginUserCookiesData(): Promise<any | undefined> {
   const loginUserCookiesData = cookie.get(LOGIN_USER_COOKIE_KEY)?.value;
 
   if (!loginUserCookiesData) {
@@ -26,6 +26,8 @@ export async function getLoginUserCookiesData(): Promise<LoginUserDataType | und
 
 export async function setLoginUserCookiesData(loginUserData: LoginUserDataType) {
   cookie.delete(LOGIN_USER_COOKIE_KEY);
+
+  console.log(loginUserData);
 
   cookie.set(LOGIN_USER_COOKIE_KEY, JSON.stringify(loginUserData), {
     httpOnly: true,
