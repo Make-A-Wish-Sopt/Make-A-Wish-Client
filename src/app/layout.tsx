@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import '../styles/global.css';
-import RootProvider from '@/components/rootProvider';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
   title: '조물주 보다 생일 선물주',
@@ -12,7 +13,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="bg-background">
       <body>
-        <RootProvider>{children}</RootProvider>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {/* {children} */}
       </body>
     </html>
   );

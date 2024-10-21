@@ -92,7 +92,7 @@ function WishesCreateTitleInputModal({
       <div className="flex flex-col items-center gap-20 w-full">
         <div className="flex flex-col items-center w-full">
           <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
-          <h2 className="font-bitbit text-[24px] text-background">생일 잔치상 만들기</h2>
+          <h4 className="font-bitbit text-[24px] text-background">생일 잔치상 만들기</h4>
         </div>
         <div className="w-full">
           <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>

@@ -14,8 +14,6 @@ export default async function WishesPageContainer() {
     dayCount: 0,
   };
 
-  console.log(progressWishesData);
-
   const { wishId, dayCount } = progressWishesData;
   const publicWishesData = await getPublicWishes(wishId);
   const receivedCakeList = (await getCakesResult(wishId)) || defaultCakeListData;
@@ -24,6 +22,7 @@ export default async function WishesPageContainer() {
   return (
     <WishesPageStateContainer isWishesProgress={wishId !== undefined}>
       <DayCountText dayCount={dayCount} />
+
       <WishesMessageToCreateUser
         publicWishesData={publicWishesData}
         cakeMessageOnlyOne={receivedCakeList.length === 1}
