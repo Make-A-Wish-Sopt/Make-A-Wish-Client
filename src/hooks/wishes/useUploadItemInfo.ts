@@ -4,37 +4,36 @@ import { useEffect, useState } from 'react';
 
 export function useUploadItemInfo() {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageURL, setImageURL] = useState('');
-  const [signedUrl, setSignedUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [signedURL, setSignedURL] = useState('');
   const [filename, setFilename] = useState('');
 
   useEffect(() => {
-    if (!filename || !signedUrl) return;
+    if (!signedURL || !filename) return;
 
     try {
-      uploadPresignedURL(signedUrl, imageFile).then((signedResponse) => {
+      uploadPresignedURL(signedURL, imageFile).then((signedResponse) => {
         if (signedResponse.status) {
           const S3_URL = `${process.env.NEXT_PUBLIC_S3_URL}/${filename}`;
-          setImageURL(S3_URL);
+          setImageUrl(S3_URL);
         }
       });
     } catch (error) {}
-  }, [filename, signedUrl]);
+  }, [signedURL, filename]);
 
   useEffect(() => {
-    if (!imageFile || !validation.checkImageFileSize(imageFile.size)) return;
-
-    try {
-      getPresignedURL(imageFile.name).then((presignedResponse) => {
-        if (presignedResponse.status) {
-          const signedUrl = presignedResponse.data.data.signedUrl;
-          const filename = presignedResponse.data.data.filename;
-
-          setSignedUrl(signedUrl);
-          setFilename(filename.substring(1));
-        }
-      });
-    } catch (error) {}
+    if (imageFile && validation.checkImageFileSize(imageFile.size)) {
+      try {
+        getPresignedURL(imageFile.name).then((presignedResponse) => {
+          if (presignedResponse.status) {
+            const signedURL = presignedResponse.data.data.signedUrl;
+            const filename = presignedResponse.data.data.filename;
+            setSignedURL(signedURL);
+            setFilename(filename);
+          }
+        });
+      } catch (error) {}
+    }
   }, [imageFile]);
 
   function uploadImageFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -42,5 +41,5 @@ export function useUploadItemInfo() {
     imageFile && setImageFile(imageFile);
   }
 
-  return { imageFile, imageURL, setImageURL, uploadImageFile };
+  return { imageFile, imageUrl, setImageUrl, uploadImageFile };
 }

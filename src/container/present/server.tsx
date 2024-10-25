@@ -37,7 +37,7 @@ export function MessageFromWisheMaker({ wishId }: { wishId: string }) {
 
       {/* 이미지값 넣어줘야해요! */}
       <div className="mb-30">
-        <UploadImageBox imageURL={''} />
+        <UploadImageBox imageUrl={''} />
       </div>
     </>
   );

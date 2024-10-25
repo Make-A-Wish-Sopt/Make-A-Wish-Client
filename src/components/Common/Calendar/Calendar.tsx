@@ -1,40 +1,20 @@
 import Image from 'next/image';
 import { ko } from 'date-fns/locale';
-import { UseFormReturn, useWatch } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarHeader from './CalendarHeader';
 import { getDate } from '@/utils/common/getDate';
 import { CalendarGreyIc, CalendarIc } from '../../../../public/assets/icons';
-
 import Box from '../Box';
-import { WishesLinkDataType } from '@/types/input';
 
 interface CalendarProps {
   date: Date;
-  methods: UseFormReturn<WishesLinkDataType, any, undefined>;
+  handleChangeDate?: (selectedDate: Date) => void;
   readOnly?: boolean;
 }
 
 export default function Calendar(props: CalendarProps) {
-  const { date, methods, readOnly } = props;
-
-  const control = methods.control;
-
-  const watchStartDateData = useWatch({
-    control,
-    name: 'startDate',
-  });
-
-  const watchEndDateData = useWatch({
-    control,
-    name: 'endDate',
-  });
-
-  const handleChangeDate = (selectedDate: Date) => {
-    methods.setValue('startDate', selectedDate);
-    methods.setValue('endDate', getDate(selectedDate, 7));
-  };
+  const { date, handleChangeDate, readOnly } = props;
 
   return (
     <Box bgColor="dark_green" fontColor={readOnly ? 'gray2' : 'white'}>

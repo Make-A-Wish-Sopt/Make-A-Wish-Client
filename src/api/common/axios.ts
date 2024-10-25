@@ -34,6 +34,11 @@ client.interceptors.response.use(
   },
   async function (error: any) {
     const originalRequest = error.config;
+    let retryFlg = false;
+
+    if (retryFlg) {
+      return Promise.reject(error); // 이미 재시도된 요청은 다시 재시도하지 않음
+    }
 
     // 토큰 만료 시 처리
     if (error.response && error.response.data.message === '유효하지 않은 토큰입니다.') {
@@ -51,16 +56,23 @@ client.interceptors.response.use(
             refreshToken: refreshToken,
           };
 
-          await fetch('http://localhost:8080/api/set-cookies', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+          console.log(accessToken);
+          console.log(loginUserCookiesData);
+
+          await axios.post(
+            'http://localhost:8080/api/set-cookies',
+            JSON.stringify(newCookiesData),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
             },
-            body: JSON.stringify(newCookiesData),
-          });
+          );
 
           // 3. 갱신된 토큰을 헤더에 추가
           originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+          retryFlg = true;
 
           // 4. 원래 요청 재시도
           return client(originalRequest);

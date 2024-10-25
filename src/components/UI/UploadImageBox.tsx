@@ -1,36 +1,68 @@
 'use client';
 
+// import Image from 'next/image';
+// import { UploadImageLogoIc } from '../../../public/assets/icons';
+
+// export function UploadImageBox({
+//   imageUrl,
+//   handleUploadImageFile,
+// }: {
+//   imageUrl: string;
+//   handleUploadImageFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// }) {
+//   return (
+//     <label>
+//       <div className="flex justify-center items-center w-full h-220 bg-dark_green text-gray2 rounded-xl relative">
+//         {imageUrl ? (
+//           <Image src={imageUrl} alt="등록한 사진 이미지" fill />
+//         ) : (
+//           <Image src={UploadImageLogoIc} alt="파일 업로드 아이콘" width={70} />
+//           // 이미지가 (덜커덩 거리면서 등록되는거)이상하게 등록되는거 수정해야됩니다.
+//         )}
+//       </div>
+
+//       <input
+//         className="hidden"
+//         type="file"
+//         accept=".jpg,.jpeg,.png"
+//         onChange={handleUploadImageFile}
+//         disabled={handleUploadImageFile === undefined}
+//         readOnly
+//       />
+//     </label>
+//   );
+// }
+
+import React from 'react';
 import Image from 'next/image';
 import { UploadImageLogoIc } from '../../../public/assets/icons';
-import { Suspense } from 'react';
 
-export function UploadImageBox({
-  imageURL,
+export const UploadImageBox = React.memo(function UploadImageBox({
+  imageUrl,
   handleUploadImageFile,
 }: {
-  imageURL: string;
+  imageUrl: string;
   handleUploadImageFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <Suspense>
-      <label>
-        <div className="flex justify-center items-center w-full h-220 bg-dark_green text-gray2 rounded-xl">
-          {imageURL ? (
-            <Image src={imageURL} alt="등록한 사진 이미지" width={100} height={100} />
-          ) : (
-            <Image src={UploadImageLogoIc} alt="파일 업로드 아이콘" />
-          )}
-        </div>
+    <label>
+      <div className="flex justify-center items-center w-full h-220 bg-dark_green text-gray2 rounded-xl relative">
+        {imageUrl ? (
+          <Image src={imageUrl} alt="등록한 사진 이미지" fill />
+        ) : (
+          <Image src={UploadImageLogoIc} alt="파일 업로드 아이콘" width={70} />
+          // 이미지가 (덜커덩 거리면서 등록되는거)이상하게 등록되는거 수정해야됩니다.
+        )}
+      </div>
 
-        <input
-          className="hidden"
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          onChange={handleUploadImageFile}
-          disabled={handleUploadImageFile === undefined}
-          readOnly
-        />
-      </label>
-    </Suspense>
+      <input
+        className="hidden"
+        type="file"
+        accept=".jpg,.jpeg,.png"
+        onChange={handleUploadImageFile}
+        disabled={handleUploadImageFile === undefined}
+        readOnly
+      />
+    </label>
   );
-}
+});

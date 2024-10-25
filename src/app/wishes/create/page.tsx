@@ -14,6 +14,7 @@ export default function WishesCreatePage({
   searchParams: { step: WishesCreateStepType; wishTitle: string };
 }) {
   const { step, wishTitle } = searchParams;
+
   if ((step !== 'link' && step !== 'account') || wishTitle === '') {
     return <ErrorPage />;
   }
