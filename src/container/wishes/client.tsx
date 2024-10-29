@@ -10,7 +10,7 @@ import { ReactNode } from 'react';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { useForm } from 'react-hook-form';
-import { convertEncodeBase64 } from '@/utils/common/convert';
+import { convertEncode } from '@/utils/common/convert';
 
 export default function WishesPageStateContainer({
   isWishesProgress,
@@ -82,7 +82,7 @@ function WishesCreateTitleInputModal({
     const wishTitle = watch('wishTitle');
 
     if (wishTitle) {
-      const encodeWishTitle = convertEncodeBase64(wishTitle);
+      const encodeWishTitle = convertEncode(wishTitle);
       router.push(`/wishes/create?step=link&wishTitle=${encodeWishTitle}`);
     }
   }

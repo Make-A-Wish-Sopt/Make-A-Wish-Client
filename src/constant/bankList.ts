@@ -133,6 +133,7 @@ BANK_LIST[31].bankCode = '0061'; //BNP파리바
 BANK_LIST[31].bankCode = '0067'; //중국건설
 
 export const PAY_LIST = [
-  { id: 1, name: '토스뱅크' },
-  { id: 2, name: '카카오뱅크' },
+  { id: 5, name: '토스뱅크' },
+  { id: 1, name: '카카오뱅크' },
+  { id: 1, name: '카카오뱅크' },
 ];

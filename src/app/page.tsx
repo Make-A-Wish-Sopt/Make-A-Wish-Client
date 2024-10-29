@@ -2,7 +2,6 @@ import Header from '@/components/Common/Hedaer';
 import MainPageContainer from '@/container/container';
 import MainLayout from '@/layouts/MainLayout';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
-import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const isLoggedIn = (await getLoginUserCookiesData()) ? true : false;

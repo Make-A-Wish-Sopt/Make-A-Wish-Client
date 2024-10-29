@@ -1,17 +1,26 @@
 'use client';
 
+import { RouterPathsType } from '@/components/Common/Hedaer';
+import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 
 export default function ErrorPage({
   alertMessage,
+  pathTo,
   children,
 }: {
   alertMessage?: string;
+  pathTo?: RouterPathsType;
   children?: ReactNode;
 }) {
+  const router = useRouter();
   if (alertMessage) {
     alert(alertMessage);
-    window.location.replace('/');
+    if (pathTo) {
+      router.push(pathTo);
+    } else {
+      router.push('/');
+    }
   }
   return (
     <>

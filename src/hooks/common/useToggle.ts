@@ -7,13 +7,13 @@ export default function useToggle() {
     setToggleState(!toggleState);
   };
 
-  const changeOpenState = (state: boolean) => {
+  const changeToggleState = (state: boolean) => {
     setToggleState(state);
   };
 
   return {
     toggleState,
     handleToggle,
-    changeOpenState,
+    changeToggleState,
   };
 }

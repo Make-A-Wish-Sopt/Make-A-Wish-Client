@@ -2,7 +2,6 @@
 
 import { patchProgressWishes } from '@/api/wishes';
 import MoreBox from '@/components/UI/MoreBox';
-import { usePatchProgressWishes } from '@/hooks/queries/wishes';
 import { useRouter } from 'next/navigation';
 
 export function MypageMenuButtons() {

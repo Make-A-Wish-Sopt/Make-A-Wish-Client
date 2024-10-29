@@ -2,7 +2,7 @@ import { ColorsTypes, FontsTypes } from '@/styles/styles';
 
 import { CSSProperties, PropsWithChildren } from 'react';
 
-interface BoxProps {
+export interface BoxProps {
   bgColor?: keyof ColorsTypes;
   fontColor?: keyof ColorsTypes;
   font?: keyof FontsTypes;

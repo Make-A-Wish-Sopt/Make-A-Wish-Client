@@ -23,7 +23,7 @@ export function CakesTree({
 }) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3));
 
-  const { toggleState, handleToggle, changeOpenState } = useToggle();
+  const { toggleState, handleToggle, changeToggleState } = useToggle();
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<CakePresentMessageDataType | null>(null);
@@ -60,7 +60,7 @@ export function CakesTree({
                   key={cake.name}
                   onClick={() => {
                     handleSelectOne(cake.presentId);
-                    changeOpenState(true);
+                    changeToggleState(true);
                   }}
                   style={{ width: '105%' }}
                 >

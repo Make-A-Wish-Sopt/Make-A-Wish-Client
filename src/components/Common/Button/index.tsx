@@ -14,7 +14,16 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { disabled, bgColor, fontColor, font, styles, onClick, icon, children } = props;
+  const {
+    disabled,
+    bgColor = 'main_blue',
+    fontColor,
+    font = 'bitbit',
+    styles,
+    onClick,
+    icon,
+    children,
+  } = props;
 
   const defaultStyle: CSSProperties = {
     backgroundColor: disabled ? colors.gray2 : bgColor ? colors[bgColor] : colors.main_blue,
@@ -27,9 +36,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     <button
       className={`flex justify-center items-center ${
         icon ? 'gap-10px' : 'gap-0'
-      } w-full h-50 text-[20px] font-${font ? font : 'bitbit'} bg-${
-        bgColor ? bgColor : 'main_blue'
-      } rounded-xl`}
+      } w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl`}
       disabled={disabled}
       onClick={onClick}
       style={combinedStyle}

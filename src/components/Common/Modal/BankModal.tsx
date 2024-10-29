@@ -2,21 +2,17 @@
 
 import Image from 'next/image';
 import { BANK_LIST } from '@/constant/bankList';
-import { UseFormReturn } from 'react-hook-form';
-import { WishesAccountDataType } from '@/types/input';
-
-
 
 interface BankModalProps {
   handleToggle: () => void;
-  methods: UseFormReturn<WishesAccountDataType, any, undefined>;
+  changeBank: (input: string) => void;
 }
 
 export default function BankModal(props: BankModalProps) {
-  const { handleToggle, methods } = props;
+  const { handleToggle, changeBank } = props;
 
   const handleChangeBank = (input: string) => {
-    methods.setValue('bank', input);
+    changeBank(input);
     handleToggle();
   };
 

@@ -3,7 +3,6 @@ import WishesCreatePageStateContainer from './client';
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
 import { getUserAccount } from '@/api/user';
-import { checkComp } from '@/utils/common/checkComponent';
 
 export default async function WishesCreatePageContainer({
   createStep,

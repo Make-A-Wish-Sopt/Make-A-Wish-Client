@@ -4,6 +4,8 @@ export { default as LogoImg } from '../images/logoImg.svg';
 export { default as MainPageCakeImg } from '../images/mainPageCakeImg.png';
 export { default as MainCakeListImg } from '../images/mainCakeListImg.png';
 
+export { default as AccountCopyCakeImg } from '../images/AccountCopyCakeImg.png';
+
 //생일선물을 주는 사람이 선택하는 선물 아이템 이미지
 export { default as PresentItem1Img } from './presentItem/presentItem1Img.png';
 export { default as PresentItem2Img } from './presentItem/presentItem2Img.png';

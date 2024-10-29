@@ -1,31 +1,30 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import useToggle from '@/hooks/common/useToggle';
+import { PropsWithChildren, useEffect } from 'react';
 
 interface CheckBoxProps<T> {
   checkBoxText: string;
-  registerName?: keyof T;
+  changeCheckedState: (state: boolean) => void;
 }
 
 export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) {
-  const { register, control } = useFormContext();
-  const { checkBoxText, registerName } = props;
+  const { checkBoxText, changeCheckedState } = props;
+  const { toggleState, handleToggle } = useToggle();
 
-  const checkState = useWatch({
-    control,
-    name: registerName as string,
-  });
+  useEffect(() => {
+    changeCheckedState(toggleState);
+  }, [toggleState]);
 
   return (
     <div className="flex items-center h-full">
       <input
         className="w-20 h-20"
         type="checkbox"
-        {...register(registerName as string)}
+        onChange={handleToggle}
         style={{
           backgroundImage: `url(${
-            checkState ? '/assets/icons/checkedBoxIc.svg' : '/assets/icons/unCheckedBoxIc.svg'
+            toggleState ? '/assets/icons/checkedBoxIc.svg' : '/assets/icons/unCheckedBoxIc.svg'
           })`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',

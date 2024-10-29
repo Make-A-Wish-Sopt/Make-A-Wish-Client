@@ -15,5 +15,4 @@ export const wishesAccountInputInit: WishesAccountDataType = {
   account: '',
   bank: '',
   phone: '',
-  noticeAgree: false,
 };

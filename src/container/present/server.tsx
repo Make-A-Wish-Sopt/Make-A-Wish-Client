@@ -1,22 +1,17 @@
-'use client';
-
 import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
-import { useGetPublicWishes } from '@/hooks/queries/public';
 
-export function MessageFromWisheMaker({ wishId }: { wishId: string }) {
-  const { publicWishesData } = useGetPublicWishes(wishId);
-
+export function MessageFromWisheMaker() {
   return (
     <>
       <div className="flex justify-between mt-33">
         <h3 className="font-bitbit text-main_blue text-[24px]  whitespace-pre-line">
-          {publicWishesData?.title}
+          {/* {publicWishesData?.title} */}
         </h3>
 
         <span className="font-bitbit text-main_blue text-[20px]  whitespace-pre-line">
-          {`D-${publicWishesData?.dayCount}`}
+          {/* {`D-${publicWishesData?.dayCount}`} */}
         </span>
       </div>
 
@@ -32,7 +27,7 @@ export function MessageFromWisheMaker({ wishId }: { wishId: string }) {
           border: `1px solid ${colors.dark_green}`,
         }}
       >
-        <span className="text-[14px] text-gray1">{publicWishesData?.hint}</span>
+        {/* <span className="text-[14px] text-gray1">{publicWishesData?.hint}</span> */}
       </Box>
 
       {/* 이미지값 넣어줘야해요! */}

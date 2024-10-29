@@ -33,8 +33,6 @@ export const wishesAccountDataResolver = yup.object().shape({
     .min(10, '휴대폰 번호는 최소 10자리여야 합니다.')
     .max(11, '휴대폰 번호는 최대 11자리여야 합니다.')
     .required('필수 입력 항목입니다.'),
-
-  noticeAgree: yup.boolean().required(),
 });
 
 export type WishesAccountDataResolverType = yup.InferType<typeof wishesAccountDataResolver>;

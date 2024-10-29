@@ -1,5 +1,5 @@
-export const convertEncodeBase64 = (str: string) => Buffer.from(str).toString('base64');
-export const convertDecodeBase64 = (str: string) => Buffer.from(str, 'base64').toString('utf-8');
+export const convertEncode = (str: string) => Buffer.from(str).toString('base64');
+export const convertDecode = (str: string) => Buffer.from(str, 'base64').toString('utf-8');
 
 export const convertMoneyText = (price: string) => {
   if (price) {

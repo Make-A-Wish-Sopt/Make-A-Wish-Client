@@ -1,16 +1,20 @@
 'use client';
 
-import { getDate } from '@/utils/common/getDate';
 import { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
-import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { WishesCreateStepType } from '@/app/wishes/create/page';
 import { UserAccountDataType } from '@/types/api/response';
 import { useForm } from 'react-hook-form';
 import { wishesAccountInputInit, wishesLinkInputInit } from '@/constant/init';
 import WishesLinkInputForm from './wishesLinkInputForm';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { wishesLinkDataResolver, WishesLinkResolverType } from '@/validation/wishes.validate';
+import {
+  wishesAccountDataResolver,
+  WishesAccountDataResolverType,
+  wishesLinkDataResolver,
+  WishesLinkResolverType,
+} from '@/validation/wishes.validate';
+import ErrorPage from '@/app/error';
 
 const WishesAccountInputForm = dynamic(() => import('./WishesAccountInputForm'));
 
@@ -34,11 +38,12 @@ export default function WishesCreatePageStateContainer({
     resolver: yupResolver(wishesLinkDataResolver),
   });
 
-  const wishesAccountInputMethods = useForm<WishesAccountDataType>({
+  const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
     defaultValues: {
       ...wishesAccountInputInit,
     },
+    resolver: yupResolver(wishesAccountDataResolver),
   });
 
   return (
@@ -46,13 +51,22 @@ export default function WishesCreatePageStateContainer({
       {children}
       {
         {
+          // Step1
           link: <WishesLinkInputForm methods={wishesLinkInputMethods} />,
+
+          // Step 2
           account: (
-            <WishesAccountInputForm
-              accountData={userAccountData?.accountInfo}
-              phone={userAccountData?.phone}
-              methods={wishesAccountInputMethods}
-            />
+            <>
+              {wishTitle === process.env.NEXT_PUBLIC_WISHES_CREATE_ACCOUNT_KEY ? (
+                <WishesAccountInputForm
+                  accountData={userAccountData?.accountInfo}
+                  phone={userAccountData?.phone}
+                  methods={wishesAccountInputMethods}
+                />
+              ) : (
+                <ErrorPage alertMessage={'잘못된 접근입니다.'} pathTo={'/wishes'} />
+              )}
+            </>
           ),
         }[createStep]
       }

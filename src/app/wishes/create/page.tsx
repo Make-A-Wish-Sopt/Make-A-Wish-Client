@@ -3,7 +3,7 @@ import Loading from '@/app/loading';
 import Header from '@/components/Common/Hedaer';
 import WishesCreatePageContainer from '@/container/wishes/create/container';
 import MainLayout from '@/layouts/MainLayout';
-import { convertDecodeBase64 } from '@/utils/common/convert';
+import { convertDecode } from '@/utils/common/convert';
 import { Suspense } from 'react';
 
 export type WishesCreateStepType = 'link' | 'account';
@@ -19,11 +19,11 @@ export default function WishesCreatePage({
     return <ErrorPage />;
   }
 
-  const decodeWishTitle = convertDecodeBase64(wishTitle);
+  const decodeWishTitle = convertDecode(wishTitle);
 
   return (
     <Suspense fallback={<Loading />}>
-      <Header backBtn />
+      <Header backBtn pathTo="/wishes" />
       <MainLayout>
         <WishesCreatePageContainer createStep={searchParams.step} wishTitle={decodeWishTitle} />
       </MainLayout>

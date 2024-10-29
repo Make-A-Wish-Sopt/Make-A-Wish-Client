@@ -5,7 +5,7 @@ import Box from '../Box';
 interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;
   boxStyles?: React.CSSProperties;
-  styles?: React.CSSProperties;
+  inputStyles?: React.CSSProperties;
   onClick?: () => void;
   children?: ReactNode;
 }
@@ -13,7 +13,7 @@ interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function InputText({
   register,
   boxStyles,
-  styles,
+  inputStyles,
   onClick,
   readOnly,
   children,
@@ -21,7 +21,7 @@ export default function InputText({
 }: InputTextProps) {
   return (
     <Box bgColor="dark_green" fontColor="white" font="galmuri" styles={boxStyles}>
-      <div className="flex justify-between items-center w-full h-full " style={styles}>
+      <div className="flex justify-between items-center w-full h-full " style={inputStyles}>
         <input
           className="w-full h-full font-galmuri text-[14px] plachoder-gray2"
           {...register}

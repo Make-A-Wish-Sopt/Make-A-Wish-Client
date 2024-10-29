@@ -17,7 +17,6 @@ export interface WishesLinkDataType {
 
 export interface WishesAccountDataType extends AccountDataType {
   phone: string;
-  noticeAgree: boolean;
 }
 
 export interface AccountDataType {

@@ -20,7 +20,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
           }`}
           onClick={handleToggle}
         >
-          <div className="w-full h-full" onClick={(e) => e.stopPropagation()}>
+          <div className="w-auto h-auto" onClick={(e) => e.stopPropagation()}>
             {children}
           </div>
         </div>

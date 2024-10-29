@@ -19,7 +19,7 @@ export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
   const { id } = useParams<{ id: string }>();
 
   const handleClick = () => {
-    router.push(`/present/${id}?avatarCakeId=${center}`);
+    router.push(`/present/${id}?presentStep=present&avatarCakeId=${center}`);
   };
 
   return (
