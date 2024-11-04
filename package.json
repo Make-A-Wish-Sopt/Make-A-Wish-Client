@@ -43,7 +43,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.45",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.14",
     "ts-jest": "^29.2.4",
     "typescript": "^5"
   },

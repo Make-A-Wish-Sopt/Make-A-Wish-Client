@@ -1,9 +1,8 @@
 export interface PresentDataType {
   name: string;
   message: string;
-  messageOnly: boolean;
-  avatarCakeId: number;
-  presentId: number;
+  cakeId: number;
+  giftMenuId?: number;
 }
 
 export interface WishesLinkDataType {

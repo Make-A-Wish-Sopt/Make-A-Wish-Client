@@ -48,6 +48,11 @@ function MessageFromWisheMaker({ publicWishesData }: { publicWishesData: PublicW
         </span>
       </div>
 
+      {/* 이미지값 넣어줘야해요! */}
+      <div className="mt-20 mb-10">
+        <UploadImageBox imageUrl={''} />
+      </div>
+
       <Box
         bgColor="background"
         fontColor="gray1"
@@ -56,17 +61,12 @@ function MessageFromWisheMaker({ publicWishesData }: { publicWishesData: PublicW
           height: 'auto',
           minHeight: '5rem',
           padding: '1.2rem',
-          margin: '2rem 0',
+          marginBottom: '2rem',
           border: `1px solid ${colors.dark_green}`,
         }}
       >
         <span className="text-[14px] text-gray1">{publicWishesData?.hint}</span>
       </Box>
-
-      {/* 이미지값 넣어줘야해요! */}
-      <div className="mb-30">
-        <UploadImageBox imageUrl={''} />
-      </div>
     </>
   );
 }

@@ -1,23 +1,20 @@
 'use client';
 
-import { useForm, UseFormReturn } from 'react-hook-form';
-import { PresentDataType } from '@/types/input';
-import InputForm from '@/components/UI/InputForm';
-import InputTextForm from '@/components/UI/InputTextForm';
-import PresentList from '@/components/UI/PresentList';
-import Box from '@/components/Common/Box';
-import CheckBox from '@/components/UI/CheckBox';
-import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
+import { useForm } from 'react-hook-form';
 import Button from '@/components/Common/Button';
-import { BANK_LIST, PAY_LIST } from '@/constant/bankList';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
-import InputText from '@/components/Common/Input/inputText';
 import useToggle from '@/hooks/common/useToggle';
 import { PresentStepType } from '@/app/present/[id]/page';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { AccountCopyCakeImg } from '../../../public/assets/images';
+import { presentDataResolver, PresentDataResolverType } from '@/validation/present.validate';
+import { presentDataInputInit } from '@/constant/init';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { postPublicCakes } from '@/api/public';
+import PresentGiverInfoInputForm from './presentGiverInfoInputForm';
+import SelectPayment from './selectPayment';
 
 const CheckPresentItem = dynamic(() => import('./checkPresentItem'));
 
@@ -38,46 +35,66 @@ export default function GivePresentPageStateContainer({
   children: ReactNode;
   account: string;
 }) {
-  const methods = useForm<PresentDataType>({
+  const methods = useForm<PresentDataResolverType>({
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      message: '',
-      messageOnly: false,
-      avatarCakeId: Number(avatarCakeId),
-      presentId: 0,
+      ...presentDataInputInit,
+      cakeId: Number(avatarCakeId),
     },
+    resolver: yupResolver(presentDataResolver),
   });
+
+  const isValid = methods.formState.isValid;
 
   const router = useRouter();
 
-  function handleSubmit() {
-    if (presentStep === 'present') {
-      handleNextToPaymentStep();
+  const { toggleState: messageOnlyOption, changeToggleState: changeMessageOnlyOption } =
+    useToggle();
+
+  function handleGivePresent() {
+    if (!wantsGift || messageOnlyOption) {
+      GivePresentMessageOnly();
+      return;
     }
+
+    handleNextToPaymentStep();
+  }
+
+  function GivePresentMessageOnly() {
+    try {
+      const data = methods.getValues();
+      postPublicCakes({ ...data, wishId: wishId });
+    } catch (error) {}
   }
 
   function handleNextToPaymentStep() {
-    const presentId = methods.getValues('presentId');
+    const giftMenuId = methods.getValues('giftMenuId');
 
-    router.push(`/present/${wishId}?presentStep=payment&presentId=${presentId}`);
+    router.push(`/present/${wishId}?presentStep=payment&presentId=${giftMenuId}`);
   }
 
   async function handleAccountCopy() {
     try {
       await navigator.clipboard.writeText(account);
-      console.log(account);
-    } catch (error) {
-      console.log(error);
-    }
+      alert('계좌번호가 복사됐어요!');
+    } catch (error) {}
   }
+
+  console.log(isValid);
 
   return (
     <>
       {children}
       {
         {
-          present: <PresentGiverInfoInputForm methods={methods} wantsGift={wantsGift} />,
+          present: (
+            <PresentGiverInfoInputForm
+              methods={methods}
+              wantsGift={wantsGift}
+              messageOnlyOption={messageOnlyOption}
+              changeMessageOnlyOption={changeMessageOnlyOption}
+            />
+          ),
           payment: (
             <section className="flex flex-col items-center w-full">
               <CheckPresentItem
@@ -96,117 +113,40 @@ export default function GivePresentPageStateContainer({
           ),
         }[presentStep]
       }
-      <Button
-        onClick={handleSubmit}
-        bgColor="main_blue"
-        fontColor="white"
-        styles={{ marginBottom: '5.8rem' }}
-      >
-        {presentStep === 'present' ? '친구 생일 축하해주기' : '선물하러 가기'}
-      </Button>
-    </>
-  );
-}
-
-export function PresentGiverInfoInputForm({
-  methods,
-  wantsGift,
-}: {
-  methods: UseFormReturn<PresentDataType, any, undefined>;
-  wantsGift?: boolean;
-}) {
-  const { toggleState: messageOnlyOption, changeToggleState: changeMessageOnlyOption } =
-    useToggle();
-
-  function changePresentId(id: number) {
-    methods.setValue('presentId', id);
-  }
-
-  function changeCheckedState(state: boolean) {
-    changeMessageOnlyOption(state);
-    methods.setValue('messageOnly', state);
-  }
-
-  return (
-    <>
-      <InputForm title="본인의 닉네임 작성하기">
-        <InputText
-          register={methods.register('name')}
-          placeholder="당신의 이름이나 별명을 편하게 작성해주세요"
-        />
-      </InputForm>
-
-      {!wantsGift && (
-        <InputForm title="선물하고 싶은 항목 선택하기">
-          {!messageOnlyOption && <PresentList changePresentId={changePresentId} />}
-          <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-            <CheckBox<PresentDataType>
-              checkBoxText="편지만 보낼게요"
-              changeCheckedState={changeCheckedState}
-            />
-          </Box>
-        </InputForm>
+      {presentStep === 'present' && (
+        <PresentMessageButton handleClick={handleGivePresent} disabled={!isValid} />
       )}
 
-      <InputForm title="친구에게 편지남기기">
-        <InputTextForm
-          inputType="textarea"
-          register={methods.register('message')}
-          control={methods.control}
-          placeholder="ex.) 생일을 축하합니다~"
-          maxLength={MAX_TEXTAREA_LENGTH}
-        />
-      </InputForm>
+      {presentStep === 'payment' && (
+        <Button
+          onClick={handleGivePresent}
+          bgColor="main_blue"
+          fontColor="white"
+          styles={{ marginBottom: '5.8rem' }}
+          disabled={isValid}
+        >
+          {'선물하러 가기'}
+        </Button>
+      )}
     </>
   );
 }
 
-function SelectPayment() {
-  const handleDeepLink = (payment: { id: number; name: string }) => {
-    const ua = navigator.userAgent.toLowerCase();
-
-    if (payment.name === '토스뱅크') {
-      window.open('supertoss://toss/pay');
-
-      setTimeout(() => {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-            : 'https://apps.apple.com/app/id839333328',
-        );
-      }, 2000);
-    }
-
-    if (payment.name === '카카오뱅크') {
-      window.open('kakaobank://');
-      window.open('kakaopay://');
-
-      setTimeout(() => {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
-            : 'https://apps.apple.com/app/id1258016944',
-        );
-      }, 2000);
-    }
-  };
-
+function PresentMessageButton({
+  handleClick,
+  disabled,
+}: {
+  handleClick: () => void;
+  disabled: boolean;
+}) {
   return (
-    <div className="w-full">
-      <InputForm title="결제수단 선택">
-        <ul className="flex gap-8">
-          {PAY_LIST.map((payment) => (
-            <li
-              className="flex flex-col  items-center justify-center w-full h-92 rounded-xl bg-dark_green"
-              key={payment.name}
-              onClick={() => handleDeepLink(payment)}
-            >
-              <Image src={BANK_LIST[payment.id].logo} alt="은행 로고 이미지"></Image>
-              <span className="font-galmuri text-[14px] text-white">{payment.name}</span>
-            </li>
-          ))}
-        </ul>
-      </InputForm>
-    </div>
+    <Button
+      onClick={handleClick}
+      fontColor="white"
+      styles={{ marginBottom: '5.8rem' }}
+      disabled={disabled}
+    >
+      {'친구 생일 축하해주기'}
+    </Button>
   );
 }

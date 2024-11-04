@@ -36,6 +36,8 @@ export function CakesTree({
     }
   }, [selectedPresentId]);
 
+  console.log(selectedPresentId);
+
   return (
     <div className="flex flex-col items-center w-full">
       <div className="relative w-375 h-screen mt-40">
@@ -103,7 +105,7 @@ export function CakeMessageModal({
   return (
     <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
       <div className="flex flex-col items-center w-full h-full">
-        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`선물주 운영자님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
+        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`${name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
         <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
           <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
             {name}

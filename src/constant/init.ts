@@ -1,4 +1,4 @@
-import { WishesAccountDataType, WishesLinkDataType } from '@/types/input';
+import { PresentDataType, WishesAccountDataType, WishesLinkDataType } from '@/types/input';
 import { getDate } from '@/utils/common/getDate';
 
 export const wishesLinkInputInit: WishesLinkDataType = {
@@ -15,4 +15,11 @@ export const wishesAccountInputInit: WishesAccountDataType = {
   account: '',
   bank: '',
   phone: '',
+};
+
+export const presentDataInputInit: PresentDataType = {
+  name: '',
+  message: '',
+  cakeId: 0,
+  giftMenuId: 0,
 };

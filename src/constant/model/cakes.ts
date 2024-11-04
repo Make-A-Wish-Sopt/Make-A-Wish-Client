@@ -41,6 +41,8 @@ const CAKE_ID = {
   rudolphCakeId: 12,
 };
 
+type CakeIdType = typeof CAKE_ID;
+
 export type CakeItemType = {
   cakeId: number;
   name: string;
