@@ -1,6 +1,7 @@
 'use client';
 
-import { RouterPathsType } from '@/components/Common/Hedaer';
+
+import { RouterPathsType } from '@/hooks/common/useRouters';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 

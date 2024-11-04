@@ -7,21 +7,25 @@ import WishesPageStateContainer from './client';
 import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 import { CakesTree } from '@/components/UI/CakeTree';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { MainProgressDataType } from '@/types/wishesType';
 
-export default async function WishesPageContainer() {
-  const progressWishesData = (await getMainProgressWishesData()) || {
-    wishId: undefined,
-    dayCount: 0,
-  };
-
-  const { wishId, dayCount } = progressWishesData;
+export default async function WishesPageContainer({
+  progressWishesData,
+}: {
+  progressWishesData: MainProgressDataType;
+}) {
+  const wishId = '';
+  // const { wishId, dayCount } = progressWishesData;
   const publicWishesData = await getPublicWishes(wishId);
   const receivedCakeList = (await getCakesResult(wishId)) || defaultCakeListData;
   const { nickName } = (await getLoginUserCookiesData()) || { nickName: '' };
 
+
+
   return (
     <WishesPageStateContainer isWishesProgress={wishId !== undefined}>
-      <DayCountText dayCount={dayCount} />
+
+      {/* <DayCountText dayCount={dayCount} /> */}
 
       <WishesMessageToCreateUser
         publicWishesData={publicWishesData}

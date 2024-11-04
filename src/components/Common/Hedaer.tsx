@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { BackBtnIc, MenuIc } from '../../../public/assets/icons';
-
-export type RouterPathsType = '/' | '/wishes' | `/wishes/${string}` | '/mypage';
+import { RouterPathsType } from '@/hooks/common/useRouters';
 
 interface HeaderProps {
   backBtn?: boolean;

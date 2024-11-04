@@ -10,7 +10,7 @@ export interface LoginUserDataType {
   wishId: string;
 }
 
-export async function getLoginUserCookiesData(): Promise<any | undefined> {
+export async function getLoginUserCookiesData(): Promise<LoginUserDataType | undefined> {
   const loginUserCookiesData = cookies().get(LOGIN_USER_COOKIE_KEY)?.value;
 
   if (!loginUserCookiesData) {

@@ -30,9 +30,7 @@ export const getCakePresentMessage = async (wishId: string, presentId: number) =
 /**
  * 해당 소원에 대한 모든 케이크 리스트 결과 조회
  */
-export const getCakesResult = async (wishId?: string) => {
-  if (!wishId) return;
-
+export const getCakesResult = async (wishId: string) => {
   const { accessToken } = await getLoginUserCookiesData();
 
   if (!accessToken) return;
