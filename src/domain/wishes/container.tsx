@@ -16,7 +16,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { convertEncode } from '@/utils/common/convert';
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { CakePresentMessageDataType } from '@/types/api/response';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { getCakePresentMessage } from '@/api/cakes';
@@ -28,12 +28,13 @@ type WishesPageGlobalStateType = {
 };
 
 export default function WishesPageContainer({
-  progressWishesData,
+  isWishProgress,
   loginUserData,
+  children,
 }: {
-  progressWishesData: MainProgressDataType;
+  isWishProgress: boolean;
   loginUserData: LoginUserDataType;
-}) {
+} & PropsWithChildren) {
   const { nickName } = loginUserData;
 
   const methods = useForm<WishesPageGlobalStateType>({
@@ -58,13 +59,8 @@ export default function WishesPageContainer({
 
   return (
     <FormProvider {...methods}>
-      {progressWishesData ? (
-        <>
-          <WishesMessageToCreateUser wishId={progressWishesData.wishId} />
-          <FixedBottomButton onClick={() => handleRouter('/wishes')}>
-            생일잔치 링크 공유하기
-          </FixedBottomButton>
-        </>
+      {isWishProgress ? (
+        <>{children}</>
       ) : (
         <>
           <MessageText>{`${nickName}님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</MessageText>
@@ -72,11 +68,16 @@ export default function WishesPageContainer({
             cakeList={defaultCakeListData}
             handleChangeCakeMessageModalState={handleChangeCakeMessageModalState}
           />
-          <FixedBottomButton onClick={handleChangeWishTitleModalState}>
-            생일잔치 링크 생성하기
-          </FixedBottomButton>
         </>
       )}
+
+      <FixedBottomButton
+        onClick={() => {
+          isWishProgress ? handleRouter('/wishes') : handleChangeWishTitleModalState();
+        }}
+      >
+        {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+      </FixedBottomButton>
 
       {methods.watch('wishesTitleInputModalState') && (
         <WishesCreateTitleInputModal handleState={handleChangeWishTitleModalState} />

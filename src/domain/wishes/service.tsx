@@ -2,16 +2,36 @@ import { getCakesResult } from '@/api/cakes';
 import { MessageText } from './component';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { CakesTreeMessage } from './container';
+import { checkComp } from '@/utils/common/checkComponent';
+import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
 
-  return <CakesTreeMessage cakeList={receivedCakeList} wishId={wishId} />;
+  function defineCakeTree(receivedCakeList?: CakeItemType[]) {
+    if (!receivedCakeList) return defaultCakeListData;
+
+    if (receivedCakeList.length === 0) return defaultCakeListData;
+
+    if (receivedCakeList.length > 0 && receivedCakeList.length < 12) {
+      const mergedCakeList = [
+        ...receivedCakeList,
+        ...defaultCakeListData.slice(0, 12 - receivedCakeList.length),
+      ];
+
+      return mergedCakeList;
+    }
+
+    return receivedCakeList;
+  }
+
+  return <CakesTreeMessage cakeList={defineCakeTree(receivedCakeList)} wishId={wishId} />;
 }
 
 export async function WishesMessageToCreateUser({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
   const { nickName } = await getLoginUserCookiesData();
+  checkComp();
 
   return (
     <MessageText>

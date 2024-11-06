@@ -11,12 +11,12 @@ export const client = axios.create({
   },
 });
 
-let isRefreshing = false;
-
 // 요청 인터셉터
 client.interceptors.request.use(
-  function (config) {
-    const accessToken = localStorage.getItem('accessToken');
+  async function (config) {
+    // const accessToken = localStorage.getItem('accessToken');
+    const loginUserCookiesData = await getLoginUserCookiesData();
+    const { accessToken } = loginUserCookiesData;
 
     if (config.headers) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;

@@ -20,11 +20,8 @@ export default async function WishesPageContainer({
   const receivedCakeList = (await getCakesResult(wishId)) || defaultCakeListData;
   const { nickName } = (await getLoginUserCookiesData()) || { nickName: '' };
 
-
-
   return (
     <WishesPageStateContainer isWishesProgress={wishId !== undefined}>
-
       {/* <DayCountText dayCount={dayCount} /> */}
 
       <WishesMessageToCreateUser

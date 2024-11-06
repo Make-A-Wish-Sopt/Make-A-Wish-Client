@@ -4,6 +4,7 @@ import { getMainProgressWishesData } from '@/api/wishes';
 
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer from '@/domain/wishes/container';
+import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wishes/service';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
@@ -13,10 +14,14 @@ export default async function WishesPage() {
     <>
       <Header mypageBtn />
       <MainLayout>
-        <WishesPageContainer
-          progressWishesData={progressWishesData}
-          loginUserData={loginUserData}
-        />
+        <WishesPageContainer isWishProgress={!!progressWishesData} loginUserData={loginUserData}>
+          {progressWishesData && (
+            <>
+              <WishesMessageToCreateUser wishId={progressWishesData.wishId} />
+              <ReceivedCakePresentList wishId={progressWishesData.wishId} />
+            </>
+          )}
+        </WishesPageContainer>
       </MainLayout>
     </>
   );
