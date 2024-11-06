@@ -5,9 +5,10 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import axios from 'axios';
 
 export const postAuthKakao = async (code: string) => {
+  //이거 수정해야됩니다
   try {
-    const data = await client.post<LoginResponseType>(
-      `${API_VERSION_01}${PATH_AUTH.KAKAO}?redirectUri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+    const data = await axios.post<LoginResponseType>(
+      `${process.env.NEXT_PUBLIC_BASE_URL}${API_VERSION_01}${PATH_AUTH.KAKAO}?redirectUri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
       {},
       {
         headers: {

@@ -4,16 +4,16 @@ import Image from 'next/image';
 import { BANK_LIST } from '@/constant/bankList';
 
 interface BankModalProps {
-  handleToggle: () => void;
+  handleState: () => void;
   changeBank: (input: string) => void;
 }
 
 export default function BankModal(props: BankModalProps) {
-  const { handleToggle, changeBank } = props;
+  const { handleState, changeBank } = props;
 
   const handleChangeBank = (input: string) => {
     changeBank(input);
-    handleToggle();
+    handleState();
   };
 
   return (

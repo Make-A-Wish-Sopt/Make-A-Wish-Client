@@ -5,19 +5,19 @@ import Box, { BoxProps } from '../Common/Box';
 
 interface DropDownBoxProps extends BoxProps {
   isOpen: boolean;
-  handleToggle: () => void;
+  handleState: () => void;
 }
 
 export default function DropDwonBox({
   isOpen,
-  handleToggle,
+  handleState,
   ...rest
 }: PropsWithChildren<DropDownBoxProps>) {
   return (
     <Box {...rest}>
       <div className="flex items-center gap-8 w-full h-full text-[14px]">
         {rest.children}
-        <div onClick={handleToggle}>
+        <div onClick={handleState}>
           <Image
             src={MainBlueArrowIc}
             alt="화살표 아이콘"

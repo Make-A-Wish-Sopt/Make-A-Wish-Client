@@ -19,7 +19,7 @@ export default function WishesPageStateContainer({
   isWishesProgress: boolean;
   children?: ReactNode;
 }) {
-  const { toggleState: wishesTitleModalState, handleToggle: handleOpenWishesTitleModal } =
+  const { state: wishesTitleModalState, handleState: handleOpenWishesTitleModal } =
     useToggle();
 
   return (
@@ -32,7 +32,7 @@ export default function WishesPageStateContainer({
       {wishesTitleModalState && (
         <WishesCreateTitleInputModal
           isOpen={wishesTitleModalState}
-          handleToggle={handleOpenWishesTitleModal}
+          handleState={handleOpenWishesTitleModal}
         />
       )}
     </>
@@ -65,10 +65,10 @@ export function WishesCreateOrShareButton({
 
 function WishesCreateTitleInputModal({
   isOpen,
-  handleToggle,
+  handleState,
 }: {
   isOpen: boolean;
-  handleToggle: () => void;
+  handleState: () => void;
 }) {
   const { getValues, watch, register } = useForm({
     defaultValues: {
@@ -88,7 +88,7 @@ function WishesCreateTitleInputModal({
   }
 
   return (
-    <CloseIconInModal isOpen={isOpen} handleToggle={handleToggle}>
+    <CloseIconInModal isOpen={isOpen} handleState={handleState}>
       <div className="flex flex-col items-center gap-20 w-full">
         <div className="flex flex-col items-center w-full">
           <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />

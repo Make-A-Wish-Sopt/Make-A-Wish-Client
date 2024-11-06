@@ -10,20 +10,20 @@ import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
 import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
 
 export function CakeMessageModal({
-  toggleState,
-  handleToggle,
+  state,
+  handleChange,
   cakePresentMessageData,
   nickName,
 }: {
-  toggleState: boolean;
-  handleToggle: () => void;
+  state: boolean;
+  handleChange: () => void;
   cakePresentMessageData: CakePresentMessageDataType;
   nickName: string;
 }) {
   const { cakeId, giftMenuId, message, name } = cakePresentMessageData;
 
   return (
-    <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
+    <CloseTopModal isOpen={state} handleState={handleChange} bgColor={'background'}>
       <div className="flex flex-col items-center w-full h-full">
         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`${name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
         <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
@@ -58,14 +58,14 @@ export function MessageText({ children }: PropsWithChildren) {
 
 export function WishesCreateTitleInputModalContainer({
   isOpen,
-  handleToggle,
+  handleState,
   children,
 }: {
   isOpen: boolean;
-  handleToggle: () => void;
+  handleState: () => void;
 } & PropsWithChildren) {
   return (
-    <CloseIconInModal isOpen={isOpen} handleToggle={handleToggle}>
+    <CloseIconInModal isOpen={isOpen} handleState={handleState}>
       <div className="flex flex-col items-center gap-20 w-full">
         <div className="flex flex-col items-center w-full">
           <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />

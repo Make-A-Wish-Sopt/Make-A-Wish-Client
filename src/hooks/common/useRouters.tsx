@@ -7,9 +7,17 @@ export type RouterPathsType = '/' | '/wishes' | `/wishes/${string}` | '/mypage';
 export function useRouters() {
   const router = useRouter();
 
+  function handleBack() {
+    router.back();
+  }
+
   function handleRouter(path: RouterPathsType) {
     router.push(path);
   }
 
-  return { handleRouter };
+  function handleReplace(path: string) {
+    router.replace(path);
+  }
+
+  return { handleRouter, handleReplace, handleBack };
 }

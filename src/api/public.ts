@@ -1,7 +1,6 @@
 import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
-import { PresentDataType } from '@/types/input';
 import { PresentDataResolverType } from '@/validation/present.validate';
 
 export const getPublicWishes = async (wishId?: string) => {

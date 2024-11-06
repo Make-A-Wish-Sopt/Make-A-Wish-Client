@@ -6,7 +6,6 @@ export default async function MainLayout({ children }: PropsWithChildren) {
 
   if (!loginUserCookiesData) {
     //  로그인페이지로 이동
-    console.log('로그인 필요함');
   }
 
   return (

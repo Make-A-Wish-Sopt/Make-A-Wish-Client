@@ -9,7 +9,7 @@ import {
   MessageText,
   WishesCreateTitleInputModalContainer,
 } from './component';
-import { cakeImageWithId, CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
+import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 import { WishesMessageToCreateUser } from './service';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
@@ -18,11 +18,10 @@ import Button from '@/components/Common/Button';
 import { convertEncode } from '@/utils/common/convert';
 import { useEffect, useState } from 'react';
 import { CakePresentMessageDataType } from '@/types/api/response';
-import useToggle from '@/hooks/common/useToggle';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { getCakePresentMessage } from '@/api/cakes';
 
-type WishesPageFormStateType = {
+type WishesPageGlobalStateType = {
   wishTitle: string;
   wishesTitleInputModalState: boolean;
   cakeMessageModalState: boolean;
@@ -37,7 +36,7 @@ export default function WishesPageContainer({
 }) {
   const { nickName } = loginUserData;
 
-  const methods = useForm<WishesPageFormStateType>({
+  const methods = useForm<WishesPageGlobalStateType>({
     defaultValues: {
       wishTitle: '',
       wishesTitleInputModalState: false,
@@ -80,7 +79,7 @@ export default function WishesPageContainer({
       )}
 
       {methods.watch('wishesTitleInputModalState') && (
-        <WishesCreateTitleInputModal handleToggle={handleChangeWishTitleModalState} />
+        <WishesCreateTitleInputModal handleState={handleChangeWishTitleModalState} />
       )}
 
       {/* <div className="fixed bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" /> */}
@@ -97,7 +96,7 @@ export function CakesTreeMessage({
   wishId?: string;
   handleChangeCakeMessageModalState?: () => void;
 }) {
-  const { watch } = useFormContext<WishesPageFormStateType>();
+  const { watch } = useFormContext<WishesPageGlobalStateType>();
   const state = watch('cakeMessageModalState');
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
@@ -116,15 +115,13 @@ export function CakesTreeMessage({
     handleChangeCakeMessageModalState();
   }
 
-  console.log(selectedPresentId);
-
   return (
     <>
       <CakeTreeTest cakeList={cakeList} handleSelectOne={handleSelectCake} />
       {state && selectedPresentId > 0 && cakePresentMessageData && (
         <CakeMessageModal
-          toggleState={state}
-          handleToggle={handleChangeCakeMessageModalState}
+          state={state}
+          handleChange={handleChangeCakeMessageModalState}
           cakePresentMessageData={cakePresentMessageData}
           nickName={'asdf'}
         />
@@ -133,8 +130,8 @@ export function CakesTreeMessage({
   );
 }
 
-function WishesCreateTitleInputModal({ handleToggle }: { handleToggle: () => void }) {
-  const { register, watch } = useFormContext<WishesPageFormStateType>();
+function WishesCreateTitleInputModal({ handleState }: { handleState: () => void }) {
+  const { register, watch } = useFormContext<WishesPageGlobalStateType>();
 
   const { handleRouter } = useRouters();
 
@@ -150,7 +147,7 @@ function WishesCreateTitleInputModal({ handleToggle }: { handleToggle: () => voi
   return (
     <WishesCreateTitleInputModalContainer
       isOpen={watch('wishesTitleInputModalState')}
-      handleToggle={handleToggle}
+      handleState={handleState}
     >
       <div className="w-full">
         <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>

@@ -8,7 +8,7 @@ export default function CloseTopModal(props: PropsWithChildren<ModalProps>) {
     <Modal {...props}>
       <div className="p-20">
         <div className="flex justify-end w-full">
-          <Image src={CloseBlueIc} alt="닫기" onClick={props.handleToggle} />
+          <Image src={CloseBlueIc} alt="닫기" onClick={props.handleState} />
         </div>
         {props.children}
       </div>

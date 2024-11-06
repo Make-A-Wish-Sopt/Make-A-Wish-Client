@@ -48,8 +48,7 @@ export default function GivePresentPageStateContainer({
 
   const router = useRouter();
 
-  const { toggleState: messageOnlyOption, changeToggleState: changeMessageOnlyOption } =
-    useToggle();
+  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
 
   function handleGivePresent() {
     if (!wantsGift || messageOnlyOption) {
@@ -79,8 +78,6 @@ export default function GivePresentPageStateContainer({
       alert('계좌번호가 복사됐어요!');
     } catch (error) {}
   }
-
-  console.log(isValid);
 
   return (
     <>

@@ -23,7 +23,7 @@ export function CakesTree({
 }) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3));
 
-  const { toggleState, handleToggle, changeToggleState } = useToggle();
+  const { state, handleState, changeState } = useToggle();
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<CakePresentMessageDataType | null>(null);
@@ -35,8 +35,6 @@ export function CakesTree({
       });
     }
   }, [selectedPresentId]);
-
-  console.log(selectedPresentId);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -62,7 +60,7 @@ export function CakesTree({
                   key={cake.name}
                   onClick={() => {
                     handleSelectOne(cake.presentId);
-                    changeToggleState(true);
+                    changeState(true);
                   }}
                   style={{ width: '105%' }}
                 >
@@ -77,10 +75,10 @@ export function CakesTree({
         ))}
       </div>
 
-      {toggleState && selectedPresentId > 0 && cakePresentMessageData && (
+      {state && selectedPresentId > 0 && cakePresentMessageData && (
         <CakeMessageModal
-          toggleState={toggleState}
-          handleToggle={handleToggle}
+          state={state}
+          handleState={handleState}
           cakePresentMessageData={cakePresentMessageData}
           nickName={nickName}
         />
@@ -90,20 +88,20 @@ export function CakesTree({
 }
 
 export function CakeMessageModal({
-  toggleState,
-  handleToggle,
+  state,
+  handleState,
   cakePresentMessageData,
   nickName,
 }: {
-  toggleState: boolean;
-  handleToggle: () => void;
+  state: boolean;
+  handleState: () => void;
   cakePresentMessageData: CakePresentMessageDataType;
   nickName: string;
 }) {
   const { cakeId, giftMenuId, message, name } = cakePresentMessageData;
 
   return (
-    <CloseTopModal isOpen={toggleState} handleToggle={handleToggle} bgColor={'background'}>
+    <CloseTopModal isOpen={state} handleState={handleState} bgColor={'background'}>
       <div className="flex flex-col items-center w-full h-full">
         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`${name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
         <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">

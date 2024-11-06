@@ -1,6 +1,5 @@
 import { getProgressWishLinkData } from '@/api/wishes';
-import WishesAccountInputForm from '@/container/wishes/create/WishesAccountInputForm';
-import WishesLinkInputForm from '@/container/wishes/create/wishesLinkInputForm';
+
 import dynamic from 'next/dynamic';
 
 export default async function WishesEditPageContainer() {

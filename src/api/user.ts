@@ -2,9 +2,9 @@ import { BANK_LIST } from '@/constant/bankList';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
-
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType, WishesDataInputType } from '@/types/wishesType';
+import axios from 'axios';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 export const putUserAccount = async (
@@ -23,7 +23,6 @@ export const putUserAccount = async (
     {
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );
@@ -34,11 +33,6 @@ export const getUserAccount = async () => {
   try {
     const data = await client.get<UserAccountDataResponseType>(
       `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
     );
 
     return data?.data.data;
@@ -49,7 +43,6 @@ export const deleteUserInfo = async () => {
   const data = await client.delete(`${API_VERSION_01}${PATH_USER.DEFAULT}`, {
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: `Bearer ${ACCESS_TOKEN}`,
     },
   });
 

@@ -10,21 +10,21 @@ interface CheckBoxProps<T> {
 
 export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) {
   const { checkBoxText, changeCheckedState } = props;
-  const { toggleState, handleToggle } = useToggle();
+  const { state, handleState } = useToggle();
 
   useEffect(() => {
-    changeCheckedState(toggleState);
-  }, [toggleState]);
+    changeCheckedState(state);
+  }, [state]);
 
   return (
     <div className="flex items-center h-full">
       <input
         className="w-20 h-20"
         type="checkbox"
-        onChange={handleToggle}
+        onChange={handleState}
         style={{
           backgroundImage: `url(${
-            toggleState ? '/assets/icons/checkedBoxIc.svg' : '/assets/icons/unCheckedBoxIc.svg'
+            state ? '/assets/icons/checkedBoxIc.svg' : '/assets/icons/unCheckedBoxIc.svg'
           })`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
