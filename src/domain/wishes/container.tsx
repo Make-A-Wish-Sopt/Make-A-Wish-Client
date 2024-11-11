@@ -1,8 +1,6 @@
 'use client';
 
-import FixedBottomButton, {
-  FixedBottomButtonWrapper,
-} from '@/components/Common/Button/FixedBottomButton';
+import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import { LoginUserDataType } from '@/utils/common/cookies';
 import {
   CakeMessageModal,
@@ -36,96 +34,64 @@ export default function WishesPageContainer({ children }: PropsWithChildren) {
     },
   });
 
-  return <section className="relative">{children}</section>;
-}
-
-export function WishesPageContai({
-  isWishProgress,
-  loginUserData,
-  children,
-}: {
-  isWishProgress: boolean;
-  loginUserData: LoginUserDataType;
-} & PropsWithChildren) {
-  const { nickName } = loginUserData;
-
-  const methods = useForm<WishesPageGlobalStateType>({
-    defaultValues: {
-      wishTitle: '',
-      wishesTitleInputModalState: false,
-      cakeMessageModalState: false,
-    },
-  });
-
-  const { handleRouter } = useRouters();
-
-  function handleChangeWishTitleModalState() {
-    const state = methods.watch('wishesTitleInputModalState');
-    methods.setValue('wishesTitleInputModalState', !state);
-  }
-
-  function handleChangeCakeMessageModalState() {
-    const state = methods.watch('cakeMessageModalState');
-    methods.setValue('cakeMessageModalState', !state);
-  }
-
   return (
     <section className="relative">
       <FormProvider {...methods}>
-        {isWishProgress ? (
-          <>
-            <span className="flex flex-row-reverse w-full text-[24px] font-bitbit text-center text-main_blue mt-12 mb-10">
-              D-?
-            </span>
-            {children}
-          </>
-        ) : (
-          <>
-            <span className="flex flex-row-reverse w-full text-[24px] font-bitbit text-center text-main_blue mt-12 mb-10">
-              D-?
-            </span>
-
-            <MessageText>{`${nickName}님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</MessageText>
-            <CakesTreeMessage
-              cakeList={defaultCakeListData}
-              handleChangeCakeMessageModalState={handleChangeCakeMessageModalState}
-            />
-          </>
-        )}
-        <FixedBottomButtonWrapper>
-          <Button
-            onClick={() => {
-              isWishProgress ? handleRouter('/wishes') : handleChangeWishTitleModalState();
-            }}
-          >
-            {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
-          </Button>
-        </FixedBottomButtonWrapper>
-
-        {methods.watch('wishesTitleInputModalState') && (
-          <WishesCreateTitleInputModal handleState={handleChangeWishTitleModalState} />
-        )}
-
-        <div className="sticky bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" />
+        {children}
+        {methods.watch('wishesTitleInputModalState') && <WishesCreateTitleInputModal />}
       </FormProvider>
+
+      <div className="sticky bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" />
     </section>
+  );
+}
+
+export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress: boolean }) {
+  const { handleRouter } = useRouters();
+
+  const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
+
+  function handleButtonClick() {
+    if (isWishProgress) {
+      handleRouter('/wishes');
+    } else {
+      handleChangeWishTitleModalState();
+    }
+  }
+
+  function handleChangeWishTitleModalState() {
+    const modalState = watch('wishesTitleInputModalState');
+    setValue('wishesTitleInputModalState', !modalState);
+  }
+
+  return (
+    <>
+      <FixedBottomButtonWrapper>
+        <Button onClick={handleButtonClick}>
+          {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+        </Button>
+      </FixedBottomButtonWrapper>
+    </>
   );
 }
 
 export function CakesTreeMessage({
   cakeList,
   wishId,
-  handleChangeCakeMessageModalState,
 }: {
   cakeList: CakeItemType[];
   wishId?: string;
-  handleChangeCakeMessageModalState?: () => void;
 }) {
-  const { watch } = useFormContext<WishesPageGlobalStateType>();
+  const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
   const state = watch('cakeMessageModalState');
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<CakePresentMessageDataType | null>(null);
+
+  function handleChangeCakeMessageModalState() {
+    const modalState = watch('cakeMessageModalState');
+    setValue('cakeMessageModalState', !modalState);
+  }
 
   useEffect(() => {
     if (selectedPresentId > 0) {
@@ -155,10 +121,15 @@ export function CakesTreeMessage({
   );
 }
 
-function WishesCreateTitleInputModal({ handleState }: { handleState: () => void }) {
-  const { register, watch } = useFormContext<WishesPageGlobalStateType>();
+function WishesCreateTitleInputModal() {
+  const { register, watch, setValue } = useFormContext<WishesPageGlobalStateType>();
 
   const { handleRouter } = useRouters();
+
+  function handleModalState() {
+    const state = watch('wishesTitleInputModalState');
+    setValue('wishesTitleInputModalState', !state);
+  }
 
   function handleClick() {
     const wishTitle = watch('wishTitle');
@@ -172,7 +143,7 @@ function WishesCreateTitleInputModal({ handleState }: { handleState: () => void 
   return (
     <WishesCreateTitleInputModalContainer
       isOpen={watch('wishesTitleInputModalState')}
-      handleState={handleState}
+      handleState={handleModalState}
     >
       <div className="w-full">
         <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>

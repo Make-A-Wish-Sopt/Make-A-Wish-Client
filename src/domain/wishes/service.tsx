@@ -5,10 +5,6 @@ import { CakesTreeMessage } from './container';
 import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
-  return <></>;
-}
-
-export async function ReceivedCakePresentListTest({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
 
   function defineCakeTree(receivedCakeList?: CakeItemType[]) {
@@ -31,9 +27,14 @@ export async function ReceivedCakePresentListTest({ wishId }: { wishId: string }
   return <CakesTreeMessage cakeList={defineCakeTree(receivedCakeList)} wishId={wishId} />;
 }
 
-export async function WishesMessageToCreateUser({ wishId }: { wishId: string }) {
+export async function WishesMessageToCreateUser({
+  wishId,
+  nickName,
+}: {
+  wishId: string;
+  nickName: string;
+}) {
   const receivedCakeList = await getCakesResult(wishId);
-  const { nickName } = await getLoginUserCookiesData();
 
   return (
     <MessageText>
