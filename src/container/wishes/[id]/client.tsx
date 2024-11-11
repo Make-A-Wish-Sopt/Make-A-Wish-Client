@@ -16,10 +16,10 @@ export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
 
   const router = useRouter();
 
-  const { id } = useParams<{ id: string }>();
+  const { wishId } = useParams<{ wishId: string }>();
 
   const handleClick = () => {
-    router.push(`/present/${id}?presentStep=present&avatarCakeId=${center}`);
+    router.push(`/present/${wishId}/?presentStep=present&avatarCakeId=${center}`);
   };
 
   return (

@@ -12,7 +12,7 @@ export default function InputTextForm<T>({
   children,
 }: {
   inputType?: 'text' | 'textarea';
-  register: UseFormRegisterReturn<keyof T & string>;
+  register?: UseFormRegisterReturn<keyof T & string>;
   control?: Control<T>;
   placeholder?: string;
   maxLength?: number;

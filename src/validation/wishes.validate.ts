@@ -13,7 +13,7 @@ export const wishesLinkDataResolver = yup
   .noUnknown(true, 'Unknown field is not allowed')
   .required();
 
-export type WishesLinkResolverType = yup.InferType<typeof wishesLinkDataResolver>;
+export type WishesLinkDataResolverType = yup.InferType<typeof wishesLinkDataResolver>;
 
 export const wishesAccountDataResolver = yup
   .object()
@@ -48,3 +48,7 @@ export const wishesPhoneResolver = yup
   .required();
 
 export type WishesPhoneResolverType = yup.InferType<typeof wishesPhoneResolver>;
+
+export type WishesLinkDataType = Required<yup.InferType<typeof wishesLinkDataResolver>>;
+export type WishesAccountDataType = Required<yup.InferType<typeof wishesAccountDataResolver>>;
+export type WishesPhoneType = Required<yup.InferType<typeof wishesPhoneResolver>>;

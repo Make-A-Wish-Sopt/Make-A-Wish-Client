@@ -1,6 +1,5 @@
 'use client';
 
-
 import { RouterPathsType } from '@/hooks/common/useRouters';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';

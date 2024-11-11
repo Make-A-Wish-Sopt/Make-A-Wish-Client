@@ -7,6 +7,7 @@ interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   boxStyles?: React.CSSProperties;
   inputStyles?: React.CSSProperties;
   onClick?: () => void;
+  blur?: boolean;
   children?: ReactNode;
 }
 
@@ -17,6 +18,7 @@ export default function InputText({
   onClick,
   readOnly,
   children,
+  blur = false,
   ...rest
 }: InputTextProps) {
   return (
@@ -26,6 +28,7 @@ export default function InputText({
           className="w-full h-full font-galmuri text-[14px] plachoder-gray2"
           {...register}
           onClick={onClick}
+          style={blur ? { filter: 'blur(5px)' } : {}}
           readOnly={readOnly}
           {...rest}
         ></input>

@@ -37,6 +37,7 @@ export type PublicWishesDataType = {
   title: string;
   hint: string;
   wantsGift: boolean;
+  presentImageUrl: string;
 };
 
 export type PublicWishesDataResponseType = DefaultResponseType<PublicWishesDataType>;

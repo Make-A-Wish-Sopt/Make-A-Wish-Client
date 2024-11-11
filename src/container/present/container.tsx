@@ -4,7 +4,7 @@ import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { PublicWishesDataType } from '@/types/api/response';
-import { PresentStepType } from '@/app/present/[id]/page';
+import { PresentStepType } from '@/app/present/[wishId]/page';
 
 export default async function GivePresentPageContainer({
   wishId,

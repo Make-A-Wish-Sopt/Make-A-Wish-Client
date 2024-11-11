@@ -8,7 +8,7 @@ import { client } from './common/axios';
 import { API_VERSION_01, PATH_WISHES } from './path';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/wishesType';
-import { WishesLinkResolverType } from '@/validation/wishes.validate';
+import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 
 /**
  * 진행중인 소원 조회
@@ -45,7 +45,7 @@ export const getWishes = async () => {
  * 소원링크 생성
  */
 export const postWishes = async (
-  methods: UseFormReturn<WishesLinkResolverType, any, undefined>,
+  methods: UseFormReturn<WishesLinkDataResolverType, any, undefined>,
 ) => {
   const data = await client.post<WishesCreateResponseType>(
     `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
@@ -58,6 +58,7 @@ export const postWishes = async (
       },
     },
   );
+
   return data;
 };
 

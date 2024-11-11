@@ -2,17 +2,20 @@ import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/typ
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 import { PresentDataResolverType } from '@/validation/present.validate';
+import axios from 'axios';
 
-export const getPublicWishes = async (wishId?: string) => {
-  if (!wishId) return;
-
+export const getPublicWishes = async (wishId: string) => {
   try {
-    const data = await client.get<PublicWishesDataResponseType>(
-      `${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(Number(wishId))}`,
+    const data = await axios.get<PublicWishesDataResponseType>(
+      `${process.env.NEXT_PUBLIC_BASE_URL}${API_VERSION_01}${PATH_PUBLIC.GET_WISHES_INFO(
+        Number(wishId),
+      )}`,
     );
 
     return data.data.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //케이크 아이디 수정해야될거 같음

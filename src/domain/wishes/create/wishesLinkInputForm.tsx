@@ -3,7 +3,7 @@ import Button from '@/components/Common/Button';
 import Calendar from '@/components/Common/Calendar/Calendar';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import InputForm from '@/components/UI/InputForm';
-import InputTextForm from '@/components/UI/InputTextForm';
+import InputTextForm, { TextCount } from '@/components/UI/InputTextForm';
 import RadioSelect from '@/components/UI/RadioSelect';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
@@ -12,26 +12,18 @@ import useToggle from '@/hooks/common/useToggle';
 import { useUploadItemInfo } from '@/hooks/wishes/useUploadItemInfo';
 import { convertEncode } from '@/utils/common/convert';
 import { getDate } from '@/utils/common/getDate';
-import { WishesLinkResolverType } from '@/validation/wishes.validate';
+import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { useEffect } from 'react';
-import { FormProvider, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
 import { DropDownContent } from './component';
+import InputTextarea from '@/components/Common/Input/inputTextarea';
 
 export default function WishesLinkInputForm({
   methods,
 }: {
-  methods: UseFormReturn<WishesLinkResolverType, any, undefined>;
+  methods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
 }) {
   const { control, handleSubmit } = methods;
-
-  const wantsGiftWatch = useWatch({
-    control,
-    name: 'wantsGift',
-  }) as boolean;
-
-  function handleChangeImageUrl(imageUrl: string) {
-    methods.setValue('imageUrl', imageUrl);
-  }
 
   //달력 최적화 해보자~
   const [startDateWatch, endDateWatch] = useWatch({
@@ -47,31 +39,22 @@ export default function WishesLinkInputForm({
   const { handleRouter } = useRouters();
 
   function handleNextStep() {
-    if (wantsGiftWatch) {
-      handleRouter(
-        `/wishes/create?step=account&wishTitle=${convertEncode(
-          process.env.NEXT_PUBLIC_WISHES_CREATE_ACCOUNT_KEY,
-        )}`,
-      );
+    // if (wantsGiftWatch) {
+    if (methods.watch('wantsGift')) {
+      handleRouter('/wishes/create?step=account');
     } else {
       createOnlyLettersWishes();
     }
   }
 
   function createOnlyLettersWishes() {
-    try {
-      postWishes(methods).then((response) => {
-        if (response.data.success) {
-          handleRouter('/wishes/share');
-        }
-      });
-    } catch (error) {}
+    handleRouter('/wishes/create?step=preview');
   }
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleNextStep)}>
-        <ImageToBeShownToGiver handleChangeImageUrl={handleChangeImageUrl} />
+        <ImageToBeShownToGiver />
 
         <>
           <InputForm title="내 생일 주간 설정하기">
@@ -91,12 +74,20 @@ export default function WishesLinkInputForm({
   );
 }
 
-function ImageToBeShownToGiver({
-  handleChangeImageUrl,
-}: {
-  handleChangeImageUrl: (imageUrl: string) => void;
-}) {
+export function ImageToBeShownToGiver() {
   const { imageUrl, uploadImageFile } = useUploadItemInfo();
+
+  const { control, setValue } = useFormContext<WishesLinkDataResolverType>();
+
+  function handleChangeImageUrl(imageUrl: string) {
+    setValue('imageUrl', imageUrl);
+  }
+
+  const image = useWatch({
+    control,
+    name: 'imageUrl',
+  });
+  const {} = useFormContext<WishesLinkDataResolverType>();
 
   useEffect(() => {
     if (imageUrl) {
@@ -106,23 +97,25 @@ function ImageToBeShownToGiver({
 
   return (
     <InputForm title={`링크에 들어온 친구가 보게 될\n 재밌는 이미지를 등록해보세요!`}>
-      <UploadImageBox imageUrl={imageUrl} handleUploadImageFile={uploadImageFile} />;
+      {/* refactor : 이미지 사이즈 찌그러지는거 변경해야됩니다! */}
+      <UploadImageBox imageUrl={image} handleUploadImageFile={uploadImageFile} />;
     </InputForm>
   );
 }
 
 function HintMessageToGiver() {
-  const { register, control } = useFormContext<WishesLinkResolverType>();
+  const { register, control } = useFormContext<WishesLinkDataResolverType>();
+
+  const enteredText = useWatch({
+    control,
+    name: 'hint',
+  }) as string;
 
   return (
     <InputForm title="친구에게 남기고 싶은 한마디">
-      <InputTextForm<WishesLinkResolverType>
-        inputType="textarea"
-        register={register('hint')}
-        control={control}
-        placeholder="ex.) 생일을 축하합니다~"
-        maxLength={MAX_TEXTAREA_LENGTH}
-      />
+      <InputTextarea register={register('hint')} placeholder="ex.) 생일을 축하합니다~">
+        <TextCount textLength={enteredText.length} maxLength={MAX_TEXTAREA_LENGTH}></TextCount>
+      </InputTextarea>
     </InputForm>
   );
 }
@@ -142,7 +135,7 @@ function SelectWantsGiftOption() {
     changeState: changeDropBoxState,
   } = useToggle();
 
-  const { control, setValue } = useFormContext<WishesLinkResolverType>();
+  const { control, setValue } = useFormContext<WishesLinkDataResolverType>();
 
   const selectOption = useWatch({
     control,
@@ -157,7 +150,7 @@ function SelectWantsGiftOption() {
     <>
       <ul className="flex flex-col gap-12 font-galmuri text-white">
         <li
-          className="w-full bg-dark_green rounded-xl"
+          className={`w-full ${dropDownState && 'px-10 py-12'} bg-dark_green rounded-xl`}
           onClick={() => handleChangeWantsGiftState(true)}
         >
           <DropDwonBox isOpen={dropDownState} handleState={handleDropBoxState}>
@@ -183,23 +176,16 @@ function SelectWantsGiftOption() {
 }
 
 function WishesLinkSubmitButton() {
-  const { control, formState } = useFormContext<WishesLinkResolverType>();
-
-  const wantsGiftWatch = useWatch({
-    control,
-    name: 'wantsGift',
-  }) as boolean;
+  const { formState } = useFormContext<WishesLinkDataResolverType>();
 
   return (
     <div className="flex justify-between gap-10">
-      {wantsGiftWatch && (
-        <Button fontColor="white" disabled>
-          이전
-        </Button>
-      )}
+      <Button fontColor="white" disabled>
+        이전
+      </Button>
 
-      <Button type="submit" fontColor="white" disabled={!formState.isValid}>
-        {wantsGiftWatch ? '다음으로' : '소원링크 생성'}
+      <Button type="submit" disabled={!formState.isValid}>
+        다음
       </Button>
     </div>
   );

@@ -2,7 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 
-export type RouterPathsType = '/' | '/wishes' | `/wishes/${string}` | '/mypage';
+export type RouterPathsType =
+  | '/'
+  | '/wishes'
+  | `/wishes/${string}`
+  | '/mypage'
+  | '/present'
+  | `/present/${string}`;
 
 export function useRouters() {
   const router = useRouter();

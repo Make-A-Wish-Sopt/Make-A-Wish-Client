@@ -1,9 +1,8 @@
 'use client';
 
-import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
+import { FormProvider, useFormContext, UseFormReturn } from 'react-hook-form';
 import {
   WishesAccountDataResolverType,
-  wishesPhoneResolver,
   WishesPhoneResolverType,
 } from '@/validation/wishes.validate';
 import InputForm from '@/components/UI/InputForm';
@@ -16,38 +15,32 @@ import useToggle from '@/hooks/common/useToggle';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import Modal from '@/components/Common/Modal';
 import BankModal from '@/components/Common/Modal/BankModal';
-import { getUserAccount } from '@/api/user';
+import { getUserAccount, postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { useRouters } from '@/hooks/common/useRouters';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function WishesAccountInputForm({
   methods,
+  wishesPhoneMethods,
 }: {
   methods: UseFormReturn<WishesAccountDataResolverType, any, undefined>;
+  wishesPhoneMethods: UseFormReturn<WishesPhoneResolverType, any, undefined>;
 } & PropsWithChildren) {
-  const { register, reset, setValue, formState, handleSubmit } = methods;
-
-  const wishesPhoneMethods = useForm<WishesPhoneResolverType>({
-    defaultValues: {
-      phone: '',
-    },
-    resolver: yupResolver(wishesPhoneResolver),
-  });
+  const { register, reset, setValue, formState } = methods;
 
   const [savedAccountData, setSavedAccountData] = useState<UserAccountDataType | null>(null);
 
   //부모의 상태에 따라 리렌더링 되는거 최적화 해보기
   const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
-  const { state, changeState } = useToggle();
-
+  const { state: nextBtnState, changeState: changeNextBtnState } = useToggle();
+  const { state: accountVerifyBtnState, changeState: changeAccountVerifyBtnState } = useToggle();
   const { isValid } = formState;
 
   useEffect(() => {
     if (isValid && wishesPhoneMethods.formState.isValid && noticeAgree) {
-      changeState(true);
+      changeNextBtnState(true);
     } else {
-      changeState(false);
+      changeNextBtnState(false);
     }
   }, [isValid, wishesPhoneMethods.formState.isValid, noticeAgree]);
 
@@ -73,58 +66,76 @@ export default function WishesAccountInputForm({
     setValue('bank', input, { shouldDirty: true });
   }
 
-  function handleWishesCreateSubmit() {
-    console.log('helo');
-  }
+  // refactor : 조건부분 더욱 상세하게 하기
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleWishesCreateSubmit)}>
-        <InputForm title="계좌번호 입력하기">
-          <div className="flex flex-col gap-12">
-            <InputText
-              value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
-              boxStyles={{ backgroundColor: '#3C0F0F', color: colors.warning_red }}
-              readOnly
+      <InputForm title="계좌번호 입력하기">
+        <div className="flex flex-col gap-12">
+          <InputText
+            value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
+            boxStyles={{ backgroundColor: '#3C0F0F', color: colors.warning_red }}
+            readOnly
+          />
+
+          <InputText placeholder="예금주명" register={register('name')} />
+
+          <SelectBank changeBank={changeBank} />
+
+          <AccountInput
+            accountVerifyBtnState={accountVerifyBtnState}
+            changeAccountVerifyBtnState={changeAccountVerifyBtnState}
+          >
+            <InputText placeholder="계좌번호를 입력해주세요" register={register('account')} />
+          </AccountInput>
+        </div>
+      </InputForm>
+
+      <InputForm title="휴대폰번호 입력하기">
+        <div className="flex flex-col gap-24">
+          <InputText
+            placeholder="(-)없이 숫자만 입력해주세요"
+            register={wishesPhoneMethods.register('phone')}
+          />
+
+          <AccountFormNotice>
+            <CheckBox<WishesAccountDataResolverType>
+              checkBoxText={'동의함'}
+              changeCheckedState={changeNoticeAgreeState}
             />
+          </AccountFormNotice>
+        </div>
+      </InputForm>
 
-            <InputText placeholder="예금주명" register={register('name')} />
-
-            <SelectBank changeBank={changeBank} />
-
-            <AccountInput>
-              <InputText placeholder="계좌번호를 입력해주세요" register={register('account')} />
-            </AccountInput>
-          </div>
-        </InputForm>
-
-        <InputForm title="휴대폰번호 입력하기">
-          <div className="flex flex-col gap-24">
-            <InputText
-              placeholder="(-)없이 숫자만 입력해주세요"
-              register={wishesPhoneMethods.register('phone')}
-            />
-
-            <AccountFormNotice>
-              <CheckBox<WishesAccountDataResolverType>
-                checkBoxText={'동의함'}
-                changeCheckedState={changeNoticeAgreeState}
-              />
-            </AccountFormNotice>
-          </div>
-        </InputForm>
-
-        <WishesAccountSubmitButton disabled={!state} />
-      </form>
+      <WishesAccountSubmitButton disabled={!nextBtnState || accountVerifyBtnState} />
     </FormProvider>
   );
 }
 
-function AccountInput({ children }: PropsWithChildren) {
-  const { formState } = useFormContext<WishesAccountDataResolverType>();
+function AccountInput({
+  accountVerifyBtnState,
+  changeAccountVerifyBtnState,
+  children,
+}: {
+  accountVerifyBtnState: boolean;
+  changeAccountVerifyBtnState: (state: boolean) => void;
+} & PropsWithChildren) {
+  const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
   const { isDirty, isValid } = formState;
+  const { account, bank, name } = watch();
+
+  useEffect(() => {
+    changeAccountVerifyBtnState(false);
+  }, []);
 
   function handleAccountCheck() {
+    if (account && bank && name) {
+      postVerifyAccount({ account: account, bank: bank, name: name }).then((response) => {
+        // refactor : 어뷰징유저 하는거 확인해야합니다!
+        changeAccountVerifyBtnState(response.success);
+      });
+    }
+
     //logic
   }
 
@@ -138,7 +149,7 @@ function AccountInput({ children }: PropsWithChildren) {
             font="galmuri"
             onClick={handleAccountCheck}
             styles={{ fontSize: '14px' }}
-            disabled={!(isValid && isDirty)}
+            disabled={!(isValid && isDirty && !accountVerifyBtnState)}
           >
             계좌번호 확인
           </Button>
@@ -183,7 +194,13 @@ function AccountFormNotice({ children }: PropsWithChildren) {
 
 //이전 다음 이렇게 된 버튼을 컴포넌트로 만들어도 좋을듯
 function WishesAccountSubmitButton({ disabled }: { disabled: boolean }) {
-  const { handleBack } = useRouters();
+  const { handleBack, handleRouter } = useRouters();
+  const { formState } = useFormContext<WishesAccountDataResolverType>();
+  const { isValid, isDirty } = formState;
+
+  function handleWishesCreateSubmit() {
+    handleRouter('/wishes/create?step=preview');
+  }
 
   return (
     <div className="flex justify-between gap-10">
@@ -191,9 +208,11 @@ function WishesAccountSubmitButton({ disabled }: { disabled: boolean }) {
         이전
       </Button>
 
-      <Button type="submit" fontColor="white" disabled={disabled}>
+      <Button type="submit" onClick={handleWishesCreateSubmit} disabled={disabled}>
         다음
       </Button>
     </div>
   );
 }
+
+// function

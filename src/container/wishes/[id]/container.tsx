@@ -1,11 +1,9 @@
-
 import { SelectCakes } from './client';
 import { avatarCakeList, AvatarCakeType } from '@/constant/model/cakes';
 
 export default function InvitedWishesPageContainer() {
   return (
     <>
-      return (
       <div className="flex flex-col items-center">
         <h1 className="text-[56px] text-main_blue mt-[91px] font-bitbit leading-none">
           조물주보다 <br />
@@ -19,7 +17,6 @@ export default function InvitedWishesPageContainer() {
 
         <SelectCakes<AvatarCakeType> avatarCakeList={avatarCakeList} />
       </div>
-      );
     </>
   );
 }

@@ -50,7 +50,7 @@ export function CakeMessageModal({
 
 export function MessageText({ children }: PropsWithChildren) {
   return (
-    <div className="text-[24px] font-bitbit text-center text-white mt-10 whitespace-pre-wrap">
+    <div className="text-[24px] font-bitbit text-center text-white whitespace-pre-wrap">
       <span className="transition-opacity duration-500 opacity-100 leading-tight">{children}</span>
     </div>
   );
@@ -65,14 +65,8 @@ export function WishesCreateTitleInputModalContainer({
   handleState: () => void;
 } & PropsWithChildren) {
   return (
-    <CloseIconInModal isOpen={isOpen} handleState={handleState}>
-      <div className="flex flex-col items-center gap-20 w-full">
-        <div className="flex flex-col items-center w-full">
-          <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
-          <h4 className="font-bitbit text-[24px] text-background">생일 잔치상 만들기</h4>
-        </div>
-        {children}
-      </div>
+    <CloseIconInModal modalTitle="생일 잔치상 만들기" isOpen={isOpen} handleState={handleState}>
+      {children}
     </CloseIconInModal>
   );
 }

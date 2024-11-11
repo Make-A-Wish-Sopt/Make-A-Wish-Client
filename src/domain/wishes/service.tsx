@@ -2,7 +2,6 @@ import { getCakesResult } from '@/api/cakes';
 import { MessageText } from './component';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { CakesTreeMessage } from './container';
-import { checkComp } from '@/utils/common/checkComponent';
 import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
@@ -31,7 +30,6 @@ export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
 export async function WishesMessageToCreateUser({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
   const { nickName } = await getLoginUserCookiesData();
-  checkComp();
 
   return (
     <MessageText>

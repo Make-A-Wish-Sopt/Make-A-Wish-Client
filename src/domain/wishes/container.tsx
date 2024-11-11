@@ -1,7 +1,8 @@
 'use client';
 
-import FixedBottomButton from '@/components/Common/Button/FixedBottomButton';
-import { MainProgressDataType } from '@/types/wishesType';
+import FixedBottomButton, {
+  FixedBottomButtonWrapper,
+} from '@/components/Common/Button/FixedBottomButton';
 import { LoginUserDataType } from '@/utils/common/cookies';
 import {
   CakeMessageModal,
@@ -10,7 +11,6 @@ import {
   WishesCreateTitleInputModalContainer,
 } from './component';
 import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
-import { WishesMessageToCreateUser } from './service';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
@@ -58,33 +58,45 @@ export default function WishesPageContainer({
   }
 
   return (
-    <FormProvider {...methods}>
-      {isWishProgress ? (
-        <>{children}</>
-      ) : (
-        <>
-          <MessageText>{`${nickName}님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</MessageText>
-          <CakesTreeMessage
-            cakeList={defaultCakeListData}
-            handleChangeCakeMessageModalState={handleChangeCakeMessageModalState}
-          />
-        </>
-      )}
+    <section className="relative">
+      <FormProvider {...methods}>
+        {isWishProgress ? (
+          <>
+            <span className="flex flex-row-reverse w-full text-[24px] font-bitbit text-center text-main_blue mt-12 mb-10">
+              D-?
+            </span>
+            {children}
+          </>
+        ) : (
+          <>
+            <span className="flex flex-row-reverse w-full text-[24px] font-bitbit text-center text-main_blue mt-12 mb-10">
+              D-?
+            </span>
 
-      <FixedBottomButton
-        onClick={() => {
-          isWishProgress ? handleRouter('/wishes') : handleChangeWishTitleModalState();
-        }}
-      >
-        {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
-      </FixedBottomButton>
+            <MessageText>{`${nickName}님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</MessageText>
+            <CakesTreeMessage
+              cakeList={defaultCakeListData}
+              handleChangeCakeMessageModalState={handleChangeCakeMessageModalState}
+            />
+          </>
+        )}
+        <FixedBottomButtonWrapper>
+          <Button
+            onClick={() => {
+              isWishProgress ? handleRouter('/wishes') : handleChangeWishTitleModalState();
+            }}
+          >
+            {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+          </Button>
+        </FixedBottomButtonWrapper>
 
-      {methods.watch('wishesTitleInputModalState') && (
-        <WishesCreateTitleInputModal handleState={handleChangeWishTitleModalState} />
-      )}
+        {methods.watch('wishesTitleInputModalState') && (
+          <WishesCreateTitleInputModal handleState={handleChangeWishTitleModalState} />
+        )}
 
-      {/* <div className="fixed bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" /> */}
-    </FormProvider>
+        <div className="sticky bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" />
+      </FormProvider>
+    </section>
   );
 }
 

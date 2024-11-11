@@ -3,22 +3,26 @@ import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { UseFormReturn } from 'react-hook-form';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
-import { AccountInfoType, WishesDataInputType } from '@/types/wishesType';
-import axios from 'axios';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { AccountInfoType } from '@/types/wishesType';
+import {
+  WishesAccountDataResolverType,
+  WishesPhoneResolverType,
+} from '@/validation/wishes.validate';
 
-export const putUserAccount = async (
-  methods: UseFormReturn<WishesDataInputType, any, undefined>,
-) => {
+export const putUserAccount = async ({
+  accountDataMethods,
+  phoneDataMethods,
+}: {
+  accountDataMethods: UseFormReturn<WishesAccountDataResolverType, any, undefined>;
+  phoneDataMethods: UseFormReturn<WishesPhoneResolverType, any, undefined>;
+}) => {
   const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {
-        name: methods.getValues('name'),
-        bank: methods.getValues('bank'),
-        account: methods.getValues('account'),
+        ...accountDataMethods.watch(),
       },
-      phone: methods.getValues('phone'),
+      phone: phoneDataMethods.watch('phone'),
     },
     {
       headers: {
@@ -26,6 +30,7 @@ export const putUserAccount = async (
       },
     },
   );
+
   return data;
 };
 
