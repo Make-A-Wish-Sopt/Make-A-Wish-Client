@@ -5,6 +5,10 @@ import { CakesTreeMessage } from './container';
 import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
+  return <></>;
+}
+
+export async function ReceivedCakePresentListTest({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
 
   function defineCakeTree(receivedCakeList?: CakeItemType[]) {

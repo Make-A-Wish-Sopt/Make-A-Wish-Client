@@ -27,7 +27,19 @@ type WishesPageGlobalStateType = {
   cakeMessageModalState: boolean;
 };
 
-export default function WishesPageContainer({
+export default function WishesPageContainer({ children }: PropsWithChildren) {
+  const methods = useForm<WishesPageGlobalStateType>({
+    defaultValues: {
+      wishTitle: '',
+      wishesTitleInputModalState: false,
+      cakeMessageModalState: false,
+    },
+  });
+
+  return <section className="relative">{children}</section>;
+}
+
+export function WishesPageContai({
   isWishProgress,
   loginUserData,
   children,

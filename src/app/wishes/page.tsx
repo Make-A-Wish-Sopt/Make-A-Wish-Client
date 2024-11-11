@@ -8,19 +8,20 @@ import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wis
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
-  const loginUserData = await getLoginUserCookiesData();
+  // const loginUserData = await getLoginUserCookiesData();
 
   return (
     <>
       <Header mypageBtn />
       <MainLayout>
-        <WishesPageContainer isWishProgress={!!progressWishesData} loginUserData={loginUserData}>
-          {progressWishesData && (
+        <WishesPageContainer>
+          <ReceivedCakePresentList wishId={progressWishesData.wishId} />
+          {/* {progressWishesData && (
             <>
               <WishesMessageToCreateUser wishId={progressWishesData.wishId} />
               <ReceivedCakePresentList wishId={progressWishesData.wishId} />
             </>
-          )}
+          )} */}
         </WishesPageContainer>
       </MainLayout>
     </>
