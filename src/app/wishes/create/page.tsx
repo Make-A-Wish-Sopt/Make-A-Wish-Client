@@ -3,7 +3,7 @@ import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
-import { AccountInputWithSavedAccountData } from '@/domain/wishes/create/service';
+import { AccountInputWithSavedAccountData, CenteredContent } from '@/domain/wishes/create/service';
 import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
 import WishesLinkInputForm from '@/domain/wishes/create/wishesLinkInputForm';
 import MainLayout from '@/layouts/MainLayout';
@@ -33,21 +33,24 @@ export default async function WishesCreatePage({
     <>
       <Header backBtn pathTo="/wishes" />
       <MainLayout>
-        {/* <WishesCreatePageContainer createStep={searchParams.step} wishTitle={decodeWishTitle}>
-          {
-            {
-              done: <CenteredContent />,
-            }[step]
-          }
-        </WishesCreatePageContainer> */}
         <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
           {
             {
+              link: (
+                <>
+                  <WishesCreateTitleText>생일잔치 링크 생성하기</WishesCreateTitleText>
+                </>
+              ),
               account: (
                 <>
                   <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
                   <AccountInputWithSavedAccountData />
                   {/* <WishesAccountInputForm/> */}
+                </>
+              ),
+              done: (
+                <>
+                  <CenteredContent />,
                 </>
               ),
             }[step]

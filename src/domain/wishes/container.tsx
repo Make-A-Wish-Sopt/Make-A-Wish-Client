@@ -1,10 +1,10 @@
 'use client';
 
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { CakeMessageModal, CakeTreeTest, WishesCreateTitleInputModalContainer } from './component';
+import { CakeMessageModal, CakeTree, WishesCreateTitleInputModalContainer } from './component';
 import { CakeItemType } from '@/constant/model/cakes';
 import { useRouters } from '@/hooks/common/useRouters';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { convertEncode } from '@/utils/common/convert';
@@ -21,6 +21,7 @@ type WishesPageGlobalStateType = {
 
 export default function WishesPageContainer({ children }: PropsWithChildren) {
   const methods = useForm<WishesPageGlobalStateType>({
+    mode: 'onChange',
     defaultValues: {
       wishTitle: '',
       wishesTitleInputModalState: false,
@@ -33,6 +34,7 @@ export default function WishesPageContainer({ children }: PropsWithChildren) {
       <FormProvider {...methods}>
         {children}
         {methods.watch('wishesTitleInputModalState') && <WishesCreateTitleInputModal />}
+        <WishesCreateTitleInputModal />
       </FormProvider>
 
       <div className="sticky bottom-0 w-full h-170 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" />
@@ -43,7 +45,7 @@ export default function WishesPageContainer({ children }: PropsWithChildren) {
 export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress: boolean }) {
   const { handleRouter } = useRouters();
 
-  const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
+  const { setValue, watch } = useFormContext<WishesPageGlobalStateType>();
 
   function handleButtonClick() {
     if (isWishProgress) {
@@ -55,6 +57,7 @@ export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress
 
   function handleChangeWishTitleModalState() {
     const modalState = watch('wishesTitleInputModalState');
+
     setValue('wishesTitleInputModalState', !modalState);
   }
 
@@ -77,13 +80,15 @@ export function CakesTreeMessage({
   wishId?: string;
 }) {
   const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
-  const { cakeMessageModalState } = watch();
+  // const { cakeMessageModalState } = watch();
+  const cakeMessageModalState = true;
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<CakePresentMessageDataType | null>(null);
 
   function handleChangeCakeMessageModalState() {
-    const modalState = watch('cakeMessageModalState');
+    // const modalState = watch('cakeMessageModalState');
+    const modalState = true;
     setValue('cakeMessageModalState', !modalState);
   }
 
@@ -102,7 +107,7 @@ export function CakesTreeMessage({
 
   return (
     <>
-      <CakeTreeTest cakeList={cakeList} handleSelectOne={handleSelectCake} />
+      <CakeTree cakeList={cakeList} handleSelectOne={handleSelectCake} />
       {cakeMessageModalState && selectedPresentId > 0 && cakePresentMessageData && (
         <CakeMessageModal
           state={cakeMessageModalState}
@@ -116,17 +121,18 @@ export function CakesTreeMessage({
 }
 
 function WishesCreateTitleInputModal() {
-  const { register, watch, setValue } = useFormContext<WishesPageGlobalStateType>();
+  const { register, setValue, getValues } = useFormContext<WishesPageGlobalStateType>();
 
   const { handleRouter } = useRouters();
 
+  const modalState = getValues('wishesTitleInputModalState');
+
   function handleModalState() {
-    const state = watch('wishesTitleInputModalState');
-    setValue('wishesTitleInputModalState', !state);
+    setValue('wishesTitleInputModalState', !modalState);
   }
 
   function handleClick() {
-    const wishTitle = watch('wishTitle');
+    const wishTitle = getValues('wishTitle');
 
     if (wishTitle) {
       const encodeWishTitle = convertEncode(wishTitle);
@@ -135,10 +141,7 @@ function WishesCreateTitleInputModal() {
   }
 
   return (
-    <WishesCreateTitleInputModalContainer
-      isOpen={watch('wishesTitleInputModalState')}
-      handleState={handleModalState}
-    >
+    <WishesCreateTitleInputModalContainer isOpen={modalState} handleState={handleModalState}>
       <div className="w-full">
         <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>
         <InputText register={register('wishTitle')} placeholder="ex) 에어팟맥스 받게 해주세요" />

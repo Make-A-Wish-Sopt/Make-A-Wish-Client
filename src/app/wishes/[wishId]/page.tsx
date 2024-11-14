@@ -1,10 +1,11 @@
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
-import InvitedWishesPageContainer from '@/container/wishes/[id]/container';
+import { WishesIdLayoutWithContent } from '@/domain/wishes/[id]/component';
+import WishesIdPageContainer from '@/domain/wishes/[id]/container';
 import MainLayout from '@/layouts/MainLayout';
 
-export default async function InvitedWishesPage({ params }: { params: { wishId: string } }) {
+export default async function WishesIdPage({ params }: { params: { wishId: string } }) {
   const { wishId } = params;
   const publicProgressWishes = await getPublicWishes(wishId);
 
@@ -16,7 +17,9 @@ export default async function InvitedWishesPage({ params }: { params: { wishId: 
     <>
       <Header />
       <MainLayout>
-        <InvitedWishesPageContainer />
+        <WishesIdPageContainer wishId={wishId}>
+          <WishesIdLayoutWithContent></WishesIdLayoutWithContent>
+        </WishesIdPageContainer>
       </MainLayout>
     </>
   );

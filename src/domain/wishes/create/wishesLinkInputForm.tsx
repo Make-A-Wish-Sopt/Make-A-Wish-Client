@@ -21,15 +21,18 @@ import InputTextarea from '@/components/Common/Input/inputTextarea';
 import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export function Test({ wishTitle }: { wishTitle?: string }) {
-  const test = useFormContext<WishesLinkDataResolverType>();
-  const isValid = test.formState.isValid;
-  console.log(isValid);
+export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
+  const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
+  const { formState } = savedWishesLinkDataMethods;
+  const isValid = formState.isValid;
+  const savedWishesLinkData = savedWishesLinkDataMethods.watch();
 
-  return <WishesLinkInputForm wishTitle={wishTitle} progressWishesData={isValid && test.watch()} />;
+  return (
+    <WishesLinkInputs wishTitle={wishTitle} progressWishesData={isValid && savedWishesLinkData} />
+  );
 }
 
-export default function WishesLinkInputForm({
+export function WishesLinkInputs({
   wishTitle,
   progressWishesData,
 }: {
@@ -58,18 +61,20 @@ export default function WishesLinkInputForm({
   const parentContextMethods = useFormContext<WishesLinkDataResolverType>();
 
   useEffect(() => {
-    if (progressWishesData) {
-      console.log('reset!!!!!!!!');
+    const isEdit = !methods.formState.isDirty;
+
+    if (progressWishesData && isEdit) {
       reset({ ...progressWishesData });
     }
   }, [progressWishesData]);
 
   function handleNextStep() {
+    parentContextMethods.reset({
+      ...watch(),
+    });
+
     if (methods.watch('wantsGift')) {
       handleRouter('/wishes/create?step=account');
-      parentContextMethods.reset({
-        ...watch(),
-      });
     } else {
       createOnlyLettersWishes();
     }

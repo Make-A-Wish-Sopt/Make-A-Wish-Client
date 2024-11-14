@@ -71,7 +71,7 @@ export function WishesCreateTitleInputModalContainer({
   );
 }
 
-export function CakeTreeTest({
+export function CakeTree({
   cakeList,
   handleSelectOne,
 }: {

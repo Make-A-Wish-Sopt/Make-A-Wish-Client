@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 
-export default function useCarousel(maxLength: number) {
+export interface CarouselType {
+  center: number;
+  left: number;
+  right: number;
+  next: () => void;
+  prev: () => void;
+}
+
+export default function useCarousel(maxLength: number): CarouselType {
   const [center, setCenter] = useState(0);
   const [left, setLeft] = useState(maxLength);
   const [right, setRight] = useState(1);

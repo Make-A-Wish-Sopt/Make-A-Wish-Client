@@ -1,6 +1,5 @@
 import MainLayout from '@/layouts/MainLayout';
 import Header from '@/components/Common/Hedaer';
-// import WishesSharePageContainer from '@/container/wishes/share/container';
 import { getMainProgressWishesData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import WishesSharePageContainer from '@/domain/wishes/share/container';

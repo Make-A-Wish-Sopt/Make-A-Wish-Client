@@ -1,26 +1,32 @@
 'use client';
 
+import { avatarCakeList } from '@/constant/model/cakes';
+import useCarousel, { CarouselType } from '@/hooks/common/useCarousel';
+import { useRouters } from '@/hooks/common/useRouters';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeftIc, ArrowRightIc } from '../../../../public/assets/icons';
-import useCarousel from '@/hooks/common/useCarousel';
+import { PropsWithChildren } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@/components/Common/Button';
-import { AvatarCakeType, CakeItemType } from '@/constant/model/cakes';
 
-export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
-  avatarCakeList,
-}: {
-  avatarCakeList: Array<T>;
-}) {
-  const { center, left, right, next, prev } = useCarousel(avatarCakeList.length - 1);
+export default function WishesIdPageContainer({
+  wishId,
+  children,
+}: { wishId: string } & PropsWithChildren) {
+  const carousel = useCarousel(avatarCakeList.length - 1);
+  const { center } = carousel;
 
-  const router = useRouter();
+  return (
+    <>
+      {children}
+      <SelectAvatarCakes carousel={carousel} />
+      <WishesIdPageSubmitButton wishId={wishId} avatarCakeId={center} />
+    </>
+  );
+}
 
-  const { wishId } = useParams<{ wishId: string }>();
-
-  const handleClick = () => {
-    router.push(`/present/${wishId}/?presentStep=present&avatarCakeId=${center}`);
-  };
+function SelectAvatarCakes({ carousel }: { carousel: CarouselType }) {
+  const { center, left, right, next, prev } = carousel;
 
   return (
     <>
@@ -38,7 +44,7 @@ export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
             zIndex: 1,
           }}
         >
-          <Image src={ArrowLeftIc} alt="왼쪽 화살표" width={10} priority></Image>
+          <Image src={ArrowLeftIc} alt="왼쪽 화살표" width={10} priority />
         </li>
 
         <li>
@@ -59,16 +65,29 @@ export function SelectCakes<T extends CakeItemType | AvatarCakeType>({
             zIndex: 1,
           }}
         >
-          <Image src={ArrowRightIc} alt="오른쪽 화살표" priority></Image>
+          <Image src={ArrowRightIc} alt="오른쪽 화살표" priority />
         </li>
 
         <li className="absolute opacity-50" style={{ top: 0, right: '-50%' }}>
           <Image src={avatarCakeList[right].image} alt="이미지" width={250} priority />
         </li>
       </ul>
-      <Button bgColor="main_blue" fontColor="black" onClick={handleClick}>
-        친구 생일잔치 입장하기
-      </Button>
     </>
   );
+}
+
+function WishesIdPageSubmitButton({
+  wishId,
+  avatarCakeId,
+}: {
+  wishId: string;
+  avatarCakeId: number;
+}) {
+  const { handleRouter } = useRouters();
+
+  const handleClick = () => {
+    handleRouter(`/present/${wishId}/?presentStep=present&avatarCakeId=${avatarCakeId}`);
+  };
+
+  return <Button onClick={handleClick}>친구 생일잔치 입장하기</Button>;
 }

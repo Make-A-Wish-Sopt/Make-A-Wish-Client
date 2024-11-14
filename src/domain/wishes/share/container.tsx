@@ -13,7 +13,7 @@ export default function WishesSharePageContainer({ children }: {} & PropsWithChi
     <>
       {children}
       <SharePageFixedButtons />
-      <CloseIconInModal isOpen={!state} handleState={handleState}></CloseIconInModal>
+      {/* <CloseIconInModal isOpen={!state} handleState={handleState}></CloseIconInModal> */}
     </>
   );
 }
