@@ -8,21 +8,16 @@ import {
   WishesAccountDataResolverType,
   WishesPhoneResolverType,
 } from '@/validation/wishes.validate';
+import { AccountDataType } from '@/types/input';
 
-export const putUserAccount = async ({
-  accountDataMethods,
-  phoneDataMethods,
-}: {
-  accountDataMethods: UseFormReturn<WishesAccountDataResolverType, any, undefined>;
-  phoneDataMethods: UseFormReturn<WishesPhoneResolverType, any, undefined>;
-}) => {
+export const putUserAccount = async (accountInputs: AccountDataType) => {
   const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {
-        ...accountDataMethods.watch(),
+        ...accountInputs,
       },
-      phone: phoneDataMethods.watch('phone'),
+      phone: 'refactor : 전화번호 수정',
     },
     {
       headers: {

@@ -1,7 +1,8 @@
 'use client';
 
-import { FormProvider, useFormContext, UseFormReturn } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import {
+  wishesAccountDataResolver,
   WishesAccountDataResolverType,
   WishesPhoneResolverType,
 } from '@/validation/wishes.validate';
@@ -9,67 +10,44 @@ import InputForm from '@/components/UI/InputForm';
 import { colors } from '@/styles/styles';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { UserAccountDataType } from '@/types/api/response';
 import useToggle from '@/hooks/common/useToggle';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import Modal from '@/components/Common/Modal';
 import BankModal from '@/components/Common/Modal/BankModal';
-import { getUserAccount, postVerifyAccount } from '@/api/user';
+import { postVerifyAccount, putUserAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { useRouters } from '@/hooks/common/useRouters';
+import { wishesAccountInputInit } from '@/constant/init';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function WishesAccountInputForm({
-  methods,
-  wishesPhoneMethods,
+  savedUserAccountData,
 }: {
-  methods: UseFormReturn<WishesAccountDataResolverType, any, undefined>;
-  wishesPhoneMethods: UseFormReturn<WishesPhoneResolverType, any, undefined>;
-} & PropsWithChildren) {
-  const { register, reset, setValue, formState } = methods;
+  savedUserAccountData?: UserAccountDataType;
+}) {
+  const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
+    mode: 'onChange',
+    defaultValues: {
+      ...wishesAccountInputInit,
+    },
+    resolver: yupResolver(wishesAccountDataResolver),
+  });
 
-  const [savedAccountData, setSavedAccountData] = useState<UserAccountDataType | null>(null);
-
-  //부모의 상태에 따라 리렌더링 되는거 최적화 해보기
-  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
-  const { state: nextBtnState, changeState: changeNextBtnState } = useToggle();
   const { state: accountVerifyBtnState, changeState: changeAccountVerifyBtnState } = useToggle();
-  const { isValid } = formState;
+  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
+
+  const { register, reset } = wishesAccountInputMethods;
 
   useEffect(() => {
-    if (isValid && wishesPhoneMethods.formState.isValid && noticeAgree) {
-      changeNextBtnState(true);
-    } else {
-      changeNextBtnState(false);
+    if (savedUserAccountData) {
+      reset({ ...savedUserAccountData.accountInfo });
     }
-  }, [isValid, wishesPhoneMethods.formState.isValid, noticeAgree]);
-
-  useEffect(() => {
-    getUserAccount().then((response) => {
-      setSavedAccountData({
-        ...response,
-      });
-    });
   }, []);
 
-  useEffect(() => {
-    if (savedAccountData) {
-      reset({ ...savedAccountData.accountInfo });
-
-      wishesPhoneMethods.reset({
-        phone: savedAccountData.phone,
-      });
-    }
-  }, [savedAccountData]);
-
-  function changeBank(input: string) {
-    setValue('bank', input, { shouldDirty: true });
-  }
-
-  // refactor : 조건부분 더욱 상세하게 하기
-
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...wishesAccountInputMethods}>
       <InputForm title="계좌번호 입력하기">
         <div className="flex flex-col gap-12">
           <InputText
@@ -79,8 +57,7 @@ export default function WishesAccountInputForm({
           />
 
           <InputText placeholder="예금주명" register={register('name')} />
-
-          <SelectBank changeBank={changeBank} />
+          <SelectBank />
 
           <AccountInput
             accountVerifyBtnState={accountVerifyBtnState}
@@ -88,26 +65,10 @@ export default function WishesAccountInputForm({
           >
             <InputText placeholder="계좌번호를 입력해주세요" register={register('account')} />
           </AccountInput>
+          <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
         </div>
+        <WishesAccountSubmitButton disabled={!(noticeAgree && !accountVerifyBtnState)} />
       </InputForm>
-
-      <InputForm title="휴대폰번호 입력하기">
-        <div className="flex flex-col gap-24">
-          <InputText
-            placeholder="(-)없이 숫자만 입력해주세요"
-            register={wishesPhoneMethods.register('phone')}
-          />
-
-          <AccountFormNotice>
-            <CheckBox<WishesAccountDataResolverType>
-              checkBoxText={'동의함'}
-              changeCheckedState={changeNoticeAgreeState}
-            />
-          </AccountFormNotice>
-        </div>
-      </InputForm>
-
-      <WishesAccountSubmitButton disabled={!nextBtnState || accountVerifyBtnState} />
     </FormProvider>
   );
 }
@@ -125,8 +86,8 @@ function AccountInput({
   const { account, bank, name } = watch();
 
   useEffect(() => {
-    changeAccountVerifyBtnState(false);
-  }, []);
+    changeAccountVerifyBtnState(isDirty);
+  }, [isDirty]);
 
   function handleAccountCheck() {
     if (account && bank && name) {
@@ -141,7 +102,7 @@ function AccountInput({
 
   return (
     <div className="flex justify-between gap-6">
-      <div className="flex-grow-3">{children}</div>
+      <div className="flex-grow-3 w-full">{children}</div>
       <div className="flex-grow-1">
         <div className="w-115 h-50 font-galmuri">
           <Button
@@ -149,7 +110,7 @@ function AccountInput({
             font="galmuri"
             onClick={handleAccountCheck}
             styles={{ fontSize: '14px' }}
-            disabled={!(isValid && isDirty && !accountVerifyBtnState)}
+            disabled={!(isValid && isDirty) || !accountVerifyBtnState}
           >
             계좌번호 확인
           </Button>
@@ -159,9 +120,14 @@ function AccountInput({
   );
 }
 
-function SelectBank({ changeBank }: { changeBank: (input: string) => void }) {
+function SelectBank() {
   const { state: modalState, handleState: handleChangeModalState } = useToggle();
-  const { register } = useFormContext<WishesAccountDataResolverType>();
+  const { register, setValue } = useFormContext<WishesAccountDataResolverType>();
+
+  function changeBank(input: string) {
+    setValue('bank', input, { shouldDirty: true });
+  }
+
   return (
     <>
       <DropDwonBox isOpen={false} handleState={handleChangeModalState} bgColor="dark_green">
@@ -183,11 +149,20 @@ function SelectBank({ changeBank }: { changeBank: (input: string) => void }) {
   );
 }
 
-function AccountFormNotice({ children }: PropsWithChildren) {
+function AccountFormNotice({
+  changeNoticeAgreeState,
+}: {
+  changeNoticeAgreeState: (state: boolean) => void;
+}) {
   return (
     <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl ">
       {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
-      <div className="flex justify-end w-full h-20">{children}</div>
+      <div className="flex justify-end w-full h-20">
+        <CheckBox<WishesAccountDataResolverType>
+          checkBoxText={'동의함'}
+          changeCheckedState={changeNoticeAgreeState}
+        />
+      </div>
     </div>
   );
 }
@@ -195,11 +170,17 @@ function AccountFormNotice({ children }: PropsWithChildren) {
 //이전 다음 이렇게 된 버튼을 컴포넌트로 만들어도 좋을듯
 function WishesAccountSubmitButton({ disabled }: { disabled: boolean }) {
   const { handleBack, handleRouter } = useRouters();
-  const { formState } = useFormContext<WishesAccountDataResolverType>();
-  const { isValid, isDirty } = formState;
+  const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
+  // const { isValid, isDirty } = formState;
 
   function handleWishesCreateSubmit() {
-    handleRouter('/wishes/create?step=preview');
+    const { account, bank, name } = watch();
+
+    if (account && bank && name) {
+      putUserAccount({ account: account, bank: bank, name: name }).then((response) => {
+        response.data.success && handleRouter('/wishes/create?step=preview');
+      });
+    }
   }
 
   return (

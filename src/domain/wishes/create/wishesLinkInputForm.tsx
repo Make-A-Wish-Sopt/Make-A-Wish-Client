@@ -1,47 +1,75 @@
+'use client';
+
 import { postWishes } from '@/api/wishes';
 import Button from '@/components/Common/Button';
 import Calendar from '@/components/Common/Calendar/Calendar';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import InputForm from '@/components/UI/InputForm';
-import InputTextForm, { TextCount } from '@/components/UI/InputTextForm';
+import { TextCount } from '@/components/UI/InputTextForm';
 import RadioSelect from '@/components/UI/RadioSelect';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import { useRouters } from '@/hooks/common/useRouters';
 import useToggle from '@/hooks/common/useToggle';
 import { useUploadItemInfo } from '@/hooks/wishes/useUploadItemInfo';
-import { convertEncode } from '@/utils/common/convert';
 import { getDate } from '@/utils/common/getDate';
-import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
+import { wishesLinkDataResolver, WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { useEffect } from 'react';
-import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { DropDownContent } from './component';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
+import { wishesLinkInputInit } from '@/constant/init';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+export function Test({ wishTitle }: { wishTitle?: string }) {
+  const test = useFormContext<WishesLinkDataResolverType>();
+  const isValid = test.formState.isValid;
+  console.log(isValid);
+
+  return <WishesLinkInputForm wishTitle={wishTitle} progressWishesData={isValid && test.watch()} />;
+}
 
 export default function WishesLinkInputForm({
-  methods,
+  wishTitle,
+  progressWishesData,
 }: {
-  methods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+  wishTitle: string;
+  progressWishesData?: WishesLinkDataResolverType;
 }) {
-  const { control, handleSubmit } = methods;
-
-  //달력 최적화 해보자~
-  const [startDateWatch, endDateWatch] = useWatch({
-    control,
-    name: ['startDate', 'endDate'],
+  const methods = useForm<WishesLinkDataResolverType>({
+    mode: 'onChange',
+    defaultValues: {
+      ...wishesLinkInputInit,
+      title: wishTitle,
+    },
+    resolver: yupResolver(wishesLinkDataResolver),
   });
 
-  function handleChangeDate(selectedDate: Date) {
-    methods.setValue('startDate', selectedDate);
-    methods.setValue('endDate', getDate(selectedDate, 7));
-  }
+  useEffect(() => {
+    if (wishTitle) {
+      methods.setValue('title', wishTitle);
+    }
+  }, [wishTitle]);
+
+  const { reset, handleSubmit, watch } = methods;
 
   const { handleRouter } = useRouters();
 
+  const parentContextMethods = useFormContext<WishesLinkDataResolverType>();
+
+  useEffect(() => {
+    if (progressWishesData) {
+      console.log('reset!!!!!!!!');
+      reset({ ...progressWishesData });
+    }
+  }, [progressWishesData]);
+
   function handleNextStep() {
-    // if (wantsGiftWatch) {
     if (methods.watch('wantsGift')) {
       handleRouter('/wishes/create?step=account');
+      parentContextMethods.reset({
+        ...watch(),
+      });
     } else {
       createOnlyLettersWishes();
     }
@@ -56,21 +84,38 @@ export default function WishesLinkInputForm({
       <form onSubmit={handleSubmit(handleNextStep)}>
         <ImageToBeShownToGiver />
 
-        <>
-          <InputForm title="내 생일 주간 설정하기">
-            {/* 캘린더 안되는거 수정해야됨 */}
-            <div className="flex justify-between gap-10">
-              <Calendar date={startDateWatch} handleChangeDate={handleChangeDate} />
-              <Calendar date={endDateWatch} readOnly />
-            </div>
-          </InputForm>
-        </>
+        <InputForm title="내 생일 주간 설정하기">
+          {/* 캘린더 안되는거 수정해야됨 */}
+          <div className="flex justify-between gap-10">
+            <WishesPeriod />
+          </div>
+        </InputForm>
 
         <HintMessageToGiver />
         <WantsGiftOption />
         <WishesLinkSubmitButton />
       </form>
     </FormProvider>
+  );
+}
+
+function WishesPeriod() {
+  const { control, setValue } = useFormContext<WishesLinkDataResolverType>();
+  const [startDateWatch, endDateWatch] = useWatch({
+    control,
+    name: ['startDate', 'endDate'],
+  });
+
+  function handleChangeDate(selectedDate: Date) {
+    setValue('startDate', selectedDate);
+    setValue('endDate', getDate(selectedDate, 7));
+  }
+
+  return (
+    <>
+      <Calendar date={startDateWatch} handleChangeDate={handleChangeDate} />
+      <Calendar date={endDateWatch} readOnly />
+    </>
   );
 }
 

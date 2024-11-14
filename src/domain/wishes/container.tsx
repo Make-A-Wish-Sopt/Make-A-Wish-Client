@@ -1,14 +1,8 @@
 'use client';
 
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { LoginUserDataType } from '@/utils/common/cookies';
-import {
-  CakeMessageModal,
-  CakeTreeTest,
-  MessageText,
-  WishesCreateTitleInputModalContainer,
-} from './component';
-import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
+import { CakeMessageModal, CakeTreeTest, WishesCreateTitleInputModalContainer } from './component';
+import { CakeItemType } from '@/constant/model/cakes';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
@@ -83,7 +77,7 @@ export function CakesTreeMessage({
   wishId?: string;
 }) {
   const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
-  const state = watch('cakeMessageModalState');
+  const { cakeMessageModalState } = watch();
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<CakePresentMessageDataType | null>(null);
@@ -109,9 +103,9 @@ export function CakesTreeMessage({
   return (
     <>
       <CakeTreeTest cakeList={cakeList} handleSelectOne={handleSelectCake} />
-      {state && selectedPresentId > 0 && cakePresentMessageData && (
+      {cakeMessageModalState && selectedPresentId > 0 && cakePresentMessageData && (
         <CakeMessageModal
-          state={state}
+          state={cakeMessageModalState}
           handleChange={handleChangeCakeMessageModalState}
           cakePresentMessageData={cakePresentMessageData}
           nickName={'asdf'}

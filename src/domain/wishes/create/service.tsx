@@ -3,6 +3,8 @@ import ErrorPage from '@/app/error';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import Image from 'next/image';
 import { SharePageCakeImg } from '../../../../public/assets/images';
+import { getUserAccount } from '@/api/user';
+import WishesAccountInputForm from './wishesAccountInputForm';
 
 export async function CenteredContent() {
   const progressWishesData = await getMainProgressWishesData();
@@ -30,4 +32,10 @@ export async function CenteredContent() {
       <Image src={SharePageCakeImg} alt="링크생성 완료 케이크 이미지" width={221} />
     </div>
   );
+}
+
+export async function AccountInputWithSavedAccountData() {
+  const savedUserAccountData = await getUserAccount();
+
+  return <WishesAccountInputForm savedUserAccountData={savedUserAccountData} />;
 }

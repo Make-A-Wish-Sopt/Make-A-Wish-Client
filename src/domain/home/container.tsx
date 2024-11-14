@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useRouters } from '@/hooks/common/useRouters';
 import Button from '@/components/Common/Button';
 import { KakaoLoginIc } from '../../../public/assets/icons';
-import useToggle from '@/hooks/common/useToggle';
 import { PropsWithChildren } from 'react';
 import { MainPageCenteredContent } from './component';
 
@@ -13,10 +12,8 @@ export default function MainPageContainer({ children }: PropsWithChildren) {
     <>
       {children}
       <MainPageCenteredContent />
-      <div className="flex flex-col gap-10">
-        <KakaoLoginButton />
-        <AlimTalkReceiveButton />
-      </div>
+
+      <KakaoLoginButton />
     </>
   );
 }
@@ -39,16 +36,6 @@ export function KakaoLoginButton() {
       icon={<Image src={KakaoLoginIc} alt="카카오 로고 아이콘" />}
     >
       카카오톡 로그인으로 시작하기
-    </Button>
-  );
-}
-
-export function AlimTalkReceiveButton() {
-  const handleKaKaoLogin = () => {};
-
-  return (
-    <Button bgColor="main_blue" fontColor="black" onClick={handleKaKaoLogin}>
-      생일 D-7 알림톡 받기
     </Button>
   );
 }
