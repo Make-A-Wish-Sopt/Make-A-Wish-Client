@@ -34,6 +34,7 @@ export { default as CakeDishTopRibbonImg } from '../images/cakeDishTopRibbonImg.
 export { default as WishesCreateDefaultImg } from '../images/wishesCreateDefaultImg.png';
 
 // 트리에 올라가는 케이크 이미지
+export { default as AdminCakeImg } from './CakeList/AdminCakeImg.png';
 export { default as BeefCakeImg } from './CakeList/BeefCakeImg.png';
 export { default as ChickenCakeImg } from './CakeList/ChickenCakeImg.png';
 export { default as FlowerCakeImg } from './CakeList/FlowerCakeImg.png';
