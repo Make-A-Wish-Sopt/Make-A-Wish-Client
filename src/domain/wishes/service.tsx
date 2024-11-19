@@ -1,30 +1,68 @@
 import { getCakesResult } from '@/api/cakes';
 import { MessageText } from './component';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { CakesTreeMessage } from './container';
-import { CakeItemType, defaultCakeListData } from '@/constant/model/cakes';
+import {
+  CakeTreeDataType,
+  defaultCakeTreeDataArray,
+  defaultCakeTreeDataObject,
+} from '@/constant/model/cakesTreeData';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
+  const convertRecentCakeList = receivedCakeList.reverse();
+  const cakeList = defineCakeTree(convertRecentCakeList);
 
-  function defineCakeTree(receivedCakeList?: CakeItemType[]) {
-    if (!receivedCakeList) return defaultCakeListData;
+  function defineCakeTree(receivedCakeList?: CakeTreeDataType[]) {
+    if (!receivedCakeList) return defaultCakeTreeDataArray;
 
-    if (receivedCakeList.length === 0) return defaultCakeListData;
+    if (receivedCakeList.length === 0) return defaultCakeTreeDataArray;
 
-    if (receivedCakeList.length > 0 && receivedCakeList.length < 12) {
+    if (receivedCakeList.length > 0 && receivedCakeList.length <= 12) {
+      const convertReceivedCakeData = receivedCakeList
+        .map((cake) => {
+          const matchCakesData = defaultCakeTreeDataObject[cake.cakeId];
+
+          if (matchCakesData) {
+            return {
+              ...matchCakesData,
+              name: cake.name,
+              presentId: cake.presentId,
+              cakeImg: defaultCakeTreeDataObject[cake.cakeId].cakeImg,
+              isAdminMessage: false,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+
       const mergedCakeList = [
-        ...receivedCakeList,
-        ...defaultCakeListData.slice(0, 12 - receivedCakeList.length),
+        ...convertReceivedCakeData,
+        ...defaultCakeTreeDataArray.slice(0, 12 - receivedCakeList.length),
       ];
 
       return mergedCakeList;
-    }
+    } else {
+      const convertReceivedCakeData = receivedCakeList
+        .map((cake) => {
+          const matchCakesData = defaultCakeTreeDataObject[cake.cakeId];
 
-    return receivedCakeList;
+          if (matchCakesData) {
+            return {
+              ...matchCakesData,
+              name: cake.name,
+              presentId: cake.presentId,
+              cakeImg: defaultCakeTreeDataObject[cake.cakeId].cakeImg,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+
+      return convertReceivedCakeData;
+    }
   }
 
-  return <CakesTreeMessage cakeList={defineCakeTree(receivedCakeList)} wishId={wishId} />;
+  return <CakesTreeMessage cakeList={cakeList} wishId={wishId} />;
 }
 
 export async function WishesMessageToCreateUser({

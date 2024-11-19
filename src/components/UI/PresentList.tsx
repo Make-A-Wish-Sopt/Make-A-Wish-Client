@@ -1,6 +1,6 @@
 'use client';
 
-import { presentList } from '@/constant/model/present';
+import { presentListArray } from '@/constant/model/present';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { convertMoneyText } from '@/utils/common/convert';
 import Image from 'next/image';
@@ -23,7 +23,7 @@ export default function PresentList({
 
   return (
     <div className="flex w-full flex-wrap gap-5 justify-between">
-      {presentList.map((item) => (
+      {presentListArray.map((item) => (
         <div
           className={`flex flex-col items-center p-9 flex-grow flex-shrink basis-[calc(33%-10px)] ${
             isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'

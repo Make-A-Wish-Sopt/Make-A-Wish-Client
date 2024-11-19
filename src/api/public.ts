@@ -25,7 +25,7 @@ export const postPublicCakes = async (
 ) => {
   const requestData = {
     ...presentData,
-    cakeId: presentData.cakeId + 1,
+    cakeId: presentData.cakeId,
   };
 
   const data = await client.post<PostPublicCakesResponseType>(

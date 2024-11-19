@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
-import { MessageBox } from '@/domain/present/component';
+import { MessageBox } from '@/domain/present/[wishId]/component';
 import InputForm from '@/components/UI/InputForm';
 import InputText from '@/components/Common/Input/inputText';
 import PresentList from '@/components/UI/PresentList';

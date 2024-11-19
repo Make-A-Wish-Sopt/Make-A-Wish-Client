@@ -1,4 +1,4 @@
-import { presentList } from '@/constant/model/present';
+import { presentListArray } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
 
 export default function CheckPresentItem({
@@ -15,8 +15,8 @@ export default function CheckPresentItem({
       </h3>
 
       <span className="font-bitbit text-center text-white text-[24px] mt-10 whitespace-pre-line">
-        {`${giverName}님\n${presentList[presentId].itemName} ${convertMoneyText(
-          presentList[presentId].price.toString(),
+        {`${giverName}님\n${presentListArray[presentId].itemName} ${convertMoneyText(
+          presentListArray[presentId].price.toString(),
         )}원을\n선물하시겠어요?`}
       </span>
     </>

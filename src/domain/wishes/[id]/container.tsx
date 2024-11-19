@@ -1,19 +1,18 @@
 'use client';
 
-import { avatarCakeList } from '@/constant/model/cakes';
 import useCarousel, { CarouselType } from '@/hooks/common/useCarousel';
 import { useRouters } from '@/hooks/common/useRouters';
 import Image from 'next/image';
 import { ArrowLeftIc, ArrowRightIc } from '../../../../public/assets/icons';
 import { PropsWithChildren } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@/components/Common/Button';
+import { defaultAvatarCakesDataArray } from '@/constant/model/avatarCakesData';
 
 export default function WishesIdPageContainer({
   wishId,
   children,
 }: { wishId: string } & PropsWithChildren) {
-  const carousel = useCarousel(avatarCakeList.length - 1);
+  const carousel = useCarousel(defaultAvatarCakesDataArray.length - 1);
   const { center } = carousel;
 
   return (
@@ -32,7 +31,12 @@ function SelectAvatarCakes({ carousel }: { carousel: CarouselType }) {
     <>
       <ul className="relative flex justify-center w-full h-300 mb-46">
         <li className="absolute opacity-50" style={{ top: 0, left: '-50%' }}>
-          <Image src={avatarCakeList[left].image} alt="이전 케이크 이미지" width={250} priority />
+          <Image
+            src={defaultAvatarCakesDataArray[left].cakeImg}
+            alt="이전 케이크 이미지"
+            width={250}
+            priority
+          />
         </li>
 
         <li
@@ -49,7 +53,7 @@ function SelectAvatarCakes({ carousel }: { carousel: CarouselType }) {
 
         <li>
           <Image
-            src={avatarCakeList[center].image}
+            src={defaultAvatarCakesDataArray[center].cakeImg}
             alt="선택한 케이크 이미지"
             width={250}
             priority
@@ -69,7 +73,12 @@ function SelectAvatarCakes({ carousel }: { carousel: CarouselType }) {
         </li>
 
         <li className="absolute opacity-50" style={{ top: 0, right: '-50%' }}>
-          <Image src={avatarCakeList[right].image} alt="이미지" width={250} priority />
+          <Image
+            src={defaultAvatarCakesDataArray[right].cakeImg}
+            alt="이미지"
+            width={250}
+            priority
+          />
         </li>
       </ul>
     </>
@@ -84,9 +93,10 @@ function WishesIdPageSubmitButton({
   avatarCakeId: number;
 }) {
   const { handleRouter } = useRouters();
+  const cakeId = defaultAvatarCakesDataArray[avatarCakeId].id;
 
   const handleClick = () => {
-    handleRouter(`/present/${wishId}/?presentStep=present&avatarCakeId=${avatarCakeId}`);
+    handleRouter(`/present/${wishId}/?presentStep=present&avatarCakeId=${cakeId}`);
   };
 
   return <Button onClick={handleClick}>친구 생일잔치 입장하기</Button>;

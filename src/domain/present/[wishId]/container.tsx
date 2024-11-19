@@ -18,14 +18,17 @@ import { useRouters } from '@/hooks/common/useRouters';
 import { PublicWishesDataType } from '@/types/api/response';
 import Payment from './payment';
 import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
-import FixedBottomButton, {
-  FixedBottomButtonWrapper,
-} from '@/components/Common/Button/FixedBottomButton';
+import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import Image from 'next/image';
-import { defaultCakeListData } from '@/constant/model/cakes';
-import { presentList } from '@/constant/model/present';
+import { presentListArray } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
+import {
+  defaultCakeTreeDataArray,
+  defaultCakeTreeDataObject,
+} from '@/constant/model/cakesTreeData';
+import PresentSuccess, { PresentSuccessCakeTree } from './done';
+import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -71,8 +74,6 @@ export default function GivePresentPageContainer({
 
   const { handleRouter } = useRouters();
 
-  console.log(selectedCakeId);
-
   useEffect(() => {
     if (messageOnlyOption) {
       changeGiftMenutId(0);
@@ -113,6 +114,7 @@ export default function GivePresentPageContainer({
           {
             present: (
               <>
+                <MessageFromWisheMaker publicWishesData={publicWishesData} />
                 <PresentGiverInfoInputForm>
                   {wantsGift && (
                     <InputForm title="선물하고 싶은 항목 선택하기">
@@ -163,14 +165,26 @@ export default function GivePresentPageContainer({
             done: (
               <section className="w-full">
                 {
-                  <PresentMessageModal
-                    nickName={publicWishesData.name}
-                    modalState={presenetMessageModalState}
-                    handleModalState={handlePresentMessageModalState}
-                    changeModalState={changePresenetMessgaeModalState}
-                    selectedCakeId={selectedCakeId}
-                  />
+                  // <PresentMessageModal
+                  //   nickName={publicWishesData.name}
+                  //   modalState={presenetMessageModalState}
+                  //   handleModalState={handlePresentMessageModalState}
+                  //   changeModalState={changePresenetMessgaeModalState}
+                  //   selectedCakeId={selectedCakeId}
+                  // />
                 }
+                <PresentSuccess
+                  giverName={methods.getValues('name')}
+                  wishesName={publicWishesData.name}
+                />
+                <PresentSuccessCakeTree
+                  cakeList={[
+                    defaultCakeTreeDataObject[selectedCakeId],
+                    ...defaultCakeTreeDataArray,
+                  ]}
+                />
+
+                <PresentSuccessSubmitButton />
               </section>
             ),
           }[step]
@@ -192,8 +206,6 @@ function CheckSendMoneyModal({
   selectedCakeId: string;
 }) {
   const { handleRouter } = useRouters();
-
-  console.log(selectedCakeId);
 
   function handleNextStep() {
     handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
@@ -253,7 +265,7 @@ function PresentMessageModal({
             {name}
           </span>
           <Image
-            src={defaultCakeListData[selectedCakeId].image}
+            src={defaultCakeTreeDataObject[selectedCakeId].cakeImg}
             alt="보낸 케이크 아바타 이미지"
             width={160}
           />
@@ -268,12 +280,12 @@ function PresentMessageModal({
                 <>
                   <div className="flex gap-4 items-center font-bitbit text-[16px] text-white">
                     <Image
-                      src={presentList[giftMenuId - 1].image}
+                      src={presentListArray[giftMenuId - 1].image}
                       alt="선물한 선물 이미지"
                       height={43}
                     />
-                    {`${presentList[giftMenuId - 1].itemName} ${convertMoneyText(
-                      presentList[giftMenuId - 1].price.toString(),
+                    {`${presentListArray[giftMenuId - 1].itemName} ${convertMoneyText(
+                      presentListArray[giftMenuId - 1].price.toString(),
                     )}원`}
                   </div>
                 </>

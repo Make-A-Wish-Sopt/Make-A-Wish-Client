@@ -1,8 +1,7 @@
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
-import GivePresentPageContainer from '@/domain/present/container';
-import { MessageFromWisheMaker } from '@/domain/present/service';
+import GivePresentPageContainer from '@/domain/present/[wishId]/container';
 import MainLayout from '@/layouts/MainLayout';
 
 export type PresentStepType = 'present' | 'payment' | 'done';
@@ -29,13 +28,7 @@ export default async function GivePresentPage({
           step={searchParams.presentStep}
           publicWishesData={publicWishesData}
           wishId={params.wishId}
-        >
-          {
-            {
-              present: <MessageFromWisheMaker wishId={params.wishId} />,
-            }[searchParams.presentStep]
-          }
-        </GivePresentPageContainer>
+        ></GivePresentPageContainer>
       </MainLayout>
     </>
   );

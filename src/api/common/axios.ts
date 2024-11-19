@@ -65,9 +65,6 @@ client.interceptors.request.use(
 //     //         refreshToken: refreshToken,
 //     //       };
 
-//     //       console.log(accessToken);
-//     //       console.log(loginUserCookiesData);
-
 //     //       await axios.post(
 //     //         'http://localhost:8080/api/set-cookies',
 //     //         JSON.stringify(newCookiesData),

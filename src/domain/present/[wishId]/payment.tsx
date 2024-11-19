@@ -1,8 +1,10 @@
+'use client';
+
 import CheckPresentItem from '@/container/present/checkPresentItem';
 import { PresentDataResolverType } from '@/validation/present.validate';
 import Image from 'next/image';
 import { useFormContext } from 'react-hook-form';
-import { AccountCopyCakeImg } from '../../../public/assets/images';
+import { AccountCopyCakeImg } from '../../../../public/assets/images';
 import SelectPayment from '@/container/present/selectPayment';
 
 export default function Payment({

@@ -9,7 +9,7 @@ import WishesPageContainer, {
 } from '@/domain/wishes/container';
 import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wishes/service';
 import { MessageText } from '@/domain/wishes/component';
-import { defaultCakeListData } from '@/constant/model/cakes';
+import { defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
@@ -19,7 +19,7 @@ export default async function WishesPage() {
     <>
       <Header mypageBtn />
       <MainLayout>
-        <WishesPageContainer>
+        <WishesPageContainer nickName={loginUserData.nickName}>
           {progressWishesData ? (
             <>
               <WishesMessageToCreateUser
@@ -34,7 +34,7 @@ export default async function WishesPage() {
                 D-?
               </span>
               <MessageText>{`${loginUserData.nickName}님, 친구들을 초대해\n케이크 접시를 꾸며봐요!`}</MessageText>
-              <CakesTreeMessage cakeList={defaultCakeListData} />
+              <CakesTreeMessage cakeList={defaultCakeTreeDataArray} />
             </>
           )}
           <WishesPageFixedBottomButton isWishProgress={!!progressWishesData} />

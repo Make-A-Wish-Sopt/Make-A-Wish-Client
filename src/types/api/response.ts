@@ -1,4 +1,4 @@
-import { CakeItemType } from '@/constant/model/cakes';
+import { CakeTreeDataType } from '@/constant/model/cakesTreeData';
 import { AccountInfoType, MainProgressDataType, WishStatusType } from '../wishesType';
 import { LoginUserDataType } from '@/utils/common/cookies';
 import { WishesLinkDataType } from '../input';
@@ -55,11 +55,11 @@ export type CakePresentMessageDataType = {
   name: string;
   message: string;
   cakeId: number;
-  giftMenuId: number;
+  giftMenuId: number | string;
 };
 
 export type CakePresentMessageResponseType = DefaultResponseType<CakePresentMessageDataType>;
-export type GetCakesResultResponseType = DefaultResponseType<Array<CakeItemType>>;
+export type GetCakesResultResponseType = DefaultResponseType<Array<CakeTreeDataType>>;
 
 export type UpdateTokenResponseType = DefaultResponseType<{
   accessToken: string;
