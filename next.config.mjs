@@ -9,22 +9,7 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'img.29cm.co.kr',
-        port: '',
-        pathname: '/**',
-      },
-    ],
-    domains: [
-      'img.29cm.co.kr',
-      'img2.29cm.co.kr',
-      'product.29cm.co.kr',
-      'localhost',
-      'wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
-      'shopping-phinf.pstatic.net',
-    ],
+    domains: ['localhost', 'wish-image-bucket.s3.ap-northeast-2.amazonaws.com', 'sunmulzu.com'],
   },
   eslint: {
     dirs: ['__test__'],
