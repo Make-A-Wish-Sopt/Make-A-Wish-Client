@@ -3,7 +3,6 @@
 import Loading from '@/app/loading';
 import { useRouters } from '@/hooks/common/useRouters';
 import { LoginUserDataType } from '@/utils/common/cookies';
-import axios from 'axios';
 import { PropsWithChildren, useEffect } from 'react';
 
 export default function LoginPageContainer({ children }: PropsWithChildren) {
@@ -18,18 +17,20 @@ export function LoginWithSavedCookiesDatas({
   const { handleRouter } = useRouters();
 
   useEffect(() => {
-    axios
-      .post('http://localhost:8080/api/set-cookies', JSON.stringify(loginUserData), {
+    async function fetchAccessToken() {
+      const response = await fetch('/api/set-cookies', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then(() => {
-        handleRouter('/wishes');
+        body: JSON.stringify(loginUserData),
       });
 
-    localStorage.setItem('accessToken', loginUserData.accessToken);
-    handleRouter('/wishes');
+      localStorage.setItem('accessToken', loginUserData.accessToken);
+      handleRouter('/wishes');
+    }
+
+    fetchAccessToken();
   }, []);
 
   return <Loading />;

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouters } from '@/hooks/common/useRouters';
 import Button from '@/components/Common/Button';
 import { KakaoLoginIc } from '../../../public/assets/icons';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { MainPageCenteredContent } from './component';
 
 export default function MainPageContainer({
@@ -29,12 +29,23 @@ export default function MainPageContainer({
 }
 
 export function KakaoLoginButton() {
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
-
+  const [authUrl, setAuthUrl] = useState<string | null>(null);
   const { handleReplace } = useRouters();
 
+  useEffect(() => {
+    async function fetchAuthUrl() {
+      const response = await fetch('/api/kakao');
+      const data = await response.json();
+      setAuthUrl(data.authUrl);
+    }
+
+    fetchAuthUrl();
+  }, []);
+
   const handleKaKaoLogin = () => {
-    handleReplace(KAKAO_AUTH_URL);
+    if (authUrl) {
+      handleReplace(authUrl);
+    }
   };
 
   return (

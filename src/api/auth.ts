@@ -1,5 +1,4 @@
 import { API_VERSION_01, PATH_AUTH } from './path';
-import { client } from './common/axios';
 import { LoginResponseType, UpdateTokenResponseType } from '@/types/api/response';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import axios from 'axios';
