@@ -1,4 +1,3 @@
-import { getPublicWishes } from '@/api/public';
 import Box from '@/components/Common/Box';
 import Button from '@/components/Common/Button';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
@@ -37,7 +36,7 @@ export function MessageFromWisheMaker({
           {publicWishesData.title}
         </h3>
 
-        <span className="font-bitbit text-main_blue text-[20px]  whitespace-pre-line">
+        <span className="font-bitbit text-main_blue text-[20px]  whitespace-pre-wrap">
           {`D-${publicWishesData.dayCount}`}
         </span>
       </div>
@@ -72,8 +71,10 @@ export function PresentSuccessSubmitButton() {
   }
 
   return (
-    <FixedBottomButtonWrapper>
-      <Button onClick={handleClick}>제 생일에도 써볼래요</Button>
-    </FixedBottomButtonWrapper>
+    <>
+      <FixedBottomButtonWrapper>
+        <Button onClick={handleClick}>제 생일에도 써볼래요</Button>
+      </FixedBottomButtonWrapper>
+    </>
   );
 }

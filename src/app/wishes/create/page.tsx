@@ -1,9 +1,14 @@
 import { getMainProgressWishesData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
+import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
-import { AccountInputWithSavedAccountData, CenteredContent } from '@/domain/wishes/create/service';
+import {
+  AccountInputWithSavedAccountData,
+  CenteredContent,
+  ShareWishesLinkModal,
+} from '@/domain/wishes/create/service';
 import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
 import WishesLinkInputForm from '@/domain/wishes/create/wishesLinkInputForm';
 import MainLayout from '@/layouts/MainLayout';
@@ -51,6 +56,7 @@ export default async function WishesCreatePage({
               done: (
                 <>
                   <CenteredContent />,
+                  <ShareWishesLinkModal />
                 </>
               ),
             }[step]

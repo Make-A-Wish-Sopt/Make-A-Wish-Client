@@ -20,6 +20,7 @@ import WishesInputPreview from './wishesInputPreview';
 import { postWishes } from '@/api/wishes';
 import useToggle from '@/hooks/common/useToggle';
 import WishesLinkInputForm from './wishesLinkInputForm';
+import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
 export default function WishesCreatePageContainer({
   step,
@@ -123,63 +124,15 @@ function SharePageFixedButtons() {
   );
 }
 
-//export function WishesCreatePageContaine({
-//   createStep,
-//   wishTitle,
-//   children,
-// }: {
-//   createStep: WishesCreateStepType;
-//   wishTitle?: string;
-// } & PropsWithChildren) {
-//   const wishesLinkInputMethods = useForm<WishesLinkDataResolverType>({
-//     mode: 'onChange',
-//     defaultValues: {
-//       ...wishesLinkInputInit,
-//     },
-//     resolver: yupResolver(wishesLinkDataResolver),
-//   });
+export function ShareSnsModal({ wishId, nickName }: { wishId: string; nickName: string }) {
+  const { state: modalState, handleState: handleModalState } = useToggle();
 
-//   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
-//     mode: 'onChange',
-//     defaultValues: {
-//       ...wishesAccountInputInit,
-//     },
-//     resolver: yupResolver(wishesAccountDataResolver),
-//   });
-
-//   useEffect(() => {
-//     if (wishTitle) {
-//       wishesLinkInputMethods.setValue('title', wishTitle);
-//     }
-//   }, [wishTitle]);
-
-//   return (
-//     <>
-//       {
-//         {
-//           account: (
-//             <>
-//               <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
-//               {/* <WishesAccountInputForm
-//                 methods={wishesAccountInputMethods}
-//                 wishesPhoneMethods={wishesPhoneMethods}
-//               /> */}
-//             </>
-//           ),
-//           preview: (
-//             <>
-//               <WishesInputPreview methods={wishesLinkInputMethods} />
-//               <WishesPreviewSubmitButton linkDataMethods={wishesLinkInputMethods} />
-//             </>
-//           ),
-//           done: (
-//             <>
-//               {children}
-//               <SharePageFixedButtons />
-//             </>
-//           ),
-//         }[createStep]
-//       }
-//     </>
-//   );
-// }
+  return (
+    <ShareLinkModal
+      wishId={wishId}
+      nickName={nickName}
+      modalState={modalState}
+      handleModalState={handleModalState}
+    />
+  );
+}

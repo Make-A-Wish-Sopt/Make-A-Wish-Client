@@ -4,10 +4,20 @@ import Image from 'next/image';
 import { useRouters } from '@/hooks/common/useRouters';
 import Button from '@/components/Common/Button';
 import { KakaoLoginIc } from '../../../public/assets/icons';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { MainPageCenteredContent } from './component';
 
-export default function MainPageContainer({ children }: PropsWithChildren) {
+export default function MainPageContainer({
+  isLoggedIn = false,
+  children,
+}: { isLoggedIn?: boolean } & PropsWithChildren) {
+  const { handleRouter } = useRouters();
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     handleRouter('/wishes');
+  //   }
+  // }, []);
   return (
     <>
       {children}

@@ -87,7 +87,7 @@ export type CakeTreeDataType = {
 export type DummyCakeTreeDataType = {
   isAdminMessage: boolean;
   message: string;
-  giftMenuId: string;
+  giftMenuId: string | number;
 } & CakeTreeDataType;
 
 const defaultCakeTreeDataMap: Map<CakeIdType, DummyCakeTreeDataType> = new Map();

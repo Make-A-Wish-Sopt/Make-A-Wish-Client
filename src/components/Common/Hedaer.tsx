@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const { backBtn, mypageBtn, pathTo, isLoggedIn } = props;
+  const { backBtn, mypageBtn, pathTo } = props;
   const pathname = usePathname();
   const router = useRouter();
 

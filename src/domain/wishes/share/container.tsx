@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import Button from '@/components/Common/Button';
-import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
+import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import useToggle from '@/hooks/common/useToggle';
 
 export default function WishesSharePageContainer({ children }: {} & PropsWithChildren) {
@@ -13,7 +13,7 @@ export default function WishesSharePageContainer({ children }: {} & PropsWithChi
     <>
       {children}
       <SharePageFixedButtons />
-      {/* <CloseIconInModal isOpen={!state} handleState={handleState}></CloseIconInModal> */}
+      {/* <CloseIconInModalWithVitaminCake isOpen={!state} handleState={handleState}></CloseIconInModalWithVitaminCake> */}
     </>
   );
 }

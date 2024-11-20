@@ -26,14 +26,12 @@ export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataTyp
   const wishId = '254';
 
   const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
-  console.log(selectedPresentId);
 
   const [firstCake, ...restCake] = cakeList;
 
   useEffect(() => {
     if (selectedPresentId > 0) {
       getCakePresentMessage(wishId, selectedPresentId).then((response) => {
-        console.log(response);
         // setCakePresentMessageData(response);
       });
     }

@@ -9,9 +9,9 @@ export default async function Home() {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header />
       <MainLayout>
-        <MainPageContainer />
+        <MainPageContainer isLoggedIn={isLoggedIn} />
       </MainLayout>
     </>
   );

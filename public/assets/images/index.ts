@@ -24,10 +24,10 @@ export { default as MainEndCakeImg } from '../images/mainEndCakeImg.png';
 export { default as LinkBeefCakeImg } from '../images/linkBeefCakeImg.png';
 
 // SNS share
-export { default as KaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';
-export { default as InstaLogoImg } from '../images/sns/instaLogoImg.svg';
-export { default as FacebookLogoImg } from '../images/sns/facebookLogoImg.svg';
-export { default as TwitterLogoImg } from '../images/sns/twitterLogoImg.svg';
+export { default as ShareKaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';
+export { default as ShareInstaLogoImg } from '../images/sns/instaLogoImg.svg';
+export { default as ShareFacebookLogoImg } from '../images/sns/facebookLogoImg.svg';
+export { default as ShareTwitterLogoImg } from '../images/sns/twitterLogoImg.svg';
 
 //케이크 트리 관련 이미지
 export { default as CakeDishTopRibbonImg } from '../images/cakeDishTopRibbonImg.png';

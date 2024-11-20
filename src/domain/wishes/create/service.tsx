@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { SharePageCakeImg } from '../../../../public/assets/images';
 import { getUserAccount } from '@/api/user';
 import WishesAccountInputForm from './wishesAccountInputForm';
+import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
+import { ShareSnsModal } from './container';
 
 export async function CenteredContent() {
   const progressWishesData = await getMainProgressWishesData();
@@ -32,6 +34,13 @@ export async function CenteredContent() {
       <Image src={SharePageCakeImg} alt="링크생성 완료 케이크 이미지" width={221} />
     </div>
   );
+}
+
+export async function ShareWishesLinkModal() {
+  const progressWishesData = await getMainProgressWishesData();
+  const { nickName } = await getLoginUserCookiesData();
+
+  return <ShareSnsModal wishId={progressWishesData.wishId} nickName={nickName} />;
 }
 
 export async function AccountInputWithSavedAccountData() {

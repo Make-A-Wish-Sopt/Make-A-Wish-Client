@@ -15,20 +15,18 @@ import CheckBox from '@/components/UI/CheckBox';
 import Button from '@/components/Common/Button';
 import { postPublicCakes } from '@/api/public';
 import { useRouters } from '@/hooks/common/useRouters';
-import { PublicWishesDataType } from '@/types/api/response';
+import { CakePresentMessageDataType, PublicWishesDataType } from '@/types/api/response';
 import Payment from './payment';
-import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
+import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
-import Image from 'next/image';
-import { presentListArray } from '@/constant/model/present';
-import { convertMoneyText } from '@/utils/common/convert';
 import {
   defaultCakeTreeDataArray,
   defaultCakeTreeDataObject,
 } from '@/constant/model/cakesTreeData';
 import PresentSuccess, { PresentSuccessCakeTree } from './done';
 import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
+import { CakeMessageModalUI } from '@/domain/wishes/component';
+import GradientShadow from '@/components/UI/GradientShadow';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -54,11 +52,6 @@ export default function GivePresentPageContainer({
   const { wantsGift } = publicWishesData;
   const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
   const {
-    state: checkSendMoneyModalState,
-    changeState: changeSendMoneyModalState,
-    handleState: handleCheckSendMoneyModalState,
-  } = useToggle();
-  const {
     state: presenetMessageModalState,
     handleState: handlePresentMessageModalState,
     changeState: changePresenetMessgaeModalState,
@@ -76,11 +69,11 @@ export default function GivePresentPageContainer({
 
   useEffect(() => {
     if (messageOnlyOption) {
-      changeGiftMenutId(0);
+      changeGiftMenuId(0);
     }
   }, [messageOnlyOption]);
 
-  function changeGiftMenutId(id: number) {
+  function changeGiftMenuId(id: number) {
     methods.setValue('giftMenuId', id);
   }
 
@@ -91,6 +84,16 @@ export default function GivePresentPageContainer({
       GivePresent();
       handleRouter(`/present/${wishId}/?presentStep=done`);
     }
+  }
+
+  function isValid() {
+    if (!methods.formState.isValid) return false;
+
+    const giftMenuId = methods.watch('giftMenuId');
+
+    if (!messageOnlyOption && !giftMenuId) return false;
+
+    return true;
   }
 
   function GivePresent() {
@@ -118,7 +121,7 @@ export default function GivePresentPageContainer({
                 <PresentGiverInfoInputForm>
                   {wantsGift && (
                     <InputForm title="선물하고 싶은 항목 선택하기">
-                      {!messageOnlyOption && <PresentList changeGiftMenutId={changeGiftMenutId} />}
+                      {!messageOnlyOption && <PresentList changeGiftMenuId={changeGiftMenuId} />}
                       <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
                         <CheckBox<PresentDataResolverType>
                           checkBoxText="편지만 보낼게요"
@@ -131,7 +134,7 @@ export default function GivePresentPageContainer({
                 <Button
                   onClick={handleGivePresent}
                   styles={{ marginBottom: '5.8rem' }}
-                  disabled={!methods.formState.isValid}
+                  disabled={!isValid()}
                 >
                   {'친구 생일 축하해주기'}
                 </Button>
@@ -139,39 +142,29 @@ export default function GivePresentPageContainer({
             ),
             payment: (
               <>
-                <Payment
-                  account={`${publicWishesData.accountNumber} ${publicWishesData.bank}`}
-                  handleCheckSendMoneyModalState={handleCheckSendMoneyModalState}
-                />
+                <Payment account={`${publicWishesData.accountNumber} ${publicWishesData.bank}`} />
                 <Button
                   onClick={() => {
-                    changeSendMoneyModalState(true);
+                    handleRouter(
+                      `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`,
+                    );
                   }}
                   styles={{ marginBottom: '5.8rem' }}
                 >
-                  {'선물하러 가기'}
+                  {'송금하고, 편지 확인하기'}
                 </Button>
-
-                {checkSendMoneyModalState && (
-                  <CheckSendMoneyModal
-                    modalState={checkSendMoneyModalState}
-                    handleModalState={handleCheckSendMoneyModalState}
-                    selectedCakeId={selectedCakeId}
-                    wishId={wishId}
-                  />
-                )}
               </>
             ),
             done: (
-              <section className="w-full">
+              <section className="relative w-full">
                 {
-                  // <PresentMessageModal
-                  //   nickName={publicWishesData.name}
-                  //   modalState={presenetMessageModalState}
-                  //   handleModalState={handlePresentMessageModalState}
-                  //   changeModalState={changePresenetMessgaeModalState}
-                  //   selectedCakeId={selectedCakeId}
-                  // />
+                  <PresentMessageModal
+                    nickName={publicWishesData.name}
+                    modalState={presenetMessageModalState}
+                    handleModalState={handlePresentMessageModalState}
+                    changeModalState={changePresenetMessgaeModalState}
+                    selectedCakeId={selectedCakeId}
+                  />
                 }
                 <PresentSuccess
                   giverName={methods.getValues('name')}
@@ -184,6 +177,7 @@ export default function GivePresentPageContainer({
                   ]}
                 />
 
+                <GradientShadow height={19} />
                 <PresentSuccessSubmitButton />
               </section>
             ),
@@ -213,7 +207,7 @@ function CheckSendMoneyModal({
   }
 
   return (
-    <CloseIconInModal
+    <CloseIconInModalWithVitaminCake
       modalTitle="친구 계좌로 돈을 송금하셨나요?"
       modalColor="main_blue"
       isOpen={modalState}
@@ -232,7 +226,7 @@ function CheckSendMoneyModal({
           {'송금했어요'}
         </Button>
       </div>
-    </CloseIconInModal>
+    </CloseIconInModalWithVitaminCake>
   );
 }
 
@@ -256,47 +250,24 @@ function PresentMessageModal({
   const { watch } = useFormContext<PresentDataResolverType>();
   const { name, message, giftMenuId } = watch();
 
-  return (
-    <CloseTopModal bgColor="background" isOpen={modalState} handleState={handleModalState}>
-      <div className="flex flex-col items-center w-full h-full">
-        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`${name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
-        <div className="flex flex-col items-center w-full h-full p-20 bg-dark_green rounded-2xl text-white">
-          <span className="font-galmuri  text-[16px] px-14 py-8 bg-black bg-opacity-50 rounded-4xl">
-            {name}
-          </span>
-          <Image
-            src={defaultCakeTreeDataObject[selectedCakeId].cakeImg}
-            alt="보낸 케이크 아바타 이미지"
-            width={160}
-          />
-          <span className="font-galmuri text-[14px] mb-13">{message}</span>
+  const messageData: CakePresentMessageDataType & { isAdminMessage: boolean } = {
+    name: name,
+    message: message,
+    giftMenuId: giftMenuId,
+    cakeId: Number(selectedCakeId),
+    isAdminMessage: false,
+  };
 
-          <div className="flex justify-between items-center w-full h-54 p-12 rounded-xl border border-main_blue font-bitbit text-[16px] text-white">
-            <span className="font-galmuri">선물한 항목</span>
-            <span>
-              {giftMenuId === 0 ? (
-                '정성담은 편지'
-              ) : (
-                <>
-                  <div className="flex gap-4 items-center font-bitbit text-[16px] text-white">
-                    <Image
-                      src={presentListArray[giftMenuId - 1].image}
-                      alt="선물한 선물 이미지"
-                      height={43}
-                    />
-                    {`${presentListArray[giftMenuId - 1].itemName} ${convertMoneyText(
-                      presentListArray[giftMenuId - 1].price.toString(),
-                    )}원`}
-                  </div>
-                </>
-              )}
-            </span>
-          </div>
-        </div>
-      </div>
+  return (
+    <CakeMessageModalUI
+      modalState={modalState}
+      handleModalState={handleModalState}
+      messageData={messageData}
+      nickName={nickName}
+    >
       <FixedBottomButtonWrapper>
         <Button>이미지 저장하기</Button>
       </FixedBottomButtonWrapper>
-    </CloseTopModal>
+    </CakeMessageModalUI>
   );
 }

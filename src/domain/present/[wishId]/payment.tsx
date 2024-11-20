@@ -7,13 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { AccountCopyCakeImg } from '../../../../public/assets/images';
 import SelectPayment from '@/container/present/selectPayment';
 
-export default function Payment({
-  account,
-  handleCheckSendMoneyModalState,
-}: {
-  account: string;
-  handleCheckSendMoneyModalState: () => void;
-}) {
+export default function Payment({ account }: { account: string }) {
   const { watch } = useFormContext<PresentDataResolverType>();
 
   async function handleAccountCopy() {
@@ -34,7 +28,7 @@ export default function Payment({
           onClick={handleAccountCopy}
         />
 
-        <SelectPayment handleCheckSendMoneyModalState={handleCheckSendMoneyModalState} />
+        <SelectPayment />
       </section>
     </>
   );

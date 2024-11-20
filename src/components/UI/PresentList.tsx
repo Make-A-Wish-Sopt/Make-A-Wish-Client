@@ -6,10 +6,10 @@ import { convertMoneyText } from '@/utils/common/convert';
 import Image from 'next/image';
 
 export default function PresentList({
-  changeGiftMenutId,
+  changeGiftMenuId,
   readonly,
 }: {
-  changeGiftMenutId?: (id: number) => void;
+  changeGiftMenuId?: (id: number) => void;
   readonly?: boolean;
 }) {
   const { isSelected, handleSelectOne } = useSelectItem();
@@ -18,7 +18,7 @@ export default function PresentList({
     if (readonly) return;
 
     handleSelectOne(id);
-    changeGiftMenutId(id);
+    changeGiftMenuId(id);
   }
 
   return (

@@ -5,11 +5,14 @@ import { getMainProgressWishesData } from '@/api/wishes';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer, {
   CakesTreeMessage,
+  WishesLinkSnsShareModal,
   WishesPageFixedBottomButton,
 } from '@/domain/wishes/container';
 import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wishes/service';
 import { MessageText } from '@/domain/wishes/component';
 import { defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
+import GradientShadow from '@/components/UI/GradientShadow';
+import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
@@ -27,6 +30,10 @@ export default async function WishesPage() {
                 nickName={loginUserData.nickName}
               />
               <ReceivedCakePresentList wishId={progressWishesData.wishId} />
+              <WishesLinkSnsShareModal
+                wishId={progressWishesData.wishId}
+                nickName={loginUserData.nickName}
+              />
             </>
           ) : (
             <>
@@ -39,6 +46,7 @@ export default async function WishesPage() {
           )}
           <WishesPageFixedBottomButton isWishProgress={!!progressWishesData} />
         </WishesPageContainer>
+        <GradientShadow height={19} />
       </MainLayout>
     </>
   );

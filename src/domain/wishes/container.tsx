@@ -1,7 +1,7 @@
 'use client';
 
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { CakeTree, WishesCreateTitleInputModalContainer } from './component';
+import { CakeMessageModalUI, CakeTree, WishesCreateTitleInputModalContainer } from './component';
 import {
   CakeTreeDataType,
   defaultCakeTreeDataObject,
@@ -16,16 +16,15 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { CakePresentMessageDataType } from '@/types/api/response';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import GradientShadow from '@/components/UI/GradientShadow';
-import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
-import Image from 'next/image';
 import { getCakePresentMessage } from '@/api/cakes';
-import { presentListObject } from '@/constant/model/present';
+import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
 type WishesPageGlobalStateType = {
   wishTitle: string;
   wishesTitleInputModalState: boolean;
   cakeMessageModalState: boolean;
   cakePresentMessageData: CakePresentMessageDataType & { isAdminMessage: boolean };
+  shareLinkModalState: boolean;
 };
 
 export default function WishesPageContainer({
@@ -38,6 +37,7 @@ export default function WishesPageContainer({
       wishTitle: '',
       wishesTitleInputModalState: false,
       cakeMessageModalState: false,
+      shareLinkModalState: false,
     },
   });
 
@@ -50,8 +50,6 @@ export default function WishesPageContainer({
         <WishesCreateTitleInputModal />
         {cakePresentMessageData && <CakeMessageModal nickName={nickName} />}
       </FormProvider>
-
-      <GradientShadow height={170} />
     </section>
   );
 }
@@ -61,9 +59,15 @@ export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress
 
   const { setValue, watch } = useFormContext<WishesPageGlobalStateType>();
 
+  function handleShareLinkModalState() {
+    const modalState = watch('shareLinkModalState');
+
+    setValue('shareLinkModalState', !modalState);
+  }
+
   function handleButtonClick() {
     if (isWishProgress) {
-      handleRouter('/wishes');
+      handleShareLinkModalState();
     } else {
       handleChangeWishTitleModalState();
     }
@@ -108,6 +112,7 @@ export function CakesTreeMessage({
     if (dummyCakeId >= 0) {
       setValue('cakePresentMessageData', {
         ...defaultCakeTreeDataObject[dummyCakeId],
+        name: '선물주운영자',
         cakeId: dummyCakeId,
       });
     }
@@ -148,59 +153,23 @@ function CakeMessageModal({ nickName }: { nickName: string }) {
   const { setValue, getValues, watch } = useFormContext<WishesPageGlobalStateType>();
 
   const modalState = getValues('cakeMessageModalState');
-  const { cakeId, message, name, isAdminMessage, giftMenuId } = watch('cakePresentMessageData');
-
-  console.log(watch('cakePresentMessageData'));
+  const messageData = watch('cakePresentMessageData');
 
   function handleModalState() {
     setValue('cakeMessageModalState', !modalState);
   }
 
   return (
-    <CloseTopModal isOpen={modalState} handleState={handleModalState} bgColor={'background'}>
-      <div className={`flex flex-col items-center w-full h-full font-galmuri`}>
-        <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">{`${name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}</span>
-        <div
-          className={`flex flex-col items-center w-full h-full p-20  rounded-2xl  ${
-            isAdminMessage ? 'bg-main_blue text-dark_blue ' : 'bg-dark_green text-white'
-          }`}
-        >
-          <span
-            className={`text-[16px] px-14 py-8 ${
-              isAdminMessage ? 'bg-white' : 'bg-black '
-            } bg-opacity-50 rounded-4xl`}
-          >
-            {name}
-          </span>
-          <Image
-            src={defaultCakeTreeDataObject[cakeId].cakeImg}
-            alt="보낸 케이크 아바타 이미지"
-            width={160}
-          />
-          <span className="h-110 text-[14px] mb-13 text-center whitespace-pre-wrap ">
-            {message}
-          </span>
-
-          <div
-            className={`flex justify-between items-center w-full h-54 p-12 rounded-xl border  font-bitbit text-[16px] ${
-              isAdminMessage ? 'border-dark_blue' : 'border-main_blue'
-            }`}
-          >
-            <span className="font-galmuri">선물한 항목</span>
-            <span>
-              {isAdminMessage
-                ? giftMenuId
-                : giftMenuId
-                ? presentListObject[giftMenuId].itemName
-                : '정성 담은 편지'}
-            </span>
-          </div>
-        </div>
-      </div>
+    <CakeMessageModalUI
+      modalState={modalState}
+      handleModalState={handleModalState}
+      messageData={messageData}
+      nickName={nickName}
+    >
       <FixedBottomButtonWrapper>
         <Button>이미지 저장하기</Button>
       </FixedBottomButtonWrapper>
-    </CloseTopModal>
+    </CakeMessageModalUI>
   );
 }
 
@@ -239,5 +208,28 @@ function WishesCreateTitleInputModal() {
         입장하기
       </Button>
     </WishesCreateTitleInputModalContainer>
+  );
+}
+
+export function WishesLinkSnsShareModal({
+  wishId,
+  nickName,
+}: {
+  wishId: string;
+  nickName: string;
+}) {
+  const { setValue, watch } = useFormContext<WishesPageGlobalStateType>();
+  const modalState = watch('shareLinkModalState');
+
+  function handleShareLinkModalState() {
+    setValue('shareLinkModalState', !modalState);
+  }
+  return (
+    <ShareLinkModal
+      modalState={modalState}
+      handleModalState={handleShareLinkModalState}
+      wishId={wishId}
+      nickName={nickName}
+    />
   );
 }
