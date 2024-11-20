@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import { MypageDefaultCakeImg } from '../../../public/assets/images';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
-export async function MypageUserName() {
-  const { nickName } = await getLoginUserCookiesData();
-
+export function MypageUserName({ nickName }: { nickName: string }) {
   return (
     <div className="flex gap-10 items-center mt-11 mb-20">
       <Image

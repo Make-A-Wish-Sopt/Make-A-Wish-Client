@@ -1,11 +1,11 @@
 'use client';
 
-import CheckPresentItem from '@/container/present/checkPresentItem';
 import { PresentDataResolverType } from '@/validation/present.validate';
 import Image from 'next/image';
 import { useFormContext } from 'react-hook-form';
 import { AccountCopyCakeImg } from '../../../../public/assets/images';
-import SelectPayment from '@/container/present/selectPayment';
+import SelectPayment from './selectPayment';
+import { CheckPresentItem } from './component';
 
 export default function Payment({ account }: { account: string }) {
   const { watch } = useFormContext<PresentDataResolverType>();

@@ -2,18 +2,30 @@
 
 import { patchProgressWishes } from '@/api/wishes';
 import MoreBox from '@/components/UI/MoreBox';
-import { useRouter } from 'next/navigation';
+import { useRouters } from '@/hooks/common/useRouters';
+import { MypageUserName } from './component';
 
-export function MypageMenuButtons() {
+export default function MypageContainer({ nickName }: { nickName: string }) {
+  return (
+    <>
+      <MypageUserName nickName={nickName} />
+      <MypageMenuButtons />
+      <MypageAuthButtons />
+    </>
+  );
+}
+
+function MypageMenuButtons() {
   const test = () => {};
-  const router = useRouter();
+
+  const { handleRouter } = useRouters();
 
   return (
     <ul className="flex flex-col gap-12">
       <MoreBox
         text="진행 중인 생일잔치 정보 수정하기"
         handleClick={() => {
-          router.push('/mypage/wishes/edit');
+          handleRouter('/mypage/wishes/edit');
         }}
       ></MoreBox>
       <MoreBox
@@ -29,7 +41,7 @@ export function MypageMenuButtons() {
   );
 }
 
-export function MypageAuthButtons() {
+function MypageAuthButtons() {
   return (
     <ul className="flex flex-col gap-4 mt-30">
       <li className="font-bitbit text-[18px] text-main_blue underline cursor-pointer">로그아웃</li>

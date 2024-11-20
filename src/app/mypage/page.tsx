@@ -1,13 +1,17 @@
 import Header from '@/components/Common/Hedaer';
+import MypageContainer from '@/domain/mypage/container';
 import MainLayout from '@/layouts/MainLayout';
-import MypageContainer from '@/container/mypaeg/container';
 
-export default function Mypage() {
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
+
+export default async function Mypage() {
+  const { nickName } = await getLoginUserCookiesData();
+
   return (
     <>
       <Header backBtn />
       <MainLayout>
-        <MypageContainer />
+        <MypageContainer nickName={nickName} />
       </MainLayout>
     </>
   );

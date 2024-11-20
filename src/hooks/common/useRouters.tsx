@@ -7,6 +7,7 @@ export type RouterPathsType =
   | '/wishes'
   | `/wishes/${string}`
   | '/mypage'
+  | `/mypage/${string}`
   | '/present'
   | `/present/${string}`;
 

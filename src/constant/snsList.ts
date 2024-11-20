@@ -1,26 +1,26 @@
 import { SNSListType } from '@/types/snsListType';
 import {
-  FacebookLogoImg,
-  InstaLogoImg,
-  KaKaoLogoImg,
-  TwitterLogoImg,
+  ShareFacebookLogoImg,
+  ShareInstaLogoImg,
+  ShareKaKaoLogoImg,
+  ShareTwitterLogoImg,
 } from '../../public/assets/images';
 
 export const SNS_LIST: SNSListType[] = [
   {
     name: 'KakaoTalk',
-    logo: KaKaoLogoImg,
+    logo: ShareKaKaoLogoImg,
   },
   {
     name: 'Instagram',
-    logo: InstaLogoImg,
+    logo: ShareInstaLogoImg,
   },
   {
     name: 'FaceBook',
-    logo: FacebookLogoImg,
+    logo: ShareFacebookLogoImg,
   },
   {
     name: 'Twitter',
-    logo: TwitterLogoImg,
+    logo: ShareTwitterLogoImg,
   },
 ];

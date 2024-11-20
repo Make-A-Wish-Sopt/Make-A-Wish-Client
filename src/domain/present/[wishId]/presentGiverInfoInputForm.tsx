@@ -4,7 +4,7 @@ import InputTextForm from '@/components/UI/InputTextForm';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import { PresentDataResolverType } from '@/validation/present.validate';
 import { PropsWithChildren } from 'react';
-import { useFormContext, UseFormReturn } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 export default function PresentGiverInfoInputForm({ children }: PropsWithChildren) {
   const { register, control } = useFormContext<PresentDataResolverType>();

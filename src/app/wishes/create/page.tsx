@@ -50,7 +50,6 @@ export default async function WishesCreatePage({
                 <>
                   <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
                   <AccountInputWithSavedAccountData />
-                  {/* <WishesAccountInputForm/> */}
                 </>
               ),
               done: (
