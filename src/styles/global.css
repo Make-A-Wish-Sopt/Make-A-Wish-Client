@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'DNFBitBitTTF';
+  src: url('/fonts/DNFBitBitTTF.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Galmuri11';
+  src: url('/fonts/Galmuri11.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer utilities {
+  .custom-grid li:nth-child(3n + 2) {
+    position: relative;
+    transform: translateY(-13px);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+}
+
+html {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  scroll-behavior: smooth;
+
+  font-size: 62.5%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  overflow: scroll;
+}
+
+ul,
+li {
+  padding-left: 0rem;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+textarea,
+input,
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  &:focus {
+    outline: none;
+  }
+}
