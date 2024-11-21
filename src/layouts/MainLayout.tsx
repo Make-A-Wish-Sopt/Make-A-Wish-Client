@@ -4,7 +4,6 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';
-import LoginCheckLayout from './LoginCheckLayout';
 
 export default async function MainLayout({
   checkLoggedIn,

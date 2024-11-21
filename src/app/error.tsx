@@ -4,14 +4,12 @@ import Button from '@/components/Common/Button';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import { RoutePathType, useRouters } from '@/hooks/common/useRouters';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { MainCakeImg } from '../../public/assets/images';
-import Header from '@/components/Common/Hedaer';
 
 export default function ErrorPage({
   alertMessage,
   routePath = '/',
-  btnMessage = '뒤로 이동하기',
+  btnMessage = '홈으로 이동하기',
 }: {
   alertMessage?: string;
   routePath?: RoutePathType;

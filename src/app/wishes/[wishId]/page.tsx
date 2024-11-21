@@ -9,7 +9,7 @@ export default async function WishesIdPage({ params }: { params: { wishId: strin
   const publicProgressWishes = await getPublicWishes(wishId);
 
   if (!publicProgressWishes) {
-    return <ErrorPage alertMessage="소원링크가 잘못되었습니다!" />;
+    return <ErrorPage alertMessage="해당 소원은 존재하지 않아요!" />;
   }
 
   return (

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { SharePageCakeImg } from '../../../../public/assets/images';
 import { getUserAccount } from '@/api/user';
 import WishesAccountInputForm from './wishesAccountInputForm';
-import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import { ShareSnsModal } from './container';
 
 export async function CenteredContent() {

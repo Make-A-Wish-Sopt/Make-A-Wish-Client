@@ -16,7 +16,11 @@ export default async function GivePresentPage({
   const publicWishesData = await getPublicWishes(params.wishId);
 
   if (!publicWishesData) {
-    return <ErrorPage alertMessage="진행중인 소원링크가 존재 하지 않습니다!" />;
+    return (
+      <ErrorPage
+        alertMessage="진행중인 소원링크가 존재 하지 않아요!"
+      />
+    );
   }
 
   return (
