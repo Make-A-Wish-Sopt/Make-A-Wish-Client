@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-export type RouterPathsType =
+export type RoutePathType =
   | '/'
   | '/wishes'
   | `/wishes/${string}`
@@ -18,7 +18,7 @@ export function useRouters() {
     router.back();
   }
 
-  function handleRouter(path: RouterPathsType) {
+  function handleRouter(path: RoutePathType) {
     router.push(path);
   }
 

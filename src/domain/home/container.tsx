@@ -7,22 +7,11 @@ import { KakaoLoginIc } from '../../../public/assets/icons';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { MainPageCenteredContent } from './component';
 
-export default function MainPageContainer({
-  isLoggedIn = false,
-  children,
-}: { isLoggedIn?: boolean } & PropsWithChildren) {
-  const { handleRouter } = useRouters();
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     handleRouter('/wishes');
-  //   }
-  // }, []);
+export default function MainPageContainer({ children }: PropsWithChildren) {
   return (
     <>
       {children}
       <MainPageCenteredContent />
-
       <KakaoLoginButton />
     </>
   );

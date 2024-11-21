@@ -36,7 +36,7 @@ export default async function WishesCreatePage({
 
   return (
     <>
-      <Header backBtn pathTo="/wishes" />
+      <Header backBtn routePath="/wishes" />
       <MainLayout>
         <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
           {

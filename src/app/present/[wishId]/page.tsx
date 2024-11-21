@@ -21,7 +21,7 @@ export default async function GivePresentPage({
 
   return (
     <>
-      <Header backBtn pathTo={`/wishes/${params.wishId}`} />
+      <Header backBtn routePath={`/wishes/${params.wishId}`} />
       <MainLayout>
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}

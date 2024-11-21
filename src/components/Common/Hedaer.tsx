@@ -3,23 +3,23 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { BackBtnIc, MenuIc } from '../../../public/assets/icons';
-import { RouterPathsType } from '@/hooks/common/useRouters';
+import { RoutePathType } from '@/hooks/common/useRouters';
 
 interface HeaderProps {
   backBtn?: boolean;
-  pathTo?: RouterPathsType;
+  routePath?: RoutePathType;
   mypageBtn?: boolean;
   isLoggedIn?: boolean;
 }
 
 export default function Header(props: HeaderProps) {
-  const { backBtn, mypageBtn, pathTo } = props;
+  const { backBtn, mypageBtn, routePath } = props;
   const pathname = usePathname();
   const router = useRouter();
 
   function handleRouteBack() {
-    if (pathTo) {
-      router.push(pathTo);
+    if (routePath) {
+      router.push(routePath);
     } else {
       router.back();
     }
