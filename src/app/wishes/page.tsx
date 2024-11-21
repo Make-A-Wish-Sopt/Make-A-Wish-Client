@@ -12,10 +12,16 @@ import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wis
 import { MessageText } from '@/domain/wishes/component';
 import { defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
 import GradientShadow from '@/components/UI/GradientShadow';
+import ErrorPage from '../error';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
   const loginUserData = await getLoginUserCookiesData();
+
+  if (!loginUserData)
+    return (
+      <ErrorPage alertMessage="로그인이 필요해요!" routePath="/" btnMessage="로그인 하러가기" />
+    );
 
   return (
     <>

@@ -1,20 +1,35 @@
 import ErrorPage from '@/app/error';
+import { RoutePathType } from '@/hooks/common/useRouters';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';
+import LoginCheckLayout from './LoginCheckLayout';
 
 export default async function MainLayout({
   checkLoggedIn,
   children,
 }: { checkLoggedIn?: boolean } & PropsWithChildren) {
-  const loginUserCookiesData = await getLoginUserCookiesData();
+  const loginUserData = await getLoginUserCookiesData();
 
-  if (checkLoggedIn && !loginUserCookiesData) {
+  if (checkLoggedIn && !loginUserData) {
     return <ErrorPage alertMessage="로그인이 필요합니다!" />;
+  }
+
+  const headersList = headers();
+  const headerPathname = headersList.get('x-pathname') as RoutePathType;
+
+  if (headerPathname === '/' && loginUserData) {
+    redirect('/wishes');
   }
 
   return (
     <main className="relative flex justify-center">
-      <div className="w-full h-svh px-22 min-w-375 max-w-500">{children}</div>
+      {checkLoggedIn && !loginUserData ? (
+        <ErrorPage />
+      ) : (
+        <div className="w-full h-svh px-22 min-w-375 max-w-500">{children}</div>
+      )}
     </main>
   );
 }
