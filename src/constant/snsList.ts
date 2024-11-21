@@ -1,10 +1,15 @@
-import { SNSListType } from '@/types/snsListType';
 import {
   ShareFacebookLogoImg,
   ShareInstaLogoImg,
   ShareKaKaoLogoImg,
   ShareTwitterLogoImg,
 } from '../../public/assets/images';
+import { StaticImageData } from 'next/image';
+
+interface SNSListType {
+  name: string;
+  logo: StaticImageData;
+}
 
 export const SNS_LIST: SNSListType[] = [
   {

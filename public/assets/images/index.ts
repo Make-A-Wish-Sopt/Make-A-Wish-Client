@@ -1,7 +1,4 @@
-export { default as MainLoginImg } from '../images/mainLoginImg.png';
 export { default as MainCakeImg } from '../images/mainCakeImg.png';
-export { default as LogoImg } from '../images/logoImg.svg';
-export { default as MainPageCakeImg } from '../images/mainPageCakeImg.png';
 export { default as MainCakeListImg } from '../images/mainCakeListImg.png';
 
 export { default as AccountCopyCakeImg } from '../images/AccountCopyCakeImg.png';
@@ -15,13 +12,9 @@ export { default as PresentItem5Img } from './presentItem/presentItem5Img.png';
 export { default as PresentItem6Img } from './presentItem/presentItem6Img.png';
 
 export { default as MypageDefaultCakeImg } from '../images/mypageDefaultCakeImg.png';
-export { default as GuideBoxImg } from '../images/guideBoxImg.svg';
-export { default as GuideContentImg } from '../images/guideContentImg.svg';
-export { default as BorderImg } from '../images/borderImg.svg';
 
 // cake
 export { default as MainEndCakeImg } from '../images/mainEndCakeImg.png';
-export { default as LinkBeefCakeImg } from '../images/linkBeefCakeImg.png';
 
 // SNS share
 export { default as ShareKaKaoLogoImg } from '../images/sns/kakaoLogoImg.svg';

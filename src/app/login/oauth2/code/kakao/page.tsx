@@ -3,6 +3,7 @@ import { LoginService } from '@/domain/login/service';
 
 export default async function KakaoLoginPage({ searchParams }: { searchParams: { code: string } }) {
   const { code } = searchParams;
+
   return (
     <>
       <LoginPageContainer>

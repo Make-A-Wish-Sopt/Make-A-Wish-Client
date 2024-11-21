@@ -1,6 +1,5 @@
 'use client';
 
-import { postWishes } from '@/api/wishes';
 import Button from '@/components/Common/Button';
 import Calendar from '@/components/Common/Calendar/Calendar';
 import DropDwonBox from '@/components/UI/DropDwonBox';
@@ -11,7 +10,7 @@ import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import { useRouters } from '@/hooks/common/useRouters';
 import useToggle from '@/hooks/common/useToggle';
-import { useUploadItemInfo } from '@/hooks/wishes/useUploadItemInfo';
+import { useUploadItemInfo } from '@/hooks/common/useUploadItemInfo';
 import { getDate } from '@/utils/common/getDate';
 import { wishesLinkDataResolver, WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { useEffect } from 'react';

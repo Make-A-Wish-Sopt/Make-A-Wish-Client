@@ -1,7 +1,6 @@
 import MainLayout from '@/layouts/MainLayout';
 import Header from '@/components/Common/Hedaer';
 import { getMainProgressWishesData } from '@/api/wishes';
-
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer, {
   CakesTreeMessage,
