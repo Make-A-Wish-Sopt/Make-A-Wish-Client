@@ -10,7 +10,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontColor?: keyof ColorsTypes;
   font?: keyof FontsTypes;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  styles?: CSSProperties;
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
@@ -19,7 +18,6 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     bgColor = 'main_blue',
     fontColor,
     font = 'bitbit',
-    styles,
     onClick,
     icon,
     children,
@@ -30,7 +28,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     color: disabled ? colors.white : fontColor ? colors[fontColor] : colors.black,
   };
 
-  const combinedStyle: CSSProperties = { ...defaultStyle, ...styles };
+  const combinedStyle: CSSProperties = { ...defaultStyle, ...props.style };
 
   return (
     <button

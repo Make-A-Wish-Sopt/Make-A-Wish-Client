@@ -53,7 +53,7 @@ export function KakaoLoginButton() {
       bgColor="yellow"
       fontColor="black"
       onClick={handleKaKaoLogin}
-      styles={{ marginTop: '3.3rem' }}
+      style={{ marginTop: '3.3rem' }}
       icon={<Image src={KakaoLoginIc} alt="카카오 로고 아이콘" />}
     >
       카카오톡 로그인으로 시작하기

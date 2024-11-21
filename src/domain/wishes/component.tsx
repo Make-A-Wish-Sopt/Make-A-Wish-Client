@@ -9,7 +9,6 @@ import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import { presentListObject } from '@/constant/model/present';
 import { CakePresentMessageDataType } from '@/types/api/response';
 import { convertMoneyText } from '@/utils/common/convert';
-import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
 export function CakeMessageModalUI({
   modalState,

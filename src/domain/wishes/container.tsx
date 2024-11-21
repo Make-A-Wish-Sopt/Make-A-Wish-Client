@@ -15,7 +15,6 @@ import { convertEncode } from '@/utils/common/convert';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { CakePresentMessageDataType } from '@/types/api/response';
 import useSelectItem from '@/hooks/common/useSelectItem';
-import GradientShadow from '@/components/UI/GradientShadow';
 import { getCakePresentMessage } from '@/api/cakes';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
@@ -55,8 +54,6 @@ export default function WishesPageContainer({
 }
 
 export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress: boolean }) {
-  const { handleRouter } = useRouters();
-
   const { setValue, watch } = useFormContext<WishesPageGlobalStateType>();
 
   function handleShareLinkModalState() {
@@ -166,9 +163,7 @@ function CakeMessageModal({ nickName }: { nickName: string }) {
       messageData={messageData}
       nickName={nickName}
     >
-      <FixedBottomButtonWrapper>
-        <Button>이미지 저장하기</Button>
-      </FixedBottomButtonWrapper>
+      <Button>이미지 저장하기</Button>
     </CakeMessageModalUI>
   );
 }
@@ -202,7 +197,7 @@ function WishesCreateTitleInputModal() {
       <Button
         bgColor="dark_green"
         fontColor="white"
-        styles={{ width: '13.8rem' }}
+        style={{ width: '13.8rem' }}
         onClick={handleClick}
       >
         입장하기

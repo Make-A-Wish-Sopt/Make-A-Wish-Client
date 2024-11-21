@@ -109,7 +109,7 @@ function AccountInput({
             fontColor="white"
             font="galmuri"
             onClick={handleAccountCheck}
-            styles={{ fontSize: '14px' }}
+            style={{ fontSize: '14px' }}
             disabled={!(isValid && isDirty) || !accountVerifyBtnState}
           >
             계좌번호 확인

@@ -133,7 +133,7 @@ export default function GivePresentPageContainer({
                 </PresentGiverInfoInputForm>
                 <Button
                   onClick={handleGivePresent}
-                  styles={{ marginBottom: '5.8rem' }}
+                  style={{ marginBottom: '5.8rem' }}
                   disabled={!isValid()}
                 >
                   {'친구 생일 축하해주기'}
@@ -145,11 +145,12 @@ export default function GivePresentPageContainer({
                 <Payment account={`${publicWishesData.accountNumber} ${publicWishesData.bank}`} />
                 <Button
                   onClick={() => {
+                    GivePresent();
                     handleRouter(
                       `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`,
                     );
                   }}
-                  styles={{ marginBottom: '5.8rem' }}
+                  style={{ marginBottom: '5.8rem' }}
                 >
                   {'송금하고, 편지 확인하기'}
                 </Button>
@@ -259,15 +260,15 @@ function PresentMessageModal({
   };
 
   return (
-    <CakeMessageModalUI
-      modalState={modalState}
-      handleModalState={handleModalState}
-      messageData={messageData}
-      nickName={nickName}
-    >
-      <FixedBottomButtonWrapper>
+    <>
+      <CakeMessageModalUI
+        modalState={modalState}
+        handleModalState={handleModalState}
+        messageData={messageData}
+        nickName={nickName}
+      >
         <Button>이미지 저장하기</Button>
-      </FixedBottomButtonWrapper>
-    </CakeMessageModalUI>
+      </CakeMessageModalUI>
+    </>
   );
 }

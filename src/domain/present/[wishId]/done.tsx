@@ -1,6 +1,4 @@
-import { getCakePresentMessage } from '@/api/cakes';
 import { CakeTreeDataType, defaultCakeTreeDataObject } from '@/constant/model/cakesTreeData';
-import useSelectItem from '@/hooks/common/useSelectItem';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { CakeDishTopRibbonImg } from '../../../../public/assets/images';
@@ -23,19 +21,16 @@ export default function PresentSuccess({
 
 export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataType[] }) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3 - 1));
-  const wishId = '254';
-
-  const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
 
   const [firstCake, ...restCake] = cakeList;
 
-  useEffect(() => {
-    if (selectedPresentId > 0) {
-      getCakePresentMessage(wishId, selectedPresentId).then((response) => {
-        // setCakePresentMessageData(response);
-      });
-    }
-  }, [selectedPresentId]);
+  // useEffect(() => {
+  //   if (selectedPresentId > 0) {
+  //     getCakePresentMessage(wishId, selectedPresentId).then((response) => {
+  //       // setCakePresentMessageData(response);
+  //     });
+  //   }
+  // }, [selectedPresentId]);
 
   return (
     <>
@@ -85,9 +80,6 @@ export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataTyp
                   <li
                     className="z-5 flex flex-col items-center aspect-square p-4 transform translate-y-[-30px] justify-self-center"
                     key={cake.name}
-                    onClick={() => {
-                      handleSelectOne(cake.presentId);
-                    }}
                     style={{ width: '105%' }}
                   >
                     <Image

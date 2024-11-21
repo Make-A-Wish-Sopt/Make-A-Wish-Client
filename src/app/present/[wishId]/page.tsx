@@ -21,14 +21,14 @@ export default async function GivePresentPage({
 
   return (
     <>
-      <Header backBtn pathTo={`/present/${params.wishId}`} />
+      <Header backBtn pathTo={`/wishes/${params.wishId}`} />
       <MainLayout>
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}
           step={searchParams.presentStep}
           publicWishesData={publicWishesData}
           wishId={params.wishId}
-        ></GivePresentPageContainer>
+        />
       </MainLayout>
     </>
   );
