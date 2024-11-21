@@ -12,7 +12,6 @@ import { ReceivedCakePresentList, WishesMessageToCreateUser } from '@/domain/wis
 import { MessageText } from '@/domain/wishes/component';
 import { defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
 import GradientShadow from '@/components/UI/GradientShadow';
-import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
@@ -21,7 +20,7 @@ export default async function WishesPage() {
   return (
     <>
       <Header mypageBtn />
-      <MainLayout>
+      <MainLayout checkLoggedIn>
         <WishesPageContainer nickName={loginUserData.nickName}>
           {progressWishesData ? (
             <>

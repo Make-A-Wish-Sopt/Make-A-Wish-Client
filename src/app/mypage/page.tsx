@@ -10,7 +10,7 @@ export default async function Mypage() {
   return (
     <>
       <Header backBtn />
-      <MainLayout>
+      <MainLayout checkLoggedIn>
         <MypageContainer nickName={nickName} />
       </MainLayout>
     </>
