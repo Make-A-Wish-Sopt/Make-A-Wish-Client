@@ -1,35 +1,27 @@
 'use client';
 
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { CakeMessageModalUI, CakeTree, WishesCreateTitleInputModalContainer } from './component';
-import {
-  CakeTreeDataType,
-  defaultCakeTreeDataObject,
-  DummyCakeTreeDataType,
-} from '@/constant/model/cakesTreeData';
+import { CakeTree, SaveCakeMessageModal, WishesCreateTitleInputModalContainer } from './component';
+import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { convertEncode } from '@/utils/common/convert';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { CakePresentMessageDataType } from '@/types/api/response';
-import useSelectItem from '@/hooks/common/useSelectItem';
-import { getCakePresentMessage } from '@/api/cakes';
+import { PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
+import { getCakePresentMessage } from '@/api/cakes';
+import Loading from '@/app/loading';
 
 type WishesPageGlobalStateType = {
   wishTitle: string;
   wishesTitleInputModalState: boolean;
   cakeMessageModalState: boolean;
-  cakePresentMessageData: CakePresentMessageDataType & { isAdminMessage: boolean };
+  cakePresentMessageData: ReceivedCakeTreeMessageDataType;
   shareLinkModalState: boolean;
 };
 
-export default function WishesPageContainer({
-  nickName,
-  children,
-}: { nickName: string } & PropsWithChildren) {
+export default function WishesPageContainer({ children }: PropsWithChildren) {
   const methods = useForm<WishesPageGlobalStateType>({
     mode: 'onChange',
     defaultValues: {
@@ -40,14 +32,11 @@ export default function WishesPageContainer({
     },
   });
 
-  const cakePresentMessageData = methods.watch('cakePresentMessageData');
-
   return (
     <section className="relative">
       <FormProvider {...methods}>
         {children}
         <WishesCreateTitleInputModal />
-        {cakePresentMessageData && <CakeMessageModal nickName={nickName} />}
       </FormProvider>
     </section>
   );
@@ -91,30 +80,10 @@ export function CakesTreeMessage({
   cakeList,
   wishId,
 }: {
-  cakeList: CakeTreeDataType[];
+  cakeList: ReceivedCakeTreeMessageDataType[];
   wishId?: string;
 }) {
   const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
-
-  const { selectedId: selectedPresentId, handleSelectOne } = useSelectItem();
-  const [dummyCakeId, setDummyCakeId] = useState(-1);
-
-  useEffect(() => {
-    if (selectedPresentId > 0) {
-      getCakePresentMessage(wishId, selectedPresentId).then((response) => {
-        setValue('cakePresentMessageData', { ...response, isAdminMessage: false });
-      });
-    }
-
-    if (dummyCakeId >= 0) {
-      setValue('cakePresentMessageData', {
-        ...defaultCakeTreeDataObject[dummyCakeId],
-        name: '선물주운영자',
-        cakeId: dummyCakeId,
-      });
-    }
-    defaultCakeTreeDataObject;
-  }, [selectedPresentId, dummyCakeId]);
 
   function handleChangeCakeMessageModalState() {
     const modalState = watch('cakeMessageModalState');
@@ -122,49 +91,64 @@ export function CakesTreeMessage({
     setValue('cakeMessageModalState', !modalState);
   }
 
-  function handleSelectCake(id: number) {
-    handleSelectOne(id);
+  function handleSelectCake(cake: ReceivedCakeTreeMessageDataType) {
+    setValue('cakePresentMessageData', cake);
     handleChangeCakeMessageModalState();
   }
 
-  function handleSetCakeData(cake: DummyCakeTreeDataType) {
-    if (selectedPresentId === 0) {
-      setDummyCakeId(cake.cakeId);
-    } else {
-      setDummyCakeId(-1);
-    }
-  }
-
-  return (
-    <>
-      <CakeTree
-        cakeList={cakeList}
-        handleSelectOne={handleSelectCake}
-        handleSetCakeData={handleSetCakeData}
-      />
-    </>
-  );
+  return <CakeTree cakeList={cakeList} handleSelectCake={handleSelectCake} />;
 }
 
-function CakeMessageModal({ nickName }: { nickName: string }) {
+export function ReceivedCakeMessageModal({
+  nickName,
+  wishId,
+}: {
+  nickName: string;
+  wishId: string;
+}) {
   const { setValue, getValues, watch } = useFormContext<WishesPageGlobalStateType>();
 
   const modalState = getValues('cakeMessageModalState');
   const messageData = watch('cakePresentMessageData');
+
+  const [receivedCakeMessageData, setReceivedCakeMessageData] =
+    useState<ReceivedCakeTreeMessageDataType>(null);
+
+  useEffect(() => {
+    if (messageData) {
+      const { presentId, cakeImg } = watch('cakePresentMessageData');
+      if (presentId > 0) {
+        getCakePresentMessage(wishId, presentId).then((response) => {
+          setReceivedCakeMessageData({
+            ...response,
+            cakeImg: cakeImg,
+            isAdminMessage: false,
+            presentId: presentId,
+          });
+        });
+      } else {
+        setReceivedCakeMessageData({ ...messageData });
+      }
+    }
+  }, [messageData]);
 
   function handleModalState() {
     setValue('cakeMessageModalState', !modalState);
   }
 
   return (
-    <CakeMessageModalUI
-      modalState={modalState}
-      handleModalState={handleModalState}
-      messageData={messageData}
-      nickName={nickName}
-    >
-      <Button>이미지 저장하기</Button>
-    </CakeMessageModalUI>
+    <>
+      {receivedCakeMessageData && (
+        <SaveCakeMessageModal
+          modalState={modalState}
+          handleModalState={handleModalState}
+          receivedCakeMessageData={receivedCakeMessageData}
+          nickName={nickName}
+        >
+          <Button>이미지 저장하기</Button>
+        </SaveCakeMessageModal>
+      )}
+    </>
   );
 }
 

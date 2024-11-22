@@ -22,10 +22,9 @@ export default function ShareLinkModal({
     if (typeof window !== 'undefined') {
       const { Kakao } = window;
 
-      //refactor : 카카오 환경변수 변경해야됨
-      // if (!Kakao.isInitialized()) {
-      //   Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
-      // }
+      if (!Kakao.isInitialized()) {
+        Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+      }
     }
   }, []);
 
@@ -46,6 +45,7 @@ export default function ShareLinkModal({
             onClick={() => {
               snsItem.onClick(wishLink, nickName);
             }}
+            key={snsItem.name}
           />
         ))}
       </div>

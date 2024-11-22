@@ -4,6 +4,7 @@ import { getMainProgressWishesData } from '@/api/wishes';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer, {
   CakesTreeMessage,
+  ReceivedCakeMessageModal,
   WishesLinkSnsShareModal,
   WishesPageFixedBottomButton,
 } from '@/domain/wishes/container';
@@ -26,7 +27,7 @@ export default async function WishesPage() {
     <>
       <Header mypageBtn />
       <MainLayout checkLoggedIn>
-        <WishesPageContainer nickName={loginUserData.nickName}>
+        <WishesPageContainer>
           {progressWishesData ? (
             <>
               <WishesMessageToCreateUser
@@ -37,6 +38,10 @@ export default async function WishesPage() {
               <WishesLinkSnsShareModal
                 wishId={progressWishesData.wishId}
                 nickName={loginUserData.nickName}
+              />
+              <ReceivedCakeMessageModal
+                nickName={loginUserData.nickName}
+                wishId={progressWishesData.wishId}
               />
             </>
           ) : (

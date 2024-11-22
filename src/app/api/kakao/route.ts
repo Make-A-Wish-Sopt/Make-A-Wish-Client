@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(res: NextRequest) {
+export async function GET() {
   const clientId = process.env.KAKAO_RESTAPI_KEY;
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 

@@ -1,28 +1,27 @@
 'use client';
 
-import { CakeTreeDataType, defaultCakeTreeDataObject } from '@/constant/model/cakesTreeData';
+import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import Image from 'next/image';
 import { CakeDishTopRibbonImg } from '../../../public/assets/images';
 import { PropsWithChildren } from 'react';
 import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import { presentListObject } from '@/constant/model/present';
-import { CakePresentMessageDataType } from '@/types/api/response';
 import { convertMoneyText } from '@/utils/common/convert';
 
-export function CakeMessageModalUI({
+export function SaveCakeMessageModal({
   modalState,
   handleModalState,
-  messageData,
+  receivedCakeMessageData,
   nickName,
   children,
 }: {
   modalState: boolean;
   handleModalState: () => void;
-  messageData: CakePresentMessageDataType & { isAdminMessage: boolean };
+  receivedCakeMessageData: ReceivedCakeTreeMessageDataType;
   nickName: string;
 } & PropsWithChildren) {
-  const { cakeId, message, name, isAdminMessage, giftMenuId } = messageData;
+  const { name, cakeImg, isAdminMessage, message, giftMenuId, presentId } = receivedCakeMessageData;
 
   return (
     <CloseTopModal isOpen={modalState} handleState={handleModalState} bgColor={'background'}>
@@ -40,11 +39,7 @@ export function CakeMessageModalUI({
           >
             {name}
           </span>
-          <Image
-            src={defaultCakeTreeDataObject[cakeId].cakeImg}
-            alt="보낸 케이크 아바타 이미지"
-            width={160}
-          />
+          <Image src={cakeImg} alt="보낸 케이크 아바타 이미지" width={160} />
           <span className="h-110 text-[14px] mb-13 text-center whitespace-pre-wrap ">
             {message}
           </span>
@@ -112,12 +107,10 @@ export function WishesCreateTitleInputModalContainer({
 
 export function CakeTree({
   cakeList,
-  handleSelectOne,
-  handleSetCakeData,
+  handleSelectCake,
 }: {
-  cakeList: CakeTreeDataType[];
-  handleSelectOne: (id: number) => void;
-  handleSetCakeData?: (cake: CakeTreeDataType) => void;
+  cakeList: ReceivedCakeTreeMessageDataType[];
+  handleSelectCake?: (cake: ReceivedCakeTreeMessageDataType) => void;
 }) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3 - 1));
 
@@ -156,8 +149,7 @@ export function CakeTree({
                   className="z-5 flex flex-col items-center aspect-square p-4 transform translate-y-[-30px] justify-self-center"
                   key={cake.name}
                   onClick={() => {
-                    handleSelectOne(cake.presentId);
-                    handleSetCakeData(cake);
+                    handleSelectCake(cake);
                   }}
                   style={{ width: '105%' }}
                 >

@@ -15,17 +15,17 @@ import CheckBox from '@/components/UI/CheckBox';
 import Button from '@/components/Common/Button';
 import { postPublicCakes } from '@/api/public';
 import { useRouters } from '@/hooks/common/useRouters';
-import { CakePresentMessageDataType, PublicWishesDataType } from '@/types/api/response';
+import { PublicWishesDataType } from '@/types/api/response';
 import Payment from './payment';
 import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import {
   defaultCakeTreeDataArray,
   defaultCakeTreeDataObject,
+  ReceivedCakeTreeMessageDataType,
 } from '@/constant/model/cakesTreeData';
 import PresentSuccess, { PresentSuccessCakeTree } from './done';
 import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
-import { CakeMessageModalUI } from '@/domain/wishes/component';
+import { SaveCakeMessageModal } from '@/domain/wishes/component';
 import GradientShadow from '@/components/UI/GradientShadow';
 
 export default function GivePresentPageContainer({
@@ -251,24 +251,26 @@ function PresentMessageModal({
   const { watch } = useFormContext<PresentDataResolverType>();
   const { name, message, giftMenuId } = watch();
 
-  const messageData: CakePresentMessageDataType & { isAdminMessage: boolean } = {
+  const receivedCakeMessageData: ReceivedCakeTreeMessageDataType = {
     name: name,
     message: message,
     giftMenuId: giftMenuId,
     cakeId: Number(selectedCakeId),
+    cakeImg: defaultCakeTreeDataObject[Number(selectedCakeId)].cakeImg,
+    presentId: giftMenuId,
     isAdminMessage: false,
   };
 
   return (
     <>
-      <CakeMessageModalUI
+      <SaveCakeMessageModal
         modalState={modalState}
         handleModalState={handleModalState}
-        messageData={messageData}
+        receivedCakeMessageData={receivedCakeMessageData}
         nickName={nickName}
       >
         <Button>이미지 저장하기</Button>
-      </CakeMessageModalUI>
+      </SaveCakeMessageModal>
     </>
   );
 }

@@ -84,13 +84,13 @@ export type CakeTreeDataType = {
   presentId: number;
 };
 
-export type DummyCakeTreeDataType = {
+export type ReceivedCakeTreeMessageDataType = {
   isAdminMessage: boolean;
   message: string;
   giftMenuId: string | number;
 } & CakeTreeDataType;
 
-const defaultCakeTreeDataMap: Map<CakeIdType, DummyCakeTreeDataType> = new Map();
+const defaultCakeTreeDataMap: Map<CakeIdType, ReceivedCakeTreeMessageDataType> = new Map();
 defaultCakeTreeDataMap.set(cakeId.adminCakeId, {
   name: '선물주운영자',
   cakeImg: AdminCakeImg,

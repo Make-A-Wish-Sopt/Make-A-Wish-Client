@@ -1,13 +1,8 @@
 import { BANK_LIST } from '@/constant/bankList';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
-import { UseFormReturn } from 'react-hook-form';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
-import {
-  WishesAccountDataResolverType,
-  WishesPhoneResolverType,
-} from '@/validation/wishes.validate';
 import { AccountDataType } from '@/types/input';
 
 export const putUserAccount = async (accountInputs: AccountDataType) => {
@@ -17,7 +12,6 @@ export const putUserAccount = async (accountInputs: AccountDataType) => {
       accountInfo: {
         ...accountInputs,
       },
-      phone: 'refactor : 전화번호 수정',
     },
     {
       headers: {
