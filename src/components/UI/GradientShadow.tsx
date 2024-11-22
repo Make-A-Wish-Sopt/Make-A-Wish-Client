@@ -1,9 +1,15 @@
-export default function GradientShadow({ height }: { height: number }) {
+interface GradientShadowProps {
+  height: number | string;
+}
+
+export default function GradientShadow({ height }: GradientShadowProps) {
+  const computedHeight = typeof height === 'number' ? `${height}rem` : height;
+
   return (
     <svg
       className="fixed bottom-0 left-0 w-full pointer-events-none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ height: `${height}rem` }}
+      style={{ height: computedHeight }}
     >
       <defs>
         <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">

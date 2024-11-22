@@ -146,7 +146,6 @@ export function ImageToBeShownToGiver() {
 
   return (
     <InputForm title={`링크에 들어온 친구가 보게 될\n 재밌는 이미지를 등록해보세요!`}>
-      {/* refactor : 이미지 사이즈 찌그러지는거 변경해야됩니다! */}
       <UploadImageBox imageUrl={image} handleUploadImageFile={uploadImageFile} />;
     </InputForm>
   );

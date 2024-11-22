@@ -40,6 +40,7 @@ export default function WishesCreatePageContainer({
         {
           link: (
             <>
+              {children}
               <WishesLinkInputForm wishTitle={wishTitle} />
             </>
           ),
@@ -62,8 +63,6 @@ export default function WishesCreatePageContainer({
   );
 }
 
-// refactor : 힌트 입력한거 null로 들어갑니다!
-
 function WishesPreviewSubmitButton({
   linkDataMethods,
 }: {
@@ -81,7 +80,6 @@ function WishesPreviewSubmitButton({
 
   function handleNextStep() {
     try {
-      //refactor : hint 변수 추가해야됨
       postWishes(linkDataMethods).then((response) => {
         response.data.success && changeWishesCreateSuccess(true);
       });

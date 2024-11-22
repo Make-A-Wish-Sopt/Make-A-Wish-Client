@@ -8,6 +8,7 @@ import PresentList from '@/components/UI/PresentList';
 import Box from '@/components/Common/Box';
 import CheckBox from '@/components/UI/CheckBox';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
+import GradientShadow from '@/components/UI/GradientShadow';
 
 export default function WishesInputPreview({
   methods,
@@ -52,9 +53,7 @@ export default function WishesInputPreview({
             {/* 이 글자수 추가하는 부분 다시 생각해야됩니다! */}
           </InputTextarea>
         </InputForm>
-
-        {/* refactor : 블러높이 처리 해야합니다 */}
-        <div className="sticky bottom-0 w-full h-300 bg-[linear-gradient(180deg,_rgba(4,6,31,0)_0%,_rgba(4,6,31,1)_100%)]" />
+        <GradientShadow height={'60%'} />
       </div>
     </section>
   );
