@@ -4,7 +4,7 @@ import useToggle from '@/hooks/common/useToggle';
 import Image from 'next/image';
 import { HelpIc } from '../../../../public/assets/icons';
 import BorderBox from '@/components/UI/BorderBox';
-import { WishesKakaopaySubmitButton } from './container';
+import { WishesAccountSubmitButton } from './container';
 import { FormProvider, useForm, UseFormReturn } from 'react-hook-form';
 import {
   wishesAccountDataResolver,
@@ -80,7 +80,7 @@ export default function WishesKakaopayInputForm({
 
       <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
 
-      <WishesKakaopaySubmitButton
+      <WishesAccountSubmitButton
         linkDataMethods={linkDataMethods}
         disabled={!(isKakaoPayCodeValid && noticeAgree)}
       />

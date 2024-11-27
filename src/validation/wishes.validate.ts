@@ -56,7 +56,3 @@ export const wishesPhoneResolver = yup
   .required();
 
 export type WishesPhoneResolverType = yup.InferType<typeof wishesPhoneResolver>;
-
-export type WishesLinkDataType = Required<yup.InferType<typeof wishesLinkDataResolver>>;
-export type WishesAccountDataType = Required<yup.InferType<typeof wishesAccountDataResolver>>;
-export type WishesPhoneType = Required<yup.InferType<typeof wishesPhoneResolver>>;

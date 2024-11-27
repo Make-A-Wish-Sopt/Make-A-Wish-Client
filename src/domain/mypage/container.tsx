@@ -27,16 +27,17 @@ function MypageMenuButtons() {
         handleClick={() => {
           handleRouter('/mypage/wishes/edit');
         }}
-      ></MoreBox>
+      />
+      <MoreBox text="현금 입금 방식 변경하기" handleClick={test} />
       <MoreBox
         text="진행 중인 생일잔치 중단하기"
         handleClick={() => {
           patchProgressWishes();
         }}
-      ></MoreBox>
-      <MoreBox text="지난 생일잔치 링크모음" handleClick={test}></MoreBox>
-      <MoreBox text="사용설명서 보기" handleClick={test}></MoreBox>
-      <MoreBox text="고객센터 문의하기" handleClick={test}></MoreBox>
+      />
+      <MoreBox text="지난 생일잔치 링크모음" handleClick={test} />
+      <MoreBox text="사용설명서 보기" handleClick={test} />
+      <MoreBox text="고객센터 문의하기" handleClick={test} />
     </ul>
   );
 }
