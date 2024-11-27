@@ -1,7 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
 import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
-import { MessageBox } from '@/domain/present/[wishId]/component';
 import InputForm from '@/components/UI/InputForm';
 import InputText from '@/components/Common/Input/inputText';
 import PresentList from '@/components/UI/PresentList';
@@ -9,6 +8,7 @@ import Box from '@/components/Common/Box';
 import CheckBox from '@/components/UI/CheckBox';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
 import GradientShadow from '@/components/UI/GradientShadow';
+import BorderBox from '@/components/UI/BorderBox';
 
 export default function WishesInputPreview({
   methods,
@@ -29,7 +29,9 @@ export default function WishesInputPreview({
         {/* 소원 생성 시 등록한 이미지 미리보기 */}
         <div className="flex flex-col w-full gap-10 mb-20">
           <UploadImageBox imageUrl={imageUrl} />
-          <MessageBox message={hint} />
+          <BorderBox>
+            <p className="text-[14px]">{hint}</p>
+          </BorderBox>
         </div>
 
         {/* 친구가 작성하게될 입력 미리보기 */}

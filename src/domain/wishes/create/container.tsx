@@ -1,16 +1,14 @@
 'use client';
 
 import { WishesCreateStepType } from '@/app/wishes/create/page';
-import { wishesAccountInputInit, wishesLinkInputInit } from '@/constant/init';
+import { wishesLinkInputInit } from '@/constant/init';
 import {
-  wishesAccountDataResolver,
   WishesAccountDataResolverType,
   wishesLinkDataResolver,
   WishesLinkDataResolverType,
 } from '@/validation/wishes.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormProvider, useForm, UseFormReturn } from 'react-hook-form';
-import { WishesCreateTitleText } from './component';
+import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
 import { PropsWithChildren, useEffect } from 'react';
 
 import { useRouters } from '@/hooks/common/useRouters';
@@ -21,6 +19,9 @@ import { postWishes } from '@/api/wishes';
 import useToggle from '@/hooks/common/useToggle';
 import WishesLinkInputForm from './wishesLinkInputForm';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
+import SelectDeposit from './selectDeposit';
+import WishesKakaopayInputForm from './wishesKakaopayInputForm';
+import { putUserAccount } from '@/api/user';
 
 export default function WishesCreatePageContainer({
   step,
@@ -44,6 +45,18 @@ export default function WishesCreatePageContainer({
               <WishesLinkInputForm wishTitle={wishTitle} />
             </>
           ),
+          select: (
+            <>
+              {children}
+              <SelectDeposit />
+            </>
+          ),
+          kakaopay: (
+            <>
+              {children}
+              <WishesKakaopayInputForm linkDataMethods={savedWishesLinkDataMethods} />
+            </>
+          ),
           account: <>{children}</>,
           preview: (
             <>
@@ -63,6 +76,53 @@ export default function WishesCreatePageContainer({
   );
 }
 
+export function WishesKakaopaySubmitButton({
+  linkDataMethods,
+  disabled,
+}: {
+  linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+  disabled: boolean;
+}) {
+  const { handleBack, handleRouter } = useRouters();
+  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
+  const { watch } = useFormContext<WishesAccountDataResolverType>();
+
+  useEffect(() => {
+    if (wishesCreateSuccess) {
+      const accountInputs = watch();
+
+      putUserAccount(accountInputs).then((response) => {
+        response.data.success && handleRouter('/wishes/create?step=preview');
+      });
+    }
+  }, [wishesCreateSuccess]);
+
+  function handleCreateWishes() {
+    const wishesData = linkDataMethods.watch();
+    postWishes(wishesData).then((response) => {
+      response.data.success && changeWishesCreateSuccess(true);
+    });
+  }
+  return (
+    <FixedBottomButtonWrapper>
+      <div className="flex justify-between gap-10">
+        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+          이전
+        </Button>
+
+        <Button
+          onClick={() => {
+            handleCreateWishes();
+          }}
+          disabled={disabled}
+        >
+          생성 완료!
+        </Button>
+      </div>
+    </FixedBottomButtonWrapper>
+  );
+}
+
 function WishesPreviewSubmitButton({
   linkDataMethods,
 }: {
@@ -79,11 +139,19 @@ function WishesPreviewSubmitButton({
   }, [wishesCreateSuccess]);
 
   function handleNextStep() {
-    try {
-      postWishes(linkDataMethods).then((response) => {
-        response.data.success && changeWishesCreateSuccess(true);
-      });
-    } catch (error) {}
+    const wantsGift = linkDataMethods.watch('wantsGift');
+
+    if (wantsGift) {
+      handleRouter('/wishes/create?step=select');
+    } else {
+      const wishesData = linkDataMethods.watch();
+
+      try {
+        postWishes(wishesData).then((response) => {
+          response.data.success && changeWishesCreateSuccess(true);
+        });
+      } catch (error) {}
+    }
   }
 
   return (

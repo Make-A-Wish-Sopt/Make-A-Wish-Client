@@ -7,6 +7,7 @@ import { useRouters } from '@/hooks/common/useRouters';
 import { colors } from '@/styles/styles';
 import { PublicWishesDataType } from '@/types/api/response';
 import { convertMoneyText } from '@/utils/common/convert';
+import { PropsWithChildren } from 'react';
 
 export function CheckPresentItem({
   giverName,
@@ -30,23 +31,7 @@ export function CheckPresentItem({
   );
 }
 
-export function MessageBox({ message }: { message: string }) {
-  return (
-    <Box
-      bgColor="background"
-      fontColor="gray1"
-      font="galmuri"
-      styles={{
-        height: 'auto',
-        minHeight: '5rem',
-        padding: '1.2rem',
-        border: `1px solid ${colors.dark_green}`,
-      }}
-    >
-      <span className="text-[14px] text-gray1">{message}</span>
-    </Box>
-  );
-}
+
 
 export function MessageFromWisheMaker({
   publicWishesData,
