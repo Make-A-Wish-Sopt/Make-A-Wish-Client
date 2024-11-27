@@ -6,7 +6,7 @@ import { WishesLinkDataType } from '../input';
 export type DefaultResponseType<T = unknown> = {
   success: boolean;
   message: string;
-  data: T;
+  data?: T;
 };
 
 export type WishesCreateResponseType = DefaultResponseType<number>; //소원아이디

@@ -14,12 +14,12 @@ export interface WishesLinkDataType {
   wantsGift: boolean;
 }
 
-export interface WishesAccountDataType extends AccountDataType {
-  phone: string;
-}
+// export interface WishesAccountDataType extends AccountDataType {
+//   phone: string;
+// }
 
-export interface AccountDataType {
-  name: string;
-  bank: string;
-  account: string;
-}
+// export interface AccountDataType {
+//   name: string;
+//   bank: string;
+//   account: string;
+// }

@@ -9,8 +9,9 @@ import {
 } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
 import { convertDecode } from '@/utils/common/convert';
+import { Children } from 'react';
 
-const WishesCreateSteps = ['link', 'account', 'preview', 'done'] as const;
+const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'preview', 'done'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
 
 export default async function WishesCreatePage({
@@ -45,6 +46,16 @@ export default async function WishesCreatePage({
               link: (
                 <>
                   <WishesCreateTitleText>생일잔치 링크 생성하기</WishesCreateTitleText>
+                </>
+              ),
+              select: (
+                <>
+                  <WishesCreateTitleText>현금 입금 방식 선택하기</WishesCreateTitleText>
+                </>
+              ),
+              kakaopay: (
+                <>
+                  <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>
                 </>
               ),
               account: (

@@ -3,15 +3,16 @@ import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
-import { AccountDataType } from '@/types/input';
+import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
 
-export const putUserAccount = async (accountInputs: AccountDataType) => {
+export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
   const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {
         ...accountInputs,
       },
+      phone: '01030247076',
     },
     {
       headers: {

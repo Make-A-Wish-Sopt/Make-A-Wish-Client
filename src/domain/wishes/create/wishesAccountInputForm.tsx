@@ -4,7 +4,6 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import {
   wishesAccountDataResolver,
   WishesAccountDataResolverType,
-  WishesPhoneResolverType,
 } from '@/validation/wishes.validate';
 import InputForm from '@/components/UI/InputForm';
 import { colors } from '@/styles/styles';
@@ -31,6 +30,7 @@ export default function WishesAccountInputForm({
     mode: 'onChange',
     defaultValues: {
       ...wishesAccountInputInit,
+      forPayCode: false,
     },
     resolver: yupResolver(wishesAccountDataResolver),
   });
@@ -83,7 +83,7 @@ function AccountInput({
 } & PropsWithChildren) {
   const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
   const { isDirty, isValid } = formState;
-  const { account, bank, name } = watch();
+  const { account, bank, name, forPayCode, kakaoPayCode } = watch();
 
   useEffect(() => {
     changeAccountVerifyBtnState(isDirty);
@@ -91,7 +91,13 @@ function AccountInput({
 
   function handleAccountCheck() {
     if (account && bank && name) {
-      postVerifyAccount({ account: account, bank: bank, name: name }).then((response) => {
+      postVerifyAccount({
+        account: account,
+        bank: bank,
+        name: name,
+        forPayCode: forPayCode,
+        kakaoPayCode: kakaoPayCode,
+      }).then((response) => {
         // refactor : 어뷰징유저 하는거 확인해야합니다!
         changeAccountVerifyBtnState(response.success);
       });
@@ -149,7 +155,7 @@ function SelectBank() {
   );
 }
 
-function AccountFormNotice({
+export function AccountFormNotice({
   changeNoticeAgreeState,
 }: {
   changeNoticeAgreeState: (state: boolean) => void;
@@ -174,13 +180,11 @@ function WishesAccountSubmitButton({ disabled }: { disabled: boolean }) {
   // const { isValid, isDirty } = formState;
 
   function handleWishesCreateSubmit() {
-    const { account, bank, name } = watch();
+    const accountInputs = watch();
 
-    if (account && bank && name) {
-      putUserAccount({ account: account, bank: bank, name: name }).then((response) => {
-        response.data.success && handleRouter('/wishes/create?step=preview');
-      });
-    }
+    putUserAccount(accountInputs).then((response) => {
+      response.data.success && handleRouter('/wishes/create?step=preview');
+    });
   }
 
   return (

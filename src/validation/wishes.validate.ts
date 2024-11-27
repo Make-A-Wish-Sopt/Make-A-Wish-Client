@@ -26,8 +26,16 @@ export const wishesAccountDataResolver = yup
       .max(15, '계좌번호는 최대 15자리여야 합니다.'),
 
     name: yup.string().required('필수 입력 항목입니다.'),
-
     bank: yup.string().required('필수 입력 항목입니다.'),
+    kakaoPayCode: yup
+      .string()
+      .required('필수 입력 항목입니다.')
+      .test('is-valid-kakao-pay-url', '유효한 카카오페이 URL이 아닙니다.', (value) => {
+        if (!value) return false;
+        return value.startsWith('https://qr.kakaopay.com/');
+      }),
+
+    forPayCode: yup.boolean().required('필수 입력 항목입니다.'),
   })
   .noUnknown(true, 'Unknown field is not allowed')
   .required();

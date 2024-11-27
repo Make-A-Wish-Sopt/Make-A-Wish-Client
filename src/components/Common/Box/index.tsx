@@ -11,11 +11,18 @@ export interface BoxProps {
 }
 
 export default function Box(props: PropsWithChildren<BoxProps>) {
-  const { bgColor, fontColor, styles, onClick, children } = props;
+  const {
+    bgColor = 'dark_green',
+    font = 'galmuri',
+    fontColor = 'white',
+    styles,
+    onClick,
+    children,
+  } = props;
 
   return (
     <div
-      className={`w-full h-50 bg-${bgColor || 'dark_blue'} text-${
+      className={`w-full h-50 bg-${bgColor || 'dark_blue'} font-${font} text-${
         fontColor || 'white'
       } p-10 pl-12 rounded-xl`}
       style={styles}

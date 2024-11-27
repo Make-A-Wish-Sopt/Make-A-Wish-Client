@@ -73,7 +73,7 @@ export function WishesLinkInputs({
     });
 
     if (methods.watch('wantsGift')) {
-      handleRouter('/wishes/create?step=account');
+      handleRouter('/wishes/create?step=preview');
     } else {
       createOnlyLettersWishes();
     }
