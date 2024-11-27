@@ -30,3 +30,4 @@ export { default as UploadImageLogoIc } from '/public/assets/icons/uploadImageLo
 export { default as SelectRadioIc } from './selectRadioIc.svg';
 export { default as UnSelectRadioIc } from './unSelectRadioIc.svg';
 export { default as MainBlueArrowIc } from './mainBlueArrowIc.svg';
+export { default as HelpIc } from './helpIc.svg';
