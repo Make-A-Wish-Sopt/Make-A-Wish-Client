@@ -13,12 +13,13 @@ import useToggle from '@/hooks/common/useToggle';
 import { useUploadItemInfo } from '@/hooks/common/useUploadItemInfo';
 import { getDate } from '@/utils/common/getDate';
 import { wishesLinkDataResolver, WishesLinkDataResolverType } from '@/validation/wishes.validate';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { DropDownContent } from './component';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
 import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { putProgressWishes } from '@/api/wishes';
 
 export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
@@ -27,17 +28,20 @@ export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string 
   const savedWishesLinkData = savedWishesLinkDataMethods.watch();
 
   return (
-    <WishesLinkInputs wishTitle={wishTitle} progressWishesData={isValid && savedWishesLinkData} />
+    <WishesLinkInputs wishTitle={wishTitle} progressWishesData={isValid && savedWishesLinkData}>
+      <WishesLinkSubmitButton />
+    </WishesLinkInputs>
   );
 }
 
 export function WishesLinkInputs({
   wishTitle,
   progressWishesData,
+  children,
 }: {
   wishTitle: string;
   progressWishesData?: WishesLinkDataResolverType;
-}) {
+} & PropsWithChildren) {
   const methods = useForm<WishesLinkDataResolverType>({
     mode: 'onChange',
     defaultValues: {
@@ -95,9 +99,11 @@ export function WishesLinkInputs({
           </div>
         </InputForm>
 
-        <HintMessageToGiver />
+        {/* <HintMessageToGiver /> */}
         <WantsGiftOption />
-        <WishesLinkSubmitButton />
+
+        {/* Submit Button */}
+        {children}
       </form>
     </FormProvider>
   );
@@ -236,5 +242,22 @@ function WishesLinkSubmitButton() {
         다음
       </Button>
     </div>
+  );
+}
+
+export function WishesLinkEditSubmitButton() {
+  const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
+  const editWishesLinkData = watch();
+
+  console.log(editWishesLinkData);
+
+  function handleEditWisheLink() {
+    // putProgressWishes(editWishesLinkData);
+  }
+
+  return (
+    <Button onClick={handleEditWisheLink} disabled={!formState.isValid}>
+      수정 완료
+    </Button>
   );
 }
