@@ -9,7 +9,6 @@ import { API_VERSION_01, PATH_WISHES } from './path';
 import { UseFormReturn } from 'react-hook-form';
 import { WishesDataInputType } from '@/types/wishesType';
 import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
-import { WishesLinkDataType } from '@/types/input';
 
 /**
  * 진행중인 소원 조회
@@ -96,23 +95,11 @@ export const getProgressWishLinkData = async () => {
 /**
  * 진행중인 소원 정보 수정
  */
-export const putProgressWishes = async (
-  methods: UseFormReturn<WishesDataInputType, any, undefined>,
-) => {
+export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) => {
   const data = await client.put(
     `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
     {
-      title: methods.getValues('title'),
-      hint: methods.getValues('hint'),
-      initial: methods.getValues('initial'),
-      imageUrl: methods.getValues('imageUrl'),
-      phone: methods.getValues('phone'),
-      account: methods.getValues('account'),
-      bank: methods.getValues('bank'),
-      name: methods.getValues('name'),
-      startDate: methods.getValues('startDate'),
-      endDate: methods.getValues('endDate'),
-      price: methods.getValues('price'),
+      ...wishesData,
     },
     {
       headers: {
