@@ -1,5 +1,10 @@
 import { CakeTreeDataType } from '@/constant/model/cakesTreeData';
-import { AccountInfoType, MainProgressDataType, WishStatusType } from '../wishesType';
+import {
+  AccountInfoType,
+  MainProgressDataType,
+  SavedAccountInfoType,
+  WishStatusType,
+} from '../wishesType';
 import { LoginUserDataType } from '@/utils/common/cookies';
 import { WishesLinkDataType } from '../input';
 
@@ -27,7 +32,7 @@ export type UserAccountDataType = {
   phone: string;
 };
 
-export type UserAccountDataResponseType = DefaultResponseType<UserAccountDataType>;
+export type UserAccountDataResponseType = DefaultResponseType<SavedAccountInfoType>;
 
 export type PublicWishesDataType = {
   accountNumber: string;

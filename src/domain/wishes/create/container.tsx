@@ -19,9 +19,10 @@ import { postWishes } from '@/api/wishes';
 import useToggle from '@/hooks/common/useToggle';
 import WishesLinkInputForm from './wishesLinkInputForm';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
-import SelectDeposit from './selectDeposit';
+import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
+import { ShareWishesLinkModal } from './service';
 
 export default function WishesCreatePageContainer({
   step,
@@ -34,6 +35,19 @@ export default function WishesCreatePageContainer({
     },
     resolver: yupResolver(wishesLinkDataResolver),
   });
+
+  const { state: selectAccount, changeState: changeSelectAccount } = useToggle();
+  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
+  const { state: isKakaoPayCodeValid, changeState: changeIsKakaoPayCodeValid } = useToggle();
+  const { handleRouter } = useRouters();
+
+  function handleNextStep() {
+    if (selectAccount) {
+      handleRouter('/wishes/create?step=account');
+    } else {
+      handleRouter('/wishes/create?step=kakaopay');
+    }
+  }
 
   return (
     <FormProvider {...savedWishesLinkDataMethods}>
@@ -48,13 +62,26 @@ export default function WishesCreatePageContainer({
           select: (
             <>
               {children}
-              <SelectDeposit />
+              <SelectDeposit
+                selectAccount={selectAccount}
+                changeSelectAccount={changeSelectAccount}
+              >
+                <WishesDepositSubmitButton handleNextStep={handleNextStep} />
+              </SelectDeposit>
             </>
           ),
           kakaopay: (
             <>
               {children}
-              <WishesKakaopayInputForm linkDataMethods={savedWishesLinkDataMethods} />
+              <WishesKakaopayInputForm
+                changeNoticeAgreeState={changeNoticeAgreeState}
+                changeIsKakaoPayCodeValid={changeIsKakaoPayCodeValid}
+              >
+                <WishesAccountSubmitButton
+                  linkDataMethods={savedWishesLinkDataMethods}
+                  disabled={!(isKakaoPayCodeValid && noticeAgree)}
+                />
+              </WishesKakaopayInputForm>
             </>
           ),
           account: <>{children}</>,
@@ -76,31 +103,15 @@ export default function WishesCreatePageContainer({
   );
 }
 
-export function WishesKakaopaySubmitButton({
-  linkDataMethods,
-  disabled,
-}: {
-  linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
-  disabled: boolean;
-}) {
+export function WishesEditAccountSubmitButton({ isValid }: { isValid: boolean }) {
   const { handleBack, handleRouter } = useRouters();
-  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
   const { watch } = useFormContext<WishesAccountDataResolverType>();
 
-  useEffect(() => {
-    if (wishesCreateSuccess) {
-      const accountInputs = watch();
+  function handleWishesCreateSubmit() {
+    const accountInputs = watch();
 
-      putUserAccount(accountInputs).then((response) => {
-        response.data.success && handleRouter('/wishes/create?step=preview');
-      });
-    }
-  }, [wishesCreateSuccess]);
-
-  function handleCreateWishes() {
-    const wishesData = linkDataMethods.watch();
-    postWishes(wishesData).then((response) => {
-      response.data.success && changeWishesCreateSuccess(true);
+    putUserAccount(accountInputs).then((response) => {
+      response.data.success && handleRouter('/');
     });
   }
   return (
@@ -112,7 +123,48 @@ export function WishesKakaopaySubmitButton({
 
         <Button
           onClick={() => {
-            handleCreateWishes();
+            handleWishesCreateSubmit();
+          }}
+          disabled={!isValid}
+        >
+          수정 완료!
+        </Button>
+      </div>
+    </FixedBottomButtonWrapper>
+  );
+}
+
+export function WishesAccountSubmitButton({
+  linkDataMethods,
+  disabled,
+}: {
+  linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+  disabled: boolean;
+}) {
+  const { handleBack, handleRouter } = useRouters();
+  const { watch } = useFormContext<WishesAccountDataResolverType>();
+
+  function handleWishesCreateSubmit() {
+    const accountInputs = watch();
+    const wishesData = linkDataMethods.watch();
+
+    putUserAccount(accountInputs).then((response) => {
+      response.data.success &&
+        postWishes(wishesData).then((response) => {
+          response.data.success && handleRouter('/wishes/create?step=done');
+        });
+    });
+  }
+  return (
+    <FixedBottomButtonWrapper>
+      <div className="flex justify-between gap-10">
+        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+          이전
+        </Button>
+
+        <Button
+          onClick={() => {
+            handleWishesCreateSubmit();
           }}
           disabled={disabled}
         >
@@ -169,12 +221,13 @@ function WishesPreviewSubmitButton({
 
 function SharePageFixedButtons() {
   const { handleRouter } = useRouters();
+  const { state: shareModalState, handleState: handleShareModalState } = useToggle();
 
   return (
     <>
       <FixedBottomButtonWrapper>
         <div className="flex flex-col gap-10">
-          <Button>생일잔치에 친구 초대하기</Button>
+          <Button onClick={handleShareModalState}>생일잔치에 친구 초대하기</Button>
           <Button
             bgColor="gray4"
             fontColor="white"
@@ -186,19 +239,18 @@ function SharePageFixedButtons() {
           </Button>
         </div>
       </FixedBottomButtonWrapper>
+      {shareModalState && (
+        <ShareLinkModal
+          wishId="261"
+          nickName="ㅎㅁㅎ"
+          modalState={shareModalState}
+          handleModalState={handleShareModalState}
+        />
+      )}
     </>
   );
 }
 
-export function ShareSnsModal({ wishId, nickName }: { wishId: string; nickName: string }) {
-  const { state: modalState, handleState: handleModalState } = useToggle();
-
-  return (
-    <ShareLinkModal
-      wishId={wishId}
-      nickName={nickName}
-      modalState={modalState}
-      handleModalState={handleModalState}
-    />
-  );
+export function ShareSnsModal({ wishId }) {
+  return <></>;
 }

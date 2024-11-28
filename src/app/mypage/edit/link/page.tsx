@@ -1,10 +1,10 @@
 import { getProgressWishLinkData } from '@/api/wishes';
 import Header from '@/components/Common/Hedaer';
-import WishesEditPageContainer from '@/domain/mypage/edit/link/container';
+import WisheLinkEditPageContainer from '@/domain/mypage/edit/link/container';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';
 
-export default async function wisheLinkEditPage() {
+export default async function WisheLinkEditPage() {
   const progressWishLinkData = await getProgressWishLinkData();
 
   const { status, ...progressWishesData } = progressWishLinkData;
@@ -13,9 +13,9 @@ export default async function wisheLinkEditPage() {
     <>
       <Header backBtn />
       <MainLayout>
-        <WishesEditPageContainer progressWishesData={progressWishesData}>
+        <WisheLinkEditPageContainer progressWishesData={progressWishesData}>
           <WishesCreateTitleText>생일잔치 링크 수정하기</WishesCreateTitleText>
-        </WishesEditPageContainer>
+        </WisheLinkEditPageContainer>
       </MainLayout>
     </>
   );

@@ -25,10 +25,15 @@ function MypageMenuButtons() {
       <MoreBox
         text="진행 중인 생일잔치 정보 수정하기"
         handleClick={() => {
-          handleRouter('/mypage/wishes/edit');
+          handleRouter('/mypage/edit/link');
         }}
       />
-      <MoreBox text="현금 입금 방식 변경하기" handleClick={test} />
+      <MoreBox
+        text="현금 입금 방식 변경하기"
+        handleClick={() => {
+          handleRouter('/mypage/edit/deposit?step=select');
+        }}
+      />
       <MoreBox
         text="진행 중인 생일잔치 중단하기"
         handleClick={() => {

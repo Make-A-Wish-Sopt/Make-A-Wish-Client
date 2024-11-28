@@ -1,29 +1,27 @@
 import InputText from '@/components/Common/Input/inputText';
 import { AccountFormNotice } from './wishesAccountInputForm';
-import useToggle from '@/hooks/common/useToggle';
 import Image from 'next/image';
 import { HelpIc } from '../../../../public/assets/icons';
 import BorderBox from '@/components/UI/BorderBox';
-import { WishesAccountSubmitButton } from './container';
-import { FormProvider, useForm, UseFormReturn } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
   wishesAccountDataResolver,
   WishesAccountDataResolverType,
-  WishesLinkDataResolverType,
 } from '@/validation/wishes.validate';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { DefaultResponseType } from '@/types/api/response';
+import { getUserAccount } from '@/api/user';
 
 export default function WishesKakaopayInputForm({
-  linkDataMethods,
+  changeNoticeAgreeState,
+  changeIsKakaoPayCodeValid,
+  children,
 }: {
-  linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
-}) {
-  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
-  const { state: isKakaoPayCodeValid, changeState: changeIsKakaoPayCodeValid } = useToggle();
-
+  changeNoticeAgreeState: (state: boolean) => void;
+  changeIsKakaoPayCodeValid: (state: boolean) => void;
+} & PropsWithChildren) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
     defaultValues: {
@@ -33,9 +31,17 @@ export default function WishesKakaopayInputForm({
     resolver: yupResolver(wishesAccountDataResolver),
   });
 
-  const { register, watch } = wishesAccountInputMethods;
+  const { register, watch, reset } = wishesAccountInputMethods;
 
   const { kakaoPayCode } = watch();
+
+  useEffect(() => {
+    getUserAccount().then((response) => {
+      reset({
+        ...response.transferInfo,
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (kakaoPayCode) {
@@ -79,11 +85,7 @@ export default function WishesKakaopayInputForm({
       </div>
 
       <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
-
-      <WishesAccountSubmitButton
-        linkDataMethods={linkDataMethods}
-        disabled={!(isKakaoPayCodeValid && noticeAgree)}
-      />
+      {children}
     </FormProvider>
   );
 }

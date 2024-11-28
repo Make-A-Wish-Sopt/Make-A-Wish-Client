@@ -5,7 +5,7 @@ import {
 import { WishesLinkDataType } from '@/types/input';
 import { PropsWithChildren } from 'react';
 
-export default function WishesEditPageContainer({
+export default function WisheLinkEditPageContainer({
   progressWishesData,
   children,
 }: { progressWishesData: WishesLinkDataType } & PropsWithChildren) {

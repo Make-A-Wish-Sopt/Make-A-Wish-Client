@@ -4,6 +4,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import {
   wishesAccountDataResolver,
   WishesAccountDataResolverType,
+  WishesLinkDataResolverType,
 } from '@/validation/wishes.validate';
 import InputForm from '@/components/UI/InputForm';
 import { colors } from '@/styles/styles';
@@ -20,6 +21,7 @@ import CheckBox from '@/components/UI/CheckBox';
 import { useRouters } from '@/hooks/common/useRouters';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { WishesAccountSubmitButton } from './container';
 
 export default function WishesAccountInputForm({
   savedUserAccountData,
@@ -34,6 +36,7 @@ export default function WishesAccountInputForm({
     },
     resolver: yupResolver(wishesAccountDataResolver),
   });
+  const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
 
   const { state: accountVerifyBtnState, changeState: changeAccountVerifyBtnState } = useToggle();
   const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
@@ -67,7 +70,10 @@ export default function WishesAccountInputForm({
           </AccountInput>
           <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
         </div>
-        <WishesAccountSubmitButton disabled={!(noticeAgree && !accountVerifyBtnState)} />
+        <WishesAccountSubmitButton
+          disabled={!(noticeAgree && !accountVerifyBtnState)}
+          linkDataMethods={savedWishesLinkDataMethods}
+        />
       </InputForm>
     </FormProvider>
   );
@@ -173,31 +179,41 @@ export function AccountFormNotice({
   );
 }
 
-//이전 다음 이렇게 된 버튼을 컴포넌트로 만들어도 좋을듯
-function WishesAccountSubmitButton({ disabled }: { disabled: boolean }) {
-  const { handleBack, handleRouter } = useRouters();
-  const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
-  // const { isValid, isDirty } = formState;
+// //이전 다음 이렇게 된 버튼을 컴포넌트로 만들어도 좋을듯
+// function WishesAccountSubmitButton({
+//   linkDataMethods,
+//   disabled,
+// }: {
+//   linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+//   disabled: boolean;
+// }) {
+//   const { handleBack, handleRouter } = useRouters();
+//   const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
+//   // const { isValid, isDirty } = formState;
 
-  function handleWishesCreateSubmit() {
-    const accountInputs = watch();
+//   function handleWishesCreateSubmit() {
+//     const accountInputs = watch();
+//     const wishesData = linkDataMethods.watch();
 
-    putUserAccount(accountInputs).then((response) => {
-      response.data.success && handleRouter('/wishes/create?step=preview');
-    });
-  }
+//     putUserAccount(accountInputs).then((response) => {
+//       response.data.success &&
+//         postWishes(wishesData).then((response) => {
+//           response.data.success && handleRouter('/wishes/create?step=done');
+//         });
+//     });
+//   }
 
-  return (
-    <div className="flex justify-between gap-10">
-      <Button fontColor="white" onClick={handleBack}>
-        이전
-      </Button>
+//   return (
+//     <div className="flex justify-between gap-10">
+//       <Button fontColor="white" onClick={handleBack}>
+//         이전
+//       </Button>
 
-      <Button type="submit" onClick={handleWishesCreateSubmit} disabled={disabled}>
-        다음
-      </Button>
-    </div>
-  );
-}
+//       <Button type="submit" onClick={handleWishesCreateSubmit} disabled={disabled}>
+//         생성 완료!
+//       </Button>
+//     </div>
+//   );
+// }
 
 // function

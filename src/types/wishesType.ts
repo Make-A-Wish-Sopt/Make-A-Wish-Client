@@ -28,10 +28,19 @@ export interface BankInfoInputsType extends AccountInfoType {
   phone: string;
 }
 
+export interface SavedAccountInfoType {
+  id: number;
+  transferInfo: TransferInfoType;
+}
+
 export interface AccountInfoType {
   name: string;
   bank: string;
   account: string;
+}
+
+export interface TransferInfoType {
+  accountInfo: AccountInfoType;
   kakaoPayCode: string;
   forPayCode: boolean;
 }

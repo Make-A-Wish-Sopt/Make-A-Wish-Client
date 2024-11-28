@@ -2,7 +2,7 @@ import { BANK_LIST } from '@/constant/bankList';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
-import { AccountInfoType } from '@/types/wishesType';
+import { AccountInfoType, SavedAccountInfoType } from '@/types/wishesType';
 import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
 
 export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
@@ -10,9 +10,12 @@ export const putUserAccount = async (accountInputs: WishesAccountDataResolverTyp
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {
-        ...accountInputs,
+        name: accountInputs.name,
+        bank: accountInputs.bank,
+        account: accountInputs.account,
       },
-      phone: '01030247076',
+      kakaoPayCode: accountInputs.kakaoPayCode,
+      forPayCode: accountInputs.forPayCode,
     },
     {
       headers: {

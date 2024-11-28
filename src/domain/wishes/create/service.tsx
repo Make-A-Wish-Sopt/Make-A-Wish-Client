@@ -39,7 +39,8 @@ export async function ShareWishesLinkModal() {
   const progressWishesData = await getMainProgressWishesData();
   const { nickName } = await getLoginUserCookiesData();
 
-  return <ShareSnsModal wishId={progressWishesData.wishId} nickName={nickName} />;
+  // return <ShareSnsModal wishId={progressWishesData.wishId} nickName={nickName} />;
+  return <></>;
 }
 
 export async function AccountInputWithSavedAccountData() {
