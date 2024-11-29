@@ -33,6 +33,7 @@ export const sizes = {
   350: '35rem',
   375: '37.5rem',
   500: '50rem',
+  608: '60.8rem',
 
   'fixed-bottom': '5.4rem',
   '91.4%': '91.4%',

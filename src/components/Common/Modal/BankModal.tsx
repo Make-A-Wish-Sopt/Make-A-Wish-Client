@@ -17,11 +17,11 @@ export default function BankModal(props: BankModalProps) {
   };
 
   return (
-    <section className="w-331 h-600 p-22 pb-0 border border-dark_green bg-background rounded-3xl">
+    <section className="w-331 h-608 p-22 pb-0 border border-dark_green bg-background rounded-3xl overflow-scroll">
       <h2 className="font-galmuri text-[16px] text-white">은행을 선택해주세요.</h2>
       <ul
         id="bankList"
-        className="h-91.4% overflow-scroll scrollbar-hide mt-8 grid grid-cols-3 gap-2"
+        className="h-91.4% overflow-scroll scrollbar-hide mt-8 grid grid-cols-3 gap-8"
       >
         {BANK_LIST.map((bank) => (
           <li

@@ -2,7 +2,7 @@ import { BANK_LIST } from '@/constant/bankList';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
-import { AccountInfoType, SavedAccountInfoType } from '@/types/wishesType';
+import { AccountInfoType } from '@/types/wishesType';
 import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
 
 export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
@@ -60,7 +60,6 @@ export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
     {
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     },
   );

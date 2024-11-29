@@ -63,4 +63,6 @@ for (let i = 1; i <= 33; i++) {
   bankImgs[`bank${i}Img`] = require(`../images/bankLogo/bank${i}Img.svg`).default;
 }
 
+export { default as KakaopayLogoIc } from '../images/bankLogo/kakaopayLogoIc.svg';
+
 export default bankImgs;

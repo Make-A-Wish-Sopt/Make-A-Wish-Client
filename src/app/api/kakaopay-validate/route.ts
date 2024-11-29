@@ -1,8 +1,7 @@
 import { DefaultResponseType } from '@/types/api/response';
-import { NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request, res: NextApiResponse<DefaultResponseType>) {
+export async function POST(req: Request) {
   const { kakaoPayCode } = await req.json();
 
   if (!kakaoPayCode || typeof kakaoPayCode !== 'string') {

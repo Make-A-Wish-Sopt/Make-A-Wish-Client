@@ -80,7 +80,7 @@ export function SaveCakeMessageModal({
 
 export function MessageText({ children }: PropsWithChildren) {
   return (
-    <div className="text-[24px] font-bitbit text-center text-white whitespace-pre-wrap">
+    <div className="text-[24px] font-bitbit text-center text-white whitespace-pre-line">
       <span className="transition-opacity duration-500 opacity-100 leading-tight">{children}</span>
     </div>
   );

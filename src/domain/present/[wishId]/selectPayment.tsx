@@ -1,11 +1,11 @@
 'use client';
 
 import InputForm from '@/components/UI/InputForm';
-import { BANK_LIST, PAY_LIST } from '@/constant/bankList';
+import { PaymentDataType, paymentListArray } from '@/constant/bankList';
 import Image from 'next/image';
 
 export default function SelectPayment() {
-  const handleDeepLink = (payment: { id: number; name: string }) => {
+  const handleDeepLink = (payment: PaymentDataType) => {
     const ua = navigator.userAgent.toLowerCase();
 
     if (payment.name === '토스뱅크') {
@@ -38,16 +38,16 @@ export default function SelectPayment() {
     <div className="w-full">
       <InputForm title="결제수단 선택">
         <ul className="flex gap-8">
-          {PAY_LIST.map((payment) => (
+          {paymentListArray.map((paymentItem) => (
             <li
               className="flex flex-col gap-10  items-center justify-center w-full h-92 rounded-xl bg-dark_green"
-              key={payment.name}
+              key={paymentItem.paymentId}
               onClick={() => {
-                handleDeepLink(payment);
+                handleDeepLink(paymentItem);
               }}
             >
-              <Image src={BANK_LIST[payment.id].logo} alt="은행 로고 이미지"></Image>
-              <span className="font-galmuri text-[14px] text-white">{payment.name}</span>
+              <Image src={paymentItem.bankIconImg} alt="은행 로고 이미지" />
+              <span className="font-galmuri text-[14px] text-white">{paymentItem.name}</span>
             </li>
           ))}
         </ul>

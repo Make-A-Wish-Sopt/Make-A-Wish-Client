@@ -46,5 +46,5 @@ export async function ShareWishesLinkModal() {
 export async function AccountInputWithSavedAccountData() {
   const savedUserAccountData = await getUserAccount();
 
-  return <WishesAccountInputForm savedUserAccountData={savedUserAccountData} />;
+  return <WishesAccountInputForm savedUserAccountData={savedUserAccountData.transferInfo} />;
 }

@@ -99,7 +99,7 @@ export function WishesLinkInputs({
           </div>
         </InputForm>
 
-        {/* <HintMessageToGiver /> */}
+        <HintMessageToGiver />
         <WantsGiftOption />
 
         {/* Submit Button */}
@@ -248,8 +248,6 @@ function WishesLinkSubmitButton() {
 export function WishesLinkEditSubmitButton() {
   const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
   const editWishesLinkData = watch();
-
-  console.log(editWishesLinkData);
 
   function handleEditWisheLink() {
     // putProgressWishes(editWishesLinkData);

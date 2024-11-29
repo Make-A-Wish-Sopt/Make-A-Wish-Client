@@ -3,6 +3,7 @@ import {
   AccountInfoType,
   MainProgressDataType,
   SavedAccountInfoType,
+  TransferInfoType,
   WishStatusType,
 } from '../wishesType';
 import { LoginUserDataType } from '@/utils/common/cookies';
@@ -35,14 +36,13 @@ export type UserAccountDataType = {
 export type UserAccountDataResponseType = DefaultResponseType<SavedAccountInfoType>;
 
 export type PublicWishesDataType = {
-  accountNumber: string;
-  bank: string;
-  name: string;
   dayCount: number;
   title: string;
   hint: string;
   wantsGift: boolean;
   presentImageUrl: string;
+  nickname: string;
+  transferInfo: TransferInfoType;
 };
 
 export type PublicWishesDataResponseType = DefaultResponseType<PublicWishesDataType>;

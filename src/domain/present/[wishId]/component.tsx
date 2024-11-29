@@ -31,8 +31,6 @@ export function CheckPresentItem({
   );
 }
 
-
-
 export function MessageFromWisheMaker({
   publicWishesData,
 }: {

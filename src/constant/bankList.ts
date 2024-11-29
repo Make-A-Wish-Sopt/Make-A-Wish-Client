@@ -1,6 +1,6 @@
 import { BankListType } from '@/types/bankListType';
 import { StaticImageData } from 'next/image';
-import bankImgs from '../../public/assets/images';
+import bankImgs, { KakaopayLogoIc } from '../../public/assets/images';
 
 export const BANK_LIST: BankListType[] = [];
 
@@ -131,6 +131,41 @@ BANK_LIST[29].bankCode = '0055'; //도이치
 BANK_LIST[30].bankCode = '0057'; //JP모간
 BANK_LIST[31].bankCode = '0061'; //BNP파리바
 BANK_LIST[31].bankCode = '0067'; //중국건설
+
+export const paymentId = {
+  toss: 5,
+  kakaobank: 1,
+  kakaopay: 100,
+};
+
+export type PaymentIdType = (typeof paymentId)[keyof typeof paymentId];
+
+export type PaymentDataType = {
+  name: string;
+  bankIconImg: StaticImageData;
+};
+
+const paymentListMap: Map<PaymentIdType, PaymentDataType> = new Map();
+
+paymentListMap.set(paymentId.toss, {
+  name: '토스뱅크',
+  bankIconImg: BANK_LIST[paymentId.toss].logo,
+});
+
+paymentListMap.set(paymentId.kakaobank, {
+  name: '카카오뱅크',
+  bankIconImg: BANK_LIST[paymentId.kakaobank].logo,
+});
+
+paymentListMap.set(paymentId.kakaopay, {
+  name: '카카오페이',
+  bankIconImg: KakaopayLogoIc,
+});
+
+export const paymentListArray = Array.from(paymentListMap.entries()).map(([paymentId, value]) => ({
+  paymentId,
+  ...value,
+}));
 
 export const PAY_LIST = [
   { id: 5, name: '토스뱅크' },

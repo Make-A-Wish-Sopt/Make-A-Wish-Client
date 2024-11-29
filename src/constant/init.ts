@@ -1,5 +1,5 @@
 import { PresentDataType, WishesLinkDataType } from '@/types/input';
-import { AccountInfoType } from '@/types/wishesType';
+import { TransferInfoType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
 
 export const wishesLinkInputInit: WishesLinkDataType = {
@@ -11,10 +11,12 @@ export const wishesLinkInputInit: WishesLinkDataType = {
   wantsGift: false,
 };
 
-export const wishesAccountInputInit: AccountInfoType = {
-  name: '',
-  account: '',
-  bank: '',
+export const wishesAccountInputInit: TransferInfoType = {
+  accountInfo: {
+    account: '',
+    name: '',
+    bank: '',
+  },
   forPayCode: false,
   kakaoPayCode: '',
 };

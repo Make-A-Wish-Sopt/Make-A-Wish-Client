@@ -17,7 +17,6 @@ import { postPublicCakes } from '@/api/public';
 import { useRouters } from '@/hooks/common/useRouters';
 import { PublicWishesDataType } from '@/types/api/response';
 import Payment from './payment';
-import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import {
   defaultCakeTreeDataArray,
   defaultCakeTreeDataObject,
@@ -27,6 +26,11 @@ import PresentSuccess, { PresentSuccessCakeTree } from './done';
 import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
 import { SaveCakeMessageModal } from '@/domain/wishes/component';
 import GradientShadow from '@/components/UI/GradientShadow';
+import KakaopayPayment from './kakaopayPayment';
+import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
+import Link from 'next/link';
+import { presentListArray } from '@/constant/model/present';
+import { watch } from 'fs';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -49,13 +53,18 @@ export default function GivePresentPageContainer({
     resolver: yupResolver(presentDataResolver),
   });
 
-  const { wantsGift } = publicWishesData;
+  const { transferInfo, hint, dayCount, presentImageUrl, title, nickname, wantsGift } =
+    publicWishesData;
+
+  const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
   const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
   const {
     state: presenetMessageModalState,
     handleState: handlePresentMessageModalState,
     changeState: changePresenetMessgaeModalState,
   } = useToggle();
+
+  const { giftMenuId } = methods.watch();
 
   const [selectedCakeId, setSelectedCakeId] = useState<string | null>(null);
 
@@ -87,11 +96,17 @@ export default function GivePresentPageContainer({
   }
 
   function isValid() {
-    if (!methods.formState.isValid) return false;
+    if (!methods.formState.isValid) {
+      return false;
+    }
+
+    if (!wantsGift) return true;
 
     const giftMenuId = methods.watch('giftMenuId');
 
-    if (!messageOnlyOption && !giftMenuId) return false;
+    if (!messageOnlyOption && !giftMenuId) {
+      return false;
+    }
 
     return true;
   }
@@ -107,6 +122,15 @@ export default function GivePresentPageContainer({
     const giftMenuId = methods.getValues('giftMenuId');
 
     handleRouter(`/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}`);
+  }
+
+  function handlePayment() {
+    if (forPayCode) {
+      window.open(kakaoPayCode);
+    } else {
+    }
+
+    handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
   }
 
   return (
@@ -142,25 +166,43 @@ export default function GivePresentPageContainer({
             ),
             payment: (
               <>
-                <Payment account={`${publicWishesData.accountNumber} ${publicWishesData.bank}`} />
-                <Button
-                  onClick={() => {
-                    GivePresent();
-                    handleRouter(
-                      `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`,
-                    );
-                  }}
-                  style={{ marginBottom: '5.8rem' }}
-                >
-                  {'송금하고, 편지 확인하기'}
-                </Button>
+                {forPayCode ? (
+                  <>
+                    <KakaopayPayment
+                      wishMakerName={nickname}
+                      presentPrice={presentListArray[giftMenuId].price.toString()}
+                    >
+                      <KakaopaySubmitButton handleSubmit={handlePayment} />
+                    </KakaopayPayment>
+                  </>
+                ) : (
+                  <>
+                    <Payment
+                      wishMakerName={nickname}
+                      presentPrice={presentListArray[giftMenuId].price.toString()}
+                      // account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
+                    />
+                    <Button
+                      onClick={() => {
+                        GivePresent();
+                        handleRouter(
+                          `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`,
+                        );
+                      }}
+                      style={{ marginBottom: '5.8rem' }}
+                    >
+                      {'송금하고, 편지 확인하기'}
+                    </Button>
+                  </>
+                )}
               </>
             ),
             done: (
               <section className="relative w-full">
                 {
                   <PresentMessageModal
-                    nickName={publicWishesData.name}
+                    // nickName={publicWishesData.transferInfo.accountInfo.name}
+                    nickName={'테스트'}
                     modalState={presenetMessageModalState}
                     handleModalState={handlePresentMessageModalState}
                     changeModalState={changePresenetMessgaeModalState}
@@ -169,7 +211,8 @@ export default function GivePresentPageContainer({
                 }
                 <PresentSuccess
                   giverName={methods.getValues('name')}
-                  wishesName={publicWishesData.name}
+                  // wishesName={publicWishesData.transferInfo.accountInfo.name}
+                  wishesName={'테스트'}
                 />
                 <PresentSuccessCakeTree
                   cakeList={[
@@ -189,45 +232,11 @@ export default function GivePresentPageContainer({
   );
 }
 
-function CheckSendMoneyModal({
-  modalState,
-  handleModalState,
-  wishId,
-  selectedCakeId,
-}: {
-  modalState: boolean;
-  handleModalState: () => void;
-  wishId: string;
-  selectedCakeId: string;
-}) {
-  const { handleRouter } = useRouters();
-
-  function handleNextStep() {
-    handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
-    handleModalState();
-  }
-
+function KakaopaySubmitButton({ handleSubmit }: { handleSubmit: () => void }) {
   return (
-    <CloseIconInModalWithVitaminCake
-      modalTitle="친구 계좌로 돈을 송금하셨나요?"
-      modalColor="main_blue"
-      isOpen={modalState}
-      handleState={handleModalState}
-    >
-      <span className="w-full font-galmuri text-[14px] text-dark_blue whitespace-pre-line text-center">
-        {'은행 앱으로 직접 송금하지 않았다면\n실제로 돈이 보내진 게 아니니 안심하세요!'}
-      </span>
-
-      <div className="flex justify-between gap-10 w-full">
-        <Button bgColor="white" fontColor="dark_green">
-          {'송금 안했어요'}
-        </Button>
-
-        <Button bgColor="dark_green" fontColor="white" onClick={handleNextStep}>
-          {'송금했어요'}
-        </Button>
-      </div>
-    </CloseIconInModalWithVitaminCake>
+    <FixedBottomButtonWrapper>
+      <Button onClick={handleSubmit}>카카오로 송금하고, 편지 확인하기</Button>
+    </FixedBottomButtonWrapper>
   );
 }
 
@@ -274,3 +283,45 @@ function PresentMessageModal({
     </>
   );
 }
+
+//function CheckSendMoneyModal({
+//   modalState,
+//   handleModalState,
+//   wishId,
+//   selectedCakeId,
+// }: {
+//   modalState: boolean;
+//   handleModalState: () => void;
+//   wishId: string;
+//   selectedCakeId: string;
+// }) {
+//   const { handleRouter } = useRouters();
+
+//   function handleNextStep() {
+//     handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
+//     handleModalState();
+//   }
+
+//   return (
+//     <CloseIconInModalWithVitaminCake
+//       modalTitle="친구 계좌로 돈을 송금하셨나요?"
+//       modalColor="main_blue"
+//       isOpen={modalState}
+//       handleState={handleModalState}
+//     >
+//       <span className="w-full font-galmuri text-[14px] text-dark_blue whitespace-pre-line text-center">
+//         {'은행 앱으로 직접 송금하지 않았다면\n실제로 돈이 보내진 게 아니니 안심하세요!'}
+//       </span>
+
+//       <div className="flex justify-between gap-10 w-full">
+//         <Button bgColor="white" fontColor="dark_green">
+//           {'송금 안했어요'}
+//         </Button>
+
+//         <Button bgColor="dark_green" fontColor="white" onClick={handleNextStep}>
+//           {'송금했어요'}
+//         </Button>
+//       </div>
+//     </CloseIconInModalWithVitaminCake>
+//   );
+// }

@@ -11,22 +11,21 @@ import { colors } from '@/styles/styles';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { PropsWithChildren, useEffect } from 'react';
-import { UserAccountDataType } from '@/types/api/response';
 import useToggle from '@/hooks/common/useToggle';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import Modal from '@/components/Common/Modal';
 import BankModal from '@/components/Common/Modal/BankModal';
-import { postVerifyAccount, putUserAccount } from '@/api/user';
+import { postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
-import { useRouters } from '@/hooks/common/useRouters';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { WishesAccountSubmitButton } from './container';
+import { TransferInfoType } from '@/types/wishesType';
 
 export default function WishesAccountInputForm({
   savedUserAccountData,
 }: {
-  savedUserAccountData?: UserAccountDataType;
+  savedUserAccountData?: TransferInfoType;
 }) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
@@ -45,7 +44,7 @@ export default function WishesAccountInputForm({
 
   useEffect(() => {
     if (savedUserAccountData) {
-      reset({ ...savedUserAccountData.accountInfo });
+      reset({ ...savedUserAccountData });
     }
   }, []);
 
@@ -59,19 +58,23 @@ export default function WishesAccountInputForm({
             readOnly
           />
 
-          <InputText placeholder="예금주명" register={register('name')} />
+          <InputText placeholder="예금주명" register={register('accountInfo.name')} />
           <SelectBank />
 
           <AccountInput
             accountVerifyBtnState={accountVerifyBtnState}
             changeAccountVerifyBtnState={changeAccountVerifyBtnState}
           >
-            <InputText placeholder="계좌번호를 입력해주세요" register={register('account')} />
+            <InputText
+              placeholder="계좌번호를 입력해주세요"
+              register={register('accountInfo.account')}
+            />
           </AccountInput>
           <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
         </div>
         <WishesAccountSubmitButton
-          disabled={!(noticeAgree && !accountVerifyBtnState)}
+          // disabled={noticeAgree || accountVerifyBtnState}
+          disabled={!(noticeAgree && wishesAccountInputMethods.formState.isValid)}
           linkDataMethods={savedWishesLinkDataMethods}
         />
       </InputForm>
@@ -87,29 +90,36 @@ function AccountInput({
   accountVerifyBtnState: boolean;
   changeAccountVerifyBtnState: (state: boolean) => void;
 } & PropsWithChildren) {
-  const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
+  const { formState, watch, reset } = useFormContext<WishesAccountDataResolverType>();
   const { isDirty, isValid } = formState;
-  const { account, bank, name, forPayCode, kakaoPayCode } = watch();
+  const { accountInfo, forPayCode, kakaoPayCode } = watch();
 
   useEffect(() => {
-    changeAccountVerifyBtnState(isDirty);
-  }, [isDirty]);
-
-  function handleAccountCheck() {
-    if (account && bank && name) {
-      postVerifyAccount({
-        account: account,
-        bank: bank,
-        name: name,
-        forPayCode: forPayCode,
-        kakaoPayCode: kakaoPayCode,
-      }).then((response) => {
-        // refactor : 어뷰징유저 하는거 확인해야합니다!
-        changeAccountVerifyBtnState(response.success);
-      });
+    if (isValid) {
+      changeAccountVerifyBtnState(true);
     }
 
-    //logic
+    if (!accountInfo) {
+      changeAccountVerifyBtnState(isDirty);
+    }
+  }, [isDirty, isValid]);
+
+  function handleAccountCheck() {
+    if ((accountInfo.account && accountInfo.bank, accountInfo.name)) {
+      postVerifyAccount({
+        account: accountInfo.account,
+        bank: accountInfo.bank,
+        name: accountInfo.name,
+      }).then((response) => {
+        reset({
+          accountInfo,
+          forPayCode,
+          kakaoPayCode,
+        });
+        // refactor : 어뷰징유저 하는거 확인해야합니다!
+        changeAccountVerifyBtnState(!response.success);
+      });
+    }
   }
 
   return (
@@ -137,14 +147,14 @@ function SelectBank() {
   const { register, setValue } = useFormContext<WishesAccountDataResolverType>();
 
   function changeBank(input: string) {
-    setValue('bank', input, { shouldDirty: true });
+    setValue('accountInfo.bank', input, { shouldDirty: true });
   }
 
   return (
     <>
       <DropDwonBox isOpen={false} handleState={handleChangeModalState} bgColor="dark_green">
         <input
-          {...register('bank')}
+          {...register('accountInfo.bank')}
           placeholder="은행 선택"
           className="w-full h-full font-galmuri text-[14px]"
           readOnly
@@ -154,7 +164,9 @@ function SelectBank() {
 
       {modalState && (
         <Modal isOpen={modalState} handleState={handleChangeModalState}>
-          <BankModal changeBank={changeBank} handleState={handleChangeModalState} />
+          <div className="flex justify-center items-center  w-full h-full">
+            <BankModal changeBank={changeBank} handleState={handleChangeModalState} />
+          </div>
         </Modal>
       )}
     </>
@@ -178,42 +190,3 @@ export function AccountFormNotice({
     </div>
   );
 }
-
-// //이전 다음 이렇게 된 버튼을 컴포넌트로 만들어도 좋을듯
-// function WishesAccountSubmitButton({
-//   linkDataMethods,
-//   disabled,
-// }: {
-//   linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
-//   disabled: boolean;
-// }) {
-//   const { handleBack, handleRouter } = useRouters();
-//   const { formState, watch } = useFormContext<WishesAccountDataResolverType>();
-//   // const { isValid, isDirty } = formState;
-
-//   function handleWishesCreateSubmit() {
-//     const accountInputs = watch();
-//     const wishesData = linkDataMethods.watch();
-
-//     putUserAccount(accountInputs).then((response) => {
-//       response.data.success &&
-//         postWishes(wishesData).then((response) => {
-//           response.data.success && handleRouter('/wishes/create?step=done');
-//         });
-//     });
-//   }
-
-//   return (
-//     <div className="flex justify-between gap-10">
-//       <Button fontColor="white" onClick={handleBack}>
-//         이전
-//       </Button>
-
-//       <Button type="submit" onClick={handleWishesCreateSubmit} disabled={disabled}>
-//         생성 완료!
-//       </Button>
-//     </div>
-//   );
-// }
-
-// function
