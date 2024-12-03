@@ -7,7 +7,7 @@ export default function GradientShadow({ height }: GradientShadowProps) {
 
   return (
     <svg
-      className="fixed bottom-0 left-0 w-full pointer-events-none"
+      className="fixed bottom-0 z-[10] left-0 w-full pointer-events-none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ height: computedHeight }}
     >

@@ -11,7 +11,7 @@ declare global {
 }
 
 export const metadata: Metadata = {
-  title: '조물주 보다 생일 선물주',
+  title: '조물주보다 생일선물주',
   keywords: '생일',
 };
 

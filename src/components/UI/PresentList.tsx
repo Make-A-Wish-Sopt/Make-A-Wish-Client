@@ -28,15 +28,13 @@ export default function PresentList({
           className={`flex flex-col items-center p-9 flex-grow flex-shrink basis-[calc(33%-10px)] ${
             isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
           }
-            font-bitbit rounded-xl`}
+            font-bitbit rounded-xl  text-[14px]`}
           onClick={() => handleSelectPresent(item.id)}
           key={item.id}
         >
           <Image src={item.image} alt="선물 이미지" />
-          <span className="font-bitbit text-[12px]">{item.itemName}</span>
-          <span className="font-bitbit text-[12px]">
-            {convertMoneyText(item.price.toString())}원
-          </span>
+          <span>{item.itemName}</span>
+          <span>{convertMoneyText(item.price.toString())}원</span>
         </div>
       ))}
     </div>

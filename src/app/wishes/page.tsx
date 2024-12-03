@@ -53,9 +53,10 @@ export default async function WishesPage() {
               <CakesTreeMessage cakeList={defaultCakeTreeDataArray} />
             </>
           )}
+
+          <GradientShadow height={19} />
           <WishesPageFixedBottomButton isWishProgress={!!progressWishesData} />
         </WishesPageContainer>
-        <GradientShadow height={19} />
       </MainLayout>
     </>
   );
