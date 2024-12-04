@@ -18,7 +18,7 @@ export function LoginWithSavedCookiesDatas({
 
   useEffect(() => {
     async function fetchAccessToken() {
-      const response = await fetch('/api/set-cookies', {
+      const response = await fetch('/api/cookies', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,6 @@ export function LoginWithSavedCookiesDatas({
         body: JSON.stringify(loginUserData),
       });
 
-      localStorage.setItem('accessToken', loginUserData.accessToken);
       handleRouter('/wishes');
     }
 

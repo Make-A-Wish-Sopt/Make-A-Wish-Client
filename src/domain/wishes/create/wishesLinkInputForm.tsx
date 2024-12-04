@@ -207,6 +207,9 @@ function SelectWantsGiftOption() {
           className={`w-full ${dropDownState && 'px-10 py-12'} bg-dark_green rounded-xl`}
           onClick={() => handleChangeWantsGiftState(true)}
         >
+          {/* refactor : 여백 수정해야합니다! */}
+          {/* refactor : 선물 리스트 스타일 수정해야합니다! */}
+
           <DropDwonBox isOpen={dropDownState} handleState={handleDropBoxState}>
             <RadioSelect isSelect={selectOption} />
             <span className="w-full">네! 생일 선물도 받아볼래요</span>

@@ -8,10 +8,9 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import InputText from '@/components/Common/Input/inputText';
 import Button from '@/components/Common/Button';
 import { convertEncode } from '@/utils/common/convert';
-import { PropsWithChildren, Suspense, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import { getCakePresentMessage } from '@/api/cakes';
-import Loading from '@/app/loading';
 
 type WishesPageGlobalStateType = {
   wishTitle: string;
@@ -76,13 +75,7 @@ export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress
   );
 }
 
-export function CakesTreeMessage({
-  cakeList,
-  wishId,
-}: {
-  cakeList: ReceivedCakeTreeMessageDataType[];
-  wishId?: string;
-}) {
+export function CakesTreeMessage({ cakeList }: { cakeList: ReceivedCakeTreeMessageDataType[] }) {
   const { watch, setValue } = useFormContext<WishesPageGlobalStateType>();
 
   function handleChangeCakeMessageModalState() {
@@ -145,7 +138,7 @@ export function ReceivedCakeMessageModal({
           receivedCakeMessageData={receivedCakeMessageData}
           nickName={nickName}
         >
-          <Button>이미지 저장하기</Button>
+          {/* <Button>이미지 저장하기</Button> */}
         </SaveCakeMessageModal>
       )}
     </>

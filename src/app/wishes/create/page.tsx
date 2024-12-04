@@ -4,12 +4,11 @@ import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
 import {
   AccountInputWithSavedAccountData,
-  CenteredContent,
-  ShareWishesLinkModal,
+  WishesCreateSuccess,
 } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
 import { convertDecode } from '@/utils/common/convert';
-import { Children } from 'react';
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'preview', 'done'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
@@ -20,6 +19,7 @@ export default async function WishesCreatePage({
   searchParams: { step: WishesCreateStepType; wishTitle: string };
 }) {
   const { step, wishTitle } = searchParams;
+  const loginUserData = await getLoginUserCookiesData();
 
   if (
     (step === 'link' && !wishTitle) ||
@@ -39,7 +39,7 @@ export default async function WishesCreatePage({
   return (
     <>
       <Header backBtn routePath="/wishes" />
-      <MainLayout>
+      <MainLayout checkLoggedIn>
         <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
           {
             {
@@ -58,6 +58,11 @@ export default async function WishesCreatePage({
                   <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>
                 </>
               ),
+              preview: (
+                <>
+                  <h1 className="font-bitbit text-main_blue text-center text-[24px] mt-26 mb-20">{`${loginUserData.nickName}님의 생일잔치`}</h1>
+                </>
+              ),
               account: (
                 <>
                   <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
@@ -66,7 +71,7 @@ export default async function WishesCreatePage({
               ),
               done: (
                 <>
-                  <CenteredContent />,
+                  <WishesCreateSuccess />,
                 </>
               ),
             }[step]

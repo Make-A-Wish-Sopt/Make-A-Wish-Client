@@ -62,7 +62,7 @@ export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
     }
   }
 
-  return <CakesTreeMessage cakeList={cakeList} wishId={wishId} />;
+  return <CakesTreeMessage cakeList={cakeList} />;
 }
 
 export async function WishesMessageToCreateUser({
@@ -73,12 +73,13 @@ export async function WishesMessageToCreateUser({
   nickName: string;
 }) {
   const receivedCakeList = await getCakesResult(wishId);
+  console.log(receivedCakeList);
 
   return (
     <MessageText>
       {receivedCakeList.length === 1
         ? `저희가 ${nickName}님의 생일을\n축하하며 편지를 남겼어요!`
-        : `${nickName}님의 생일잔치에\n도착한 케이크들이에요!`}
+        : `${nickName}님의 생일잔치에\n도착한 케이크들이에요!`}
     </MessageText>
   );
 }

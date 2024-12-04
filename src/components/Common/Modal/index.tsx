@@ -12,29 +12,29 @@ export interface ModalProps {
 export default function Modal(props: PropsWithChildren<ModalProps>) {
   const { isOpen, handleState, bgColor, children } = props;
 
-  const preventScroll = () => {
-    const currentScrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${currentScrollY}px`;
-    return currentScrollY;
-  };
+  // const preventScroll = () => {
+  //   const currentScrollY = window.scrollY;
+  //   document.body.style.position = 'fixed';
+  //   document.body.style.width = '100%';
+  //   document.body.style.top = `-${currentScrollY}px`;
+  //   return currentScrollY;
+  // };
 
-  const allowScroll = (prevScrollY) => {
-    document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.top = '';
-    window.scrollTo(0, prevScrollY);
-  };
+  // const allowScroll = (prevScrollY) => {
+  //   document.body.style.position = '';
+  //   document.body.style.width = '';
+  //   document.body.style.top = '';
+  //   window.scrollTo(0, prevScrollY);
+  // };
 
-  useEffect(() => {
-    if (isOpen) {
-      const prevScrollY = preventScroll();
-      return () => {
-        allowScroll(prevScrollY);
-      };
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     const prevScrollY = preventScroll();
+  //     return () => {
+  //       allowScroll(prevScrollY);
+  //     };
+  //   }
+  // }, [isOpen]);
 
   return (
     <>

@@ -10,9 +10,9 @@ export const putUserAccount = async (accountInputs: WishesAccountDataResolverTyp
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
       accountInfo: {
-        name: accountInputs.name,
-        bank: accountInputs.bank,
-        account: accountInputs.account,
+        name: accountInputs.accountInfo.name,
+        bank: accountInputs.accountInfo.bank,
+        account: accountInputs.accountInfo.account,
       },
       kakaoPayCode: accountInputs.kakaoPayCode,
       forPayCode: accountInputs.forPayCode,

@@ -19,7 +19,7 @@ export default function ErrorPage({
 
   return (
     <>
-      <main className="w-full h-svh flex flex-col justify-center items-center px-22 min-w-375 max-w-500">
+      <main className="w-full h-svh flex flex-col justify-center items-center px-22 min-w-375 ">
         <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
 
         <h1 className="font-bitbit text-main_blue text-[100px]">ERROR</h1>

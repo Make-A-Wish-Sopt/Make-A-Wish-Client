@@ -7,7 +7,7 @@ import MainLayout from '@/layouts/MainLayout';
 const WishesDepositEditSteps = ['select', 'kakaopay', 'account'] as const;
 export type WishesDepositEditStepsType = (typeof WishesDepositEditSteps)[number];
 
-export default async function wisheDepositEditPage({
+export default async function WisheDepositEditPage({
   searchParams,
 }: {
   searchParams: { step: WishesDepositEditStepsType };

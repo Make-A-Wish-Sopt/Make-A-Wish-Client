@@ -278,7 +278,7 @@ function PresentMessageModal({
         receivedCakeMessageData={receivedCakeMessageData}
         nickName={nickName}
       >
-        <Button>이미지 저장하기</Button>
+        {/* <Button onClick={captureAndDownloadImage}>이미지 저장하기</Button> */}
       </SaveCakeMessageModal>
     </>
   );

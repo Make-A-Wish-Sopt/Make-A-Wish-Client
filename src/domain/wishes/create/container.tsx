@@ -18,11 +18,9 @@ import WishesInputPreview from './wishesInputPreview';
 import { postWishes } from '@/api/wishes';
 import useToggle from '@/hooks/common/useToggle';
 import WishesLinkInputForm from './wishesLinkInputForm';
-import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
-import { ShareWishesLinkModal } from './service';
 
 export default function WishesCreatePageContainer({
   step,
@@ -87,16 +85,12 @@ export default function WishesCreatePageContainer({
           account: <>{children}</>,
           preview: (
             <>
+              {children}
               <WishesInputPreview methods={savedWishesLinkDataMethods} />
               <WishesPreviewSubmitButton linkDataMethods={savedWishesLinkDataMethods} />
             </>
           ),
-          done: (
-            <>
-              {children}
-              <SharePageFixedButtons />
-            </>
-          ),
+          done: <>{children}</>,
         }[step]
       }
     </FormProvider>
@@ -209,7 +203,7 @@ function WishesPreviewSubmitButton({
   return (
     <FixedBottomButtonWrapper>
       <div className="flex justify-between gap-10">
-        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+        <Button bgColor="gray4" fontColor="main_blue" onClick={handleBack}>
           수정하기
         </Button>
 
@@ -217,40 +211,4 @@ function WishesPreviewSubmitButton({
       </div>
     </FixedBottomButtonWrapper>
   );
-}
-
-function SharePageFixedButtons() {
-  const { handleRouter } = useRouters();
-  const { state: shareModalState, handleState: handleShareModalState } = useToggle();
-
-  return (
-    <>
-      <FixedBottomButtonWrapper>
-        <div className="flex flex-col gap-10">
-          <Button onClick={handleShareModalState}>생일잔치에 친구 초대하기</Button>
-          <Button
-            bgColor="gray4"
-            fontColor="white"
-            onClick={() => {
-              handleRouter('/wishes');
-            }}
-          >
-            홈으로 이동하기
-          </Button>
-        </div>
-      </FixedBottomButtonWrapper>
-      {shareModalState && (
-        <ShareLinkModal
-          wishId="261"
-          nickName="ㅎㅁㅎ"
-          modalState={shareModalState}
-          handleModalState={handleShareModalState}
-        />
-      )}
-    </>
-  );
-}
-
-export function ShareSnsModal({ wishId }) {
-  return <></>;
 }

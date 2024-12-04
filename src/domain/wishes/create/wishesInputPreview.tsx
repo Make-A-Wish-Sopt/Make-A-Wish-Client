@@ -21,11 +21,6 @@ export default function WishesInputPreview({
   return (
     <section className="relative flex flex-col item-center w-full mb-30">
       <div className="w-full">
-        {/* 소원제목 미리보기 */}
-        <h3 className="font-bitbit text-main_blue text-[20px] text-center leading-tight mt-26 mb-12 whitespace-pre-line">
-          {watch('title')}
-        </h3>
-
         {/* 소원 생성 시 등록한 이미지 미리보기 */}
         <div className="flex flex-col w-full gap-10 mb-20">
           <UploadImageBox imageUrl={imageUrl} />

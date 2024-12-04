@@ -17,11 +17,6 @@ export const getMainProgressWishesData = async () => {
   try {
     const data = await client.get<MainProgressDataResponseType>(
       `${API_VERSION_01}${PATH_WISHES.MAIN}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
     );
 
     return data.data.data;
@@ -32,11 +27,7 @@ export const getMainProgressWishesData = async () => {
  * 모든 소원리스트 조회
  */
 export const getWishes = async () => {
-  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {});
 
   return data.data.data.wishes;
 };
@@ -50,11 +41,6 @@ export const postWishes = async (wishesData: WishesLinkDataResolverType) => {
     {
       ...wishesData,
     },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
   );
 
   return data;
@@ -65,9 +51,6 @@ export const postWishes = async (wishesData: WishesLinkDataResolverType) => {
  */
 export const deleteWishes = async (wishesData: number[]) => {
   const data = await client.delete(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
     data: {
       wishes: wishesData,
     },
@@ -82,11 +65,6 @@ export const deleteWishes = async (wishesData: number[]) => {
 export const getProgressWishLinkData = async () => {
   const data = await client.get<WishesProgressDataResponseType>(
     `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
   );
 
   return data.data.data;
@@ -96,17 +74,9 @@ export const getProgressWishLinkData = async () => {
  * 진행중인 소원 정보 수정
  */
 export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) => {
-  const data = await client.put(
-    `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
-    {
-      ...wishesData,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
+  const data = await client.put(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
+    ...wishesData,
+  });
 
   return data.data.data;
 };
@@ -115,11 +85,7 @@ export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) 
  * 진행중인 소원 중단
  */
 export const patchProgressWishes = async () => {
-  const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {});
 
   return data.data.data;
 };
@@ -128,11 +94,7 @@ export const patchProgressWishes = async () => {
  * 소원 단건 조회
  */
 export const getSingleWishInfo = async (wishId: string | string[] | undefined) => {
-  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`);
 
   return data.data.data;
 };
