@@ -73,6 +73,7 @@ export default function WishesCreatePageContainer({
             <>
               {children}
               <WishesKakaopayInputForm
+                isKakaoPayCodeValid={isKakaoPayCodeValid}
                 changeNoticeAgreeState={changeNoticeAgreeState}
                 changeIsKakaoPayCodeValid={changeIsKakaoPayCodeValid}
               >

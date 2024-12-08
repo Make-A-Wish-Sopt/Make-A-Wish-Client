@@ -62,6 +62,8 @@ export { default as PayCodeGuideStep1Img } from '../images/ModalContent/PayCodeG
 export { default as PayCodeGuideStep2Img } from '../images/ModalContent/PayCodeGuideModal/PayCodeGuideStep2Img.png';
 export { default as PayCodeGuideStep3Img } from '../images/ModalContent/PayCodeGuideModal/PayCodeGuideStep3Img.png';
 
+export { default as GuideImg } from '../images/GuideImg.png';
+
 // bank
 const bankImgs: Record<string, any> = {};
 for (let i = 1; i <= 33; i++) {

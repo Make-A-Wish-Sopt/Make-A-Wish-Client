@@ -3,7 +3,7 @@
 import { getProgressWishLinkData, patchProgressWishes } from '@/api/wishes';
 import MoreBox from '@/components/UI/MoreBox';
 import { useRouters } from '@/hooks/common/useRouters';
-import { MypageUserName } from './component';
+import { MypageUserName, UserManualGuideButton } from './component';
 import useToggle from '@/hooks/common/useToggle';
 import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import Button from '@/components/Common/Button';
@@ -69,7 +69,8 @@ export default function MypageContainer({
           </>
         )}
 
-        <MoreBox text="사용설명서 보기" />
+        <UserManualGuideButton />
+        {/* <MoreBox text="사용설명서 보기" /> */}
         <MoreBox handleClick={handleConnectServiceCenter} text="고객센터 문의하기" />
       </ul>
 

@@ -22,10 +22,9 @@ export default function InputText({
   ...rest
 }: InputTextProps) {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (keyPrevent && !event.ctrlKey && event.key !== 'v') {
-      // Ctrl+V (붙여넣기) 허용, 나머지 키보드 입력 차단
-      event.preventDefault();
-    }
+    if (!keyPrevent) return;
+
+    // 키보다 방지기능 구현
   };
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
 import InputText from '@/components/Common/Input/inputText';
 import { AccountFormNotice } from './wishesAccountInputForm';
 import Image from 'next/image';
-import { HelpIc } from '../../../../public/assets/icons';
+import { AlertSuccessIc, CheckIc, HelpIc } from '../../../../public/assets/icons';
 import BorderBox from '@/components/UI/BorderBox';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -15,12 +15,16 @@ import { DefaultResponseType } from '@/types/api/response';
 import { getUserAccount } from '@/api/user';
 import useToggle from '@/hooks/common/useToggle';
 import { PayCodeGuideModal } from './component';
+import CloseIcon from '@/components/Common/Icon/CloseIcon';
+import CheckedIcon from '@/components/Common/Icon/CheckedIcon';
 
 export default function WishesKakaopayInputForm({
+  isKakaoPayCodeValid,
   changeNoticeAgreeState,
   changeIsKakaoPayCodeValid,
   children,
 }: {
+  isKakaoPayCodeValid: boolean;
   changeNoticeAgreeState: (state: boolean) => void;
   changeIsKakaoPayCodeValid: (state: boolean) => void;
 } & PropsWithChildren) {
@@ -32,7 +36,7 @@ export default function WishesKakaopayInputForm({
     },
     resolver: yupResolver(wishesAccountDataResolver),
   });
-  const { register, watch, reset } = wishesAccountInputMethods;
+  const { register, watch, reset, formState } = wishesAccountInputMethods;
   const { kakaoPayCode } = watch();
 
   const {
@@ -50,9 +54,7 @@ export default function WishesKakaopayInputForm({
   }, []);
 
   useEffect(() => {
-    if (kakaoPayCode) {
-      checkKakaopayCode(kakaoPayCode);
-    }
+    handleValidateKakaopayCode();
   }, [kakaoPayCode]);
 
   async function checkKakaopayCode(kakaoPayCode: string) {
@@ -66,6 +68,17 @@ export default function WishesKakaopayInputForm({
     const data: DefaultResponseType = await response.json();
 
     changeIsKakaoPayCodeValid(data.success);
+  }
+
+  async function handleValidateKakaopayCode() {
+    if (!kakaoPayCode) return;
+
+    if (kakaoPayCode.startsWith('https://qr.kakaopay.com/')) {
+      checkKakaopayCode(kakaoPayCode);
+    } else {
+      changeIsKakaoPayCodeValid(false);
+      // wishesAccountInputMethods.setValue('kakaoPayCode', '');
+    }
   }
 
   return (
@@ -87,7 +100,22 @@ export default function WishesKakaopayInputForm({
           register={register('kakaoPayCode')}
           placeholder="송금링크를 붙여넣어주세요"
           keyPrevent
-        />
+          onBlur={handleValidateKakaopayCode}
+        >
+          {isKakaoPayCodeValid ? (
+            <CheckedIcon />
+          ) : (
+            // <Image src={AlertSuccessIc} alt="유효 아이콘" />
+            <div
+              onClick={() => {
+                kakaoPayCode && wishesAccountInputMethods.setValue('kakaoPayCode', '');
+              }}
+            >
+              <CloseIcon color={kakaoPayCode ? 'main_blue' : 'gray2'} />
+            </div>
+          )}
+        </InputText>
+        {isKakaoPayCodeValid && <span></span>}
 
         <BorderBox>
           <p className="text-[12px]">

@@ -46,6 +46,7 @@ export default function WisheDepositEditPageContainer({
           kakaopay: (
             <>
               <WishesKakaopayInputForm
+                isKakaoPayCodeValid={isKakaoPayCodeValid}
                 changeNoticeAgreeState={changeNoticeAgreeState}
                 changeIsKakaoPayCodeValid={changeIsKakaoPayCodeValid}
               >

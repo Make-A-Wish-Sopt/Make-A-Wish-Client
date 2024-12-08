@@ -49,8 +49,8 @@ presetListDataMap.set(4, {
   image: PresentItem4Img,
 });
 presetListDataMap.set(5, {
-  name: 'sushi',
-  itemName: '초밥이었던',
+  name: 'beef',
+  itemName: '소고기였던',
   price: 25900,
   image: PresentItem5Img,
 });
