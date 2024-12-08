@@ -16,7 +16,9 @@ export default function CloseIconInModalWithVitaminCake({
       <div className="flex flex-col items-center gap-20 w-full">
         <div className="flex flex-col items-center w-full">
           <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
-          <h4 className="font-bitbit text-[24px] text-background">{modalTitle}</h4>
+          <h4 className="font-bitbit text-[24px] text-background leading-none text-center whitespace-pre-line">
+            {modalTitle}
+          </h4>
         </div>
         {children}
       </div>

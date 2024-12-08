@@ -21,7 +21,7 @@ export default async function GivePresentPage({
 
   return (
     <>
-      <Header backBtn />
+      <Header backBtn mypageBtn />
       <MainLayout>
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}

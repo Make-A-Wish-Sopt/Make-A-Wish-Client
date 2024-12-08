@@ -56,6 +56,11 @@ export { default as CoffeeCakeAvatarImg } from '../images/AvatarCakeList/CoffeeC
 export { default as DdongCakeAvatarImg } from '../images/AvatarCakeList/DdongCakeAvatarImg.png';
 
 export { default as SharePageCakeImg } from '../images/SharePageCakeImg.png';
+export { default as EmptyWishesCakeImg } from '../images/EmptyWishesCakeImg.png';
+
+export { default as PayCodeGuideStep1Img } from '../images/ModalContent/PayCodeGuideModal/PayCodeGuideStep1Img.png';
+export { default as PayCodeGuideStep2Img } from '../images/ModalContent/PayCodeGuideModal/PayCodeGuideStep2Img.png';
+export { default as PayCodeGuideStep3Img } from '../images/ModalContent/PayCodeGuideModal/PayCodeGuideStep3Img.png';
 
 // bank
 const bankImgs: Record<string, any> = {};

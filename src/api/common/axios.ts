@@ -28,8 +28,6 @@ client.interceptors.request.use(
       config.headers['Authorization'] = `Bearer ${loginUserCookiesData.accessToken}`;
     }
 
-    console.log('request token : ', config.headers.Authorization);
-
     if (config.headers.Authorization) {
       return config;
     }
@@ -63,7 +61,6 @@ client.interceptors.response.use(
         }
 
         const { accessToken, refreshToken } = data;
-        console.log('update Token : ', accessToken);
 
         const loginUserCookiesData = await getLoginUserCookiesData();
 

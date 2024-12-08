@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function useSelectItem() {
   const [selectedId, setSelectedId] = useState(0);
-  // const [selectedIdArray, setSelectedIdArray] = useState<Array<Number>>([]);
+  const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([]);
 
   function handleSelectOne(id: number) {
     setSelectedId(id);
@@ -14,5 +14,20 @@ export default function useSelectItem() {
     return selectedId === id;
   }
 
-  return { selectedId, handleSelectOne, isSelected };
+  function addToDeleteIdList(addItemId: number) {
+    setSelectedIdArray([...selectedIdArray, addItemId]);
+  }
+
+  function removeToDeleteIdList(removeItemId: number) {
+    setSelectedIdArray([...selectedIdArray.filter((id) => id !== removeItemId)]);
+  }
+
+  return {
+    selectedId,
+    handleSelectOne,
+    isSelected,
+    selectedIdArray,
+    addToDeleteIdList,
+    removeToDeleteIdList,
+  };
 }

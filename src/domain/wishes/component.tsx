@@ -101,7 +101,6 @@ export function SaveCakeMessageModal({
                     <Image
                       src={presentListObject[Number(giftMenuId)].image}
                       alt="선물한 선물 이미지"
-                      width={43}
                       height={43}
                     />
                     {`${presentListObject[Number(giftMenuId)].itemName} ${convertMoneyText(

@@ -1,14 +1,36 @@
 import Image from 'next/image';
 import Box from '../Common/Box';
-import { ArrowRightIc } from '../../../public/assets/icons';
 
-export default function MoreBox({ text, handleClick }: { text: string; handleClick: () => void }) {
+import { colors } from '@/styles/styles';
+import ArrowIcon from '../Common/Icon/ArrowIcon';
+
+export default function MoreBox({
+  text,
+  disabled = false,
+  handleClick,
+}: {
+  text: string;
+  disabled?: boolean;
+  handleClick?: () => void;
+}) {
+  function handleMoreClick() {
+    if (disabled) return;
+
+    handleClick();
+  }
+
   return (
     <li>
-      <Box bgColor="dark_green" fontColor="main_blue" onClick={handleClick}>
+      <Box
+        onClick={handleMoreClick}
+        styles={{
+          backgroundColor: disabled ? colors.gray4 : colors.dark_green,
+          color: disabled ? colors.gray3 : colors.main_blue,
+        }}
+      >
         <div className="flex justify-between items-center w-full h-full font-bitbit text-[18px]">
           {text}
-          <Image src={ArrowRightIc} alt="왼쪽 화살표" width={10} priority></Image>
+          <ArrowIcon color={disabled ? 'gray3' : 'main_blue'} />
         </div>
       </Box>
     </li>

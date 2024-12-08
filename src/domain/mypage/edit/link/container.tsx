@@ -12,7 +12,10 @@ export default function WisheLinkEditPageContainer({
   return (
     <>
       {children}
-      <WishesLinkInputs wishTitle="asdf" progressWishesData={progressWishesData}>
+      <WishesLinkInputs
+        wishTitle={progressWishesData.title}
+        progressWishesData={progressWishesData}
+      >
         <WishesLinkEditSubmitButton />
       </WishesLinkInputs>
     </>

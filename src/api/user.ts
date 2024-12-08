@@ -9,11 +9,7 @@ export const putUserAccount = async (accountInputs: WishesAccountDataResolverTyp
   const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
-      accountInfo: {
-        name: accountInputs.accountInfo.name,
-        bank: accountInputs.accountInfo.bank,
-        account: accountInputs.accountInfo.account,
-      },
+      accountInfo: accountInputs.accountInfo,
       kakaoPayCode: accountInputs.kakaoPayCode,
       forPayCode: accountInputs.forPayCode,
     },

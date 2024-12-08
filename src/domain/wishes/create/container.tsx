@@ -21,6 +21,7 @@ import WishesLinkInputForm from './wishesLinkInputForm';
 import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
+import WishesAccountInputForm from './wishesAccountInputForm';
 
 export default function WishesCreatePageContainer({
   step,
@@ -82,7 +83,17 @@ export default function WishesCreatePageContainer({
               </WishesKakaopayInputForm>
             </>
           ),
-          account: <>{children}</>,
+          account: (
+            <>
+              {children}
+              <WishesAccountInputForm changeNoticeAgreeState={changeNoticeAgreeState}>
+                <WishesAccountSubmitButton
+                  disabled={!noticeAgree}
+                  linkDataMethods={savedWishesLinkDataMethods}
+                />
+              </WishesAccountInputForm>
+            </>
+          ),
           preview: (
             <>
               {children}
@@ -97,15 +108,25 @@ export default function WishesCreatePageContainer({
   );
 }
 
-export function WishesEditAccountSubmitButton({ isValid }: { isValid: boolean }) {
+export function WishesEditAccountSubmitButton({
+  isValid,
+  forPayCode,
+}: {
+  isValid: boolean;
+  forPayCode: boolean;
+}) {
   const { handleBack, handleRouter } = useRouters();
   const { watch } = useFormContext<WishesAccountDataResolverType>();
 
   function handleWishesCreateSubmit() {
     const accountInputs = watch();
 
-    putUserAccount(accountInputs).then((response) => {
-      response.data.success && handleRouter('/');
+    putUserAccount({
+      ...accountInputs,
+      forPayCode: forPayCode,
+    }).then((response) => {
+      response.data.success && alert('계좌정보 수정완료!');
+      handleRouter('/mypage');
     });
   }
   return (
@@ -136,7 +157,7 @@ export function WishesAccountSubmitButton({
   disabled: boolean;
 }) {
   const { handleBack, handleRouter } = useRouters();
-  const { watch } = useFormContext<WishesAccountDataResolverType>();
+  const { watch, formState } = useFormContext<WishesAccountDataResolverType>();
 
   function handleWishesCreateSubmit() {
     const accountInputs = watch();
@@ -160,7 +181,7 @@ export function WishesAccountSubmitButton({
           onClick={() => {
             handleWishesCreateSubmit();
           }}
-          disabled={disabled}
+          disabled={disabled && formState.isValid}
         >
           생성 완료!
         </Button>
@@ -203,7 +224,7 @@ function WishesPreviewSubmitButton({
   return (
     <FixedBottomButtonWrapper>
       <div className="flex justify-between gap-10">
-        <Button bgColor="gray4" fontColor="main_blue" onClick={handleBack}>
+        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
           수정하기
         </Button>
 

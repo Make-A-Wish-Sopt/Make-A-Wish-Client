@@ -30,7 +30,7 @@ export default function Header(props: HeaderProps) {
       <div className="flex justify-between items-center min-w-375 max-w-500 w-full mt-2rem pt-16 px-22">
         {backBtn && <Image src={BackBtnIc} alt="뒤로가기 아이콘" onClick={handleRouteBack} />}
         <div></div>
-        {mypageBtn && pathname === '/wishes' && (
+        {mypageBtn && (
           <Image src={MenuIc} alt="메뉴 아이콘" onClick={() => router.push('/mypage')} />
         )}
       </div>

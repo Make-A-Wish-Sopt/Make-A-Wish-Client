@@ -2,10 +2,7 @@ import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
-import {
-  AccountInputWithSavedAccountData,
-  WishesCreateSuccess,
-} from '@/domain/wishes/create/service';
+import { WishesCreateSuccess } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
 import { convertDecode } from '@/utils/common/convert';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
@@ -66,7 +63,6 @@ export default async function WishesCreatePage({
               account: (
                 <>
                   <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
-                  <AccountInputWithSavedAccountData />
                 </>
               ),
               done: (

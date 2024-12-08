@@ -15,18 +15,17 @@ import useToggle from '@/hooks/common/useToggle';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import Modal from '@/components/Common/Modal';
 import BankModal from '@/components/Common/Modal/BankModal';
-import { postVerifyAccount } from '@/api/user';
+import { getUserAccount, postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { WishesAccountSubmitButton } from './container';
-import { TransferInfoType } from '@/types/wishesType';
 
 export default function WishesAccountInputForm({
-  savedUserAccountData,
+  changeNoticeAgreeState,
+  children,
 }: {
-  savedUserAccountData?: TransferInfoType;
-}) {
+  changeNoticeAgreeState: (state: boolean) => void;
+} & PropsWithChildren) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
     defaultValues: {
@@ -38,14 +37,16 @@ export default function WishesAccountInputForm({
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
 
   const { state: accountVerifyBtnState, changeState: changeAccountVerifyBtnState } = useToggle();
-  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
 
   const { register, reset } = wishesAccountInputMethods;
 
   useEffect(() => {
-    if (savedUserAccountData) {
-      reset({ ...savedUserAccountData });
-    }
+    getUserAccount().then((response) => {
+      response.transferInfo &&
+        reset({
+          ...response.transferInfo,
+        });
+    });
   }, []);
 
   return (
@@ -72,11 +73,9 @@ export default function WishesAccountInputForm({
           </AccountInput>
           <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
         </div>
-        <WishesAccountSubmitButton
-          // disabled={noticeAgree || accountVerifyBtnState}
-          disabled={!(noticeAgree && wishesAccountInputMethods.formState.isValid)}
-          linkDataMethods={savedWishesLinkDataMethods}
-        />
+
+        {/* Submit Button */}
+        {children}
       </InputForm>
     </FormProvider>
   );
@@ -179,13 +178,14 @@ export function AccountFormNotice({
   changeNoticeAgreeState: (state: boolean) => void;
 }) {
   return (
-    <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl ">
+    <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl">
       {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
       <div className="flex justify-end w-full h-20">
-        <CheckBox<WishesAccountDataResolverType>
-          checkBoxText={'동의함'}
-          changeCheckedState={changeNoticeAgreeState}
-        />
+        <div className="flex justify-end">
+          <CheckBox changeCheckedState={changeNoticeAgreeState}>
+            <span className="font-galmuri text-[14px] text-main_blue ml-8">{'동의함'}</span>
+          </CheckBox>
+        </div>
       </div>
     </div>
   );

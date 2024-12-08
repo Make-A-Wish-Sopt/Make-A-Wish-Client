@@ -5,7 +5,6 @@ import Button from '@/components/Common/Button';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import InputForm from '@/components/UI/InputForm';
 import SelectBox from '@/components/UI/SelectBox';
-import { useRouters } from '@/hooks/common/useRouters';
 import { PropsWithChildren } from 'react';
 
 export default function SelectDeposit({
@@ -41,12 +40,10 @@ export default function SelectDeposit({
 }
 
 export function WishesDepositSubmitButton({ handleNextStep }: { handleNextStep: () => void }) {
-  const { handleBack } = useRouters();
-
   return (
     <FixedBottomButtonWrapper>
       <div className="flex justify-between gap-10">
-        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+        <Button bgColor="gray2" fontColor="white">
           이전
         </Button>
 

@@ -73,7 +73,6 @@ export async function WishesMessageToCreateUser({
   nickName: string;
 }) {
   const receivedCakeList = await getCakesResult(wishId);
-  console.log(receivedCakeList);
 
   return (
     <MessageText>

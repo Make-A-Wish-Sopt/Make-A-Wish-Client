@@ -13,6 +13,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { PropsWithChildren, useEffect } from 'react';
 import { DefaultResponseType } from '@/types/api/response';
 import { getUserAccount } from '@/api/user';
+import useToggle from '@/hooks/common/useToggle';
+import { PayCodeGuideModal } from './component';
 
 export default function WishesKakaopayInputForm({
   changeNoticeAgreeState,
@@ -30,10 +32,14 @@ export default function WishesKakaopayInputForm({
     },
     resolver: yupResolver(wishesAccountDataResolver),
   });
-
   const { register, watch, reset } = wishesAccountInputMethods;
-
   const { kakaoPayCode } = watch();
+
+  const {
+    state: payCodeGuideModalState,
+    changeState: changePayCodeGuideModalState,
+    handleState: handlePayCodeGuideModalState,
+  } = useToggle();
 
   useEffect(() => {
     getUserAccount().then((response) => {
@@ -50,7 +56,7 @@ export default function WishesKakaopayInputForm({
   }, [kakaoPayCode]);
 
   async function checkKakaopayCode(kakaoPayCode: string) {
-    const response = await fetch('/api/kakaopay-validate', {
+    const response = await fetch('/api/kakao/paycode', {
       method: 'POST',
       body: JSON.stringify({ kakaoPayCode: kakaoPayCode }),
       headers: {
@@ -69,7 +75,13 @@ export default function WishesKakaopayInputForm({
           <h3 className="font-bitbit text-white text-[20px] leading-tight whitespace-pre-line">
             송금코드 링크 붙여넣기
           </h3>
-          <Image src={HelpIc} alt="도움말 아이콘" />
+          <Image
+            onClick={() => {
+              changePayCodeGuideModalState(true);
+            }}
+            src={HelpIc}
+            alt="도움말 아이콘"
+          />
         </div>
         <InputText
           register={register('kakaoPayCode')}
@@ -86,6 +98,12 @@ export default function WishesKakaopayInputForm({
 
       <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
       {children}
+      {payCodeGuideModalState && (
+        <PayCodeGuideModal
+          modalState={payCodeGuideModalState}
+          handleModalState={handlePayCodeGuideModalState}
+        />
+      )}
     </FormProvider>
   );
 }

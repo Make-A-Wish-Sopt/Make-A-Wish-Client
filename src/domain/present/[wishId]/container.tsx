@@ -147,10 +147,9 @@ export default function GivePresentPageContainer({
                     <InputForm title="선물하고 싶은 항목 선택하기">
                       {!messageOnlyOption && <PresentList changeGiftMenuId={changeGiftMenuId} />}
                       <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-                        <CheckBox<PresentDataResolverType>
-                          checkBoxText="편지만 보낼게요"
-                          changeCheckedState={changeMessageOnlyOption}
-                        />
+                        <CheckBox changeCheckedState={changeMessageOnlyOption}>
+                          <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
+                        </CheckBox>
                       </Box>
                     </InputForm>
                   )}

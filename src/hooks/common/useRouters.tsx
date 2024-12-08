@@ -26,5 +26,9 @@ export function useRouters() {
     router.replace(path);
   }
 
-  return { handleRouter, handleReplace, handleBack };
+  function handleRefresh() {
+    router.refresh();
+  }
+
+  return { handleRouter, handleReplace, handleBack, handleRefresh };
 }

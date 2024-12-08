@@ -1,3 +1,5 @@
+import { getUserAccount } from '@/api/user';
+import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
 import WisheDepositEditPageContainer from '@/domain/mypage/edit/deposit/container';
@@ -22,11 +24,21 @@ export default async function WisheDepositEditPage({
     );
   }
 
+  const userAccount = await getUserAccount();
+  const transferInfo = userAccount.transferInfo;
+
+  if (!userAccount) {
+    return <ErrorPage alertMessage="등록된 계좌가 없습니다!" btnMessage="뒤로 돌아가기" />;
+  }
+
   return (
     <>
-      <Header backBtn />
+      <Header backBtn routePath="/mypage" />
       <MainLayout checkLoggedIn>
-        <WisheDepositEditPageContainer step={searchParams.step}>
+        <WisheDepositEditPageContainer
+          step={searchParams.step}
+          forPayCode={transferInfo.forPayCode}
+        >
           {
             {
               select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
@@ -35,7 +47,11 @@ export default async function WisheDepositEditPage({
                   <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>,
                 </>
               ),
-              account: <></>,
+              account: (
+                <>
+                  <WishesCreateTitleText>입금 받을 계좌 입력하기</WishesCreateTitleText>
+                </>
+              ),
             }[searchParams.step]
           }
         </WisheDepositEditPageContainer>

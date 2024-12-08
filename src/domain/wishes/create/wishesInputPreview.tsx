@@ -39,7 +39,9 @@ export default function WishesInputPreview({
           <InputForm title="선물하고 싶은 항목 선택하기">
             <PresentList readonly />
             <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-              <CheckBox checkBoxText="편지만 보낼게요" readOnly />
+              <CheckBox readOnly>
+                <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
+              </CheckBox>
             </Box>
           </InputForm>
         )}

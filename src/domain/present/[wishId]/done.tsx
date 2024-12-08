@@ -52,7 +52,7 @@ export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataTyp
               src={firstCake.cakeImg}
               alt="선물보낸 케이크 이미지"
               width={187}
-              style={{ transform: 'translate(0%, -10%)', zIndex: 100 }}
+              style={{ transform: 'translate(0%, -10%)', zIndex: 100, objectFit: 'contain' }}
             />
           </div>
 

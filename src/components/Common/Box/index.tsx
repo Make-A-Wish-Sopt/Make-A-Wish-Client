@@ -22,9 +22,7 @@ export default function Box(props: PropsWithChildren<BoxProps>) {
 
   return (
     <div
-      className={`w-full h-50 bg-${bgColor || 'dark_blue'} font-${font} text-${
-        fontColor || 'white'
-      } p-10 pl-12 rounded-xl`}
+      className={`w-full h-50 bg-${bgColor} font-${font} text-${fontColor} p-10 pl-12 rounded-xl`}
       style={styles}
       onClick={onClick}
     >

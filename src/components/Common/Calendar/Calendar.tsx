@@ -1,38 +1,47 @@
-import Image from 'next/image';
+import { DayPicker, NextMonthButtonProps, PreviousMonthButtonProps } from 'react-day-picker';
 import { ko } from 'date-fns/locale';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import CalendarHeader from './CalendarHeader';
-import { CalendarGreyIc, CalendarIc } from '../../../../public/assets/icons';
-import Box from '../Box';
+import 'react-day-picker/dist/style.css';
+import ArrowIcon from '../Icon/ArrowIcon';
+import { CSSProperties } from 'react';
 
 interface CalendarProps {
   date: Date;
-  handleChangeDate?: (selectedDate: Date) => void;
-  readOnly?: boolean;
+  ChangeDate?: (selectedDate: Date) => void;
+  style?: CSSProperties;
 }
 
 export default function Calendar(props: CalendarProps) {
-  const { date, handleChangeDate, readOnly } = props;
+  const { date, ChangeDate, style } = props;
 
   return (
-    <Box bgColor="dark_green" fontColor={readOnly ? 'gray2' : 'white'}>
-      <div className="flex justify-between items-center w-full h-full text-[14px] font-galmuri">
-        <DatePicker
-          renderCustomHeader={({ date, changeYear, changeMonth }) => (
-            <CalendarHeader date={date} changeYear={changeYear} changeMonth={changeMonth} />
-          )}
-          locale={ko}
-          dateFormat="yyyy.MM.dd"
-          selected={new Date(date)}
-          onChange={() => handleChangeDate(date)}
-          minDate={new Date()}
-          selectsEnd
-          readOnly={readOnly}
-          className="react-datepicker__input-container"
-        />
-        <Image src={readOnly ? CalendarGreyIc : CalendarIc} alt="캘린더 아이콘" />
-      </div>
-    </Box>
+    <DayPicker
+      mode="single"
+      selected={date}
+      onSelect={ChangeDate}
+      locale={ko}
+      components={{
+        NextMonthButton: (props: NextMonthButtonProps) => (
+          <button {...props} className="mr-10 mt-15 ml-25">
+            <ArrowIcon />
+          </button>
+        ),
+        PreviousMonthButton: (props: PreviousMonthButtonProps) => (
+          <button {...props} className="rotate-180 mt-15">
+            <ArrowIcon />
+          </button>
+        ),
+      }}
+      className="flex justify-center items-center w-full max-w-[331px] aspect-square text-main_blue bg-white rounded-2xl  text-[14px] p-15"
+      classNames={{
+        weekday: 'font-bold text-[18px]',
+        month_caption: 'font-bold mb-20',
+        caption_label: 'text-[24px]',
+        selected: 'bg-main_blue text-white rounded-full',
+        today: 'text-bold',
+        disabled: 'text-gray2',
+      }}
+      disabled={{ before: new Date() }}
+      style={style}
+    />
   );
 }

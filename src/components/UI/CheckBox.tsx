@@ -3,14 +3,13 @@
 import useToggle from '@/hooks/common/useToggle';
 import { PropsWithChildren, useEffect } from 'react';
 
-interface CheckBoxProps<T> {
-  checkBoxText: string;
+interface CheckBoxProps {
   changeCheckedState?: (state: boolean) => void;
   readOnly?: boolean;
 }
 
-export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) {
-  const { checkBoxText, changeCheckedState, readOnly = false } = props;
+export default function CheckBox(props: PropsWithChildren<CheckBoxProps>) {
+  const { changeCheckedState, readOnly = false, children } = props;
   const { state, handleState } = useToggle();
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) 
   }, [state]);
 
   return (
-    <div className="flex items-center h-full">
+    <div className="flex items-center w-full h-full ">
       <input
         className="w-20 h-20"
         type="checkbox"
@@ -34,7 +33,8 @@ export default function CheckBox<T>(props: PropsWithChildren<CheckBoxProps<T>>) 
         }}
         readOnly={readOnly}
       />
-      <span className="font-galmuri text-[14px] ml-8">{checkBoxText}</span>
+
+      {children}
     </div>
   );
 }

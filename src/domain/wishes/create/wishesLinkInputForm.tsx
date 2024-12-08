@@ -14,12 +14,13 @@ import { useUploadItemInfo } from '@/hooks/common/useUploadItemInfo';
 import { getDate } from '@/utils/common/getDate';
 import { wishesLinkDataResolver, WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { PropsWithChildren, useEffect } from 'react';
-import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
 import { DropDownContent } from './component';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
 import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { putProgressWishes } from '@/api/wishes';
+import CalendarInput from '@/components/Common/Calendar/CalendarInput';
 
 export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
@@ -29,7 +30,7 @@ export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string 
 
   return (
     <WishesLinkInputs wishTitle={wishTitle} progressWishesData={isValid && savedWishesLinkData}>
-      <WishesLinkSubmitButton />
+      <WishesLinkSubmitButton savedWishesLinkDataMethods={savedWishesLinkDataMethods} />
     </WishesLinkInputs>
   );
 }
@@ -57,11 +58,7 @@ export function WishesLinkInputs({
     }
   }, [wishTitle]);
 
-  const { reset, handleSubmit, watch } = methods;
-
-  const { handleRouter } = useRouters();
-
-  const parentContextMethods = useFormContext<WishesLinkDataResolverType>();
+  const { reset } = methods;
 
   useEffect(() => {
     const isEdit = !methods.formState.isDirty;
@@ -71,40 +68,21 @@ export function WishesLinkInputs({
     }
   }, [progressWishesData]);
 
-  function handleNextStep() {
-    parentContextMethods.reset({
-      ...watch(),
-    });
-
-    if (methods.watch('wantsGift')) {
-      handleRouter('/wishes/create?step=preview');
-    } else {
-      createOnlyLettersWishes();
-    }
-  }
-
-  function createOnlyLettersWishes() {
-    handleRouter('/wishes/create?step=preview');
-  }
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleNextStep)}>
-        <ImageToBeShownToGiver />
+      <ImageToBeShownToGiver />
 
-        <InputForm title="내 생일 주간 설정하기">
-          {/* 캘린더 안되는거 수정해야됨 */}
-          <div className="flex justify-between gap-10">
-            <WishesPeriod />
-          </div>
-        </InputForm>
+      <InputForm title="내 생일 주간 설정하기">
+        <div className="flex justify-between gap-10">
+          <WishesPeriod />
+        </div>
+      </InputForm>
 
-        <HintMessageToGiver />
-        <WantsGiftOption />
+      <HintMessageToGiver />
+      <WantsGiftOption />
 
-        {/* Submit Button */}
-        {children}
-      </form>
+      {/* Submit Button */}
+      {children}
     </FormProvider>
   );
 }
@@ -123,8 +101,8 @@ function WishesPeriod() {
 
   return (
     <>
-      <Calendar date={startDateWatch} handleChangeDate={handleChangeDate} />
-      <Calendar date={endDateWatch} readOnly />
+      <CalendarInput date={startDateWatch} handleChangeDate={handleChangeDate} />
+      <CalendarInput date={endDateWatch} readonly />
     </>
   );
 }
@@ -232,8 +210,29 @@ function SelectWantsGiftOption() {
   );
 }
 
-function WishesLinkSubmitButton() {
-  const { formState } = useFormContext<WishesLinkDataResolverType>();
+function WishesLinkSubmitButton({
+  savedWishesLinkDataMethods,
+}: {
+  savedWishesLinkDataMethods: UseFormReturn<WishesLinkDataResolverType>;
+}) {
+  const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
+  const { handleRouter } = useRouters();
+
+  function handleClickNext() {
+    savedWishesLinkDataMethods.reset({
+      ...watch(),
+    });
+
+    if (watch('wantsGift')) {
+      handleRouter('/wishes/create?step=preview');
+    } else {
+      createOnlyLettersWishes();
+    }
+  }
+
+  function createOnlyLettersWishes() {
+    handleRouter('/wishes/create?step=preview');
+  }
 
   return (
     <div className="flex justify-between gap-10">
@@ -241,7 +240,7 @@ function WishesLinkSubmitButton() {
         이전
       </Button>
 
-      <Button type="submit" disabled={!formState.isValid}>
+      <Button onClick={handleClickNext} disabled={!formState.isValid}>
         다음
       </Button>
     </div>
@@ -251,9 +250,13 @@ function WishesLinkSubmitButton() {
 export function WishesLinkEditSubmitButton() {
   const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
   const editWishesLinkData = watch();
+  const { handleBack } = useRouters();
 
   function handleEditWisheLink() {
-    // putProgressWishes(editWishesLinkData);
+    putProgressWishes(editWishesLinkData).then((response) => {
+      response.success && alert('소원정보 수정완료!');
+      handleBack();
+    });
   }
 
   return (

@@ -1,8 +1,6 @@
 import { getMainProgressWishesData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
-import { getUserAccount } from '@/api/user';
-import WishesAccountInputForm from './wishesAccountInputForm';
 import WishesCreateDone from './wishesCreateDone';
 import { WishesCreateDoneMessage } from './component';
 
@@ -22,10 +20,4 @@ export async function WishesCreateSuccess() {
       <WishesCreateDoneMessage nickName={nickName} status={status} dDay={dDay} />;
     </WishesCreateDone>
   );
-}
-
-export async function AccountInputWithSavedAccountData() {
-  const savedUserAccountData = await getUserAccount();
-
-  return <WishesAccountInputForm savedUserAccountData={savedUserAccountData.transferInfo} />;
 }

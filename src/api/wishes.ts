@@ -2,12 +2,11 @@ import {
   DefaultResponseType,
   MainProgressDataResponseType,
   WishesCreateResponseType,
+  WishesHistoryListResponseType,
   WishesProgressDataResponseType,
 } from '@/types/api/response';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_WISHES } from './path';
-import { UseFormReturn } from 'react-hook-form';
-import { WishesDataInputType } from '@/types/wishesType';
 import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 
 /**
@@ -27,7 +26,10 @@ export const getMainProgressWishesData = async () => {
  * 모든 소원리스트 조회
  */
 export const getWishes = async () => {
-  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {});
+  const data = await client.get<WishesHistoryListResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
+    {},
+  );
 
   return data.data.data.wishes;
 };
@@ -49,10 +51,10 @@ export const postWishes = async (wishesData: WishesLinkDataResolverType) => {
 /**
  * 소원링크 삭제
  */
-export const deleteWishes = async (wishesData: number[]) => {
-  const data = await client.delete(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
+export const deleteWishes = async (wishesIdList: number[]) => {
+  const data = await client.delete<DefaultResponseType>(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
     data: {
-      wishes: wishesData,
+      wishes: wishesIdList,
     },
   });
 
@@ -63,22 +65,24 @@ export const deleteWishes = async (wishesData: number[]) => {
  * 진행중인 소원 정보 조회
  */
 export const getProgressWishLinkData = async () => {
-  const data = await client.get<WishesProgressDataResponseType>(
-    `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
-  );
+  try {
+    const data = await client.get<WishesProgressDataResponseType>(
+      `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
+    );
 
-  return data.data.data;
+    return data.data.data;
+  } catch (error) {}
 };
 
 /**
  * 진행중인 소원 정보 수정
  */
 export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) => {
-  const data = await client.put(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
+  const data = await client.put<DefaultResponseType>(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
     ...wishesData,
   });
 
-  return data.data.data;
+  return data.data;
 };
 
 /**

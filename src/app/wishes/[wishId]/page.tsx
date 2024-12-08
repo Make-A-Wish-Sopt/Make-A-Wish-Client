@@ -16,7 +16,7 @@ export default async function WishesIdPage({ params }: { params: { wishId: strin
     <>
       <MainLayout>
         <WishesIdPageContainer wishId={wishId}>
-          <WishesIdLayoutWithContent></WishesIdLayoutWithContent>
+          <WishesIdLayoutWithContent />
         </WishesIdPageContainer>
       </MainLayout>
     </>
