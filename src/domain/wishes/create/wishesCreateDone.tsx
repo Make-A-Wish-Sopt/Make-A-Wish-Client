@@ -39,20 +39,18 @@ function SharePageFixedButtons({ handleClick }: { handleClick: () => void }) {
 
   return (
     <>
-      <FixedBottomButtonWrapper>
-        <div className="flex flex-col gap-10">
-          <Button onClick={handleClick}>생일잔치에 친구 초대하기</Button>
-          <Button
-            bgColor="gray4"
-            fontColor="white"
-            onClick={() => {
-              handleRouter('/wishes');
-            }}
-          >
-            홈으로 이동하기
-          </Button>
-        </div>
-      </FixedBottomButtonWrapper>
+      <div className="flex flex-col gap-10">
+        <Button onClick={handleClick}>생일잔치에 친구 초대하기</Button>
+        <Button
+          bgColor="gray4"
+          fontColor="white"
+          onClick={() => {
+            handleRouter('/wishes');
+          }}
+        >
+          홈으로 이동하기
+        </Button>
+      </div>
     </>
   );
 }
