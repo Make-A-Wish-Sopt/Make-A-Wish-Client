@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
 import { PropsWithChildren } from 'react';
-import PresentList from '@/components/UI/PresentList';
+import PresentList, { PresentListSample } from '@/components/UI/PresentList';
 import {
   PayCodeGuideStep1Img,
   PayCodeGuideStep2Img,
@@ -31,7 +31,7 @@ export function DropDownContent() {
         6개 중 하나를 선택해 선물할 수 있어요
       </div>
 
-      <PresentList readonly />
+      <PresentListSample />
     </div>
   );
 }
@@ -53,9 +53,8 @@ export function WishesCreateDoneMessage({
         링크 생성 완료!{' '}
       </h1>
       <span className="font-galmuri text-[14px] text-white mb-44">
-        {status === 'WHILE'
-          ? '생일 축하 받으로 가볼까요?'
-          : `${dDay}일 뒤부터 링크를 공유할 수 있어요`}
+        {status === 'WHILE' && '생일 축하 받으로 가볼까요?'}
+        {status === 'BEFORE' && `${dDay}일 뒤부터 링크를 공유할 수 있어요`}
       </span>
       <Image src={SharePageCakeImg} alt="링크생성 완료 케이크 이미지" width={221} />
     </div>

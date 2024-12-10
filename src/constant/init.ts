@@ -8,7 +8,7 @@ export const wishesLinkInputInit: WishesLinkDataType = {
   hint: '',
   startDate: new Date(),
   endDate: getDate(new Date(), 7),
-  wantsGift: false,
+  wantsGift: true,
 };
 
 export const wishesAccountInputInit: TransferInfoType = {

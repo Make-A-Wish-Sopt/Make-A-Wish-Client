@@ -1,7 +1,6 @@
 'use client';
 
 import Button from '@/components/Common/Button';
-import Calendar from '@/components/Common/Calendar/Calendar';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import InputForm from '@/components/UI/InputForm';
 import { TextCount } from '@/components/UI/InputTextForm';
@@ -64,7 +63,11 @@ export function WishesLinkInputs({
     const isEdit = !methods.formState.isDirty;
 
     if (progressWishesData && isEdit) {
-      reset({ ...progressWishesData });
+      reset({
+        ...progressWishesData,
+        startDate: new Date(progressWishesData.startDate),
+        endDate: new Date(progressWishesData.endDate),
+      });
     }
   }, [progressWishesData]);
 
@@ -235,7 +238,7 @@ function WishesLinkSubmitButton({
   }
 
   return (
-    <div className="flex justify-between gap-10">
+    <div className="flex justify-between gap-10 pb-58">
       <Button fontColor="white" disabled>
         이전
       </Button>
@@ -260,8 +263,10 @@ export function WishesLinkEditSubmitButton() {
   }
 
   return (
-    <Button onClick={handleEditWisheLink} disabled={!formState.isValid}>
-      수정 완료
-    </Button>
+    <div className="pb-58">
+      <Button onClick={handleEditWisheLink} disabled={!formState.isValid}>
+        수정 완료
+      </Button>
+    </div>
   );
 }

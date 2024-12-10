@@ -14,7 +14,7 @@ export default function DropDwonBox({
   ...rest
 }: PropsWithChildren<DropDownBoxProps>) {
   return (
-    <Box {...rest}>
+    <Box {...rest} styles={{ padding: isOpen && '0', height: isOpen && 'auto' }}>
       <div className="flex items-center gap-8 w-full h-full text-[14px]">
         {rest.children}
         <div onClick={handleState}>

@@ -1,14 +1,19 @@
 import { colors, ColorsTypes } from '@/styles/styles';
 
-export default function CheckedIcon({ bgColor = 'main_blue' }: { bgColor?: keyof ColorsTypes }) {
+export default function CheckedIcon({
+  bgColor = 'main_blue',
+  width = 14,
+}: {
+  bgColor?: keyof ColorsTypes;
+  width: number;
+}) {
   return (
     <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
+      width={width}
+      viewBox={'0 0 14 14'}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ fill: colors[bgColor] }}
+      style={{ fill: colors[bgColor], aspectRatio: 1 / 1 }}
     >
       <rect width="14" height="14" rx="7" />
       <rect x="3" y="6.92859" width="1.14286" height="1.14286" fill="white" />

@@ -10,7 +10,6 @@ export default function BorderBox({ children }: PropsWithChildren) {
       font="galmuri"
       styles={{
         height: 'auto',
-        minHeight: '5rem',
         padding: '1rem',
         border: `1px solid ${colors.dark_green}`,
         whiteSpace: 'pre-line',

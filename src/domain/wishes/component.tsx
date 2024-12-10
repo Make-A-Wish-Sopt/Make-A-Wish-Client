@@ -192,7 +192,7 @@ export function CakeTree({
             }}
           >
             {/* 층별로 3개씩 케이크 배치 */}
-            <ul className="grid grid-cols-3 justify-center gap-x-[1px] custom-grid w-full h-full mt-70 px-50">
+            <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
               {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake) => (
                 <li
                   className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
@@ -202,7 +202,7 @@ export function CakeTree({
                   }}
                 >
                   <Image src={cake.cakeImg} alt="케이크 이미지" width={100} />
-                  <span className="absolute top-[100px] font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl -mt-10">
+                  <span className="absolute top-[100px] font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl -mt-13">
                     {cake.name}
                   </span>
                 </li>

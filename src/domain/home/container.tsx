@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouters } from '@/hooks/common/useRouters';
 import Button from '@/components/Common/Button';
 import { KakaoLoginIc } from '../../../public/assets/icons';
 import { PropsWithChildren, useEffect, useState } from 'react';

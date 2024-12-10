@@ -1,6 +1,6 @@
 'use client';
 
-import { getProgressWishLinkData, patchProgressWishes } from '@/api/wishes';
+import { patchProgressWishes } from '@/api/wishes';
 import MoreBox from '@/components/UI/MoreBox';
 import { useRouters } from '@/hooks/common/useRouters';
 import { MypageUserName, UserManualGuideButton } from './component';
@@ -52,6 +52,7 @@ export default function MypageContainer({
               handleClick={() => {
                 handleRouter('/mypage/edit/deposit?step=select');
               }}
+              disabled={!progressWishes.wantsGift}
             />
             <MoreBox
               text="진행 중인 생일잔치 중단하기"
@@ -70,7 +71,7 @@ export default function MypageContainer({
         )}
 
         <UserManualGuideButton />
-        {/* <MoreBox text="사용설명서 보기" /> */}
+        
         <MoreBox handleClick={handleConnectServiceCenter} text="고객센터 문의하기" />
       </ul>
 

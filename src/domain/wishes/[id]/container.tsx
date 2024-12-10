@@ -29,7 +29,7 @@ function SelectAvatarCakes({ carousel }: { carousel: CarouselType }) {
 
   return (
     <>
-      <ul className="relative flex justify-center w-full h-300 mb-46">
+      <ul className="relative flex justify-center w-full h-300 mb-30">
         <li className="absolute opacity-50" style={{ top: 0, left: '-50%' }}>
           <Image
             src={defaultAvatarCakesDataArray[left].cakeImg}

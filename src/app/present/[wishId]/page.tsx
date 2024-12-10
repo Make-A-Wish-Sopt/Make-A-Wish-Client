@@ -16,12 +16,12 @@ export default async function GivePresentPage({
   const publicWishesData = await getPublicWishes(params.wishId);
 
   if (!publicWishesData) {
-    return <ErrorPage alertMessage="진행중인 소원링크가 존재 하지 않아요!" />;
+    return <ErrorPage alertMessage="해당 소원은 존재하지 않아요!" />;
   }
 
   return (
     <>
-      <Header backBtn mypageBtn />
+      <Header backBtn />
       <MainLayout>
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}

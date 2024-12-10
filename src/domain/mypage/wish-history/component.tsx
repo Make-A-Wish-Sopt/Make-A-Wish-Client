@@ -7,6 +7,7 @@ import { ArrowRightIc } from '../../../../public/assets/icons';
 import useToggle from '@/hooks/common/useToggle';
 import { useEffect } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
+import { getSingleWishInfo, getWishes } from '@/api/wishes';
 
 export function WishHistoryBox({
   wishTitle,
@@ -23,7 +24,7 @@ export function WishHistoryBox({
 }) {
   const { state: checkedState, changeState: changeCheckedState } = useToggle();
 
-  const {} = useRouters();
+  const { handleRouter } = useRouters();
 
   useEffect(() => {
     if (checkedState) {
@@ -33,6 +34,10 @@ export function WishHistoryBox({
     }
   }, [checkedState]);
 
+  function handleClick() {
+    handleRouter(`/mypage/wishes-history/${wishId}`);
+  }
+
   return (
     <Box
       styles={{
@@ -41,6 +46,7 @@ export function WishHistoryBox({
         alignItems: 'center',
         height: 'auto',
       }}
+      onClick={handleClick}
     >
       <CheckBox changeCheckedState={changeCheckedState}>
         <div className="flex flex-col w-full  ml-10">

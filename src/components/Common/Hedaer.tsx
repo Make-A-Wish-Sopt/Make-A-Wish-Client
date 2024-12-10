@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { BackBtnIc, MenuIc } from '../../../public/assets/icons';
 import { RoutePathType } from '@/hooks/common/useRouters';
 
@@ -14,7 +14,6 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { backBtn, mypageBtn, routePath } = props;
-  const pathname = usePathname();
   const router = useRouter();
 
   function handleRouteBack() {

@@ -11,8 +11,8 @@ export default function PresentSuccess({
   wishesName: string;
 }) {
   return (
-    <div className="flex flex-col items-center w-full h-full mt-65">
-      <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
+    <div className="flex flex-col items-center w-full h-full mt-25">
+      <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-20">
         {`${giverName}님,\n${wishesName}의 생일잔치에\n와주셔서 감사해요!`}
       </span>
     </div>
@@ -67,20 +67,20 @@ export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataTyp
               }}
             >
               {/* 층별로 3개씩 케이크 배치 */}
-              <ul className="grid grid-cols-3 justify-center gap-x-[1px] custom-grid w-full h-full mt-70 px-50">
+              <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
                 {restCake.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake) => (
                   <li
-                    className="z-5 flex flex-col items-center aspect-square p-4 transform translate-y-[-30px] justify-self-center"
-                    key={cake.name}
-                    style={{ width: '105%' }}
+                    className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
+                    key={cake.cakeId}
                   >
                     <Image
                       src={defaultCakeTreeDataObject[cake.cakeId].cakeImg}
                       alt="케이크 이미지"
                     />
-                    <p className="flex items-center justify-center font-galmuri max-w-[85px] h-20 px-8 py-3 text-white text-[10px]  bg-black bg-opacity-50 rounded-4xl text-ellipsis overflow-hidden whitespace-nowrap">
+
+                    <span className="absolute top-[100px] font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl -mt-13">
                       {cake.name}
-                    </p>
+                    </span>
                   </li>
                 ))}
               </ul>

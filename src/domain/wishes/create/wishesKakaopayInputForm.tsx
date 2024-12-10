@@ -36,7 +36,7 @@ export default function WishesKakaopayInputForm({
     },
     resolver: yupResolver(wishesAccountDataResolver),
   });
-  const { register, watch, reset, formState } = wishesAccountInputMethods;
+  const { register, watch, reset } = wishesAccountInputMethods;
   const { kakaoPayCode } = watch();
 
   const {
@@ -98,12 +98,12 @@ export default function WishesKakaopayInputForm({
         </div>
         <InputText
           register={register('kakaoPayCode')}
-          placeholder="송금링크를 붙여넣어주세요"
+          placeholder="송금링크를 붙여 넣어주세요"
           keyPrevent
           onBlur={handleValidateKakaopayCode}
         >
           {isKakaoPayCodeValid ? (
-            <CheckedIcon />
+            <CheckedIcon width={24} />
           ) : (
             // <Image src={AlertSuccessIc} alt="유효 아이콘" />
             <div

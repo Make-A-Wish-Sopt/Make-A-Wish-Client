@@ -13,7 +13,7 @@ export async function WishesCreateSuccess() {
   }
   const { dayCount, status } = progressWishesData;
 
-  const dDay = dayCount - 7;
+  const dDay = status === 'WHILE' ? dayCount : Math.abs(dayCount - 7);
 
   return (
     <WishesCreateDone progressWishesData={progressWishesData} nickName={nickName}>

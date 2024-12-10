@@ -5,7 +5,7 @@ import { convertMoneyText } from '@/utils/common/convert';
 
 export default function KakaopayPayment({
   wishMakerName,
-  presentPrice,
+  presentPrice = '0',
   children,
 }: { wishMakerName: string; presentPrice: string } & PropsWithChildren) {
   return (

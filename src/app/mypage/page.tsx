@@ -1,4 +1,4 @@
-import { getProgressWishLinkData, getWishes } from '@/api/wishes';
+import { getProgressWishLinkData } from '@/api/wishes';
 import Header from '@/components/Common/Hedaer';
 import MypageContainer from '@/domain/mypage/container';
 import MainLayout from '@/layouts/MainLayout';

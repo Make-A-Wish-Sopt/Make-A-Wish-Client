@@ -28,9 +28,7 @@ import { SaveCakeMessageModal } from '@/domain/wishes/component';
 import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import Link from 'next/link';
-import { presentListArray } from '@/constant/model/present';
-import { watch } from 'fs';
+import { presentListArray, presentListObject } from '@/constant/model/present';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -53,8 +51,7 @@ export default function GivePresentPageContainer({
     resolver: yupResolver(presentDataResolver),
   });
 
-  const { transferInfo, hint, dayCount, presentImageUrl, title, nickname, wantsGift } =
-    publicWishesData;
+  const { transferInfo, nickname, wantsGift } = publicWishesData;
 
   const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
   const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
@@ -130,6 +127,8 @@ export default function GivePresentPageContainer({
     } else {
     }
 
+    GivePresent();
+
     handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
   }
 
@@ -154,13 +153,11 @@ export default function GivePresentPageContainer({
                     </InputForm>
                   )}
                 </PresentGiverInfoInputForm>
-                <Button
-                  onClick={handleGivePresent}
-                  style={{ marginBottom: '5.8rem' }}
-                  disabled={!isValid()}
-                >
-                  {'친구 생일 축하해주기'}
-                </Button>
+                <div className="pb-58">
+                  <Button onClick={handleGivePresent} disabled={!isValid()}>
+                    {'친구 생일 축하해주기'}
+                  </Button>
+                </div>
               </>
             ),
             payment: (
@@ -169,7 +166,9 @@ export default function GivePresentPageContainer({
                   <>
                     <KakaopayPayment
                       wishMakerName={nickname}
-                      presentPrice={presentListArray[giftMenuId].price.toString()}
+                      presentPrice={
+                        giftMenuId > 0 && presentListObject[giftMenuId].price.toString()
+                      }
                     >
                       <KakaopaySubmitButton handleSubmit={handlePayment} />
                     </KakaopayPayment>
@@ -179,7 +178,7 @@ export default function GivePresentPageContainer({
                     <Payment
                       wishMakerName={nickname}
                       presentPrice={presentListArray[giftMenuId].price.toString()}
-                      // account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
+                      account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
                     />
                     <Button
                       onClick={() => {
@@ -200,8 +199,7 @@ export default function GivePresentPageContainer({
               <section className="relative w-full">
                 {
                   <PresentMessageModal
-                    // nickName={publicWishesData.transferInfo.accountInfo.name}
-                    nickName={'테스트'}
+                    nickName={publicWishesData.nickname}
                     modalState={presenetMessageModalState}
                     handleModalState={handlePresentMessageModalState}
                     changeModalState={changePresenetMessgaeModalState}
@@ -210,8 +208,7 @@ export default function GivePresentPageContainer({
                 }
                 <PresentSuccess
                   giverName={methods.getValues('name')}
-                  // wishesName={publicWishesData.transferInfo.accountInfo.name}
-                  wishesName={'테스트'}
+                  wishesName={publicWishesData.nickname}
                 />
                 <PresentSuccessCakeTree
                   cakeList={[
