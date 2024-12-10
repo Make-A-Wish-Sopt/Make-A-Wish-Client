@@ -31,7 +31,7 @@ export default function WishesInputPreview({
 
         {/* 친구가 작성하게될 입력 미리보기 */}
         <InputForm title="친구가 작성하게 될 닉네임">
-          <InputText placeholder="당신의 이름이나 별명을 편하게 작성해주세요" blur />
+          <InputText placeholder="당신의 이름이나 별명을 편하게 작성해주세요" blur readOnly />
         </InputForm>
 
         {/* 선물을 원한다고 체크했을 경우*/}
@@ -48,7 +48,7 @@ export default function WishesInputPreview({
 
         {/* 친구가 작성하게될 편지 미리보기 */}
         <InputForm title="친구가 남기게 될 편지">
-          <InputTextarea placeholder="ex.) 생일을 축하합니다~" blur>
+          <InputTextarea placeholder="ex.) 생일을 축하합니다~" blur readOnly>
             {/* 이 글자수 추가하는 부분 다시 생각해야됩니다! */}
           </InputTextarea>
         </InputForm>
