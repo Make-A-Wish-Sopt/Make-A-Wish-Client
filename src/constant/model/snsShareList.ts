@@ -24,7 +24,7 @@ export const snsShareListObject: Record<ShareSnskeyType, SnsDataType> = {
           content: {
             title: `${name}님의 생일선물을 고민하고 있다면?`,
             description: `고민할 필요없이 이 귀여운 케이크를 선물해 ${name}님의 생일 펀딩에 참여해보세요!`,
-            imageUrl: 'https://ifh.cc/g/wWJNBF.jpg',
+            imageUrl: '../../../public/assets/images/CakeList/AdminCakeImg.png',
             link: {
               mobileWebUrl: link,
               webUrl: link,
