@@ -29,6 +29,7 @@ import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import { presentListArray, presentListObject } from '@/constant/model/present';
+import { convertMoneyText } from '@/utils/common/convert';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -121,8 +122,16 @@ export default function GivePresentPageContainer({
     handleRouter(`/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}`);
   }
 
-  function handlePayment() {
+  async function handleAccountCopy(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {}
+  }
+
+  async function handlePayment() {
     if (forPayCode) {
+      const presentPrice = presentListObject[giftMenuId].price.toString();
+      await handleAccountCopy(convertMoneyText(presentPrice));
       window.open(kakaoPayCode);
     } else {
     }
