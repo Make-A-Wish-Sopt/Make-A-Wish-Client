@@ -1,6 +1,5 @@
 import { CakeTreeDataType, defaultCakeTreeDataObject } from '@/constant/model/cakesTreeData';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import { CakeDishTopRibbonImg } from '../../../../public/assets/images';
 
 export default function PresentSuccess({

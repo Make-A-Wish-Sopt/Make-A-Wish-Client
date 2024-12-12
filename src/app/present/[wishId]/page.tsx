@@ -21,7 +21,10 @@ export default async function GivePresentPage({
 
   return (
     <>
-      <Header backBtn />
+      <Header
+        backBtn
+        routePath={searchParams.presentStep === 'done' ? `/wishes/${params.wishId}` : undefined}
+      />
       <MainLayout>
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}
