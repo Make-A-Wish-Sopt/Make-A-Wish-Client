@@ -22,7 +22,7 @@ export default function MypageContainer({
   };
   isLoggedIn: boolean;
 }) {
-  const { handleRouter } = useRouters();
+  const { handleRouter, handleRefresh } = useRouters();
   const {
     state: pauseWishesModalState,
     changeState: chnagePauseWishesModalState,
@@ -98,6 +98,7 @@ export default function MypageContainer({
               onClick={() => {
                 patchProgressWishes();
                 chnagePauseWishesModalState(false);
+                handleRefresh();
               }}
             >
               중단하기

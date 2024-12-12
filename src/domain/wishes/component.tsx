@@ -198,7 +198,7 @@ export function CakeTree({
               {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake) => (
                 <li
                   className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
-                  key={cake.cakeId}
+                  key={`${cake.name} ${cake.cakeId}`}
                   onClick={() => {
                     handleSelectCake(cake);
                   }}

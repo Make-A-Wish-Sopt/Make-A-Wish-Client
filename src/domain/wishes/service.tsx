@@ -6,6 +6,10 @@ import {
   defaultCakeTreeDataArray,
   defaultCakeTreeDataObject,
 } from '@/constant/model/cakesTreeData';
+import {
+  AdminMessageAlarmIcon,
+  RecentMessageAlarmIcon,
+} from '@/components/Common/Icon/MessageAlarmIcon';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
@@ -75,10 +79,14 @@ export async function WishesMessageToCreateUser({
   const receivedCakeList = await getCakesResult(wishId);
 
   return (
-    <MessageText>
-      {receivedCakeList.length === 1
-        ? `저희가 ${nickName}님의 생일을\n축하하며 편지를 남겼어요!`
-        : `${nickName}님의 생일잔치에\n도착한 케이크들이에요!`}
-    </MessageText>
+    <>
+      <MessageText>
+        {receivedCakeList.length === 0
+          ? `${nickName}님의 생일을 축하하며\n편지 12개를 선물로 드렸어요!`
+          : `${nickName}님의 생일잔치에\n케이크가 도착했어요!`}
+      </MessageText>
+
+      {receivedCakeList.length === 0 ? <AdminMessageAlarmIcon /> : <RecentMessageAlarmIcon />}
+    </>
   );
 }

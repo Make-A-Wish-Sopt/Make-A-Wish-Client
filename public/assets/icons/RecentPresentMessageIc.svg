@@ -1,0 +1,27 @@
+<svg width="93" height="62" viewBox="0 0 93 62" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect x="3" y="3" width="87" height="44" fill="#003D50"/>
+<rect width="15" height="6" transform="matrix(1 0 0 -1 39 53)" fill="#003D50"/>
+<rect width="9" height="6" transform="matrix(1 0 0 -1 42 59)" fill="#003D50"/>
+<rect y="6" width="3" height="38" fill="#00C2FF"/>
+<rect x="90" y="6" width="3" height="38" fill="#00C2FF"/>
+<rect x="3" y="3" width="8" height="3" fill="#00C2FF"/>
+<rect x="3" y="44" width="8" height="3" fill="#00C2FF"/>
+<rect x="82" y="44" width="8" height="3" fill="#00C2FF"/>
+<rect x="82" y="3" width="8" height="3" fill="#00C2FF"/>
+<rect x="45" y="59" width="3" height="3" fill="#00C2FF"/>
+<rect x="42" y="53" width="3" height="6" fill="#00C2FF"/>
+<rect x="39" y="50" width="3" height="3" fill="#00C2FF"/>
+<rect width="3" height="3" transform="matrix(-1 0 0 1 48 59)" fill="#00C2FF"/>
+<rect width="3" height="6" transform="matrix(-1 0 0 1 51 53)" fill="#00C2FF"/>
+<rect width="3" height="3" transform="matrix(-1 0 0 1 54 50)" fill="#00C2FF"/>
+<rect x="51" y="47" width="31" height="3" fill="#00C2FF"/>
+<rect x="42" y="47" width="3" height="31" transform="rotate(90 42 47)" fill="#00C2FF"/>
+<rect x="82" width="3.00001" height="71" transform="rotate(90 82 0)" fill="#00C2FF"/>
+<rect x="26" y="5" width="40" height="40" fill="url(#pattern0_212_407)"/>
+<defs>
+<pattern id="pattern0_212_407" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_212_407" transform="translate(-0.391667 -2.07083) scale(0.0541667)"/>
+</pattern>
+<image id="image0_212_407" width="32" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAABACAYAAAB7jnWuAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAQAAAAAA1tBW+AAAAtElEQVRoBe2SQQqEMAxFyyDMrT1a79OewF3HCJGvs4m1LoQXkDYS+5+PpkRhAAMYwAAGMIABDGAAAxjAAAYwgAEMYAADGMDAGwzknFtP2XdD/s/Cr0LYfCllHMAfxDwfpUjvsMMBdog1bElpezYK6T3c3j8CcA5sEm5QWs8BrCluQFcNt30E4NN7S7/teL/OffTcbgAL8FBfo6E6dwtAIfTQK/spMlxrjYwxgwEMYAAD7zTwAxB+SdUDKUBfAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>
