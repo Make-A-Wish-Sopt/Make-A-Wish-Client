@@ -273,51 +273,7 @@ function PresentMessageModal({
         handleModalState={handleModalState}
         receivedCakeMessageData={receivedCakeMessageData}
         nickName={nickName}
-      >
-        {/* <Button onClick={captureAndDownloadImage}>이미지 저장하기</Button> */}
-      </SaveCakeMessageModal>
+      ></SaveCakeMessageModal>
     </>
   );
 }
-
-//function CheckSendMoneyModal({
-//   modalState,
-//   handleModalState,
-//   wishId,
-//   selectedCakeId,
-// }: {
-//   modalState: boolean;
-//   handleModalState: () => void;
-//   wishId: string;
-//   selectedCakeId: string;
-// }) {
-//   const { handleRouter } = useRouters();
-
-//   function handleNextStep() {
-//     handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
-//     handleModalState();
-//   }
-
-//   return (
-//     <CloseIconInModalWithVitaminCake
-//       modalTitle="친구 계좌로 돈을 송금하셨나요?"
-//       modalColor="main_blue"
-//       isOpen={modalState}
-//       handleState={handleModalState}
-//     >
-//       <span className="w-full font-galmuri text-[14px] text-dark_blue whitespace-pre-line text-center">
-//         {'은행 앱으로 직접 송금하지 않았다면\n실제로 돈이 보내진 게 아니니 안심하세요!'}
-//       </span>
-
-//       <div className="flex justify-between gap-10 w-full">
-//         <Button bgColor="white" fontColor="dark_green">
-//           {'송금 안했어요'}
-//         </Button>
-
-//         <Button bgColor="dark_green" fontColor="white" onClick={handleNextStep}>
-//           {'송금했어요'}
-//         </Button>
-//       </div>
-//     </CloseIconInModalWithVitaminCake>
-//   );
-// }

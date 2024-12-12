@@ -137,9 +137,7 @@ export function ReceivedCakeMessageModal({
           handleModalState={handleModalState}
           receivedCakeMessageData={receivedCakeMessageData}
           nickName={nickName}
-        >
-          {/* <Button>이미지 저장하기</Button> */}
-        </SaveCakeMessageModal>
+        />
       )}
     </>
   );

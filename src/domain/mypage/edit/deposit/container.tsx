@@ -39,7 +39,7 @@ export default function WisheDepositEditPageContainer({
                 selectAccount={selectAccount}
                 changeSelectAccount={changeSelectAccount}
               >
-                <WishesDepositSubmitButton handleNextStep={handleNextStep} />
+                <WishesDepositSubmitButton handleNextStep={handleNextStep} isEdit/>
               </SelectDeposit>
             </>
           ),

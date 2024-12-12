@@ -26,7 +26,7 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className="flex justify-center w-full">
-      <div className="flex justify-between items-center min-w-375 max-w-500 w-full mt-2rem pt-16 px-22">
+      <div className="flex justify-between items-center w-375 mt-2rem pt-16 px-22">
         {backBtn && <Image src={BackBtnIc} alt="뒤로가기 아이콘" onClick={handleRouteBack} />}
         <div></div>
         {mypageBtn && (

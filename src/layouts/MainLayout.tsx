@@ -27,7 +27,7 @@ export default async function MainLayout({
       {checkLoggedIn && !loginUserData ? (
         <ErrorPage />
       ) : (
-        <div className="w-full h-svh px-22 min-w-375 max-w-500">{children}</div>
+        <div className="w-375 h-svh px-22 ">{children}</div>
       )}
     </main>
   );

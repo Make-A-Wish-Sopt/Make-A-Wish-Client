@@ -46,7 +46,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
           }`}
           onClick={handleState}
         >
-          <div className="w-full h-full" onClick={(e) => e.stopPropagation()}>
+          <div className="w-375  h-full" onClick={(e) => e.stopPropagation()}>
             {children}
           </div>
         </div>

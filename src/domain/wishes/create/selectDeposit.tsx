@@ -5,6 +5,7 @@ import Button from '@/components/Common/Button';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import InputForm from '@/components/UI/InputForm';
 import SelectBox from '@/components/UI/SelectBox';
+import { useRouters } from '@/hooks/common/useRouters';
 import { PropsWithChildren } from 'react';
 
 export default function SelectDeposit({
@@ -39,16 +40,28 @@ export default function SelectDeposit({
   );
 }
 
-export function WishesDepositSubmitButton({ handleNextStep }: { handleNextStep: () => void }) {
+export function WishesDepositSubmitButton({
+  handleNextStep,
+  isEdit,
+}: {
+  handleNextStep: () => void;
+  isEdit?: boolean;
+}) {
+  const { handleBack } = useRouters();
+
+  function handlePrev() {
+    if (isEdit) return;
+
+    handleBack();
+  }
+
   return (
     <FixedBottomButtonWrapper>
-      <div className="flex justify-between gap-10">
-        <Button bgColor="gray2" fontColor="white">
-          이전
-        </Button>
+      <Button bgColor={isEdit ? 'gray2' : 'gray4'} fontColor="white" onClick={handlePrev}>
+        이전
+      </Button>
 
-        <Button onClick={handleNextStep}>다음</Button>
-      </div>
+      <Button onClick={handleNextStep}>다음</Button>
     </FixedBottomButtonWrapper>
   );
 }

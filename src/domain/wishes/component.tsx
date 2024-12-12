@@ -89,23 +89,25 @@ export function SaveCakeMessageModal({
               isAdminMessage ? 'border-dark_blue' : 'border-main_blue'
             }`}
           >
-            <span className="font-galmuri">선물한 항목</span>
-            <span>
+            <div className="font-galmuri w-150">선물한 항목</div>
+            <span className="flex justify-end w-full ">
               {isAdminMessage ? (
                 giftMenuId
               ) : giftMenuId === 0 ? (
                 <>{'정성 담은 편지'}</>
               ) : (
                 <>
-                  <div className="flex gap-4 items-center font-bitbit text-[16px] text-white">
+                  <div className="relative flex flex-row-reverse  gap-4  items-center font-bitbit text-[16px] text-white text-right ">
+                    <span className="w-auto whitespace-pre-wrap">
+                      {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
+                        presentListObject[Number(giftMenuId)].price.toString(),
+                      )}원`}
+                    </span>
                     <Image
                       src={presentListObject[Number(giftMenuId)].image}
                       alt="선물한 선물 이미지"
                       height={43}
                     />
-                    {`${presentListObject[Number(giftMenuId)].itemName} ${convertMoneyText(
-                      presentListObject[Number(giftMenuId)].price.toString(),
-                    )}원`}
                   </div>
                 </>
               )}

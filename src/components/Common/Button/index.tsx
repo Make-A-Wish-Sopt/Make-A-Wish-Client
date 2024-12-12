@@ -16,7 +16,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
   const {
     disabled,
     bgColor = 'main_blue',
-    fontColor,
+    fontColor = 'black',
     font = 'bitbit',
     onClick,
     icon,

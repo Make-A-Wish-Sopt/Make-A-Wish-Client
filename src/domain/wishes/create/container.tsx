@@ -172,20 +172,18 @@ export function WishesAccountSubmitButton({
   }
   return (
     <FixedBottomButtonWrapper>
-      <div className="flex justify-between gap-10">
-        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
-          이전
-        </Button>
+      <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+        이전
+      </Button>
 
-        <Button
-          onClick={() => {
-            handleWishesCreateSubmit();
-          }}
-          disabled={disabled && formState.isValid}
-        >
-          생성 완료!
-        </Button>
-      </div>
+      <Button
+        onClick={() => {
+          handleWishesCreateSubmit();
+        }}
+        disabled={disabled && formState.isValid}
+      >
+        생성 완료!
+      </Button>
     </FixedBottomButtonWrapper>
   );
 }
@@ -223,13 +221,13 @@ function WishesPreviewSubmitButton({
 
   return (
     <FixedBottomButtonWrapper>
-      <div className="flex justify-between gap-10">
-        <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
-          수정하기
-        </Button>
+      {/* <div className="flex justify-between gap-10"> */}
+      <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+        수정하기
+      </Button>
 
-        <Button onClick={handleNextStep}>이대로 등록하기</Button>
-      </div>
+      <Button onClick={handleNextStep}>이대로 등록하기</Button>
+      {/* </div> */}
     </FixedBottomButtonWrapper>
   );
 }

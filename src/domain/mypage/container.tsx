@@ -52,7 +52,7 @@ export default function MypageContainer({
               handleClick={() => {
                 handleRouter('/mypage/edit/deposit?step=select');
               }}
-              disabled={!progressWishes.wantsGift}
+              disabled={progressWishes ? !progressWishes.wantsGift : false}
             />
             <MoreBox
               text="진행 중인 생일잔치 중단하기"
@@ -71,7 +71,7 @@ export default function MypageContainer({
         )}
 
         <UserManualGuideButton />
-        
+
         <MoreBox handleClick={handleConnectServiceCenter} text="고객센터 문의하기" />
       </ul>
 

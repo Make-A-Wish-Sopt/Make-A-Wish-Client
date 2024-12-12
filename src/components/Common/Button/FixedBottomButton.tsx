@@ -10,7 +10,6 @@ export default function FixedBottomButton({ children, ...rest }: PropsWithChildr
       style={{
         position: 'fixed',
         left: '0',
-        // bottom: '5.4rem',
         padding: '0 2.2rem',
         zIndex: 10,
       }}
@@ -21,5 +20,9 @@ export default function FixedBottomButton({ children, ...rest }: PropsWithChildr
 }
 
 export function FixedBottomButtonWrapper({ children }: PropsWithChildren) {
-  return <div className="fixed left-0 bottom-fixed-bottom px-22 z-10 w-full">{children}</div>;
+  return (
+    <div className="fixed bottom-fixed-bottom left-1/2 transform -translate-x-1/2 flex gap-10 w-375 px-22 z-10 ">
+      {children}
+    </div>
+  );
 }
