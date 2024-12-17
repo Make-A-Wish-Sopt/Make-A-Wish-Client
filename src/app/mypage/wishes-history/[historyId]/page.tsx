@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/MainLayout';
 export default async function WishesHistoryMessageTreePage() {
   return (
     <>
-      <Header backBtn routePath="/mypage" />
+      <Header backBtn />
       <MainLayout checkLoggedIn>
         <WishesHistoryMessageTreePageContainer></WishesHistoryMessageTreePageContainer>
       </MainLayout>

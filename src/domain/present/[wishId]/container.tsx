@@ -61,17 +61,8 @@ export default function GivePresentPageContainer({
     handleState: handlePresentMessageModalState,
     changeState: changePresenetMessgaeModalState,
   } = useToggle();
-
   const { giftMenuId } = methods.watch();
-
-  const [selectedCakeId, setSelectedCakeId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (avatarCakeId !== undefined) {
-      setSelectedCakeId(avatarCakeId);
-    }
-  }, [avatarCakeId]);
-
+  const [selectedCakeId, setSelectedCakeId] = useState<string>(avatarCakeId);
   const { handleRouter } = useRouters();
 
   useEffect(() => {
@@ -89,7 +80,7 @@ export default function GivePresentPageContainer({
       handleNextToPaymentStep();
     } else {
       GivePresent();
-      handleRouter(`/present/${wishId}/?presentStep=done`);
+      handleRouter(`/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`);
     }
   }
 
@@ -153,12 +144,22 @@ export default function GivePresentPageContainer({
                 <PresentGiverInfoInputForm>
                   {wantsGift && (
                     <InputForm title="선물하고 싶은 항목 선택하기">
-                      {!messageOnlyOption && <PresentList changeGiftMenuId={changeGiftMenuId} />}
-                      <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-                        <CheckBox changeCheckedState={changeMessageOnlyOption}>
-                          <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
-                        </CheckBox>
-                      </Box>
+                      <PresentList
+                        changeGiftMenuId={changeGiftMenuId}
+                        messageOnlyOption={messageOnlyOption}
+                      >
+                        <Box
+                          bgColor="dark_green"
+                          fontColor="gray2"
+                          styles={{ marginTop: '0.6rem' }}
+                        >
+                          <CheckBox changeCheckedState={changeMessageOnlyOption}>
+                            <span className="font-galmuri text-[14px] ml-8">
+                              {'편지만 보낼게요'}
+                            </span>
+                          </CheckBox>
+                        </Box>
+                      </PresentList>
                     </InputForm>
                   )}
                 </PresentGiverInfoInputForm>
@@ -224,6 +225,7 @@ export default function GivePresentPageContainer({
                     defaultCakeTreeDataObject[selectedCakeId],
                     ...defaultCakeTreeDataArray,
                   ]}
+                  modalState={presenetMessageModalState}
                 />
 
                 <GradientShadow height={19} />
@@ -276,14 +278,12 @@ function PresentMessageModal({
   };
 
   return (
-    <>
-      <SaveCakeMessageModal
-        modalState={modalState}
-        handleModalState={handleModalState}
-        receivedCakeMessageData={receivedCakeMessageData}
-        nickName={nickName}
-        isLoading={false}
-      />
-    </>
+    <SaveCakeMessageModal
+      modalState={modalState}
+      handleModalState={handleModalState}
+      receivedCakeMessageData={receivedCakeMessageData}
+      nickName={nickName}
+      isLoading={false}
+    />
   );
 }

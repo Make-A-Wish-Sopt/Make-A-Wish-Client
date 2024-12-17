@@ -7,7 +7,6 @@ import { ArrowRightIc } from '../../../../public/assets/icons';
 import useToggle from '@/hooks/common/useToggle';
 import { useEffect } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
-import { getSingleWishInfo, getWishes } from '@/api/wishes';
 
 export function WishHistoryBox({
   wishTitle,
@@ -34,7 +33,7 @@ export function WishHistoryBox({
     }
   }, [checkedState]);
 
-  function handleClick() {
+  function handleClick(e: React.MouseEvent) {
     handleRouter(`/mypage/wishes-history/${wishId}`);
   }
 
@@ -45,8 +44,8 @@ export function WishHistoryBox({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 'auto',
+        padding: '14px 20px',
       }}
-      onClick={handleClick}
     >
       <CheckBox changeCheckedState={changeCheckedState}>
         <div className="flex flex-col w-full  ml-10">
@@ -54,7 +53,9 @@ export function WishHistoryBox({
           <p className="font-galmuri text-[11px] text-gray2">{period}</p>
         </div>
       </CheckBox>
-      <Image src={ArrowRightIc} alt="왼쪽 화살표" width={10} priority />
+      <div className="flex flex-row-reverse w-35 h-35" onClick={handleClick}>
+        <Image src={ArrowRightIc} alt="왼쪽 화살표" width={10} priority />
+      </div>
     </Box>
   );
 }

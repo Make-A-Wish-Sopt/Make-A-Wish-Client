@@ -37,14 +37,10 @@ export function SaveCakeMessageModal({
 
     const img = canvas.toDataURL('image/png');
 
-    console.log(img);
-
     if (!htmlContent) {
       console.error('DOM이 준비되지 않았습니다.');
       return;
     }
-
-    console.log(htmlContent);
 
     htmlToImage
       .toJpeg(htmlContent, {
@@ -54,8 +50,6 @@ export function SaveCakeMessageModal({
         imagePlaceholder: '',
       })
       .then((url) => {
-        console.log(url);
-
         // downloadImage(url);
       });
   };
