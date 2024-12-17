@@ -25,7 +25,7 @@ export default function MypageContainer({
   const { handleRouter, handleRefresh } = useRouters();
   const {
     state: pauseWishesModalState,
-    changeState: chnagePauseWishesModalState,
+    changeState: changePauseWishesModalState,
     handleState: handlePauseWishesModalState,
   } = useToggle();
 
@@ -57,7 +57,7 @@ export default function MypageContainer({
             <MoreBox
               text="진행 중인 생일잔치 중단하기"
               handleClick={() => {
-                chnagePauseWishesModalState(true);
+                changePauseWishesModalState(true);
               }}
               disabled={progressWishes === undefined}
             />
@@ -87,7 +87,7 @@ export default function MypageContainer({
               bgColor="white"
               fontColor="dark_green"
               onClick={() => {
-                chnagePauseWishesModalState(false);
+                changePauseWishesModalState(false);
               }}
             >
               취소
@@ -97,7 +97,7 @@ export default function MypageContainer({
               fontColor="white"
               onClick={() => {
                 patchProgressWishes();
-                chnagePauseWishesModalState(false);
+                changePauseWishesModalState(false);
                 handleRefresh();
               }}
             >
