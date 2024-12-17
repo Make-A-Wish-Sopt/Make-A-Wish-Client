@@ -84,7 +84,6 @@ export function WishesLinkInputs({
       <HintMessageToGiver />
       <WantsGiftOption />
 
-      {/* Submit Button */}
       {children}
     </FormProvider>
   );
@@ -185,17 +184,28 @@ function SelectWantsGiftOption() {
     <>
       <ul className="flex flex-col gap-12 font-galmuri text-white">
         <li
-          className={`w-full ${dropDownState && 'px-10 py-12'} bg-dark_green rounded-xl`}
+          className={`flex flex-col w-full bg-dark_green rounded-xl duration-300`}
           onClick={() => handleChangeWantsGiftState(true)}
+          style={{
+            maxHeight: dropDownState ? '415px' : '50px',
+            transition: 'max-height 0.5s ease-out, opacity 0.3s ease-out',
+          }}
         >
-          {/* refactor : 여백 수정해야합니다! */}
-          {/* refactor : 선물 리스트 스타일 수정해야합니다! */}
-
-          <DropDwonBox isOpen={dropDownState} handleState={handleDropBoxState}>
-            <RadioSelect isSelect={selectOption} />
-            <span className="w-full">네! 생일 선물도 받아볼래요</span>
-          </DropDwonBox>
-          {dropDownState && <DropDownContent />}
+          <div>
+            <DropDwonBox isOpen={dropDownState} handleState={handleDropBoxState}>
+              <RadioSelect isSelect={selectOption} />
+              <span className="w-full">네! 생일 선물도 받아볼래요</span>
+            </DropDwonBox>
+          </div>
+          <div
+            className="duration-300"
+            style={{
+              opacity: dropDownState ? 1 : 0,
+              visibility: dropDownState ? 'visible' : 'hidden',
+            }}
+          >
+            <DropDownContent />
+          </div>
         </li>
 
         <li

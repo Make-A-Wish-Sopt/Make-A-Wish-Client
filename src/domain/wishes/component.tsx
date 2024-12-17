@@ -195,7 +195,6 @@ export function CakeTree({
   handleSelectCake?: (cake: ReceivedCakeTreeMessageDataType) => void;
 }) {
   const numberOfRows = Math.max(4, Math.floor((cakeList.length - 1) / 3) + 1);
-  console.log(numberOfRows);
 
   return (
     <div className="flex flex-col items-center w-full">
