@@ -18,7 +18,13 @@ export default function PresentSuccess({
   );
 }
 
-export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataType[] }) {
+export function PresentSuccessCakeTree({
+  cakeList,
+  modalState,
+}: {
+  cakeList: CakeTreeDataType[];
+  modalState: boolean;
+}) {
   const numberOfRows = Math.max(4, Math.ceil(cakeList.length / 3 - 1));
 
   const [firstCake, ...restCake] = cakeList;
@@ -41,18 +47,38 @@ export function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTreeDataTyp
               zIndex: 5,
             }}
           />
+
           <div
             className="absolute top-128 flex justify-center w-375 h-222  bg-cover bg-no-repeat bg-[url('/assets/images/cakeDishImg.png')]"
             style={{
               top: `${0}px`,
             }}
           >
-            <Image
-              src={firstCake.cakeImg}
-              alt="선물보낸 케이크 이미지"
-              width={187}
-              style={{ transform: 'translate(0%, -10%)', zIndex: 100, objectFit: 'contain' }}
-            />
+            {!modalState && (
+              <Image
+                src={firstCake.cakeImg}
+                alt="선물보낸 케이크 이미지"
+                width={187}
+                style={{
+                  transform: 'translate(0%, -10%)',
+                  zIndex: 100,
+                  objectFit: 'contain',
+                  animation: 'appearAnimation 0.3s ease-out forwards',
+                }}
+              />
+            )}
+            <style jsx>{`
+              @keyframes appearAnimation {
+                0% {
+                  transform: translate(0, -10%) scale(0);
+                  opacity: 0;
+                }
+                100% {
+                  transform: translate(0%, -10%) scale(1);
+                  opacity: 1;
+                }
+              }
+            `}</style>
           </div>
 
           {/* 케이크 접시 구성 */}

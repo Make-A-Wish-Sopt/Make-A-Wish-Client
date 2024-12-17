@@ -188,7 +188,7 @@ function SelectWantsGiftOption() {
           onClick={() => handleChangeWantsGiftState(true)}
           style={{
             maxHeight: dropDownState ? '415px' : '50px',
-            transition: 'max-height 0.5s ease-out, opacity 0.3s ease-out',
+            transition: 'max-height 0.3s ease-out, opacity 0.3s ease-out',
           }}
         >
           <div>

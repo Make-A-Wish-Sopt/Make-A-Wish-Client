@@ -22,9 +22,27 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
           }`}
           onClick={handleState}
         >
-          <div className="w-375  h-full" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="w-375  h-full"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              animation: 'appearAnimation 0.3s ease-out forwards',
+            }}
+          >
             {children}
           </div>
+          <style jsx>{`
+            @keyframes appearAnimation {
+              0% {
+                transform: scale(0);
+                opacity: 0;
+              }
+              100% {
+                transform: scale(1);
+                opacity: 1;
+              }
+            }
+          `}</style>
         </div>
       )}
     </>

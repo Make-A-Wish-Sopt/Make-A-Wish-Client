@@ -4,42 +4,55 @@ import { presentListArray } from '@/constant/model/present';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { convertMoneyText } from '@/utils/common/convert';
 import Image from 'next/image';
+import { PropsWithChildren } from 'react';
 
 export default function PresentList({
   changeGiftMenuId,
+  messageOnlyOption,
   readonly,
+  children,
 }: {
   changeGiftMenuId?: (id: number) => void;
+  messageOnlyOption: boolean;
   readonly?: boolean;
-}) {
+} & PropsWithChildren) {
   const { isSelected, handleSelectOne } = useSelectItem();
 
   function handleSelectPresent(id: number) {
     if (readonly) return;
-
-    console.log(id);
 
     handleSelectOne(id);
     changeGiftMenuId(id);
   }
 
   return (
-    <div className="grid grid-cols-3 gap-6 w-full">
-      {presentListArray.map((item) => (
-        <div
-          className={`flex flex-col items-center p-9  ${
-            isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
-          }
+    <>
+      <div
+        className="grid grid-cols-3 gap-6 w-full duration-200"
+        style={{
+          transition: '0.5s ease-out, opacity 0.2s ease-out',
+          visibility: messageOnlyOption ? 'hidden' : 'visible',
+          opacity: messageOnlyOption ? 0 : 1,
+          height: messageOnlyOption ? 0 : '236px',
+        }}
+      >
+        {presentListArray.map((item) => (
+          <div
+            className={`flex flex-col items-center p-9  ${
+              isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
+            }
             font-bitbit rounded-xl text-[14px]`}
-          onClick={() => handleSelectPresent(item.id)}
-          key={item.id}
-        >
-          <Image src={item.image} alt="선물 이미지" width={56} />
-          <span>{item.itemName}</span>
-          <span>{convertMoneyText(item.price.toString())}원</span>
-        </div>
-      ))}
-    </div>
+            onClick={() => handleSelectPresent(item.id)}
+            key={item.id}
+          >
+            <Image src={item.image} alt="선물 이미지" width={56} />
+            <span>{item.itemName}</span>
+            <span>{convertMoneyText(item.price.toString())}원</span>
+          </div>
+        ))}
+      </div>
+      {children}
+    </>
   );
 }
 
