@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from 'react';
 import { WishHistoryBox } from './component';
-import { WishesHistoryType } from '@/types/api/response';
+import { WishesHistoryListType } from '@/types/api/response';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import Image from 'next/image';
 import { DeleteBtnIc } from '../../../../public/assets/icons';
@@ -16,7 +16,7 @@ import { EmptyWishesCakeImg } from '../../../../public/assets/images';
 export default function WishesHistoryPageContainer({
   wishesHistory,
   children,
-}: { wishesHistory: WishesHistoryType[] } & PropsWithChildren) {
+}: { wishesHistory: WishesHistoryListType[] } & PropsWithChildren) {
   const { selectedIdArray, removeToDeleteIdList, addToDeleteIdList } = useSelectItem();
   const {
     state: deleteModalState,

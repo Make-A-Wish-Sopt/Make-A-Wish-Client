@@ -19,6 +19,7 @@ import { getUserAccount, postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
+import CheckedIcon from '@/components/Common/Icon/CheckedIcon';
 
 export default function WishesAccountInputForm({
   changeNoticeAgreeState,
@@ -38,7 +39,7 @@ export default function WishesAccountInputForm({
 
   const { state: accountVerifyBtnState, changeState: changeAccountVerifyBtnState } = useToggle();
 
-  const { register, reset } = wishesAccountInputMethods;
+  const { register, reset, formState } = wishesAccountInputMethods;
 
   useEffect(() => {
     getUserAccount().then((response) => {
@@ -69,7 +70,9 @@ export default function WishesAccountInputForm({
             <InputText
               placeholder="계좌번호를 입력해주세요"
               register={register('accountInfo.account')}
-            />
+            >
+              {!formState.isDirty && <CheckedIcon width={24} />}
+            </InputText>
           </AccountInput>
           <AccountFormNotice changeNoticeAgreeState={changeNoticeAgreeState} />
         </div>

@@ -14,14 +14,22 @@ export type DefaultResponseType<T = unknown> = {
   message: string;
   data?: T;
 };
-export type WishesHistoryType = {
+
+export type WishesHistoryListType = {
   wishId: number;
+} & WishesHistoryType;
+
+export type WishesHistoryType = {
   title: string;
   startAt: string;
   endAt: string;
 };
 
-export type WishesHistoryListResponseType = DefaultResponseType<{ wishes: WishesHistoryType[] }>;
+export type WishesHistoryResponseType = DefaultResponseType<WishesHistoryType>;
+
+export type WishesHistoryListResponseType = DefaultResponseType<{
+  wishes: WishesHistoryListType[];
+}>;
 
 export type WishesCreateResponseType = DefaultResponseType<number>; //소원아이디
 

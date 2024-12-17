@@ -17,6 +17,7 @@ import useToggle from '@/hooks/common/useToggle';
 import { PayCodeGuideModal } from './component';
 import CloseIcon from '@/components/Common/Icon/CloseIcon';
 import CheckedIcon from '@/components/Common/Icon/CheckedIcon';
+import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
 
 export default function WishesKakaopayInputForm({
   isKakaoPayCodeValid,
@@ -39,6 +40,8 @@ export default function WishesKakaopayInputForm({
   const { register, watch, reset } = wishesAccountInputMethods;
   const { kakaoPayCode } = watch();
 
+  const { state: loadingState, changeState: changeLoadingState } = useToggle();
+
   const {
     state: payCodeGuideModalState,
     changeState: changePayCodeGuideModalState,
@@ -58,6 +61,8 @@ export default function WishesKakaopayInputForm({
   }, [kakaoPayCode]);
 
   async function checkKakaopayCode(kakaoPayCode: string) {
+    changeLoadingState(true);
+
     const response = await fetch('/api/kakao/paycode', {
       method: 'POST',
       body: JSON.stringify({ kakaoPayCode: kakaoPayCode }),
@@ -67,7 +72,15 @@ export default function WishesKakaopayInputForm({
     });
     const data: DefaultResponseType = await response.json();
 
-    changeIsKakaoPayCodeValid(data.success);
+    // changeIsKakaoPayCodeValid(data.success);
+
+    setTimeout(() => {
+      changeIsKakaoPayCodeValid(data.success);
+    }, 1500);
+
+    setTimeout(() => {
+      changeLoadingState(false);
+    }, 2000);
   }
 
   async function handleValidateKakaopayCode() {
@@ -77,7 +90,6 @@ export default function WishesKakaopayInputForm({
       checkKakaopayCode(kakaoPayCode);
     } else {
       changeIsKakaoPayCodeValid(false);
-      // wishesAccountInputMethods.setValue('kakaoPayCode', '');
     }
   }
 
@@ -105,7 +117,6 @@ export default function WishesKakaopayInputForm({
           {isKakaoPayCodeValid ? (
             <CheckedIcon width={24} />
           ) : (
-            // <Image src={AlertSuccessIc} alt="유효 아이콘" />
             <div
               onClick={() => {
                 kakaoPayCode && wishesAccountInputMethods.setValue('kakaoPayCode', '');
@@ -115,7 +126,6 @@ export default function WishesKakaopayInputForm({
             </div>
           )}
         </InputText>
-        {isKakaoPayCodeValid && <span></span>}
 
         <BorderBox>
           <p className="text-[12px]">
@@ -131,6 +141,11 @@ export default function WishesKakaopayInputForm({
           modalState={payCodeGuideModalState}
           handleModalState={handlePayCodeGuideModalState}
         />
+      )}
+      {loadingState && (
+        <>
+          <ValidateLoadingModal isOpen={loadingState} success={isKakaoPayCodeValid} />
+        </>
       )}
     </FormProvider>
   );

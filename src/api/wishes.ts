@@ -3,6 +3,7 @@ import {
   MainProgressDataResponseType,
   WishesCreateResponseType,
   WishesHistoryListResponseType,
+  WishesHistoryResponseType,
   WishesProgressDataResponseType,
 } from '@/types/api/response';
 import { client } from './common/axios';
@@ -98,7 +99,9 @@ export const patchProgressWishes = async () => {
  * 소원 단건 조회
  */
 export const getSingleWishInfo = async (wishId: string | string[] | undefined) => {
-  const data = await client.get(`${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`);
+  const data = await client.get<WishesHistoryResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.GET_SINGLE_WISH_INFO(wishId)}`,
+  );
 
   return data.data.data;
 };

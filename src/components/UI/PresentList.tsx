@@ -13,7 +13,7 @@ export default function PresentList({
   children,
 }: {
   changeGiftMenuId?: (id: number) => void;
-  messageOnlyOption: boolean;
+  messageOnlyOption?: boolean;
   readonly?: boolean;
 } & PropsWithChildren) {
   const { isSelected, handleSelectOne } = useSelectItem();

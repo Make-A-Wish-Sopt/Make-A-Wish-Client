@@ -131,7 +131,7 @@ export function WishesEditAccountSubmitButton({
   }
   return (
     <FixedBottomButtonWrapper>
-      <div className="flex justify-between gap-10">
+      <div className="flex justify-between gap-10 w-full">
         <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
           이전
         </Button>
