@@ -104,23 +104,37 @@ export function ReceivedCakeMessageModal({
   const modalState = getValues('cakeMessageModalState');
   const messageData = watch('cakePresentMessageData');
 
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+
   const [receivedCakeMessageData, setReceivedCakeMessageData] =
     useState<ReceivedCakeTreeMessageDataType>(null);
 
   useEffect(() => {
     if (messageData) {
       const { presentId, cakeImg } = watch('cakePresentMessageData');
+
+      setIsLoading(true); // 로딩 시작
+
       if (presentId > 0) {
-        getCakePresentMessage(wishId, presentId).then((response) => {
-          setReceivedCakeMessageData({
-            ...response,
-            cakeImg: cakeImg,
-            isAdminMessage: false,
-            presentId: presentId,
+        getCakePresentMessage(wishId, presentId)
+          .then((response) => {
+            setReceivedCakeMessageData({
+              ...response,
+              cakeImg: cakeImg,
+              isAdminMessage: false,
+              presentId: presentId,
+            });
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setIsLoading(false); // 로딩 완료
+            }, 800);
           });
-        });
       } else {
         setReceivedCakeMessageData({ ...messageData });
+        setTimeout(() => {
+          setIsLoading(false); // 로딩 완료
+        }, 800);
       }
     }
   }, [messageData]);
@@ -137,6 +151,7 @@ export function ReceivedCakeMessageModal({
           handleModalState={handleModalState}
           receivedCakeMessageData={receivedCakeMessageData}
           nickName={nickName}
+          isLoading={isLoading}
         />
       )}
     </>

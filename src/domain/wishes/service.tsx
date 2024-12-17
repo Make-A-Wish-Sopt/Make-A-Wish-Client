@@ -19,51 +19,31 @@ export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
   function defineCakeTree(receivedCakeList?: CakeTreeDataType[]) {
     if (!receivedCakeList) return defaultCakeTreeDataArray;
 
-    if (receivedCakeList.length === 0) return defaultCakeTreeDataArray;
+    const defaulCakeList = defaultCakeTreeDataArray.map((cake) => {
+      cake.name = '선물주운영자';
+      return cake;
+    });
 
-    if (receivedCakeList.length > 0 && receivedCakeList.length <= 12) {
-      const convertReceivedCakeData = receivedCakeList
-        .map((cake) => {
-          const matchCakesData = defaultCakeTreeDataObject[cake.cakeId];
+    if (receivedCakeList.length === 0) return defaulCakeList;
 
-          if (matchCakesData) {
-            return {
-              ...matchCakesData,
-              name: cake.name,
-              presentId: cake.presentId,
-              cakeImg: defaultCakeTreeDataObject[cake.cakeId].cakeImg,
-              isAdminMessage: false,
-            };
-          }
-          return null;
-        })
-        .filter(Boolean);
+    const convertReceivedCakeData = receivedCakeList
+      .map((cake) => {
+        const matchCakesData = defaultCakeTreeDataObject[cake.cakeId];
 
-      const mergedCakeList = [
-        ...convertReceivedCakeData,
-        ...defaultCakeTreeDataArray.slice(0, 12 - receivedCakeList.length),
-      ];
+        if (matchCakesData) {
+          return {
+            ...matchCakesData,
+            name: cake.name,
+            presentId: cake.presentId,
+            cakeImg: defaultCakeTreeDataObject[cake.cakeId].cakeImg,
+            isAdminMessage: false,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
 
-      return mergedCakeList;
-    } else {
-      const convertReceivedCakeData = receivedCakeList
-        .map((cake) => {
-          const matchCakesData = defaultCakeTreeDataObject[cake.cakeId];
-
-          if (matchCakesData) {
-            return {
-              ...matchCakesData,
-              name: cake.name,
-              presentId: cake.presentId,
-              cakeImg: defaultCakeTreeDataObject[cake.cakeId].cakeImg,
-            };
-          }
-          return null;
-        })
-        .filter(Boolean);
-
-      return convertReceivedCakeData;
-    }
+    return [...convertReceivedCakeData, ...defaulCakeList];
   }
 
   return <CakesTreeMessage cakeList={cakeList} />;

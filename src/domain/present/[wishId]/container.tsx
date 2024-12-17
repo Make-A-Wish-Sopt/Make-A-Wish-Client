@@ -282,7 +282,8 @@ function PresentMessageModal({
         handleModalState={handleModalState}
         receivedCakeMessageData={receivedCakeMessageData}
         nickName={nickName}
-      ></SaveCakeMessageModal>
+        isLoading={false}
+      />
     </>
   );
 }
