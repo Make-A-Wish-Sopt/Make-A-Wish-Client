@@ -19,21 +19,23 @@ export default function ErrorPage({
 
   return (
     <>
-      <main className="w-375 h-svh flex flex-col justify-center items-center px-22  ">
-        <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
+      <main className="w-full h-svh flex flex-col justify-center items-center px-22  ">
+        <div className="flex flex-col items-center justify-center w-375 h-full">
+          <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
 
-        <h1 className="font-bitbit text-main_blue text-[100px]">ERROR</h1>
-        <p className="font-bitbit text-white text-[25px]">{alertMessage}</p>
+          <h1 className="font-bitbit text-main_blue text-[100px]">ERROR</h1>
+          <p className="font-bitbit text-white text-[25px]">{alertMessage}</p>
 
-        <FixedBottomButtonWrapper>
-          <Button
-            onClick={() => {
-              handleRouter(routePath);
-            }}
-          >
-            {btnMessage}
-          </Button>
-        </FixedBottomButtonWrapper>
+          <FixedBottomButtonWrapper>
+            <Button
+              onClick={() => {
+                handleRouter(routePath);
+              }}
+            >
+              {btnMessage}
+            </Button>
+          </FixedBottomButtonWrapper>
+        </div>
       </main>
     </>
   );
