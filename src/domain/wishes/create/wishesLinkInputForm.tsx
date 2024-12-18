@@ -76,9 +76,7 @@ export function WishesLinkInputs({
       <ImageToBeShownToGiver />
 
       <InputForm title="내 생일 주간 설정하기">
-        <div className="flex justify-between gap-10">
-          <WishesPeriod />
-        </div>
+        <WishesPeriod />
       </InputForm>
 
       <HintMessageToGiver />
@@ -102,10 +100,10 @@ function WishesPeriod() {
   }
 
   return (
-    <>
+    <div className="flex justify-between gap-10">
       <CalendarInput date={startDateWatch} handleChangeDate={handleChangeDate} />
       <CalendarInput date={endDateWatch} readonly />
-    </>
+    </div>
   );
 }
 

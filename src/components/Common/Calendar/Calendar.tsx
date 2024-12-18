@@ -6,12 +6,13 @@ import { CSSProperties } from 'react';
 
 interface CalendarProps {
   date: Date;
+  isOpen: boolean;
   ChangeDate?: (selectedDate: Date) => void;
   style?: CSSProperties;
 }
 
 export default function Calendar(props: CalendarProps) {
-  const { date, ChangeDate, style } = props;
+  const { date, ChangeDate, isOpen, style } = props;
 
   return (
     <DayPicker
@@ -31,7 +32,7 @@ export default function Calendar(props: CalendarProps) {
           </button>
         ),
       }}
-      className="flex justify-center items-center w-full max-w-[331px] aspect-square text-main_blue bg-white rounded-2xl  text-[14px] p-15"
+      className={`flex justify-center items-center w-full max-w-[331px] aspect-square text-main_blue rounded-2xl  text-[14px] p-15 z-10 transition-all duration-300 ${isOpen ? 'w-full opacity-100 scale-100' : 'w-0 opacity-0 scale-0'}`}
       classNames={{
         weekday: 'font-bold text-[18px]',
         month_caption: 'font-bold mb-20',

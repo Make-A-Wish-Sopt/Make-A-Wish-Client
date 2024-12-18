@@ -39,13 +39,18 @@ export default function CalendarInput({
           <CalendarIcon color={readonly ? 'gray2' : 'white'} />
         </div>
       </Box>
-      {calendarOpenState && (
-        <Calendar
-          date={date}
-          ChangeDate={ChangeDate}
-          style={{ position: 'absolute', marginTop: '7rem' }}
-        />
-      )}
+
+      <Calendar
+        date={date}
+        ChangeDate={ChangeDate}
+        isOpen={calendarOpenState}
+        style={{
+          position: 'absolute',
+          marginTop: '7rem',
+          backgroundColor: '#001D26',
+          transformOrigin: 'top left',
+        }}
+      />
     </>
   );
 }
