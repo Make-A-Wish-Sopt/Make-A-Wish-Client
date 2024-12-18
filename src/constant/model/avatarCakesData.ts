@@ -20,7 +20,8 @@ export type AvatarCakesDataType = {
   cakeImg: StaticImageData;
 };
 
-const defaultAvatarCakesDataMap: Map<CakeIdType, AvatarCakesDataType> = new Map();
+const defaultAvatarCakesDataMap: Map<CakeIdType, AvatarCakesDataType> =
+  new Map();
 defaultAvatarCakesDataMap.set(cakeId.vitaminCakeId, {
   name: '비타사백',
   cakeImg: VitaminCakeAvatarImg,
@@ -66,9 +67,9 @@ defaultAvatarCakesDataMap.set(cakeId.ddongCakeId, {
   cakeImg: DdongCakeAvatarImg,
 });
 
-export const defaultAvatarCakesDataArray = Array.from(defaultAvatarCakesDataMap.entries()).map(
-  ([id, value]) => ({
-    id,
-    ...value,
-  }),
-);
+export const defaultAvatarCakesDataArray = Array.from(
+  defaultAvatarCakesDataMap.entries()
+).map(([id, value]) => ({
+  id,
+  ...value,
+}));

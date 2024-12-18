@@ -9,10 +9,15 @@ export default function KakaopayPayment({
   children,
 }: { wishMakerName: string; presentPrice: string } & PropsWithChildren) {
   return (
-    <section className="flex flex-col items-center w-full font-bitbit text-white ">
-      <Image src={BeefCakeImg} alt="케이크 이미지" width={121} className="mt-60" />
+    <section className="flex flex-col  items-center w-full font-bitbit text-white ">
+      <Image
+        src={BeefCakeImg}
+        alt="케이크 이미지"
+        width={121}
+        className="mt-120"
+      />
       <span className="text-[24px] ">{`${wishMakerName}님에게`}</span>
-      <span className="text-[50px] leading-none">{`${convertMoneyText(presentPrice)}원`}</span>
+      <span className="text-main_blue text-[50px] leading-none">{`${convertMoneyText(presentPrice)}원`}</span>
       <span className="text-[24px] ">{`송금하기`}</span>
       {children}
     </section>

@@ -19,7 +19,9 @@ export default function useSelectItem() {
   }
 
   function removeToDeleteIdList(removeItemId: number) {
-    setSelectedIdArray([...selectedIdArray.filter((id) => id !== removeItemId)]);
+    setSelectedIdArray([
+      ...selectedIdArray.filter((id) => id !== removeItemId),
+    ]);
   }
 
   return {

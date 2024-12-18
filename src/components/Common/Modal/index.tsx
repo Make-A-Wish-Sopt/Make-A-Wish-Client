@@ -22,7 +22,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
       style={{ visibility: isOpen ? 'visible' : 'hidden' }}
     >
       <div
-        className="w-375  h-full"
+        className="w-375 h-full"
         onClick={(e) => e.stopPropagation()}
         style={{
           animation: 'appearAnimation 0.3s ease-out forwards',

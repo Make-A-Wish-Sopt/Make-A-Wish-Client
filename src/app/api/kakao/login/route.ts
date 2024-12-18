@@ -5,7 +5,10 @@ export async function GET() {
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 
   if (!clientId || !redirectUri) {
-    return NextResponse.json({ error: 'Missing Kakao API configuration', status: 500 });
+    return NextResponse.json({
+      error: 'Missing Kakao API configuration',
+      status: 500,
+    });
   }
 
   const authUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;

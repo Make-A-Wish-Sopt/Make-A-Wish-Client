@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useRouters } from './useRouters';
 
@@ -7,23 +9,24 @@ export default function useKakaoAuth() {
   const { handleReplace } = useRouters();
 
   useEffect(() => {
-    async function fetchAuthUrl() {
+    async function fetchAuthLoginUrl() {
       const response = await fetch('/api/kakao/login');
       const data = await response.json();
       setLoginUrl(data.authUrl);
     }
 
-    fetchAuthUrl();
+    fetchAuthLoginUrl();
   }, []);
 
   useEffect(() => {
-    async function fetchAuthUrl() {
+    async function fetchAuthLogoutUrl() {
       const response = await fetch('/api/kakao/logout');
       const data = await response.json();
+
       setLogoutUrl(data.authUrl);
     }
 
-    fetchAuthUrl();
+    fetchAuthLogoutUrl();
   }, []);
 
   const handleKaKaoLogin = () => {
@@ -33,7 +36,7 @@ export default function useKakaoAuth() {
   };
 
   const handleKaKaoLogout = () => {
-    if (loginUrl) {
+    if (logoutUrl) {
       handleReplace(logoutUrl);
     }
   };

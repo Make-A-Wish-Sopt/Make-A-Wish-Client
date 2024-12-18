@@ -11,7 +11,7 @@ export default async function Mypage() {
   if (!loginUserData) {
     return (
       <>
-        <Header backBtn />
+        <Header backBtn routePath="/" />
         <MainLayout>
           <MypageContainer nickName={'조물주'} isLoggedIn={false} />
         </MainLayout>
@@ -27,7 +27,11 @@ export default async function Mypage() {
     <>
       <Header backBtn routePath="/wishes" />
       <MainLayout checkLoggedIn>
-        <MypageContainer nickName={nickName} progressWishes={progressWishes} isLoggedIn />
+        <MypageContainer
+          nickName={nickName}
+          progressWishes={progressWishes}
+          isLoggedIn
+        />
       </MainLayout>
     </>
   );

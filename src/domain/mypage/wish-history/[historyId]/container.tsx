@@ -23,8 +23,10 @@ export default function WishesHistoryMessageTreePageContainer({
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<ReceivedCakeTreeMessageDataType | null>(null);
 
-  const { state: cakeMessageModalState, handleState: handleChangeCakeMessageModalState } =
-    useToggle();
+  const {
+    state: cakeMessageModalState,
+    handleState: handleChangeCakeMessageModalState,
+  } = useToggle();
 
   const { state: isLoading, changeState: changeIsLoading } = useToggle();
 

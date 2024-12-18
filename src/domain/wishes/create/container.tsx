@@ -8,7 +8,12 @@ import {
   WishesLinkDataResolverType,
 } from '@/validation/wishes.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
+import {
+  FormProvider,
+  useForm,
+  useFormContext,
+  UseFormReturn,
+} from 'react-hook-form';
 import { PropsWithChildren, useEffect } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
@@ -34,9 +39,14 @@ export default function WishesCreatePageContainer({
     resolver: yupResolver(wishesLinkDataResolver),
   });
 
-  const { state: selectAccount, changeState: changeSelectAccount } = useToggle();
-  const { state: noticeAgree, changeState: changeNoticeAgreeState } = useToggle();
-  const { state: isKakaoPayCodeValid, changeState: changeIsKakaoPayCodeValid } = useToggle();
+  const selectAccount = useToggle();
+  const isKakaoPayCodeValid = useToggle();
+  const noticeAgree = useToggle();
+  const submitBtnActiveState = useToggle();
+  const accountVerifyBtnState = useToggle();
+  const isLoading = useToggle();
+  const isAccountValid = useToggle(true);
+
   const { handleRouter } = useRouters();
 
   function handleNextStep() {
@@ -60,10 +70,7 @@ export default function WishesCreatePageContainer({
           select: (
             <>
               {children}
-              <SelectDeposit
-                selectAccount={selectAccount}
-                changeSelectAccount={changeSelectAccount}
-              >
+              <SelectDeposit selectAccount={selectAccount}>
                 <WishesDepositSubmitButton handleNextStep={handleNextStep} />
               </SelectDeposit>
             </>
@@ -72,13 +79,14 @@ export default function WishesCreatePageContainer({
             <>
               {children}
               <WishesKakaopayInputForm
+                noticeAgree={noticeAgree}
                 isKakaoPayCodeValid={isKakaoPayCodeValid}
-                changeNoticeAgreeState={changeNoticeAgreeState}
-                changeIsKakaoPayCodeValid={changeIsKakaoPayCodeValid}
+                submitBtnActiveState={submitBtnActiveState}
               >
                 <WishesAccountSubmitButton
                   linkDataMethods={savedWishesLinkDataMethods}
-                  disabled={!(isKakaoPayCodeValid && noticeAgree)}
+                  forPayCode={true}
+                  disabled={!submitBtnActiveState.state}
                 />
               </WishesKakaopayInputForm>
             </>
@@ -86,9 +94,22 @@ export default function WishesCreatePageContainer({
           account: (
             <>
               {children}
-              <WishesAccountInputForm changeNoticeAgreeState={changeNoticeAgreeState}>
+              <WishesAccountInputForm
+                accountVerifyBtnState={accountVerifyBtnState}
+                isAccountValid={isAccountValid}
+                isLoading={isLoading}
+                submitBtnActiveState={submitBtnActiveState}
+                noticeAgree={noticeAgree}
+              >
                 <WishesAccountSubmitButton
-                  disabled={!noticeAgree}
+                  disabled={
+                    !(
+                      noticeAgree &&
+                      isAccountValid.state &&
+                      accountVerifyBtnState.state
+                    )
+                  }
+                  forPayCode={false}
                   linkDataMethods={savedWishesLinkDataMethods}
                 />
               </WishesAccountInputForm>
@@ -98,7 +119,9 @@ export default function WishesCreatePageContainer({
             <>
               {children}
               <WishesInputPreview methods={savedWishesLinkDataMethods} />
-              <WishesPreviewSubmitButton linkDataMethods={savedWishesLinkDataMethods} />
+              <WishesPreviewSubmitButton
+                linkDataMethods={savedWishesLinkDataMethods}
+              />
             </>
           ),
           done: <>{children}</>,
@@ -109,10 +132,10 @@ export default function WishesCreatePageContainer({
 }
 
 export function WishesEditAccountSubmitButton({
-  isValid,
+  disabled,
   forPayCode,
 }: {
-  isValid: boolean;
+  disabled: boolean;
   forPayCode: boolean;
 }) {
   const { handleBack, handleRouter } = useRouters();
@@ -140,7 +163,7 @@ export function WishesEditAccountSubmitButton({
           onClick={() => {
             handleWishesCreateSubmit();
           }}
-          disabled={!isValid}
+          disabled={disabled}
         >
           수정 완료!
         </Button>
@@ -151,19 +174,24 @@ export function WishesEditAccountSubmitButton({
 
 export function WishesAccountSubmitButton({
   linkDataMethods,
+  forPayCode,
   disabled,
 }: {
   linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+  forPayCode: boolean;
   disabled: boolean;
 }) {
   const { handleBack, handleRouter } = useRouters();
-  const { watch, formState } = useFormContext<WishesAccountDataResolverType>();
+  const { watch } = useFormContext<WishesAccountDataResolverType>();
 
   function handleWishesCreateSubmit() {
     const accountInputs = watch();
     const wishesData = linkDataMethods.watch();
 
-    putUserAccount(accountInputs).then((response) => {
+    putUserAccount({
+      ...accountInputs,
+      forPayCode: forPayCode,
+    }).then((response) => {
       response.data.success &&
         postWishes(wishesData).then((response) => {
           response.data.success && handleRouter('/wishes/create?step=done');
@@ -180,7 +208,7 @@ export function WishesAccountSubmitButton({
         onClick={() => {
           handleWishesCreateSubmit();
         }}
-        disabled={disabled && formState.isValid}
+        disabled={disabled}
       >
         생성 완료!
       </Button>
@@ -195,7 +223,8 @@ function WishesPreviewSubmitButton({
 }) {
   const { handleBack, handleRouter } = useRouters();
 
-  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
+  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } =
+    useToggle();
 
   useEffect(() => {
     if (wishesCreateSuccess) {

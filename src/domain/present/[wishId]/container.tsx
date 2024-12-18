@@ -2,7 +2,10 @@
 
 import { PresentStepType } from '@/app/present/[wishId]/page';
 import { presentDataInputInit } from '@/constant/init';
-import { presentDataResolver, PresentDataResolverType } from '@/validation/present.validate';
+import {
+  presentDataResolver,
+  PresentDataResolverType,
+} from '@/validation/present.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
@@ -28,8 +31,10 @@ import { SaveCakeMessageModal } from '@/domain/wishes/component';
 import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { presentListArray, presentListObject } from '@/constant/model/present';
+import { presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
+import useSelectItem from '@/hooks/common/useSelectItem';
+import { paymentListObject } from '@/constant/bankList';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -55,21 +60,26 @@ export default function GivePresentPageContainer({
   const { transferInfo, nickname, wantsGift } = publicWishesData;
 
   const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
-  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
+  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } =
+    useToggle();
   const {
     state: presenetMessageModalState,
     handleState: handlePresentMessageModalState,
     changeState: changePresenetMessgaeModalState,
   } = useToggle();
   const { giftMenuId } = methods.watch();
-  const [selectedCakeId, setSelectedCakeId] = useState<string>(avatarCakeId);
+  const selectedCakeId = avatarCakeId;
   const { handleRouter } = useRouters();
+
+  const { selectedId, isSelected, handleSelectOne } = useSelectItem();
 
   useEffect(() => {
     if (messageOnlyOption) {
       changeGiftMenuId(0);
     }
   }, [messageOnlyOption]);
+
+  useEffect(() => {}, [giftMenuId]);
 
   function changeGiftMenuId(id: number) {
     methods.setValue('giftMenuId', id);
@@ -80,7 +90,9 @@ export default function GivePresentPageContainer({
       handleNextToPaymentStep();
     } else {
       GivePresent();
-      handleRouter(`/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`);
+      handleRouter(
+        `/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`
+      );
     }
   }
 
@@ -110,7 +122,9 @@ export default function GivePresentPageContainer({
   function handleNextToPaymentStep() {
     const giftMenuId = methods.getValues('giftMenuId');
 
-    handleRouter(`/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}`);
+    handleRouter(
+      `/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}&avatarCakeId=${selectedCakeId}`
+    );
   }
 
   async function handleAccountCopy(text: string) {
@@ -129,8 +143,41 @@ export default function GivePresentPageContainer({
 
     GivePresent();
 
-    handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
+    handleRouter(
+      `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`
+    );
   }
+
+  const handleDeepLink = (paymentId: number) => {
+    if (!paymentId) return;
+
+    const ua = navigator.userAgent.toLowerCase();
+
+    if (paymentListObject[paymentId].name === '토스뱅크') {
+      window.open('supertoss://toss/pay');
+
+      setTimeout(() => {
+        window.open(
+          ua.indexOf('android') > -1
+            ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
+            : 'https://apps.apple.com/app/id839333328'
+        );
+      }, 2000);
+    }
+
+    if (paymentListObject[paymentId].name === '카카오뱅크') {
+      window.open('kakaobank://');
+      window.open('kakaopay://');
+
+      setTimeout(() => {
+        window.open(
+          ua.indexOf('android') > -1
+            ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
+            : 'https://apps.apple.com/app/id1258016944'
+        );
+      }, 2000);
+    }
+  };
 
   return (
     <>
@@ -145,6 +192,7 @@ export default function GivePresentPageContainer({
                   {wantsGift && (
                     <InputForm title="선물하고 싶은 항목 선택하기">
                       <PresentList
+                        selectedGiftMenuId={giftMenuId}
                         changeGiftMenuId={changeGiftMenuId}
                         messageOnlyOption={messageOnlyOption}
                       >
@@ -153,7 +201,9 @@ export default function GivePresentPageContainer({
                           fontColor="gray2"
                           styles={{ marginTop: '0.6rem' }}
                         >
-                          <CheckBox changeCheckedState={changeMessageOnlyOption}>
+                          <CheckBox
+                            changeCheckedState={changeMessageOnlyOption}
+                          >
                             <span className="font-galmuri text-[14px] ml-8">
                               {'편지만 보낼게요'}
                             </span>
@@ -177,7 +227,8 @@ export default function GivePresentPageContainer({
                     <KakaopayPayment
                       wishMakerName={nickname}
                       presentPrice={
-                        giftMenuId > 0 && presentListObject[giftMenuId].price.toString()
+                        giftMenuId > 0 &&
+                        presentListObject[giftMenuId].price.toString()
                       }
                     >
                       <KakaopaySubmitButton handleSubmit={handlePayment} />
@@ -187,14 +238,22 @@ export default function GivePresentPageContainer({
                   <>
                     <Payment
                       wishMakerName={nickname}
-                      presentPrice={presentListArray[giftMenuId].price.toString()}
+                      presentPrice={
+                        giftMenuId > 0 &&
+                        presentListObject[giftMenuId].price.toString()
+                      }
                       account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
+                      isSelected={isSelected}
+                      handleSelectOne={handleSelectOne}
                     />
                     <Button
                       onClick={() => {
+                        if (!selectedId) return;
+
                         GivePresent();
+                        handleDeepLink(selectedId);
                         handleRouter(
-                          `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`,
+                          `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`
                         );
                       }}
                       style={{ marginBottom: '5.8rem' }}
@@ -206,27 +265,28 @@ export default function GivePresentPageContainer({
               </>
             ),
             done: (
-              <section className="relative w-full">
-                {
-                  <PresentMessageModal
-                    nickName={publicWishesData.nickname}
-                    modalState={presenetMessageModalState}
-                    handleModalState={handlePresentMessageModalState}
-                    changeModalState={changePresenetMessgaeModalState}
-                    selectedCakeId={selectedCakeId}
-                  />
-                }
+              <section className="relative w-full ">
+                <PresentMessageModal
+                  nickName={publicWishesData.nickname}
+                  modalState={presenetMessageModalState}
+                  handleModalState={handlePresentMessageModalState}
+                  changeModalState={changePresenetMessgaeModalState}
+                  selectedCakeId={selectedCakeId}
+                />
+
                 <PresentSuccess
                   giverName={methods.getValues('name')}
                   wishesName={publicWishesData.nickname}
                 />
-                <PresentSuccessCakeTree
-                  cakeList={[
-                    defaultCakeTreeDataObject[selectedCakeId],
-                    ...defaultCakeTreeDataArray,
-                  ]}
-                  modalState={presenetMessageModalState}
-                />
+                {!presenetMessageModalState && (
+                  <PresentSuccessCakeTree
+                    cakeList={[
+                      defaultCakeTreeDataObject[selectedCakeId],
+                      ...defaultCakeTreeDataArray,
+                    ]}
+                    modalState={presenetMessageModalState}
+                  />
+                )}
 
                 <GradientShadow height={19} />
                 <PresentSuccessSubmitButton />

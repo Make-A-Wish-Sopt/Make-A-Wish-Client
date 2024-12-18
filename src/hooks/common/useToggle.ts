@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-export default function useToggle(init?: boolean) {
+export interface ToggleHookType {
+  state: boolean;
+  changeState: (state: boolean) => void;
+  handleState: () => void;
+}
+
+export default function useToggle(init?: boolean): ToggleHookType {
   const [state, setState] = useState(init === undefined ? false : init);
 
   const handleState = () => {

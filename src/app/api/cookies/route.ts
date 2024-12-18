@@ -15,7 +15,9 @@ export async function POST(request: Request) {
     httpOnly: true,
   });
 
-  const data: LoginUserDataType = JSON.parse(cookieStore.get(LOGIN_USER_COOKIE_KEY)?.value);
+  const data: LoginUserDataType = JSON.parse(
+    cookieStore.get(LOGIN_USER_COOKIE_KEY)?.value
+  );
 
   return NextResponse.json<DefaultResponseType<LoginUserDataType>>({
     success: true,
@@ -34,4 +36,16 @@ export async function GET(req: any) {
   const data = cookieStore;
 
   return NextResponse.json({ success: true, data: data });
+}
+
+export async function DELETE() {
+  const cookieStore = await cookies();
+
+  if (!cookieStore) {
+    return NextResponse.json({ success: false });
+  }
+
+  cookieStore.delete(LOGIN_USER_COOKIE_KEY);
+
+  return NextResponse.json({ success: true });
 }

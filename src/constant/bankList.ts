@@ -157,18 +157,16 @@ paymentListMap.set(paymentId.kakaobank, {
   bankIconImg: BANK_LIST[paymentId.kakaobank].logo,
 });
 
-paymentListMap.set(paymentId.kakaopay, {
-  name: '카카오페이',
-  bankIconImg: KakaopayLogoIc,
-});
+// paymentListMap.set(paymentId.kakaopay, {
+//   name: '카카오페이',
+//   bankIconImg: KakaopayLogoIc,
+// });
 
-export const paymentListArray = Array.from(paymentListMap.entries()).map(([paymentId, value]) => ({
-  paymentId,
-  ...value,
-}));
+export const paymentListArray = Array.from(paymentListMap.entries()).map(
+  ([paymentId, value]) => ({
+    paymentId,
+    ...value,
+  })
+);
 
-export const PAY_LIST = [
-  { id: 5, name: '토스뱅크' },
-  { id: 1, name: '카카오뱅크' },
-  { id: 1, name: '카카오뱅크' },
-];
+export const paymentListObject = Object.fromEntries(paymentListMap);

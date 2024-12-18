@@ -1,24 +1,25 @@
 'use client';
 
-import { PresentDataResolverType } from '@/validation/present.validate';
 import Image from 'next/image';
-import { useFormContext } from 'react-hook-form';
-import { AccountCopyCakeImg } from '../../../../public/assets/images';
+import { MainCakeImg } from '../../../../public/assets/images';
 import SelectPayment from './selectPayment';
-import { CheckPresentItem } from './component';
+
 import { convertMoneyText } from '@/utils/common/convert';
+import { AccountCopySpeechBubbleIcon } from '@/components/Common/Icon/MessageAlarmIcon';
 
 export default function Payment({
   wishMakerName,
   presentPrice,
   account,
+  isSelected,
+  handleSelectOne,
 }: {
   wishMakerName: string;
   presentPrice: string;
   account?: string;
+  isSelected: (id: number) => boolean;
+  handleSelectOne: (id: number) => void;
 }) {
-  const { watch } = useFormContext<PresentDataResolverType>();
-
   async function handleAccountCopy() {
     try {
       await navigator.clipboard.writeText(account);
@@ -30,18 +31,40 @@ export default function Payment({
     <>
       <section className="flex flex-col items-center w-full text-white font-bitbit">
         <span className="text-[24px] mt-54 ">{`${wishMakerName}님에게`}</span>
-        <span className="text-[50px] leading-none">{`${convertMoneyText(presentPrice)}원`}</span>
+        <span className="text-main_blue text-[50px] leading-none">{`${convertMoneyText(presentPrice)}원`}</span>
         <span className="text-[24px] ">{`송금하기`}</span>
-        {/* <CheckPresentItem presentId={Number(watch('giftMenuId'))} giverName={watch('name')} /> */}
-        <Image
-          src={AccountCopyCakeImg}
-          alt="계좌번호 복사하기 이미지"
-          width={250}
-          className="my-24"
-          onClick={handleAccountCopy}
-        />
+        <div className="relative mt-62">
+          <AccountCopySpeechBubbleIcon />
+          <Image
+            className="duration-300 transition-all "
+            src={MainCakeImg}
+            alt="계좌번호 복사하기 이미지"
+            width={128}
+            onClick={handleAccountCopy}
+            style={{
+              animation: 'growShrink 1s ease-out infinite',
+            }}
+          />
+          <style jsx>{`
+            @keyframes growShrink {
+              0% {
+                transform: scale(1);
+              }
 
-        <SelectPayment />
+              50% {
+                transform: scale(1.1);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+          `}</style>
+        </div>
+
+        <SelectPayment
+          isSelected={isSelected}
+          handleSelectOne={handleSelectOne}
+        />
       </section>
     </>
   );

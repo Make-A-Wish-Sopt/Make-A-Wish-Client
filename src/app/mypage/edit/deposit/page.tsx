@@ -7,7 +7,8 @@ import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';
 
 const WishesDepositEditSteps = ['select', 'kakaopay', 'account'] as const;
-export type WishesDepositEditStepsType = (typeof WishesDepositEditSteps)[number];
+export type WishesDepositEditStepsType =
+  (typeof WishesDepositEditSteps)[number];
 
 export default async function WisheDepositEditPage({
   searchParams,
@@ -27,8 +28,15 @@ export default async function WisheDepositEditPage({
   const userAccount = await getUserAccount();
   const transferInfo = userAccount.transferInfo;
 
+  console.log('forpaycode : ', transferInfo.forPayCode);
+
   if (!userAccount) {
-    return <ErrorPage alertMessage="등록된 계좌가 없습니다!" btnMessage="뒤로 돌아가기" />;
+    return (
+      <ErrorPage
+        alertMessage="등록된 계좌가 없습니다!"
+        btnMessage="뒤로 돌아가기"
+      />
+    );
   }
 
   return (
@@ -41,15 +49,24 @@ export default async function WisheDepositEditPage({
         >
           {
             {
-              select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
+              select: (
+                <WishesCreateTitleText>
+                  현금 입금 방식 변경하기
+                </WishesCreateTitleText>
+              ),
               kakaopay: (
                 <>
-                  <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>,
+                  <WishesCreateTitleText>
+                    카카오페이 송금코드 가져오기
+                  </WishesCreateTitleText>
+                  ,
                 </>
               ),
               account: (
                 <>
-                  <WishesCreateTitleText>입금 받을 계좌 입력하기</WishesCreateTitleText>
+                  <WishesCreateTitleText>
+                    입금 받을 계좌 입력하기
+                  </WishesCreateTitleText>
                 </>
               ),
             }[searchParams.step]

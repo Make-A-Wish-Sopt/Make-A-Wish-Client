@@ -1,4 +1,7 @@
-import { getLoginUserCookiesData, LoginUserDataType } from '@/utils/common/cookies';
+import {
+  getLoginUserCookiesData,
+  LoginUserDataType,
+} from '@/utils/common/cookies';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { updateAccessToken } from '../auth';
 import { DefaultResponseType } from '@/types/api/response';
@@ -25,7 +28,8 @@ client.interceptors.request.use(
     const loginUserCookiesData = await getLoginUserCookiesData();
 
     if (loginUserCookiesData) {
-      config.headers['Authorization'] = `Bearer ${loginUserCookiesData.accessToken}`;
+      config.headers['Authorization'] =
+        `Bearer ${loginUserCookiesData.accessToken}`;
     }
 
     if (config.headers.Authorization) {
@@ -36,7 +40,7 @@ client.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 // 응답 인터셉터
@@ -54,6 +58,13 @@ client.interceptors.response.use(
       const responseData = error.response.data as DefaultResponseType;
 
       if (responseData.message === '유효하지 않은 토큰입니다.') {
+        await fetch('/api/cookies', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         const data = await updateAccessToken();
 
         if (!data) {
@@ -79,9 +90,11 @@ client.interceptors.response.use(
           credentials: 'include',
         });
 
-        const newLoginUserData: DefaultResponseType<LoginUserDataType> = await response.json();
+        const newLoginUserData: DefaultResponseType<LoginUserDataType> =
+          await response.json();
 
-        error.config.headers['Authorization'] = `Bearer ${newLoginUserData.data.accessToken}`;
+        error.config.headers['Authorization'] =
+          `Bearer ${newLoginUserData.data.accessToken}`;
 
         tokenRefreshFlag = true;
 
@@ -90,5 +103,5 @@ client.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );

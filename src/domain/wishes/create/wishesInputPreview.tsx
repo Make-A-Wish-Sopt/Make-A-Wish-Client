@@ -31,16 +31,26 @@ export default function WishesInputPreview({
 
         {/* 친구가 작성하게될 입력 미리보기 */}
         <InputForm title="친구가 작성하게 될 닉네임">
-          <InputText placeholder="당신의 이름이나 별명을 편하게 작성해주세요" blur readOnly />
+          <InputText
+            placeholder="당신의 이름이나 별명을 편하게 작성해주세요"
+            blur
+            readOnly
+          />
         </InputForm>
 
         {/* 선물을 원한다고 체크했을 경우*/}
         {wantsGift && (
           <InputForm title="선물하고 싶은 항목 선택하기">
             <PresentList readonly />
-            <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
+            <Box
+              bgColor="dark_green"
+              fontColor="gray2"
+              styles={{ marginTop: '0.6rem' }}
+            >
               <CheckBox readOnly>
-                <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
+                <span className="font-galmuri text-[14px] ml-8">
+                  {'편지만 보낼게요'}
+                </span>
               </CheckBox>
             </Box>
           </InputForm>
