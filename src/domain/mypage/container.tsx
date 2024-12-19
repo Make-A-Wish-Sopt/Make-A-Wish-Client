@@ -46,7 +46,9 @@ export default function MypageContainer({
               handleClick={() => {
                 handleRouter('/mypage/edit/link');
               }}
-              disabled={progressWishes === undefined}
+              disabled={
+                progressWishes === undefined || (progressWishes && progressWishes.status === 'END')
+              }
             />
             <MoreBox
               text="현금 입금 방식 변경하기"
@@ -60,7 +62,9 @@ export default function MypageContainer({
               handleClick={() => {
                 changePauseWishesModalState(true);
               }}
-              disabled={progressWishes === undefined}
+              disabled={
+                progressWishes === undefined || (progressWishes && progressWishes.status === 'END')
+              }
             />
             <MoreBox
               text="지난 생일잔치 링크모음"

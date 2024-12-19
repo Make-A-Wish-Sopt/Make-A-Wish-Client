@@ -31,17 +31,12 @@ export const getCakePresentMessage = async (wishId: string, presentId: number) =
  * 해당 소원에 대한 모든 케이크 리스트 결과 조회
  */
 export const getCakesResult = async (wishId: string) => {
-  const { accessToken } = await getLoginUserCookiesData();
-
-  if (!accessToken) return;
-
   try {
     const data = await client.get<GetCakesResultResponseType>(
       `${API_VERSION_01}${PATH_CAKES.GET_CAKES_RESULT(Number(wishId))}`,
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

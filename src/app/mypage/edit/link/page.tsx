@@ -18,7 +18,10 @@ export default async function WisheLinkEditPage() {
     <>
       <Header backBtn />
       <MainLayout>
-        <WisheLinkEditPageContainer progressWishesData={progressWishesData}>
+        <WisheLinkEditPageContainer
+          progressWishesData={progressWishesData}
+          wishesProgressStatus={status}
+        >
           <WishesCreateTitleText>생일잔치 링크 수정하기</WishesCreateTitleText>
         </WisheLinkEditPageContainer>
       </MainLayout>

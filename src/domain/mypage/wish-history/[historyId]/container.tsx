@@ -1,47 +1,71 @@
 'use client';
 
+import { getCakePresentMessage } from '@/api/cakes';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import { CakeTree, SaveCakeMessageModal } from '@/domain/wishes/component';
 import useToggle from '@/hooks/common/useToggle';
 import { WishesHistoryType } from '@/types/api/response';
-import { defineCakeTree } from '@/utils/common/defineCakeTree';
-import { convertDateToString } from '@/utils/common/getDate';
 import { useEffect, useState } from 'react';
 
 export default function WishesHistoryMessageTreePageContainer({
   wishesHistory,
   nickname,
+  cakeList,
+  historyId,
 }: {
   wishesHistory: WishesHistoryType;
   nickname: string;
+  cakeList: ReceivedCakeTreeMessageDataType[];
+  historyId: string;
 }) {
   const { startAt, endAt } = wishesHistory;
-  const len = 1;
-
-  const defineCake = defineCakeTree([]);
 
   const [cakePresentMessageData, setCakePresentMessageData] =
     useState<ReceivedCakeTreeMessageDataType | null>(null);
 
-  const {
-    state: cakeMessageModalState,
-    handleState: handleChangeCakeMessageModalState,
-  } = useToggle();
+  const [receivedCakeMessageData, setReceivedCakeMessageData] =
+    useState<ReceivedCakeTreeMessageDataType>(null);
 
-  const { state: isLoading, changeState: changeIsLoading } = useToggle();
+  const cakeMessageModalState = useToggle();
+  const isLoading = useToggle();
 
   useEffect(() => {
-    setTimeout(() => {
-      changeIsLoading(false);
-    }, 500);
+    if (cakePresentMessageData) {
+      const { presentId, cakeImg } = cakePresentMessageData;
+
+      isLoading.changeState(true);
+
+      if (presentId > 0) {
+        getCakePresentMessage(historyId, presentId)
+          .then((response) => {
+            setReceivedCakeMessageData({
+              ...response,
+              cakeImg: cakeImg,
+              isAdminMessage: false,
+              presentId: presentId,
+            });
+          })
+          .finally(() => {
+            setTimeout(() => {
+              isLoading.changeState(false);
+            }, 800);
+          });
+      } else {
+        setReceivedCakeMessageData({ ...cakePresentMessageData });
+        setTimeout(() => {
+          isLoading.changeState(false);
+        }, 800);
+      }
+    }
   }, [cakePresentMessageData]);
 
   function handleSelectCake(cake: ReceivedCakeTreeMessageDataType) {
-    changeIsLoading(true);
+    isLoading.changeState(true);
+
     setCakePresentMessageData({
       ...cake,
     });
-    handleChangeCakeMessageModalState();
+    cakeMessageModalState.handleState();
   }
 
   return (
@@ -49,15 +73,15 @@ export default function WishesHistoryMessageTreePageContainer({
       <span className="mt-30 font-galmuri text-[16px] text-gray1">{`${startAt.split('T')[0]} ~ ${endAt.split('T')[0]}`}</span>
       <span className="font-bitbit text-[24px] text-white mt-10 whitespace-pre-line text-center">{`${nickname}님의 생일잔치에\n도착했던 케이크들이에요!`}</span>
 
-      <CakeTree cakeList={defineCake} handleSelectCake={handleSelectCake} />
+      <CakeTree cakeList={cakeList} handleSelectCake={handleSelectCake} />
 
-      {cakePresentMessageData && (
+      {receivedCakeMessageData && (
         <SaveCakeMessageModal
-          modalState={cakeMessageModalState}
-          handleModalState={handleChangeCakeMessageModalState}
-          receivedCakeMessageData={cakePresentMessageData}
+          modalState={cakeMessageModalState.state}
+          handleModalState={cakeMessageModalState.handleState}
+          receivedCakeMessageData={receivedCakeMessageData}
           nickName={nickname}
-          isLoading={isLoading}
+          isLoading={isLoading.state}
         />
       )}
     </section>

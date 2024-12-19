@@ -20,6 +20,7 @@ import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { putProgressWishes } from '@/api/wishes';
 import CalendarInput from '@/components/Common/Calendar/CalendarInput';
+import { WishStatusType } from '@/types/wishesType';
 
 export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
@@ -37,10 +38,12 @@ export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string 
 export function WishesLinkInputs({
   wishTitle,
   progressWishesData,
+  wishesProgressStatus,
   children,
 }: {
   wishTitle: string;
   progressWishesData?: WishesLinkDataResolverType;
+  wishesProgressStatus?: WishStatusType;
 } & PropsWithChildren) {
   const methods = useForm<WishesLinkDataResolverType>({
     mode: 'onChange',
@@ -51,18 +54,16 @@ export function WishesLinkInputs({
     resolver: yupResolver(wishesLinkDataResolver),
   });
 
+  const { reset } = methods;
+
   useEffect(() => {
     if (wishTitle) {
       methods.setValue('title', wishTitle);
     }
   }, [wishTitle]);
 
-  const { reset } = methods;
-
   useEffect(() => {
-    const isEdit = !methods.formState.isDirty;
-
-    if (progressWishesData && isEdit) {
+    if (progressWishesData) {
       reset({
         ...progressWishesData,
         startDate: new Date(progressWishesData.startDate),
@@ -76,7 +77,7 @@ export function WishesLinkInputs({
       <ImageToBeShownToGiver />
 
       <InputForm title="내 생일 주간 설정하기">
-        <WishesPeriod />
+        <WishesPeriod disabled={wishesProgressStatus !== 'BEFORE'} />
       </InputForm>
 
       <HintMessageToGiver />
@@ -87,7 +88,7 @@ export function WishesLinkInputs({
   );
 }
 
-function WishesPeriod() {
+function WishesPeriod({ disabled }: { disabled?: boolean }) {
   const { control, setValue } = useFormContext<WishesLinkDataResolverType>();
   const [startDateWatch, endDateWatch] = useWatch({
     control,
@@ -101,7 +102,11 @@ function WishesPeriod() {
 
   return (
     <div className="flex justify-between gap-10">
-      <CalendarInput date={startDateWatch} handleChangeDate={handleChangeDate} />
+      <CalendarInput
+        date={startDateWatch}
+        handleChangeDate={handleChangeDate}
+        readonly={disabled}
+      />
       <CalendarInput date={endDateWatch} readonly />
     </div>
   );

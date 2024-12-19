@@ -41,7 +41,6 @@ export const snsShareListObject: Record<ShareSnskeyType, SnsDataType> = {
           ],
         });
       } else {
-        console.error('Kakao SDK is not initialized.');
       }
     },
   },

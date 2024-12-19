@@ -27,8 +27,7 @@ export function SaveCakeMessageModal({
   nickName: string;
   isLoading: boolean;
 } & PropsWithChildren) {
-  const { name, cakeImg, isAdminMessage, message, giftMenuId } =
-    receivedCakeMessageData;
+  const { name, cakeImg, isAdminMessage, message, giftMenuId } = receivedCakeMessageData;
 
   const captureRef = useRef(null);
 
@@ -39,7 +38,6 @@ export function SaveCakeMessageModal({
     const img = canvas.toDataURL('image/png');
 
     if (!htmlContent) {
-      console.error('DOM이 준비되지 않았습니다.');
       return;
     }
 
@@ -65,11 +63,7 @@ export function SaveCakeMessageModal({
   };
 
   return (
-    <CloseTopModal
-      isOpen={modalState}
-      handleState={handleModalState}
-      bgColor={'background'}
-    >
+    <CloseTopModal isOpen={modalState} handleState={handleModalState} bgColor={'background'}>
       <div className={`flex flex-col items-center w-full h-416 font-galmuri`}>
         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
           {`${isLoading ? 'ㅇㅇㅇ' : name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}
@@ -79,16 +73,12 @@ export function SaveCakeMessageModal({
           id="save-cake-message-content"
           ref={captureRef}
           className={`flex flex-col items-center justify-center w-full  h-full min-h-[412px] p-20  rounded-2xl  ${
-            isAdminMessage
-              ? 'bg-main_blue text-dark_blue '
-              : 'bg-dark_green text-white'
+            isAdminMessage ? 'bg-main_blue text-dark_blue ' : 'bg-dark_green text-white'
           }`}
         >
           {isLoading ? (
             <>
-              <ClipLoader
-                color={isAdminMessage ? colors.background : colors.main_blue}
-              />
+              <ClipLoader color={isAdminMessage ? colors.background : colors.main_blue} />
             </>
           ) : (
             <>
@@ -129,9 +119,7 @@ export function SaveCakeMessageModal({
                       <div className="relative flex flex-row-reverse  gap-4  items-center font-bitbit text-[16px] text-white text-right ">
                         <span className="w-auto whitespace-pre-wrap leading-tight">
                           {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
-                            presentListObject[
-                              Number(giftMenuId)
-                            ].price.toString()
+                            presentListObject[Number(giftMenuId)].price.toString(),
                           )}원`}
                         </span>
                         <Image
@@ -167,9 +155,7 @@ export function SaveCakeMessageModal({
 export function MessageText({ children }: PropsWithChildren) {
   return (
     <div className="text-[24px] font-bitbit text-center text-white whitespace-pre-wrap">
-      <span className="transition-opacity duration-500 opacity-100 leading-tight">
-        {children}
-      </span>
+      <span className="transition-opacity duration-500 opacity-100 leading-tight">{children}</span>
     </div>
   );
 }
@@ -232,24 +218,20 @@ export function CakeTree({
           >
             {/* 층별로 3개씩 케이크 배치 */}
             <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
-              {cakeList
-                .slice(rowIndex * 3, rowIndex * 3 + 3)
-                .map((cake, index) => (
-                  <li
-                    className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
-                    key={`${cake.name}${cake.cakeId} ${index}`}
-                    onClick={() => {
-                      handleSelectCake(cake);
-                    }}
-                  >
-                    <Image src={cake.cakeImg} alt="케이크 이미지" width={100} />
-                    <span className="absolute top-[100px] font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl -mt-13 truncate ">
-                      {cake.name.length > 10
-                        ? `${cake.name.slice(0, 9)}...님`
-                        : cake.name}
-                    </span>
-                  </li>
-                ))}
+              {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake, index) => (
+                <li
+                  className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
+                  key={`${cake.name}${cake.cakeId} ${index}`}
+                  onClick={() => {
+                    handleSelectCake(cake);
+                  }}
+                >
+                  <Image src={cake.cakeImg} alt="케이크 이미지" width={100} />
+                  <span className="absolute top-[100px] font-galmuri text-white text-[10px] px-8 py-2 bg-black bg-opacity-50 rounded-4xl -mt-13 truncate ">
+                    {cake.name.length > 10 ? `${cake.name.slice(0, 9)}...님` : cake.name}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         ))}
