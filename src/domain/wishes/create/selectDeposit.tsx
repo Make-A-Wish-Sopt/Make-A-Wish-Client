@@ -24,10 +24,7 @@ export default function SelectDeposit({
               selectAccount.changeState(false);
             }}
           >
-            <SelectBox
-              selectState={!selectAccount.state}
-              text={'카카오 송금하기로 받기'}
-            />
+            <SelectBox selectState={!selectAccount.state} text={'카카오 송금하기로 받기'} />
           </Box>
 
           <Box
@@ -35,10 +32,7 @@ export default function SelectDeposit({
               selectAccount.changeState(true);
             }}
           >
-            <SelectBox
-              selectState={selectAccount.state}
-              text={'은행 계좌로 받기'}
-            />
+            <SelectBox selectState={selectAccount.state} text={'은행 계좌로 받기'} />
           </Box>
         </div>
       </InputForm>
@@ -65,11 +59,7 @@ export function WishesDepositSubmitButton({
 
   return (
     <FixedBottomButtonWrapper>
-      <Button
-        bgColor={isEdit ? 'gray2' : 'gray4'}
-        fontColor="white"
-        onClick={handlePrev}
-      >
+      <Button bgColor={isEdit ? 'gray2' : 'gray4'} fontColor="white" onClick={handlePrev}>
         이전
       </Button>
 

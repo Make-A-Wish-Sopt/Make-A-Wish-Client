@@ -31,9 +31,7 @@ export default function MypageContainer({
   } = useToggle();
 
   function handleConnectServiceCenter() {
-    window.open(
-      'https://sunmulzu.notion.site/5c1945f34dd3440a984d09cf52f7a591?pvs=4'
-    );
+    window.open('https://sunmulzu.notion.site/5c1945f34dd3440a984d09cf52f7a591?pvs=4');
   }
 
   return (
@@ -75,10 +73,7 @@ export default function MypageContainer({
 
         <UserManualGuideButton />
 
-        <MoreBox
-          handleClick={handleConnectServiceCenter}
-          text="고객센터 문의하기"
-        />
+        <MoreBox handleClick={handleConnectServiceCenter} text="고객센터 문의하기" />
       </ul>
 
       <MypageAuthButtons isLoggedIn={isLoggedIn} />
@@ -101,8 +96,8 @@ export default function MypageContainer({
             <Button
               bgColor="dark_green"
               fontColor="white"
-              onClick={() => {
-                patchProgressWishes();
+              onClick={async () => {
+                await patchProgressWishes();
                 changePauseWishesModalState(false);
                 handleRefresh();
               }}
@@ -214,11 +209,7 @@ function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
           >
             아니요
           </Button>
-          <Button
-            bgColor="dark_green"
-            fontColor="white"
-            onClick={handleDeleteUser}
-          >
+          <Button bgColor="dark_green" fontColor="white" onClick={handleDeleteUser}>
             예
           </Button>
         </div>

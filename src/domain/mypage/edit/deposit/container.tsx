@@ -2,9 +2,7 @@
 
 import { WishesDepositEditStepsType } from '@/app/mypage/edit/deposit/page';
 import { WishesEditAccountSubmitButton } from '@/domain/wishes/create/container';
-import SelectDeposit, {
-  WishesDepositSubmitButton,
-} from '@/domain/wishes/create/selectDeposit';
+import SelectDeposit, { WishesDepositSubmitButton } from '@/domain/wishes/create/selectDeposit';
 import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
 import WishesKakaopayInputForm from '@/domain/wishes/create/wishesKakaopayInputForm';
 import { useRouters } from '@/hooks/common/useRouters';
@@ -29,8 +27,6 @@ export default function WisheDepositEditPageContainer({
 
   const { handleRouter } = useRouters();
 
-  console.log(forPayCode);
-
   function handleNextStep() {
     if (selectAccount.state) {
       handleRouter('/mypage/edit/deposit?step=account');
@@ -51,10 +47,7 @@ export default function WisheDepositEditPageContainer({
           select: (
             <>
               <SelectDeposit selectAccount={selectAccount}>
-                <WishesDepositSubmitButton
-                  handleNextStep={handleNextStep}
-                  isEdit
-                />
+                <WishesDepositSubmitButton handleNextStep={handleNextStep} isEdit />
               </SelectDeposit>
             </>
           ),

@@ -8,12 +8,7 @@ import {
   WishesLinkDataResolverType,
 } from '@/validation/wishes.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  FormProvider,
-  useForm,
-  useFormContext,
-  UseFormReturn,
-} from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
 import { PropsWithChildren, useEffect } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
@@ -50,7 +45,7 @@ export default function WishesCreatePageContainer({
   const { handleRouter } = useRouters();
 
   function handleNextStep() {
-    if (selectAccount) {
+    if (selectAccount.state) {
       handleRouter('/wishes/create?step=account');
     } else {
       handleRouter('/wishes/create?step=kakaopay');
@@ -102,13 +97,7 @@ export default function WishesCreatePageContainer({
                 noticeAgree={noticeAgree}
               >
                 <WishesAccountSubmitButton
-                  disabled={
-                    !(
-                      noticeAgree &&
-                      isAccountValid.state &&
-                      accountVerifyBtnState.state
-                    )
-                  }
+                  disabled={!(noticeAgree && isAccountValid.state && accountVerifyBtnState.state)}
                   forPayCode={false}
                   linkDataMethods={savedWishesLinkDataMethods}
                 />
@@ -119,9 +108,7 @@ export default function WishesCreatePageContainer({
             <>
               {children}
               <WishesInputPreview methods={savedWishesLinkDataMethods} />
-              <WishesPreviewSubmitButton
-                linkDataMethods={savedWishesLinkDataMethods}
-              />
+              <WishesPreviewSubmitButton linkDataMethods={savedWishesLinkDataMethods} />
             </>
           ),
           done: <>{children}</>,
@@ -223,8 +210,7 @@ function WishesPreviewSubmitButton({
 }) {
   const { handleBack, handleRouter } = useRouters();
 
-  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } =
-    useToggle();
+  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
 
   useEffect(() => {
     if (wishesCreateSuccess) {
