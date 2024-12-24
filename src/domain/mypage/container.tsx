@@ -149,14 +149,14 @@ function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
             >
               로그아웃
             </li>
-            <li
+            {/* <li
               onClick={() => {
                 deleteUserModal.changeState(true);
               }}
               className="font-bitbit text-[18px] text-main_blue underline cursor-pointer"
             >
               회원탈퇴
-            </li>
+            </li> */}
           </>
         ) : (
           <>
