@@ -55,9 +55,7 @@ export default async function WishesPage() {
           )}
 
           <GradientShadow height={19} />
-          <WishesPageFixedBottomButton
-            isWishProgress={!!progressWishesData || progressWishesData.status !== 'END'}
-          />
+          <WishesPageFixedBottomButton isWishProgress={!!progressWishesData} />
         </WishesPageContainer>
       </MainLayout>
     </>
