@@ -72,16 +72,16 @@ export function WishesLinkInputs({
     }
   }, [progressWishesData]);
 
+  console.log(wishesProgressStatus);
+
   return (
     <FormProvider {...methods}>
-      <ImageToBeShownToGiver />
-
-      <InputForm title="내 생일 주간 설정하기">
-        <WishesPeriod disabled={wishesProgressStatus !== 'BEFORE'} />
-      </InputForm>
-
-      <HintMessageToGiver />
       <WantsGiftOption />
+      <ImageToBeShownToGiver />
+      <HintMessageToGiver />
+      <InputForm title="내 생일 주간 설정하기">
+        <WishesPeriod disabled={wishesProgressStatus && wishesProgressStatus !== 'BEFORE'} />
+      </InputForm>
 
       {children}
     </FormProvider>
@@ -150,7 +150,10 @@ function HintMessageToGiver() {
 
   return (
     <InputForm title="친구에게 남기고 싶은 한마디">
-      <InputTextarea register={register('hint')} placeholder={ `너네 편지 안받아본지가...10년째\n편지 좀 작성해주겠니?`}>
+      <InputTextarea
+        register={register('hint')}
+        placeholder={`너네 편지 안받아본지가...10년째\n편지 좀 작성해주겠니?`}
+      >
         <TextCount textLength={enteredText.length} maxLength={MAX_TEXTAREA_LENGTH}></TextCount>
       </InputTextarea>
     </InputForm>
