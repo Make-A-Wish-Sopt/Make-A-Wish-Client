@@ -150,7 +150,7 @@ function HintMessageToGiver() {
 
   return (
     <InputForm title="친구에게 남기고 싶은 한마디">
-      <InputTextarea register={register('hint')} placeholder="ex.) 생일을 축하합니다~">
+      <InputTextarea register={register('hint')} placeholder={ `너네 편지 안받아본지가...10년째\n편지 좀 작성해주겠니?`}>
         <TextCount textLength={enteredText.length} maxLength={MAX_TEXTAREA_LENGTH}></TextCount>
       </InputTextarea>
     </InputForm>
