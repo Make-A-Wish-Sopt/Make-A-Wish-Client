@@ -2,10 +2,7 @@
 
 import { PresentStepType } from '@/app/present/[wishId]/page';
 import { presentDataInputInit } from '@/constant/init';
-import {
-  presentDataResolver,
-  PresentDataResolverType,
-} from '@/validation/present.validate';
+import { presentDataResolver, PresentDataResolverType } from '@/validation/present.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
@@ -60,8 +57,7 @@ export default function GivePresentPageContainer({
   const { transferInfo, nickname, wantsGift } = publicWishesData;
 
   const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
-  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } =
-    useToggle();
+  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
   const {
     state: presenetMessageModalState,
     handleState: handlePresentMessageModalState,
@@ -90,9 +86,7 @@ export default function GivePresentPageContainer({
       handleNextToPaymentStep();
     } else {
       GivePresent();
-      handleRouter(
-        `/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`
-      );
+      handleRouter(`/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`);
     }
   }
 
@@ -123,8 +117,12 @@ export default function GivePresentPageContainer({
     const giftMenuId = methods.getValues('giftMenuId');
 
     handleRouter(
-      `/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}&avatarCakeId=${selectedCakeId}`
+      `/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}&avatarCakeId=${selectedCakeId}`,
     );
+  }
+
+  function handleNextToDoneStep() {
+    handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
   }
 
   async function handleAccountCopy(text: string) {
@@ -133,19 +131,20 @@ export default function GivePresentPageContainer({
     } catch (error) {}
   }
 
-  async function handlePayment() {
+  async function handleKakaoPayment() {
     if (forPayCode) {
       const presentPrice = presentListObject[giftMenuId].price.toString();
       await handleAccountCopy(convertMoneyText(presentPrice));
       window.open(kakaoPayCode);
-    } else {
     }
+    GivePresent();
+  }
+
+  function handleBankTransfer() {
+    if (!selectedId) return;
 
     GivePresent();
-
-    handleRouter(
-      `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`
-    );
+    handleDeepLink(selectedId);
   }
 
   const handleDeepLink = (paymentId: number) => {
@@ -160,7 +159,7 @@ export default function GivePresentPageContainer({
         window.open(
           ua.indexOf('android') > -1
             ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-            : 'https://apps.apple.com/app/id839333328'
+            : 'https://apps.apple.com/app/id839333328',
         );
       }, 2000);
     }
@@ -173,7 +172,7 @@ export default function GivePresentPageContainer({
         window.open(
           ua.indexOf('android') > -1
             ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
-            : 'https://apps.apple.com/app/id1258016944'
+            : 'https://apps.apple.com/app/id1258016944',
         );
       }, 2000);
     }
@@ -201,9 +200,7 @@ export default function GivePresentPageContainer({
                           fontColor="gray2"
                           styles={{ marginTop: '0.6rem' }}
                         >
-                          <CheckBox
-                            changeCheckedState={changeMessageOnlyOption}
-                          >
+                          <CheckBox changeCheckedState={changeMessageOnlyOption}>
                             <span className="font-galmuri text-[14px] ml-8">
                               {'편지만 보낼게요'}
                             </span>
@@ -227,11 +224,13 @@ export default function GivePresentPageContainer({
                     <KakaopayPayment
                       wishMakerName={nickname}
                       presentPrice={
-                        giftMenuId > 0 &&
-                        presentListObject[giftMenuId].price.toString()
+                        giftMenuId > 0 && presentListObject[giftMenuId].price.toString()
                       }
                     >
-                      <KakaopaySubmitButton handleSubmit={handlePayment} />
+                      <KakaopaySubmitButton
+                        handleKakaoPayment={handleKakaoPayment}
+                        handleNextToDoneStep={handleNextToDoneStep}
+                      />
                     </KakaopayPayment>
                   </>
                 ) : (
@@ -239,27 +238,16 @@ export default function GivePresentPageContainer({
                     <Payment
                       wishMakerName={nickname}
                       presentPrice={
-                        giftMenuId > 0 &&
-                        presentListObject[giftMenuId].price.toString()
+                        giftMenuId > 0 && presentListObject[giftMenuId].price.toString()
                       }
                       account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
                       isSelected={isSelected}
                       handleSelectOne={handleSelectOne}
                     />
-                    <Button
-                      onClick={() => {
-                        if (!selectedId) return;
-
-                        GivePresent();
-                        handleDeepLink(selectedId);
-                        handleRouter(
-                          `/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`
-                        );
-                      }}
-                      style={{ marginBottom: '5.8rem' }}
-                    >
-                      {'송금하고, 편지 확인하기'}
-                    </Button>
+                    <BankTransferSubmitButton
+                      handleBankTransfer={handleBankTransfer}
+                      handleNextToDoneStep={handleNextToDoneStep}
+                    />
                   </>
                 )}
               </>
@@ -299,10 +287,56 @@ export default function GivePresentPageContainer({
   );
 }
 
-function KakaopaySubmitButton({ handleSubmit }: { handleSubmit: () => void }) {
+function BankTransferSubmitButton({
+  handleBankTransfer,
+  handleNextToDoneStep,
+}: {
+  handleBankTransfer: () => void;
+  handleNextToDoneStep: () => void;
+}) {
+  const firstClick = useToggle(false);
+  return (
+    <>
+      {firstClick.state ? (
+        <Button onClick={handleNextToDoneStep}>송금 완료했어요!</Button>
+      ) : (
+        <Button
+          onClick={() => {
+            firstClick.changeState(true);
+            handleBankTransfer();
+          }}
+          style={{ marginBottom: '5.8rem' }}
+        >
+          {'송금하고, 편지 확인하기'}
+        </Button>
+      )}
+    </>
+  );
+}
+
+function KakaopaySubmitButton({
+  handleKakaoPayment,
+  handleNextToDoneStep,
+}: {
+  handleKakaoPayment: () => void;
+  handleNextToDoneStep: () => void;
+}) {
+  const firstClick = useToggle(false);
+
   return (
     <FixedBottomButtonWrapper>
-      <Button onClick={handleSubmit}>카카오로 송금하고, 편지 확인하기</Button>
+      {firstClick.state ? (
+        <Button onClick={handleNextToDoneStep}>송금 완료했어요!</Button>
+      ) : (
+        <Button
+          onClick={() => {
+            firstClick.changeState(true);
+            handleKakaoPayment();
+          }}
+        >
+          카카오로 송금하고, 편지 확인하기
+        </Button>
+      )}
     </FixedBottomButtonWrapper>
   );
 }
