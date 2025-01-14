@@ -52,7 +52,7 @@ export default async function WishesCreatePage({
               ),
               kakaopay: (
                 <>
-                  <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>
+                  <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>
                 </>
               ),
               preview: (

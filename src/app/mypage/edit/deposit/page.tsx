@@ -44,7 +44,7 @@ export default async function WisheDepositEditPage({
               select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
               kakaopay: (
                 <>
-                  <WishesCreateTitleText>카카오페이 송금코드 가져오기</WishesCreateTitleText>,
+                  <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>,
                 </>
               ),
               account: (

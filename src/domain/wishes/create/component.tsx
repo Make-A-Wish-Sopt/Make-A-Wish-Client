@@ -62,30 +62,3 @@ export function WishesCreateDoneMessage({
     </div>
   );
 }
-
-export function PayCodeGuideModal({
-  modalState,
-  handleModalState,
-}: {
-  modalState: boolean;
-  handleModalState: () => void;
-}) {
-  return (
-    <CloseIconInModal isOpen={modalState} handleState={handleModalState}>
-      <h2 className="font-bitbit text-[24px] text-background text-center mb-20">
-        송금코드 가져오는 법
-      </h2>
-      <ul className="flex flex-col gap-6">
-        <li>
-          <Image src={PayCodeGuideStep1Img} alt="송금코드 가져오기 단계1 이미지" />
-        </li>
-        <li>
-          <Image src={PayCodeGuideStep2Img} alt="송금코드 가져오기 단계1 이미지" />
-        </li>
-        <li>
-          <Image src={PayCodeGuideStep3Img} alt="송금코드 가져오기 단계1 이미지" />
-        </li>
-      </ul>
-    </CloseIconInModal>
-  );
-}

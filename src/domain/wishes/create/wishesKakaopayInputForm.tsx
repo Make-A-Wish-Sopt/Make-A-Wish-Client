@@ -1,8 +1,6 @@
 import InputText from '@/components/Common/Input/inputText';
 import { AccountFormNotice } from './wishesAccountInputForm';
 import Image from 'next/image';
-import { HelpIc } from '../../../../public/assets/icons';
-import BorderBox from '@/components/UI/BorderBox';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   wishesAccountDataResolver,
@@ -14,13 +12,10 @@ import { PropsWithChildren, useEffect } from 'react';
 import { DefaultResponseType } from '@/types/api/response';
 import { getUserAccount } from '@/api/user';
 import useToggle, { ToggleHookType } from '@/hooks/common/useToggle';
-import { PayCodeGuideModal } from './component';
 import CloseIcon from '@/components/Common/Icon/CloseIcon';
-import CheckedIcon, {
-  WarningCheckedIcon,
-} from '@/components/Common/Icon/CheckedIcon';
+import CheckedIcon, { WarningCheckedIcon } from '@/components/Common/Icon/CheckedIcon';
 import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
-import { AxiosError } from 'axios';
+import { KakaoCodeGuideImg } from '../../../../public/assets/images';
 
 export default function WishesKakaopayInputForm({
   isKakaoPayCodeValid,
@@ -46,12 +41,6 @@ export default function WishesKakaopayInputForm({
   const isLoading = useToggle();
 
   const isFirstInput = useToggle(true);
-
-  const {
-    state: payCodeGuideModalState,
-    changeState: changePayCodeGuideModalState,
-    handleState: handlePayCodeGuideModalState,
-  } = useToggle();
 
   useEffect(() => {
     if (
@@ -129,29 +118,28 @@ export default function WishesKakaopayInputForm({
     }, 2000);
   }
 
+  console.log(!!kakaoPayCode);
+  console.log(isKakaoPayCodeValid.state);
+  console.log('isValid : ', isValid);
+
   return (
     <FormProvider {...wishesAccountInputMethods}>
       <div className="flex flex-col gap-12 mb-24">
-        <div className="flex items-center gap-8 mb-12 ">
-          <h3 className="font-bitbit text-white text-[20px] leading-tight whitespace-pre-line">
-            송금코드 링크 붙여넣기
-          </h3>
-          <Image
-            onClick={() => {
-              changePayCodeGuideModalState(true);
-            }}
-            src={HelpIc}
-            alt="도움말 아이콘"
-          />
-        </div>
+        <Image
+          src={KakaoCodeGuideImg}
+          alt="카카오코드 가져오기 안내 이미지"
+          onClick={() => {
+            window.location.href = 'kakaotalk://';
+          }}
+          style={{ cursor: 'pointer' }}
+        />
+
         <InputText
           register={register('kakaoPayCode')}
           placeholder="송금링크를 붙여 넣어주세요"
           keyPrevent
         >
-          {!!kakaoPayCode && isKakaoPayCodeValid.state && (
-            <CheckedIcon width={24} />
-          )}
+          {!!kakaoPayCode && isKakaoPayCodeValid.state && <CheckedIcon width={24} />}
           {!isLoading.state &&
             kakaoPayCode &&
             !isKakaoPayCodeValid.state &&
@@ -170,29 +158,12 @@ export default function WishesKakaopayInputForm({
             </div>
           )}
         </InputText>
-
-        <BorderBox>
-          <p className="text-[12px]">
-            {
-              '카카오톡 이동 -> 하단 더보기 탭 선택 -> 상단 코드스캔 선택 -> 송금코드 링크 복사'
-            }
-          </p>
-        </BorderBox>
       </div>
 
       <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState} />
       {children}
-      {payCodeGuideModalState && (
-        <PayCodeGuideModal
-          modalState={payCodeGuideModalState}
-          handleModalState={handlePayCodeGuideModalState}
-        />
-      )}
 
-      <ValidateLoadingModal
-        isOpen={isLoading.state}
-        success={isKakaoPayCodeValid.state}
-      />
+      <ValidateLoadingModal isOpen={isLoading.state} success={isKakaoPayCodeValid.state} />
     </FormProvider>
   );
 }
