@@ -1,3 +1,4 @@
+import { BANK_LIST, BANK_NAMES } from '@/constant/bankList';
 import * as yup from 'yup';
 
 export const wishesLinkDataResolver = yup
@@ -27,8 +28,17 @@ export const wishesAccountDataResolver = yup
           .matches(/^[0-9]+$/, '숫자만 입력하세요.')
           .min(10, '계좌번호는 최소 10자리여야 합니다.')
           .max(15, '계좌번호는 최대 15자리여야 합니다.'),
-        name: yup.string().required('필수 입력 항목입니다.'),
-        bank: yup.string().required('필수 입력 항목입니다.'),
+        name: yup
+          .string()
+          .required('필수 입력 항목입니다.')
+          .matches(/^[가-힣]+$/, '이름은 한글만 입력 가능합니다.')
+          .min(2, '이름은 최소 2자 이상이어야 합니다.')
+          .max(5, '이름은 최대 5자까지 입력 가능합니다.'),
+        bank: yup
+          .string()
+          .trim()
+          .required('필수 입력 항목입니다.')
+          .oneOf(BANK_NAMES, '유효한 은행을 선택하세요.'),
       })
       .required('계좌 정보는 필수입니다.'),
     kakaoPayCode: yup

@@ -13,7 +13,6 @@ import { PropsWithChildren, useEffect } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import Button from '@/components/Common/Button';
-import WishesInputPreview from './wishesInputPreview';
 import { postWishes } from '@/api/wishes';
 import useToggle from '@/hooks/common/useToggle';
 import WishesLinkInputForm from './wishesLinkInputForm';
@@ -40,7 +39,7 @@ export default function WishesCreatePageContainer({
   const submitBtnActiveState = useToggle();
   const accountVerifyBtnState = useToggle();
   const isLoading = useToggle();
-  const isAccountValid = useToggle(true);
+  const isAccountValid = useToggle();
 
   const { handleRouter } = useRouters();
 
@@ -77,6 +76,7 @@ export default function WishesCreatePageContainer({
                 noticeAgree={noticeAgree}
                 isKakaoPayCodeValid={isKakaoPayCodeValid}
                 submitBtnActiveState={submitBtnActiveState}
+                isLoading={isLoading}
               >
                 <WishesAccountSubmitButton
                   linkDataMethods={savedWishesLinkDataMethods}
@@ -97,18 +97,11 @@ export default function WishesCreatePageContainer({
                 noticeAgree={noticeAgree}
               >
                 <WishesAccountSubmitButton
-                  disabled={!(noticeAgree && isAccountValid.state && accountVerifyBtnState.state)}
+                  disabled={!submitBtnActiveState.state}
                   forPayCode={false}
                   linkDataMethods={savedWishesLinkDataMethods}
                 />
               </WishesAccountInputForm>
-            </>
-          ),
-          preview: (
-            <>
-              {children}
-              <WishesInputPreview methods={savedWishesLinkDataMethods} />
-              <WishesPreviewSubmitButton linkDataMethods={savedWishesLinkDataMethods} />
             </>
           ),
           done: <>{children}</>,
@@ -203,46 +196,46 @@ export function WishesAccountSubmitButton({
   );
 }
 
-function WishesPreviewSubmitButton({
-  linkDataMethods,
-}: {
-  linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
-}) {
-  const { handleBack, handleRouter } = useRouters();
+// function WishesPreviewSubmitButton({
+//   linkDataMethods,
+// }: {
+//   linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
+// }) {
+//   const { handleBack, handleRouter } = useRouters();
 
-  const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
+//   const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
 
-  useEffect(() => {
-    if (wishesCreateSuccess) {
-      handleRouter('/wishes/create?step=done');
-    }
-  }, [wishesCreateSuccess]);
+//   useEffect(() => {
+//     if (wishesCreateSuccess) {
+//       handleRouter('/wishes/create?step=done');
+//     }
+//   }, [wishesCreateSuccess]);
 
-  function handleNextStep() {
-    const wantsGift = linkDataMethods.watch('wantsGift');
+//   function handleNextStep() {
+//     const wantsGift = linkDataMethods.watch('wantsGift');
 
-    if (wantsGift) {
-      handleRouter('/wishes/create?step=select');
-    } else {
-      const wishesData = linkDataMethods.watch();
+//     if (wantsGift) {
+//       handleRouter('/wishes/create?step=select');
+//     } else {
+//       const wishesData = linkDataMethods.watch();
 
-      try {
-        postWishes(wishesData).then((response) => {
-          response.data.success && changeWishesCreateSuccess(true);
-        });
-      } catch (error) {}
-    }
-  }
+//       try {
+//         postWishes(wishesData).then((response) => {
+//           response.data.success && changeWishesCreateSuccess(true);
+//         });
+//       } catch (error) {}
+//     }
+//   }
 
-  return (
-    <FixedBottomButtonWrapper>
-      {/* <div className="flex justify-between gap-10"> */}
-      <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
-        수정하기
-      </Button>
+//   return (
+//     <FixedBottomButtonWrapper>
+//       {/* <div className="flex justify-between gap-10"> */}
+//       <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
+//         수정하기
+//       </Button>
 
-      <Button onClick={handleNextStep}>이대로 등록하기</Button>
-      {/* </div> */}
-    </FixedBottomButtonWrapper>
-  );
-}
+//       <Button onClick={handleNextStep}>이대로 등록하기</Button>
+//       {/* </div> */}
+//     </FixedBottomButtonWrapper>
+//   );
+// }

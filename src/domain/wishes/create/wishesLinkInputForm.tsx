@@ -18,7 +18,7 @@ import { DropDownContent } from './component';
 import InputTextarea from '@/components/Common/Input/inputTextarea';
 import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { putProgressWishes } from '@/api/wishes';
+import { postWishes, putProgressWishes } from '@/api/wishes';
 import CalendarInput from '@/components/Common/Calendar/CalendarInput';
 import { WishStatusType } from '@/types/wishesType';
 
@@ -71,8 +71,6 @@ export function WishesLinkInputs({
       });
     }
   }, [progressWishesData]);
-
-  console.log(wishesProgressStatus);
 
   return (
     <FormProvider {...methods}>
@@ -236,21 +234,27 @@ function WishesLinkSubmitButton({
 }) {
   const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
   const { handleRouter } = useRouters();
+  const giftOption = watch('wantsGift');
 
   function handleClickNext() {
     savedWishesLinkDataMethods.reset({
       ...watch(),
     });
 
-    if (watch('wantsGift')) {
-      handleRouter('/wishes/create?step=preview');
+    if (giftOption) {
+      handleRouter('/wishes/create?step=select');
     } else {
       createOnlyLettersWishes();
     }
   }
 
   function createOnlyLettersWishes() {
-    handleRouter('/wishes/create?step=preview');
+    const wishesData = savedWishesLinkDataMethods.watch();
+    try {
+      postWishes(wishesData).then((response) => {
+        response.data.success && handleRouter('/wishes/create?step=done');
+      });
+    } catch (error) {}
   }
 
   return (
@@ -260,7 +264,7 @@ function WishesLinkSubmitButton({
       </Button>
 
       <Button onClick={handleClickNext} disabled={!formState.isValid}>
-        다음
+        {giftOption ? '다음' : '소원생성'}
       </Button>
     </div>
   );

@@ -9,7 +9,11 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
-    domains: ['localhost', 'wish-image-bucket.s3.ap-northeast-2.amazonaws.com', 'sunmulzu.com'],
+    domains: [
+      'localhost',
+      'sunmulzu-wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
+      'sunmulzu.com',
+    ],
   },
   eslint: {
     dirs: ['__test__'],

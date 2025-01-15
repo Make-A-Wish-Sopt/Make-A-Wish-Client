@@ -166,7 +166,6 @@ export default function GivePresentPageContainer({
 
     if (paymentListObject[paymentId].name === '카카오뱅크') {
       window.open('kakaobank://');
-      window.open('kakaopay://');
 
       setTimeout(() => {
         window.open(

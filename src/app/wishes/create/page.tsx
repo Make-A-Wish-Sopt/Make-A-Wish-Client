@@ -7,7 +7,7 @@ import MainLayout from '@/layouts/MainLayout';
 import { convertDecode } from '@/utils/common/convert';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
-const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'preview', 'done'] as const;
+const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
 
 export default async function WishesCreatePage({
@@ -53,11 +53,6 @@ export default async function WishesCreatePage({
               kakaopay: (
                 <>
                   <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>
-                </>
-              ),
-              preview: (
-                <>
-                  <h1 className="font-bitbit text-main_blue text-center text-[24px] mt-26 mb-20">{`${loginUserData.nickName}님의 생일잔치`}</h1>
                 </>
               ),
               account: (

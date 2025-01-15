@@ -53,43 +53,45 @@ export const BANK_LIST: BankListType[] = [];
 //   },
 // };
 
-for (let i = 0; i <= 32; i++) {
+export const BANK_NAMES = [
+  'NH농협',
+  '카카오뱅크',
+  'KB국민',
+  '신한',
+  '우리',
+  '토스뱅크',
+  'IBK기업',
+  '하나',
+  '새마을',
+  '부산',
+  '대구',
+  '케이뱅크',
+  '신협',
+  '우체국',
+  'SC제일',
+  '경남',
+  '광주',
+  '수협',
+  '전북',
+  '저축은행',
+  '제주',
+  '씨티',
+  'KDB산업',
+  '산림조합',
+  'SBI저축은행',
+  'BOA',
+  '중국',
+  'HSBC',
+  '중국공상',
+  '도이치',
+  'JP모간',
+  'BNP파리바',
+  '중국건설',
+];
+
+for (let i = 0; i < BANK_NAMES.length; i++) {
   BANK_LIST.push({
-    name: [
-      'NH농협',
-      '카카오뱅크',
-      'KB국민',
-      '신한',
-      '우리',
-      '토스뱅크',
-      'IBK기업',
-      '하나',
-      '새마을',
-      '부산',
-      '대구',
-      '케이뱅크',
-      '신협',
-      '우체국',
-      'SC제일',
-      '경남',
-      '광주',
-      '수협',
-      '전북',
-      '저축은행',
-      '제주',
-      '씨티',
-      'KDB산업',
-      '산림조합',
-      'SBI저축은행',
-      'BOA',
-      '중국',
-      'HSBC',
-      '중국공상',
-      '도이치',
-      'JP모간',
-      'BNP파리바',
-      '중국건설',
-    ][i],
+    name: BANK_NAMES[i],
     bankNumber: i + 1,
     logo: bankImgs[`bank${i + 1}Img`],
     bankCode: '',
@@ -162,11 +164,9 @@ paymentListMap.set(paymentId.kakaobank, {
 //   bankIconImg: KakaopayLogoIc,
 // });
 
-export const paymentListArray = Array.from(paymentListMap.entries()).map(
-  ([paymentId, value]) => ({
-    paymentId,
-    ...value,
-  })
-);
+export const paymentListArray = Array.from(paymentListMap.entries()).map(([paymentId, value]) => ({
+  paymentId,
+  ...value,
+}));
 
 export const paymentListObject = Object.fromEntries(paymentListMap);

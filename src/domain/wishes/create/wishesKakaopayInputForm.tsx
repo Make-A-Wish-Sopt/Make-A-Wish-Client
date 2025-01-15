@@ -12,7 +12,6 @@ import { PropsWithChildren, useEffect } from 'react';
 import { DefaultResponseType } from '@/types/api/response';
 import { getUserAccount } from '@/api/user';
 import useToggle, { ToggleHookType } from '@/hooks/common/useToggle';
-import CloseIcon from '@/components/Common/Icon/CloseIcon';
 import CheckedIcon, { WarningCheckedIcon } from '@/components/Common/Icon/CheckedIcon';
 import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
 import { KakaoCodeGuideImg } from '../../../../public/assets/images';
@@ -21,10 +20,12 @@ export default function WishesKakaopayInputForm({
   isKakaoPayCodeValid,
   noticeAgree,
   submitBtnActiveState,
+  isLoading,
   children,
 }: {
   isKakaoPayCodeValid: ToggleHookType;
   noticeAgree: ToggleHookType;
+  isLoading: ToggleHookType;
   submitBtnActiveState: ToggleHookType;
 } & PropsWithChildren) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
@@ -36,91 +37,104 @@ export default function WishesKakaopayInputForm({
     resolver: yupResolver(wishesAccountDataResolver),
   });
   const { register, watch, reset, formState } = wishesAccountInputMethods;
-  const { isValid, isDirty } = formState;
+  const { isDirty, errors } = formState;
   const { kakaoPayCode } = watch();
-  const isLoading = useToggle();
+  const isInitialApiCall = useToggle(true);
+  const kakaoPayValidator = wishesAccountDataResolver.pick(['kakaoPayCode']);
 
-  const isFirstInput = useToggle(true);
+
+  //데이터베이스에서 가져온 정보들이 유효한지 체크 후 초기화
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUserAccount();
+        if (response.transferInfo) {
+          // 📌 Yup 유효성 검사 실행
+          await kakaoPayValidator.validate({ kakaoPayCode: response.transferInfo.kakaoPayCode });
+          await handleCheckKakaoPayCode(response.transferInfo.kakaoPayCode);
+
+          // ✅ 유효성 검사를 통과하면 reset 실행
+          reset({ ...response.transferInfo });
+        }
+      } catch (error) {
+        console.error('초기 데이터 유효성 검사 실패:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (
-      !!kakaoPayCode &&
       noticeAgree.state &&
-      isValid &&
-      isKakaoPayCodeValid.state &&
+      kakaoPayCode &&
+      successIconCondition() !== undefined &&
       !isLoading.state
     ) {
       submitBtnActiveState.changeState(true);
     } else {
       submitBtnActiveState.changeState(false);
     }
+  }, [noticeAgree, kakaoPayCode, isKakaoPayCodeValid.state, isLoading]);
 
-    if (kakaoPayCode && !isDirty) {
-      isKakaoPayCodeValid.changeState(true);
+  async function handleCheckKakaoPayCode(kakaoPayCode: string) {
+    if (!errors.kakaoPayCode) {
+      await validateKakaoCodeURL(kakaoPayCode);
     }
-  }, [
-    isDirty,
-    isValid,
-    noticeAgree.state,
-    kakaoPayCode,
-    isKakaoPayCodeValid.state,
-    isLoading.state,
-  ]);
-
-  useEffect(() => {
-    getUserAccount().then((response) => {
-      if (response.transferInfo.kakaoPayCode) {
-        isFirstInput.changeState(false);
-      }
-
-      reset({
-        ...response.transferInfo,
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!kakaoPayCode) return;
-
-    if (isValid) {
-      checkKakaopayCode(kakaoPayCode);
-    }
-  }, [kakaoPayCode, isValid]);
-
-  function checkKakaopayCode(kakaoPayCode: string) {
-    if (!kakaoPayCode) {
-      isKakaoPayCodeValid.changeState(false);
-      return;
-    }
-
-    isLoading.changeState(true);
-
-    fetch('/api/kakao/paycode', {
-      method: 'POST',
-      body: JSON.stringify({ kakaoPayCode: kakaoPayCode }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(async (response) => {
-        const data = (await response.json()) as DefaultResponseType;
-        isFirstInput.changeState(false);
-        setTimeout(() => {
-          isKakaoPayCodeValid.changeState(data.success);
-        }, 1500);
-      })
-      .catch(() => {
-        isKakaoPayCodeValid.changeState(false);
-      });
-
-    setTimeout(() => {
-      isLoading.changeState(false);
-    }, 2000);
   }
 
-  console.log(!!kakaoPayCode);
-  console.log(isKakaoPayCodeValid.state);
-  console.log('isValid : ', isValid);
+  async function validateKakaoCodeURL(kakaoPayCode: string) {
+    try {
+      const response = await fetch('/api/kakao/paycode', {
+        method: 'POST',
+        body: JSON.stringify({ kakaoPayCode: kakaoPayCode }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = (await response.json()) as DefaultResponseType;
+
+      setTimeout(() => {
+        isKakaoPayCodeValid.changeState(data.success);
+      }, 1500);
+
+      isLoading.changeState(true);
+    } catch (error) {
+      isKakaoPayCodeValid.changeState(false);
+      return;
+    } finally {
+      reset({ ...watch(), kakaoPayCode: kakaoPayCode });
+      setTimeout(() => {
+        isLoading.changeState(false);
+      }, 2000);
+      isInitialApiCall.changeState(false);
+    }
+  }
+
+  function warningIconCondition() {
+    if (!kakaoPayCode) return;
+    if (isInitialApiCall.state) return;
+    if (!isInitialApiCall.state && !errors.kakaoPayCode && isDirty) return;
+    if (errors.kakaoPayCode) {
+      return <WarningCheckedIcon width={24} />;
+    }
+
+    if (isKakaoPayCodeValid.state) {
+      return;
+    } else {
+      return <WarningCheckedIcon width={24} />;
+    }
+  }
+
+  function successIconCondition() {
+    if (!kakaoPayCode) return;
+    if (errors.kakaoPayCode) return;
+    if (!isKakaoPayCodeValid.state) return;
+    if (isDirty) return;
+
+    return <CheckedIcon width={24} />;
+  }
 
   return (
     <FormProvider {...wishesAccountInputMethods}>
@@ -137,26 +151,13 @@ export default function WishesKakaopayInputForm({
         <InputText
           register={register('kakaoPayCode')}
           placeholder="송금링크를 붙여 넣어주세요"
+          onBlur={() => {
+            handleCheckKakaoPayCode(kakaoPayCode);
+          }}
           keyPrevent
         >
-          {!!kakaoPayCode && isKakaoPayCodeValid.state && <CheckedIcon width={24} />}
-          {!isLoading.state &&
-            kakaoPayCode &&
-            !isKakaoPayCodeValid.state &&
-            !isFirstInput.state && <WarningCheckedIcon width={24} />}
-          {kakaoPayCode && (
-            <div
-              onClick={() => {
-                kakaoPayCode &&
-                  wishesAccountInputMethods.setValue('kakaoPayCode', '', {
-                    shouldDirty: true,
-                  });
-              }}
-              className="ml-5"
-            >
-              <CloseIcon color={kakaoPayCode ? 'main_blue' : 'gray2'} />
-            </div>
-          )}
+          {!isLoading.state && successIconCondition()}
+          {!isLoading.state && warningIconCondition()}
         </InputText>
       </div>
 

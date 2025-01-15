@@ -18,13 +18,9 @@ import { getUserAccount, postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
-import CheckedIcon, {
-  WarningCheckedIcon,
-} from '@/components/Common/Icon/CheckedIcon';
+import CheckedIcon, { WarningCheckedIcon } from '@/components/Common/Icon/CheckedIcon';
 import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
 import { AxiosError } from 'axios';
-import { DefaultResponseType } from '@/types/api/response';
-import { useRouters } from '@/hooks/common/useRouters';
 
 export default function WishesAccountInputForm({
   accountVerifyBtnState,
@@ -49,34 +45,68 @@ export default function WishesAccountInputForm({
     resolver: yupResolver(wishesAccountDataResolver),
   });
 
-  const { register, reset, formState } = wishesAccountInputMethods;
+  const { register, reset, watch, formState } = wishesAccountInputMethods;
+  const { errors, isDirty } = formState;
+  const { accountInfo } = watch();
+  // const { name, bank, account } = accountInfo;
+  const isInitialApiCall = useToggle(true);
 
   useEffect(() => {
-    getUserAccount().then((response) => {
-      response.transferInfo &&
-        reset({
-          ...response.transferInfo,
-        });
-    });
+    const fetchData = async () => {
+      try {
+        const response = await getUserAccount();
+        if (response.transferInfo) {
+          // 📌 Yup 유효성 검사 실행
+          const accountValidator = wishesAccountDataResolver.pick(['accountInfo']);
+
+          await accountValidator.validate({ accountInfo: response.transferInfo.accountInfo });
+
+          accountVerifyBtnState.changeState(true);
+          isAccountValid.changeState(true);
+
+          // ✅ 유효성 검사를 통과하면 reset 실행
+          reset({ ...response.transferInfo });
+        }
+      } catch (error) {
+        console.error('초기 데이터 유효성 검사 실패:', error);
+        accountVerifyBtnState.changeState(false);
+        isAccountValid.changeState(false);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  function warningIconCondition() {
+    if (!accountInfo.account) return;
+    if (isInitialApiCall.state) return;
+    if (!isInitialApiCall.state && !errors.accountInfo && isDirty) return;
+
+    if (errors.accountInfo && errors.accountInfo.account) {
+      return <WarningCheckedIcon width={24} />;
+    }
+
+    if (isAccountValid.state) {
+      return;
+    } else {
+      return <WarningCheckedIcon width={24} />;
+    }
+  }
+
+  function successIconCondition() {
+    if (!accountInfo.account) return;
+    if (errors.accountInfo && errors.accountInfo.account) return;
+    if (!isAccountValid.state) return;
+    if (isDirty) return;
+
+    return <CheckedIcon width={24} />;
+  }
 
   return (
     <FormProvider {...wishesAccountInputMethods}>
       <InputForm title="계좌번호 입력하기">
         <div className="flex flex-col gap-12">
-          <InputText
-            value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
-            boxStyles={{
-              backgroundColor: '#3C0F0F',
-              color: colors.warning_red,
-            }}
-            readOnly
-          />
-
-          <InputText
-            placeholder="예금주명"
-            register={register('accountInfo.name')}
-          />
+          <InputText placeholder="예금주명" register={register('accountInfo.name')} />
           <SelectBank />
 
           <AccountInput
@@ -85,17 +115,27 @@ export default function WishesAccountInputForm({
             isAccountValid={isAccountValid}
             submitBtnActiveState={submitBtnActiveState}
             noticeAgree={noticeAgree.state}
+            isInitialApiCall={isInitialApiCall}
           >
             <InputText
               placeholder="계좌번호를 입력해주세요"
               register={register('accountInfo.account')}
             >
-              {!formState.isDirty && isAccountValid.state && (
-                <CheckedIcon width={24} />
-              )}
-              {!isAccountValid.state && <WarningCheckedIcon width={24} />}
+              {!isLoading.state && warningIconCondition()}
+              {!isLoading.state && successIconCondition()}
             </InputText>
           </AccountInput>
+          {!isInitialApiCall.state && !isAccountValid.state && (
+            <InputText
+              value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
+              boxStyles={{
+                backgroundColor: '#3C0F0F',
+                color: colors.warning_red,
+              }}
+              readOnly
+            />
+          )}
+
           <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState} />
         </div>
 
@@ -112,6 +152,7 @@ function AccountInput({
   isLoading,
   submitBtnActiveState,
   noticeAgree,
+  isInitialApiCall,
   children,
 }: {
   accountVerifyBtnState: ToggleHookType;
@@ -119,40 +160,36 @@ function AccountInput({
   isLoading: ToggleHookType;
   submitBtnActiveState: ToggleHookType;
   noticeAgree: boolean;
+  isInitialApiCall: ToggleHookType;
 } & PropsWithChildren) {
-  const { formState, watch, reset } =
-    useFormContext<WishesAccountDataResolverType>();
-  const { isDirty, isValid } = formState;
+  const { formState, watch, reset, trigger } = useFormContext<WishesAccountDataResolverType>();
+  const { isDirty, errors } = formState;
   const { accountInfo, forPayCode, kakaoPayCode } = watch();
 
-  const { handleRouter } = useRouters();
+  useEffect(() => {
+    trigger('accountInfo'); // 계좌 정보가 변경될 때 유효성 검사 실행
+  }, [accountInfo.account, accountInfo.bank, accountInfo.name]);
 
   useEffect(() => {
-    if (
-      !!accountInfo &&
-      !isDirty &&
-      noticeAgree &&
-      isValid &&
-      isAccountValid.state &&
-      !isLoading.state
-    ) {
-      submitBtnActiveState.changeState(true);
+    console.log(errors.accountInfo);
+    if (errors.accountInfo) {
+      accountVerifyBtnState.changeState(false);
+      return;
     } else {
-      submitBtnActiveState.changeState(false);
-    }
-
-    if (isValid) {
       accountVerifyBtnState.changeState(true);
     }
+  }, [errors.accountInfo, isDirty, isInitialApiCall.state]);
 
-    if (!accountInfo) {
-      accountVerifyBtnState.changeState(isDirty);
-    }
+  useEffect(() => {
+    submitBtnActiveState.changeState(false);
+    //은행 유호셩 API 실패
+    if (!isAccountValid.state) return;
+    if (!noticeAgree) return;
+    if (errors.accountInfo) return;
+    if (errors.accountInfo && !isDirty) return;
 
-    if (!isDirty) {
-      isAccountValid.changeState(true);
-    }
-  }, [isDirty, isValid, isAccountValid.state, noticeAgree]);
+    submitBtnActiveState.changeState(true);
+  }, [isAccountValid.state, accountVerifyBtnState.state, noticeAgree]);
 
   function handleAccountCheck() {
     isLoading.changeState(true);
@@ -164,27 +201,24 @@ function AccountInput({
         name: accountInfo.name,
       })
         .then((response) => {
-          reset({
-            accountInfo,
-            forPayCode,
-            kakaoPayCode,
-          });
-          // refactor : 어뷰징유저 하는거 확인해야합니다!
           isAccountValid.changeState(response.success);
           accountVerifyBtnState.changeState(!response.success);
         })
         .catch((error: AxiosError) => {
-          const errorData = error.response.data as DefaultResponseType;
-          if (errorData.message === '어뷰징 유저로 이용 불가합니다.') {
-            // alert('4회 이상 입력오류로 서비스 이용이 제한 됩니다.');
-            // handleRouter('/');
-          }
-          isAccountValid.changeState(errorData.success);
+          accountVerifyBtnState.changeState(false);
+          isAccountValid.changeState(false);
         })
         .finally(() => {
           setTimeout(() => {
             isLoading.changeState(false);
           }, 1500);
+          isInitialApiCall.changeState(false);
+          accountVerifyBtnState.changeState(false);
+          reset({
+            accountInfo,
+            forPayCode,
+            kakaoPayCode,
+          });
         });
     }
   }
@@ -199,27 +233,20 @@ function AccountInput({
             font="galmuri"
             onClick={handleAccountCheck}
             style={{ fontSize: '14px' }}
-            disabled={!(isValid && isDirty) || !accountVerifyBtnState.state}
+            disabled={!accountVerifyBtnState.state}
           >
             계좌번호 확인
           </Button>
         </div>
       </div>
-      {
-        <ValidateLoadingModal
-          isOpen={isLoading.state}
-          success={isAccountValid.state}
-        />
-      }
+      {<ValidateLoadingModal isOpen={isLoading.state} success={isAccountValid.state} />}
     </div>
   );
 }
 
 function SelectBank() {
-  const { state: modalState, handleState: handleChangeModalState } =
-    useToggle();
-  const { register, setValue } =
-    useFormContext<WishesAccountDataResolverType>();
+  const { state: modalState, handleState: handleChangeModalState } = useToggle();
+  const { register, setValue } = useFormContext<WishesAccountDataResolverType>();
 
   function changeBank(input: string) {
     setValue('accountInfo.bank', input, { shouldDirty: true });
@@ -227,11 +254,7 @@ function SelectBank() {
 
   return (
     <>
-      <DropDwonBox
-        isOpen={false}
-        handleState={handleChangeModalState}
-        bgColor="dark_green"
-      >
+      <DropDwonBox isOpen={false} handleState={handleChangeModalState} bgColor="dark_green">
         <input
           {...register('accountInfo.bank')}
           placeholder="은행 선택"
@@ -244,10 +267,7 @@ function SelectBank() {
       {modalState && (
         <Modal isOpen={modalState} handleState={handleChangeModalState}>
           <div className="flex justify-center items-center  w-full h-full">
-            <BankModal
-              changeBank={changeBank}
-              handleState={handleChangeModalState}
-            />
+            <BankModal changeBank={changeBank} handleState={handleChangeModalState} />
           </div>
         </Modal>
       )}
@@ -262,15 +282,11 @@ export function AccountFormNotice({
 }) {
   return (
     <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl">
-      {
-        '※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'
-      }
+      {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
       <div className="flex justify-end w-full h-20">
         <div className="flex justify-end">
           <CheckBox changeCheckedState={changeNoticeAgreeState}>
-            <span className="font-galmuri text-[14px] text-main_blue ml-8">
-              {'동의함'}
-            </span>
+            <span className="font-galmuri text-[14px] text-main_blue ml-8">{'동의함'}</span>
           </CheckBox>
         </div>
       </div>
