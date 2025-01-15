@@ -57,6 +57,7 @@ export default function WisheDepositEditPageContainer({
                 isKakaoPayCodeValid={isKakaoPayCodeValid}
                 noticeAgree={noticeAgree}
                 submitBtnActiveState={submitBtnActiveState}
+                isLoading={isLoading}
               >
                 <WishesEditAccountSubmitButton
                   disabled={!submitBtnActiveState.state}
