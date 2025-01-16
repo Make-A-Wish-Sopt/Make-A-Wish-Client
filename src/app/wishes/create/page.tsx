@@ -16,7 +16,6 @@ export default async function WishesCreatePage({
   searchParams: { step: WishesCreateStepType; wishTitle: string };
 }) {
   const { step, wishTitle } = searchParams;
-  const loginUserData = await getLoginUserCookiesData();
 
   if (
     (step === 'link' && !wishTitle) ||
@@ -31,7 +30,7 @@ export default async function WishesCreatePage({
     );
   }
 
-  const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : undefined;
+  const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : '';
 
   return (
     <>

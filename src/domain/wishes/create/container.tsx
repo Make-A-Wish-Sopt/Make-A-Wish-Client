@@ -9,7 +9,7 @@ import {
 } from '@/validation/wishes.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { useRouters } from '@/hooks/common/useRouters';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import Button from '@/components/Common/Button';
@@ -20,6 +20,7 @@ import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
 import WishesAccountInputForm from './wishesAccountInputForm';
+import { convertEncode } from '@/utils/common/convert';
 
 export default function WishesCreatePageContainer({
   step,
@@ -43,11 +44,30 @@ export default function WishesCreatePageContainer({
 
   const { handleRouter } = useRouters();
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      sessionStorage.setItem('isReloading', 'true'); // 새로고침 여부 저장
+      event.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('isReloading')) {
+      if (wishTitle) {
+        handleRouter(`/wishes/create?step=link&wishTitle=${convertEncode(wishTitle)}`);
+      }
+      sessionStorage.removeItem('isReloading'); // 상태 초기화
+    }
+  }, []);
+
   function handleNextStep() {
     if (selectAccount.state) {
-      handleRouter('/wishes/create?step=account');
+      handleRouter(`/wishes/create?step=account&wishTitle=${convertEncode(wishTitle)}`);
     } else {
-      handleRouter('/wishes/create?step=kakaopay');
+      handleRouter(`/wishes/create?step=kakaopay&wishTitle=${convertEncode(wishTitle)}}`);
     }
   }
 
@@ -195,47 +215,3 @@ export function WishesAccountSubmitButton({
     </FixedBottomButtonWrapper>
   );
 }
-
-// function WishesPreviewSubmitButton({
-//   linkDataMethods,
-// }: {
-//   linkDataMethods: UseFormReturn<WishesLinkDataResolverType, any, undefined>;
-// }) {
-//   const { handleBack, handleRouter } = useRouters();
-
-//   const { state: wishesCreateSuccess, changeState: changeWishesCreateSuccess } = useToggle();
-
-//   useEffect(() => {
-//     if (wishesCreateSuccess) {
-//       handleRouter('/wishes/create?step=done');
-//     }
-//   }, [wishesCreateSuccess]);
-
-//   function handleNextStep() {
-//     const wantsGift = linkDataMethods.watch('wantsGift');
-
-//     if (wantsGift) {
-//       handleRouter('/wishes/create?step=select');
-//     } else {
-//       const wishesData = linkDataMethods.watch();
-
-//       try {
-//         postWishes(wishesData).then((response) => {
-//           response.data.success && changeWishesCreateSuccess(true);
-//         });
-//       } catch (error) {}
-//     }
-//   }
-
-//   return (
-//     <FixedBottomButtonWrapper>
-//       {/* <div className="flex justify-between gap-10"> */}
-//       <Button bgColor="gray4" fontColor="white" onClick={handleBack}>
-//         수정하기
-//       </Button>
-
-//       <Button onClick={handleNextStep}>이대로 등록하기</Button>
-//       {/* </div> */}
-//     </FixedBottomButtonWrapper>
-//   );
-// }

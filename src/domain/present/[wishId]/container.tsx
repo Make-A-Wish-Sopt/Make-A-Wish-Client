@@ -70,6 +70,23 @@ export default function GivePresentPageContainer({
   const { selectedId, isSelected, handleSelectOne } = useSelectItem();
 
   useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      sessionStorage.setItem('isReloading', 'true'); // 새로고침 여부 저장
+      event.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('isReloading')) {
+      handleRouter(`/wishes/${wishId}`);
+      sessionStorage.removeItem('isReloading'); // 상태 초기화
+    }
+  }, []);
+
+  useEffect(() => {
     if (messageOnlyOption) {
       changeGiftMenuId(0);
     }

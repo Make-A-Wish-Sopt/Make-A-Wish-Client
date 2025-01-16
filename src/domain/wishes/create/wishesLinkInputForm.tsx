@@ -21,6 +21,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { postWishes, putProgressWishes } from '@/api/wishes';
 import CalendarInput from '@/components/Common/Calendar/CalendarInput';
 import { WishStatusType } from '@/types/wishesType';
+import { convertEncode } from '@/utils/common/convert';
 
 export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
@@ -30,7 +31,10 @@ export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string 
 
   return (
     <WishesLinkInputs wishTitle={wishTitle} progressWishesData={isValid && savedWishesLinkData}>
-      <WishesLinkSubmitButton savedWishesLinkDataMethods={savedWishesLinkDataMethods} />
+      <WishesLinkSubmitButton
+        savedWishesLinkDataMethods={savedWishesLinkDataMethods}
+        wishTitle={wishTitle}
+      />
     </WishesLinkInputs>
   );
 }
@@ -229,8 +233,10 @@ function SelectWantsGiftOption() {
 
 function WishesLinkSubmitButton({
   savedWishesLinkDataMethods,
+  wishTitle,
 }: {
   savedWishesLinkDataMethods: UseFormReturn<WishesLinkDataResolverType>;
+  wishTitle: string;
 }) {
   const { formState, watch } = useFormContext<WishesLinkDataResolverType>();
   const { handleRouter } = useRouters();
@@ -242,7 +248,7 @@ function WishesLinkSubmitButton({
     });
 
     if (giftOption) {
-      handleRouter('/wishes/create?step=select');
+      handleRouter(`/wishes/create?step=select&wishTitle=${convertEncode(wishTitle)}`);
     } else {
       createOnlyLettersWishes();
     }
