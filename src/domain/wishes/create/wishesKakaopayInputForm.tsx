@@ -42,7 +42,6 @@ export default function WishesKakaopayInputForm({
   const isInitialApiCall = useToggle(true);
   const kakaoPayValidator = wishesAccountDataResolver.pick(['kakaoPayCode']);
 
-
   //데이터베이스에서 가져온 정보들이 유효한지 체크 후 초기화
   useEffect(() => {
     const fetchData = async () => {
@@ -161,7 +160,9 @@ export default function WishesKakaopayInputForm({
         </InputText>
       </div>
 
-      <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState} />
+      <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState}>
+        <p>{'※ 잘못된 송금코드 링크 기재로 발생되는 문제는 책임지지 않아요!ㅠㅠ'}</p>
+      </AccountFormNotice>
       {children}
 
       <ValidateLoadingModal isOpen={isLoading.state} success={isKakaoPayCodeValid.state} />

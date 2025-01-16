@@ -95,6 +95,18 @@ export default function WishesAccountInputForm({
   return (
     <FormProvider {...wishesAccountInputMethods}>
       <InputForm title="계좌번호 입력하기">
+        {!isInitialApiCall.state && !isAccountValid.state && (
+          <InputText
+            value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
+            boxStyles={{
+              backgroundColor: '#3C0F0F',
+              color: colors.warning_red,
+              marginBottom: '1.2rem',
+            }}
+            readOnly
+          />
+        )}
+
         <div className="flex flex-col gap-12">
           <InputText placeholder="예금주명" register={register('accountInfo.name')} />
           <SelectBank />
@@ -115,18 +127,10 @@ export default function WishesAccountInputForm({
               {!isLoading.state && successIconCondition()}
             </InputText>
           </AccountInput>
-          {!isInitialApiCall.state && !isAccountValid.state && (
-            <InputText
-              value={'※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.'}
-              boxStyles={{
-                backgroundColor: '#3C0F0F',
-                color: colors.warning_red,
-              }}
-              readOnly
-            />
-          )}
 
-          <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState} />
+          <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState}>
+            <p>{'※ 잘못된 계좌번호 기재로 발생되는 문제는 책임지지 않아요!ㅠㅠ'}</p>
+          </AccountFormNotice>
         </div>
 
         {children}
@@ -273,12 +277,13 @@ function SelectBank() {
 
 export function AccountFormNotice({
   changeNoticeAgreeState,
+  children,
 }: {
   changeNoticeAgreeState: (state: boolean) => void;
-}) {
+} & PropsWithChildren) {
   return (
     <div className="flex flex-col justify-between w-full h-98 bg-dark_green text-left mb-24 p-12  font-galmuri text-white text-[14px] rounded-xl">
-      {'※ 계좌번호, 연락처에 대한 허위기재와 오기로 인해 발생되는 문제는 책임지지 않습니다.'}
+      {children}
       <div className="flex justify-end w-full h-20">
         <div className="flex justify-end">
           <CheckBox changeCheckedState={changeNoticeAgreeState}>
