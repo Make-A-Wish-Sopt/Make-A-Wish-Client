@@ -60,16 +60,12 @@ export default function WishesAccountInputForm({
           const accountValidator = wishesAccountDataResolver.pick(['accountInfo']);
 
           await accountValidator.validate({ accountInfo: response.transferInfo.accountInfo });
-
-          accountVerifyBtnState.changeState(true);
           isAccountValid.changeState(true);
 
           // ✅ 유효성 검사를 통과하면 reset 실행
           reset({ ...response.transferInfo });
         }
       } catch (error) {
-        console.error('초기 데이터 유효성 검사 실패:', error);
-        accountVerifyBtnState.changeState(false);
         isAccountValid.changeState(false);
       }
     };
@@ -82,13 +78,7 @@ export default function WishesAccountInputForm({
     if (isInitialApiCall.state) return;
     if (!isInitialApiCall.state && !errors.accountInfo && isDirty) return;
 
-    if (errors.accountInfo && errors.accountInfo.account) {
-      return <WarningCheckedIcon width={24} />;
-    }
-
-    if (isAccountValid.state) {
-      return;
-    } else {
+    if (!isAccountValid.state || (errors.accountInfo && errors.accountInfo.account)) {
       return <WarningCheckedIcon width={24} />;
     }
   }
@@ -139,7 +129,6 @@ export default function WishesAccountInputForm({
           <AccountFormNotice changeNoticeAgreeState={noticeAgree.changeState} />
         </div>
 
-        {/* Submit Button */}
         {children}
       </InputForm>
     </FormProvider>
@@ -171,30 +160,38 @@ function AccountInput({
   }, [accountInfo.account, accountInfo.bank, accountInfo.name]);
 
   useEffect(() => {
-    console.log(errors.accountInfo);
-    if (errors.accountInfo) {
-      accountVerifyBtnState.changeState(false);
-      return;
-    } else {
+    accountVerifyBtnState.changeState(false);
+
+    if (!accountInfo.account || errors.accountInfo) return;
+    if (!isInitialApiCall.state && !isDirty) return;
+
+    if (
+      (!isInitialApiCall.state && !errors.accountInfo && isDirty) ||
+      (accountInfo.account && !errors.accountInfo)
+    ) {
       accountVerifyBtnState.changeState(true);
     }
-  }, [errors.accountInfo, isDirty, isInitialApiCall.state]);
+  }, [errors.accountInfo, isInitialApiCall.state, accountInfo.account, isDirty]);
 
   useEffect(() => {
-    submitBtnActiveState.changeState(false);
-    //은행 유호셩 API 실패
-    if (!isAccountValid.state) return;
-    if (!noticeAgree) return;
-    if (errors.accountInfo) return;
-    if (errors.accountInfo && !isDirty) return;
-
-    submitBtnActiveState.changeState(true);
-  }, [isAccountValid.state, accountVerifyBtnState.state, noticeAgree]);
+    if (
+      !errors.accountInfo &&
+      !accountVerifyBtnState.state &&
+      noticeAgree &&
+      isAccountValid.state
+    ) {
+      submitBtnActiveState.changeState(true);
+    } else {
+      submitBtnActiveState.changeState(false);
+    }
+  }, [errors.accountInfo, accountVerifyBtnState.state, noticeAgree, isAccountValid.state]);
 
   function handleAccountCheck() {
     isLoading.changeState(true);
 
     if ((accountInfo.account && accountInfo.bank, accountInfo.name)) {
+      isAccountValid.changeState(false);
+
       postVerifyAccount({
         account: accountInfo.account,
         bank: accountInfo.bank,
@@ -202,10 +199,8 @@ function AccountInput({
       })
         .then((response) => {
           isAccountValid.changeState(response.success);
-          accountVerifyBtnState.changeState(!response.success);
         })
         .catch((error: AxiosError) => {
-          accountVerifyBtnState.changeState(false);
           isAccountValid.changeState(false);
         })
         .finally(() => {
@@ -214,6 +209,7 @@ function AccountInput({
           }, 1500);
           isInitialApiCall.changeState(false);
           accountVerifyBtnState.changeState(false);
+
           reset({
             accountInfo,
             forPayCode,
