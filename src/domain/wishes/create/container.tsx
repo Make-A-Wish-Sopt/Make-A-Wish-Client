@@ -154,10 +154,16 @@ export function WishesEditAccountSubmitButton({
     putUserAccount({
       ...accountInputs,
       forPayCode: forPayCode,
-    }).then((response) => {
-      response.data.success && alert('계좌정보 수정완료!');
-      handleRouter('/mypage');
-    });
+    })
+      .then((response) => {
+        response.data.success && alert('계좌정보 수정완료!');
+      })
+      .catch(() => {
+        alert('계좌정보 수정실패!');
+      })
+      .finally(() => {
+        handleRouter('/mypage');
+      });
   }
   return (
     <FixedBottomButtonWrapper>

@@ -284,8 +284,12 @@ export function WishesLinkEditSubmitButton() {
   function handleEditWisheLink() {
     putProgressWishes(editWishesLinkData).then((response) => {
       response.success && alert('소원정보 수정완료!');
+    }).catch(() => {
+      alert('소원정보 수정실패!!')
+    }).finally(() => {
       handleBack();
     });
+
   }
 
   return (
