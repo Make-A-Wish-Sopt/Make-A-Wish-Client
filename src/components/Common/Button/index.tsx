@@ -2,6 +2,7 @@
 
 import React, { ButtonHTMLAttributes, CSSProperties, PropsWithChildren, ReactNode } from 'react';
 import { colors, ColorsTypes, FontsTypes } from '@/styles/styles';
+import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
@@ -10,6 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontColor?: keyof ColorsTypes;
   font?: keyof FontsTypes;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  gaEventLable?: string;
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
@@ -20,6 +22,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     font = 'bitbit',
     onClick,
     icon,
+    gaEventLable,
     children,
   } = props;
 
@@ -30,13 +33,23 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
 
   const combinedStyle: CSSProperties = { ...defaultStyle, ...props.style };
 
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    if (onClick) {
+      if (gaEventLable) {
+        sendGTMEvent('event', gaEventLable);
+        sendGAEvent('event', gaEventLable);
+      }
+      onClick(e);
+    }
+  }
+
   return (
     <button
       className={`flex justify-center items-center ${
         icon ? 'gap-10px' : 'gap-0'
       } w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl`}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       style={combinedStyle}
     >
       {icon && icon}

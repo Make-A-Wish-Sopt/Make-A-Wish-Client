@@ -32,6 +32,8 @@ import { presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { paymentListObject } from '@/constant/bankList';
+import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
+import { GA_VIEW_PRESENT } from '@/constant/ga';
 
 export default function GivePresentPageContainer({
   avatarCakeId,
@@ -66,6 +68,7 @@ export default function GivePresentPageContainer({
   const { giftMenuId } = methods.watch();
   const selectedCakeId = avatarCakeId;
   const { handleRouter } = useRouters();
+  const paymentType = forPayCode ? 'kakaopay' : 'account';
 
   const { selectedId, isSelected, handleSelectOne } = useSelectItem();
 
@@ -92,7 +95,15 @@ export default function GivePresentPageContainer({
     }
   }, [messageOnlyOption]);
 
-  useEffect(() => {}, [giftMenuId]);
+  useEffect(() => {
+    if (step === 'payment') {
+      sendGAEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
+      sendGTMEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
+    } else {
+      sendGAEvent('event', GA_VIEW_PRESENT[step] as string); // GA4에 이벤트 전송
+      sendGTMEvent('event', GA_VIEW_PRESENT[step] as string); // GTM에 이벤트 전송
+    }
+  }, [step]);
 
   function changeGiftMenuId(id: number) {
     methods.setValue('giftMenuId', id);
@@ -134,7 +145,7 @@ export default function GivePresentPageContainer({
     const giftMenuId = methods.getValues('giftMenuId');
 
     handleRouter(
-      `/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}&avatarCakeId=${selectedCakeId}`,
+      `/present/${wishId}/?presentStep=payment&presentId=${giftMenuId}&avatarCakeId=${selectedCakeId}&paymentType=${paymentType}`,
     );
   }
 

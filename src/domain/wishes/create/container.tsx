@@ -21,6 +21,8 @@ import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
 import WishesAccountInputForm from './wishesAccountInputForm';
 import { convertEncode } from '@/utils/common/convert';
+import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
+import { GA_VIEW_WISHES } from '@/constant/ga';
 
 export default function WishesCreatePageContainer({
   step,
@@ -53,6 +55,11 @@ export default function WishesCreatePageContainer({
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, []);
+
+  useEffect(() => {
+    sendGAEvent('event', GA_VIEW_WISHES[step]); // GA4에 이벤트 전송
+    sendGTMEvent('event', GA_VIEW_WISHES[step]); // GTM에 이벤트 전송
+  }, [step]);
 
   useEffect(() => {
     if (sessionStorage.getItem('isReloading')) {

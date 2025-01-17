@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { Suspense } from 'react';
 import Loading from './loading';
 import Script from 'next/script';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 declare global {
   interface Window {
@@ -27,6 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
       </body>
     </html>
   );

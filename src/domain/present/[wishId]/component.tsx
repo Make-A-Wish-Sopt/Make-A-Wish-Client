@@ -2,6 +2,7 @@ import Box from '@/components/Common/Box';
 import Button from '@/components/Common/Button';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
+import { GA_CLICK_BUTTON } from '@/constant/ga';
 import { presentListArray } from '@/constant/model/present';
 import { useRouters } from '@/hooks/common/useRouters';
 import { colors } from '@/styles/styles';
@@ -80,7 +81,9 @@ export function PresentSuccessSubmitButton() {
   return (
     <>
       <FixedBottomButtonWrapper>
-        <Button onClick={handleClick}>제 생일에도 써볼래요</Button>
+        <Button onClick={handleClick} gaEventLable={GA_CLICK_BUTTON.tryMyBirthdayBtn}>
+          제 생일에도 써볼래요
+        </Button>
       </FixedBottomButtonWrapper>
     </>
   );

@@ -5,13 +5,18 @@ import GivePresentPageContainer from '@/domain/present/[wishId]/container';
 import MainLayout from '@/layouts/MainLayout';
 
 export type PresentStepType = 'present' | 'payment' | 'done';
+export type PaymentType = 'kakaopay' | 'account';
 
 export default async function GivePresentPage({
   params,
   searchParams,
 }: {
   params: { wishId: string };
-  searchParams: { presentStep: PresentStepType; avatarCakeId?: string; presentId?: string };
+  searchParams: {
+    presentStep: PresentStepType;
+    avatarCakeId?: string;
+    presentId?: string;
+  };
 }) {
   const publicWishesData = await getPublicWishes(params.wishId);
 
