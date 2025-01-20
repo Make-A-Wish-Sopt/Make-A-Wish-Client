@@ -1,5 +1,5 @@
 import { postAuthKakao } from '@/api/auth';
-import { LoginWithSavedCookiesDatas } from './container';
+import { SaveUserDataWithRedirectWishes } from './container';
 import ErrorPage from '@/app/error';
 
 export async function LoginService({ code }: { code: string }) {
@@ -8,7 +8,7 @@ export async function LoginService({ code }: { code: string }) {
   return (
     <>
       {loginUserData ? (
-        <LoginWithSavedCookiesDatas loginUserData={loginUserData} />
+        <SaveUserDataWithRedirectWishes loginUserData={loginUserData} />
       ) : (
         <ErrorPage alertMessage="카카오 로그인 실패" />
       )}

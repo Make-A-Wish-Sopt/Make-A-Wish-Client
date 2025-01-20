@@ -5,10 +5,8 @@ export default async function KakaoLoginPage({ searchParams }: { searchParams: {
   const { code } = searchParams;
 
   return (
-    <>
-      <LoginPageContainer>
-        <LoginService code={code} />
-      </LoginPageContainer>
-    </>
+    <LoginPageContainer>
+      <LoginService code={code} />
+    </LoginPageContainer>
   );
 }

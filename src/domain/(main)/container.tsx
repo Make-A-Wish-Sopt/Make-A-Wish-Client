@@ -5,14 +5,13 @@ import Button from '@/components/Common/Button';
 import { KakaoLoginIc } from '../../../public/assets/icons';
 import { PropsWithChildren } from 'react';
 import useKakaoAuth from '@/hooks/common/useKakaoAuth';
-import GlobalStateContext from '@/Context/globalStateContext';
 
 export default function IndexPageContainer({ children }: PropsWithChildren) {
   return (
-    <GlobalStateContext.Provider value={{}}>
+    <>
       {children}
       <KakaoLoginButton />
-    </GlobalStateContext.Provider>
+    </>
   );
 }
 
