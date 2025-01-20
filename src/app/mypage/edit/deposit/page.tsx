@@ -1,7 +1,7 @@
 import { getUserAccount } from '@/api/user';
 import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
-import Header from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Common/Hedaer';
 import WisheDepositEditPageContainer from '@/domain/mypage/edit/deposit/container';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';
@@ -33,8 +33,8 @@ export default async function WisheDepositEditPage({
 
   return (
     <>
-      <Header backBtn routePath="/mypage" />
-      <MainLayout checkLoggedIn>
+      <Header leftMenu={<BackButton routePath="/mypage" />} />
+      <MainLayout isPrivate>
         <WisheDepositEditPageContainer
           step={searchParams.step}
           forPayCode={transferInfo.forPayCode}

@@ -1,6 +1,6 @@
 import { getCakesResult } from '@/api/cakes';
 import { getSingleWishInfo } from '@/api/wishes';
-import Header from '@/components/Common/Hedaer';
+import Header, { BackButton, MypageButton } from '@/components/Common/Hedaer';
 import WishesHistoryMessageTreePageContainer from '@/domain/mypage/wish-history/[historyId]/container';
 import MainLayout from '@/layouts/MainLayout';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
@@ -21,8 +21,8 @@ export default async function WishesHistoryMessageTreePage({
 
   return (
     <>
-      <Header backBtn mypageBtn />
-      <MainLayout checkLoggedIn>
+      <Header leftMenu={<BackButton />} rightMenu={<MypageButton />} />
+      <MainLayout isPrivate>
         <WishesHistoryMessageTreePageContainer
           wishesHistory={wishesHistory}
           nickname={loginUserData.nickName}

@@ -1,6 +1,6 @@
 import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
-import Header from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Common/Hedaer';
 import WisheLinkEditPageContainer from '@/domain/mypage/edit/link/container';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';
@@ -16,7 +16,7 @@ export default async function WisheLinkEditPage() {
 
   return (
     <>
-      <Header backBtn />
+      <Header leftMenu={<BackButton routePath="/" />} />
       <MainLayout>
         <WisheLinkEditPageContainer
           progressWishesData={progressWishesData}

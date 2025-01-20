@@ -1,5 +1,5 @@
 import MainLayout from '@/layouts/MainLayout';
-import Header from '@/components/Common/Hedaer';
+import Header, { MypageButton } from '@/components/Common/Hedaer';
 import { getMainProgressWishesData } from '@/api/wishes';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer, {
@@ -25,8 +25,8 @@ export default async function WishesPage() {
 
   return (
     <>
-      <Header mypageBtn />
-      <MainLayout checkLoggedIn>
+      <Header rightMenu={<MypageButton />} />
+      <MainLayout isPrivate>
         <WishesPageContainer>
           {progressWishesData ? (
             <>

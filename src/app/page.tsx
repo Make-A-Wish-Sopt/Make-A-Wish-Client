@@ -1,11 +1,11 @@
-import Header from '@/components/Common/Hedaer';
+import Header, { MypageButton } from '@/components/Common/Hedaer';
 import MainPageContainer from '@/domain/home/container';
 import MainLayout from '@/layouts/MainLayout';
 
 export default async function Home() {
   return (
     <>
-      <Header mypageBtn />
+      <Header rightMenu={<MypageButton />} />
       <MainLayout>
         <MainPageContainer />
       </MainLayout>

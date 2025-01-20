@@ -1,6 +1,6 @@
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
-import Header from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Common/Hedaer';
 import GivePresentPageContainer from '@/domain/present/[wishId]/container';
 import MainLayout from '@/layouts/MainLayout';
 
@@ -27,8 +27,11 @@ export default async function GivePresentPage({
   return (
     <>
       <Header
-        backBtn
-        routePath={searchParams.presentStep === 'done' ? `/wishes/${params.wishId}` : undefined}
+        leftMenu={
+          <BackButton
+            routePath={searchParams.presentStep === 'done' && `/wishes/${params.wishId}`}
+          />
+        }
       />
       <MainLayout>
         <GivePresentPageContainer

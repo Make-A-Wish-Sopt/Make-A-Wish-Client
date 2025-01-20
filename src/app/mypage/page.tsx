@@ -1,5 +1,5 @@
 import { getProgressWishLinkData } from '@/api/wishes';
-import Header from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Common/Hedaer';
 import MypageContainer from '@/domain/mypage/container';
 import MainLayout from '@/layouts/MainLayout';
 
@@ -11,7 +11,7 @@ export default async function Mypage() {
   if (!loginUserData) {
     return (
       <>
-        <Header backBtn routePath="/" />
+        <Header leftMenu={<BackButton routePath="/" />} />
         <MainLayout>
           <MypageContainer nickName={'조물주'} isLoggedIn={false} />
         </MainLayout>
@@ -25,13 +25,9 @@ export default async function Mypage() {
 
   return (
     <>
-      <Header backBtn routePath="/wishes" />
-      <MainLayout checkLoggedIn>
-        <MypageContainer
-          nickName={nickName}
-          progressWishes={progressWishes}
-          isLoggedIn
-        />
+      <Header leftMenu={<BackButton routePath="/wishes" />} />
+      <MainLayout isPrivate>
+        <MypageContainer nickName={nickName} progressWishes={progressWishes} isLoggedIn />
       </MainLayout>
     </>
   );
