@@ -16,8 +16,7 @@ export default async function WisheLinkEditPage() {
 
   return (
     <>
-      <Header leftMenu={<BackButton routePath="/" />} />
-      <MainLayout>
+      <MainLayout Header={<Header leftMenu={<BackButton routePath="/" />} />}>
         <WisheLinkEditPageContainer
           progressWishesData={progressWishesData}
           wishesProgressStatus={status}

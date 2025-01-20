@@ -14,13 +14,10 @@ export default async function WishesIdPage({ params }: { params: { wishId: strin
   }
 
   return (
-    <>
-      <Header rightMenu={<MypageButton />} />
-      <MainLayout>
-        <WishesIdPageContainer wishId={wishId}>
-          <WishesIdLayoutWithContent />
-        </WishesIdPageContainer>
-      </MainLayout>
-    </>
+    <MainLayout Header={<Header rightMenu={<MypageButton />} />}>
+      <WishesIdPageContainer wishId={wishId}>
+        <WishesIdLayoutWithContent />
+      </WishesIdPageContainer>
+    </MainLayout>
   );
 }

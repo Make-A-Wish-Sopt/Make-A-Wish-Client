@@ -32,30 +32,24 @@ export default async function WisheDepositEditPage({
   }
 
   return (
-    <>
-      <Header leftMenu={<BackButton routePath="/mypage" />} />
-      <MainLayout isPrivate>
-        <WisheDepositEditPageContainer
-          step={searchParams.step}
-          forPayCode={transferInfo.forPayCode}
-        >
+    <MainLayout Header={<Header leftMenu={<BackButton routePath="/mypage" />} />} isPrivate>
+      <WisheDepositEditPageContainer step={searchParams.step} forPayCode={transferInfo.forPayCode}>
+        {
           {
-            {
-              select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
-              kakaopay: (
-                <>
-                  <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>,
-                </>
-              ),
-              account: (
-                <>
-                  <WishesCreateTitleText>입금 받을 계좌 입력하기</WishesCreateTitleText>
-                </>
-              ),
-            }[searchParams.step]
-          }
-        </WisheDepositEditPageContainer>
-      </MainLayout>
-    </>
+            select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
+            kakaopay: (
+              <>
+                <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>,
+              </>
+            ),
+            account: (
+              <>
+                <WishesCreateTitleText>입금 받을 계좌 입력하기</WishesCreateTitleText>
+              </>
+            ),
+          }[searchParams.step]
+        }
+      </WisheDepositEditPageContainer>
+    </MainLayout>
   );
 }

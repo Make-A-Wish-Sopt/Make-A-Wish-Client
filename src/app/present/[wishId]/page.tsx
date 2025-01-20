@@ -26,14 +26,17 @@ export default async function GivePresentPage({
 
   return (
     <>
-      <Header
-        leftMenu={
-          <BackButton
-            routePath={searchParams.presentStep === 'done' && `/wishes/${params.wishId}`}
+      <MainLayout
+        Header={
+          <Header
+            leftMenu={
+              <BackButton
+                routePath={searchParams.presentStep === 'done' && `/wishes/${params.wishId}`}
+              />
+            }
           />
         }
-      />
-      <MainLayout>
+      >
         <GivePresentPageContainer
           avatarCakeId={searchParams.avatarCakeId}
           step={searchParams.presentStep}

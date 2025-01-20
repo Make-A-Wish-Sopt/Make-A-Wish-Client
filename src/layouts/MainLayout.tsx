@@ -6,9 +6,10 @@ import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 
 export default async function MainLayout({
+  Header,
   isPrivate = false,
   children,
-}: { isPrivate?: boolean } & PropsWithChildren) {
+}: { Header?: JSX.Element; isPrivate?: boolean } & PropsWithChildren) {
   if (isPrivate && !(await isLoggedIn())) {
     return <ErrorPage alertMessage="로그인이 필요합니다!" routePath="/" />;
   }
@@ -22,8 +23,11 @@ export default async function MainLayout({
   }
 
   return (
-    <main className="relative flex justify-center">
-      <div className="w-375 h-svh px-22 ">{children}</div>
-    </main>
+    <>
+      {Header}
+      <main className="relative flex justify-center">
+        <div className="w-375 h-svh px-22 ">{children}</div>
+      </main>
+    </>
   );
 }

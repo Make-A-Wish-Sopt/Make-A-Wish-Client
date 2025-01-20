@@ -33,8 +33,7 @@ export default async function WishesCreatePage({
 
   return (
     <>
-      <Header leftMenu={<BackButton routePath="/wishes" />} />
-      <MainLayout isPrivate>
+      <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />} isPrivate>
         <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
           {
             {

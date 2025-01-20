@@ -10,12 +10,9 @@ export default async function Mypage() {
 
   if (!loginUserData) {
     return (
-      <>
-        <Header leftMenu={<BackButton routePath="/" />} />
-        <MainLayout>
-          <MypageContainer nickName={'조물주'} isLoggedIn={false} />
-        </MainLayout>
-      </>
+      <MainLayout Header={<Header leftMenu={<BackButton routePath="/" />} />}>
+        <MypageContainer nickName={'조물주'} isLoggedIn={false} />
+      </MainLayout>
     );
   }
 
@@ -24,11 +21,8 @@ export default async function Mypage() {
   const progressWishes = await getProgressWishLinkData();
 
   return (
-    <>
-      <Header leftMenu={<BackButton routePath="/wishes" />} />
-      <MainLayout isPrivate>
-        <MypageContainer nickName={nickName} progressWishes={progressWishes} isLoggedIn />
-      </MainLayout>
-    </>
+    <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />} isPrivate>
+      <MypageContainer nickName={nickName} progressWishes={progressWishes} isLoggedIn />
+    </MainLayout>
   );
 }

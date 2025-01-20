@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { MainCakeListImg } from '../../../public/assets/images';
+import { checkComp } from '@/utils/common/checkComponent';
 
 export function MainPageCenteredContent() {
+  console.log('content :');
+  checkComp();
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-[56px] leading-none text-main_blue mt-[28px] font-bitbit ">

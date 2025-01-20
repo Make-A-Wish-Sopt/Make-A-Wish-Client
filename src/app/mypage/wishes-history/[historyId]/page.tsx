@@ -20,16 +20,16 @@ export default async function WishesHistoryMessageTreePage({
   const cakeList = defineCakeTree(convertRecentCakeList);
 
   return (
-    <>
-      <Header leftMenu={<BackButton />} rightMenu={<MypageButton />} />
-      <MainLayout isPrivate>
-        <WishesHistoryMessageTreePageContainer
-          wishesHistory={wishesHistory}
-          nickname={loginUserData.nickName}
-          cakeList={cakeList}
-          historyId={historyId}
-        ></WishesHistoryMessageTreePageContainer>
-      </MainLayout>
-    </>
+    <MainLayout
+      Header={<Header leftMenu={<BackButton />} rightMenu={<MypageButton />} />}
+      isPrivate
+    >
+      <WishesHistoryMessageTreePageContainer
+        wishesHistory={wishesHistory}
+        nickname={loginUserData.nickName}
+        cakeList={cakeList}
+        historyId={historyId}
+      ></WishesHistoryMessageTreePageContainer>
+    </MainLayout>
   );
 }
