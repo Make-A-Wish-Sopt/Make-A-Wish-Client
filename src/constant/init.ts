@@ -2,6 +2,14 @@ import { PresentDataType, WishesLinkDataType } from '@/types/input';
 import { TransferInfoType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
 
+export const initialWishesPageModalState = {
+  wishesTitleInputModalState: false,
+  cakeMessageModalState: false,
+  shareLinkModalState: false,
+};
+
+export type WishesPageModalState = typeof initialWishesPageModalState;
+
 export const wishesLinkInputInit: WishesLinkDataType = {
   imageUrl: '',
   title: '',
