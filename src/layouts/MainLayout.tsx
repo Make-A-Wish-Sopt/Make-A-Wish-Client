@@ -1,6 +1,7 @@
 import ErrorPage from '@/app/error';
 import { isLoggedIn } from '@/utils/common/auth';
 import { PropsWithChildren } from 'react';
+import ModalPortal from './ModalPortal';
 
 export default async function MainLayout({
   Header,
@@ -11,7 +12,9 @@ export default async function MainLayout({
 
   // 로그인 필요한 페이지에서 비로그인 상태 체크
   if (isPrivate && !isUserLoggedIn) {
-    return <ErrorPage alertMessage="로그인이 필요합니다!" routePath="/" />;
+    return (
+      <ErrorPage alertMessage="로그인이 필요해요!" routePath="/" btnMessage="로그인 하러가기" />
+    );
   }
 
   return (

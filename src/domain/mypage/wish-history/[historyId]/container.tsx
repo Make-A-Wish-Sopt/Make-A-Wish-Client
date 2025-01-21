@@ -2,7 +2,7 @@
 
 import { getCakePresentMessage } from '@/api/cakes';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
-import { CakeTree, SaveCakeMessageModal } from '@/domain/wishes/component';
+import { CakeTree, SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
 import useToggle from '@/hooks/common/useToggle';
 import { WishesHistoryType } from '@/types/api/response';
 import { useEffect, useState } from 'react';

@@ -24,7 +24,7 @@ import {
 } from '@/constant/model/cakesTreeData';
 import PresentSuccess, { PresentSuccessCakeTree } from './done';
 import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
-import { SaveCakeMessageModal } from '@/domain/wishes/component';
+import { SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
 import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';

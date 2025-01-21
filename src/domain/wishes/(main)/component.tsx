@@ -2,13 +2,12 @@
 
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import Image from 'next/image';
-import { CakeDishTopRibbonImg } from '../../../public/assets/images';
+import { CakeDishTopRibbonImg } from '../../../../public/assets/images';
 import { PropsWithChildren, useRef } from 'react';
 import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
 import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import { presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
-import Button from '@/components/Common/Button';
 import * as htmlToImage from 'html-to-image';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { colors } from '@/styles/styles';
@@ -149,14 +148,6 @@ export function SaveCakeMessageModal({
         </Button>
       </div> */}
     </CloseTopModal>
-  );
-}
-
-export function MessageText({ children }: PropsWithChildren) {
-  return (
-    <div className="text-[24px] font-bitbit text-center text-white whitespace-pre-wrap">
-      <span className="transition-opacity duration-500 opacity-100 leading-tight">{children}</span>
-    </div>
   );
 }
 
