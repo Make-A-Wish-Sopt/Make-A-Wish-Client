@@ -1,15 +1,9 @@
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
 import { PropsWithChildren } from 'react';
-import PresentList, { PresentListSample } from '@/components/UI/PresentList';
-import {
-  PayCodeGuideStep1Img,
-  PayCodeGuideStep2Img,
-  PayCodeGuideStep3Img,
-  SharePageCakeImg,
-} from '../../../../public/assets/images';
+import { PresentListSample } from '@/components/UI/PresentList';
+import { SharePageCakeImg } from '../../../../public/assets/images';
 import { WishStatusType } from '@/types/wishesType';
-import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
 
 export function WishesCreateTitleText({ children }: PropsWithChildren) {
   return (

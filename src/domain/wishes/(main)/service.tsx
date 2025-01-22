@@ -1,21 +1,22 @@
 import { getCakesResult } from '@/api/cakes';
-import { CakesTreeMessage } from './container';
+import { CakePresentList } from './container';
 import {
   AdminMessageAlarmIcon,
   RecentMessageAlarmIcon,
 } from '@/components/Common/Icon/MessageAlarmIcon';
 import { defineCakeTree } from '@/utils/common/defineCakeTree';
 import { GuideText } from '@/components/UI/GuideText';
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
-export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
+export async function GetReceivedCakePresentList({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
-  const convertRecentCakeList = receivedCakeList.reverse();
-  const cakeList = defineCakeTree(convertRecentCakeList);
+  const cakeList = defineCakeTree(receivedCakeList.reverse()); //뒤집는 과정은 데이터가 가장 최신게 끝으로 가기 때문
+  const loginUserData = await getLoginUserCookiesData();
 
-  return <CakesTreeMessage cakeList={cakeList} />;
+  return <CakePresentList cakeList={cakeList} wishId={wishId} nickname={loginUserData?.nickName} />;
 }
 
-export async function GuideMessageToUser({
+export async function GetCakeCountThenGuideMessageToUser({
   wishId,
   nickName,
 }: {

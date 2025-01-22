@@ -6,6 +6,12 @@ export async function middleware(request: NextRequest) {
   // 현재 경로 확인
   const pathname = request.nextUrl.pathname;
 
+  const isFileRequest = pathname.match(/\.\w+$/);
+  // 경로에 확장자가 있다면 미들웨어 로직 스킵
+  if (isFileRequest) {
+    return NextResponse.next();
+  }
+
   // 쿠키에서 로그인 상태 확인
   const isLoggedIn = !!(await getLoginUserCookiesData());
 

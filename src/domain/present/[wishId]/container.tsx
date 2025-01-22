@@ -399,12 +399,14 @@ function PresentMessageModal({
   };
 
   return (
-    <SaveCakeMessageModal
-      modalState={modalState}
-      handleModalState={handleModalState}
-      receivedCakeMessageData={receivedCakeMessageData}
-      nickName={nickName}
-      isLoading={false}
-    />
+    <>
+      {/* <SaveCakeMessageModal
+        modalState={modalState}
+        handleModalState={handleModalState}
+        receivedCakeMessageData={receivedCakeMessageData}
+        nickName={nickName}
+        isLoading={false}
+      /> */}
+    </>
   );
 }

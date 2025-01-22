@@ -3,30 +3,30 @@
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import Image from 'next/image';
 import { CakeDishTopRibbonImg } from '../../../../public/assets/images';
-import { PropsWithChildren, useRef } from 'react';
-import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
 import { presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
 import * as htmlToImage from 'html-to-image';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { colors } from '@/styles/styles';
+import { getCakePresentMessage } from '@/api/cakes';
 
 export function SaveCakeMessageModal({
   modalState,
   handleModalState,
-  receivedCakeMessageData,
+  cakePresentMessage,
   nickName,
   isLoading,
   children,
 }: {
   modalState: boolean;
   handleModalState: () => void;
-  receivedCakeMessageData: ReceivedCakeTreeMessageDataType;
+  cakePresentMessage: ReceivedCakeTreeMessageDataType;
   nickName: string;
   isLoading: boolean;
 } & PropsWithChildren) {
-  const { name, cakeImg, isAdminMessage, message, giftMenuId } = receivedCakeMessageData;
+  const { name, cakeImg, isAdminMessage, message, giftMenuId } = cakePresentMessage;
 
   const captureRef = useRef(null);
 
@@ -151,33 +151,34 @@ export function SaveCakeMessageModal({
   );
 }
 
-export function WishesCreateTitleInputModalContainer({
-  isOpen,
-  handleState,
-  children,
-}: {
-  isOpen: boolean;
-  handleState: () => void;
-} & PropsWithChildren) {
-  return (
-    <CloseIconInModalWithVitaminCake
-      modalTitle="생일 잔치상 만들기"
-      isOpen={isOpen}
-      handleState={handleState}
-    >
-      {children}
-    </CloseIconInModalWithVitaminCake>
-  );
-}
-
 export function CakeTree({
   cakeList,
-  handleSelectCake,
+  readonly = false,
+  test,
 }: {
   cakeList: ReceivedCakeTreeMessageDataType[];
-  handleSelectCake?: (cake: ReceivedCakeTreeMessageDataType) => void;
+  readonly?: boolean;
+  test?: { wishId: string; handleModalState: () => void };
 }) {
   const numberOfRows = Math.max(4, Math.floor((cakeList.length - 1) / 3) + 1);
+
+  const [selectedCake, setSelectedCake] = useState<ReceivedCakeTreeMessageDataType | null>(null);
+
+  useEffect(() => {
+    if (readonly) return;
+
+    if (test && selectedCake.presentId > 0) {
+      getCakePresentMessage(test.wishId, selectedCake.presentId);
+    }
+  }, [selectedCake]);
+
+  function handleSelectCake(cake: ReceivedCakeTreeMessageDataType) {
+    if (!readonly) {
+      setSelectedCake({
+        ...cake,
+      });
+    }
+  }
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -211,6 +212,7 @@ export function CakeTree({
             <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
               {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake, index) => (
                 <li
+                  id="cake-item"
                   className="relative z-10 flex flex-col items-center w-100  aspect-square  transform translate-y-[-30px] justify-self-center"
                   key={`${cake.name}${cake.cakeId} ${index}`}
                   onClick={() => {

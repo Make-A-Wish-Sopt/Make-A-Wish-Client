@@ -1,7 +1,10 @@
 import { getLoginUserCookiesData, LoginUserDataType } from '@/utils/common/cookies';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { updateAccessToken } from '../auth';
 import { DefaultResponseType } from '@/types/api/response';
+import { getCookie, setCookie } from 'cookies-next/client';
+import { cookies } from 'next/headers';
+import { LOGIN_USER_COOKIE_KEY } from '@/constant/cookies';
 
 let tokenRefreshFlag = false;
 
@@ -22,14 +25,14 @@ client.interceptors.request.use(
       return config;
     }
 
+    if (config.headers.Authorization) {
+      return config;
+    }
+
     const loginUserCookiesData = await getLoginUserCookiesData();
 
     if (loginUserCookiesData) {
       config.headers['Authorization'] = `Bearer ${loginUserCookiesData.accessToken}`;
-    }
-
-    if (config.headers.Authorization) {
-      return config;
     }
 
     return config;
@@ -54,41 +57,16 @@ client.interceptors.response.use(
       const responseData = error.response.data as DefaultResponseType;
 
       if (responseData.message === '유효하지 않은 토큰입니다.') {
-        await fetch('/api/cookies', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
         const data = await updateAccessToken();
 
         if (!data) {
-          return; //에러
+          //재로그인 시키기
+          return;
         }
 
-        const { accessToken, refreshToken } = data;
+        const { accessToken } = data;
 
-        const loginUserCookiesData = await getLoginUserCookiesData();
-
-        const newCookiesData = {
-          ...loginUserCookiesData,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        };
-
-        const response = await fetch('http://localhost:8080/api/cookies', {
-          method: 'POST',
-          body: JSON.stringify(newCookiesData),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        const newLoginUserData: DefaultResponseType<LoginUserDataType> = await response.json();
-
-        error.config.headers['Authorization'] = `Bearer ${newLoginUserData.data.accessToken}`;
+        error.config.headers['Authorization'] = `Bearer ${accessToken}`;
 
         tokenRefreshFlag = true;
 

@@ -2,7 +2,7 @@
 
 import { getCakePresentMessage } from '@/api/cakes';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
-import { CakeTree, SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
+import { SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
 import useToggle from '@/hooks/common/useToggle';
 import { WishesHistoryType } from '@/types/api/response';
 import { useEffect, useState } from 'react';
@@ -73,7 +73,7 @@ export default function WishesHistoryMessageTreePageContainer({
       <span className="mt-30 font-galmuri text-[16px] text-gray1">{`${startAt.split('T')[0]} ~ ${endAt.split('T')[0]}`}</span>
       <span className="font-bitbit text-[24px] text-white mt-10 whitespace-pre-line text-center">{`${nickname}님의 생일잔치에\n도착했던 케이크들이에요!`}</span>
 
-      <CakeTree cakeList={cakeList} handleSelectCake={handleSelectCake} />
+      {/* <CakeTree cakeList={cakeList} handleSelectCake={handleSelectCake} />
 
       {receivedCakeMessageData && (
         <SaveCakeMessageModal
@@ -83,7 +83,7 @@ export default function WishesHistoryMessageTreePageContainer({
           nickName={nickname}
           isLoading={isLoading.state}
         />
-      )}
+      )} */}
     </section>
   );
 }
