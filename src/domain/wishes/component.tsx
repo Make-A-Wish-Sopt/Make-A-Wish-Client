@@ -66,7 +66,7 @@ export function SaveCakeMessageModal({
     <CloseTopModal isOpen={modalState} handleState={handleModalState} bgColor={'background'}>
       <div className={`flex flex-col items-center w-full h-416 font-galmuri`}>
         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
-          {`${isLoading ? 'ㅇㅇㅇ' : name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}
+          {`${isLoading ? 'ㅇㅇㅇ' : name}님이\n${nickName}님에게 남긴 편지에요!`}
         </span>
 
         <div
@@ -104,50 +104,36 @@ export function SaveCakeMessageModal({
               </span>
 
               <div
-                className={`flex justify-between items-center w-full h-54 p-12 rounded-xl border  font-bitbit text-[16px] ${
+                className={`flex justify-center items-center w-full h-54 p-12 rounded-xl border  font-bitbit text-[16px] ${
                   isAdminMessage ? 'border-dark_blue' : 'border-main_blue'
                 }`}
               >
-                <div className="font-galmuri w-150">선물한 항목</div>
-                <span className="flex justify-end w-full ">
-                  {isAdminMessage ? (
-                    giftMenuId
-                  ) : giftMenuId === 0 ? (
-                    <>{'정성 담은 편지'}</>
-                  ) : (
-                    <>
-                      <div className="relative flex flex-row-reverse  gap-4  items-center font-bitbit text-[16px] text-white text-right ">
-                        <span className="w-auto whitespace-pre-wrap leading-tight">
-                          {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
-                            presentListObject[Number(giftMenuId)].price.toString(),
-                          )}원`}
-                        </span>
-                        <Image
-                          src={presentListObject[Number(giftMenuId)].image}
-                          alt="선물한 선물 이미지"
-                          height={43}
-                        />
-                      </div>
-                    </>
-                  )}
-                </span>
+                {isAdminMessage ? (
+                  giftMenuId
+                ) : giftMenuId === 0 ? (
+                  <p>{'정성 담은 편지'}</p>
+                ) : (
+                  <>
+                    <div className="flex gap-4  items-center font-bitbit text-[16px] text-white text-right ">
+                      <Image
+                        src={presentListObject[Number(giftMenuId)].image}
+                        alt="선물한 선물 이미지"
+                        height={43}
+                      />
+                      <p>
+                        {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
+                          presentListObject[Number(giftMenuId)].price.toString(),
+                        )}원`}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </>
           )}
         </div>
       </div>
       {children}
-
-      {/* <div className="pb-58">
-        <Button
-          onClick={() => {
-            handleSaveImage();
-          }}
-          style={{ marginTop: '2rem' }}
-        >
-          이미지 저장하기
-        </Button>
-      </div> */}
     </CloseTopModal>
   );
 }

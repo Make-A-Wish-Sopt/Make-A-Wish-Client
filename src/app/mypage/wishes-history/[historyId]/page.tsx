@@ -16,8 +16,7 @@ export default async function WishesHistoryMessageTreePage({
   const wishesHistory = await getSingleWishInfo(historyId);
   const loginUserData = await getLoginUserCookiesData();
   const receivedCakeList = await getCakesResult(historyId);
-  const convertRecentCakeList = receivedCakeList.reverse();
-  const cakeList = defineCakeTree(convertRecentCakeList);
+  const cakeList = defineCakeTree(receivedCakeList);
 
   return (
     <>

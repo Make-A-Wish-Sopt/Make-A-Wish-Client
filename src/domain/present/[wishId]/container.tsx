@@ -113,7 +113,7 @@ export default function GivePresentPageContainer({
     if (wantsGift && !messageOnlyOption) {
       handleNextToPaymentStep();
     } else {
-      GivePresent();
+      givePresent();
       handleRouter(`/present/${wishId}/?presentStep=done&avatarCakeId=${selectedCakeId}`);
     }
   }
@@ -134,7 +134,7 @@ export default function GivePresentPageContainer({
     return true;
   }
 
-  function GivePresent() {
+  function givePresent() {
     try {
       const data = methods.watch();
       postPublicCakes({ ...data, wishId: wishId });
@@ -165,14 +165,6 @@ export default function GivePresentPageContainer({
       await handleAccountCopy(convertMoneyText(presentPrice));
       window.open(kakaoPayCode);
     }
-    GivePresent();
-  }
-
-  function handleBankTransfer() {
-    if (!selectedId) return;
-
-    GivePresent();
-    handleDeepLink(selectedId);
   }
 
   const handleDeepLink = (paymentId: number) => {
@@ -257,6 +249,7 @@ export default function GivePresentPageContainer({
                       <KakaopaySubmitButton
                         handleKakaoPayment={handleKakaoPayment}
                         handleNextToDoneStep={handleNextToDoneStep}
+                        givePresent={givePresent}
                       />
                     </KakaopayPayment>
                   </>
@@ -272,7 +265,7 @@ export default function GivePresentPageContainer({
                       handleSelectOne={handleSelectOne}
                     />
                     <BankTransferSubmitButton
-                      handleBankTransfer={handleBankTransfer}
+                      givePresent={givePresent}
                       handleNextToDoneStep={handleNextToDoneStep}
                     />
                   </>
@@ -315,28 +308,23 @@ export default function GivePresentPageContainer({
 }
 
 function BankTransferSubmitButton({
-  handleBankTransfer,
+  givePresent,
   handleNextToDoneStep,
 }: {
-  handleBankTransfer: () => void;
+  givePresent: () => void;
   handleNextToDoneStep: () => void;
 }) {
-  const firstClick = useToggle(false);
   return (
     <>
-      {firstClick.state ? (
-        <Button onClick={handleNextToDoneStep}>송금 완료했어요!</Button>
-      ) : (
-        <Button
-          onClick={() => {
-            firstClick.changeState(true);
-            handleBankTransfer();
-          }}
-          style={{ marginBottom: '5.8rem' }}
-        >
-          {'송금하고, 편지 확인하기'}
-        </Button>
-      )}
+      <Button
+        onClick={() => {
+          givePresent();
+          handleNextToDoneStep();
+        }}
+        style={{ marginBottom: '5.8rem' }}
+      >
+        송금 완료했다면, 편지확인하기
+      </Button>
     </>
   );
 }
@@ -344,16 +332,25 @@ function BankTransferSubmitButton({
 function KakaopaySubmitButton({
   handleKakaoPayment,
   handleNextToDoneStep,
+  givePresent,
 }: {
   handleKakaoPayment: () => void;
   handleNextToDoneStep: () => void;
+  givePresent: () => void;
 }) {
   const firstClick = useToggle(false);
 
   return (
     <FixedBottomButtonWrapper>
       {firstClick.state ? (
-        <Button onClick={handleNextToDoneStep}>송금 완료했어요!</Button>
+        <Button
+          onClick={() => {
+            givePresent();
+            handleNextToDoneStep();
+          }}
+        >
+          송금 완료했어요!
+        </Button>
       ) : (
         <Button
           onClick={() => {

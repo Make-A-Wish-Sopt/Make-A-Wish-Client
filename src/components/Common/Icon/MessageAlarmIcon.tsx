@@ -36,10 +36,7 @@ export function AccountCopySpeechBubbleIcon() {
     <Image
       src={AccountCopySpeechBubbleIc}
       alt="계좌번호 복사 아이콘"
-      className="animate-bounce absolute -top-[50px]  z-10"
-      style={{
-        animation: 'bounce 1.3s ease-in-out infinite',
-      }}
+      className="absolute -top-[50px]  z-10"
     />
   );
 }

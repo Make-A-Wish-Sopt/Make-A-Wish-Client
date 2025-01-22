@@ -9,8 +9,7 @@ import { defineCakeTree } from '@/utils/common/defineCakeTree';
 
 export async function ReceivedCakePresentList({ wishId }: { wishId: string }) {
   const receivedCakeList = await getCakesResult(wishId);
-  const convertRecentCakeList = receivedCakeList.reverse();
-  const cakeList = defineCakeTree(convertRecentCakeList);
+  const cakeList = defineCakeTree(receivedCakeList);
 
   return <CakesTreeMessage cakeList={cakeList} />;
 }

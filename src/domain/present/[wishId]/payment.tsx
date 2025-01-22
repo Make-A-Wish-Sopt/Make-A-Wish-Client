@@ -61,10 +61,7 @@ export default function Payment({
           `}</style>
         </div>
 
-        <SelectPayment
-          isSelected={isSelected}
-          handleSelectOne={handleSelectOne}
-        />
+        <SelectPayment />
       </section>
     </>
   );
