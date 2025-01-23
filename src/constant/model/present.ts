@@ -61,6 +61,15 @@ presetListDataMap.set(6, {
   image: PresentItem6Img,
 });
 
+export const presentKakaopayCodePrice = {
+  1: '99209248',
+  2: '135678780',
+  3: '22f605609',
+  4: '28d207360',
+  5: '329606546',
+  6: '404204275',
+};
+
 export const presentListArray = Array.from(presetListDataMap.entries()).map(([id, value]) => ({
   id,
   ...value,

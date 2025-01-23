@@ -28,7 +28,7 @@ import { SaveCakeMessageModal } from '@/domain/wishes/component';
 import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
 import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import { presentListObject } from '@/constant/model/present';
+import { presentKakaopayCodePrice, presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
 import useSelectItem from '@/hooks/common/useSelectItem';
 import { paymentListObject } from '@/constant/bankList';
@@ -153,49 +153,11 @@ export default function GivePresentPageContainer({
     handleRouter(`/present/${wishId}?presentStep=done&avatarCakeId=${selectedCakeId}`);
   }
 
-  async function handleAccountCopy(text: string) {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (error) {}
-  }
-
   async function handleKakaoPayment() {
     if (forPayCode) {
-      const presentPrice = presentListObject[giftMenuId].price.toString();
-      await handleAccountCopy(convertMoneyText(presentPrice));
-      window.open(kakaoPayCode);
+      window.open(`${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`);
     }
   }
-
-  const handleDeepLink = (paymentId: number) => {
-    if (!paymentId) return;
-
-    const ua = navigator.userAgent.toLowerCase();
-
-    if (paymentListObject[paymentId].name === '토스뱅크') {
-      window.open('supertoss://toss/pay');
-
-      setTimeout(() => {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=viva.republica.toss'
-            : 'https://apps.apple.com/app/id839333328',
-        );
-      }, 2000);
-    }
-
-    if (paymentListObject[paymentId].name === '카카오뱅크') {
-      window.open('kakaobank://');
-
-      setTimeout(() => {
-        window.open(
-          ua.indexOf('android') > -1
-            ? 'https://play.google.com/store/apps/details?id=com.kakaobank.channel'
-            : 'https://apps.apple.com/app/id1258016944',
-        );
-      }, 2000);
-    }
-  };
 
   return (
     <>
