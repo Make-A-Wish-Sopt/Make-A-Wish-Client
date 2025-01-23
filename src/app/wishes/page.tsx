@@ -16,7 +16,8 @@ import { GuideText } from '@/components/UI/GuideText';
 import { DayCount } from '@/domain/wishes/(main)/content';
 
 export default async function WishesPage() {
-  const progressWishesData = await getMainProgressWishesData();
+  // const progressWishesData = await getMainProgressWishesData();
+  const progressWishesData = undefined;
   const loginUserData = await getLoginUserCookiesData();
   const isProgressWishes = !!progressWishesData;
 
