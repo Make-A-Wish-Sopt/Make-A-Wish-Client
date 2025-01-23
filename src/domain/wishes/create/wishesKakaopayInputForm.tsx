@@ -40,22 +40,25 @@ export default function WishesKakaopayInputForm({
   const { isDirty, errors } = formState;
   const { kakaoPayCode } = watch();
   const isInitialApiCall = useToggle(true);
-  const kakaoPayValidator = wishesAccountDataResolver.pick(['kakaoPayCode']);
 
   //데이터베이스에서 가져온 정보들이 유효한지 체크 후 초기화
   useEffect(() => {
     const fetchData = async () => {
+      const response = await getUserAccount();
       try {
-        const response = await getUserAccount();
         if (response.transferInfo) {
-          // 📌 Yup 유효성 검사 실행
+          reset({ ...response.transferInfo });
+
+          const kakaoPayValidator = wishesAccountDataResolver.pick(['kakaoPayCode']);
+
           await kakaoPayValidator.validate({ kakaoPayCode: response.transferInfo.kakaoPayCode });
           await handleCheckKakaoPayCode(response.transferInfo.kakaoPayCode);
-
-          // ✅ 유효성 검사를 통과하면 reset 실행
-          reset({ ...response.transferInfo });
         }
       } catch (error) {
+        reset({
+          ...response.transferInfo,
+          kakaoPayCode: '',
+        });
         console.error('초기 데이터 유효성 검사 실패:', error);
       }
     };

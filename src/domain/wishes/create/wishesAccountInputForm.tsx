@@ -53,20 +53,30 @@ export default function WishesAccountInputForm({
 
   useEffect(() => {
     const fetchData = async () => {
+      const response = await getUserAccount();
       try {
-        const response = await getUserAccount();
         if (response.transferInfo) {
           // 📌 Yup 유효성 검사 실행
+          reset({
+            ...response.transferInfo,
+          });
           const accountValidator = wishesAccountDataResolver.pick(['accountInfo']);
 
           await accountValidator.validate({ accountInfo: response.transferInfo.accountInfo });
           isAccountValid.changeState(true);
 
           // ✅ 유효성 검사를 통과하면 reset 실행
-          reset({ ...response.transferInfo });
         }
       } catch (error) {
         isAccountValid.changeState(false);
+        reset({
+          ...response.transferInfo,
+          accountInfo: {
+            account: '',
+            bank: '',
+            name: '',
+          },
+        });
       }
     };
 
