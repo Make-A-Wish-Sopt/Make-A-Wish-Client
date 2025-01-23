@@ -32,5 +32,5 @@ export { default as UnSelectRadioIc } from './unSelectRadioIc.svg';
 export { default as MainBlueArrowIc } from './mainBlueArrowIc.svg';
 export { default as HelpIc } from './helpIc.svg';
 export { default as AdminPresentMessageIc } from './AdminPresentMessageIc.svg';
-export { default as RecentPresentMessageIc } from './RecentPresentMessageIc.svg';
+export { default as RecentPresentMessageIc } from './RecentPresentMessageIc.png';
 export { default as AccountCopySpeechBubbleIc } from './AccountCopySpeechBubbleIc.svg';

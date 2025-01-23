@@ -10,6 +10,7 @@ export function RecentMessageAlarmIcon() {
     <Image
       src={RecentPresentMessageIc}
       alt="메세지 도착 아이콘"
+      width={93}
       className="animate-bounce absolute ml-38 mt-20 z-10"
       style={{
         animation: 'bounce 1.3s ease-in-out infinite',
