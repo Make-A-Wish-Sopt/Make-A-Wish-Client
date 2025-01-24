@@ -1,8 +1,17 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
 import { RoutePathType, useRouters } from './useRouters';
 import { usePathname } from 'next/navigation';
 
 export default function useFormSteps<T extends (string | { [key: string]: string })[]>(stepArr: T) {
+  interface StepProps {
+    name: string;
+    children: ReactNode;
+  }
+
+  interface FunnelProps {
+    children: Array<ReactElement<StepProps>>;
+  }
+
   const pathname = usePathname();
   const { handleRouter } = useRouters();
 
@@ -40,28 +49,22 @@ export default function useFormSteps<T extends (string | { [key: string]: string
     return false;
   }
 
-  function nextSpecificStep(): { [key: string]: string } {
-    if (!isStepLast())
-      if (typeof stepArr[step + 1] !== 'string') {
-        return stepArr[step + 1] as { [key: string]: string };
-      }
-  }
-
-  function handleSameLevelNext(key: keyof ReturnType<typeof nextSpecificStep>, query?: string) {
+  function handleSameLevelNext<T>(key: keyof T, query?: string) {
     if (isStepLast()) return;
     if (isNextStepIsSingleStep()) return;
 
-    const test = stepArr[step + 1] as { [key: string]: string };
+    const test = stepArr[step + 1] as T;
     const path = `${pathname}?step=${test[key]}${query ? `&${query}` : ''}` as RoutePathType;
     handleRouter(path);
+
     stepUp();
   }
 
-  function handleSameLevelPrev(key: keyof ReturnType<typeof nextSpecificStep>, query?: string) {
+  function handleSameLevelPrev<T>(key: keyof T, query?: string) {
     if (isStepFirst()) return;
     if (isNextStepIsSingleStep()) return;
 
-    const test = stepArr[step - 1] as { [key: string]: string };
+    const test = stepArr[step - 1] as T;
     const path = `${pathname}?step=${test[key]}${query ? `&${query}` : ''}` as RoutePathType;
     handleRouter(path);
     stepDown();
@@ -87,22 +90,23 @@ export default function useFormSteps<T extends (string | { [key: string]: string
     stepDown();
   }
 
-  function TestTest({ children }: PropsWithChildren) {
-    return (
-      <>
-        <h1 className="text-white text-[16px] font-bitbit">HELLO WORLD</h1>
-        {children}
-      </>
-    );
-  }
+  const Step = (props: StepProps): ReactElement => {
+    return <>{props.children}</>;
+  };
+
+  const Funnel = ({ children }: FunnelProps) => {
+    const targetStep = children.find((childStep) => childStep.props.name === stepArr[step]);
+
+    return <>{targetStep}</>;
+  };
 
   return {
     handleNextStepRouter,
     handlePrevStepRouter,
     currentStep,
-    TestTest,
     handleSameLevelNext,
     handleSameLevelPrev,
-    nextSpecificStep,
+    Funnel,
+    Step,
   };
 }

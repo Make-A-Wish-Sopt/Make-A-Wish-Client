@@ -4,22 +4,31 @@ import Button from '@/components/Common/Button';
 import useFormSteps from '@/hooks/common/useStep';
 
 export default function TestComponent() {
-  const testStep = ['link', 'select', { kakaopay: 'kakaopay', account: 'account' }, 'done'];
+  const deepStep = {
+    kakaopay: 'kakaopay',
+    account: 'account',
+  } as const;
+
+  type DeepStepType = typeof deepStep;
+
+  const testStep = ['link', 'select', deepStep, 'done'];
+
   type TestStepType = typeof testStep;
+
   const {
     currentStep,
     handleNextStepRouter,
     handlePrevStepRouter,
-    TestTest,
     handleSameLevelNext,
     handleSameLevelPrev,
-    nextSpecificStep,
+    Funnel,
+    Step,
   } = useFormSteps<TestStepType>(testStep);
 
-  console.log('specific', nextSpecificStep());
+  console.log(currentStep());
 
   return (
-    <TestTest>
+    <>
       <div className="flex gap-5">
         <Button onClick={() => handlePrevStepRouter()}>이전 단계</Button>
         <Button onClick={() => handleNextStepRouter()}>다음 단계</Button>
@@ -28,19 +37,37 @@ export default function TestComponent() {
       <div className="flex gap-5 mt-30">
         <Button
           onClick={() => {
-            handleSameLevelPrev(nextSpecificStep());
+            handleSameLevelPrev<DeepStepType>('account');
           }}
         >
           구체적 이전단계
         </Button>
         <Button
           onClick={() => {
-            handleSameLevelNext('step1');
+            handleSameLevelNext<DeepStepType>('account');
           }}
         >
           구체적 다음단계
         </Button>
       </div>
-    </TestTest>
+
+      <Funnel>
+        <Step name="link">
+          <h1 className="text-white text-[16px] font-bitbit">링크 단계입니다!</h1>
+        </Step>
+
+        <Step name="select">
+          <h1 className="text-white text-[16px] font-bitbit">선택 단계입니다!</h1>
+        </Step>
+
+        <Step name={''}>
+          <h1 className="text-white text-[16px] font-bitbit">은행 단계입니다!</h1>
+        </Step>
+
+        <Step name="done">
+          <h1 className="text-white text-[16px] font-bitbit">완료 단계입니다!</h1>
+        </Step>
+      </Funnel>
+    </>
   );
 }
