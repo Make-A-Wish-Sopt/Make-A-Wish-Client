@@ -11,6 +11,7 @@ import { convertEncode } from '@/utils/common/convert';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import { getCakePresentMessage } from '@/api/cakes';
+import { WishStatusType } from '@/types/wishesType';
 
 type WishesPageGlobalStateType = {
   wishTitle: string;
@@ -41,7 +42,14 @@ export default function WishesPageContainer({ children }: PropsWithChildren) {
   );
 }
 
-export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress: boolean }) {
+export function WishesPageFixedBottomButton({
+  isWishProgress,
+  disabled = false,
+  children,
+}: {
+  isWishProgress: boolean;
+  disabled?: boolean;
+} & PropsWithChildren) {
   const { setValue, watch } = useFormContext<WishesPageGlobalStateType>();
 
   function handleShareLinkModalState() {
@@ -67,8 +75,8 @@ export function WishesPageFixedBottomButton({ isWishProgress }: { isWishProgress
   return (
     <>
       <FixedBottomButtonWrapper>
-        <Button onClick={handleButtonClick}>
-          {isWishProgress ? '생일잔치 링크 공유하기' : '생일잔치 링크 생성하기'}
+        <Button onClick={handleButtonClick} disabled={disabled}>
+          {children}
         </Button>
       </FixedBottomButtonWrapper>
     </>

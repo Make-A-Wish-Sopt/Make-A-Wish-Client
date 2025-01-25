@@ -1,8 +1,12 @@
-import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
+import {
+  DefaultResponseType,
+  PostPublicCakesResponseType,
+  PublicWishesDataResponseType,
+} from '@/types/api/response';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 import { PresentDataResolverType } from '@/validation/present.validate';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export const getPublicWishes = async (wishId: string) => {
   try {
@@ -13,7 +17,10 @@ export const getPublicWishes = async (wishId: string) => {
     );
 
     return data.data.data;
-  } catch (error) {}
+  } catch (error) {
+    const response = error?.response.data as DefaultResponseType;
+    if (response.message === '이미 종료된 소원이에요!') return 'done';
+  }
 };
 
 //케이크 아이디 수정해야될거 같음

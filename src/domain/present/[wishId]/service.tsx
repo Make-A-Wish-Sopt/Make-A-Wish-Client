@@ -2,9 +2,14 @@ import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { getPublicWishes } from '@/api/public';
+import ErrorPage from '@/app/error';
 
 export async function MessageFromWisheMaker({ wishId }: { wishId: string }) {
   const publicWishesData = await getPublicWishes(wishId);
+
+  if (publicWishesData === 'done') {
+    return <ErrorPage alertMessage={`이미 종료된 생일잔치에요!`} />;
+  }
 
   return (
     <>

@@ -20,8 +20,12 @@ export default async function GivePresentPage({
 }) {
   const publicWishesData = await getPublicWishes(params.wishId);
 
+  if (publicWishesData === 'done') {
+    return <ErrorPage alertMessage={`이미 종료된 생일잔치에요!`} />;
+  }
+
   if (!publicWishesData) {
-    return <ErrorPage alertMessage="해당 소원은 존재하지 않아요!" />;
+    return <ErrorPage alertMessage="해당 생일잔치는 존재하지 않아요!" />;
   }
 
   return (

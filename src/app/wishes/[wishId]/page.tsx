@@ -9,8 +9,12 @@ export default async function WishesIdPage({ params }: { params: { wishId: strin
   const { wishId } = params;
   const publicProgressWishes = await getPublicWishes(wishId);
 
+  if (publicProgressWishes === 'done') {
+    return <ErrorPage alertMessage={`이미 종료된 생일잔치에요!`} />;
+  }
+
   if (!publicProgressWishes) {
-    return <ErrorPage alertMessage={`소원 시작 전 or 종료되었거나, 존재하지 않은 소원이에요!`} />;
+    return <ErrorPage alertMessage={`존재하지 않은 생일잔치에요!`} />;
   }
 
   return (
