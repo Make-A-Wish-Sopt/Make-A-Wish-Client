@@ -28,61 +28,96 @@ export default function useFormSteps(stepArr: StepsType) {
     return step.value;
   }
 
-  function next() {
-    if (
-      step &&
-      step.next &&
-      typeof step.next.value === 'string' &&
-      step.next.depth - step.depth === 1
-    ) {
+  function nextTest<T = string>(queryKey: T) {
+    if (!step || !step.next) return;
+
+    if (typeof step.next.value === 'string') {
       setStep(step.next);
+      return;
+    }
+
+    if (queryKey) {
+      setStep({
+        ...step.next,
+        value: Object.keys(step.next.value[0])[0],
+      });
+    } else {
+      console.log('세부적인 스텝을 입력해주세요!');
     }
   }
 
-  function prev() {
-    if (step && step.prev && typeof step.prev.value === 'string' && step.depth - step.prev.depth === 1) {
+  function next<T = string>(queryKey?: T) {
+    if (!step || !step.next) return;
+
+    if (typeof step.next.value === 'string') {
+      setStep(step.next);
+      return;
+    }
+
+    if (queryKey) {
+      setStep({
+        ...step.next,
+        value: Object.keys(step.next.value[0])[0],
+      });
+    } else {
+      console.log('세부적인 스텝을 입력해주세요!');
+    }
+  }
+
+  function prev(queryKey?: string) {
+    if (!step || !step.prev) return;
+
+    if (typeof step.prev.value === 'string') {
       setStep(step.prev);
+      return;
+    }
+
+    if (queryKey) {
+      setStep({
+        ...step.prev,
+        value: Object.keys(step.prev.value[0])[0],
+      });
+    } else {
+      console.log('세부적인 스텝을 입력해주세요!');
     }
   }
 
-  function nextSteps<T extends { [key: string]: string[] }, K extends keyof T>(
-    stepKey: K,
-    stepQuery: T[K][number],
-  ) {
-    if (step && step.next && typeof step.next.value !== 'string') {
-      if (Object.keys(step.next.value)[0] === stepKey && step.next.depth - step.depth === 1) {
-        setStep({
-          ...step.next,
-          value: stepKey as string,
-        });
-      } else {
-        console.log('Check step align!');
-      }
-    }
-  }
+  // function nextSteps<T extends { [key: string]: string[] }, K extends keyof T>(
+  //   stepKey: K,
+  //   stepQuery: T[K][number],
+  // ) {
+  //   if (step && step.next && typeof step.next.value !== 'string') {
+  //     if (Object.keys(step.next.value)[0] === stepKey && step.next.depth - step.depth === 1) {
+  //       setStep({
+  //         ...step.next,
+  //         value: stepKey as string,
+  //       });
+  //     } else {
+  //       console.log('Check step align!');
+  //     }
+  //   }
+  // }
 
-  function prevSteps<T extends { [key: string]: string[] }, K extends keyof T>(
-    stepKey: K,
-    stepQuery: T[K][number],
-  ) {
-    if (step && step.prev && typeof step.prev.value !== 'string') {
-      if (Object.keys(step.prev.value)[0] === stepKey && step.depth - step.prev.depth === 1) {
-        setStep({
-          ...step.prev,
-          value: stepKey as string,
-        });
-      } else {
-        console.log('Check step align!');
-      }
-    }
-  }
+  // function prevSteps<T extends { [key: string]: string[] }, K extends keyof T>(
+  //   stepKey: K,
+  //   stepQuery: T[K][number],
+  // ) {
+  //   if (step && step.prev && typeof step.prev.value !== 'string') {
+  //     if (Object.keys(step.prev.value)[0] === stepKey && step.depth - step.prev.depth === 1) {
+  //       setStep({
+  //         ...step.prev,
+  //         value: stepKey as string,
+  //       });
+  //     } else {
+  //       console.log('Check step align!');
+  //     }
+  //   }
+  // }
 
   return {
     currentStep,
     next,
     prev,
-    nextSteps,
-    prevSteps,
   };
 }
 
