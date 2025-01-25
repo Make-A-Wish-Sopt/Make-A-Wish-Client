@@ -22,14 +22,14 @@ client.interceptors.request.use(
       return config;
     }
 
-    if (config.headers.Authorization) {
-      return config;
-    }
-
     const loginUserCookiesData = await getLoginUserCookiesData();
 
     if (loginUserCookiesData) {
       config.headers['Authorization'] = `Bearer ${loginUserCookiesData.accessToken}`;
+    }
+
+    if (config.headers.Authorization) {
+      return config;
     }
 
     return config;
@@ -77,7 +77,7 @@ client.interceptors.response.use(
           refreshToken: refreshToken,
         };
 
-        const response = await fetch('http://localhost:8080/api/cookies', {
+        const response = await fetch('/api/cookies', {
           method: 'POST',
           body: JSON.stringify(newCookiesData),
           headers: {

@@ -12,6 +12,7 @@ import Button from '@/components/Common/Button';
 import * as htmlToImage from 'html-to-image';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { colors } from '@/styles/styles';
+import { GiftBoxIc } from '../../../public/assets/icons';
 
 export function SaveCakeMessageModal({
   modalState,
@@ -104,21 +105,27 @@ export function SaveCakeMessageModal({
               </span>
 
               <div
-                className={`flex justify-center items-center w-full h-54 p-12 rounded-xl border  font-bitbit text-[16px] ${
-                  isAdminMessage ? 'border-dark_blue' : 'border-main_blue'
-                }`}
+                className={`flex justify-center items-center w-full h-54 p-12 rounded-xl   font-bitbit text-[16px] ${
+                  isAdminMessage ? 'bg-light_blue' : 'bg-black'
+                } bg-opacity-50`}
               >
-                {isAdminMessage ? (
-                  giftMenuId
-                ) : giftMenuId === 0 ? (
-                  <p>{'정성 담은 편지'}</p>
+                {isAdminMessage || giftMenuId === 0 ? (
+                  <div className="flex gap-4  items-center font-bitbit text-[16px]">
+                    <Image src={GiftBoxIc} alt="선물박스 아이콘" />
+                    <p>선물 | </p>
+                    <p>{'정성 담은 편지'}</p>
+                  </div>
                 ) : (
                   <>
-                    <div className="flex gap-4  items-center font-bitbit text-[16px] text-white text-right ">
+                    <div className="flex gap-4  items-center font-bitbit text-[16px] text-white ">
+                      <div className="flex align-center h-full gap-4">
+                        <Image src={GiftBoxIc} alt="선물박스 아이콘" />
+                        <p>선물 | </p>
+                      </div>
                       <Image
                         src={presentListObject[Number(giftMenuId)].image}
                         alt="선물한 선물 이미지"
-                        height={43}
+                        height={30}
                       />
                       <p>
                         {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
