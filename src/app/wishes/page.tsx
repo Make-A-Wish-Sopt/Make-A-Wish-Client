@@ -61,7 +61,7 @@ export default async function WishesPage() {
           >
             {!!progressWishesData
               ? progressWishesData?.status === 'BEFORE'
-                ? `${progressWishesData?.dayCount}일 뒤에 생일잔치 오픈!`
+                ? `${progressWishesData?.dayCount + 1}일 뒤에 생일잔치 오픈!`
                 : '생일잔치 링크 공유하기'
               : '생일잔치 링크 생성하기'}
           </WishesPageFixedBottomButton>

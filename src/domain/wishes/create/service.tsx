@@ -13,11 +13,28 @@ export async function WishesCreateSuccess() {
   }
   const { dayCount, status } = progressWishesData;
 
-  const dDay = status === 'WHILE' ? dayCount : Math.abs(dayCount - 7);
+  // const dDay = status === 'WHILE' ? dayCount : Math.abs(dayCount - 7);
+
+  const dDayMessage =
+    status === 'WHILE'
+      ? '생일 축하 받으로 가볼까요?'
+      : status === 'BEFORE'
+        ? `${dayCount + 1}일 뒤부터 링크를 공유할 수 있어요`
+        : '';
+
+  const shareBtnText =
+    progressWishesData?.status === 'BEFORE'
+      ? `${progressWishesData?.dayCount + 1}일 뒤에 생일잔치 오픈!`
+      : '생일잔치에 친구 초대하기';
 
   return (
-    <WishesCreateDone progressWishesData={progressWishesData} nickName={nickName}>
-      <WishesCreateDoneMessage nickName={nickName} status={status} dDay={dDay} />;
+    <WishesCreateDone
+      progressWishesData={progressWishesData}
+      nickName={nickName}
+      disabled={status === 'BEFORE'}
+      shareBtnText={shareBtnText}
+    >
+      <WishesCreateDoneMessage nickName={nickName} dDayMessage={dDayMessage} />;
     </WishesCreateDone>
   );
 }

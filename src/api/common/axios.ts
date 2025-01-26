@@ -22,14 +22,14 @@ client.interceptors.request.use(
       return config;
     }
 
+    if (config.headers.Authorization) {
+      return config;
+    }
+
     const loginUserCookiesData = await getLoginUserCookiesData();
 
     if (loginUserCookiesData) {
       config.headers['Authorization'] = `Bearer ${loginUserCookiesData.accessToken}`;
-    }
-
-    if (config.headers.Authorization) {
-      return config;
     }
 
     return config;
@@ -54,12 +54,12 @@ client.interceptors.response.use(
       const responseData = error.response.data as DefaultResponseType;
 
       if (responseData.message === '유효하지 않은 토큰입니다.') {
-        await fetch('/api/cookies', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        // await fetch('/api/cookies', {
+        //   method: 'DELETE',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
 
         const data = await updateAccessToken();
 
@@ -77,18 +77,18 @@ client.interceptors.response.use(
           refreshToken: refreshToken,
         };
 
-        const response = await fetch('/api/cookies', {
-          method: 'POST',
-          body: JSON.stringify(newCookiesData),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
+        // const response = await fetch('/api/cookies', {
+        //   method: 'POST',
+        //   body: JSON.stringify(newCookiesData),
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   credentials: 'include',
+        // });
 
-        const newLoginUserData: DefaultResponseType<LoginUserDataType> = await response.json();
+        // const newLoginUserData: DefaultResponseType<LoginUserDataType> = await response.json();
 
-        error.config.headers['Authorization'] = `Bearer ${newLoginUserData.data.accessToken}`;
+        error.config.headers['Authorization'] = `Bearer ${accessToken}`;
 
         tokenRefreshFlag = true;
 

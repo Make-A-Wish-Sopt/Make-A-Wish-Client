@@ -11,10 +11,14 @@ import { PropsWithChildren } from 'react';
 export default function WishesCreateDone({
   progressWishesData,
   nickName,
+  disabled = false,
+  shareBtnText,
   children,
 }: {
   progressWishesData: MainProgressDataType;
   nickName: string;
+  disabled?: boolean;
+  shareBtnText: string;
 } & PropsWithChildren) {
   const { state: shareModalState, handleState: handleShareModalState } = useToggle();
 
@@ -29,18 +33,32 @@ export default function WishesCreateDone({
           handleModalState={handleShareModalState}
         />
       )}
-      <SharePageFixedButtons handleClick={handleShareModalState} />
+      <SharePageFixedButtons
+        handleClick={handleShareModalState}
+        disabled={disabled}
+        shareBtnText={shareBtnText}
+      />
     </>
   );
 }
 
-function SharePageFixedButtons({ handleClick }: { handleClick: () => void }) {
+function SharePageFixedButtons({
+  handleClick,
+  disabled = false,
+  shareBtnText,
+}: {
+  handleClick: () => void;
+  disabled?: boolean;
+  shareBtnText: string;
+}) {
   const { handleRouter } = useRouters();
 
   return (
     <>
       <div className="flex flex-col gap-10">
-        <Button onClick={handleClick}>생일잔치에 친구 초대하기</Button>
+        <Button onClick={handleClick} disabled={disabled}>
+          {shareBtnText}
+        </Button>
         <Button
           bgColor="gray4"
           fontColor="white"

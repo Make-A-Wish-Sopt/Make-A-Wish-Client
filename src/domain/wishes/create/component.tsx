@@ -36,12 +36,10 @@ export function DropDownContent() {
 
 export function WishesCreateDoneMessage({
   nickName,
-  status,
-  dDay,
+  dDayMessage,
 }: {
   nickName: string;
-  status: WishStatusType;
-  dDay: number;
+  dDayMessage: string;
 }) {
   return (
     <div className="flex flex-col items-center w-full">
@@ -50,10 +48,7 @@ export function WishesCreateDoneMessage({
         <br />
         링크 생성 완료!{' '}
       </h1>
-      <span className="font-galmuri text-[14px] text-white mb-44">
-        {status === 'WHILE' && '생일 축하 받으로 가볼까요?'}
-        {status === 'BEFORE' && `${dDay}일 뒤부터 링크를 공유할 수 있어요`}
-      </span>
+      <span className="font-galmuri text-[14px] text-white mb-44">{dDayMessage}</span>
       <Image src={SharePageCakeImg} alt="링크생성 완료 케이크 이미지" width={221} />
     </div>
   );

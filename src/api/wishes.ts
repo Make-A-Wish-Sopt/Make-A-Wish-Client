@@ -20,7 +20,9 @@ export const getMainProgressWishesData = async () => {
     );
 
     return data.data.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**

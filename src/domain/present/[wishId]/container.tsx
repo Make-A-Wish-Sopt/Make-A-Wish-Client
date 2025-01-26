@@ -182,7 +182,7 @@ export default function GivePresentPageContainer({
                           styles={{ marginTop: '0.6rem' }}
                         >
                           <CheckBox changeCheckedState={changeMessageOnlyOption}>
-                            <span className="font-galmuri text-[14px] ml-8">
+                            <span className="font-galmuri text-[14px] ml-8 text-white">
                               {'편지만 보낼게요'}
                             </span>
                           </CheckBox>
@@ -285,7 +285,7 @@ function BankTransferSubmitButton({
         }}
         style={{ marginBottom: '5.8rem' }}
       >
-        송금 완료했다면, 편지확인하기
+        송금 완료했다면, 편지 확인하기
       </Button>
     </>
   );
