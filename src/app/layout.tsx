@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: '생일선물 플랫폼 조물주보다 생일선물주를 소개합니다.',
     images: [
       {
-        url: '../../public/assets/images/mainCakeListImg.png',
+        url: '../../public/assets/images/ThumbnailImg.png',
         width: 1200, // 이미지 너비
         height: 630, // 이미지 높이
         alt: '생일선물 플랫폼 미리보기 이미지',
