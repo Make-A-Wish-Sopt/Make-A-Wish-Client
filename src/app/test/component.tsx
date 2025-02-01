@@ -1,73 +1,60 @@
 'use client';
 
 import Button from '@/components/Common/Button';
-import useFormSteps from '@/hooks/common/useStep';
+import useFormSteps from '@/hooks/common/useLinkedList';
+import StepVisual from '@/utils/common/d3';
 
 export default function TestComponent() {
-  const deepStep = {
-    kakaopay: 'kakaopay',
-    account: 'account',
-  } as const;
+  const deepStep1Query: ['account', 'kakaopay'] = ['account', 'kakaopay'];
+  const deepStep1 = { deepStep1: deepStep1Query };
+  type DeepStep1Type = typeof deepStep1;
 
-  type DeepStepType = typeof deepStep;
+  const deepStep2Query: ['step1', 'step2'] = ['step1', 'step2'];
+  const deepStep2 = { deepStep2: deepStep2Query };
+  type DeepStep2Type = typeof deepStep2;
 
-  const testStep = ['link', 'select', deepStep, 'done'];
+  const stepArray = ['link', 'select', deepStep1, deepStep2, 'done'];
 
-  type TestStepType = typeof testStep;
+  const hook = useFormSteps(stepArray);
+  const { currentStep, onNextStep, onPrevStep, onNextSteps, onPrevSteps } = hook;
 
-  const {
-    currentStep,
-    handleNextStepRouter,
-    handlePrevStepRouter,
-    handleSameLevelNext,
-    handleSameLevelPrev,
-    Funnel,
-    Step,
-  } = useFormSteps<TestStepType>(testStep);
-
-  console.log(currentStep());
+  const currentStepValue = currentStep() || 'link'; // currentStep()이 undefined일 경우 기본값 설정
 
   return (
     <>
       <div className="flex gap-5">
-        <Button onClick={() => handlePrevStepRouter()}>이전 단계</Button>
-        <Button onClick={() => handleNextStepRouter()}>다음 단계</Button>
+        <Button
+          onClick={() => {
+            onPrevStep();
+          }}
+        >
+          이전 단계
+        </Button>
+        <Button
+          onClick={() => {
+            onNextStep();
+          }}
+        >
+          다음 단계
+        </Button>
       </div>
-
       <div className="flex gap-5 mt-30">
         <Button
           onClick={() => {
-            handleSameLevelPrev<DeepStepType>('account');
+            // onNextSteps<typeof deepStep1Query>('');
           }}
         >
-          구체적 이전단계
+          이전 단계
         </Button>
         <Button
           onClick={() => {
-            handleSameLevelNext<DeepStepType>('account');
+            onNextSteps<DeepStep1Type>('deepStep1', 'kakaopay');
           }}
         >
-          구체적 다음단계
+          다음 단계
         </Button>
       </div>
-
-      <Funnel>
-        <Step name="link">
-          <h1 className="text-white text-[16px] font-bitbit">링크 단계입니다!</h1>
-        </Step>
-
-        <Step name="select">
-          <h1 className="text-white text-[16px] font-bitbit">선택 단계입니다!</h1>
-        </Step>
-
-        <Step name={''}>
-          <h1 className="text-white text-[16px] font-bitbit">은행 단계입니다!</h1>
-        </Step>
-
-        <Step name="done">
-          <h1 className="text-white text-[16px] font-bitbit">완료 단계입니다!</h1>
-        </Step>
-      </Funnel>
+      <StepVisual test={hook} />
     </>
   );
 }

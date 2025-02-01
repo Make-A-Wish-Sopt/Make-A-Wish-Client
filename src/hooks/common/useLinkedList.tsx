@@ -10,114 +10,88 @@ export default function useFormSteps(stepArr: StepsType) {
     setStep(createLinkedStep(stepArr));
   }, []);
 
+  function getStepArr() {
+    return stepArr;
+  }
+
   function currentStep() {
     if (!step) return;
-
-    if (step.next) {
-      console.log('next : ', step.next.value);
-    }
-
-    if (step.prev) {
-      console.log('prev : ', step.prev.value);
-    }
-
-    console.log('current : ', step.value);
-
-    console.log('========================');
 
     return step.value;
   }
 
-  function nextTest<T = string>(queryKey: T) {
+  function onNextStep() {
     if (!step || !step.next) return;
 
     if (typeof step.next.value === 'string') {
       setStep(step.next);
-      return;
-    }
-
-    if (queryKey) {
-      setStep({
-        ...step.next,
-        value: Object.keys(step.next.value[0])[0],
-      });
-    } else {
-      console.log('세부적인 스텝을 입력해주세요!');
     }
   }
 
-  function next<T = string>(queryKey?: T) {
-    if (!step || !step.next) return;
+  function onNextSteps<T extends Record<string, string[]>>(
+    stepKey: keyof T,
+    stepValue: T[keyof T][number],
+  ) {
+    if (!step || !step.prev) return;
 
     if (typeof step.next.value === 'string') {
-      setStep(step.next);
       return;
     }
 
-    if (queryKey) {
+    const nextStepsKey = Object.keys(step.next.value)[0];
+    const nextSteps = step.next.value[nextStepsKey];
+
+    if (stepKey === nextStepsKey && nextSteps.includes(stepValue)) {
       setStep({
         ...step.next,
-        value: Object.keys(step.next.value[0])[0],
+        value: nextStepsKey,
       });
     } else {
-      console.log('세부적인 스텝을 입력해주세요!');
+      console.log('Next StepKey is ', nextStepsKey);
+      console.log('Next Steps are ', nextSteps);
+      console.log('Please Select Collect Next Step Key&Value');
     }
   }
 
-  function prev(queryKey?: string) {
+  function onPrevStep() {
     if (!step || !step.prev) return;
 
     if (typeof step.prev.value === 'string') {
       setStep(step.prev);
-      return;
-    }
-
-    if (queryKey) {
-      setStep({
-        ...step.prev,
-        value: Object.keys(step.prev.value[0])[0],
-      });
-    } else {
-      console.log('세부적인 스텝을 입력해주세요!');
     }
   }
 
-  // function nextSteps<T extends { [key: string]: string[] }, K extends keyof T>(
-  //   stepKey: K,
-  //   stepQuery: T[K][number],
-  // ) {
-  //   if (step && step.next && typeof step.next.value !== 'string') {
-  //     if (Object.keys(step.next.value)[0] === stepKey && step.next.depth - step.depth === 1) {
-  //       setStep({
-  //         ...step.next,
-  //         value: stepKey as string,
-  //       });
-  //     } else {
-  //       console.log('Check step align!');
-  //     }
-  //   }
-  // }
+  function onPrevSteps<T extends Record<string, string[]>>(
+    stepKey: keyof T,
+    stepValue: T[keyof T][number],
+  ) {
+    if (!step || !step.prev) return;
 
-  // function prevSteps<T extends { [key: string]: string[] }, K extends keyof T>(
-  //   stepKey: K,
-  //   stepQuery: T[K][number],
-  // ) {
-  //   if (step && step.prev && typeof step.prev.value !== 'string') {
-  //     if (Object.keys(step.prev.value)[0] === stepKey && step.depth - step.prev.depth === 1) {
-  //       setStep({
-  //         ...step.prev,
-  //         value: stepKey as string,
-  //       });
-  //     } else {
-  //       console.log('Check step align!');
-  //     }
-  //   }
-  // }
+    if (typeof step.prev.value === 'string') {
+      return;
+    }
+    const prevStepsKey = Object.keys(step.prev.value)[0];
+    const prevSteps = step.prev.value[prevStepsKey];
+
+    if (stepKey === prevStepsKey && prevSteps.includes(stepValue)) {
+      setStep({
+        ...step.prev,
+        value: prevStepsKey,
+      });
+    } else {
+      console.log('Prev StepKey is ', prevStepsKey);
+      console.log('Prev Steps are ', prevSteps);
+      console.log('Please Select Collect Prev Step Key&Value');
+    }
+  }
 
   return {
     currentStep,
-    next,
-    prev,
+    onNextStep,
+    onPrevStep,
+    onNextSteps,
+    onPrevSteps,
+    getStepArr,
   };
 }
 
