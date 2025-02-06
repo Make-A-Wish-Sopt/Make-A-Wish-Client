@@ -154,9 +154,16 @@ export default function GivePresentPageContainer({
   }
 
   async function handleKakaoPayment() {
+    const originalCode = presentKakaopayCodePrice[giftMenuId].toString();
+    const randomFourDigits = Math.floor(1000 + Math.random() * 9000); // 1000~9999 사이의 난수
+    const newCode = originalCode.slice(0, -4) + randomFourDigits;
+    console.log(newCode);
+
     if (forPayCode) {
-      // location.href = `${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`;
-      window.open(`${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`);
+      const kakaopayCodeUrl = `${kakaoPayCode}${newCode}`;
+      location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(kakaopayCodeUrl);
+
+      // window.open(`${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`);
     }
   }
 
@@ -236,7 +243,7 @@ export default function GivePresentPageContainer({
               </>
             ),
             done: (
-              <section className="relative w-full">
+              <section className="relative w-full ">
                 <PresentMessageModal
                   nickName={publicWishesData.nickname}
                   modalState={presenetMessageModalState}
@@ -317,8 +324,10 @@ function KakaopaySubmitButton({
       ) : (
         <Button
           onClick={() => {
-            firstClick.changeState(true);
             handleKakaoPayment();
+            setTimeout(() => {
+              firstClick.changeState(true);
+            }, 2000);
           }}
         >
           카카오로 송금하고, 편지 확인하기

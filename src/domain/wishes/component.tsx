@@ -73,7 +73,7 @@ export function SaveCakeMessageModal({
         <div
           id="save-cake-message-content"
           ref={captureRef}
-          className={`flex flex-col items-center  w-full  h-svh min-h-[412px] p-20  rounded-2xl  ${
+          className={`flex flex-col items-center  w-full   min-h-[412px] p-20  rounded-2xl  ${
             isAdminMessage ? 'bg-main_blue text-dark_blue ' : 'bg-dark_green text-white'
           }`}
         >
@@ -100,7 +100,9 @@ export function SaveCakeMessageModal({
                 loading="eager"
               />
 
-              <span className="text-[14px] mb-13 text-center whitespace-pre-wrap ">{message}</span>
+              <span className="min-h-[110px] text-[14px] mb-13 text-center whitespace-pre-wrap ">
+                {message}
+              </span>
 
               <div
                 className={`flex justify-center items-center w-full h-54 p-12 rounded-xl   font-bitbit text-[16px] ${
