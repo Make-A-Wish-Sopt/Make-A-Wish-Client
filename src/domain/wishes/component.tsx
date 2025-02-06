@@ -65,7 +65,7 @@ export function SaveCakeMessageModal({
 
   return (
     <CloseTopModal isOpen={modalState} handleState={handleModalState} bgColor={'background'}>
-      <div className={`flex flex-col items-center w-full h-416 font-galmuri`}>
+      <div className={`flex flex-col items-center w-full font-galmuri`}>
         <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
           {`${isLoading ? 'ㅇㅇㅇ' : name}님이\n${nickName}님에게 남긴 편지에요!`}
         </span>
@@ -73,7 +73,7 @@ export function SaveCakeMessageModal({
         <div
           id="save-cake-message-content"
           ref={captureRef}
-          className={`flex flex-col items-center justify-center w-full  h-full min-h-[412px] p-20  rounded-2xl  ${
+          className={`flex flex-col items-center  w-full  h-svh min-h-[412px] p-20  rounded-2xl  ${
             isAdminMessage ? 'bg-main_blue text-dark_blue ' : 'bg-dark_green text-white'
           }`}
         >
@@ -100,9 +100,7 @@ export function SaveCakeMessageModal({
                 loading="eager"
               />
 
-              <span className="h-110 text-[14px] mb-13 text-center whitespace-pre-wrap ">
-                {message}
-              </span>
+              <span className="text-[14px] mb-13 text-center whitespace-pre-wrap ">{message}</span>
 
               <div
                 className={`flex justify-center items-center w-full h-54 p-12 rounded-xl   font-bitbit text-[16px] ${

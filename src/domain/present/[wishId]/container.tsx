@@ -155,6 +155,7 @@ export default function GivePresentPageContainer({
 
   async function handleKakaoPayment() {
     if (forPayCode) {
+      // location.href = `${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`;
       window.open(`${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`);
     }
   }
@@ -235,7 +236,7 @@ export default function GivePresentPageContainer({
               </>
             ),
             done: (
-              <section className="relative w-full ">
+              <section className="relative w-full">
                 <PresentMessageModal
                   nickName={publicWishesData.nickname}
                   modalState={presenetMessageModalState}
