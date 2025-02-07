@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import useFormSteps from '@/hooks/common/useLinkedList';
 import Button from '@/components/Common/Button';
 
 export default function StepVisual({ test }: { test: any }) {
@@ -119,11 +118,6 @@ export default function StepVisual({ test }: { test: any }) {
           </div>
         </div>
       )}
-
-      <div className="flex gap-5">
-        <Button onClick={onPrevStep}>이전 단계</Button>
-        <Button onClick={onNextStep}>다음 단계</Button>
-      </div>
     </div>
   );
 }

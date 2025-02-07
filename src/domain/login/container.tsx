@@ -32,6 +32,7 @@ export function SaveUserDataWithRedirectWishes({
           handleRouter('/');
         }
       } catch (error) {
+        console.log(error);
         return <ErrorPage alertMessage="오류가 발생했어요!" />;
       }
     }

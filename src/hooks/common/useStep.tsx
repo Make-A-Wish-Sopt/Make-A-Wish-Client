@@ -1,112 +1,138 @@
-import { PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
-import { RoutePathType, useRouters } from './useRouters';
 import { usePathname } from 'next/navigation';
+import { ReactElement, ReactNode, useState } from 'react';
+import { RoutePathType, useRouters } from './useRouters';
 
-export default function useFormSteps<T extends (string | { [key: string]: string })[]>(stepArr: T) {
-  interface StepProps {
-    name: string;
-    children: ReactNode;
-  }
+type TestStepType = string;
+type TestStepsType = { [key: string]: string[] };
 
-  interface FunnelProps {
-    children: Array<ReactElement<StepProps>>;
-  }
+export type StepType = TestStepType | TestStepsType;
+export type StepsType = [string, ...StepType[]];
 
-  const pathname = usePathname();
-  const { handleRouter } = useRouters();
+interface StepProps<K extends TestStepType> {
+  name: K;
+  children: ReactNode;
+}
 
-  const [step, setStep] = useState(0);
+interface StepsProps<K extends TestStepsType> {
+  name: keyof K;
+  children: Array<ReactElement<StepProps<K[keyof K][number]>>>;
+}
 
-  console.log('Current Step Is : ', step);
+interface FunnelProps<T extends StepsType> {
+  children: Array<
+    ReactElement<
+      StepProps<Extract<T[number], TestStepType>> | StepsProps<Extract<T[number], TestStepsType>>
+    >
+  >;
+}
 
-  function stepUp() {
-    setStep(step + 1);
-  }
+export default function useFormSteps<T extends StepsType>(stepArr: T) {
+  const [stepIdx, setStepIdx] = useState(0);
+  const [subMenu, setSubMenu] = useState('');
 
-  function stepDown() {
-    setStep(step - 1);
-  }
+  const stepUp = () => setStepIdx(stepIdx + 1);
+  const stepDown = () => setStepIdx(stepIdx - 1);
+  const isNextSingleType = () => typeof stepArr[stepIdx + 1] === 'string';
+  const isPrevSingleType = () => typeof stepArr[stepIdx - 1] === 'string';
+  const isStepLast = () => stepIdx === stepArr.length - 1;
+  const isStepFirst = () => stepIdx === 0;
 
-  function isNextStepIsSingleStep() {
-    return typeof stepArr[step + 1] === 'string';
-  }
+  const currentStep = () => {
+    return typeof stepArr[stepIdx] === 'string'
+      ? (`${stepArr[stepIdx]}-${stepIdx}` as string)
+      : subMenu;
+  };
 
-  function isPrevStepIsSingleStep() {
-    return typeof stepArr[step - 1] === 'string';
-  }
+  const onMoveStep = (targetIdx: number, subMenuIdx?: string) => {
+    if (targetIdx >= stepArr.length || targetIdx < 0 || +subMenuIdx < 0) return;
 
-  function currentStep() {
-    return stepArr[step] as string;
-  }
+    if (subMenuIdx) {
+      const subMenues = Object.values(stepArr[targetIdx])[0];
 
-  function isStepLast() {
-    if (step === stepArr.length - 1) return true;
-    return false;
-  }
+      if (+subMenuIdx < subMenues.length) {
+        setStepIdx(targetIdx);
+        setSubMenu(`${subMenues[+subMenuIdx]}-${targetIdx}-${subMenuIdx}`);
+      }
+      return;
+    }
 
-  function isStepFirst() {
-    if (step === 0) return true;
-    return false;
-  }
+    if (stepIdx === targetIdx) return;
 
-  function handleSameLevelNext<T>(key: keyof T, query?: string) {
-    if (isStepLast()) return;
-    if (isNextStepIsSingleStep()) return;
+    setStepIdx(targetIdx);
+  };
 
-    const test = stepArr[step + 1] as T;
-    const path = `${pathname}?step=${test[key]}${query ? `&${query}` : ''}` as RoutePathType;
-    handleRouter(path);
-
+  const onNextStep = () => {
+    if (isStepLast() || !isNextSingleType()) return;
     stepUp();
-  }
+  };
 
-  function handleSameLevelPrev<T>(key: keyof T, query?: string) {
-    if (isStepFirst()) return;
-    if (isNextStepIsSingleStep()) return;
-
-    const test = stepArr[step - 1] as T;
-    const path = `${pathname}?step=${test[key]}${query ? `&${query}` : ''}` as RoutePathType;
-    handleRouter(path);
+  const onPrevStep = () => {
+    if (isStepFirst() || !isPrevSingleType()) return;
     stepDown();
-  }
+  };
 
-  function handleNextStepRouter(query?: string) {
-    if (isStepLast()) return;
-    if (!isNextStepIsSingleStep()) return;
+  const onNextSteps = <T extends Record<string, string[]>>(
+    stepKey: keyof T,
+    stepValue: T[keyof T][number],
+  ) => {
+    if (isStepLast() || isNextSingleType()) return;
 
-    const path =
-      `${pathname}?step=${stepArr[step + 1]}${query ? `&${query}` : ''}` as RoutePathType;
-    handleRouter(path);
-    stepUp();
-  }
+    const nextStepsKey = Object.keys(stepArr[stepIdx + 1])[0];
+    const nextSteps = Object.values(stepArr[stepIdx + 1])[0];
 
-  function handlePrevStepRouter(query?: string) {
-    if (isStepFirst()) return;
-    if (!isPrevStepIsSingleStep()) return;
+    if (stepKey === nextStepsKey && nextSteps.includes(stepValue)) {
+      stepUp();
+    }
+  };
 
-    const path =
-      `${pathname}?step=${stepArr[step - 1]}${query ? `&${query}` : ''}` as RoutePathType;
-    handleRouter(path);
-    stepDown();
-  }
+  const onPrevSteps = <T extends Record<string, string[]>>(
+    stepKey: keyof T,
+    stepValue: T[keyof T][number],
+  ) => {
+    if (isStepFirst() || isPrevSingleType()) return;
 
-  const Step = (props: StepProps): ReactElement => {
+    const prevStepsKey = Object.keys(stepArr[stepIdx - 1])[0];
+    const prevSteps = Object.values(stepArr[stepIdx - 1])[0];
+
+    if (stepKey === prevStepsKey && prevSteps.includes(stepValue)) {
+      stepDown();
+    }
+  };
+
+  const Step = <K extends Extract<T[number], string>>(props: StepProps<K>): ReactElement => {
     return <>{props.children}</>;
   };
 
-  const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = children.find((childStep) => childStep.props.name === stepArr[step]);
+  const Funnel = <T extends StepsType>({ children }: FunnelProps<T>) => {
+    const targetStep = children.find((childStep) => childStep.props.name === stepArr[stepIdx]);
 
     return <>{targetStep}</>;
   };
 
   return {
-    handleNextStepRouter,
-    handlePrevStepRouter,
     currentStep,
-    handleSameLevelNext,
-    handleSameLevelPrev,
+    onNextStep,
+    onPrevStep,
+    onNextSteps,
+    onPrevSteps,
     Funnel,
     Step,
+    onMoveStep,
+    // stepDepth,
   };
 }
+
+// const stepDepth = stepArr.reduce<Record<string, number>>((acc, step, index) => {
+//   if (typeof step === 'string') {
+//     acc[step] = index;
+//   } else {
+//     const key = Object.keys(step)[0];
+//     acc[key] = index;
+//   }
+//   return acc;
+// }, {});
+
+// const handleMoveStep = (step: string) => {
+//   const stepRouter = `${pathname}?step=${step}` as RoutePathType;
+//   handleRouter(stepRouter);
+// };
