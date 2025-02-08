@@ -115,7 +115,7 @@ type SingleStepType = string;
 type MultiStepType = { readonly [key: string]: readonly string[] };
 
 type StepType = SingleStepType | MultiStepType;
-type StepsType = readonly [string, ...StepType[]];
+export type StepsType = readonly [string, ...StepType[]];
 
 interface StepProps {
   name: string;

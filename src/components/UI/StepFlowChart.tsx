@@ -1,10 +1,16 @@
+import { StepsType } from '@/hooks/common/useLinkedStep';
 import mermaid from 'mermaid';
 import { useEffect, useRef } from 'react';
 
-const StepFlowChart: React.FC<{
+const StepFlowChart = ({
+  chart,
+  onMoveStep,
+  steps,
+}: {
   chart: string;
-  onMoveStep: (targetIdx: number, subMenuIdx?: string) => void;
-}> = ({ chart, onMoveStep }) => {
+  onMoveStep: (target: string | Record<string, string>) => void;
+  steps: StepsType;
+}) => {
   const chartRef = useRef<HTMLDivElement>(null);
 
   const setupMermaidClickEvents = () => {
@@ -18,7 +24,15 @@ const StepFlowChart: React.FC<{
         const [step, stepIdx, subMenuIdx] = nodeIds.slice(1, nodeIds.length - 1);
 
         if (step === 'If') return;
-        onMoveStep(+stepIdx, subMenuIdx);
+
+        if (subMenuIdx === undefined) {
+          onMoveStep(step);
+        } else {
+          const stepKey = Object.keys(steps[stepIdx])[0];
+          const subSteps = Object.values(steps[stepIdx])[0];
+
+          onMoveStep({ [stepKey]: subSteps[subMenuIdx] });
+        }
       });
     });
   };
