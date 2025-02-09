@@ -1,4 +1,4 @@
-import { StepType } from '@/hooks/common/useStep';
+import { StepType } from '@/hooks/common/useFunnel';
 
 export const getMermaidCode = (steps: StepType[], currentStep: string) => {
   let diagram: string[] = ['stateDiagram'];
