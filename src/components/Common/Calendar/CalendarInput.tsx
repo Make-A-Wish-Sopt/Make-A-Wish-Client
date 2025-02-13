@@ -22,6 +22,12 @@ export default function CalendarInput({
   }
 
   function ChangeDate(selectDate: Date) {
+    if (!selectDate) {
+      handleChangeCalendarOpenState();
+      return;
+    }
+
+    if (selectDate === date) return;
     handleChangeDate(selectDate);
     handleChangeCalendarOpenState();
   }

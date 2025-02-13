@@ -157,7 +157,6 @@ export default function GivePresentPageContainer({
     const originalCode = presentKakaopayCodePrice[giftMenuId].toString();
     const randomFourDigits = Math.floor(1000 + Math.random() * 9000); // 1000~9999 사이의 난수
     const newCode = originalCode.slice(0, -4) + randomFourDigits;
-    console.log(newCode);
 
     if (forPayCode) {
       const kakaopayCodeUrl = `${kakaoPayCode}${newCode}`;
