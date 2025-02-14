@@ -248,7 +248,7 @@ function WishesLinkSubmitButton({
     });
 
     if (giftOption) {
-      handleRouter(`/wishes/create?step=select&wishTitle=${convertEncode(wishTitle)}`);
+      handleRouter(`/wishes/create?step=select&wishTitle=${wishTitle}`);
     } else {
       createOnlyLettersWishes();
     }
@@ -282,14 +282,16 @@ export function WishesLinkEditSubmitButton() {
   const { handleBack } = useRouters();
 
   function handleEditWisheLink() {
-    putProgressWishes(editWishesLinkData).then((response) => {
-      response.success && alert('소원정보 수정완료!');
-    }).catch(() => {
-      alert('소원정보 수정실패!!')
-    }).finally(() => {
-      handleBack();
-    });
-
+    putProgressWishes(editWishesLinkData)
+      .then((response) => {
+        response.success && alert('소원정보 수정완료!');
+      })
+      .catch(() => {
+        alert('소원정보 수정실패!!');
+      })
+      .finally(() => {
+        handleBack();
+      });
   }
 
   return (

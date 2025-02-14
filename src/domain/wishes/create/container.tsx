@@ -64,7 +64,7 @@ export default function WishesCreatePageContainer({
   useEffect(() => {
     if (sessionStorage.getItem('isReloading')) {
       if (wishTitle) {
-        handleRouter(`/wishes/create?step=link&wishTitle=${convertEncode(wishTitle)}`);
+        handleRouter(`/wishes/create?step=link&wishTitle=${wishTitle}`);
       }
       sessionStorage.removeItem('isReloading'); // 상태 초기화
     }
@@ -72,9 +72,9 @@ export default function WishesCreatePageContainer({
 
   function handleNextStep() {
     if (selectAccount.state) {
-      handleRouter(`/wishes/create?step=account&wishTitle=${convertEncode(wishTitle)}`);
+      handleRouter(`/wishes/create?step=account&wishTitle=${wishTitle}`);
     } else {
-      handleRouter(`/wishes/create?step=kakaopay&wishTitle=${convertEncode(wishTitle)}}`);
+      handleRouter(`/wishes/create?step=kakaopay&wishTitle=${wishTitle}}`);
     }
   }
 

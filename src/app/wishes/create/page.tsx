@@ -5,7 +5,6 @@ import WishesCreatePageContainer from '@/domain/wishes/create/container';
 import { WishesCreateSuccess } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
 import { convertDecode } from '@/utils/common/convert';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
 
 const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
@@ -30,13 +29,13 @@ export default async function WishesCreatePage({
     );
   }
 
-  const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : '';
+  // const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : '';
 
   return (
     <>
       <Header backBtn routePath="/wishes" />
       <MainLayout checkLoggedIn>
-        <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
+        <WishesCreatePageContainer step={step} wishTitle={wishTitle}>
           {
             {
               link: (

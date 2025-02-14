@@ -181,8 +181,8 @@ function WishesCreateTitleInputModal() {
     const wishTitle = getValues('wishTitle');
 
     if (wishTitle) {
-      const encodeWishTitle = convertEncode(wishTitle);
-      handleRouter(`/wishes/create?step=link&wishTitle=${encodeWishTitle}`);
+      // const encodeWishTitle = convertEncode(wishTitle);
+      handleRouter(`/wishes/create?step=link&wishTitle=${wishTitle}`);
     }
   }
 
