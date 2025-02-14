@@ -14,8 +14,9 @@ export function MainPageCenteredContent() {
         priority
         style={{ marginTop: '2rem', padding: '0 2.2rem' }}
       />
-      <span className="text-[24px] text-main_blue mt-[31px] font-bitbit">
-        현금으로 선물 받는 생일잔치
+      <span className="text-[24px] text-main_blue mt-[31px] font-bitbit text-center leading-tight">
+        불필요한 선물이 지겹다면, <br />
+        올해 생일엔 현금으로 선물 받기
       </span>
     </div>
   );
