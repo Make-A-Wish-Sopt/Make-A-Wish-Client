@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4000",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@next/bundle-analyzer": "^13.4.19",
     "@next/third-parties": "^15.1.2",
+    "@tanstack/react-query": "^5.66.7",
     "axios": "^1.3.5",
     "cookies-next": "^5.1.0",
     "d3": "^7.9.0",
@@ -28,10 +29,12 @@
     "react-hook-form": "^7.53.0",
     "react-spinners": "^0.13.8",
     "ts-node": "^10.9.2",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@tanstack/eslint-plugin-query": "^5.66.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
