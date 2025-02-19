@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const bundleAnalyzer = withBundleAnalyzer({
+  // enabled: true,
+  // openAnalyzer: true,
+});
+
 const nextConfig = {
   reactStrictMode: false,
   compiler: {
