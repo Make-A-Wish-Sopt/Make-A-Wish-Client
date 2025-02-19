@@ -1,8 +1,9 @@
 import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import BackButton from '@/components/Elements/Button/BackButton';
+import Header from '@/components/Layout/Hedaer';
 import WisheLinkEditPageContainer from '@/domain/mypage/edit/link/container';
-import { WishesCreateTitleText } from '@/domain/wishes/create/component';
+import { WishesCreateTitleText } from '@/domain/wishes/create/content';
 import MainLayout from '@/layouts/MainLayout';
 
 export default async function WisheLinkEditPage() {

@@ -1,7 +1,8 @@
 import { getWishes } from '@/api/wishes';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import BackButton from '@/components/Elements/Button/BackButton';
+import Header from '@/components/Layout/Hedaer';
 import WishesHistoryPageContainer from '@/domain/mypage/wish-history/container';
-import { WishesCreateTitleText } from '@/domain/wishes/create/component';
+import { WishesCreateTitleText } from '@/domain/wishes/create/content';
 import MainLayout from '@/layouts/MainLayout';
 
 export default async function WishesHistoryPage() {

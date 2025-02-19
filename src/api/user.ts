@@ -1,16 +1,11 @@
 import { BANK_LIST } from '@/constant/bankList';
 import { client } from './common/axios';
 import { API_VERSION_01, PATH_USER } from './path';
-import {
-  DefaultResponseType,
-  UserAccountDataResponseType,
-} from '@/types/api/response';
+import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
 import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
 
-export const putUserAccount = async (
-  accountInputs: WishesAccountDataResolverType
-) => {
+export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
   const data = await client.put<DefaultResponseType>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     {
@@ -22,7 +17,7 @@ export const putUserAccount = async (
       headers: {
         'Content-Type': 'application/json',
       },
-    }
+    },
   );
 
   return data;
@@ -31,7 +26,7 @@ export const putUserAccount = async (
 export const getUserAccount = async () => {
   try {
     const data = await client.get<UserAccountDataResponseType>(
-      `${API_VERSION_01}${PATH_USER.ACCOUNT}`
+      `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
     );
 
     return data?.data.data;
@@ -49,9 +44,7 @@ export const deleteUserInfo = async () => {
 };
 
 export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
-  const bankCode = BANK_LIST.find(
-    (bank) => bank.name === accountInfo.bank
-  )?.bankCode;
+  const bankCode = BANK_LIST.find((bank) => bank.name === accountInfo.bank)?.bankCode;
 
   const response = await client.post<DefaultResponseType<number>>(
     `${API_VERSION_01}${PATH_USER.ACCOUNT_VERIFY}`,
@@ -64,7 +57,7 @@ export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }
+    },
   );
 
   return response.data;
