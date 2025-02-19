@@ -1,5 +1,3 @@
-'use client';
-
 import { PropsWithChildren } from 'react';
 
 interface InputFormProps {
@@ -12,11 +10,11 @@ export default function InputForm(props: PropsWithChildren<InputFormProps>) {
 
   return (
     <div className="mb-30">
-      <h3
+      <p
         className={`font-bitbit text-white text-[20px] leading-tight mb-12 whitespace-pre-line ${textCenter && 'text-center'}`}
       >
         {title}
-      </h3>
+      </p>
       {children}
     </div>
   );

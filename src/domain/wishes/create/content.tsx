@@ -13,7 +13,7 @@ export function WishesCreateTitleText({ children }: PropsWithChildren) {
     </div>
   );
 }
-export function DropDownContent() {
+export default function DropDownContent() {
   return (
     <div className="w-full px-10 pb-12">
       <div className="w-full  bg-background  px-12 py-14 rounded-xl">

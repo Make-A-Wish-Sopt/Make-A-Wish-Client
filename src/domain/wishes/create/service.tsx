@@ -2,7 +2,7 @@ import { getMainProgressWishesData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesCreateDone from './wishesCreateDone';
-import { WishesCreateDoneMessage } from './component';
+import { WishesCreateDoneMessage } from './content';
 
 export async function WishesCreateSuccess() {
   const progressWishesData = await getMainProgressWishesData();

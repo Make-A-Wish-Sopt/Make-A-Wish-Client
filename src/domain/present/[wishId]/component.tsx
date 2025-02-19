@@ -51,7 +51,7 @@ export function MessageFromWisheMaker({
 
       {/* 이미지값 넣어줘야해요! */}
       <div className="flex flex-col w-full gap-10 mb-30">
-        <UploadImageBox imageUrl={publicWishesData.presentImageUrl} />
+        <UploadImageBox />
 
         <Box
           bgColor="background"

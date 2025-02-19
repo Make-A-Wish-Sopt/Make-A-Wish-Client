@@ -25,5 +25,3 @@ export function useContainerContext<T>() {
   if (!context) throw new Error('ContainerContext must be used within MainProvider');
   return context;
 }
-
-//

@@ -1,4 +1,31 @@
-import { ReactElement, ReactNode, useState } from 'react';
+'use client';
+
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { RoutePathType, useRouters } from './useRouters';
+import { usePathname } from 'next/navigation';
+
+type ExtractSteps<T> = T extends string
+  ? T
+  : T extends Record<string, readonly string[]>
+    ? T[keyof T][number]
+    : never;
+
+export type StepKeysType<T extends StepsType> = ExtractSteps<T[number]>;
+
+export type SingleStepType = string;
+export type MultiStepType = { readonly [key: string]: readonly string[] };
+
+export type StepType = SingleStepType | MultiStepType;
+export type StepsType = readonly [string, ...StepType[]];
+
+export interface StepProps {
+  name: string;
+  children: ReactNode;
+}
+
+export interface FunnelProps {
+  children: Array<ReactElement<StepProps>>;
+}
 
 export default function useFunnel(steps: StepsType) {
   const [stepIdx, setStepIdx] = useState(0);
@@ -13,6 +40,16 @@ export default function useFunnel(steps: StepsType) {
     }
     return acc;
   }, {});
+
+  const { handleRouter } = useRouters();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const currentStep =
+      typeof current === 'string' ? current : (Object.values(current)[0] as string);
+    const path = `${pathname}?step=${currentStep}` as RoutePathType;
+    handleRouter(path);
+  }, [current]);
 
   const stepUp = () => setStepIdx(stepIdx + 1);
   const isNextSingleType = () => typeof steps[stepIdx + 1] === 'string';
@@ -103,6 +140,7 @@ export default function useFunnel(steps: StepsType) {
       setCurrent(steps[targetStepIdx]);
       setStepIdx(targetStepIdx);
     } else {
+      console.log('helo');
       const targetKey = Object.keys(target)[0];
       const targetStep = Object.values(target)[0];
       const targetStepIdx = stepsMap[targetKey];
@@ -126,39 +164,12 @@ export default function useFunnel(steps: StepsType) {
     removeHistory();
   };
 
-  const Step = (props: StepProps): ReactElement => {
-    return <>{props.children}</>;
-  };
-
-  const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = children.find((childStep) => childStep.props.name === currentStep());
-
-    return <>{targetStep}</>;
-  };
-
   return {
     steps,
     currentStep,
     currentChartStep,
     onNextStep,
     onPrevStep,
-    Funnel,
-    Step,
     onMoveStep,
   };
-}
-
-type SingleStepType = string;
-type MultiStepType = { readonly [key: string]: readonly string[] };
-
-type StepType = SingleStepType | MultiStepType;
-type StepsType = readonly [string, ...StepType[]];
-
-interface StepProps {
-  name: string;
-  children: ReactNode;
-}
-
-interface FunnelProps {
-  children: Array<ReactElement<StepProps>>;
 }

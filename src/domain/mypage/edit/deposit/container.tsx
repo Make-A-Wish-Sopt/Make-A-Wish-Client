@@ -1,8 +1,10 @@
 'use client';
 
 import { WishesDepositEditStepsType } from '@/app/mypage/edit/deposit/page';
-import { WishesEditAccountSubmitButton } from '@/domain/wishes/create/container';
-import SelectDeposit, { WishesDepositSubmitButton } from '@/domain/wishes/create/selectDeposit';
+// import { WishesEditAccountSubmitButton } from '@/domain/wishes/create/container';
+// import SelectDeposit, {
+//   WishesDepositSubmitButton,
+// } from '@/domain/wishes/create/select/selectDeposit';
 import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
 import WishesKakaopayInputForm from '@/domain/wishes/create/wishesKakaopayInputForm';
 import { useRouters } from '@/hooks/common/useRouters';
@@ -46,9 +48,9 @@ export default function WisheDepositEditPageContainer({
         {
           select: (
             <>
-              <SelectDeposit selectAccount={selectAccount}>
+              {/* <SelectDeposit selectAccount={selectAccount}>
                 <WishesDepositSubmitButton handleNextStep={handleNextStep} isEdit />
-              </SelectDeposit>
+              </SelectDeposit> */}
             </>
           ),
           kakaopay: (
@@ -59,10 +61,10 @@ export default function WisheDepositEditPageContainer({
                 submitBtnActiveState={submitBtnActiveState}
                 isLoading={isLoading}
               >
-                <WishesEditAccountSubmitButton
+                {/* <WishesEditAccountSubmitButton
                   disabled={!submitBtnActiveState.state}
                   forPayCode={true}
-                />
+                /> */}
               </WishesKakaopayInputForm>
             </>
           ),
@@ -75,10 +77,10 @@ export default function WisheDepositEditPageContainer({
                 submitBtnActiveState={submitBtnActiveState}
                 noticeAgree={noticeAgree}
               >
-                <WishesEditAccountSubmitButton
+                {/* <WishesEditAccountSubmitButton
                   disabled={!submitBtnActiveState.state}
                   forPayCode={false}
-                />
+                /> */}
               </WishesAccountInputForm>
             </>
           ),

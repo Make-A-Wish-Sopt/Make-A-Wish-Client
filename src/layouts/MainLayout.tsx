@@ -1,7 +1,6 @@
 import ErrorPage from '@/app/error';
 import { isLoggedIn } from '@/utils/common/auth';
 import { PropsWithChildren } from 'react';
-import ModalPortal from './ModalPortal';
 
 export default async function MainLayout({
   Header,

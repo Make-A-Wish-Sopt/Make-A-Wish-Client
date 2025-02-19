@@ -3,14 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { UploadImageLogoIc } from '../../../public/assets/icons';
+import { useImageContext } from '@/Context/imageContext';
 
-export const UploadImageBox = React.memo(function UploadImageBox({
-  imageUrl,
-  handleUploadImageFile,
-}: {
-  imageUrl: string;
-  handleUploadImageFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
+export const UploadImageBox = React.memo(function UploadImageBox() {
+  const { imageUrl, uploadImageFile } = useImageContext();
   const [imageAspectRatio, setImageAspectRatio] = useState(331 / 220); // 초기값: 331:220 비율
 
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
@@ -56,8 +52,8 @@ export const UploadImageBox = React.memo(function UploadImageBox({
         className="hidden"
         type="file"
         accept=".jpg,.jpeg,.png"
-        onChange={handleUploadImageFile}
-        disabled={handleUploadImageFile === undefined}
+        onChange={uploadImageFile}
+        // disabled={handleUploadImageFile === undefined}
         readOnly
       />
     </label>

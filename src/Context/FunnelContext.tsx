@@ -1,6 +1,6 @@
 'use client';
 
-import useFunnel, { MultiStepType, StepKeysType, StepsType } from '@/hooks/useFunnel';
+import useFunnel, { MultiStepType, StepKeysType, StepsType } from '@/hooks/common/useFunnel';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 type FunnelContextType<T extends StepsType> = {

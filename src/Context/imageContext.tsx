@@ -1,4 +1,4 @@
-import { useUploadImage } from '@/hooks/useUploadImage';
+import { useUploadImage } from '@/hooks/common/useUploadImage';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 type ImageContextType = {

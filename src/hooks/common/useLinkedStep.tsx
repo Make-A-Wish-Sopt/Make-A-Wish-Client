@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode, useState } from 'react';
+import { FunnelProps, MultiStepType, StepProps, StepsType, StepType } from './useFunnel';
 
 export default function useLinkedStep(steps: StepsType) {
   const [stepNode, setStepNode] = useState<LinkedStepNode>(createLinkedStep(steps));
@@ -109,19 +110,4 @@ function createLinkedStep(steps: StepsType): LinkedStepNode {
   }
 
   return head;
-}
-
-type SingleStepType = string;
-type MultiStepType = { readonly [key: string]: readonly string[] };
-
-type StepType = SingleStepType | MultiStepType;
-export type StepsType = readonly [string, ...StepType[]];
-
-interface StepProps {
-  name: string;
-  children: ReactNode;
-}
-
-interface FunnelProps {
-  children: Array<ReactElement<StepProps>>;
 }

@@ -44,9 +44,7 @@ export default function PresentList({
         {presentListArray.map((item) => (
           <div
             className={`flex flex-col items-center p-9  ${
-              isSelected(item.id)
-                ? 'bg-main_blue text-black'
-                : 'bg-dark_green text-white'
+              isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
             }
             font-bitbit rounded-xl text-[14px]`}
             onClick={() => handleSelectPresent(item.id)}
@@ -74,9 +72,7 @@ export function PresentListSample() {
         >
           <Image src={item.image} alt="선물 이미지" width={56} />
           <span className="opacity-70">{item.itemName}</span>
-          <span className="opacity-70">
-            {convertMoneyText(item.price.toString())}원
-          </span>
+          <span className="opacity-70">{convertMoneyText(item.price.toString())}원</span>
         </div>
       ))}
     </div>
