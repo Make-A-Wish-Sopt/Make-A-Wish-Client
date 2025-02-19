@@ -1,6 +1,6 @@
-import { StepType } from '@/hooks/common/useFunnel';
+import { StepsType } from '@/hooks/common/useLinkedStep';
 
-export const getMermaidCode = (steps: StepType[], currentStep: string) => {
+export const getMermaidCode = (steps: StepsType, currentStep: string) => {
   let diagram: string[] = ['stateDiagram'];
 
   for (let i = 0; i < steps.length; i++) {
