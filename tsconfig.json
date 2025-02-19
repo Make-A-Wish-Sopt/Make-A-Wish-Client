@@ -23,6 +23,6 @@
       "@assets/*": ["public/assets/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/hooks/useFunnel.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/hooks/common/useFunnel.tsx"],
   "exclude": ["node_modules"]
 }
