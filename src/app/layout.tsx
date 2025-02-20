@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/assets/images/ThumbnailImg.png',
-        width: 1200, // 이미지 너비
-        height: 630, // 이미지 높이
+        width: 1200,
+        height: 630,
         alt: '생일선물 플랫폼 미리보기 이미지',
       },
     ],
-    url: 'https://sunmulzu.com', // 페이지의 기본 URL
+    url: 'https://sunmulzu.com',
     siteName: '조물주보다 생일선물주',
   },
   metadataBase: new URL('https://sunmulzu.com'),
@@ -49,13 +49,19 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const isProduction = process.env.NODE_ENV === 'production';
+
   return (
     <html lang="ko" className="bg-background">
       <body>
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
+        {isProduction && (
+          <>
+            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
+          </>
+        )}
       </body>
     </html>
   );

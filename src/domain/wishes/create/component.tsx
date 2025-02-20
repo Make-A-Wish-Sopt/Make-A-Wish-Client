@@ -1,15 +1,8 @@
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
 import { PropsWithChildren } from 'react';
-import PresentList, { PresentListSample } from '@/components/UI/PresentList';
-import {
-  PayCodeGuideStep1Img,
-  PayCodeGuideStep2Img,
-  PayCodeGuideStep3Img,
-  SharePageCakeImg,
-} from '../../../../public/assets/images';
-import { WishStatusType } from '@/types/wishesType';
-import CloseIconInModal from '@/components/Common/Modal/CloseIconInModal';
+import { PresentListSample } from '@/components/UI/PresentList';
+import { SharePageCakeImg } from '../../../../public/assets/images';
 
 export function WishesCreateTitleText({ children }: PropsWithChildren) {
   return (
@@ -43,7 +36,7 @@ export function WishesCreateDoneMessage({
 }) {
   return (
     <div className="flex flex-col items-center w-full">
-      <h1 className="font-bitbit text-[24px] text-main_blue mt-76 mb-20 leading-10 text-center">
+      <h1 className="font-bitbit text-[24px] text-main_blue mt-13 mb-20 leading-10 text-center">
         {nickName}의 생일잔치
         <br />
         링크 생성 완료!{' '}

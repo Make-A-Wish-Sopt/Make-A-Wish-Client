@@ -20,15 +20,18 @@ import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
 import { putUserAccount } from '@/api/user';
 import WishesAccountInputForm from './wishesAccountInputForm';
-import { convertEncode } from '@/utils/common/convert';
 import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
 import { GA_VIEW_WISHES } from '@/constant/ga';
+import dynamic from 'next/dynamic';
+
+const WishesTryCakePresent = dynamic(() => import('./WishesTryCakePresent'));
 
 export default function WishesCreatePageContainer({
   step,
   wishTitle,
+  wishId,
   children,
-}: { step: WishesCreateStepType; wishTitle: string } & PropsWithChildren) {
+}: { step: WishesCreateStepType; wishTitle: string; wishId?: string } & PropsWithChildren) {
   const savedWishesLinkDataMethods = useForm<WishesLinkDataResolverType>({
     defaultValues: {
       ...wishesLinkInputInit,
@@ -132,6 +135,11 @@ export default function WishesCreatePageContainer({
             </>
           ),
           done: <>{children}</>,
+          try: (
+            <>
+              <WishesTryCakePresent wishId={wishId} />
+            </>
+          ),
         }[step]
       }
     </FormProvider>

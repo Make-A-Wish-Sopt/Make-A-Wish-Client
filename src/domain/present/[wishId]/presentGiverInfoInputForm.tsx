@@ -1,3 +1,5 @@
+'use client';
+
 import InputText from '@/components/Common/Input/inputText';
 import InputForm from '@/components/UI/InputForm';
 import InputTextForm from '@/components/UI/InputTextForm';

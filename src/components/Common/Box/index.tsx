@@ -1,3 +1,5 @@
+'use client';
+
 import { ColorsTypes, FontsTypes } from '@/styles/styles';
 
 import { CSSProperties, PropsWithChildren } from 'react';

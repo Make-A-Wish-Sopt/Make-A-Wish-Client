@@ -4,17 +4,16 @@ import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
 import { WishesCreateSuccess } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
-import { convertDecode } from '@/utils/common/convert';
 
-const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done'] as const;
+const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done', 'try'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
 
 export default async function WishesCreatePage({
   searchParams,
 }: {
-  searchParams: { step: WishesCreateStepType; wishTitle: string };
+  searchParams: { step: WishesCreateStepType; wishTitle: string; wishId: string };
 }) {
-  const { step, wishTitle } = searchParams;
+  const { step, wishTitle, wishId } = searchParams;
 
   if (
     (step === 'link' && !wishTitle) ||
@@ -29,13 +28,11 @@ export default async function WishesCreatePage({
     );
   }
 
-  // const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : '';
-
   return (
     <>
-      <Header backBtn routePath="/wishes" />
+      <Header backBtn={step !== 'done'} routePath="/wishes" />
       <MainLayout checkLoggedIn>
-        <WishesCreatePageContainer step={step} wishTitle={wishTitle}>
+        <WishesCreatePageContainer step={step} wishTitle={wishTitle} wishId={wishId}>
           {
             {
               link: (

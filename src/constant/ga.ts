@@ -7,6 +7,7 @@ export const GA_VIEW_WISHES: Record<WishesCreateStepType, string> = {
   account: 'view_create_wish_step_account',
   kakaopay: 'view_create_wish_step_kakaopay',
   done: 'add_new_wish',
+  try: 'view_create_wish_step_try',
 };
 
 export const GA_VIEW_PRESENT: Record<PresentStepType, string | Record<PaymentType, string>> = {

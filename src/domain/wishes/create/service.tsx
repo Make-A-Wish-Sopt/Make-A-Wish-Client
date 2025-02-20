@@ -13,8 +13,6 @@ export async function WishesCreateSuccess() {
   }
   const { dayCount, status } = progressWishesData;
 
-  // const dDay = status === 'WHILE' ? dayCount : Math.abs(dayCount - 7);
-
   const dDayMessage =
     status === 'WHILE'
       ? '생일 축하 받으로 가볼까요?'
@@ -22,17 +20,16 @@ export async function WishesCreateSuccess() {
         ? `${dayCount + 1}일 뒤부터 링크를 공유할 수 있어요`
         : '';
 
-  const shareBtnText =
-    progressWishesData?.status === 'BEFORE'
-      ? `${progressWishesData?.dayCount + 1}일 뒤에 생일잔치 오픈!`
-      : '생일잔치에 친구 초대하기';
+  const tryGiveCakeMessage =
+    progressWishesData?.status === 'BEFORE' ? '링크 미리 저장해두기' : '바로 친구 초대하기';
 
   return (
     <WishesCreateDone
       progressWishesData={progressWishesData}
       nickName={nickName}
       disabled={status === 'BEFORE'}
-      shareBtnText={shareBtnText}
+      tryGiveCakeMessage={tryGiveCakeMessage}
+      shareBtnText={'생일잔치 체험해보기'}
     >
       <WishesCreateDoneMessage nickName={nickName} dDayMessage={dDayMessage} />;
     </WishesCreateDone>

@@ -1,29 +1,43 @@
 'use client';
 
 import Button from '@/components/Common/Button';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
 import { useRouters } from '@/hooks/common/useRouters';
 import useToggle from '@/hooks/common/useToggle';
 import { MainProgressDataType } from '@/types/wishesType';
+import Image from 'next/image';
 import { PropsWithChildren } from 'react';
+import { CloseBlueIc } from '../../../../public/assets/icons';
 
 export default function WishesCreateDone({
   progressWishesData,
   nickName,
   disabled = false,
+  tryGiveCakeMessage,
   shareBtnText,
   children,
 }: {
   progressWishesData: MainProgressDataType;
   nickName: string;
   disabled?: boolean;
+  tryGiveCakeMessage: string;
   shareBtnText: string;
 } & PropsWithChildren) {
   const { state: shareModalState, handleState: handleShareModalState } = useToggle();
+  const { handleRouter } = useRouters();
 
   return (
     <>
+      <div className="flex flex-row-reverse">
+        <Image
+          src={CloseBlueIc}
+          alt="닫기"
+          onClick={() => {
+            handleRouter('/wishes');
+          }}
+        />
+      </div>
+
       {children}
       {shareModalState && (
         <ShareLinkModal
@@ -34,39 +48,45 @@ export default function WishesCreateDone({
         />
       )}
       <SharePageFixedButtons
-        handleClick={handleShareModalState}
+        handleShareModalState={handleShareModalState}
         disabled={disabled}
         shareBtnText={shareBtnText}
+        tryGiveCakeMessage={tryGiveCakeMessage}
+        wishId={progressWishesData.wishId}
       />
     </>
   );
 }
 
 function SharePageFixedButtons({
-  handleClick,
+  handleShareModalState,
   disabled = false,
   shareBtnText,
+  tryGiveCakeMessage,
+  wishId,
 }: {
-  handleClick: () => void;
+  handleShareModalState: () => void;
   disabled?: boolean;
   shareBtnText: string;
+  tryGiveCakeMessage: string;
+  wishId: string;
 }) {
   const { handleRouter } = useRouters();
 
   return (
     <>
       <div className="flex flex-col gap-10">
-        <Button onClick={handleClick} disabled={disabled}>
+        <Button
+          onClick={() => {
+            handleRouter(`/wishes/create?step=try&wishId=${wishId}`);
+          }}
+          disabled={disabled}
+        >
           {shareBtnText}
         </Button>
-        <Button
-          bgColor="gray4"
-          fontColor="white"
-          onClick={() => {
-            handleRouter('/wishes');
-          }}
-        >
-          홈으로 이동하기
+
+        <Button bgColor="gray4" fontColor="white" onClick={handleShareModalState}>
+          {tryGiveCakeMessage}
         </Button>
       </div>
     </>
