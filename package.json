@@ -5,13 +5,12 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start -p 4000",
+    "start": "next start",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
     "analyze": "ANALYZE=true yarn build"
   },
-
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@next/bundle-analyzer": "^13.4.19",
