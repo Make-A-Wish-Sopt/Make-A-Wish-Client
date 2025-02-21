@@ -2,11 +2,6 @@
 
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
-const bundleAnalyzer = withBundleAnalyzer({
-  // enabled: true,
-  // openAnalyzer: true,
-});
-
 const nextConfig = {
   reactStrictMode: false,
   compiler: {
@@ -16,10 +11,20 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
-    domains: [
-      'localhost',
-      'sunmulzu-wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
-      'sunmulzu.com',
+    formats: ['image/avif'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sunmulzu-wish-image-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sunmulzu.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
     ],
   },
   eslint: {
@@ -27,4 +32,7 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: true, // default!
+})(nextConfig);
