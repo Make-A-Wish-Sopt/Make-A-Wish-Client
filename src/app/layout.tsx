@@ -30,7 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <div id="modal-root" />
-        <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
+        <Script src="https://developers.kakao.com/sdk/js/kakao.js" defer />
+
         {/* {isProduction && (
           <>
             <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE!} />

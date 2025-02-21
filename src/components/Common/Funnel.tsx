@@ -8,8 +8,11 @@ import { useFunnelContext } from '@/Context/FunnelContext';
 import useToggle from '@/hooks/common/useToggle';
 import dynamic from 'next/dynamic';
 import { createMermaidFlowChart } from '@/constant/mermaid';
+import { LoadingDot } from '@/app/loading';
 
-const StepFlowChart = dynamic(() => import('../UI/StepFlowChart'));
+const StepFlowChart = dynamic(() => import('../UI/StepFlowChart'), {
+  loading: () => <LoadingDot />,
+});
 
 export const Step = (props: StepProps): ReactElement => {
   return <>{props.children}</>;

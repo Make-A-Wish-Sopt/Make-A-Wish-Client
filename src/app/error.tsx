@@ -23,7 +23,7 @@ export default function ErrorPage({
         <div className="flex flex-col items-center justify-center w-375 h-full">
           <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
 
-          <h1 className="font-bitbit text-main_blue text-[100px]">ERROR</h1>
+          <p className="font-bitbit text-main_blue text-[100px]">ERROR</p>
           <p className="font-bitbit text-white text-[25px]">{alertMessage}</p>
 
           <FixedBottomButtonWrapper>

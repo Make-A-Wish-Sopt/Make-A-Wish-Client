@@ -5,8 +5,7 @@ import { WishesDepositEditStepsType } from '@/app/mypage/edit/deposit/page';
 // import SelectDeposit, {
 //   WishesDepositSubmitButton,
 // } from '@/domain/wishes/create/select/selectDeposit';
-import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
-import WishesKakaopayInputForm from '@/domain/wishes/create/wishesKakaopayInputForm';
+
 import { useRouters } from '@/hooks/common/useRouters';
 import useToggle from '@/hooks/common/useToggle';
 import { PropsWithChildren, useEffect } from 'react';
@@ -55,33 +54,33 @@ export default function WisheDepositEditPageContainer({
           ),
           kakaopay: (
             <>
-              <WishesKakaopayInputForm
+              {/* <WishesKakaopayInputForm
                 isKakaoPayCodeValid={isKakaoPayCodeValid}
                 noticeAgree={noticeAgree}
                 submitBtnActiveState={submitBtnActiveState}
                 isLoading={isLoading}
-              >
-                {/* <WishesEditAccountSubmitButton
+              > */}
+              {/* <WishesEditAccountSubmitButton
                   disabled={!submitBtnActiveState.state}
                   forPayCode={true}
                 /> */}
-              </WishesKakaopayInputForm>
+              {/* </WishesKakaopayInputForm> */}
             </>
           ),
           account: (
             <>
-              <WishesAccountInputForm
+              {/* <WishesAccountInputForm
                 accountVerifyBtnState={accountVerifyBtnState}
                 isAccountValid={isAccountValid}
                 isLoading={isLoading}
                 submitBtnActiveState={submitBtnActiveState}
                 noticeAgree={noticeAgree}
-              >
-                {/* <WishesEditAccountSubmitButton
+              > */}
+              {/* <WishesEditAccountSubmitButton
                   disabled={!submitBtnActiveState.state}
                   forPayCode={false}
                 /> */}
-              </WishesAccountInputForm>
+              {/* </WishesAccountInputForm> */}
             </>
           ),
         }[step]

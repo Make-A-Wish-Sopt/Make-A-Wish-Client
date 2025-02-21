@@ -8,6 +8,7 @@ import useToggle from '@/hooks/common/useToggle';
 
 import { selectPaymenet } from '../container';
 import FunnelStepButton from '@/components/Modules/FunnelStepButton';
+import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
 
 export default function SelectPaymentMethod() {
   const selectAccount = useToggle();
@@ -42,10 +43,12 @@ export default function SelectPaymentMethod() {
         </div>
       </InputForm>
 
-      <FunnelStepButton
-        nextButtonProps={{ onNextStep: handleNextStep }}
-        prevButtonProps={{ onPrevStep: onPrevStep, bgColor: 'gray4' }}
-      />
+      <FixedBottomButtonWrapper>
+        <FunnelStepButton
+          nextButtonProps={{ onNextStep: handleNextStep }}
+          prevButtonProps={{ onPrevStep: onPrevStep, bgColor: 'gray4' }}
+        />
+      </FixedBottomButtonWrapper>
     </>
   );
 }

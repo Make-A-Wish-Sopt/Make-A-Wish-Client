@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { UploadImageLogoIc } from '../../../public/assets/icons';
 import { useImageContext } from '@/Context/imageContext';
 
-export const UploadImageBox = React.memo(function UploadImageBox() {
+const UploadImageBox = React.memo(function UploadImageBox({
+  readonly = false,
+}: {
+  readonly?: boolean;
+}) {
   const { imageUrl, uploadImageFile } = useImageContext();
   const [imageAspectRatio, setImageAspectRatio] = useState(331 / 220); // 초기값: 331:220 비율
 
@@ -26,7 +30,8 @@ export const UploadImageBox = React.memo(function UploadImageBox() {
           <Image
             src={imageUrl}
             alt="등록한 사진 이미지"
-            fill
+            width={331}
+            height={220}
             style={{
               objectFit: 'cover', // 이미지를 비율에 맞게 채움
               objectPosition: 'center', // 중심 정렬
@@ -43,6 +48,7 @@ export const UploadImageBox = React.memo(function UploadImageBox() {
               style={{
                 objectFit: 'contain',
               }}
+              priority
             />
           </div>
         )}
@@ -53,9 +59,11 @@ export const UploadImageBox = React.memo(function UploadImageBox() {
         type="file"
         accept=".jpg,.jpeg,.png"
         onChange={uploadImageFile}
-        // disabled={handleUploadImageFile === undefined}
+        disabled={readonly}
         readOnly
       />
     </label>
   );
 });
+
+export default UploadImageBox;

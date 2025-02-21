@@ -15,7 +15,7 @@ export default function FunnelStepButton({
   prevButtonProps: StepButtonProps;
 }) {
   return (
-    <div className="flex justify-between gap-10 pb-58">
+    <div className="flex w-full justify-between gap-10 pb-58">
       <Button
         onClick={prevButtonProps.onPrevStep}
         fontColor={prevButtonProps.fontColor || 'white'}

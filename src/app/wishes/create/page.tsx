@@ -5,10 +5,10 @@ import MainLayout from '@/layouts/MainLayout';
 import WishesCreatePageContainer from './components/container';
 import { WishesCreateTitleText } from './components/content';
 import dynamic from 'next/dynamic';
+import WishesLinkForm from './components/link/WishesLinkForm';
 
-const WishesLinkForm = dynamic(() => import('./components/link/WishesLinkForm'));
 const SelectPaymentMethod = dynamic(() => import('./components/select/SelectPaymentMethod'));
-const AccountForm = dynamic(
+const AccountInfoInputForm = dynamic(
   () => import('./components/selectPayment/account/AccountInfoInputForm'),
 );
 const KakaopayCodeInputForm = dynamic(
@@ -38,7 +38,7 @@ export default async function WishesCreatePage({
 
             <Step name="account">
               <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
-              <AccountForm />
+              <AccountInfoInputForm />
             </Step>
 
             <Step name="kakaopay">

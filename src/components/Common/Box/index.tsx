@@ -1,5 +1,4 @@
 import { ColorsTypes, FontsTypes } from '@/styles/styles';
-
 import { CSSProperties, PropsWithChildren } from 'react';
 
 export interface BoxProps {
@@ -8,6 +7,7 @@ export interface BoxProps {
   font?: keyof FontsTypes;
   styles?: CSSProperties;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  isLoading?: boolean; // 스켈레톤 여부 추가
 }
 
 export default function Box(props: PropsWithChildren<BoxProps>) {
@@ -17,16 +17,21 @@ export default function Box(props: PropsWithChildren<BoxProps>) {
     fontColor = 'white',
     styles,
     onClick,
+    isLoading = false,
     children,
   } = props;
 
   return (
     <div
-      className={`w-full h-50 bg-${bgColor} font-${font} text-${fontColor} p-10 pl-12 rounded-xl`}
+      className={`w-full h-50 rounded-xl p-10 pl-12 ${
+        isLoading
+          ? 'animate-pulse bg-gray-300' // 스켈레톤 스타일
+          : `bg-${bgColor} font-${font} text-${fontColor}`
+      }`}
       style={styles}
       onClick={onClick}
     >
-      {children}
+      {isLoading ? null : children}
     </div>
   );
 }

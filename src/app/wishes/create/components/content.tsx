@@ -5,13 +5,19 @@ import { PresentListSample } from '@/components/UI/PresentList';
 import { WishStatusType } from '@/types/wishesType';
 import { WishesFormPresentIc } from '@assets/icons';
 import { SharePageCakeImg } from '@assets/images';
-import { checkComp } from '@/utils/common/checkComponent';
 
 export function WishesCreateTitleText({ children }: PropsWithChildren) {
   return (
     <div className="flex items-center gap-10 mt-26 mb-20">
-      <Image src={WishesFormPresentIc} alt="선물 아이콘 이미지" />
-      <h1 className="font-bitbit text-main_blue text-[24px]">{children}</h1>
+      <Image
+        src={WishesFormPresentIc}
+        alt="선물 아이콘 이미지"
+        width={18}
+        height={24}
+        priority
+        fetchPriority="high"
+      />
+      <p className="font-bitbit text-main_blue text-[24px]">{children}</p>
     </div>
   );
 }
@@ -45,11 +51,11 @@ export function WishesCreateDoneMessage({
 }) {
   return (
     <div className="flex flex-col items-center w-full">
-      <h1 className="font-bitbit text-[24px] text-main_blue mt-76 mb-20 leading-10 text-center">
+      <p className="font-bitbit text-[24px] text-main_blue mt-76 mb-20 leading-10 text-center">
         {nickName}의 생일잔치
         <br />
         링크 생성 완료!{' '}
-      </h1>
+      </p>
       <span className="font-galmuri text-[14px] text-white mb-44">
         {status === 'WHILE' && '생일 축하 받으로 가볼까요?'}
         {status === 'BEFORE' && `${dDay}일 뒤부터 링크를 공유할 수 있어요`}

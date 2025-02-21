@@ -50,7 +50,7 @@ export default function PresentList({
             onClick={() => handleSelectPresent(item.id)}
             key={item.id}
           >
-            <Image src={item.image} alt="선물 이미지" width={56} />
+            <Image src={item.image} alt="선물 이미지" width={56} height={56} />
             <span>{item.itemName}</span>
             <span>{convertMoneyText(item.price.toString())}원</span>
           </div>
@@ -70,7 +70,7 @@ export function PresentListSample() {
           style={{ backgroundColor: '#08232B' }}
           key={item.id}
         >
-          <Image src={item.image} alt="선물 이미지" width={56} />
+          <Image src={item.image} alt="선물 이미지" width={56} height={56} />
           <span className="opacity-70">{item.itemName}</span>
           <span className="opacity-70">{convertMoneyText(item.price.toString())}원</span>
         </div>

@@ -64,8 +64,8 @@ function WishesLinkSubmitObserver({ children }: PropsWithChildren) {
 
   useEffect(() => {
     formState.isValid
-      ? nextButtonDisalbed.changeState(false)
-      : nextButtonDisalbed.changeState(true);
+      ? nextButtonDisalbed.changeState(true)
+      : nextButtonDisalbed.changeState(false);
   }, [formState.isValid]);
 
   return (
@@ -75,7 +75,7 @@ function WishesLinkSubmitObserver({ children }: PropsWithChildren) {
         nextButtonProps={{
           onNextStep: handleClickNext,
           label: nextButtonLabel,
-          disabled: nextButtonDisalbed.state,
+          disabled: !nextButtonDisalbed.state,
         }}
         prevButtonProps={{ disabled: true }}
       />

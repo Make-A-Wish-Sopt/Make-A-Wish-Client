@@ -1,7 +1,7 @@
 import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
-import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { getPublicWishes } from '@/api/public';
+import UploadImageBox from '@/components/UI/UploadImageBox';
 
 export async function MessageFromWisheMaker({ wishId }: { wishId: string }) {
   const publicWishesData = await getPublicWishes(wishId);
