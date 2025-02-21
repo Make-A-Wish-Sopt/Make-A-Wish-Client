@@ -2,18 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 최적화 후 폰트 코드 */
 @font-face {
-  font-family: 'DNFBitBitTTF';
-  src: url('/fonts/DNFBitBitTTF.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Galmuri11';
+  font-weight: 400;
   font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Galmuri11/Galmuri11-Regular.woff2')
+    format('woff2');
 }
 
 @font-face {
-  font-family: 'Galmuri11';
-  src: url('/fonts/Galmuri11.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'bitbit';
+  font-display: swap;
+  src: url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2');
 }
 
 @layer utilities {
@@ -26,29 +28,8 @@
 html,
 body {
   overflow-x: hidden;
-}
-
-html {
-  scroll-behavior: smooth;
   font-size: 62.5%;
-}
-
-body {
-  position: relative;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-}
-
-ol,
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
+  scroll-behavior: smooth;
 }
 
 textarea,
@@ -60,17 +41,6 @@ button {
   color: inherit;
   font: inherit;
 }
-button {
-  cursor: pointer;
-}
-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-}
 
 /* input 자동완성 시 배경색상 변경 방지 */
 
@@ -78,6 +48,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
+  -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
   -webkit-transition: background-color 9999s ease-out;
   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;

@@ -11,7 +11,7 @@
  * @returns {string} 머메이드 다이어그램 코드
  */
 
-import { StepsType } from '@/hooks/common/useLinkedStep';
+import { StepsType } from '@/hooks/common/useFunnel';
 
 export function createMermaidFlowChart(
   steps: StepsType,
@@ -77,5 +77,3 @@ export function createMermaidFlowChart(
 
   return mermaidCode;
 }
-
-export const testMermaid = () => {};

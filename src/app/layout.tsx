@@ -22,15 +22,22 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
+const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className="bg-background">
       <body>
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <div id="modal-root" />
-        <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
+        <Script src="https://developers.kakao.com/sdk/js/kakao.js" defer />
+
+        {/* {isProduction && (
+          <>
+            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE!} />
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE!} />
+          </>
+        )} */}
       </body>
     </html>
   );

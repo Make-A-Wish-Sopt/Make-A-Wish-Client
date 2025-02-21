@@ -13,7 +13,7 @@ export default function SelectPayment({
 }) {
   return (
     <div className="w-full">
-      <InputForm title="결제수단 선택" textCenter>
+      <InputForm title="결제수단 선택">
         <ul className="flex gap-8">
           {paymentListArray.map((paymentItem) => (
             <li
@@ -28,9 +28,7 @@ export default function SelectPayment({
               }}
             >
               <Image src={paymentItem.bankIconImg} alt="은행 로고 이미지" />
-              <span className="font-galmuri text-[14px] ">
-                {paymentItem.name}
-              </span>
+              <span className="font-galmuri text-[14px] ">{paymentItem.name}</span>
             </li>
           ))}
         </ul>

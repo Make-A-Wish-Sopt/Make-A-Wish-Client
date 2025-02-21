@@ -1,7 +1,7 @@
 import Box from '@/components/Common/Box';
 import { colors } from '@/styles/styles';
-import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { getPublicWishes } from '@/api/public';
+import UploadImageBox from '@/components/UI/UploadImageBox';
 
 export async function MessageFromWisheMaker({ wishId }: { wishId: string }) {
   const publicWishesData = await getPublicWishes(wishId);
@@ -20,7 +20,7 @@ export async function MessageFromWisheMaker({ wishId }: { wishId: string }) {
 
       {/* 이미지값 넣어줘야해요! */}
       <div className="flex flex-col w-full gap-10 mb-30">
-        <UploadImageBox imageUrl={publicWishesData.presentImageUrl} />
+        <UploadImageBox />
 
         <Box
           bgColor="background"

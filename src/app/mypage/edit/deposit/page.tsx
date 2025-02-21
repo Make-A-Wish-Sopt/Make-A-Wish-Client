@@ -1,9 +1,11 @@
 import { getUserAccount } from '@/api/user';
 import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import { WishesCreateTitleText } from '@/app/wishes/create/components/content';
+import BackButton from '@/components/Elements/Button/BackButton';
+import Header from '@/components/Layout/Hedaer';
 import WisheDepositEditPageContainer from '@/domain/mypage/edit/deposit/container';
-import { WishesCreateTitleText } from '@/domain/wishes/create/component';
+
 import MainLayout from '@/layouts/MainLayout';
 
 const WishesDepositEditSteps = ['select', 'kakaopay', 'account'] as const;

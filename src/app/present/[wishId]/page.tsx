@@ -1,6 +1,7 @@
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import BackButton from '@/components/Elements/Button/BackButton';
+import Header from '@/components/Layout/Hedaer';
 import GivePresentPageContainer from '@/domain/present/[wishId]/container';
 import MainLayout from '@/layouts/MainLayout';
 

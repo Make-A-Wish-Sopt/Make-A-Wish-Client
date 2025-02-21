@@ -1,69 +1,55 @@
-import ErrorPage from '@/app/error';
-import Header, { BackButton } from '@/components/Common/Hedaer';
-import { WishesCreateTitleText } from '@/domain/wishes/create/component';
-import WishesCreatePageContainer from '@/domain/wishes/create/container';
-import { WishesCreateSuccess } from '@/domain/wishes/create/service';
+import { Funnel, Step } from '@/components/Common/Funnel';
+import BackButton from '@/components/Elements/Button/BackButton';
+import Header from '@/components/Layout/Hedaer';
 import MainLayout from '@/layouts/MainLayout';
-import { convertDecode } from '@/utils/common/convert';
+import WishesCreatePageContainer from './components/container';
+import { WishesCreateTitleText } from './components/content';
+import dynamic from 'next/dynamic';
+import WishesLinkForm from './components/link/WishesLinkForm';
 
-const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done'] as const;
-export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
+const SelectPaymentMethod = dynamic(() => import('./components/select/SelectPaymentMethod'));
+const AccountInfoInputForm = dynamic(
+  () => import('./components/selectPayment/account/AccountInfoInputForm'),
+);
+const KakaopayCodeInputForm = dynamic(
+  () => import('./components/selectPayment/kakaopay/KakaopayCodeInputForm'),
+);
+const WishesCreateSuccess = dynamic(() => import('./components/service'));
 
 export default async function WishesCreatePage({
   searchParams,
 }: {
-  searchParams: { step: WishesCreateStepType; wishTitle: string };
+  searchParams: { step: string; wishTitle: string };
 }) {
-  const { step, wishTitle } = searchParams;
-
-  if (
-    (step === 'link' && !wishTitle) ||
-    !WishesCreateSteps.includes(step as WishesCreateStepType)
-  ) {
-    return (
-      <ErrorPage
-        alertMessage="잘못된 소원생성 접근이에요!"
-        routePath="/wishes"
-        btnMessage="소원 생성하러가기"
-      />
-    );
-  }
-
-  const decodeWishTitle = wishTitle ? convertDecode(wishTitle) : '';
-
   return (
     <>
       <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />} isPrivate>
-        <WishesCreatePageContainer step={step} wishTitle={decodeWishTitle}>
-          {
-            {
-              link: (
-                <>
-                  <WishesCreateTitleText>생일잔치 링크 생성하기</WishesCreateTitleText>
-                </>
-              ),
-              select: (
-                <>
-                  <WishesCreateTitleText>현금 입금 방식 선택하기</WishesCreateTitleText>
-                </>
-              ),
-              kakaopay: (
-                <>
-                  <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>
-                </>
-              ),
-              account: (
-                <>
-                  <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
-                </>
-              ),
-              done: (
-                <>
-                  <WishesCreateSuccess />,
-                </>
-              ),
-            }[step]
-          }
+        <WishesCreatePageContainer>
+          <Funnel>
+            <Step name="link">
+              <WishesCreateTitleText>생일잔치 링크 생성하기</WishesCreateTitleText>
+              <WishesLinkForm />
+            </Step>
+
+            <Step name="select">
+              <WishesCreateTitleText>현금 입금 방식 선택하기</WishesCreateTitleText>
+              <SelectPaymentMethod />
+            </Step>
+
+            <Step name="account">
+              <WishesCreateTitleText>입금받을 계좌 입력하기</WishesCreateTitleText>
+              <AccountInfoInputForm />
+            </Step>
+
+            <Step name="kakaopay">
+              <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>
+              <KakaopayCodeInputForm />
+            </Step>
+
+            <Step name="done">
+              <WishesCreateSuccess />
+            </Step>
+          </Funnel>
         </WishesCreatePageContainer>
       </MainLayout>
     </>

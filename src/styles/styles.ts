@@ -18,20 +18,12 @@ export const colors = {
 
 export type ColorsTypes = typeof colors;
 
-const sizeList: { [key: number]: string } = {};
-for (let i = 1; i <= 400; i++) {
-  sizeList[i] = `${i * 0.1}rem`;
-}
+const sizeList = Object.fromEntries(
+  Array.from({ length: 400 }, (_, i) => [i + 1, `${(i + 1) * 0.1}rem`]),
+);
 
 export const sizes = {
   ...sizeList,
-  220: '22rem',
-  235: '23.5rem',
-  250: '25rem',
-  300: '30rem',
-  331: '33.1rem',
-  350: '35rem',
-  375: '37.5rem',
   500: '50rem',
   608: '60.8rem',
 
@@ -42,7 +34,7 @@ export const sizes = {
 export type SizesTypes = typeof sizes;
 
 export const fonts = {
-  bitbit: ['DNFBitBitTTF', 'sans-serif'],
+  bitbit: ['bitbit', 'sans-serif'],
   galmuri: ['Galmuri11', 'sans-serif'],
 };
 

@@ -1,5 +1,5 @@
 import MainLayout from '@/layouts/MainLayout';
-import Header, { MypageButton } from '@/components/Common/Hedaer';
+import Header from '@/components/Layout/Hedaer';
 import { getMainProgressWishesData } from '@/api/wishes';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import WishesPageContainer, {
@@ -14,6 +14,7 @@ import { defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
 import GradientShadow from '@/components/UI/GradientShadow';
 import { GuideText } from '@/components/UI/GuideText';
 import { DayCount } from '@/domain/wishes/(main)/content';
+import MypageButton from '@/components/Elements/Button/MypageButton';
 
 export default async function WishesPage() {
   const progressWishesData = await getMainProgressWishesData();
