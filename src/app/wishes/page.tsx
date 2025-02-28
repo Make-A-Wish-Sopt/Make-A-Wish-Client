@@ -56,10 +56,7 @@ export default async function WishesPage() {
           )}
 
           <GradientShadow height={19} />
-          <WishesPageFixedBottomButton
-            isWishProgress={!!progressWishesData}
-            disabled={progressWishesData?.status === 'BEFORE'}
-          >
+          <WishesPageFixedBottomButton isWishProgress={!!progressWishesData}>
             {!!progressWishesData
               ? progressWishesData?.status === 'BEFORE'
                 ? `${progressWishesData?.dayCount + 1}일 뒤에 생일잔치 오픈!`

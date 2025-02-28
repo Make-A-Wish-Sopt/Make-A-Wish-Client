@@ -27,7 +27,6 @@ export async function WishesCreateSuccess() {
     <WishesCreateDone
       progressWishesData={progressWishesData}
       nickName={nickName}
-      disabled={status === 'BEFORE'}
       tryGiveCakeMessage={tryGiveCakeMessage}
       shareBtnText={'생일잔치 체험해보기'}
     >

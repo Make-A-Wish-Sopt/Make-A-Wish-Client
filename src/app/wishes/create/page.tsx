@@ -4,6 +4,7 @@ import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import WishesCreatePageContainer from '@/domain/wishes/create/container';
 import { WishesCreateSuccess } from '@/domain/wishes/create/service';
 import MainLayout from '@/layouts/MainLayout';
+import { WishStatusType } from '@/types/wishesType';
 
 const WishesCreateSteps = ['link', 'select', 'kakaopay', 'account', 'done', 'try'] as const;
 export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
@@ -11,7 +12,12 @@ export type WishesCreateStepType = (typeof WishesCreateSteps)[number];
 export default async function WishesCreatePage({
   searchParams,
 }: {
-  searchParams: { step: WishesCreateStepType; wishTitle: string; wishId: string };
+  searchParams: {
+    step: WishesCreateStepType;
+    wishTitle: string;
+    wishId: string;
+    status: string;
+  };
 }) {
   const { step, wishTitle, wishId } = searchParams;
 

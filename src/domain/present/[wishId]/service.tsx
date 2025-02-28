@@ -3,13 +3,17 @@ import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
+import { DefaultResponseType, PublicWishesDataType } from '@/types/api/response';
 
 export async function MessageFromWisheMaker({ wishId }: { wishId: string }) {
-  const publicWishesData = await getPublicWishes(wishId);
+  const publicProgressWishes = await getPublicWishes(wishId);
 
-  if (publicWishesData === 'done') {
-    return <ErrorPage alertMessage={`이미 종료된 생일잔치에요!`} />;
+  if (!publicProgressWishes.success) {
+    const errorResonse = publicProgressWishes.data as DefaultResponseType;
+    return <ErrorPage alertMessage={`${errorResonse.message}`} />;
   }
+
+  const publicWishesData = publicProgressWishes.data as PublicWishesDataType;
 
   return (
     <>

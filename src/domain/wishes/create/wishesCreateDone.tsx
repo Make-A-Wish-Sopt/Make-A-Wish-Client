@@ -12,14 +12,12 @@ import { CloseBlueIc } from '../../../../public/assets/icons';
 export default function WishesCreateDone({
   progressWishesData,
   nickName,
-  disabled = false,
   tryGiveCakeMessage,
   shareBtnText,
   children,
 }: {
   progressWishesData: MainProgressDataType;
   nickName: string;
-  disabled?: boolean;
   tryGiveCakeMessage: string;
   shareBtnText: string;
 } & PropsWithChildren) {
@@ -49,7 +47,6 @@ export default function WishesCreateDone({
       )}
       <SharePageFixedButtons
         handleShareModalState={handleShareModalState}
-        disabled={disabled}
         shareBtnText={shareBtnText}
         tryGiveCakeMessage={tryGiveCakeMessage}
         wishId={progressWishesData.wishId}
@@ -60,7 +57,6 @@ export default function WishesCreateDone({
 
 function SharePageFixedButtons({
   handleShareModalState,
-  disabled = false,
   shareBtnText,
   tryGiveCakeMessage,
   wishId,
@@ -80,7 +76,6 @@ function SharePageFixedButtons({
           onClick={() => {
             handleRouter(`/wishes/create?step=try&wishId=${wishId}`);
           }}
-          disabled={disabled}
         >
           {shareBtnText}
         </Button>

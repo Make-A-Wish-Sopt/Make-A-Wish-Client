@@ -16,16 +16,20 @@ import PresentGiverInfoInputForm from '@/domain/present/[wishId]/presentGiverInf
 import useToggle from '@/hooks/common/useToggle';
 import { colors } from '@/styles/styles';
 import { PublicWishesDataType } from '@/types/api/response';
+import { WishesLinkDataType } from '@/types/input';
+import { WishStatusType } from '@/types/wishesType';
 import { presentDataResolver, PresentDataResolverType } from '@/validation/present.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 export default function TryGiveCake({
-  publicWishesData,
+  progressWishLinkData,
   wishId,
 }: {
-  publicWishesData: PublicWishesDataType;
+  progressWishLinkData?: WishesLinkDataType & {
+    status: WishStatusType;
+  };
   wishId: string;
 }) {
   const avatarCakeId = 6;
@@ -38,7 +42,7 @@ export default function TryGiveCake({
     resolver: yupResolver(presentDataResolver),
   });
 
-  const { wantsGift } = publicWishesData;
+  const { wantsGift, status } = progressWishLinkData;
   const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
   const { giftMenuId } = methods.watch();
   const giveState = useToggle();
@@ -88,7 +92,7 @@ export default function TryGiveCake({
           <>
             <div className="flex flex-col items-center w-full mt-25">
               <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-20">
-                {`${methods.getValues('name')}님,\n${publicWishesData.nickname}의 생일잔치에\n와주셔서 감사해요!`}
+                {`${methods.getValues('name')}님,\n${methods.getValues('name')}의 생일잔치에\n와주셔서 감사해요!`}
               </span>
             </div>
 
@@ -101,7 +105,7 @@ export default function TryGiveCake({
             {shareModalState.state && (
               <ShareLinkModal
                 wishId={wishId}
-                nickName={publicWishesData.nickname}
+                nickName={methods.getValues('name')}
                 modalState={shareModalState.state}
                 handleModalState={shareModalState.handleState}
               />
@@ -113,9 +117,7 @@ export default function TryGiveCake({
                   shareModalState.changeState(true);
                 }}
               >
-                {publicWishesData.dayCount > 0
-                  ? '생일잔치 링크 미리 저장하기'
-                  : '지금 바로 친구 초대하기'}
+                {status === 'BEFORE' ? '생일잔치 링크 미리 저장하기' : '지금 바로 친구 초대하기'}
                 {}
               </Button>
             </FixedBottomButtonWrapper>
@@ -127,7 +129,7 @@ export default function TryGiveCake({
             </span>
 
             <div className="flex flex-col w-full gap-10 mb-30">
-              <UploadImageBox imageUrl={publicWishesData.presentImageUrl} />
+              <UploadImageBox imageUrl={progressWishLinkData.imageUrl} />
 
               <Box
                 bgColor="background"
@@ -140,7 +142,7 @@ export default function TryGiveCake({
                   border: `1px solid ${colors.dark_green}`,
                 }}
               >
-                <span className="text-[14px] text-gray1">{publicWishesData.hint}</span>
+                <span className="text-[14px] text-gray1">{progressWishLinkData.hint}</span>
               </Box>
             </div>
 

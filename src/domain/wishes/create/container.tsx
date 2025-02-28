@@ -31,7 +31,11 @@ export default function WishesCreatePageContainer({
   wishTitle,
   wishId,
   children,
-}: { step: WishesCreateStepType; wishTitle: string; wishId?: string } & PropsWithChildren) {
+}: {
+  step: WishesCreateStepType;
+  wishTitle: string;
+  wishId?: string;
+} & PropsWithChildren) {
   const savedWishesLinkDataMethods = useForm<WishesLinkDataResolverType>({
     defaultValues: {
       ...wishesLinkInputInit,

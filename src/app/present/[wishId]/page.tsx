@@ -3,6 +3,7 @@ import ErrorPage from '@/app/error';
 import Header from '@/components/Common/Hedaer';
 import GivePresentPageContainer from '@/domain/present/[wishId]/container';
 import MainLayout from '@/layouts/MainLayout';
+import { DefaultResponseType, PublicWishesDataType } from '@/types/api/response';
 
 export type PresentStepType = 'present' | 'payment' | 'done';
 export type PaymentType = 'kakaopay' | 'account';
@@ -18,15 +19,14 @@ export default async function GivePresentPage({
     presentId?: string;
   };
 }) {
-  const publicWishesData = await getPublicWishes(params.wishId);
+  const publicProgressWishes = await getPublicWishes(params.wishId);
 
-  if (publicWishesData === 'done') {
-    return <ErrorPage alertMessage={`이미 종료된 생일잔치에요!`} />;
+  if (!publicProgressWishes.success) {
+    const errorResonse = publicProgressWishes.data as DefaultResponseType;
+    return <ErrorPage alertMessage={`${errorResonse.message}`} />;
   }
 
-  if (!publicWishesData) {
-    return <ErrorPage alertMessage="해당 생일잔치는 존재하지 않아요!" />;
-  }
+  const publicWishesData = publicProgressWishes.data as PublicWishesDataType;
 
   return (
     <>

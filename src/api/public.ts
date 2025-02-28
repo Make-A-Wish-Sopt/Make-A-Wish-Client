@@ -16,10 +16,11 @@ export const getPublicWishes = async (wishId: string) => {
       )}`,
     );
 
-    return data.data.data;
+    return { success: true, data: data.data.data };
   } catch (error) {
     const response = error?.response.data as DefaultResponseType;
-    if (response.message === '이미 종료된 소원이에요!') return 'done';
+
+    return { success: false, data: response };
   }
 };
 

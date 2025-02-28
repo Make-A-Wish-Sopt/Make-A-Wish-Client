@@ -1,28 +1,30 @@
 'use client';
 
-import { getPublicWishes } from '@/api/public';
-import ErrorPage from '@/app/error';
 import TryGiveCake from './tryGiveCake';
 import { useEffect, useState } from 'react';
-import { PublicWishesDataType } from '@/types/api/response';
 import Loading from '@/app/loading';
+import { getProgressWishLinkData } from '@/api/wishes';
+import { WishesLinkDataType } from '@/types/input';
+import { WishStatusType } from '@/types/wishesType';
 
 export default function WishesTryCakePresent({ wishId }: { wishId: string }) {
-  const [publicWishesData, setPublicWishesData] = useState<PublicWishesDataType | null>(null);
+  const [progressWishLinkData, setProgressWishLinkData] = useState<
+    (WishesLinkDataType & { status: WishStatusType }) | null
+  >(null);
 
   useEffect(() => {
-    getPublicWishes(wishId).then((response) => {
-      if (response === 'done') return;
-
-      setPublicWishesData(response);
+    getProgressWishLinkData().then((response) => {
+      setProgressWishLinkData(response);
     });
   }, []);
 
-  if (!publicWishesData) return <Loading />;
-
   return (
     <>
-      <TryGiveCake publicWishesData={publicWishesData} wishId={wishId} />
+      {progressWishLinkData ? (
+        <TryGiveCake progressWishLinkData={progressWishLinkData} wishId={wishId} />
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }
