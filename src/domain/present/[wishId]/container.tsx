@@ -58,7 +58,6 @@ export default function GivePresentPageContainer({
 
   const { transferInfo, nickname, wantsGift } = publicWishesData;
 
-  const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
   const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
   const {
     state: presenetMessageModalState,
@@ -68,42 +67,9 @@ export default function GivePresentPageContainer({
   const { giftMenuId } = methods.watch();
   const selectedCakeId = avatarCakeId;
   const { handleRouter } = useRouters();
-  const paymentType = forPayCode ? 'kakaopay' : 'account';
+  const paymentType = transferInfo.forPayCode ? 'kakaopay' : 'account';
 
   const { selectedId, isSelected, handleSelectOne } = useSelectItem();
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      sessionStorage.setItem('isReloading', 'true'); // 새로고침 여부 저장
-      event.preventDefault();
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, []);
-
-  useEffect(() => {
-    if (sessionStorage.getItem('isReloading')) {
-      handleRouter(`/wishes/${wishId}`);
-      sessionStorage.removeItem('isReloading'); // 상태 초기화
-    }
-  }, []);
-
-  useEffect(() => {
-    if (messageOnlyOption) {
-      changeGiftMenuId(0);
-    }
-  }, [messageOnlyOption]);
-
-  useEffect(() => {
-    if (step === 'payment') {
-      sendGAEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
-      sendGTMEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
-    } else {
-      sendGAEvent('event', GA_VIEW_PRESENT[step] as string); // GA4에 이벤트 전송
-      sendGTMEvent('event', GA_VIEW_PRESENT[step] as string); // GTM에 이벤트 전송
-    }
-  }, [step]);
 
   function changeGiftMenuId(id: number) {
     methods.setValue('giftMenuId', id);
@@ -165,6 +131,91 @@ export default function GivePresentPageContainer({
       // window.open(`${kakaoPayCode}${presentKakaopayCodePrice[giftMenuId]}`);
     }
   }
+
+  if (!transferInfo) {
+    <>
+      {children}
+      <FormProvider {...methods}>
+        {
+          {
+            present: (
+              <>
+                <MessageFromWisheMaker publicWishesData={publicWishesData} />
+                <div className="pb-58">
+                  <Button onClick={handleGivePresent} disabled={!isValid()}>
+                    {'친구 생일 축하해주기'}
+                  </Button>
+                </div>
+              </>
+            ),
+            done: (
+              <section className="relative w-full ">
+                <PresentMessageModal
+                  nickName={publicWishesData.nickname}
+                  modalState={presenetMessageModalState}
+                  handleModalState={handlePresentMessageModalState}
+                  changeModalState={changePresenetMessgaeModalState}
+                  selectedCakeId={selectedCakeId}
+                />
+
+                <PresentSuccess
+                  giverName={methods.getValues('name')}
+                  wishesName={publicWishesData.nickname}
+                />
+                {!presenetMessageModalState && (
+                  <PresentSuccessCakeTree
+                    cakeList={[
+                      defaultCakeTreeDataObject[selectedCakeId],
+                      ...defaultCakeTreeDataArray,
+                    ]}
+                    modalState={presenetMessageModalState}
+                  />
+                )}
+
+                <GradientShadow height={19} />
+                <PresentSuccessSubmitButton />
+              </section>
+            ),
+          }[step]
+        }
+      </FormProvider>
+    </>;
+  }
+
+  const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      sessionStorage.setItem('isReloading', 'true'); // 새로고침 여부 저장
+      event.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('isReloading')) {
+      handleRouter(`/wishes/${wishId}`);
+      sessionStorage.removeItem('isReloading'); // 상태 초기화
+    }
+  }, []);
+
+  useEffect(() => {
+    if (messageOnlyOption) {
+      changeGiftMenuId(0);
+    }
+  }, [messageOnlyOption]);
+
+  useEffect(() => {
+    if (step === 'payment') {
+      sendGAEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
+      sendGTMEvent('event', GA_VIEW_PRESENT[step][paymentType]); // GA4에 이벤트 전송
+    } else {
+      sendGAEvent('event', GA_VIEW_PRESENT[step] as string); // GA4에 이벤트 전송
+      sendGTMEvent('event', GA_VIEW_PRESENT[step] as string); // GTM에 이벤트 전송
+    }
+  }, [step]);
 
   return (
     <>

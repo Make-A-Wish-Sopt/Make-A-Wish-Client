@@ -13,8 +13,10 @@ export default async function WishesIdPage({ params }: { params: { wishId: strin
 
   if (!publicProgressWishes.success) {
     const errorResonse = publicProgressWishes.data as DefaultResponseType;
-    return <ErrorPage alertMessage={`${errorResonse.message}`} />;
+    return <ErrorPage alertMessage={`${errorResonse.message}`} isError={false} />;
   }
+
+  console.log(publicProgressWishes);
 
   return (
     <>
