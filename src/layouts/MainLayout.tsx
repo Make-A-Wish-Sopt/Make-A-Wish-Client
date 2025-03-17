@@ -5,17 +5,11 @@ import ModalPortal from './ModalPortal';
 
 export default async function MainLayout({
   Header,
+  Footer,
   isPrivate = false,
   children,
-}: { Header?: JSX.Element; isPrivate?: boolean } & PropsWithChildren) {
-  const isUserLoggedIn = await isLoggedIn();
-
-  // 로그인 필요한 페이지에서 비로그인 상태 체크
-  if (isPrivate && !isUserLoggedIn) {
-    return (
-      <ErrorPage alertMessage="로그인이 필요해요!" routePath="/" btnMessage="로그인 하러가기" />
-    );
-  }
+}: { Header?: JSX.Element; Footer?: JSX.Element; isPrivate?: boolean } & PropsWithChildren) {
+  //추후 반응형까지 고려한 로직들을 추가 예정
 
   return (
     <>
@@ -23,6 +17,7 @@ export default async function MainLayout({
       <main className="relative flex justify-center">
         <div className="w-375 h-svh px-22">{children}</div>
       </main>
+      {Footer}
     </>
   );
 }

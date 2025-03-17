@@ -4,6 +4,18 @@ import React, { ButtonHTMLAttributes, CSSProperties, PropsWithChildren, ReactNod
 import { colors, ColorsTypes, FontsTypes } from '@/styles/styles';
 import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
 
+export const defaultButtonClassName = ({
+  font = 'bitbit',
+  bgColor = 'main_blue',
+  restClass,
+}: {
+  font?: keyof FontsTypes;
+  bgColor: keyof ColorsTypes;
+  restClass?: string;
+}) => {
+  return `flex justify-center items-center w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl ${restClass ?? ''}`;
+};
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   disabled?: boolean;
