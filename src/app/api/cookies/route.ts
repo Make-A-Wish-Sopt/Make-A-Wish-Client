@@ -3,21 +3,18 @@ import { cookies } from 'next/headers';
 import { LOGIN_USER_COOKIE_KEY } from '@/constant/cookies';
 import { DefaultResponseType } from '@/types/api/response';
 import { LoginUserDataType } from '@/utils/common/cookies';
-import { setCookie } from 'cookies-next/server';
 
 export async function POST(request: Request) {
   const cookiesData = await request.json();
-
   const cookieStore = cookies();
-
   cookieStore.set(LOGIN_USER_COOKIE_KEY, JSON.stringify(cookiesData), {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
   });
 
+  console.log('cookieStore: ', cookieStore);
   const data: LoginUserDataType = JSON.parse(cookieStore.get(LOGIN_USER_COOKIE_KEY)?.value);
-
   return NextResponse.json<DefaultResponseType<LoginUserDataType>>({
     success: true,
     message: '쿠키 데이터 저장성공',
@@ -26,7 +23,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(req: any) {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
 
   if (!cookieStore) {
     return NextResponse.json({ success: false });

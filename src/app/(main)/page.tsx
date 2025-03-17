@@ -5,7 +5,7 @@ import { MainCakeListImg } from '@public/assets/images';
 import Link from 'next/link';
 import { KakaoLoginIc } from '@public/assets/icons';
 
-const Page = () => {
+const Page = async () => {
   const kakaoClientId = process.env.KAKAO_RESTAPI_KEY;
   const redirectURI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
   const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoClientId}&redirect_uri=${redirectURI}`;

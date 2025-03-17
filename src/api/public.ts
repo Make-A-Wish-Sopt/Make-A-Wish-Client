@@ -1,5 +1,5 @@
 import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
-import { client } from './common/axios';
+import { client } from '../configs/client';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 import { PresentDataResolverType } from '@/validation/present.validate';
 import axios from 'axios';

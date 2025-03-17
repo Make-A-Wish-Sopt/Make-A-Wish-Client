@@ -1,5 +1,5 @@
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
-import { client } from './common/axios';
+import { client } from '../configs/client';
 import { API_VERSION_01, PATH_CAKES } from './path';
 import { CakePresentMessageResponseType, GetCakesResultResponseType } from '@/types/api/response';
 

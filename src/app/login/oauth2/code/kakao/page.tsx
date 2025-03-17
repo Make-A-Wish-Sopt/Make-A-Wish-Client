@@ -1,12 +1,32 @@
-import LoginPageContainer from '@/domain/login/container';
-import { LoginService } from '@/domain/login/service';
+import { postAuthKakao } from '@/api/auth';
 
-export default async function KakaoLoginPage({ searchParams }: { searchParams: { code: string } }) {
+import MainLayout from '@/layouts/MainLayout';
+import SaveUserDataWithRedirectWishes from './Components/Login';
+
+//변경예정
+
+interface PageProps {
+  searchParams: {
+    code: string;
+  };
+}
+
+const Page = async ({ searchParams }: PageProps) => {
+  if (!searchParams.code) {
+    return <div className="text-white">카카오 로그인 에러</div>;
+  }
   const { code } = searchParams;
+  const loginUserData = await postAuthKakao(code);
+
+  if (!loginUserData) {
+    return <div className="text-white">카카오 로그인 에러</div>;
+  }
 
   return (
-    <LoginPageContainer>
-      <LoginService code={code} />
-    </LoginPageContainer>
+    <MainLayout>
+      <SaveUserDataWithRedirectWishes loginUserData={loginUserData} />
+    </MainLayout>
   );
-}
+};
+
+export default Page;

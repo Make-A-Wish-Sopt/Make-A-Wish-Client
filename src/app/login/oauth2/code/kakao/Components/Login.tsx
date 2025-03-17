@@ -2,21 +2,17 @@
 
 import ErrorPage from '@/app/error';
 import Loading from '@/app/loading';
-import { apiRoute } from '@/configs/axios.configs';
+import { apiRoute } from '@/configs/apiRoute';
 import { useRouters } from '@/hooks/common/useRouters';
 import { DefaultResponseType } from '@/types/api/response';
 import { LoginUserDataType } from '@/utils/common/cookies';
 import { PropsWithChildren, useEffect } from 'react';
 
-export default function LoginPageContainer({ children }: PropsWithChildren) {
-  return <>{children}</>;
-}
-
-export function SaveUserDataWithRedirectWishes({
+const SaveUserDataWithRedirectWishes = ({
   loginUserData,
 }: {
   loginUserData: LoginUserDataType;
-}) {
+}) => {
   const { handleRouter } = useRouters();
 
   useEffect(() => {
@@ -40,4 +36,6 @@ export function SaveUserDataWithRedirectWishes({
   }, []);
 
   return <Loading />;
-}
+};
+
+export default SaveUserDataWithRedirectWishes;

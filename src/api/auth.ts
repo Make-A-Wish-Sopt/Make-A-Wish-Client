@@ -18,7 +18,9 @@ export const postAuthKakao = async (code: string) => {
     );
 
     return data.data.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const updateAccessToken = async () => {

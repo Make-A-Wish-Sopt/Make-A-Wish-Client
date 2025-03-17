@@ -1,10 +1,7 @@
-import { getLoginUserCookiesData, LoginUserDataType } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import axios, { AxiosError } from 'axios';
-import { updateAccessToken } from '../auth';
+import { updateAccessToken } from '../api/auth';
 import { DefaultResponseType } from '@/types/api/response';
-import { getCookie, setCookie } from 'cookies-next/client';
-import { cookies } from 'next/headers';
-import { LOGIN_USER_COOKIE_KEY } from '@/constant/cookies';
 
 let tokenRefreshFlag = false;
 

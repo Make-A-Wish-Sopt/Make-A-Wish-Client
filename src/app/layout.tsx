@@ -29,8 +29,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <div id="modal-root" />
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
+
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
+          </>
+        )}
       </body>
     </html>
   );
