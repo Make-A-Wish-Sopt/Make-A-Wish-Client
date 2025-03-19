@@ -26,10 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" className="bg-background">
       <body>
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {children}
         <div id="modal-root" />
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
-
         {process.env.NODE_ENV === 'production' && (
           <>
             <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_CODE} />

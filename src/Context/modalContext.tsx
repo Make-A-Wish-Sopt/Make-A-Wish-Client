@@ -1,26 +1,29 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import ModalPortal from '@/layouts/ModalPortal';
+import { createContext, PropsWithChildren, useContext } from 'react';
 
-type ModalContextType<T> = {
-  state: T;
-  update: (newState: T) => void;
+type ModalContextType<T extends string[]> = {
+  modalKeys: T;
 };
 
-const ModalContext = createContext<ModalContextType<any>>({
-  state: null,
-  update: () => {},
-});
+const ModalContext = createContext<ModalContextType<string[]> | undefined>(undefined);
 
-export function ModalContextProvider<T>({ init, children }: { init: T } & PropsWithChildren) {
-  const [state, update] = useState<T>(init);
-  return <ModalContext.Provider value={{ state, update }}>{children}</ModalContext.Provider>;
+export function ModalContextProvider<T extends string[]>({
+  init,
+  children,
+}: { init: T } & PropsWithChildren) {
+  return (
+    <ModalContext.Provider value={{ modalKeys: init }}>
+      <ModalPortal>{children}</ModalPortal>
+    </ModalContext.Provider>
+  );
 }
 
-export default ModalContext;
-
-export function useModalContext<T>() {
-  const context = useContext<ModalContextType<T>>(ModalContext);
-  if (!context) throw new Error('ModalContextType must be used within MainProvider');
+export function useModalContext<T extends string[]>() {
+  const context = useContext(ModalContext) as ModalContextType<T> | undefined;
+  if (!context) {
+    throw new Error('useModalContext must be used within a ModalContextProvider');
+  }
   return context;
 }
 
-//
+export default ModalContext;

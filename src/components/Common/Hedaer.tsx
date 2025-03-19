@@ -34,11 +34,19 @@ export function BackButton({ routePath }: { routePath?: RoutePathType }) {
       handleBack();
     }
   }
-  return <Image src={BackBtnIc} alt="뒤로가기 아이콘" onClick={handleRouteBack} />;
+  return (
+    <button>
+      <Image src={BackBtnIc} alt="뒤로가기 아이콘" onClick={handleRouteBack} />
+    </button>
+  );
 }
 
 export function MypageButton() {
   const { handleRouter } = useRouters();
 
-  return <Image src={MenuIc} alt="메뉴 아이콘" onClick={() => handleRouter('/mypage')} />;
+  return (
+    <button>
+      <Image src={MenuIc} alt="메뉴 아이콘" onClick={() => handleRouter('/mypage')} />
+    </button>
+  );
 }
