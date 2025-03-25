@@ -280,7 +280,11 @@ export default function GivePresentPageContainer({
                       presentPrice={
                         giftMenuId > 0 && presentListObject[giftMenuId].price.toString()
                       }
-                      account={`${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`}
+                      account={
+                        publicWishesData.transferInfo.accountInfo
+                          ? `${publicWishesData.transferInfo.accountInfo.account} ${publicWishesData.transferInfo.accountInfo.bank}`
+                          : ''
+                      }
                       isSelected={isSelected}
                       handleSelectOne={handleSelectOne}
                     />
