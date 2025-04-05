@@ -1,5 +1,5 @@
 import { getWishes } from '@/api/wishes';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Elements/Hedaer';
 import WishesHistoryPageContainer from '@/domain/mypage/wish-history/container';
 import { WishesCreateTitleText } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';

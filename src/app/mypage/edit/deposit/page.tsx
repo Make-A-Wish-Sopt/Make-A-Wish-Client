@@ -1,9 +1,9 @@
 import { getUserAccount } from '@/api/user';
 import { getProgressWishLinkData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Elements/Hedaer';
 import WisheDepositEditPageContainer from '@/domain/mypage/edit/deposit/container';
-import { WishesCreateTitleText } from '@/domain/wishes/create/component';
+import { WishCreateStepTitle } from '@/domain/wishes/create/component';
 import MainLayout from '@/layouts/MainLayout';
 
 const WishesDepositEditSteps = ['select', 'kakaopay', 'account'] as const;
@@ -36,15 +36,15 @@ export default async function WisheDepositEditPage({
       <WisheDepositEditPageContainer step={searchParams.step} forPayCode={transferInfo.forPayCode}>
         {
           {
-            select: <WishesCreateTitleText>현금 입금 방식 변경하기</WishesCreateTitleText>,
+            select: <WishCreateStepTitle>현금 입금 방식 변경하기</WishCreateStepTitle>,
             kakaopay: (
               <>
-                <WishesCreateTitleText>카카오톡 송금코드 가져오기</WishesCreateTitleText>,
+                <WishCreateStepTitle>카카오톡 송금코드 가져오기</WishCreateStepTitle>,
               </>
             ),
             account: (
               <>
-                <WishesCreateTitleText>입금 받을 계좌 입력하기</WishesCreateTitleText>
+                <WishCreateStepTitle>입금 받을 계좌 입력하기</WishCreateStepTitle>
               </>
             ),
           }[searchParams.step]

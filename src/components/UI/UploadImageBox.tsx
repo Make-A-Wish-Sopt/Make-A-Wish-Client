@@ -21,7 +21,7 @@ export const UploadImageBox = React.memo(function UploadImageBox({
   return (
     <label>
       <div
-        className="relative w-full bg-dark_green text-gray2 rounded-xl overflow-hidden"
+        className="relative w-full bg-dark_green text-gray2 rounded-xl overflow-hidden cursor-pointer"
         style={{
           aspectRatio: `${imageAspectRatio}`, // 이미지 비율에 따라 높이 설정
         }}

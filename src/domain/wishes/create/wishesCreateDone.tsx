@@ -1,10 +1,10 @@
 'use client';
 
-import Button from '@/components/Common/Button';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import ShareLinkModal from '@/components/Common/Modal/ShareLinkModal';
-import { useRouters } from '@/hooks/common/useRouters';
-import useToggle from '@/hooks/common/useToggle';
+import Button from '@/components/Elements/Button';
+import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
+import ShareLinkModal from '@/components/Elements/Modal/ShareLinkModal';
+import { useRouters } from '@/hooks/useRouters';
+import useBoolean from '@/hooks/useBoolean';
 import { MainProgressDataType } from '@/types/wishesType';
 import { PropsWithChildren } from 'react';
 
@@ -16,7 +16,7 @@ export default function WishesCreateDone({
   progressWishesData: MainProgressDataType;
   nickName: string;
 } & PropsWithChildren) {
-  const { state: shareModalState, handleState: handleShareModalState } = useToggle();
+  const { state: shareModalState, handleState: handleShareModalState } = useBoolean();
 
   return (
     <>

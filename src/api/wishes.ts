@@ -6,7 +6,7 @@ import {
   WishesHistoryResponseType,
   WishesProgressDataResponseType,
 } from '@/types/api/response';
-import { client } from '../configs/client';
+import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_WISHES } from './path';
 import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
 

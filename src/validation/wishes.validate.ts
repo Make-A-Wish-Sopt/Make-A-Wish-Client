@@ -1,7 +1,7 @@
-import { BANK_LIST, BANK_NAMES } from '@/constant/bankList';
+import { BANK_NAMES } from '@/constant/bankList';
 import * as yup from 'yup';
 
-export const wishesLinkDataResolver = yup
+export const WishesFormValidator = yup
   .object()
   .shape({
     imageUrl: yup.string().required('Image URL is required'),
@@ -13,10 +13,9 @@ export const wishesLinkDataResolver = yup
   })
   .noUnknown(true, 'Unknown field is not allowed')
   .required();
+export type WishesFormValidatorType = yup.InferType<typeof WishesFormValidator>;
 
-export type WishesLinkDataResolverType = yup.InferType<typeof wishesLinkDataResolver>;
-
-export const wishesAccountDataResolver = yup
+export const AccountFormValidator = yup
   .object()
   .shape({
     accountInfo: yup
@@ -57,4 +56,4 @@ export const wishesAccountDataResolver = yup
   .noUnknown(true, 'Unknown field is not allowed')
   .required();
 
-export type WishesAccountDataResolverType = yup.InferType<typeof wishesAccountDataResolver>;
+export type AccountFormValidatorType = yup.InferType<typeof AccountFormValidator>;

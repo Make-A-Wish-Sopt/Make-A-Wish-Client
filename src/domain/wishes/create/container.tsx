@@ -10,11 +10,11 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { useRouters } from '@/hooks/common/useRouters';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
-import Button from '@/components/Common/Button';
+import { useRouters } from '@/hooks/useRouters';
+import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
+import Button from '@/components/Elements/Button';
 import { postWishes } from '@/api/wishes';
-import useToggle from '@/hooks/common/useToggle';
+import useBoolean from '@/hooks/useBoolean';
 import WishesLinkInputForm from './wishesLinkInputForm';
 import SelectDeposit, { WishesDepositSubmitButton } from './selectDeposit';
 import WishesKakaopayInputForm from './wishesKakaopayInputForm';
@@ -36,13 +36,13 @@ export default function WishesCreatePageContainer({
     resolver: yupResolver(wishesLinkDataResolver),
   });
 
-  const selectAccount = useToggle();
-  const isKakaoPayCodeValid = useToggle();
-  const noticeAgree = useToggle();
-  const submitBtnActiveState = useToggle();
-  const accountVerifyBtnState = useToggle();
-  const isLoading = useToggle();
-  const isAccountValid = useToggle();
+  const selectAccount = useBoolean();
+  const isKakaoPayCodeValid = useBoolean();
+  const noticeAgree = useBoolean();
+  const submitBtnActiveState = useBoolean();
+  const accountVerifyBtnState = useBoolean();
+  const isLoading = useBoolean();
+  const isAccountValid = useBoolean();
 
   const { handleRouter } = useRouters();
 
@@ -64,7 +64,7 @@ export default function WishesCreatePageContainer({
   useEffect(() => {
     if (sessionStorage.getItem('isReloading')) {
       if (wishTitle) {
-        handleRouter(`/wishes/create?step=link&wishTitle=${convertEncode(wishTitle)}`);
+        handleRouter(`/wishes/create?&wishTitle=${convertEncode(wishTitle)}`);
       }
       sessionStorage.removeItem('isReloading'); // 상태 초기화
     }

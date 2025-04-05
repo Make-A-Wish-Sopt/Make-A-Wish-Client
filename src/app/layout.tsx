@@ -1,7 +1,5 @@
 import { Metadata, Viewport } from 'next';
 import '../styles/global.css';
-import { Suspense } from 'react';
-import Loading from './loading';
 import Script from 'next/script';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 

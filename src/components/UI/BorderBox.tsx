@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import Box from '../Common/Box';
+import Box from '../Elements/Box';
 import { colors } from '@/styles/styles';
 
 export default function BorderBox({ children }: PropsWithChildren) {

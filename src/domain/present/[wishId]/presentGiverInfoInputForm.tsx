@@ -1,4 +1,4 @@
-import InputText from '@/components/Common/Input/inputText';
+import InputText from '@/components/Elements/Input/inputText';
 import InputForm from '@/components/UI/InputForm';
 import InputTextForm from '@/components/UI/InputTextForm';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';

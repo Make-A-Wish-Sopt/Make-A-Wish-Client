@@ -1,5 +1,5 @@
 import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
-import { client } from '../configs/client';
+import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 import { PresentDataResolverType } from '@/validation/present.validate';
 import axios from 'axios';
@@ -21,20 +21,22 @@ export const getPublicWishes = async (wishId: string) => {
 export const postPublicCakes = async (
   presentData: PresentDataResolverType & { wishId: string },
 ) => {
-  const requestData = {
-    ...presentData,
-    cakeId: presentData.cakeId,
-  };
+  try {
+    const requestData = {
+      ...presentData,
+      cakeId: presentData.cakeId,
+    };
 
-  const data = await client.post<PostPublicCakesResponseType>(
-    `${API_VERSION_01}${PATH_PUBLIC.CAKES}`,
-    requestData,
-    {
-      headers: {
-        'Content-Type': 'application/json',
+    const data = await client.post<PostPublicCakesResponseType>(
+      `${API_VERSION_01}${PATH_PUBLIC.CAKES}`,
+      requestData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    },
-  );
+    );
 
-  return data.data.data;
+    return data.data.data;
+  } catch (error) {}
 };

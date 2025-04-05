@@ -5,7 +5,7 @@ import { MainCakeImg } from '../../../../public/assets/images';
 import SelectPayment from './selectPayment';
 
 import { convertMoneyText } from '@/utils/common/convert';
-import { AccountCopySpeechBubbleIcon } from '@/components/Common/Icon/MessageAlarmIcon';
+import { AccountCopySpeechBubbleIcon } from '@/components/Elements/Icon/MessageAlarmIcon';
 
 export default function Payment({
   wishMakerName,
@@ -61,10 +61,7 @@ export default function Payment({
           `}</style>
         </div>
 
-        <SelectPayment
-          isSelected={isSelected}
-          handleSelectOne={handleSelectOne}
-        />
+        <SelectPayment isSelected={isSelected} handleSelectOne={handleSelectOne} />
       </section>
     </>
   );

@@ -1,6 +1,6 @@
 import { getCakesResult } from '@/api/cakes';
 import { getSingleWishInfo } from '@/api/wishes';
-import Header, { BackButton, MypageButton } from '@/components/Common/Hedaer';
+import Header, { BackButton, MypageButton } from '@/components/Elements/Hedaer';
 import WishesHistoryMessageTreePageContainer from '@/domain/mypage/wish-history/[historyId]/container';
 import MainLayout from '@/layouts/MainLayout';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';

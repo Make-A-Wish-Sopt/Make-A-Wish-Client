@@ -1,4 +1,4 @@
-import InputText from '@/components/Common/Input/inputText';
+import InputText from '@/components/Elements/Input/inputText';
 import { AccountFormNotice } from './wishesAccountInputForm';
 import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,9 +11,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { PropsWithChildren, useEffect } from 'react';
 import { DefaultResponseType } from '@/types/api/response';
 import { getUserAccount } from '@/api/user';
-import useToggle, { ToggleHookType } from '@/hooks/common/useToggle';
-import CheckedIcon, { WarningCheckedIcon } from '@/components/Common/Icon/CheckedIcon';
-import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
+import useBoolean, { BooleanType } from '@/hooks/useBoolean';
+import CheckedIcon, { WarningCheckedIcon } from '@/components/Elements/Icon/CheckedIcon';
+import ValidateLoadingModal from '@/components/Elements/Modal/ValidateLoadingModal';
 import { KakaoCodeGuideImg } from '../../../../public/assets/images';
 
 export default function WishesKakaopayInputForm({
@@ -23,10 +23,10 @@ export default function WishesKakaopayInputForm({
   isLoading,
   children,
 }: {
-  isKakaoPayCodeValid: ToggleHookType;
-  noticeAgree: ToggleHookType;
-  isLoading: ToggleHookType;
-  submitBtnActiveState: ToggleHookType;
+  isKakaoPayCodeValid: BooleanType;
+  noticeAgree: BooleanType;
+  isLoading: BooleanType;
+  submitBtnActiveState: BooleanType;
 } & PropsWithChildren) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
@@ -39,7 +39,7 @@ export default function WishesKakaopayInputForm({
   const { register, watch, reset, formState } = wishesAccountInputMethods;
   const { isDirty, errors } = formState;
   const { kakaoPayCode } = watch();
-  const isInitialApiCall = useToggle(true);
+  const isInitialApiCall = useBoolean(true);
   const kakaoPayValidator = wishesAccountDataResolver.pick(['kakaoPayCode']);
 
   //데이터베이스에서 가져온 정보들이 유효한지 체크 후 초기화

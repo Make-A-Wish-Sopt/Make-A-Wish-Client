@@ -1,4 +1,4 @@
-import Box from '@/components/Common/Box';
+import Box from '@/components/Elements/Box';
 import { colors } from '@/styles/styles';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { getPublicWishes } from '@/api/public';

@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { WishesFormPresentIc } from '../../../../public/assets/icons';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { PresentListSample } from '@/components/UI/PresentList';
 import { SharePageCakeImg } from '../../../../public/assets/images';
 import { WishStatusType } from '@/types/wishesType';
 
-export function WishesCreateTitleText({ children }: PropsWithChildren) {
+export function StepTitle({ title }: { title: ReactNode }) {
   return (
     <div className="flex items-center gap-10 mt-26 mb-20">
       <Image src={WishesFormPresentIc} alt="선물 아이콘 이미지" />
-      <h1 className="font-bitbit text-main_blue text-[24px]">{children}</h1>
+      <h1 className="font-bitbit text-main_blue text-[24px]">{title}</h1>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import Button from '@/components/Common/Button';
-import useKakaoAuth from '@/hooks/common/useKakaoAuth';
+import Button from '@/components/Elements/Button';
+import useKakaoAuth from '@/hooks/useKakaoAuth';
 import { KakaoLoginIc } from '@public/assets/icons';
 import Image from 'next/image';
 

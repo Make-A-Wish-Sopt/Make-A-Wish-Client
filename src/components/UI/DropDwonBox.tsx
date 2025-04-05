@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import { MainBlueArrowIc } from '../../../public/assets/icons';
-import Box, { BoxProps } from '../Common/Box';
+import Box, { BoxProps } from '../Elements/Box';
 
 interface DropDownBoxProps extends BoxProps {
   isOpen: boolean;
-  handleState: () => void;
+  changeOpenState: () => void;
 }
 
 export default function DropDwonBox({
   isOpen,
-  handleState,
+  changeOpenState,
   ...rest
 }: PropsWithChildren<DropDownBoxProps>) {
   return (
@@ -22,7 +22,7 @@ export default function DropDwonBox({
     >
       <div className="flex items-center gap-8 w-full h-full text-[14px] ">
         {rest.children}
-        <div onClick={handleState} className="flex justify-center items-center w-30 h-30">
+        <button onClick={changeOpenState} className="flex justify-center items-center w-30 h-30 ">
           <Image
             src={MainBlueArrowIc}
             alt="화살표 아이콘"
@@ -30,7 +30,7 @@ export default function DropDwonBox({
               isOpen ? 'rotate-90' : '-rotate-90'
             }`}
           />
-        </div>
+        </button>
       </div>
     </Box>
   );

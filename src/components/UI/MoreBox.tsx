@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import Box from '../Common/Box';
+import Box from '../Elements/Box';
 
 import { colors } from '@/styles/styles';
-import ArrowIcon from '../Common/Icon/ArrowIcon';
+import ArrowIcon from '../Elements/Icon/ArrowIcon';
 
 export default function MoreBox({
   text,

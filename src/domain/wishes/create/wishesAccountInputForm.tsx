@@ -2,25 +2,26 @@
 
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import {
+  AccountFormValidatorType,
   wishesAccountDataResolver,
   WishesAccountDataResolverType,
 } from '@/validation/wishes.validate';
 import InputForm from '@/components/UI/InputForm';
 import { colors } from '@/styles/styles';
-import InputText from '@/components/Common/Input/inputText';
-import Button from '@/components/Common/Button';
+import InputText from '@/components/Elements/Input/inputText';
+import Button from '@/components/Elements/Button';
 import { PropsWithChildren, useEffect } from 'react';
-import useToggle, { ToggleHookType } from '@/hooks/common/useToggle';
+import useBoolean, { BooleanType } from '@/hooks/useBoolean';
 import DropDwonBox from '@/components/UI/DropDwonBox';
-import Modal from '@/components/Common/Modal';
-import BankModal from '@/components/Common/Modal/BankModal';
 import { getUserAccount, postVerifyAccount } from '@/api/user';
 import CheckBox from '@/components/UI/CheckBox';
 import { wishesAccountInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
-import CheckedIcon, { WarningCheckedIcon } from '@/components/Common/Icon/CheckedIcon';
-import ValidateLoadingModal from '@/components/Common/Modal/ValidateLoadingModal';
+import CheckedIcon, { WarningCheckedIcon } from '@/components/Elements/Icon/CheckedIcon';
+import ValidateLoadingModal from '@/components/Elements/Modal/ValidateLoadingModal';
 import { AxiosError } from 'axios';
+import useModals from '@/hooks/useModals';
+import Image from 'next/image';
 
 export default function WishesAccountInputForm({
   accountVerifyBtnState,
@@ -30,11 +31,11 @@ export default function WishesAccountInputForm({
   noticeAgree,
   children,
 }: {
-  accountVerifyBtnState: ToggleHookType;
-  isAccountValid: ToggleHookType;
-  isLoading: ToggleHookType;
-  submitBtnActiveState: ToggleHookType;
-  noticeAgree: ToggleHookType;
+  accountVerifyBtnState: BooleanType;
+  isAccountValid: BooleanType;
+  isLoading: BooleanType;
+  submitBtnActiveState: BooleanType;
+  noticeAgree: BooleanType;
 } & PropsWithChildren) {
   const wishesAccountInputMethods = useForm<WishesAccountDataResolverType>({
     mode: 'onChange',
@@ -49,7 +50,7 @@ export default function WishesAccountInputForm({
   const { errors, isDirty } = formState;
   const { accountInfo } = watch();
   // const { name, bank, account } = accountInfo;
-  const isInitialApiCall = useToggle(true);
+  const isInitialApiCall = useBoolean(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,7 +110,7 @@ export default function WishesAccountInputForm({
 
         <div className="flex flex-col gap-12">
           <InputText placeholder="예금주명" register={register('accountInfo.name')} />
-          <SelectBank />
+          <SelectBankInput />
 
           <AccountInput
             accountVerifyBtnState={accountVerifyBtnState}
@@ -148,12 +149,12 @@ function AccountInput({
   isInitialApiCall,
   children,
 }: {
-  accountVerifyBtnState: ToggleHookType;
-  isAccountValid: ToggleHookType;
-  isLoading: ToggleHookType;
-  submitBtnActiveState: ToggleHookType;
+  accountVerifyBtnState: BooleanType;
+  isAccountValid: BooleanType;
+  isLoading: BooleanType;
+  submitBtnActiveState: BooleanType;
   noticeAgree: boolean;
-  isInitialApiCall: ToggleHookType;
+  isInitialApiCall: BooleanType;
 } & PropsWithChildren) {
   const { formState, watch, reset, trigger } = useFormContext<WishesAccountDataResolverType>();
   const { isDirty, errors } = formState;
@@ -244,37 +245,83 @@ function AccountInput({
   );
 }
 
-function SelectBank() {
-  const { state: modalState, handleState: handleChangeModalState } = useToggle();
-  const { register, setValue } = useFormContext<WishesAccountDataResolverType>();
+const SelectBankInput = () => {
+  const { register, setValue } = useFormContext<AccountFormValidatorType>();
 
-  function changeBank(input: string) {
-    setValue('accountInfo.bank', input, { shouldDirty: true });
-  }
+  const { Modal, modalState, openModal, closeModal } = useModals<['bank']>();
+
+  const handleSelectBank = (bankName: string) => {
+    setValue('accountInfo.bank', bankName);
+    closeModal('bank');
+  };
 
   return (
     <>
-      <DropDwonBox isOpen={false} handleState={handleChangeModalState} bgColor="dark_green">
-        <input
-          {...register('accountInfo.bank')}
-          placeholder="은행 선택"
-          className="w-full h-full font-galmuri text-[14px]"
-          readOnly
-          onClick={handleChangeModalState}
-        />
-      </DropDwonBox>
-
-      {modalState && (
-        <Modal isOpen={modalState} handleState={handleChangeModalState}>
-          <div className="flex justify-center items-center  w-full h-full">
-            <BankModal changeBank={changeBank} handleState={handleChangeModalState} />
+      <Modal
+        modalKey="bank"
+        Trigger={
+          <div onClick={() => openModal('bank')}>
+            <DropDwonBox
+              isOpen={modalState.bank}
+              changeOpenState={() => closeModal('bank')}
+              bgColor="dark_green"
+            >
+              <input
+                {...register('accountInfo.bank')}
+                placeholder="은행 선택"
+                className="w-full h-full font-galmuri text-[14px] cursor-pointer"
+                readOnly
+              />
+            </DropDwonBox>
           </div>
-        </Modal>
-      )}
+        }
+      >
+        <Modal.ModalOverlay>
+          <Modal.ModalLayout className="flex justify-center items-center">
+            <Modal.ContentFrame bgColor="background" className="w-335 overflow-scroll">
+              <Modal.ContentHeader>
+                <h2 className="font-galmuri text-[16px] text-white mb-20">은행을 선택해주세요.</h2>
+              </Modal.ContentHeader>
+              <Modal.ContentBody className="max-h-[608px] overflow-scroll">
+                <ul
+                  id="bankList"
+                  className="h-91.4% overflow-scroll scrollbar-hide mt-8 grid grid-cols-3 gap-8"
+                >
+                  {BANK_LIST.map((bank) => (
+                    <li
+                      id="bankItem"
+                      className="w-90 h-66 py-10 bg-dark_green rounded-xl cursor-pointer"
+                      onClick={() => handleSelectBank(bank.name)}
+                      key={bank.name}
+                    >
+                      <div
+                        id="bankItem-wrppaer"
+                        className="flex flex-col w-full h-ful items-center"
+                      >
+                        <div
+                          id="bankLogo-wrppaer"
+                          className="flex justify-center items-center w-26 h-26 mx-auto"
+                        >
+                          <Image src={bank.logo} alt={`${bank.name} 로고`} />
+                        </div>
+                        <span
+                          id="bankName"
+                          className="font-galmuri text-white text-[12px] text-center mt-6"
+                        >
+                          {bank.name}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </Modal.ContentBody>
+            </Modal.ContentFrame>
+          </Modal.ModalLayout>
+        </Modal.ModalOverlay>
+      </Modal>
     </>
   );
-}
-
+};
 export function AccountFormNotice({
   changeNoticeAgreeState,
   children,

@@ -1,12 +1,12 @@
 'use client';
 
-import Box from '@/components/Common/Box';
+import Box from '@/components/Elements/Box';
 import CheckBox from '@/components/UI/CheckBox';
 import Image from 'next/image';
 import { ArrowRightIc } from '../../../../public/assets/icons';
-import useToggle from '@/hooks/common/useToggle';
+import useBoolean from '@/hooks/useBoolean';
 import { useEffect } from 'react';
-import { useRouters } from '@/hooks/common/useRouters';
+import { useRouters } from '@/hooks/useRouters';
 
 export function WishHistoryBox({
   wishTitle,
@@ -21,7 +21,7 @@ export function WishHistoryBox({
   addToDeleteIdList: (id: number) => void;
   removeToDeleteIdList: (id: number) => void;
 }) {
-  const { state: checkedState, changeState: changeCheckedState } = useToggle();
+  const { state: checkedState, changeState: changeCheckedState } = useBoolean();
 
   const { handleRouter } = useRouters();
 

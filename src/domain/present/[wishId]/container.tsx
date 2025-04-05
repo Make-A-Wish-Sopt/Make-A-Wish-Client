@@ -1,6 +1,6 @@
 'use client';
 
-import { PresentStepType } from '@/app/present/[wishId]/page';
+import { PresentStepType } from '@/app/present/[wishId]/pageCopy';
 import { presentDataInputInit } from '@/constant/init';
 import { presentDataResolver, PresentDataResolverType } from '@/validation/present.validate';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,12 +9,12 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import PresentGiverInfoInputForm from './presentGiverInfoInputForm';
 import InputForm from '@/components/UI/InputForm';
 import PresentList from '@/components/UI/PresentList';
-import useToggle from '@/hooks/common/useToggle';
-import Box from '@/components/Common/Box';
+import useBoolean from '@/hooks/useBoolean';
+import Box from '@/components/Elements/Box';
 import CheckBox from '@/components/UI/CheckBox';
-import Button from '@/components/Common/Button';
+import Button from '@/components/Elements/Button';
 import { postPublicCakes } from '@/api/public';
-import { useRouters } from '@/hooks/common/useRouters';
+import { useRouters } from '@/hooks/useRouters';
 import { PublicWishesDataType } from '@/types/api/response';
 import Payment from './payment';
 import {
@@ -24,13 +24,13 @@ import {
 } from '@/constant/model/cakesTreeData';
 import PresentSuccess, { PresentSuccessCakeTree } from './done';
 import { MessageFromWisheMaker, PresentSuccessSubmitButton } from './component';
-import { SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
+
 import GradientShadow from '@/components/UI/GradientShadow';
 import KakaopayPayment from './kakaopayPayment';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
+import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
 import { presentListObject } from '@/constant/model/present';
 import { convertMoneyText } from '@/utils/common/convert';
-import useSelectItem from '@/hooks/common/useSelectItem';
+import useSelectItem from '@/hooks/useSelectItem';
 import { paymentListObject } from '@/constant/bankList';
 import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
 import { GA_VIEW_PRESENT } from '@/constant/ga';
@@ -59,12 +59,12 @@ export default function GivePresentPageContainer({
   const { transferInfo, nickname, wantsGift } = publicWishesData;
 
   const { accountInfo, forPayCode, kakaoPayCode } = transferInfo;
-  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useToggle();
+  const { state: messageOnlyOption, changeState: changeMessageOnlyOption } = useBoolean();
   const {
     state: presenetMessageModalState,
     handleState: handlePresentMessageModalState,
     changeState: changePresenetMessgaeModalState,
-  } = useToggle();
+  } = useBoolean();
   const { giftMenuId } = methods.watch();
   const selectedCakeId = avatarCakeId;
   const { handleRouter } = useRouters();
@@ -321,7 +321,7 @@ function BankTransferSubmitButton({
   handleBankTransfer: () => void;
   handleNextToDoneStep: () => void;
 }) {
-  const firstClick = useToggle(false);
+  const firstClick = useBoolean(false);
   return (
     <>
       {firstClick.state ? (
@@ -348,7 +348,7 @@ function KakaopaySubmitButton({
   handleKakaoPayment: () => void;
   handleNextToDoneStep: () => void;
 }) {
-  const firstClick = useToggle(false);
+  const firstClick = useBoolean(false);
 
   return (
     <FixedBottomButtonWrapper>

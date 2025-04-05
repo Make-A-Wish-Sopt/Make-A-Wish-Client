@@ -1,19 +1,19 @@
 'use client';
 
-import Box from '@/components/Common/Box';
-import Button from '@/components/Common/Button';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
+import Box from '@/components/Elements/Box';
+import Button from '@/components/Elements/Button';
+import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
 import InputForm from '@/components/UI/InputForm';
 import SelectBox from '@/components/UI/SelectBox';
-import { useRouters } from '@/hooks/common/useRouters';
-import { ToggleHookType } from '@/hooks/common/useToggle';
+import { useRouters } from '@/hooks/useRouters';
+import { BooleanType } from '@/hooks/useBoolean';
 import { PropsWithChildren } from 'react';
 
 export default function SelectDeposit({
   selectAccount,
   children,
 }: {
-  selectAccount: ToggleHookType;
+  selectAccount: BooleanType;
 } & PropsWithChildren) {
   return (
     <>

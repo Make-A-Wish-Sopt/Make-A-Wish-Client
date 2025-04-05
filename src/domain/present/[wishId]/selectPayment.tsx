@@ -1,40 +1,32 @@
 'use client';
 
+import Box from '@/components/Elements/Box';
 import InputForm from '@/components/UI/InputForm';
-import { paymentListArray } from '@/constant/bankList';
-import Image from 'next/image';
+import SelectBox from '@/components/UI/SelectBox';
+import { BooleanType } from '@/hooks/useBoolean';
 
-export default function SelectPayment({
-  isSelected,
-  handleSelectOne,
-}: {
-  isSelected: (id: number) => boolean;
-  handleSelectOne: (id: number) => void;
-}) {
+export default function SelectPaymentForm({ selectAccount }: { selectAccount: BooleanType }) {
+  // 변경예정 : ForPayCode라는 변수는 확장성에 열려있지 않음 서버와 논의 후 변경
+
   return (
-    <div className="w-full">
-      <InputForm title="결제수단 선택" textCenter>
-        <ul className="flex gap-8">
-          {paymentListArray.map((paymentItem) => (
-            <li
-              className={`flex flex-col gap-10  items-center justify-center w-full h-92 rounded-xl bg-dark_green ${
-                isSelected(paymentItem.paymentId)
-                  ? 'bg-main_blue text-black'
-                  : 'bg-dark_green text-white'
-              }`}
-              key={paymentItem.paymentId}
-              onClick={() => {
-                handleSelectOne(paymentItem.paymentId);
-              }}
-            >
-              <Image src={paymentItem.bankIconImg} alt="은행 로고 이미지" />
-              <span className="font-galmuri text-[14px] ">
-                {paymentItem.name}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </InputForm>
-    </div>
+    <InputForm title="입금 방식 선택하기">
+      <div className="flex flex-col gap-12">
+        <Box
+          onClick={() => {
+            selectAccount.changeState(false);
+          }}
+        >
+          <SelectBox selectState={!selectAccount.state} text={'카카오 송금하기로 받기'} />
+        </Box>
+
+        <Box
+          onClick={() => {
+            selectAccount.changeState(true);
+          }}
+        >
+          <SelectBox selectState={selectAccount.state} text={'은행 계좌로 받기'} />
+        </Box>
+      </div>
+    </InputForm>
   );
 }

@@ -1,13 +1,13 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { memo, PropsWithChildren } from 'react';
 
 interface InputFormProps {
   title: string;
   textCenter?: boolean;
 }
 
-export default function InputForm(props: PropsWithChildren<InputFormProps>) {
+const InputForm = memo((props: PropsWithChildren<InputFormProps>) => {
   const { title, textCenter, children } = props;
 
   return (
@@ -20,4 +20,6 @@ export default function InputForm(props: PropsWithChildren<InputFormProps>) {
       {children}
     </div>
   );
-}
+});
+
+export default InputForm;

@@ -1,10 +1,10 @@
-import Box from '@/components/Common/Box';
-import Button from '@/components/Common/Button';
-import { FixedBottomButtonWrapper } from '@/components/Common/Button/FixedBottomButton';
+import Box from '@/components/Elements/Box';
+import Button from '@/components/Elements/Button';
+import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { GA_CLICK_BUTTON } from '@/constant/ga';
 import { presentListArray } from '@/constant/model/present';
-import { useRouters } from '@/hooks/common/useRouters';
+import { useRouters } from '@/hooks/useRouters';
 import { colors } from '@/styles/styles';
 import { PublicWishesDataType } from '@/types/api/response';
 import { convertMoneyText } from '@/utils/common/convert';

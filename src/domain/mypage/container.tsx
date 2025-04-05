@@ -2,14 +2,14 @@
 
 import { patchProgressWishes } from '@/api/wishes';
 import MoreBox from '@/components/UI/MoreBox';
-import { useRouters } from '@/hooks/common/useRouters';
+import { useRouters } from '@/hooks/useRouters';
 import { MypageUserName, UserManualGuideButton } from './component';
-import useToggle from '@/hooks/common/useToggle';
-import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
-import Button from '@/components/Common/Button';
+import useBoolean from '@/hooks/useBoolean';
+import CloseIconInModalWithVitaminCake from '@/components/Elements/Modal/CloseIconInModalWithVitaminCake';
+import Button from '@/components/Elements/Button';
 import { WishesLinkDataType } from '@/types/input';
 import { WishStatusType } from '@/types/wishesType';
-import useKakaoAuth from '@/hooks/common/useKakaoAuth';
+import useKakaoAuth from '@/hooks/useKakaoAuth';
 import { deleteUserInfo } from '@/api/user';
 
 export default function MypageContainer({
@@ -28,7 +28,7 @@ export default function MypageContainer({
     state: pauseWishesModalState,
     changeState: changePauseWishesModalState,
     handleState: handlePauseWishesModalState,
-  } = useToggle();
+  } = useBoolean();
 
   function handleConnectServiceCenter() {
     window.open('https://sunmulzu.notion.site/5c1945f34dd3440a984d09cf52f7a591?pvs=4');
@@ -118,8 +118,8 @@ export default function MypageContainer({
 function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { handleKaKaoLogin, handleKaKaoLogout } = useKakaoAuth();
 
-  const logoutModal = useToggle();
-  const deleteUserModal = useToggle();
+  const logoutModal = useBoolean();
+  const deleteUserModal = useBoolean();
 
   async function handleLogout() {
     const response = await fetch('/api/cookies', {

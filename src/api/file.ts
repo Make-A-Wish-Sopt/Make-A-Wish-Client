@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { client } from '../configs/client';
+import { client } from '../configs/apiConfig';
 import { API_VERSION_01 } from './path';
 import { PresingedURLResponseType } from '@/types/api/response';
 import PATH from '@/constant/apiPath';

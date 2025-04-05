@@ -1,27 +1,27 @@
 'use client';
 
-import Button from '@/components/Common/Button';
+import Button from '@/components/Elements/Button';
 import DropDwonBox from '@/components/UI/DropDwonBox';
 import InputForm from '@/components/UI/InputForm';
 import { TextCount } from '@/components/UI/InputTextForm';
 import RadioSelect from '@/components/UI/RadioSelect';
 import { UploadImageBox } from '@/components/UI/UploadImageBox';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
-import { useRouters } from '@/hooks/common/useRouters';
-import useToggle from '@/hooks/common/useToggle';
-import { useUploadItemInfo } from '@/hooks/common/useUploadItemInfo';
+import { useRouters } from '@/hooks/useRouters';
+import useBoolean from '@/hooks/useBoolean';
 import { getDate } from '@/utils/common/getDate';
 import { wishesLinkDataResolver, WishesLinkDataResolverType } from '@/validation/wishes.validate';
 import { PropsWithChildren, useEffect } from 'react';
 import { FormProvider, useForm, useFormContext, UseFormReturn, useWatch } from 'react-hook-form';
 import { DropDownContent } from './component';
-import InputTextarea from '@/components/Common/Input/inputTextarea';
+import InputTextarea from '@/components/Elements/Input/inputTextarea';
 import { wishesLinkInputInit } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { postWishes, putProgressWishes } from '@/api/wishes';
-import CalendarInput from '@/components/Common/Calendar/CalendarInput';
+import CalendarInput from '@/components/Elements/Calendar/CalendarButton';
 import { WishStatusType } from '@/types/wishesType';
 import { convertEncode } from '@/utils/common/convert';
+import useUploadItemInfo from '@/hooks/useUploadItemInfo';
 
 export default function WishesLinkInputForm({ wishTitle }: { wishTitle?: string }) {
   const savedWishesLinkDataMethods = useFormContext<WishesLinkDataResolverType>();
@@ -175,7 +175,7 @@ function SelectWantsGiftOption() {
     state: dropDownState,
     handleState: handleDropBoxState,
     changeState: changeDropBoxState,
-  } = useToggle();
+  } = useBoolean();
 
   const { control, setValue } = useFormContext<WishesLinkDataResolverType>();
 
@@ -282,14 +282,16 @@ export function WishesLinkEditSubmitButton() {
   const { handleBack } = useRouters();
 
   function handleEditWisheLink() {
-    putProgressWishes(editWishesLinkData).then((response) => {
-      response.success && alert('소원정보 수정완료!');
-    }).catch(() => {
-      alert('소원정보 수정실패!!')
-    }).finally(() => {
-      handleBack();
-    });
-
+    putProgressWishes(editWishesLinkData)
+      .then((response) => {
+        response.success && alert('소원정보 수정완료!');
+      })
+      .catch(() => {
+        alert('소원정보 수정실패!!');
+      })
+      .finally(() => {
+        handleBack();
+      });
   }
 
   return (

@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { GuideImg, MypageDefaultCakeImg } from '../../../public/assets/images';
 import MoreBox from '@/components/UI/MoreBox';
-import useToggle from '@/hooks/common/useToggle';
-import Modal from '@/components/Common/Modal';
-import CloseTopModal from '@/components/Common/Modal/CloseTopModal';
+import useBoolean from '@/hooks/useBoolean';
+import Modal from '@/components/Elements/Modal';
+import CloseTopModal from '@/components/Elements/Modal/CloseTopModal';
 
 export function MypageUserName({ nickName }: { nickName: string }) {
   return (
@@ -20,7 +20,7 @@ export function MypageUserName({ nickName }: { nickName: string }) {
 }
 
 export function UserManualGuideButton() {
-  const { state: guideModalState, handleState: handleGuideModalState } = useToggle();
+  const { state: guideModalState, handleState: handleGuideModalState } = useBoolean();
 
   return (
     <>

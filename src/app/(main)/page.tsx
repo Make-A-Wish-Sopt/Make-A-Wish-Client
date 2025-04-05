@@ -1,9 +1,10 @@
-import Header, { MypageButton } from '@/components/Common/Hedaer';
+import Header, { MypageButton } from '@/components/Elements/Hedaer';
 import MainLayout from '@/layouts/MainLayout';
 import Image from 'next/image';
 import { MainCakeListImg } from '@public/assets/images';
 import Link from 'next/link';
 import { KakaoLoginIc } from '@public/assets/icons';
+import ErrorPage from '../error';
 
 const Page = async () => {
   const kakaoClientId = process.env.KAKAO_RESTAPI_KEY;

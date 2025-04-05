@@ -1,26 +1,28 @@
 import { BANK_LIST } from '@/constant/bankList';
-import { client } from '../configs/client';
+import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
 import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
 
 export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
-  const data = await client.put<DefaultResponseType>(
-    `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
-    {
-      accountInfo: accountInputs.accountInfo,
-      kakaoPayCode: accountInputs.kakaoPayCode,
-      forPayCode: accountInputs.forPayCode,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
+  try {
+    const data = await client.put<DefaultResponseType>(
+      `${API_VERSION_01}${PATH_USER.ACCOUNT}`,
+      {
+        accountInfo: accountInputs.accountInfo,
+        kakaoPayCode: accountInputs.kakaoPayCode,
+        forPayCode: accountInputs.forPayCode,
       },
-    },
-  );
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
 
-  return data;
+    return data;
+  } catch (error) {}
 };
 
 export const getUserAccount = async () => {
@@ -34,31 +36,37 @@ export const getUserAccount = async () => {
 };
 
 export const deleteUserInfo = async () => {
-  const data = await client.delete(`${API_VERSION_01}${PATH_USER.DEFAULT}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return data;
-};
-
-export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
-  const bankCode = BANK_LIST.find((bank) => bank.name === accountInfo.bank)?.bankCode;
-
-  const response = await client.post<DefaultResponseType<number>>(
-    `${API_VERSION_01}${PATH_USER.ACCOUNT_VERIFY}`,
-    {
-      bankCode,
-      accountNumber: accountInfo.account,
-      name: accountInfo.name,
-    },
-    {
+  try {
+    const data = await client.delete(`${API_VERSION_01}${PATH_USER.DEFAULT}`, {
       headers: {
         'Content-Type': 'application/json',
       },
-    },
-  );
+    });
 
-  return response.data;
+    return data;
+  } catch (error) {}
+};
+
+export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
+  try {
+    const bankCode = BANK_LIST.find((bank) => bank.name === accountInfo.bank)?.bankCode;
+
+    const response = await client.post<DefaultResponseType<number>>(
+      `${API_VERSION_01}${PATH_USER.ACCOUNT_VERIFY}`,
+      {
+        bankCode,
+        accountNumber: accountInfo.account,
+        name: accountInfo.name,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    return;
+  }
 };

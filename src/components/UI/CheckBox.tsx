@@ -1,6 +1,6 @@
 'use client';
 
-import useToggle from '@/hooks/common/useToggle';
+import useBoolean from '@/hooks/useBoolean';
 import { PropsWithChildren, useEffect } from 'react';
 
 interface CheckBoxProps {
@@ -10,7 +10,7 @@ interface CheckBoxProps {
 
 export default function CheckBox(props: PropsWithChildren<CheckBoxProps>) {
   const { changeCheckedState, readOnly = false, children } = props;
-  const { state, handleState } = useToggle();
+  const { state, handleState } = useBoolean();
 
   useEffect(() => {
     changeCheckedState && changeCheckedState(state);

@@ -1,6 +1,7 @@
 import { PresentDataType, WishesLinkDataType } from '@/types/input';
 import { TransferInfoType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
+import { WishesFormValidatorType } from '@/validation/wishes.validate';
 
 export const WishesPageModalStateInit = {
   wishesTitleInputModalState: false,
@@ -14,6 +15,27 @@ export const WishesPageContainerStateInit = {
 };
 
 export type WishesPageContainerStateType = typeof WishesPageContainerStateInit;
+
+export const wishesFormInitValues: WishesFormValidatorType = {
+  imageUrl: '',
+  title: '',
+  hint: '',
+  startDate: new Date(),
+  endDate: getDate(new Date(), 7),
+  wantsGift: true,
+};
+
+export const accountFormInitValues: TransferInfoType = {
+  accountInfo: {
+    account: '',
+    name: '',
+    bank: '',
+  },
+  forPayCode: false,
+  kakaoPayCode: '',
+};
+
+//-------
 
 export const wishesLinkInputInit: WishesLinkDataType = {
   imageUrl: '',

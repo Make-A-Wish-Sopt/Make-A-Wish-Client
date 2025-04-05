@@ -5,8 +5,8 @@ import { WishesEditAccountSubmitButton } from '@/domain/wishes/create/container'
 import SelectDeposit, { WishesDepositSubmitButton } from '@/domain/wishes/create/selectDeposit';
 import WishesAccountInputForm from '@/domain/wishes/create/wishesAccountInputForm';
 import WishesKakaopayInputForm from '@/domain/wishes/create/wishesKakaopayInputForm';
-import { useRouters } from '@/hooks/common/useRouters';
-import useToggle from '@/hooks/common/useToggle';
+import { useRouters } from '@/hooks/useRouters';
+import useBoolean from '@/hooks/useBoolean';
 import { PropsWithChildren, useEffect } from 'react';
 
 export default function WisheDepositEditPageContainer({
@@ -17,13 +17,13 @@ export default function WisheDepositEditPageContainer({
   step: WishesDepositEditStepsType;
   forPayCode: boolean;
 } & PropsWithChildren) {
-  const isKakaoPayCodeValid = useToggle();
-  const noticeAgree = useToggle();
-  const submitBtnActiveState = useToggle();
-  const accountVerifyBtnState = useToggle();
-  const isLoading = useToggle();
-  const isAccountValid = useToggle(true);
-  const selectAccount = useToggle();
+  const isKakaoPayCodeValid = useBoolean();
+  const noticeAgree = useBoolean();
+  const submitBtnActiveState = useBoolean();
+  const accountVerifyBtnState = useBoolean();
+  const isLoading = useBoolean();
+  const isAccountValid = useBoolean(true);
+  const selectAccount = useBoolean();
 
   const { handleRouter } = useRouters();
 

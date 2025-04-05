@@ -3,14 +3,14 @@
 import { PropsWithChildren } from 'react';
 import { WishHistoryBox } from './component';
 import { WishesHistoryListType } from '@/types/api/response';
-import useSelectItem from '@/hooks/common/useSelectItem';
+import useSelectItem from '@/hooks/useSelectItem';
 import Image from 'next/image';
 import { DeleteBtnIc } from '../../../../public/assets/icons';
 import { deleteWishes } from '@/api/wishes';
-import { useRouters } from '@/hooks/common/useRouters';
-import useToggle from '@/hooks/common/useToggle';
-import CloseIconInModalWithVitaminCake from '@/components/Common/Modal/CloseIconInModalWithVitaminCake';
-import Button from '@/components/Common/Button';
+import { useRouters } from '@/hooks/useRouters';
+import useBoolean from '@/hooks/useBoolean';
+import CloseIconInModalWithVitaminCake from '@/components/Elements/Modal/CloseIconInModalWithVitaminCake';
+import Button from '@/components/Elements/Button';
 import { EmptyWishesCakeImg } from '../../../../public/assets/images';
 
 export default function WishesHistoryPageContainer({
@@ -22,7 +22,7 @@ export default function WishesHistoryPageContainer({
     state: deleteModalState,
     changeState: changeDeleteModalState,
     handleState: handleDeleteModalState,
-  } = useToggle();
+  } = useBoolean();
   const { handleRefresh, handleRouter } = useRouters();
 
   function handleDeleteWishes() {

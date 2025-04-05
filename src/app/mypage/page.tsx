@@ -1,5 +1,5 @@
 import { getProgressWishLinkData } from '@/api/wishes';
-import Header, { BackButton } from '@/components/Common/Hedaer';
+import Header, { BackButton } from '@/components/Elements/Hedaer';
 import MypageContainer from '@/domain/mypage/container';
 import MainLayout from '@/layouts/MainLayout';
 

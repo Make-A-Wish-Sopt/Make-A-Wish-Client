@@ -2,8 +2,7 @@
 
 import { getCakePresentMessage } from '@/api/cakes';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
-import { SaveCakeMessageModal } from '@/domain/wishes/(main)/component';
-import useToggle from '@/hooks/common/useToggle';
+import useBoolean from '@/hooks/useBoolean';
 import { WishesHistoryType } from '@/types/api/response';
 import { useEffect, useState } from 'react';
 
@@ -26,8 +25,8 @@ export default function WishesHistoryMessageTreePageContainer({
   const [receivedCakeMessageData, setReceivedCakeMessageData] =
     useState<ReceivedCakeTreeMessageDataType>(null);
 
-  const cakeMessageModalState = useToggle();
-  const isLoading = useToggle();
+  const cakeMessageModalState = useBoolean();
+  const isLoading = useBoolean();
 
   useEffect(() => {
     if (cakePresentMessageData) {
