@@ -2,22 +2,27 @@ import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// 로그인 필요 경로 목록
+const protectedRoutes = ['/wishes'];
+
 export async function middleware(request: NextRequest) {
-  // 현재 경로 확인
-  const pathname = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
 
   const isFileRequest = pathname.match(/\.\w+$/);
-  // 경로에 확장자가 있다면 미들웨어 로직 스킵
-  if (isFileRequest) {
-    return NextResponse.next();
-  }
+  if (isFileRequest) return NextResponse.next();
 
-  // 쿠키에서 로그인 상태 확인
   const isLoggedIn = !!(await getLoginUserCookiesData());
 
-  // 로그인한 사용자가 메인 페이지('/')에 접근하는 경우
+  // 로그인한 사용자가 메인 페이지('/')에 접근하는 경우 리디렉션
   if (isLoggedIn && pathname === '/') {
     return NextResponse.redirect(new URL('/wishes', request.url));
+  }
+
+  // 로그인하지 않은 사용자가 보호된 경로에 접근하는 경우 로그인 페이지로 리디렉션
+  const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
+
+  if (!isLoggedIn && isProtected) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();
