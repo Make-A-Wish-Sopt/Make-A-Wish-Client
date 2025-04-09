@@ -24,6 +24,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   font?: keyof FontsTypes;
   onClick?: React.MouseEventHandler<HTMLElement>;
   gaEventLable?: string;
+  className?: string;
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
@@ -35,6 +36,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     onClick,
     icon,
     gaEventLable,
+    className,
     children,
   } = props;
 
@@ -60,7 +62,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     <button
       className={`flex justify-center items-center ${
         icon ? 'gap-10px' : 'gap-0'
-      } w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl`}
+      } w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl ${className}`}
       disabled={disabled}
       onClick={handleClick}
       style={combinedStyle}

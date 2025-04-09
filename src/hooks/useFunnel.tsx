@@ -1,7 +1,7 @@
 'use client';
 
 import { Step, StepProps } from '@/components/Modules/Funnel';
-import { Children, PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 export type FunnelStepsType = readonly (string | readonly string[])[];
 
@@ -24,109 +24,86 @@ export type ExtractStepNames<T extends readonly (string | readonly string[])[]> 
   Flatten<T>
 >;
 
+// useFunnel.ts
 const useFunnel = <T extends FunnelStepsType>(steps: T) => {
   const [stepIdx, setStepIdx] = useState(0);
   const [subIdx, setSubIdx] = useState<null | number>(null);
-  const [history, setHistory] = useState<Array<number | number[]>>([]);
+  const [history, setHistory] = useState<Array<number | [number, number]>>([]);
 
-  const addHistory = (stepIndex: number | number[]) => {
-    const tempHistory = history;
-    tempHistory.push(stepIndex);
-    setHistory([...tempHistory]);
+  const addHistory = (index: number | [number, number]) => {
+    setHistory((prev) => [...prev, index]);
   };
 
-  const nextStep = (target?: ExtractStepNames<T>) => {
-    if (target) {
-      onMoveStep(target);
-      return;
+  const findStepIndex = (target: ExtractStepNames<T>): [number, number?] | null => {
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i];
+      if (typeof step === 'string') {
+        if (step === target) return [i];
+      } else {
+        const subIdx = step.indexOf(target as string);
+        if (subIdx !== -1) return [i, subIdx];
+      }
     }
-
-    if (stepIdx >= steps.length) return;
-
-    if (typeof steps[stepIdx + 1] === 'string') {
-      addHistory(stepIdx);
-      setStepIdx(stepIdx + 1);
-      return;
-    }
-  };
-
-  const prevStep = () => {
-    if (history.length === 0) return;
-
-    const tempHistory = [...history];
-    const lastStepIdx = tempHistory.pop();
-
-    if (typeof lastStepIdx === 'number') {
-      setStepIdx(lastStepIdx);
-      setSubIdx(null);
-    } else {
-      const [mainIndex, subIndex] = lastStepIdx;
-      setStepIdx(mainIndex);
-      setSubIdx(subIndex);
-    }
-
-    setHistory([...tempHistory]);
-  };
-
-  const findStep = (target: ExtractStepNames<T>) => {
-    const result = steps
-      .map((step, mainIndex) => {
-        if (typeof step === 'string') {
-          return step === target ? [mainIndex] : null;
-        } else {
-          const subIndex = step.findIndex((subStep) => subStep === target);
-          return subIndex !== -1 ? [mainIndex, subIndex] : null;
-        }
-      })
-      .find((item) => item !== null); // null이 아닌 첫 번째 값 반환
-
-    return result || null; // 값이 없으면 null 반환
+    return null;
   };
 
   const onMoveStep = (target: ExtractStepNames<T>) => {
-    const stepIndex = findStep(target);
+    const found = findStepIndex(target);
+    if (!found) return;
 
-    console.log(stepIndex);
-
-    if (stepIndex === null) return;
-
-    const [mainIndex, subIndex] = stepIndex;
-
-    setStepIdx(mainIndex);
-
-    if (subIndex === undefined) {
-      setSubIdx(null);
-    } else {
-      setSubIdx(subIndex);
-    }
-
-    if (subIdx === null) {
+    const [mainIdx, subIdx] = found;
+    if (subIdx === undefined) {
       addHistory(stepIdx);
     } else {
       addHistory([stepIdx, subIdx]);
     }
+
+    setStepIdx(mainIdx);
+    setSubIdx(subIdx ?? null);
   };
 
-  const currentStep = () => {
-    if (typeof steps[stepIdx] === 'string') return steps[stepIdx] as ExtractStepNames<T>;
-    else {
-      return steps[stepIdx][subIdx] as ExtractStepNames<T>;
+  const nextStep = (target?: ExtractStepNames<T>) => {
+    if (target) return onMoveStep(target);
+    const nextIdx = stepIdx + 1;
+    if (nextIdx >= steps.length) return;
+    addHistory(stepIdx);
+    setStepIdx(nextIdx);
+    setSubIdx(null);
+  };
+
+  const prevStep = () => {
+    const temp = [...history];
+    if (temp.length === 0) return;
+
+    const last = temp.pop();
+
+    setHistory(temp);
+
+    if (typeof last === 'number') {
+      setStepIdx(last);
+      setSubIdx(null);
+    } else {
+      const [mainIdx, sub] = last;
+      setStepIdx(mainIdx);
+      setSubIdx(sub);
     }
   };
 
-  const isEmptyHistory = () => {
-    return history.length === 0;
+  const currentStep = (): ExtractStepNames<T> => {
+    const step = steps[stepIdx];
+    return typeof step === 'string'
+      ? (step as ExtractStepNames<T>)
+      : (step[subIdx ?? 0] as ExtractStepNames<T>);
   };
 
-  const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = Children.toArray(children).find(
-      (childStep) => (childStep as ReactElement).key === `.$${currentStep()}`,
-    );
-
-    return <>{targetStep}</>;
+  return {
+    currentStep,
+    nextStep,
+    prevStep,
+    onMoveStep,
+    isEmptyHistory: () => history.length === 0,
+    isFirstStep: () => history.length === 0 || stepIdx === 0,
   };
-
-  return { nextStep, prevStep, onMoveStep, currentStep, isEmptyHistory, Funnel };
 };
 
 export default useFunnel;

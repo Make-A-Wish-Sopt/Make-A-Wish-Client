@@ -1,8 +1,9 @@
 import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
-import { PresentDataResolverType } from '@/validation/present.validate';
+
 import axios from 'axios';
+import { PresentFormSchemaType } from '@/Schema/present.schema';
 
 export const getPublicWishes = async (wishId: string) => {
   try {
@@ -18,9 +19,7 @@ export const getPublicWishes = async (wishId: string) => {
 
 //케이크 아이디 수정해야될거 같음
 //리팩토링
-export const postPublicCakes = async (
-  presentData: PresentDataResolverType & { wishId: string },
-) => {
+export const postPublicCakes = async (presentData: PresentFormSchemaType & { wishId: string }) => {
   try {
     const requestData = {
       ...presentData,

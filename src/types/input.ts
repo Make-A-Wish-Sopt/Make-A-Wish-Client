@@ -1,4 +1,4 @@
-export interface PresentDataType {
+export interface PresentFormDataType {
   name: string;
   message: string;
   cakeId: number;
@@ -13,13 +13,3 @@ export interface WishesLinkDataType {
   endDate: Date;
   wantsGift: boolean;
 }
-
-// export interface WishesAccountDataType extends AccountDataType {
-//   phone: string;
-// }
-
-// export interface AccountDataType {
-//   name: string;
-//   bank: string;
-//   account: string;
-// }

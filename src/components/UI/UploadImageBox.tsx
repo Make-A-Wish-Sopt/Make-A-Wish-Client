@@ -3,13 +3,17 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { UploadImageLogoIc } from '../../../public/assets/icons';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { colors } from '@/styles/styles';
 
 export const UploadImageBox = React.memo(function UploadImageBox({
   imageUrl,
   handleUploadImageFile,
+  isLoading,
 }: {
   imageUrl: string;
   handleUploadImageFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isLoading?: boolean;
 }) {
   const [imageAspectRatio, setImageAspectRatio] = useState(331 / 220); // 초기값: 331:220 비율
 
@@ -26,6 +30,12 @@ export const UploadImageBox = React.memo(function UploadImageBox({
           aspectRatio: `${imageAspectRatio}`, // 이미지 비율에 따라 높이 설정
         }}
       >
+        {isLoading && (
+          <div className="absolute z-10 flex justify-center items-center w-full h-full backdrop-blur-sm bg-black/20">
+            <ClipLoader color={colors.main_blue} size={50} />
+          </div>
+        )}
+
         {imageUrl ? (
           <Image
             src={imageUrl}

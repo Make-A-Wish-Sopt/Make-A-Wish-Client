@@ -4,37 +4,55 @@ import InputText from '@/components/Elements/Input/inputText';
 import InputForm from '@/components/UI/InputForm';
 import { useFunnelContext } from '@/Context/FunnelContext';
 import React, { PropsWithChildren } from 'react';
-import { PresentFunnelStepType } from '../page';
-import { PresentFormMethodsType } from './FunnelContainer';
 import { presentListArray } from '@/constant/model/present';
 import Image from 'next/image';
 import { convertMoneyText } from '@/utils/common/convert';
 import Box from '@/components/Elements/Box';
 import CheckBox from '@/components/UI/CheckBox';
-import useBoolean from '@/hooks/useBoolean';
-import { useFormState, useWatch } from 'react-hook-form';
+import useBoolean, { BooleanHookType } from '@/hooks/useBoolean';
+import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import InputTextForm from '@/components/UI/InputTextForm';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import Button from '@/components/Elements/Button';
 import { Step } from '@/components/Modules/Funnel';
+import { useParams, useSearchParams } from 'next/navigation';
+import { presentFormInitValues } from '@/constant/init';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { presentFormSchema, PresentFormSchemaType } from '@/Schema/present.schema';
+import { PresentFunnelStepType } from '@/constant/funnelStep';
+import { postPublicCakes } from '@/api/public';
+import { toast } from 'sonner';
 
 const PresentForm = () => {
+  const searchParams = useSearchParams();
+  const avatarCakeId = searchParams.get('avatarCakeId');
+
+  const onlyPresentMessageToggle = useBoolean();
+
+  const presentFormMethods = useForm<PresentFormSchemaType>({
+    mode: 'onChange',
+    defaultValues: {
+      ...presentFormInitValues,
+      cakeId: Number(avatarCakeId),
+    },
+    resolver: yupResolver(presentFormSchema),
+  });
+
   return (
-    <>
+    <FormProvider {...presentFormMethods}>
       <GiverNameInput />
-      <SelectPresentItem />
+      <SelectPresentItem onlyMessageToggle={onlyPresentMessageToggle} />
       <LetterToFriendInput />
 
       <Step.ButtonWrapper>
-        <NextButton />
+        <NextButton onlyPresentMessage={onlyPresentMessageToggle.state} />
       </Step.ButtonWrapper>
-    </>
+    </FormProvider>
   );
 };
 
 const GiverNameInput = () => {
-  const { inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { register } = inputs.presentFormMethods;
+  const { register } = useFormContext<PresentFormSchemaType>();
 
   return (
     <InputForm title="본인의 닉네임 작성하기">
@@ -46,10 +64,8 @@ const GiverNameInput = () => {
   );
 };
 
-const SelectPresentItem = () => {
-  const { inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { setValue, control } = inputs.presentFormMethods;
-  const onlyPresentMessageToggle = useBoolean();
+const SelectPresentItem = ({ onlyMessageToggle }: { onlyMessageToggle: BooleanHookType }) => {
+  const { setValue, control } = useFormContext<PresentFormSchemaType>();
 
   const selectedPresentId = useWatch({
     control,
@@ -63,13 +79,13 @@ const SelectPresentItem = () => {
   return (
     <InputForm title="선물하고 싶은 항목 선택하기">
       <PresentList
-        onlyPresentMessage={onlyPresentMessageToggle.state}
+        onlyPresentMessage={onlyMessageToggle.state}
         selectedId={selectedPresentId}
         onSelectItem={onSelectPresentItem}
       />
 
       <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-        <CheckBox changeCheckedState={onlyPresentMessageToggle.changeState}>
+        <CheckBox changeCheckedState={onlyMessageToggle.changeState}>
           <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
         </CheckBox>
       </Box>
@@ -78,8 +94,7 @@ const SelectPresentItem = () => {
 };
 
 const LetterToFriendInput = () => {
-  const { inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { register, control } = inputs.presentFormMethods;
+  const { register, control } = useFormContext<PresentFormSchemaType>();
 
   return (
     <InputForm title="친구에게 편지남기기">
@@ -139,13 +154,35 @@ const PresentList = ({
   );
 };
 
-const NextButton = () => {
-  const { nextStep, inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { control, getValues } = inputs.presentFormMethods;
+const NextButton = ({ onlyPresentMessage }: { onlyPresentMessage: boolean }) => {
+  const { nextStep, setSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
+  const { control, getValues } = useFormContext<PresentFormSchemaType>();
   const { isValid } = useFormState({ control });
+  const { wishId } = useParams();
 
   const handleNextStep = async () => {
-    nextStep();
+    const presentFormData = getValues();
+    if (!presentFormData) return;
+
+    if (onlyPresentMessage) {
+      const response = await postPublicCakes({ ...presentFormData, wishId: wishId as string });
+      if (!response) {
+        toast.error('선물을 보내는 중 오류가 발생했어요ㅠㅠ');
+
+        return;
+      }
+      onMoveStep('complete');
+      setSharedData((prev) => ({
+        ...prev,
+        present: { ...presentFormData },
+      }));
+    } else {
+      nextStep();
+      setSharedData((prev) => ({
+        ...prev,
+        present: { ...presentFormData },
+      }));
+    }
   };
 
   return (

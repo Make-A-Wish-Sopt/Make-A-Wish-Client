@@ -1,22 +1,9 @@
-import { PresentDataType, WishesLinkDataType } from '@/types/input';
+import { PresentFormDataType } from '@/types/input';
 import { TransferInfoType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
-import { WishesFormValidatorType } from '@/validation/wishes.validate';
+import { WishesFormScehmaType } from '@/Schema/wishes.schema';
 
-export const WishesPageModalStateInit = {
-  wishesTitleInputModalState: false,
-  shareLinkModalState: false,
-};
-
-export type WishesPageModalStateType = typeof WishesPageModalStateInit;
-
-export const WishesPageContainerStateInit = {
-  cakeMessageModalState: false,
-};
-
-export type WishesPageContainerStateType = typeof WishesPageContainerStateInit;
-
-export const wishesFormInitValues: WishesFormValidatorType = {
+export const wishesFormInitValues: WishesFormScehmaType = {
   imageUrl: '',
   title: '',
   hint: '',
@@ -35,28 +22,7 @@ export const accountFormInitValues: TransferInfoType = {
   kakaoPayCode: '',
 };
 
-//-------
-
-export const wishesLinkInputInit: WishesLinkDataType = {
-  imageUrl: '',
-  title: '',
-  hint: '',
-  startDate: new Date(),
-  endDate: getDate(new Date(), 7),
-  wantsGift: true,
-};
-
-export const wishesAccountInputInit: TransferInfoType = {
-  accountInfo: {
-    account: '',
-    name: '',
-    bank: '',
-  },
-  forPayCode: false,
-  kakaoPayCode: '',
-};
-
-export const presentDataInputInit: PresentDataType = {
+export const presentFormInitValues: PresentFormDataType = {
   name: '',
   message: '',
   cakeId: 0,

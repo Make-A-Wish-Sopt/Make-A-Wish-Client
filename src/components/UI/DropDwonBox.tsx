@@ -5,12 +5,12 @@ import Box, { BoxProps } from '../Elements/Box';
 
 interface DropDownBoxProps extends BoxProps {
   isOpen: boolean;
-  changeOpenState: () => void;
+  toggleState: () => void;
 }
 
 export default function DropDwonBox({
   isOpen,
-  changeOpenState,
+  toggleState,
   ...rest
 }: PropsWithChildren<DropDownBoxProps>) {
   return (
@@ -22,7 +22,10 @@ export default function DropDwonBox({
     >
       <div className="flex items-center gap-8 w-full h-full text-[14px] ">
         {rest.children}
-        <button onClick={changeOpenState} className="flex justify-center items-center w-30 h-30 ">
+        <button
+          onClick={() => toggleState()}
+          className="flex justify-center items-center w-30 h-30 "
+        >
           <Image
             src={MainBlueArrowIc}
             alt="화살표 아이콘"

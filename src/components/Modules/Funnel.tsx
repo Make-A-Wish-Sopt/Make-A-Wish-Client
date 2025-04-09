@@ -1,4 +1,5 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { ExtractStepNames, FunnelStepsType } from '@/hooks/useFunnel';
+import { Children, PropsWithChildren, ReactElement, ReactNode } from 'react';
 
 export interface StepProps {
   name: string;
@@ -38,4 +39,18 @@ Step.ButtonWrapper = ({
       {children}
     </div>
   );
+};
+
+export const Funnel = <T extends FunnelStepsType>({
+  children,
+  current,
+}: {
+  children: ReactNode;
+  current: ExtractStepNames<T>;
+}) => {
+  const matched = Children.toArray(children).find(
+    (child) => (child as ReactElement).key === `.$${current}`,
+  );
+
+  return <>{matched}</>;
 };

@@ -3,9 +3,9 @@ import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
-import { WishesAccountDataResolverType } from '@/validation/wishes.validate';
+import { AccountFormSchemaType } from '@/Schema/wishes.schema';
 
-export const putUserAccount = async (accountInputs: WishesAccountDataResolverType) => {
+export const putUserAccount = async (accountInputs: AccountFormSchemaType) => {
   try {
     const data = await client.put<DefaultResponseType>(
       `${API_VERSION_01}${PATH_USER.ACCOUNT}`,

@@ -21,6 +21,9 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  if (typeof window !== 'undefined' && window.Kakao && !window.Kakao.isInitialized()) {
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+  }
   return (
     <html lang="ko" className="bg-background">
       <body>
@@ -33,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CODE} />
           </>
         )}
+        <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -1,87 +1,69 @@
 import { Step } from '@/components/Modules/Funnel';
-import { WishCreateFunnel, WishCreateFunnelProvider } from './Components/FunnelContainer';
-import { ExtractStepNames } from '@/hooks/useFunnel';
-import SelectPaymentForm from './Components/Form/SelectPaymentForm';
-import KakaopayCodeForm from './Components/Form/KakaopayCodeForm';
 import MainLayout from '@/layouts/MainLayout';
-import WishesForm from './Components/Form/WishesForm';
-import AccountForm from './Components/Form/AccountForm';
-import WishCreateFinishForm from './Components/Form/WishCreateFinishForm.Server';
 import { ReactNode } from 'react';
 import Image from 'next/image';
 import { WishesFormPresentIc } from '@public/assets/icons';
+import ErrorPage from '@/app/error';
+import Header from '@/components/Elements/Header';
+import { WishesCreateFunnelSteps } from '@/constant/funnelStep';
+import { FunnelContainer } from '@/app/_components/FunnelContainer';
+import { BackButton } from '@/components/Elements/Button/BackButton';
+import dynamic from 'next/dynamic';
 
-/**
- * Wishes Create Funnel의 모든 단계를 정의하는 상수
- * @remarks 중첩 배열은 서브 스텝을 나타냅니다
- */
-const WishesCreateFunnelSteps = [
-  'complete',
-  'wishes',
-  'selectPayment',
-  ['account', 'kakaopay'],
-  'complete',
-] as const;
+const DynamicWishesFormStep = dynamic(() => import('./_components/Steps/WishesFormStep'));
+const DynamicSelectPaymentFormStep = dynamic(
+  () => import('./_components/Steps/SelectPaymentFormStep'),
+);
+const DynamicAccountFormStep = dynamic(() => import('./_components/Steps/AccountFormStep'));
+const DynamicKakaopayCodeForm = dynamic(() => import('./_components/Steps/KakaopayCodeFormStep'));
 
-export type WishesFunnelStepType = typeof WishesCreateFunnelSteps;
+const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: string } }) => {
+  if (!searchParams.wishTitle) {
+    return <ErrorPage alertMessage={`소원제목을 입력하고\n입장해주세요!`} />;
+  }
 
-/**
- * Wishes Create Funnel에서 사용 가능한 모든 단계 이름
- * @example 'wishes' | 'selectPayment' | 'account' | 'kakaopay' | 'done'
- */
-export type WishesFunnelStepName = ExtractStepNames<typeof WishesCreateFunnelSteps>;
-
-export default async function WishesCreatePage() {
   return (
-    <WishCreateFunnelProvider steps={WishesCreateFunnelSteps}>
-      <WishCreateFunnel>
-        <Step name="wishes">
-          <MainLayout>
-            <StepTitle title={'생일잔치 링크 생성하기'} />
-            <Step.FormSection className="flex flex-col gap-12 mb-24">
-              <WishesForm />
-            </Step.FormSection>
-          </MainLayout>
-        </Step>
+    <FunnelContainer steps={WishesCreateFunnelSteps}>
+      <Step name="wishes">
+        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+          <StepTitle title={'생일잔치 링크 생성하기'} />
+          <Step.FormSection className="flex flex-col gap-12 mb-24">
+            <DynamicWishesFormStep />
+          </Step.FormSection>
+        </MainLayout>
+      </Step>
 
-        <Step name="selectPayment">
-          <MainLayout>
-            <StepTitle title={'현금 입금 방식 선택하기'} />
-            <Step.FormSection className="flex flex-col gap-12 mb-24">
-              <SelectPaymentForm />
-            </Step.FormSection>
-          </MainLayout>
-        </Step>
+      <Step name="selectPayment">
+        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+          <StepTitle title={'현금 입금 방식 선택하기'} />
+          <Step.FormSection className="flex flex-col gap-12 mb-24">
+            <DynamicSelectPaymentFormStep />
+          </Step.FormSection>
+        </MainLayout>
+      </Step>
 
-        <Step name="account">
-          <MainLayout>
-            <StepTitle title={'입금 받을 계좌 입력하기'} />
-            <Step.FormSection className="flex flex-col gap-12 mb-24">
-              <AccountForm />
-            </Step.FormSection>
-          </MainLayout>
-        </Step>
+      <Step name="account">
+        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+          <StepTitle title={'입금 받을 계좌 입력하기'} />
+          <Step.FormSection className="flex flex-col gap-12 mb-24">
+            <DynamicAccountFormStep />
+          </Step.FormSection>
+        </MainLayout>
+      </Step>
 
-        <Step name="kakaopay">
-          <MainLayout>
-            <StepTitle title={'카카오톡 송금코드 가져오기'} />
-            <Step.FormSection className="flex flex-col gap-12 mb-24">
-              <KakaopayCodeForm />
-            </Step.FormSection>
-          </MainLayout>
-        </Step>
-
-        <Step name="complete">
-          <MainLayout>
-            <Step.FormSection className="flex flex-col gap-12 mb-24">
-              <WishCreateFinishForm />
-            </Step.FormSection>
-          </MainLayout>
-        </Step>
-      </WishCreateFunnel>
-    </WishCreateFunnelProvider>
+      <Step name="kakaopay">
+        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+          <StepTitle title={'카카오톡 송금코드 가져오기'} />
+          <Step.FormSection className="flex flex-col gap-12 mb-24">
+            <DynamicKakaopayCodeForm />
+          </Step.FormSection>
+        </MainLayout>
+      </Step>
+    </FunnelContainer>
   );
-}
+};
+
+export default WishesCreatePage;
 
 const StepTitle = ({ title }: { title: ReactNode }) => {
   return (

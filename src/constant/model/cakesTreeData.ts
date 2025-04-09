@@ -90,8 +90,7 @@ export type ReceivedCakeTreeMessageDataType = {
   giftMenuId: string | number;
 } & CakeTreeDataType;
 
-const defaultCakeTreeDataMap: Map<CakeIdType, ReceivedCakeTreeMessageDataType> =
-  new Map();
+const defaultCakeTreeDataMap: Map<CakeIdType, ReceivedCakeTreeMessageDataType> = new Map();
 defaultCakeTreeDataMap.set(cakeId.adminCakeId, {
   name: '선물주운영자',
   cakeImg: AdminCakeImg,
@@ -190,13 +189,11 @@ defaultCakeTreeDataMap.set(cakeId.beefCakeId, {
   giftMenuId: '소곡이',
 });
 
-export const defaultCakeTreeDataArray = Array.from(
-  defaultCakeTreeDataMap.entries()
-).map(([cakeId, value]) => ({
-  cakeId,
-  ...value,
-}));
-
-export const defaultCakeTreeDataObject = Object.fromEntries(
-  defaultCakeTreeDataMap
+export const defaultCakeTreeDataArray = Array.from(defaultCakeTreeDataMap.entries()).map(
+  ([cakeId, value]) => ({
+    cakeId,
+    ...value,
+  }),
 );
+
+export const defaultCakeTreeDataObject = Object.fromEntries(defaultCakeTreeDataMap);

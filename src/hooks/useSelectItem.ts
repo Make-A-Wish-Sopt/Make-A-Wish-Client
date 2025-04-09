@@ -1,35 +1,43 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export default function useSelectItem() {
   const [selectedId, setSelectedId] = useState(0);
-  const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([]);
+  const [selectedIdArray, setSelectedIdArray] = useState<number[]>([]);
 
-  function handleSelectOne(id: number) {
+  const handleSelectOne = useCallback((id: number) => {
     setSelectedId(id);
-  }
+  }, []);
 
-  function isSelected(id: number) {
-    return selectedId === id;
-  }
+  const isSelected = useCallback((id: number) => selectedId === id, [selectedId]);
 
-  function addToDeleteIdList(addItemId: number) {
-    setSelectedIdArray([...selectedIdArray, addItemId]);
-  }
+  const addToDeleteIdList = useCallback((addItemId: number) => {
+    setSelectedIdArray((prev) => (prev.includes(addItemId) ? prev : [...prev, addItemId]));
+  }, []);
 
-  function removeToDeleteIdList(removeItemId: number) {
-    setSelectedIdArray([
-      ...selectedIdArray.filter((id) => id !== removeItemId),
-    ]);
-  }
+  const cancelToDeleteIdList = useCallback((removeItemId: number) => {
+    setSelectedIdArray((prev) => prev.filter((id) => id !== removeItemId));
+  }, []);
 
-  return {
-    selectedId,
-    handleSelectOne,
-    isSelected,
-    selectedIdArray,
-    addToDeleteIdList,
-    removeToDeleteIdList,
-  };
+  const value = useMemo(
+    () => ({
+      selectedId,
+      handleSelectOne,
+      isSelected,
+      selectedIdArray,
+      addToDeleteIdList,
+      cancelToDeleteIdList,
+    }),
+    [
+      selectedId,
+      handleSelectOne,
+      isSelected,
+      selectedIdArray,
+      addToDeleteIdList,
+      cancelToDeleteIdList,
+    ],
+  );
+
+  return value;
 }

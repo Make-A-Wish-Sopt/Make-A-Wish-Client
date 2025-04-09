@@ -36,7 +36,7 @@ export function WarningCheckedIcon({
 }: {
   bgColor?: keyof ColorsTypes;
   iconColor?: keyof ColorsTypes;
-  width: number;
+  width?: number;
 }) {
   return (
     <svg

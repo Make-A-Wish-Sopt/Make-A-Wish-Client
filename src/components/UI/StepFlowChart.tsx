@@ -1,4 +1,4 @@
-import { StepsType } from '@/hooks/common/useLinkedStep';
+import { FunnelStepsType } from '@/hooks/useFunnel';
 import mermaid from 'mermaid';
 import { useEffect, useRef } from 'react';
 
@@ -9,7 +9,7 @@ const StepFlowChart = ({
 }: {
   chart: string;
   onMoveStep: (target: string | Record<string, string>) => void;
-  steps: StepsType;
+  steps: FunnelStepsType;
 }) => {
   const chartRef = useRef<HTMLDivElement>(null);
 

@@ -8,7 +8,7 @@ import {
 } from '@/types/api/response';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_WISHES } from './path';
-import { WishesLinkDataResolverType } from '@/validation/wishes.validate';
+import { WishesFormScehmaType } from '@/Schema/wishes.schema';
 
 /**
  * 진행중인 소원 조회
@@ -27,26 +27,30 @@ export const getMainProgressWishesData = async () => {
  * 모든 소원리스트 조회
  */
 export const getWishes = async () => {
-  const data = await client.get<WishesHistoryListResponseType>(
-    `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
-    {},
-  );
+  try {
+    const data = await client.get<WishesHistoryListResponseType>(
+      `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
+      {},
+    );
 
-  return data.data.data.wishes;
+    return data.data.data.wishes;
+  } catch (error) {}
 };
 
 /**
  * 소원링크 생성
  */
-export const postWishes = async (wishesData: WishesLinkDataResolverType) => {
-  const data = await client.post<WishesCreateResponseType>(
-    `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
-    {
-      ...wishesData,
-    },
-  );
+export const postWishes = async (wishesData: WishesFormScehmaType) => {
+  try {
+    const data = await client.post<WishesCreateResponseType>(
+      `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
+      {
+        ...wishesData,
+      },
+    );
 
-  return data;
+    return data;
+  } catch (error) {}
 };
 
 /**
@@ -78,7 +82,7 @@ export const getProgressWishLinkData = async () => {
 /**
  * 진행중인 소원 정보 수정
  */
-export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) => {
+export const putProgressWishes = async (wishesData: WishesFormScehmaType) => {
   const data = await client.put<DefaultResponseType>(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
     ...wishesData,
   });
@@ -90,9 +94,12 @@ export const putProgressWishes = async (wishesData: WishesLinkDataResolverType) 
  * 진행중인 소원 중단
  */
 export const patchProgressWishes = async () => {
-  const data = await client.patch(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {});
+  const data = await client.patch<DefaultResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
+    {},
+  );
 
-  return data.data.data;
+  return data.data;
 };
 
 /**

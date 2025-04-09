@@ -7,18 +7,18 @@ import { CSSProperties } from 'react';
 interface CalendarProps {
   date: Date;
   isOpen: boolean;
-  ChangeDate?: (selectedDate: Date) => void;
+  changeDate?: (selectedDate: Date) => void;
   style?: CSSProperties;
 }
 
 export default function Calendar(props: CalendarProps) {
-  const { date, ChangeDate, isOpen, style } = props;
+  const { date, changeDate, isOpen, style } = props;
 
   return (
     <DayPicker
       mode="single"
       selected={date}
-      onSelect={ChangeDate}
+      onSelect={changeDate}
       locale={ko}
       components={{
         NextMonthButton: (props: NextMonthButtonProps) => (

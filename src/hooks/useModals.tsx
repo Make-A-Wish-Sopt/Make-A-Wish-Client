@@ -1,10 +1,8 @@
-import IconButton from '@/components/Elements/Icon/IconButton';
-import { useModalContext } from '@/Context/modalContext';
 import ModalPortal from '@/layouts/ModalPortal';
 import { ColorsTypes } from '@/styles/styles';
-import { CloseBlueIc, CloseSmallIc } from '@public/assets/icons';
+import { CloseBlueIc } from '@public/assets/icons';
 import Image from 'next/image';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 interface ModalProps<T extends string[]> {
   modalKey: T[number];
@@ -35,6 +33,10 @@ const useModals = <T extends string[]>() => {
     setModalState({ ...modalState, [key]: false });
   };
 
+  const toggleModal = (key: T[number]) => {
+    setModalState((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
   const ModalKeyContext = createContext<T[number] | null>(null);
 
   const Modal = ({
@@ -53,7 +55,6 @@ const useModals = <T extends string[]>() => {
   Modal.ModalOverlay = ({
     bgColor = 'black/70',
     backDrop = true,
-    // bgScroll = false,
     className = 'fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999]',
     children,
   }: ModalSubComponentProps & ModalOverlayType) => {
@@ -72,15 +73,12 @@ const useModals = <T extends string[]>() => {
     );
   };
 
-  Modal.ModalLayout = ({
-    className = 'flex flex-col items-center',
-    children,
-  }: ModalSubComponentProps) => {
+  Modal.ModalLayout = ({ className, children }: ModalSubComponentProps) => {
     const modalKey = useContext(ModalKeyContext);
     return (
       <>
         <div
-          className={`w-375 h-full ${className || ''}`}
+          className={`w-375 h-full ${className || 'flex flex-col items-center justify-center'}`}
           style={{
             animation: modalState[modalKey] ? 'appearAnimation 0.3s ease-out forwards' : '',
           }}
@@ -114,10 +112,10 @@ const useModals = <T extends string[]>() => {
       <>
         {onCloseButton ? (
           <>
-            <div className="flex justify-end w-full ">
-              <IconButton onClick={() => closeModal(modalKey)}>
+            <div className="flex justify-end w-full px-22 ">
+              <button onClick={() => closeModal(modalKey)}>
                 <Image src={CloseBlueIc} alt="닫기" />
-              </IconButton>
+              </button>
             </div>
             <div className={`${className || ''}`}>{children}</div>
           </>
@@ -145,18 +143,14 @@ const useModals = <T extends string[]>() => {
 
   Modal.ContentHeader = ({
     className,
-    onCloseButton = false,
+    CloseIcon,
     children,
-  }: ModalSubComponentProps & { onCloseButton?: boolean }) => {
+  }: ModalSubComponentProps & { CloseIcon?: JSX.Element }) => {
     const modalKey = useContext(ModalKeyContext);
 
     return (
       <div className={`${className || ''}`}>
-        {onCloseButton && (
-          <IconButton onClick={() => closeModal(modalKey)}>
-            <Image src={CloseSmallIc} alt="닫기" />
-          </IconButton>
-        )}
+        {CloseIcon && <button onClick={() => closeModal(modalKey)}>{CloseIcon}</button>}
         {children}
       </div>
     );
@@ -173,7 +167,7 @@ const useModals = <T extends string[]>() => {
     return <div className={`${className || ''}`}>{children}</div>;
   };
 
-  return { modalState, Modal, openModal, closeModal };
+  return { modalState, Modal, openModal, closeModal, toggleModal };
 };
 
 export default useModals;

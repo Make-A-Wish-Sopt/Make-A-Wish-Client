@@ -21,7 +21,7 @@ export default function FixedBottomButton({ children, ...rest }: PropsWithChildr
 
 export function FixedBottomButtonWrapper({ children }: PropsWithChildren) {
   return (
-    <div className="fixed bottom-fixed-bottom left-1/2 transform -translate-x-1/2 flex gap-10 w-375 px-22 z-10 ">
+    <div className="fixed bottom-fixed-bottom left-1/2 transform -translate-x-1/2 flex gap-10 w-375 px-22 z-30 ">
       {children}
     </div>
   );

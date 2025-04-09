@@ -4,11 +4,14 @@ export const getDate = (date: Date, interval: number) => {
   return dateInterval;
 };
 
-export const convertDateToString = (date: Date) => {
-  if (!date) return;
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+export const convertDateToString = (date?: Date | string) => {
+  const targetDate = !date ? new Date() : typeof date === 'string' ? new Date(date) : date;
+
+  if (isNaN(targetDate.getTime())) return;
+
+  const year = targetDate.getFullYear();
+  const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const day = String(targetDate.getDate()).padStart(2, '0');
 
   return `${year}.${month}.${day}`;
 };

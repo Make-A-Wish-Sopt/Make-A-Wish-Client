@@ -1,18 +1,16 @@
-import { PaymentType, PresentStepType } from '@/app/present/[wishId]/page';
-import { WishesCreateStepType } from '@/app/wishes/create/page';
+import { PresentFunnelStepTypeName, WishesFunnelStepName } from './funnelStep';
 
-export const GA_VIEW_WISHES: Record<WishesCreateStepType, string> = {
-  link: 'view_create_wish_step_link',
-  select: 'view_create_wish_step_select',
+export const GA_VIEW_WISHES: Record<WishesFunnelStepName, string> = {
+  wishes: 'view_create_wish_step_link',
+  selectPayment: 'view_create_wish_step_select',
   account: 'view_create_wish_step_account',
   kakaopay: 'view_create_wish_step_kakaopay',
-  done: 'add_new_wish',
 };
 
-export const GA_VIEW_PRESENT: Record<PresentStepType, string | Record<PaymentType, string>> = {
+export const GA_VIEW_PRESENT: Record<PresentFunnelStepTypeName, string> = {
   present: 'view_present_step_present',
-  payment: { kakaopay: 'view_present_payment_kakaopay', account: 'view_present_payment_account' },
-  done: 'add_new_present',
+  payment: 'view_present_step_payment',
+  complete: 'view_present_step_complete',
 };
 
 export const GA_CLICK_BUTTON = {

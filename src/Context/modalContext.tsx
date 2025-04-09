@@ -2,17 +2,14 @@ import ModalPortal from '@/layouts/ModalPortal';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 type ModalContextType<T extends string[]> = {
-  modalKeys: T;
+  // modalKeys: T;
 };
 
 const ModalContext = createContext<ModalContextType<string[]> | undefined>(undefined);
 
-export function ModalContextProvider<T extends string[]>({
-  init,
-  children,
-}: { init: T } & PropsWithChildren) {
+export function ModalContextProvider<T extends string[]>({ children }: PropsWithChildren) {
   return (
-    <ModalContext.Provider value={{ modalKeys: init }}>
+    <ModalContext.Provider value={{}}>
       <ModalPortal>{children}</ModalPortal>
     </ModalContext.Provider>
   );

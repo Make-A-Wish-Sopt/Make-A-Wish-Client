@@ -4,6 +4,7 @@ import CloseIconInModal from './CloseIconInModal';
 import { LinkCopyIc } from '../../../../public/assets/icons';
 import { snsShareListArray } from '@/constant/model/snsShareList';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export default function ShareLinkModal({
   modalState,
@@ -31,7 +32,7 @@ export default function ShareLinkModal({
   async function handleAccountWishesLink() {
     try {
       await navigator.clipboard.writeText(wishLink);
-      alert('링크가 복사됐어요!');
+      toast.success('링크가 복사됐어요!');
     } catch (error) {}
   }
 

@@ -13,7 +13,7 @@ export default function ErrorPage({
   btnMessage = '홈으로 이동하기',
   errorText = 'ERROR',
 }: {
-  alertMessage?: string;
+  alertMessage: string;
   routePath?: RoutePathType;
   btnMessage?: string;
   errorText?: ReactNode;
@@ -27,7 +27,9 @@ export default function ErrorPage({
           <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
 
           <h1 className="font-bitbit text-main_blue text-[56px]">{errorText}</h1>
-          <p className="font-bitbit text-white text-[25px]">{alertMessage}</p>
+          <p className="font-bitbit text-white text-[25px] text-center whitespace-pre leading-none">
+            {alertMessage}
+          </p>
 
           <FixedBottomButtonWrapper>
             <Button

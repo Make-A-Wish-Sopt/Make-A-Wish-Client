@@ -1,9 +1,7 @@
 'use client';
 
-import { useShareModal } from '@/hooks/useShareModal';
+import { useModalContent } from '@/hooks/useModalContent';
 import { useEffect } from 'react';
-import { PresentFunnelStepType } from '../page';
-import { PresentFormMethodsType } from './FunnelContainer';
 import { useFunnelContext } from '@/Context/FunnelContext';
 import {
   defaultCakeTreeDataArray,
@@ -15,15 +13,26 @@ import { Step } from '@/components/Modules/Funnel';
 import Button from '@/components/Elements/Button';
 import BottomGradientShadow from '@/components/UI/GradientShadow';
 import { useRouters } from '@/hooks/useRouters';
+import { PresentFunnelStepType } from '@/constant/funnelStep';
+import { toast } from 'sonner';
+import { PresentFormSchemaType } from '@/Schema/present.schema';
 
 const CompleteForm = ({ nickName }: { nickName: string }) => {
   const { Modal, modalState, openModal, PresentMessageModalContent } =
-    useShareModal<['complete']>();
-  const { inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { getValues } = inputs.presentFormMethods;
-  const { name, message, giftMenuId, cakeId } = getValues();
+    useModalContent<['complete']>();
+  const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
 
   const { handleRouter } = useRouters();
+
+  const presentFormData = getSharedData('present');
+
+  if (!presentFormData) {
+    toast.error('선물정보를 먼저 입력해주세요!');
+    onMoveStep('present');
+    return;
+  }
+
+  const { name, message, giftMenuId, cakeId } = presentFormData as PresentFormSchemaType;
 
   const receivedCakeMessageData: ReceivedCakeTreeMessageDataType = {
     name: name,

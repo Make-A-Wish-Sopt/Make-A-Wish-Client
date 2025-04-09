@@ -1,9 +1,9 @@
 import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
-import Header, { MypageButton } from '@/components/Elements/Hedaer';
+import Header, { MypageButton } from '@/components/Elements/Header';
 
 import MainLayout from '@/layouts/MainLayout';
-import SelectAvatarCakesButton from './components/SelectAvatarCakes';
+import SelectAvatarCakesButton from './_components/SelectAvatarCakes';
 
 export default async function WishesIdPage({ params }: { params: { wishId: string } }) {
   const { wishId } = params;

@@ -2,8 +2,6 @@
 
 import { useFunnelContext } from '@/Context/FunnelContext';
 import React from 'react';
-import { PresentFunnelStepType } from '../page';
-import { PresentFormMethodsType } from './FunnelContainer';
 import { presentListObject } from '@/constant/model/present';
 import Image from 'next/image';
 import { convertMoneyText } from '@/utils/common/convert';
@@ -19,6 +17,9 @@ import { AccountCopySpeechBubbleIc } from '@public/assets/icons';
 import { clipboardCopy } from '@/utils/common/clipboardCopy';
 import { paymentListArray, paymentListObject } from '@/constant/bankList';
 import InputForm from '@/components/UI/InputForm';
+import { PresentFunnelStepType } from '@/constant/funnelStep';
+import { toast } from 'sonner';
+import { PresentFormSchemaType } from '@/Schema/present.schema';
 
 const PaymentForm = ({
   transferInfo,
@@ -32,9 +33,17 @@ const PaymentForm = ({
   }
 
   const { forPayCode } = transferInfo;
-  const { inputs } = useFunnelContext<PresentFunnelStepType, PresentFormMethodsType>();
-  const { getValues } = inputs.presentFormMethods;
-  const giftMenuId = getValues('giftMenuId');
+  const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
+  const presentFormData = getSharedData('present');
+
+  if (!presentFormData) {
+    toast.error('선물정보를 먼저 입력해주세요!');
+    onMoveStep('present');
+    return;
+  }
+
+  const { giftMenuId } = getSharedData('present') as PresentFormSchemaType;
+
   const presentPrice = giftMenuId > 0 ? presentListObject[giftMenuId].price.toString() : '0';
 
   return (
@@ -66,12 +75,9 @@ const KakaopayCodePayment = ({
   transferInfo: TransferInfoType;
 }) => {
   const { wishId } = useParams();
-  const { inputs, nextStep, onMoveStep } = useFunnelContext<
-    PresentFunnelStepType,
-    PresentFormMethodsType
-  >();
-  const { getValues, control } = inputs.presentFormMethods;
-  const { isValid } = useFormState({ control });
+  const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
+  const presentFormData = getSharedData('present') as PresentFormSchemaType;
+
   const clickYet = useBoolean(true);
 
   const 최초은행앱연결실행확인 = () => {
@@ -99,14 +105,10 @@ const KakaopayCodePayment = ({
     }
   }
 
-  const handleNextClick = async (isValid: boolean) => {
+  const handleNextClick = async () => {
     최초은행앱연결실행확인();
-    if (!isValid) {
-      alert('소원정보가 입력되지 않았어요!');
-      onMoveStep('present');
-    }
 
-    await postPublicCakes({ ...getValues(), wishId: wishId as string });
+    await postPublicCakes({ ...presentFormData, wishId: wishId as string });
     nextStep();
   };
 
@@ -120,7 +122,7 @@ const KakaopayCodePayment = ({
       <Step.ButtonWrapper vertical fixedBottom className="gap-10">
         <Button onClick={onLinkKakaopayApp}>{'카카오페이 송금하기'}</Button>
 
-        <Button disabled={clickYet.state} onClick={() => handleNextClick(isValid)}>
+        <Button disabled={clickYet.state} onClick={handleNextClick}>
           {clickYet.state ? '카카오로 송금하고, 편지 확인하기' : '송금 완료했어요!'}
         </Button>
       </Step.ButtonWrapper>
@@ -138,12 +140,10 @@ const AccountDepositPayment = ({
   transferInfo: TransferInfoType;
 }) => {
   const { wishId } = useParams();
-  const { inputs, nextStep, onMoveStep } = useFunnelContext<
-    PresentFunnelStepType,
-    PresentFormMethodsType
-  >();
-  const { getValues, control } = inputs.presentFormMethods;
-  const { isValid } = useFormState({ control });
+
+  const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
+  const presentFormData = getSharedData('present') as PresentFormSchemaType;
+
   const clickYet = useBoolean(true);
 
   const 계좌번호복사하기 = async () => {
@@ -157,12 +157,7 @@ const AccountDepositPayment = ({
   };
 
   const handleNextButtonClick = async () => {
-    if (!isValid) {
-      alert('소원정보가 입력되지 않았어요!');
-      onMoveStep('present');
-    }
-
-    await postPublicCakes({ ...getValues(), wishId: wishId as string });
+    await postPublicCakes({ ...presentFormData, wishId: wishId as string });
     nextStep();
   };
 

@@ -1,32 +1,47 @@
-import { ColorsTypes, FontsTypes } from '@/styles/styles';
+import { colors, ColorsTypes, FontsTypes } from '@/styles/styles';
+import { CSSProperties, PropsWithChildren, ElementType, ComponentPropsWithoutRef } from 'react';
 
-import { CSSProperties, PropsWithChildren } from 'react';
-
-export interface BoxProps {
+export interface BoxProps<T extends ElementType = 'div'> {
+  as?: T;
   bgColor?: keyof ColorsTypes;
   fontColor?: keyof ColorsTypes;
   font?: keyof FontsTypes;
   styles?: CSSProperties;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  className?: string;
+  disabled?: boolean;
+  children?: React.ReactNode;
 }
 
-export default function Box(props: PropsWithChildren<BoxProps>) {
+export default function Box<T extends ElementType = 'div' | 'button' | 'li'>(
+  props: PropsWithChildren<BoxProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof BoxProps>>,
+) {
   const {
+    as: Component = 'div',
     bgColor = 'dark_green',
     font = 'galmuri',
     fontColor = 'white',
     styles,
     onClick,
+    className = '',
+    disabled,
     children,
+    ...rest
   } = props;
 
   return (
-    <div
-      className={`w-full h-50 bg-${bgColor} font-${font} text-${fontColor} p-10 pl-12 rounded-xl`}
-      style={styles}
+    <Component
+      className={`w-full h-50 font-${font} text-${fontColor} p-10 pl-12 rounded-xl ${className} ${
+        disabled ? '' : `bg-${bgColor}`
+      }`}
+      style={{
+        ...styles,
+        backgroundColor: disabled ? colors.gray4 : undefined,
+        color: disabled ? colors.gray3 : undefined,
+      }}
       onClick={onClick}
+      {...rest}
     >
       {children}
-    </div>
+    </Component>
   );
 }
