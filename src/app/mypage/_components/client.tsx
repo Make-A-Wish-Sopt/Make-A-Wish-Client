@@ -14,6 +14,8 @@ import { deleteUserInfo } from '@/api/user';
 import Image from 'next/image';
 import { GuideImg } from '@public/assets/images';
 import { useFetch } from '@/hooks/useFetch';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { colors } from '@/styles/styles';
 
 export const MypageMenuContainer = ({ children }: PropsWithChildren) => {
   return <ul className="flex flex-col gap-12">{children}</ul>;
@@ -117,7 +119,7 @@ export const CloseWishMenu = ({ disabled }: { disabled?: boolean }) => {
           </Modal.ButtonWrapper>
         </ConfirmModalContent>
       </Modal>
-      {<LoadingModal />}
+      {<LoadingModal render={<ClipLoader color={colors.main_blue} size={68} />} />}
     </>
   );
 };

@@ -16,7 +16,7 @@ import {
   useFormState,
   useWatch,
 } from 'react-hook-form';
-import ValidateLoadingModal from '@/components/Elements/Modal/ValidateLoadingModal';
+import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
 import CheckedIcon, { WarningCheckedIcon } from '@/components/Elements/Icon/CheckedIcon';
 import { BooleanHookType } from '@/hooks/useBoolean';
 import useModals from '@/hooks/useModals';
@@ -196,7 +196,7 @@ export const AccountNumberInput = ({
   isAccountValid: boolean;
   onCheckAccountValid: (state: boolean) => void;
 }) => {
-  const { status, fetchData } = useFetch(postVerifyAccount);
+  const { data, status, delayFetchData, LoadingModal } = useFetch(postVerifyAccount);
   const { register, control } = useFormContext<AccountFormSchemaType>();
   const [validAccount, setValidAccount] = useState<AccountInfoType | null>(null);
   const { errors } = useFormState({ control, name: ['accountInfo'] });
@@ -215,25 +215,28 @@ export const AccountNumberInput = ({
     onCheckAccountValid(false);
   }, [accountInfo]); // 🔁 값이 바뀔 때마다 실행
 
-  const handleCheckAccount = async () => {
-    const response = await fetchData({
-      account: accountInfo.account,
-      bank: accountInfo.bank,
-      name: accountInfo.name,
-    });
+  useEffect(() => {
+    if (!data) return;
 
-    if (response) {
-      onCheckAccountValid(response.success);
+    if (data.success) {
+      onCheckAccountValid(true);
       setValidAccount({
         account: accountInfo.account,
         bank: accountInfo.bank,
         name: accountInfo.name,
       });
     } else {
-      toast(<입력제한주의사항 />);
-
       onCheckAccountValid(false);
+      toast.error('※ 4회 이상 틀리면, 서비스 이용이 제한됩니다.');
     }
+  }, [data]);
+
+  const handleCheckAccount = async () => {
+    delayFetchData(800, {
+      account: accountInfo.account,
+      bank: accountInfo.bank,
+      name: accountInfo.name,
+    });
   };
 
   const get상태아이콘 = (status: FetchStatusType) => {
@@ -277,7 +280,7 @@ export const AccountNumberInput = ({
             </Button>
           </div>
         </div>
-        {<ValidateLoadingModal isOpen={status === 'loading'} success={isAccountValid} />}
+        {<LoadingModal render={<LoadingCake text="검사 중" />} />}
       </div>
     </>
   );

@@ -46,14 +46,12 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
     }
   }, [status]);
 
-  const LoadingModal = () => {
+  const LoadingModal = ({ render }: { render: JSX.Element }) => {
     if (status !== 'loading') return null;
 
     return (
       <Modal modalKey="loading">
-        <Modal.ModalOverlay>
-          <ClipLoader color={colors.main_blue} size={68} />
-        </Modal.ModalOverlay>
+        <Modal.ModalOverlay>{render}</Modal.ModalOverlay>
       </Modal>
     );
   };

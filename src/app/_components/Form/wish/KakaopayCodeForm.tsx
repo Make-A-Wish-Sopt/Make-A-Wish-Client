@@ -8,7 +8,9 @@ import { DefaultResponseType } from '@/types/api/response';
 
 import { memo, useEffect, useState } from 'react';
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
-import ValidateLoadingModal from '@/components/Elements/Modal/ValidateLoadingModal';
+import ValidateLoadingModal, {
+  LoadingCake,
+} from '@/components/Elements/Modal/ValidateLoadingModal';
 import { FetchStatusType, useFetch } from '@/hooks/useFetch';
 import CheckedIcon, { WarningCheckedIcon } from '@/components/Elements/Icon/CheckedIcon';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -60,7 +62,7 @@ export const KakaopayCodeInput = ({
   const { register, getValues, control } = useFormContext<AccountFormSchemaType>();
   const kakaoPayCode = useWatch({ control, name: 'kakaoPayCode' });
   const { errors } = useFormState({ control });
-  const { status, fetchData } = useFetch(validateKakaoCodeURL);
+  const { data, status, delayFetchData, LoadingModal } = useFetch(validateKakaoCodeURL);
   const [validCode, setValidCode] = useState<string | null>(null);
 
   useEffect(() => {
@@ -72,6 +74,17 @@ export const KakaopayCodeInput = ({
     changeValidState(false);
   }, [kakaoPayCode]); // 🔁 값이 바뀔 때마다 실행
 
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.success) {
+      changeValidState(true);
+      setValidCode(kakaoPayCode);
+    } else {
+      changeValidState(false);
+    }
+  }, [data]);
+
   const handleCheckKakaoPayCode = async () => {
     const kakaoPayCode = getValues('kakaoPayCode');
 
@@ -79,13 +92,7 @@ export const KakaopayCodeInput = ({
     if (errors.kakaoPayCode) return;
     if (kakaoPayCode === validCode) return;
 
-    const response = await fetchData(kakaoPayCode);
-    if (response.success) {
-      changeValidState(true);
-      setValidCode(kakaoPayCode);
-    } else {
-      changeValidState(false);
-    }
+    delayFetchData(800, kakaoPayCode);
   };
 
   async function validateKakaoCodeURL(kakaoPayCode: string) {
@@ -131,7 +138,7 @@ export const KakaopayCodeInput = ({
         <p className="text-[14px] text-warning_red">{errors.kakaoPayCode.message}</p>
       )}
 
-      {<ValidateLoadingModal isOpen={status === 'loading'} success={isKakaoPayCodeValid} />}
+      {<LoadingModal render={<LoadingCake text="검사 중" />} />}
     </>
   );
 };
