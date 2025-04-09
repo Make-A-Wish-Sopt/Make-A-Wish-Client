@@ -4,20 +4,26 @@ import { Step } from '@/components/Modules/Funnel';
 import MainLayout from '@/layouts/MainLayout';
 import { WishInfoForGiver } from './components/PresentForm.Server';
 import PresentForm from './components/PresentForm';
-import PaymentForm from './components/PaymentForm';
-import CompleteForm from './components/CompleteForm';
 import { PresentFunnelStep } from '@/constant/funnelStep';
 import { FunnelContainer } from '@/app/_components/FunnelContainer';
 import Header from '@/components/Elements/Header';
 import { BackButton } from '@/components/Elements/Button/BackButton';
 import { AlimTalkMessageButton } from '@/app/wishes/_components/AlimTalckButton';
+import dynamic from 'next/dynamic';
+import { DefaultResponseType, PublicWishesDataType } from '@/types/api/response';
+
+const DynamicPaymentForm = dynamic(() => import('./components/PaymentForm'));
+const DynamicCompleteForm = dynamic(() => import('./components/CompleteForm'));
 
 export default async function GivePresentPage({ params }: { params: { wishId: string } }) {
-  const publicWishesData = await getPublicWishes(params.wishId);
+  const publicProgressWishes = await getPublicWishes(params.wishId);
 
-  if (!publicWishesData) {
-    return <ErrorPage alertMessage="해당 소원은 존재하지 않아요!" />;
+  if (!publicProgressWishes.success) {
+    const errorResonse = publicProgressWishes.data as DefaultResponseType;
+    return <ErrorPage alertMessage={`${errorResonse.message}`} />;
   }
+
+  const publicWishesData = publicProgressWishes.data as PublicWishesDataType;
 
   const { title, presentImageUrl, hint, transferInfo, nickname } = publicWishesData;
 
@@ -39,7 +45,7 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
       <Step name="payment">
         <MainLayout>
           <Step.FormSection className="flex flex-col mb-24">
-            <PaymentForm transferInfo={transferInfo} nickname={nickname} />
+            <DynamicPaymentForm transferInfo={transferInfo} nickname={nickname} />
           </Step.FormSection>
         </MainLayout>
       </Step>
@@ -47,7 +53,7 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
       <Step name="complete">
         <MainLayout>
           <Step.FormSection>
-            <CompleteForm nickName={nickname} />
+            <DynamicCompleteForm nickName={nickname} />
           </Step.FormSection>
 
           <Step.ButtonWrapper fixedBottom className="z-30">

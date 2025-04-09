@@ -26,6 +26,8 @@ const Page = async () => {
   const nickName = loginUserData.nickName;
   const hasReceivedCake = receivedCakeList.length > 0;
 
+  console.log(progressWishsData);
+
   return (
     <MainLayout Header={<Header rightMenu={<MypageButton />} />}>
       <p className={dayTextStyle}>
@@ -35,7 +37,14 @@ const Page = async () => {
       {isWishInProgress && getAlarmIcon(hasReceivedCake)}
 
       {isWishInProgress
-        ? renderWishesInProgress(receivedCakeList, wishId, nickName)
+        ? renderWishesInProgress(
+            receivedCakeList,
+            wishId,
+            nickName,
+            progressWishsData?.status === 'BEFORE'
+              ? `${progressWishsData?.dayCount + 1}일 뒤에 생일잔치 오픈!`
+              : '지금 바로 친구 초대하기',
+          )
         : renderNoWishes()}
       <GradientShadow height={19} />
     </MainLayout>
@@ -46,16 +55,17 @@ export default Page;
 
 // ===== 👇 서브 함수 분리 =====
 
-const renderWishesInProgress = (cakeList: CakeTreeDataType[], wishId: string, nickName: string) => (
+const renderWishesInProgress = (
+  cakeList: CakeTreeDataType[],
+  wishId: string,
+  nickName: string,
+  buttonText,
+) => (
   <>
     <CakePresentList cakeList={defineCakeTree([...cakeList])} wishId={wishId} nickName={nickName} />
 
     <ItemWrapper fixedBottom className="z-30">
-      <ShareWishesButton
-        wishId={wishId}
-        nickName={nickName}
-        buttonText={'생일잔치 링크 공유하기'}
-      />
+      <ShareWishesButton wishId={wishId} nickName={nickName} buttonText={buttonText} />
     </ItemWrapper>
   </>
 );

@@ -20,6 +20,8 @@ import InputForm from '@/components/UI/InputForm';
 import { PresentFunnelStepType } from '@/constant/funnelStep';
 import { toast } from 'sonner';
 import { PresentFormSchemaType } from '@/Schema/present.schema';
+import { useFetch } from '@/hooks/useFetch';
+import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
 
 const PaymentForm = ({
   transferInfo,
@@ -77,6 +79,7 @@ const KakaopayCodePayment = ({
   const { wishId } = useParams();
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
   const presentFormData = getSharedData('present') as PresentFormSchemaType;
+  const { delayFetchData, LoadingModal } = useFetch(postPublicCakes);
 
   const clickYet = useBoolean(true);
 
@@ -105,10 +108,10 @@ const KakaopayCodePayment = ({
     }
   }
 
-  const handleNextClick = async () => {
+  const handleNextClick = () => {
     최초은행앱연결실행확인();
 
-    await postPublicCakes({ ...presentFormData, wishId: wishId as string });
+    delayFetchData(1000, { ...presentFormData, wishId: wishId as string });
     nextStep();
   };
 
@@ -126,6 +129,7 @@ const KakaopayCodePayment = ({
           {clickYet.state ? '카카오로 송금하고, 편지 확인하기' : '송금 완료했어요!'}
         </Button>
       </Step.ButtonWrapper>
+      <LoadingModal render={<LoadingCake text="선물 중" />} />
     </div>
   );
 };
@@ -143,6 +147,7 @@ const AccountDepositPayment = ({
 
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
   const presentFormData = getSharedData('present') as PresentFormSchemaType;
+  const { delayFetchData, LoadingModal } = useFetch(postPublicCakes);
 
   const clickYet = useBoolean(true);
 
@@ -156,8 +161,8 @@ const AccountDepositPayment = ({
     await clipboardCopy(계좌정보);
   };
 
-  const handleNextButtonClick = async () => {
-    await postPublicCakes({ ...presentFormData, wishId: wishId as string });
+  const handleNextButtonClick = () => {
+    delayFetchData(1000, { ...presentFormData, wishId: wishId as string });
     nextStep();
   };
 
@@ -263,6 +268,7 @@ const AccountDepositPayment = ({
           {clickYet.state ? '송금하고, 편지 확인하기' : '송금 완료했어요!'}
         </Button>
       </Step.ButtonWrapper>
+      <LoadingModal render={<LoadingCake text="선물 중" />} />
     </div>
   );
 };

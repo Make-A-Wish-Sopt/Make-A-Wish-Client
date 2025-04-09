@@ -18,8 +18,12 @@ export const getPublicWishes = async (wishId: string) => {
       )}`,
     );
 
-    return data.data.data;
-  } catch (error) {}
+    return { success: true, data: data.data.data };
+  } catch (error) {
+    const response = error?.response.data as DefaultResponseType;
+
+    return { success: false, data: response };
+  }
 };
 
 //케이크 아이디 수정해야될거 같음

@@ -4,13 +4,16 @@ import Header, { MypageButton } from '@/components/Elements/Header';
 
 import MainLayout from '@/layouts/MainLayout';
 import SelectAvatarCakesButton from './_components/SelectAvatarCakes';
+import { DefaultResponseType } from '@/types/api/response';
 
 export default async function WishesIdPage({ params }: { params: { wishId: string } }) {
   const { wishId } = params;
+
   const publicProgressWishes = await getPublicWishes(wishId);
 
-  if (!publicProgressWishes) {
-    return <ErrorPage alertMessage="해당 소원은 존재하지 않아요!" />;
+  if (!publicProgressWishes.success) {
+    const errorResonse = publicProgressWishes.data as DefaultResponseType;
+    return <ErrorPage alertMessage={`${errorResonse.message}`} isError={false} />;
   }
 
   return (

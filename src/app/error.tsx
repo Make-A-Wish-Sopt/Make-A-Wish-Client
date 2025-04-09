@@ -12,11 +12,13 @@ export default function ErrorPage({
   routePath = '/',
   btnMessage = '홈으로 이동하기',
   errorText = 'ERROR',
+  isError = true,
 }: {
   alertMessage: string;
   routePath?: RoutePathType;
   btnMessage?: string;
   errorText?: ReactNode;
+  isError?: boolean;
 }) {
   const { handleRouter } = useRouters();
 
@@ -26,7 +28,7 @@ export default function ErrorPage({
         <div className="flex flex-col items-center justify-center w-375 h-full">
           <Image src={MainCakeImg} alt="메인케이크 이미지" width={200} />
 
-          <h1 className="font-bitbit text-main_blue text-[56px]">{errorText}</h1>
+          {isError && <h1 className="font-bitbit text-main_blue text-[100px]">{errorText}</h1>}
           <p className="font-bitbit text-white text-[25px] text-center whitespace-pre leading-none">
             {alertMessage}
           </p>
