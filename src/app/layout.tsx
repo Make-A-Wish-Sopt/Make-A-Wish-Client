@@ -21,9 +21,6 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  if (typeof window !== 'undefined' && window.Kakao && !window.Kakao.isInitialized()) {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-  }
   return (
     <html lang="ko" className="bg-background">
       <body>

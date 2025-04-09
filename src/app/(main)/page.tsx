@@ -7,7 +7,7 @@ import { KakaoLoginIc } from '@public/assets/icons';
 import Button from '@/components/Elements/Button';
 import { getKakaoLoginUrl } from '@/utils/common/auth';
 
-const Page = () => {
+const Page = async () => {
   const kakaoLoginUrl = getKakaoLoginUrl();
 
   return (

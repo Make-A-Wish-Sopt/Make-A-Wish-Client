@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, Suspense } from 'react';
+import { PropsWithChildren, Suspense, useEffect } from 'react';
 import { ModalContextProvider } from '@/Context/modalContext';
 import Loading from '@/app/loading';
 import { AuthProvider } from '@/Context/AuthContext';
@@ -13,6 +13,12 @@ interface MainLayoutProps extends PropsWithChildren {
 
 export default function MainLayout({ Header, Footer, children }: MainLayoutProps) {
   //추후 반응형까지 고려한 로직들을 추가 예정
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
 
   return (
     <AuthProvider>
