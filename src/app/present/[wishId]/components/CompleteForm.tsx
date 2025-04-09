@@ -9,10 +9,7 @@ import {
   ReceivedCakeTreeMessageDataType,
 } from '@/constant/model/cakesTreeData';
 import { PresentSuccessCakeTree } from '@/components/UI/PresentSuccessCakeTree';
-import { Step } from '@/components/Modules/Funnel';
-import Button from '@/components/Elements/Button';
 import BottomGradientShadow from '@/components/UI/GradientShadow';
-import { useRouters } from '@/hooks/useRouters';
 import { PresentFunnelStepType } from '@/constant/funnelStep';
 import { toast } from 'sonner';
 import { PresentFormSchemaType } from '@/Schema/present.schema';
@@ -21,8 +18,6 @@ const CompleteForm = ({ nickName }: { nickName: string }) => {
   const { Modal, modalState, openModal, PresentMessageModalContent } =
     useModalContent<['complete']>();
   const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
-
-  const { handleRouter } = useRouters();
 
   const presentFormData = getSharedData('present');
 
@@ -68,10 +63,6 @@ const CompleteForm = ({ nickName }: { nickName: string }) => {
           cakePresentMessage={receivedCakeMessageData}
         />
       </Modal>
-
-      <Step.ButtonWrapper fixedBottom className="z-30">
-        <Button onClick={() => handleRouter('/')}>{'제 생일에도 써볼래요!'}</Button>
-      </Step.ButtonWrapper>
 
       <BottomGradientShadow height={19} fixedBottom />
     </>

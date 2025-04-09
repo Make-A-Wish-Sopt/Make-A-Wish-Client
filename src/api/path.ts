@@ -31,6 +31,7 @@ export const PATH_WISHES = {
 export const PATH_PUBLIC = {
   CAKES: `${PATH.public}/cakes`,
   GET_WISHES_INFO: (wishId: number) => `${PATH.public}${PATH.wishes}/${wishId}`,
+  ALARM: `${PATH.public}/alarm`,
 };
 
 export const PATH_CAKES = {

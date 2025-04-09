@@ -5,13 +5,16 @@ import { useRouters } from '@/hooks/useRouters';
 import { useModalContent } from '@/hooks/useModalContent';
 import { PropsWithChildren } from 'react';
 
-export const PreviewGiftFlowButton = ({ children }: PropsWithChildren) => {
+export const PreviewGiftFlowButton = ({
+  wishId,
+  children,
+}: { wishId: string } & PropsWithChildren) => {
   const { handleRouter } = useRouters();
 
   return (
     <Button
       onClick={() => {
-        handleRouter('/wishes/preview');
+        handleRouter(`/wishes/preview/${wishId}`);
       }}
     >
       {children}

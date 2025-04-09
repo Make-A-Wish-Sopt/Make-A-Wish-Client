@@ -18,8 +18,6 @@ export const snsShareListObject: Record<ShareSnskeyType, SnsDataType> = {
     name: '카카오',
     image: ShareKaKaoLogoImg,
     onClick: (link: string, name: string) => {
-      console.log(window.Kakao.isInitialized());
-
       if (typeof window !== 'undefined' && window.Kakao?.isInitialized()) {
         window.Kakao.Share.sendDefault({
           objectType: 'feed',

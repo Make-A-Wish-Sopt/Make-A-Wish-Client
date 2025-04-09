@@ -25,3 +25,7 @@ export type AccountFunnelStepTypeName = ExtractStepNames<typeof AccountFormFunne
 export const PresentFunnelStep = ['present', 'payment', 'complete'] as const;
 export type PresentFunnelStepType = typeof PresentFunnelStep;
 export type PresentFunnelStepTypeName = ExtractStepNames<typeof PresentFunnelStep>;
+
+export const PreviewFunnelStep = ['present', 'complete'] as const;
+export type PreviewFunnelStepType = typeof PresentFunnelStep;
+export type PreviewFunnelStepTypeName = ExtractStepNames<typeof PresentFunnelStep>;

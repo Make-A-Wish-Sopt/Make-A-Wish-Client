@@ -7,7 +7,7 @@ import { colors } from '@/styles/styles';
 
 export type FetchStatusType = 'idle' | 'loading' | 'success' | 'error';
 
-export const useFetch = <T, A extends unknown[]>(cb: (...args: A) => Promise<T>) => {
+export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<T>) => {
   const [status, setStatus] = useState<FetchStatusType>('idle');
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -17,11 +17,18 @@ export const useFetch = <T, A extends unknown[]>(cb: (...args: A) => Promise<T>)
     setStatus(state);
   };
 
+  const delayFetchData = (delayMs: number, ...args: A) => {
+    setStatus('loading');
+
+    setTimeout(() => {
+      fetchData(...args);
+    }, delayMs || 1000);
+  };
+
   const fetchData = async (...args: A) => {
     setStatus('loading');
     try {
-      const result = await cb(...args);
-
+      const result = await fetch(...args);
       setData(result);
       setStatus('success');
       return result;
@@ -51,5 +58,5 @@ export const useFetch = <T, A extends unknown[]>(cb: (...args: A) => Promise<T>)
     );
   };
 
-  return { status, data, error, fetchData, changeStatus, LoadingModal };
+  return { status, data, error, fetchData, delayFetchData, changeStatus, LoadingModal };
 };

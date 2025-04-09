@@ -33,7 +33,7 @@ export const useModalContent = <T extends [string]>() => {
           </Modal.ModalHeader>
 
           <Modal.ContentFrame
-            className={`${isAdminMessage ? 'text-dark_blue' : 'text-white'}`}
+            className={`${isAdminMessage ? 'text-dark_blue' : 'text-white'} max-[412px]`}
             bgColor={isAdminMessage ? 'main_blue' : 'dark_green'}
           >
             <Modal.ContentBody className="flex flex-col items-center">
@@ -58,7 +58,7 @@ export const useModalContent = <T extends [string]>() => {
                 className="flex justify-end"
                 CloseIcon={<Image src={CloseSmallIc} alt="닫기" />}
               />
-              <Modal.ContentBody className="flex flex-col items-center gap-20 w-full">
+              <Modal.ContentBody className="flex flex-col items-center w-full gap-20">
                 <div className="flex flex-col items-center w-full">
                   <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
                   <p className="font-bitbit text-[24px] text-background leading-none text-center whitespace-pre-line">
@@ -135,6 +135,7 @@ export const useModalContent = <T extends [string]>() => {
     ShareWishLinkModalContent,
     PresentMessageModalContent,
     ConfirmModalContent,
+
     ...rest,
   };
 };

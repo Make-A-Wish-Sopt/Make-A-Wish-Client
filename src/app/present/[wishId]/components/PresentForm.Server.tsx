@@ -18,13 +18,8 @@ export const WishInfoForGiver = ({
         <h3 className="font-bitbit text-main_blue text-[24px]  whitespace-pre-line">
           {생일잔치제목}
         </h3>
-
-        {/* <span className="font-bitbit text-main_blue text-[20px]  whitespace-pre-wrap">
-          {`D-${publicWishesData.dayCount}`}
-        </span> */}
       </div>
 
-      {/* 이미지값 넣어줘야해요! */}
       <div className="flex flex-col w-full gap-10 mb-30">
         <UploadImageBox imageUrl={친구가남긴이미지} />
 

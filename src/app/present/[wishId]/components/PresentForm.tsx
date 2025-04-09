@@ -3,7 +3,7 @@
 import InputText from '@/components/Elements/Input/inputText';
 import InputForm from '@/components/UI/InputForm';
 import { useFunnelContext } from '@/Context/FunnelContext';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { presentListArray } from '@/constant/model/present';
 import Image from 'next/image';
 import { convertMoneyText } from '@/utils/common/convert';
@@ -33,7 +33,7 @@ const PresentForm = () => {
     mode: 'onChange',
     defaultValues: {
       ...presentFormInitValues,
-      cakeId: Number(avatarCakeId),
+      cakeId: Number(avatarCakeId) || 1,
     },
     resolver: yupResolver(presentFormSchema),
   });
@@ -51,7 +51,7 @@ const PresentForm = () => {
   );
 };
 
-const GiverNameInput = () => {
+export const GiverNameInput = () => {
   const { register } = useFormContext<PresentFormSchemaType>();
 
   return (
@@ -64,7 +64,11 @@ const GiverNameInput = () => {
   );
 };
 
-const SelectPresentItem = ({ onlyMessageToggle }: { onlyMessageToggle: BooleanHookType }) => {
+export const SelectPresentItem = ({
+  onlyMessageToggle,
+}: {
+  onlyMessageToggle: BooleanHookType;
+}) => {
   const { setValue, control } = useFormContext<PresentFormSchemaType>();
 
   const selectedPresentId = useWatch({
@@ -75,6 +79,12 @@ const SelectPresentItem = ({ onlyMessageToggle }: { onlyMessageToggle: BooleanHo
   const onSelectPresentItem = (id: number) => {
     setValue('giftMenuId', id);
   };
+
+  useEffect(() => {
+    if (onlyMessageToggle.state) {
+      setValue('giftMenuId', 0);
+    }
+  }, [onlyMessageToggle.state]);
 
   return (
     <InputForm title="선물하고 싶은 항목 선택하기">
@@ -93,7 +103,7 @@ const SelectPresentItem = ({ onlyMessageToggle }: { onlyMessageToggle: BooleanHo
   );
 };
 
-const LetterToFriendInput = () => {
+export const LetterToFriendInput = () => {
   const { register, control } = useFormContext<PresentFormSchemaType>();
 
   return (
@@ -109,7 +119,7 @@ const LetterToFriendInput = () => {
   );
 };
 
-const PresentList = ({
+export const PresentList = ({
   onlyPresentMessage,
   onSelectItem,
   selectedId,

@@ -5,6 +5,7 @@ import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData'
 import { presentListObject } from '@/constant/model/present';
 import useModals from '@/hooks/useModals';
 import { convertMoneyText } from '@/utils/common/convert';
+import { GiftBoxIc } from '@public/assets/icons';
 import { CakeDishTopRibbonImg } from '@public/assets/images';
 import Image from 'next/image';
 import { PropsWithChildren, useState } from 'react';
@@ -27,7 +28,6 @@ const CakePresentList = ({
     useState<ReceivedCakeTreeMessageDataType>(null);
 
   async function handleSelectCake(cake: ReceivedCakeTreeMessageDataType) {
-    console.log('hello', wishId, readonly);
     if (readonly || !wishId) return;
 
     try {
@@ -119,14 +119,13 @@ export const CakeMessageContent = ({
 }: {
   cakePresentMessage: ReceivedCakeTreeMessageDataType;
 }) => {
-  const { cakeImg, giftMenuId, isAdminMessage, message, name, presentId, cakeId } =
-    cakePresentMessage;
+  const { cakeImg, giftMenuId, isAdminMessage, message, name } = cakePresentMessage;
   return (
     <>
       <p
         className={`flex justify-center items-center text-[16px] px-14 py-8 ${
-          isAdminMessage ? 'bg-white' : 'bg-black '
-        } bg-opacity-50 rounded-4xl`}
+          isAdminMessage ? 'bg-light_blue' : 'bg-black '
+        } bg-opacity-50 rounded-4xl font-galmuri mb-11`}
       >
         {name}
       </p>
@@ -140,37 +139,41 @@ export const CakeMessageContent = ({
         loading="eager"
       />
 
-      <p className="h-110 text-[14px] mb-13 text-center whitespace-pre-wrap ">{message}</p>
+      <p className="max-[340px] text-[14px] mb-13 text-center whitespace-pre-wrap font-galmuri">
+        {message}
+      </p>
 
       <div
-        className={`flex justify-between items-center w-full h-54 p-12 rounded-xl border  font-bitbit text-[16px] ${
-          isAdminMessage ? 'border-dark_blue' : 'border-main_blue'
-        }`}
+        className={`flex justify-center items-center w-full h-54 p-12 rounded-xl   font-bitbit text-[16px] ${
+          isAdminMessage ? 'bg-light_blue' : 'bg-black'
+        } bg-opacity-50`}
       >
-        {/* 이 부분 변경 */}
-        <div className="font-galmuri w-150">선물한 항목</div>
-        <span className="flex justify-end w-full ">
-          {isAdminMessage ? (
-            giftMenuId
-          ) : giftMenuId === 0 ? (
-            <>{'정성 담은 편지'}</>
-          ) : (
-            <>
-              <div className="relative flex flex-row-reverse  gap-4  items-center font-bitbit text-[16px] text-white text-right ">
-                <span className="w-auto whitespace-pre-wrap leading-tight">
-                  {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
-                    presentListObject[Number(giftMenuId)].price.toString(),
-                  )}원`}
-                </span>
-                <Image
-                  src={presentListObject[Number(giftMenuId)].image}
-                  alt="선물한 선물 이미지"
-                  height={43}
-                />
+        {isAdminMessage || giftMenuId === 0 ? (
+          <div className="flex gap-4  items-center font-bitbit text-[16px]">
+            <Image src={GiftBoxIc} alt="선물박스 아이콘" />
+            <p>선물 | </p>
+            <p>{'정성 담은 편지'}</p>
+          </div>
+        ) : (
+          <>
+            <div className="flex gap-4  items-center font-bitbit text-[16px] text-white ">
+              <div className="flex align-center h-full gap-4">
+                <Image src={GiftBoxIc} alt="선물박스 아이콘" />
+                <p>선물 | </p>
               </div>
-            </>
-          )}
-        </span>
+              <Image
+                src={presentListObject[Number(giftMenuId)].image}
+                alt="선물한 선물 이미지"
+                height={30}
+              />
+              <p>
+                {`${presentListObject[Number(giftMenuId)].itemName}\n${convertMoneyText(
+                  presentListObject[Number(giftMenuId)].price.toString(),
+                )}원`}
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

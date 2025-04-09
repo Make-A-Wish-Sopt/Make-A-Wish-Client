@@ -60,7 +60,7 @@ const page = async () => {
       </div>
 
       <Step.ButtonWrapper vertical className="gap-10">
-        <PreviewGiftFlowButton />
+        <PreviewGiftFlowButton wishId={progressWishesData.wishId} />
         <LinkShareSaveButton wishId={progressWishesData.wishId} nickName={nickName}>
           {tryGiveCakeMessage}
         </LinkShareSaveButton>

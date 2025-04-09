@@ -10,6 +10,7 @@ import { PresentFunnelStep } from '@/constant/funnelStep';
 import { FunnelContainer } from '@/app/_components/FunnelContainer';
 import Header from '@/components/Elements/Header';
 import { BackButton } from '@/components/Elements/Button/BackButton';
+import { AlimTalkMessageButton } from '@/app/wishes/_components/AlimTalckButton';
 
 export default async function GivePresentPage({ params }: { params: { wishId: string } }) {
   const publicWishesData = await getPublicWishes(params.wishId);
@@ -48,6 +49,10 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
           <Step.FormSection>
             <CompleteForm nickName={nickname} />
           </Step.FormSection>
+
+          <Step.ButtonWrapper fixedBottom className="z-30">
+            <AlimTalkMessageButton buttonText={'제 생일에도 써볼래요!'} />
+          </Step.ButtonWrapper>
         </MainLayout>
       </Step>
     </FunnelContainer>

@@ -22,6 +22,7 @@ import { useSearchParams } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useFetch } from '@/hooks/useFetch';
 import Loading from '@/app/loading';
+import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
 
 const WishesFormStep = () => {
   const searchParams = useSearchParams();
@@ -70,7 +71,7 @@ const WishesFormStep = () => {
 };
 
 const WishesFormButtons = memo(() => {
-  const { handleRouter } = useRouters();
+  const { handleDelayRouter, LoadingComponent } = useRouters();
   const { PrevButton, setSharedData, nextStep, getSharedData } =
     useFunnelContext<WishesFunnelStepType>();
   const { control, getValues, reset } = useFormContext<WishesFormScehmaType>();
@@ -80,9 +81,7 @@ const WishesFormButtons = memo(() => {
     name: 'wantsGift',
   });
 
-  const { fetchData, LoadingModal, status } = useFetch(postWishes);
-
-  console.log(status);
+  const { fetchData } = useFetch(postWishes);
 
   useEffect(() => {
     const savedData = getSharedData('wishes') as WishesFormScehmaType;
@@ -96,7 +95,7 @@ const WishesFormButtons = memo(() => {
     const response = await fetchData(wishFormData);
     if (!response.data.success) return;
 
-    handleRouter('/wishes/create/complete');
+    handleDelayRouter('/wishes/create/complete');
   };
 
   // 🎯 다음 단계로만 이동
@@ -127,7 +126,7 @@ const WishesFormButtons = memo(() => {
           {wantsGift ? '다음' : '소원 생성'}
         </Button>
       </Step.ButtonWrapper>
-      <LoadingModal />
+      <LoadingComponent render={<LoadingCake text="생성 중" />} />
     </>
   );
 });

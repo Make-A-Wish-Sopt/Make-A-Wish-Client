@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, ReactNode } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import Box from '../Box';
+import InputField from './InputField';
 
 interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;
@@ -21,30 +22,14 @@ export default function InputText({
   keyPrevent = false,
   ...rest
 }: InputTextProps) {
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!keyPrevent) return;
-
-    // 키보다 방지기능 구현
-  };
-
-  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-    const pastedData = event.clipboardData.getData('text');
-    if (!pastedData) {
-      event.preventDefault(); // 빈 값 붙여넣기 방지
-    }
-  };
-
   return (
     <Box bgColor="dark_green" fontColor="white" font="galmuri" styles={boxStyles}>
-      <div className="flex justify-between items-center w-full h-full " style={inputStyles}>
-        <input
-          className="w-full h-full font-galmuri text-[14px] plachoder-gray2"
-          onClick={rest.onClick}
-          onPaste={handlePaste}
-          onKeyDown={handleKeyDown}
-          style={blur ? { filter: 'blur(5px)' } : {}}
+      <div className="flex justify-between items-center w-full h-full" style={inputStyles}>
+        <InputField
+          register={register}
+          blur={blur}
+          keyPrevent={keyPrevent}
           readOnly={readOnly}
-          {...register}
           {...rest}
         />
         {children}

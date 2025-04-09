@@ -1,9 +1,14 @@
-import { PostPublicCakesResponseType, PublicWishesDataResponseType } from '@/types/api/response';
+import {
+  DefaultResponseType,
+  PostPublicCakesResponseType,
+  PublicWishesDataResponseType,
+} from '@/types/api/response';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_PUBLIC } from './path';
 
 import axios from 'axios';
 import { PresentFormSchemaType } from '@/Schema/present.schema';
+import { AlimTalkSchemaType } from '@/Schema/wishes.schema';
 
 export const getPublicWishes = async (wishId: string) => {
   try {
@@ -37,5 +42,21 @@ export const postPublicCakes = async (presentData: PresentFormSchemaType & { wis
     );
 
     return data.data.data;
+  } catch (error) {}
+};
+
+export const postAlimTalk = async (formData: AlimTalkSchemaType) => {
+  try {
+    const data = await client.post<DefaultResponseType>(
+      `${API_VERSION_01}${PATH_PUBLIC.ALARM}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    return data.data;
   } catch (error) {}
 };

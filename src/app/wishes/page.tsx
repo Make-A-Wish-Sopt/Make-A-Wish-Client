@@ -4,8 +4,6 @@ import { getMainProgressWishesData } from '@/api/wishes';
 import { getLoginUserCookiesData } from '@/utils/common/cookies';
 import { CakeTreeDataType, defaultCakeTreeDataArray } from '@/constant/model/cakesTreeData';
 import GradientShadow from '@/components/UI/GradientShadow';
-import CreateWishesButtonWithModal from './_components/CreateWishesButtonWithModal';
-import ShareWishesButtonWithModal from './_components/ShareWishesButtonWithModal';
 import CakePresentList from './_components/CakePresentList';
 import { getCakesResult } from '@/api/cakes';
 import {
@@ -13,8 +11,10 @@ import {
   RecentMessageAlarmIcon,
 } from '@/components/Elements/Icon/MessageAlarmIcon';
 import { defineCakeTree } from '@/utils/common/defineCakeTree';
-
-export const dynamic = 'force-dynamic';
+import { AlimTalkMessageButton } from './_components/AlimTalckButton';
+import { ItemWrapper } from '@/components/Elements/Button/FixedBottomButton';
+import { ShareWishesButton } from './_components/ShareWishesButtonWithModal';
+import { CreateWishesButton } from './_components/CreateWishesButton';
 
 const Page = async () => {
   const loginUserData = await getLoginUserCookiesData();
@@ -49,14 +49,25 @@ export default Page;
 const renderWishesInProgress = (cakeList: CakeTreeDataType[], wishId: string, nickName: string) => (
   <>
     <CakePresentList cakeList={defineCakeTree([...cakeList])} wishId={wishId} nickName={nickName} />
-    <ShareWishesButtonWithModal wishId={wishId} nickName={nickName} />
+
+    <ItemWrapper fixedBottom className="z-30">
+      <ShareWishesButton
+        wishId={wishId}
+        nickName={nickName}
+        buttonText={'생일잔치 링크 공유하기'}
+      />
+    </ItemWrapper>
   </>
 );
 
 const renderNoWishes = () => (
   <>
     <CakePresentList cakeList={defaultCakeTreeDataArray} readonly />
-    <CreateWishesButtonWithModal />
+
+    <ItemWrapper fixedBottom vertical className="gap-10 z-30">
+      <CreateWishesButton />
+      <AlimTalkMessageButton buttonText={'아직 생일이 멀었어요ㅠㅠ'} />
+    </ItemWrapper>
   </>
 );
 

@@ -1,27 +1,29 @@
-'use client';
+import { PropsWithChildren } from 'react';
 
-import { PropsWithChildren, ReactNode } from 'react';
-import Button, { ButtonProps } from '.';
-
-export default function FixedBottomButton({ children, ...rest }: PropsWithChildren & ButtonProps) {
+export function ItemWrapper({
+  className,
+  fixedBottom,
+  fixedCenter,
+  vertical,
+  horizontal,
+  children,
+}: {
+  className?: string;
+  fixedBottom?: boolean;
+  fixedCenter?: boolean;
+  vertical?: boolean;
+  horizontal?: boolean;
+} & PropsWithChildren) {
   return (
-    <Button
-      {...rest}
-      style={{
-        position: 'fixed',
-        left: '0',
-        padding: '0 2.2rem',
-        zIndex: 10,
-      }}
+    <div
+      className={`
+        ${fixedBottom ? 'fixed bottom-fixed-bottom left-1/2 transform -translate-x-1/2 w-375 px-22' : ''}
+        ${fixedCenter ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' : ''}
+        ${vertical ? 'flex flex-col' : ''}
+        ${horizontal ? 'flex' : ''}
+        ${className ?? ''}
+      `}
     >
-      {children}
-    </Button>
-  );
-}
-
-export function FixedBottomButtonWrapper({ children }: PropsWithChildren) {
-  return (
-    <div className="fixed bottom-fixed-bottom left-1/2 transform -translate-x-1/2 flex gap-10 w-375 px-22 z-30 ">
       {children}
     </div>
   );

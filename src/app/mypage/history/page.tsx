@@ -172,7 +172,7 @@ const NonPrevWishHistory = () => {
           handleRouter('/wishes');
         }}
       >
-        생일잔치 오픈하러 가기
+        {'생일잔치 링크 생성하기'}
       </Button>
     </div>
   );

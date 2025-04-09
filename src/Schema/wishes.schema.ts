@@ -1,5 +1,6 @@
 import { BANK_NAMES } from '@/constant/bankList';
 import * as yup from 'yup';
+import { z } from 'zod';
 
 export const WishesFormSchema = yup
   .object()
@@ -57,3 +58,21 @@ export const AccountFormSchema = yup
   .required();
 
 export type AccountFormSchemaType = yup.InferType<typeof AccountFormSchema>;
+
+export const phoneNumberSchema = z
+  .string()
+  .min(10, '휴대폰 번호는 최소 10자리 이상이어야 합니다.')
+  .max(11, '휴대폰 번호는 최대 11자리까지 가능합니다.')
+  .regex(/^[0-9]+$/, '(-) 없이 숫자만 입력해주세요.');
+
+export const birthDateSchema = z
+  .string()
+  .length(4, '생일날짜은 4자리여야 합니다.')
+  .regex(/^[0-9]+$/, '숫자만 입력해주세요.');
+
+export const alimTalkSchema = z.object({
+  phoneNumber: phoneNumberSchema,
+  birthDate: birthDateSchema,
+});
+
+export type AlimTalkSchemaType = z.infer<typeof alimTalkSchema>;

@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Elements/Button';
-import { FixedBottomButtonWrapper } from '@/components/Elements/Button/FixedBottomButton';
+import { ItemWrapper } from '@/components/Elements/Button/FixedBottomButton';
 import { RoutePathType, useRouters } from '@/hooks/useRouters';
 import Image from 'next/image';
 import { MainCakeImg } from '../../public/assets/images';
@@ -31,7 +31,7 @@ export default function ErrorPage({
             {alertMessage}
           </p>
 
-          <FixedBottomButtonWrapper>
+          <ItemWrapper fixedBottom className="gap-10">
             <Button
               onClick={() => {
                 handleRouter(routePath);
@@ -39,7 +39,7 @@ export default function ErrorPage({
             >
               {btnMessage}
             </Button>
-          </FixedBottomButtonWrapper>
+          </ItemWrapper>
         </div>
       </main>
     </>
