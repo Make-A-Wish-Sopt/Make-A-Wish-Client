@@ -242,16 +242,12 @@ export const AccountNumberInput = ({
   const get상태아이콘 = (status: FetchStatusType) => {
     if (status === 'idle') return;
 
-    if (status === 'loading') {
-      return <ClipLoader color={colors.main_blue} />;
+    if (status === 'success' && isAccountValid) {
+      return <CheckedIcon width={24} />;
     }
 
     if (!isAccountValid || !!errors.accountInfo) {
       return <WarningCheckedIcon width={24} />;
-    }
-
-    if (status === 'success' && isAccountValid) {
-      return <CheckedIcon width={24} />;
     }
   };
 

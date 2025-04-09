@@ -110,16 +110,14 @@ export const KakaopayCodeInput = ({
   }
 
   const get상태아이콘 = (status: FetchStatusType) => {
-    if (status === 'loading') {
-      return <ClipLoader color={colors.main_blue} />;
-    }
-
-    if ((status !== 'idle' && !isKakaoPayCodeValid) || errors.kakaoPayCode) {
-      return <WarningCheckedIcon width={24} />;
-    }
+    if (status === 'idle') return;
 
     if (status === 'success' && isKakaoPayCodeValid) {
       return <CheckedIcon width={24} />;
+    }
+
+    if (!isKakaoPayCodeValid || errors.kakaoPayCode) {
+      return <WarningCheckedIcon width={24} />;
     }
   };
 
