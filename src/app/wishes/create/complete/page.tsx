@@ -16,7 +16,7 @@ const page = async () => {
   const { nickName } = await getLoginUserCookiesData();
 
   if (!progressWishesData) {
-    return <ErrorPage alertMessage="진행중인 소원이 없어요!" errorText={'OPPS...'} />;
+    return <ErrorPage alertMessage="진행중인 생일잔치이 없어요!" errorText={'OPPS...'} />;
   }
 
   const { dayCount, status } = progressWishesData;

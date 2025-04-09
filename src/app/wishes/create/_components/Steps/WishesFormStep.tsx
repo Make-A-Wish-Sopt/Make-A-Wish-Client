@@ -53,7 +53,7 @@ const WishesFormStep = () => {
         <WantsGiftOption handleChangeOption={handleChangeOption} />
       </InputForm>
 
-      <InputForm title="생일 선물도 받고 싶어요!">
+      <InputForm title="링크에 들어온 친구가 보게 될\n재밌는 이미지를 등록해보세요!">
         <ImageUploadBox handleSetImage={handleSetImage} />
       </InputForm>
 
@@ -90,7 +90,7 @@ const WishesFormButtons = memo(() => {
     }
   }, []);
 
-  // 🎯 소원 데이터를 백엔드에 보내고 완료 페이지로 이동
+  // 🎯 생일잔치 데이터를 백엔드에 보내고 완료 페이지로 이동
   const submitWishAndGoToComplete = async (wishFormData: WishesFormScehmaType) => {
     const response = await fetchData(wishFormData);
     if (!response.data.success) return;
@@ -123,7 +123,7 @@ const WishesFormButtons = memo(() => {
       <Step.ButtonWrapper horizontal className="gap-10 mb-24">
         <PrevButton />
         <Button disabled={!isValid} onClick={handleNextFlow}>
-          {wantsGift ? '다음' : '소원 생성'}
+          {wantsGift ? '다음' : '생일잔치 생성'}
         </Button>
       </Step.ButtonWrapper>
       <LoadingModal render={<LoadingCake text="생성 중" />} />

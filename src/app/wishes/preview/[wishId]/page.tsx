@@ -20,7 +20,7 @@ const page = async ({ params }: { params: { wishId: string } }) => {
 
   const { nickName } = await getLoginUserCookiesData();
   if (!progressWishesData) {
-    return <ErrorPage alertMessage="진행중인 소원이 없어요!" errorText={'OPPS...'} />;
+    return <ErrorPage alertMessage="진행중인 생일잔치이 없어요!" errorText={'OPPS...'} />;
   }
 
   return (

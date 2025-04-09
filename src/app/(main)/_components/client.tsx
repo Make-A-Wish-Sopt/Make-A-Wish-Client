@@ -1,0 +1,30 @@
+'use client';
+
+import useModals from '@/hooks/useModals';
+import { GuideImg, MainCakeListImg } from '@public/assets/images';
+import Image from 'next/image';
+
+export const ServiceGuideModal = () => {
+  const { Modal, openModal } = useModals<['guide']>();
+  return (
+    <Modal
+      modalKey="guide"
+      Trigger={
+        <Image
+          src={MainCakeListImg}
+          onClick={() => openModal('guide')}
+          alt="생일 케이크 이미지 모음"
+          priority
+          width={330}
+          height={330}
+        />
+      }
+    >
+      <Modal.ModalOverlay>
+        <Modal.ModalLayout>
+          <Image className="w-[85%]" src={GuideImg} alt="안내 이미지" />
+        </Modal.ModalLayout>
+      </Modal.ModalOverlay>
+    </Modal>
+  );
+};

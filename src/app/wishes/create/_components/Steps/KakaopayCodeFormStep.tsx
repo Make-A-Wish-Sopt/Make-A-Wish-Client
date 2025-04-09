@@ -145,7 +145,7 @@ const NextButton = ({
         disabled={!!errors.kakaoPayCode || !isKakaoPayCodeValid || !noticeAgree}
         onClick={handleNextStep}
       >
-        {isEdit ? '수정 완료' : '소원생성!'}
+        {isEdit ? '수정 완료' : '생일잔치생성!'}
       </Button>
     </>
   );

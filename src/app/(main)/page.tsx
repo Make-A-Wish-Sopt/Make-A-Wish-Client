@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { KakaoLoginIc } from '@public/assets/icons';
 import Button from '@/components/Elements/Button';
 import { getKakaoLoginUrl } from '@/utils/common/auth';
+import { ServiceGuideModal } from './_components/client';
 
 const Page = async () => {
   const kakaoLoginUrl = getKakaoLoginUrl();
@@ -34,13 +35,7 @@ const MainHereSection = () => {
         생일선물주
       </h1>
       <figure className="mt-8 px-[2.2rem]">
-        <Image
-          src={MainCakeListImg}
-          alt="생일 케이크 이미지 모음"
-          priority
-          width={330}
-          height={330}
-        />
+        <ServiceGuideModal />
       </figure>
       <p className="text-[24px] text-main_blue mt-[31px] font-bitbit">
         현금으로 선물 받는 생일잔치

@@ -119,7 +119,7 @@ const NonPrevWishHistory = () => {
       <Image
         className="mt-91"
         src={EmptyWishesCakeImg}
-        alt="소원정보가 존재하지 않을 경우 케이크 이미지"
+        alt="생일잔치정보가 존재하지 않을 경우 케이크 이미지"
         width={293}
       />
       <Button

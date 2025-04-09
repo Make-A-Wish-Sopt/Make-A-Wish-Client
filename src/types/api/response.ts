@@ -31,7 +31,7 @@ export type WishesHistoryListResponseType = DefaultResponseType<{
   wishes: WishesHistoryListType[];
 }>;
 
-export type WishesCreateResponseType = DefaultResponseType<number>; //소원아이디
+export type WishesCreateResponseType = DefaultResponseType<number>; //생일잔치아이디
 
 export type LoginResponseType = DefaultResponseType<LoginUserDataType>;
 
@@ -40,7 +40,7 @@ export type PresingedURLResponseType = DefaultResponseType<{ filename: string; s
 export type MainProgressDataResponseType = DefaultResponseType<MainProgressDataType>;
 
 export type WishesProgressDataResponseType = DefaultResponseType<
-  WishesLinkDataType & { status: WishStatusType }
+  WishesLinkDataType & { status: WishStatusType } & { transferInfo: TransferInfoType }
 >;
 
 export type UserAccountDataType = {

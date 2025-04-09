@@ -8,10 +8,10 @@ import {
 } from '@/types/api/response';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_WISHES } from './path';
-import { WishesFormScehmaType } from '@/Schema/wishes.schema';
+import { AccountFormSchemaType, WishesFormScehmaType } from '@/Schema/wishes.schema';
 
 /**
- * 진행중인 소원 조회
+ * 진행중인 생일잔치 조회
  */
 export const getMainProgressWishesData = async () => {
   try {
@@ -24,7 +24,7 @@ export const getMainProgressWishesData = async () => {
 };
 
 /**
- * 모든 소원리스트 조회
+ * 모든 생일잔치리스트 조회
  */
 export const getWishes = async () => {
   try {
@@ -38,7 +38,7 @@ export const getWishes = async () => {
 };
 
 /**
- * 소원링크 생성
+ * 생일잔치링크 생성
  */
 export const postWishes = async (wishesData: WishesFormScehmaType) => {
   try {
@@ -54,7 +54,7 @@ export const postWishes = async (wishesData: WishesFormScehmaType) => {
 };
 
 /**
- * 소원링크 삭제
+ * 생일잔치링크 삭제
  */
 export const deleteWishes = async (wishesIdList: number[]) => {
   const data = await client.delete<DefaultResponseType>(`${API_VERSION_01}${PATH_WISHES.DEFAULT}`, {
@@ -67,7 +67,7 @@ export const deleteWishes = async (wishesIdList: number[]) => {
 };
 
 /**
- * 진행중인 소원 정보 조회
+ * 진행중인 생일잔치 정보 조회
  */
 export const getProgressWishLinkData = async () => {
   try {
@@ -80,18 +80,18 @@ export const getProgressWishLinkData = async () => {
 };
 
 /**
- * 진행중인 소원 정보 수정
+ * 진행중인 생일잔치 정보 수정
  */
-export const putProgressWishes = async (wishesData: WishesFormScehmaType) => {
+export const putProgressWishes = async (editData: WishesFormScehmaType & AccountFormSchemaType) => {
   const data = await client.put<DefaultResponseType>(`${API_VERSION_01}${PATH_WISHES.PROGRESS}`, {
-    ...wishesData,
+    ...editData,
   });
 
   return data.data;
 };
 
 /**
- * 진행중인 소원 중단
+ * 진행중인 생일잔치 중단
  */
 export const patchProgressWishes = async () => {
   const data = await client.patch<DefaultResponseType>(
@@ -103,7 +103,7 @@ export const patchProgressWishes = async () => {
 };
 
 /**
- * 소원 단건 조회
+ * 생일잔치 단건 조회
  */
 export const getSingleWishInfo = async (wishId: string | string[] | undefined) => {
   const data = await client.get<WishesHistoryResponseType>(

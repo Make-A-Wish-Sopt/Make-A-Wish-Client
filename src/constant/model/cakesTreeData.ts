@@ -121,7 +121,7 @@ defaultCakeTreeDataMap.set(cakeId.santaCakeId, {
   presentId: 0,
   isAdminMessage: true,
   message: cakeMessage[cakeId.santaCakeId],
-  giftMenuId: '소원을 들어줄 산타',
+  giftMenuId: '생일잔치을 들어줄 산타',
 });
 defaultCakeTreeDataMap.set(cakeId.vitaminCakeId, {
   name: '비타사백',

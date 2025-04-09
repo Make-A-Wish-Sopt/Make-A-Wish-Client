@@ -11,37 +11,48 @@ import Button from '@/components/Elements/Button';
 import { Step } from '@/components/Modules/Funnel';
 import InputForm from '@/components/UI/InputForm';
 import { useRouters } from '@/hooks/useRouters';
-import { WishStatusType } from '@/types/wishesType';
+import { TransferInfoType, WishStatusType } from '@/types/wishesType';
 import { getDate } from '@/utils/common/getDate';
 import { WishesFormSchema, WishesFormScehmaType } from '@/Schema/wishes.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { memo, PropsWithChildren } from 'react';
+import { memo, PropsWithChildren, useEffect } from 'react';
 import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export const WisheEditFormFormProvider = ({
-  progressWishData,
+  progressWishesData,
+
   children,
 }: {
-  progressWishData: WishesFormScehmaType;
+  progressWishesData: WishesFormScehmaType;
 } & PropsWithChildren) => {
   const wishesFormMethods = useForm<WishesFormScehmaType>({
     mode: 'onChange',
-    defaultValues: { ...progressWishData },
+    defaultValues: {
+      ...progressWishesData,
+      startDate: new Date(progressWishesData.startDate),
+      endDate: new Date(progressWishesData.endDate),
+    },
     resolver: yupResolver(WishesFormSchema),
   });
 
   return <FormProvider {...wishesFormMethods}>{children}</FormProvider>;
 };
 
-export const WishEditForm = ({ wishStatus }: { wishStatus: WishStatusType }) => {
+export const WishEditForm = ({
+  wishStatus,
+  transferInfo,
+}: {
+  wishStatus: WishStatusType;
+  transferInfo: TransferInfoType;
+}) => {
   const { handleBack } = useRouters();
   const { setValue, control, getValues } = useFormContext<WishesFormScehmaType>();
   const { isValid } = useFormState({ control });
 
-  const [image, startDate, endDate, wantsGift] = useWatch({
+  const startDate = useWatch({
     control,
-    name: ['imageUrl', 'startDate', 'endDate', 'wantsGift'],
+    name: 'startDate',
   });
 
   const handleChangeDate = (selectedDate: Date) => {
@@ -60,14 +71,21 @@ export const WishEditForm = ({ wishStatus }: { wishStatus: WishStatusType }) => 
   };
 
   const handleEditWisheLink = async () => {
-    const editWishData = getValues();
+    const editWishFormData = getValues();
 
-    const response = await putProgressWishes(editWishData);
+    const editFormData = {
+      ...editWishFormData,
+      transferInfo: {
+        ...transferInfo,
+      },
+    };
+
+    const response = await putProgressWishes(editFormData);
 
     if (!response) {
-      toast.error('소원정보를 수정시 오류가 발생했어요ㅠㅠ');
+      toast.error('생일잔치정보를 수정시 오류가 발생했어요ㅠㅠ');
     } else {
-      toast.success('소원정보 수정완료!!');
+      toast.success('생일잔치정보 수정완료!!');
       setTimeout(() => {
         handleBack();
       }, 1000);

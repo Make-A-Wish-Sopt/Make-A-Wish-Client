@@ -288,7 +288,7 @@ export const createAccountWithWishData = async (
   onSuccess: () => void,
 ) => {
   if (!(await 계좌등록요청(accountData))) return;
-  if (!(await 소원정보등록(wishFormData))) return;
+  if (!(await 생일잔치정보등록(wishFormData))) return;
 
   onSuccess();
 };
@@ -315,7 +315,7 @@ const 계좌등록요청 = async (accountData: AccountFormSchemaType) => {
   return true;
 };
 
-const 소원정보등록 = async (wishFormData: WishesFormScehmaType) => {
+const 생일잔치정보등록 = async (wishFormData: WishesFormScehmaType) => {
   if (!wishFormData) return;
 
   try {
@@ -327,7 +327,7 @@ const 소원정보등록 = async (wishFormData: WishesFormScehmaType) => {
   const response = await postWishes({ ...wishFormData });
 
   if (!response?.data.success) {
-    toast.error('소원 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    toast.error('생일잔치 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
     return false;
   }
 

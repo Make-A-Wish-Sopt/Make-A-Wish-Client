@@ -19,7 +19,7 @@ const DynamicKakaopayCodeForm = dynamic(() => import('./_components/Steps/Kakaop
 
 const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: string } }) => {
   if (!searchParams.wishTitle) {
-    return <ErrorPage alertMessage={`소원제목을 입력하고\n입장해주세요!`} />;
+    return <ErrorPage alertMessage={`생일잔치제목을 입력하고\n입장해주세요!`} />;
   }
 
   return (
