@@ -1,3 +1,5 @@
+'use client';
+
 export const LoadingComponent = ({ render }: { render: JSX.Element }) => {
   return (
     <div
