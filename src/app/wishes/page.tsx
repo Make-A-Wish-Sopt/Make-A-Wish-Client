@@ -26,12 +26,10 @@ const Page = async () => {
   const nickName = loginUserData.nickName;
   const hasReceivedCake = receivedCakeList.length > 0;
 
-  console.log(progressWishsData);
-
   return (
     <MainLayout Header={<Header rightMenu={<MypageButton />} />}>
       <p className={dayTextStyle}>
-        {isWishInProgress ? `D-${progressWishsData?.dayCount}` : 'D-?'}
+        {isWishInProgress && progressWishsData ? `D-${progressWishsData?.dayCount + 1}` : 'D-?'}
       </p>
       <p className={guidTextStyle}>{getGuidText(nickName, isWishInProgress, hasReceivedCake)}</p>
       {isWishInProgress && getAlarmIcon(hasReceivedCake)}
@@ -59,7 +57,7 @@ const renderWishesInProgress = (
   cakeList: CakeTreeDataType[],
   wishId: string,
   nickName: string,
-  buttonText,
+  buttonText: string,
 ) => (
   <>
     <CakePresentList cakeList={defineCakeTree([...cakeList])} wishId={wishId} nickName={nickName} />
