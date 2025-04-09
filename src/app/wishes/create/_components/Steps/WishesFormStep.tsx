@@ -71,7 +71,7 @@ const WishesFormStep = () => {
 };
 
 const WishesFormButtons = memo(() => {
-  const { handleDelayRouter, LoadingComponent } = useRouters();
+  const { handleDelayRouter, LoadingModal } = useRouters();
   const { PrevButton, setSharedData, nextStep, getSharedData } =
     useFunnelContext<WishesFunnelStepType>();
   const { control, getValues, reset } = useFormContext<WishesFormScehmaType>();
@@ -126,7 +126,7 @@ const WishesFormButtons = memo(() => {
           {wantsGift ? '다음' : '소원 생성'}
         </Button>
       </Step.ButtonWrapper>
-      <LoadingComponent render={<LoadingCake text="생성 중" />} />
+      <LoadingModal render={<LoadingCake text="생성 중" />} />
     </>
   );
 });

@@ -1,6 +1,6 @@
 'use client';
 
-export const LoadingComponent = ({ render }: { render: JSX.Element }) => {
+export const LoadingOverlay = ({ render }: { render: JSX.Element }) => {
   return (
     <div
       id="modal-overlay"

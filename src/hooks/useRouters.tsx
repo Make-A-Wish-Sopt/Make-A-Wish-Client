@@ -1,5 +1,6 @@
 'use client';
 
+import { LoadingOverlay } from '@/components/UI/Loading';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -42,8 +43,8 @@ export function useRouters() {
     router.refresh();
   }
 
-  const LoadingComponent = ({ render }: { render: JSX.Element }) => {
-    return loading ? <LoadingComponent render={render} /> : null;
+  const LoadingModal = ({ render }: { render: JSX.Element }) => {
+    return loading ? <LoadingOverlay render={render} /> : null;
   };
 
   return {
@@ -52,6 +53,6 @@ export function useRouters() {
     handleBack,
     handleRefresh,
     handleDelayRouter,
-    LoadingComponent,
+    LoadingModal,
   };
 }

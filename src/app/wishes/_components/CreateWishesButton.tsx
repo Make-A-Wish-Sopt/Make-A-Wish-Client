@@ -48,7 +48,7 @@ const WishesCreateTitleInput = () => {
   const methods = useFormContext<{ wishTitle: string }>();
   const { register } = methods;
 
-  const { handleRouter, handleDelayRouter, LoadingComponent } = useRouters();
+  const { handleRouter, handleDelayRouter, LoadingModal } = useRouters();
 
   const handleModalSubmit = () => {
     const wishTitle = methods.getValues('wishTitle');
@@ -70,7 +70,7 @@ const WishesCreateTitleInput = () => {
 
   return (
     <>
-      <LoadingComponent render={<LoadingCake text="입장 중" />} />
+      <LoadingModal render={<LoadingCake text="입장 중" />} />
       <div className="w-full ">
         <label className="font-galmuri text-[14px] text-background mb-5">제목 정하기</label>
         <Box bgColor="sub_blue">
