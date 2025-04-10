@@ -1,5 +1,5 @@
+import { convertDateToString } from '@/utils/date';
 import Box from '../Box';
-import { convertDateToString } from '@/utils/common/getDate';
 import CalendarIcon from '../Icon/CalendarIcon';
 
 export default function CalendarDateBox({ date, readonly }: { date?: Date; readonly?: boolean }) {

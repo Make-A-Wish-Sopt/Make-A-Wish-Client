@@ -4,13 +4,18 @@ import {
   defaultCakeTreeDataObject,
 } from '@/constant/model/cakesTreeData';
 
-export function defineCakeTree(receivedCakeList?: CakeTreeDataType[]) {
-  if (!receivedCakeList) return defaultCakeTreeDataArray;
+export default function defineCakeTree(receivedCakeList?: CakeTreeDataType[]) {
+  if (!receivedCakeList) {
+    return defaultCakeTreeDataArray.map((cake) => ({
+      ...cake,
+      name: '선물주운영자',
+    }));
+  }
 
-  const defaulCakeList = defaultCakeTreeDataArray.map((cake) => {
-    cake.name = '선물주운영자';
-    return cake;
-  });
+  const defaulCakeList = defaultCakeTreeDataArray.map((cake) => ({
+    ...cake,
+    name: '선물주운영자',
+  }));
 
   if (receivedCakeList.length === 0) return defaulCakeList;
 

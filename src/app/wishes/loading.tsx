@@ -1,10 +1,8 @@
-import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
-import { LoadingOverlay } from '@/components/UI/Loading';
-
 import React from 'react';
+import { LoadingOverlay, LoadingCake } from '@/components/UI/Loading';
 
-const WishLoading = async () => {
+async function WishLoading() {
   return <LoadingOverlay render={<LoadingCake text="로딩 중" />} />;
-};
+}
 
 export default WishLoading;

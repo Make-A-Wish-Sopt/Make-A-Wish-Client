@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { PropsWithChildren } from 'react';
+import { useEffect, useState, PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 
 export default function ModalPortal({ children }: PropsWithChildren) {
@@ -23,5 +22,5 @@ export default function ModalPortal({ children }: PropsWithChildren) {
       return element;
     })();
 
-  return createPortal(<>{children}</>, modalRoot);
+  return createPortal(children, modalRoot);
 }

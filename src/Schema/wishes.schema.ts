@@ -1,6 +1,6 @@
-import { BANK_NAMES } from '@/constant/bankList';
 import * as yup from 'yup';
 import { z } from 'zod';
+import { BANK_NAMES } from '@/constant/bankList';
 
 export const WishesFormSchema = yup
   .object()

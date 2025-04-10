@@ -1,11 +1,11 @@
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/cookies';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // 보호된 경로를 정규식으로 정의
 const protectedRoutes = [/^\/wishes/, /^\/mypage\/edit(\/|$)/, /^\/mypage\/history(\/|$)/];
 
-export async function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 정적 파일 요청은 필터링 (ex: .js, .css, .png 등)

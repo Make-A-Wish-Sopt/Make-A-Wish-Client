@@ -13,16 +13,20 @@ export default function CheckBox(props: PropsWithChildren<CheckBoxProps>) {
   const { state, handleState } = useBoolean();
 
   useEffect(() => {
-    changeCheckedState && changeCheckedState(state);
-  }, [state]);
+    if (changeCheckedState) {
+      changeCheckedState(state);
+    }
+  }, [state, changeCheckedState]);
 
   return (
-    <div className="flex items-center w-full h-full ">
+    <div className="flex items-center w-full h-full">
       <input
         className="w-20 h-20"
         type="checkbox"
         onChange={() => {
-          !readOnly && handleState();
+          if (!readOnly) {
+            handleState();
+          }
         }}
         style={{
           backgroundImage: `url(${
@@ -31,9 +35,9 @@ export default function CheckBox(props: PropsWithChildren<CheckBoxProps>) {
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
         }}
+        checked={state}
         readOnly={readOnly}
       />
-
       {children}
     </div>
   );

@@ -1,8 +1,17 @@
+'use client';
+
 import ModalPortal from '@/layouts/ModalPortal';
-import { ColorsTypes } from '@/styles/styles';
+import { colors, ColorsTypes } from '@/styles/styles';
 import { CloseBlueIc } from '@public/assets/icons';
 import Image from 'next/image';
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from 'react';
 
 interface ModalProps<T extends string[]> {
   modalKey: T[number];
@@ -12,160 +21,173 @@ interface ModalProps<T extends string[]> {
 interface ModalOverlayType {
   bgColor?: keyof ColorsTypes | 'black/70';
   backDrop?: boolean;
-  closeIcon?: boolean;
-  bgScroll?: boolean;
 }
 
 interface ModalSubComponentProps extends PropsWithChildren {
   className?: string;
 }
 
+const ModalKeyContext = createContext<string | null>(null);
+
 const useModals = <T extends string[]>() => {
   const [modalState, setModalState] = useState<Record<T[number], boolean>>(() =>
-    [].reduce((acc, key) => ({ ...acc, [key]: false }), {} as Record<T[number], boolean>),
+    ([] as T[number][]).reduce(
+      (acc, key) => ({ ...acc, [key]: false }),
+      {} as Record<T[number], boolean>,
+    ),
   );
 
-  const openModal = (key: T[number]) => {
-    setModalState({ ...modalState, [key]: true });
-  };
+  const openModal = useCallback((key: T[number]) => {
+    setModalState((prev) => ({ ...prev, [key]: true }));
+  }, []);
 
-  const closeModal = (key: T[number]) => {
-    setModalState({ ...modalState, [key]: false });
-  };
+  const closeModal = useCallback((key: T[number]) => {
+    setModalState((prev) => ({ ...prev, [key]: false }));
+  }, []);
 
-  const toggleModal = (key: T[number]) => {
+  const toggleModal = useCallback((key: T[number]) => {
     setModalState((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
+  }, []);
 
-  const ModalKeyContext = createContext<T[number] | null>(null);
-
-  const Modal = ({
-    modalKey,
-    Trigger,
-    children,
-  }: ModalProps<T> & ModalOverlayType & PropsWithChildren) => {
+  function Modal({ modalKey, Trigger, children }: ModalProps<T> & PropsWithChildren) {
     return (
       <ModalKeyContext.Provider value={modalKey}>
-        <div className="cursor-pointer">{Trigger}</div>
-        {modalState[modalKey] ? <ModalPortal>{children}</ModalPortal> : null}
+        {Trigger && <div className="cursor-pointer">{Trigger}</div>}
+        {modalState[modalKey] && <ModalPortal>{children}</ModalPortal>}
       </ModalKeyContext.Provider>
     );
-  };
+  }
 
-  Modal.ModalOverlay = ({
+  function ModalOverlay({
     bgColor = 'black/70',
     backDrop = true,
     className = 'fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999]',
     children,
-  }: ModalSubComponentProps & ModalOverlayType) => {
+  }: ModalSubComponentProps & ModalOverlayType) {
     const modalKey = useContext(ModalKeyContext);
+
+    const handleClick = () => {
+      if (modalKey && backDrop) closeModal(modalKey);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') handleClick();
+    };
 
     return (
       <div
         id="modal-overlay"
-        className={`${className || ''} bg-${bgColor}`}
-        onClick={() => {
-          backDrop && closeModal(modalKey);
-        }}
+        role="button"
+        tabIndex={0}
+        className={`${className}`}
+        style={{ backgroundColor: colors[bgColor] }}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
       >
         {children}
       </div>
     );
-  };
+  }
 
-  Modal.ModalLayout = ({ className, children }: ModalSubComponentProps) => {
+  function ModalLayout({ className, children }: ModalSubComponentProps) {
     const modalKey = useContext(ModalKeyContext);
-    return (
-      <>
-        <div
-          className={`w-375 h-full ${className || 'flex flex-col items-center justify-center'}`}
-          style={{
-            animation: modalState[modalKey] ? 'appearAnimation 0.3s ease-out forwards' : '',
-          }}
-        >
-          {children}
-        </div>
-        <style jsx>{`
-          @keyframes appearAnimation {
-            0% {
-              transform: scale(0);
-              opacity: 0;
-            }
-            100% {
-              transform: scale(1);
-              opacity: 1;
-            }
-          }
-        `}</style>
-      </>
-    );
-  };
 
-  Modal.ModalHeader = ({
+    return (
+      <div
+        className={`w-375 h-full ${
+          className || 'flex flex-col items-center justify-center'
+        } ${modalKey ? 'animate-appear' : ''}`}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  function ModalHeader({
     className,
     onCloseButton = false,
     children,
-  }: ModalSubComponentProps & { onCloseButton?: boolean }) => {
+  }: ModalSubComponentProps & { onCloseButton?: boolean }) {
     const modalKey = useContext(ModalKeyContext);
 
     return (
       <>
-        {onCloseButton ? (
-          <>
-            <div className="flex justify-end w-full px-22 ">
-              <button onClick={() => closeModal(modalKey)}>
-                <Image src={CloseBlueIc} alt="닫기" />
-              </button>
-            </div>
-            <div className={`${className || ''}`}>{children}</div>
-          </>
-        ) : (
-          <div className={`${className || ''}`}>{children}</div>
+        {onCloseButton && modalKey && (
+          <div className="flex justify-end w-full px-22">
+            <button type="button" onClick={() => closeModal(modalKey)}>
+              <Image src={CloseBlueIc} alt="닫기" />
+            </button>
+          </div>
         )}
+        <div className={`${className || ''}`}>{children}</div>
       </>
     );
-  };
+  }
 
-  Modal.ContentFrame = ({
+  function ContentFrame({
     className,
     bgColor = 'main_blue',
     children,
-  }: ModalSubComponentProps & { bgColor?: keyof ColorsTypes }) => {
+  }: ModalSubComponentProps & { bgColor?: keyof ColorsTypes }) {
+    const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+      e.stopPropagation();
+    };
+
     return (
       <div
-        className={`bg-${bgColor} w-[85%] p-20 rounded-2xl ${className || ''} `}
-        onClick={(e) => e.stopPropagation()}
+        role="button"
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            handleClick(e);
+          }
+        }}
+        className={`bg-${bgColor} w-[85%] p-20 rounded-2xl ${className || ''}`}
       >
         {children}
       </div>
     );
-  };
+  }
 
-  Modal.ContentHeader = ({
+  function ContentHeader({
     className,
     CloseIcon,
     children,
-  }: ModalSubComponentProps & { CloseIcon?: JSX.Element }) => {
+  }: ModalSubComponentProps & { CloseIcon?: ReactNode }) {
     const modalKey = useContext(ModalKeyContext);
 
     return (
       <div className={`${className || ''}`}>
-        {CloseIcon && <button onClick={() => closeModal(modalKey)}>{CloseIcon}</button>}
+        {CloseIcon && modalKey && (
+          <button type="button" onClick={() => closeModal(modalKey)}>
+            {CloseIcon}
+          </button>
+        )}
         {children}
       </div>
     );
-  };
+  }
 
-  Modal.ContentBody = ({ className, children }: ModalSubComponentProps) => {
+  function ContentBody({ className, children }: ModalSubComponentProps) {
     return <div className={`w-full ${className || ''}`}>{children}</div>;
-  };
+  }
 
-  Modal.ButtonWrapper = ({
+  function ButtonWrapper({
     className = 'flex justify-between gap-10',
     children,
-  }: ModalSubComponentProps) => {
-    return <div className={`${className || ''}`}>{children}</div>;
-  };
+  }: ModalSubComponentProps) {
+    return <div className={className}>{children}</div>;
+  }
+
+  // Subcomponent 바인딩
+  Modal.ModalOverlay = ModalOverlay;
+  Modal.ModalLayout = ModalLayout;
+  Modal.ModalHeader = ModalHeader;
+  Modal.ContentFrame = ContentFrame;
+  Modal.ContentHeader = ContentHeader;
+  Modal.ContentBody = ContentBody;
+  Modal.ButtonWrapper = ButtonWrapper;
 
   return { modalState, Modal, openModal, closeModal, toggleModal };
 };

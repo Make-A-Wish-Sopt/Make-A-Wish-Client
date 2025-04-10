@@ -12,7 +12,7 @@ export default function CheckedIcon({
   return (
     <svg
       width={width}
-      viewBox={'0 0 14 14'}
+      viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ fill: colors[bgColor], aspectRatio: 1 / 1 }}
@@ -31,17 +31,15 @@ export default function CheckedIcon({
 
 export function WarningCheckedIcon({
   bgColor = 'main_blue',
-  iconColor = 'white',
   width = 14,
 }: {
   bgColor?: keyof ColorsTypes;
-  iconColor?: keyof ColorsTypes;
   width?: number;
 }) {
   return (
     <svg
       width={width}
-      viewBox={'0 0 14 14'}
+      viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ fill: colors[bgColor], aspectRatio: 1 / 1 }}

@@ -1,6 +1,6 @@
 'use server';
 
-import { LOGIN_USER_COOKIE_KEY } from '@/constant/cookies';
+import LOGIN_USER_COOKIE_KEY from '@/constant/cookies';
 import { cookies } from 'next/headers';
 
 export interface LoginUserDataType {

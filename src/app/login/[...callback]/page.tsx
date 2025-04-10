@@ -1,5 +1,6 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { postAuthKakao } from '@/api/auth';
@@ -7,7 +8,7 @@ import { apiRoute } from '@/configs/apiConfig';
 import Loading from '../../loading';
 import ErrorPage from '../../error';
 
-const Page = () => {
+function Page() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const code = searchParams.get('code');
@@ -30,7 +31,7 @@ const Page = () => {
 
         router.replace('/wishes');
       } catch (error) {
-        console.error('카카오 로그인 에러:', error);
+        toast.error('카카오 로그인 에러:', error);
         setStatus('error');
       }
     };
@@ -46,6 +47,6 @@ const Page = () => {
       )}
     </div>
   );
-};
+}
 
 export default Page;

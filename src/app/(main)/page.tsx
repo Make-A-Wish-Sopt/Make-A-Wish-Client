@@ -1,14 +1,13 @@
 import Header, { MypageButton } from '@/components/Elements/Header';
 import MainLayout from '@/layouts/MainLayout';
 import Image from 'next/image';
-import { MainCakeListImg } from '@public/assets/images';
 import Link from 'next/link';
 import { KakaoLoginIc } from '@public/assets/icons';
 import Button from '@/components/Elements/Button';
-import { getKakaoLoginUrl } from '@/utils/common/auth';
+import { getKakaoLoginUrl } from '@/utils/auth';
 import { ServiceGuideModal } from './_components/client';
 
-const Page = async () => {
+async function Page() {
   const kakaoLoginUrl = getKakaoLoginUrl();
 
   return (
@@ -23,7 +22,7 @@ const Page = async () => {
       </Link>
     </MainLayout>
   );
-};
+}
 
 export default Page;
 

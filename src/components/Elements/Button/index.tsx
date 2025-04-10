@@ -27,7 +27,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-const Button = (props: PropsWithChildren<ButtonProps>) => {
+function Button(props: PropsWithChildren<ButtonProps>) {
   const {
     disabled,
     bgColor = 'main_blue',
@@ -38,15 +38,24 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     gaEventLable,
     className,
     children,
+    style,
   } = props;
 
+  let backgroundColor = colors.main_blue;
+  if (disabled) backgroundColor = colors.gray2;
+  else if (bgColor) backgroundColor = colors[bgColor];
+
+  let textColor = colors.black;
+  if (disabled) textColor = colors.white;
+  else if (fontColor) textColor = colors[fontColor];
+
   const defaultStyle: CSSProperties = {
-    backgroundColor: disabled ? colors.gray2 : bgColor ? colors[bgColor] : colors.main_blue,
-    color: disabled ? colors.white : fontColor ? colors[fontColor] : colors.black,
+    backgroundColor,
+    color: textColor,
     cursor: disabled ? 'not-allowed' : 'pointer',
   };
 
-  const combinedStyle: CSSProperties = { ...defaultStyle, ...props.style };
+  const combinedStyle: CSSProperties = { ...defaultStyle, ...style };
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     if (onClick) {
@@ -60,6 +69,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
 
   return (
     <button
+      type="button"
       className={`flex justify-center items-center ${
         icon ? 'gap-10px' : 'gap-0'
       } w-full h-50 text-[20px] font-${font} bg-${bgColor} rounded-xl ${className}`}
@@ -67,10 +77,10 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
       onClick={handleClick}
       style={combinedStyle}
     >
-      {icon && icon}
+      {icon}
       {children}
     </button>
   );
-};
+}
 
 export default Button;

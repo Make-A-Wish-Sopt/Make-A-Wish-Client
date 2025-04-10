@@ -1,14 +1,14 @@
 import { getMainProgressWishesData } from '@/api/wishes';
 import ErrorPage from '@/app/error';
 import { Step } from '@/components/Modules/Funnel';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/cookies';
 import { SharePageCakeImg } from '@public/assets/images';
 import Image from 'next/image';
 import React from 'react';
-import { LinkShareSaveButton, PreviewGiftFlowButton } from './client';
 import MainLayout from '@/layouts/MainLayout';
 import Header, { IconRouteButton } from '@/components/Elements/Header';
 import { CloseBlueIc } from '@public/assets/icons';
+import { LinkShareSaveButton, PreviewGiftFlowButton } from './client';
 
 const page = async () => {
   const progressWishesData = await getMainProgressWishesData();
@@ -16,12 +16,10 @@ const page = async () => {
   const { nickName } = await getLoginUserCookiesData();
 
   if (!progressWishesData) {
-    return <ErrorPage alertMessage="진행중인 생일잔치이 없어요!" errorText={'OPPS...'} />;
+    return <ErrorPage alertMessage="진행중인 생일잔치이 없어요!" errorText="OPPS..." />;
   }
 
   const { dayCount, status } = progressWishesData;
-
-  const dDay = status === 'WHILE' ? dayCount : Math.abs(dayCount - 7);
 
   const getDayMessage = () => {
     if (status === 'WHILE') return '생일 축하 받으러 가볼까요?';

@@ -25,6 +25,22 @@ module.exports = {
       borderRadius: {
         '4xl': '2rem',
       },
+      // ✅ 여기에 애니메이션 추가
+      animation: {
+        appear: 'appearAnimation 0.3s ease-out forwards',
+      },
+      keyframes: {
+        appearAnimation: {
+          '0%': {
+            transform: 'scale(0)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+        },
+      },
     },
   },
   plugins: [],

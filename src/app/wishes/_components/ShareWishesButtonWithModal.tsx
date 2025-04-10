@@ -1,9 +1,9 @@
 'use client';
 
 import Button from '@/components/Elements/Button';
-import { useModalContent } from '@/hooks/useModalContent';
+import useModalContent from '@/hooks/useModalContent';
 
-export const ShareWishesButton = ({
+export default function ShareWishesButton({
   wishId,
   nickName,
   buttonText,
@@ -11,7 +11,7 @@ export const ShareWishesButton = ({
   wishId: string;
   nickName: string;
   buttonText: string;
-}) => {
+}) {
   const { Modal, ShareWishLinkModalContent, openModal } = useModalContent<['share']>();
 
   return (
@@ -26,4 +26,4 @@ export const ShareWishesButton = ({
       </Modal.ModalOverlay>
     </Modal>
   );
-};
+}

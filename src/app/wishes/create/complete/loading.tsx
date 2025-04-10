@@ -1,5 +1,4 @@
-import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
-import { LoadingOverlay } from '@/components/UI/Loading';
+import { LoadingOverlay, LoadingCake } from '@/components/UI/Loading';
 
 import React from 'react';
 

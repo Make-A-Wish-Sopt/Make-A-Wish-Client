@@ -1,9 +1,10 @@
 import Box from '@/components/Elements/Box';
-import { UploadImageBox } from '@/components/UI/UploadImageBox';
+import UploadImageBox from '@/components/UI/UploadImageBox';
+
 import { colors } from '@/styles/styles';
 import React from 'react';
 
-export const WishInfoForGiver = ({
+export default function WishInfoForGiver({
   생일잔치제목,
   친구가남긴이미지,
   친구가남긴메세지,
@@ -11,7 +12,7 @@ export const WishInfoForGiver = ({
   생일잔치제목: string;
   친구가남긴이미지: string;
   친구가남긴메세지: string;
-}) => {
+}) {
   return (
     <>
       <div className="flex justify-between mt-33 mb-20">
@@ -39,4 +40,4 @@ export const WishInfoForGiver = ({
       </div>
     </>
   );
-};
+}

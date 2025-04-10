@@ -18,14 +18,6 @@ export function useRouters() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleDelayRouter = (path: RoutePathType, delayMs?: number) => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      handleRouter(path);
-    }, delayMs || 800);
-  };
-
   function handleBack() {
     router.back();
   }
@@ -43,9 +35,17 @@ export function useRouters() {
     router.refresh();
   }
 
-  const LoadingModal = ({ render }: { render: JSX.Element }) => {
-    return loading ? <LoadingOverlay render={render} /> : null;
+  const handleDelayRouter = (path: RoutePathType, delayMs?: number) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      handleRouter(path);
+    }, delayMs || 800);
   };
+
+  function LoadingModal({ render }: { render: JSX.Element }) {
+    return loading ? <LoadingOverlay render={render} /> : null;
+  }
 
   return {
     handleRouter,

@@ -8,7 +8,6 @@ interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   boxStyles?: React.CSSProperties;
   inputStyles?: React.CSSProperties;
   blur?: boolean;
-  keyPrevent?: boolean;
   children?: ReactNode;
 }
 
@@ -19,19 +18,13 @@ export default function InputText({
   readOnly,
   children,
   blur = false,
-  keyPrevent = false,
+
   ...rest
 }: InputTextProps) {
   return (
     <Box bgColor="dark_green" fontColor="white" font="galmuri" styles={boxStyles}>
       <div className="flex justify-between items-center w-full h-full" style={inputStyles}>
-        <InputField
-          register={register}
-          blur={blur}
-          keyPrevent={keyPrevent}
-          readOnly={readOnly}
-          {...rest}
-        />
+        <InputField register={register} blur={blur} readOnly={readOnly} {...rest} />
         {children}
       </div>
     </Box>

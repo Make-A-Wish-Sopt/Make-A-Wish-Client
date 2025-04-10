@@ -1,4 +1,3 @@
-import { DefaultResponseType } from '@/types/api/response';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -12,7 +11,7 @@ export async function GET() {
     });
   }
 
-  const authUrl = `https://kauth.kakao.com/oauth/logout?client_id=${clientId}&logout_redirect_uri=${logoutRedirectUri}`;
+  const logoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${clientId}&logout_redirect_uri=${logoutRedirectUri}`;
 
-  return NextResponse.json({ authUrl: authUrl });
+  return NextResponse.json({ authUrl: logoutUrl });
 }

@@ -3,10 +3,10 @@ import ErrorPage from '@/app/error';
 import Header from '@/components/Elements/Header';
 import MainLayout from '@/layouts/MainLayout';
 import React from 'react';
-import { WishEditForm, WisheEditFormFormProvider } from './_components/client';
 import { Step } from '@/components/Modules/Funnel';
-import { StepTitle } from '@/components/UI/StepTitle';
-import { BackButton } from '@/components/Elements/Button/BackButton';
+import StepTitle from '@/components/UI/StepTitle';
+import BackButton from '@/components/Elements/Button/BackButton';
+import { WishEditForm, WisheEditFormFormProvider } from './_components/client';
 
 const page = async () => {
   const progressWishLinkData = await getProgressWishLinkData();
@@ -22,7 +22,7 @@ const page = async () => {
   return (
     <MainLayout Header={<Header leftMenu={<BackButton routePath="/" />} />}>
       <WisheEditFormFormProvider progressWishesData={progressWishesData}>
-        <StepTitle title={'생일잔치 링크 수정하기'} />
+        <StepTitle title="생일잔치 링크 수정하기" />
         <Step.FormSection className="flex flex-col gap-12 mb-24">
           <WishEditForm wishStatus={status} transferInfo={transferInfo} />
         </Step.FormSection>

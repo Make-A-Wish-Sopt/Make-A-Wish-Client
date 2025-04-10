@@ -1,4 +1,6 @@
 import { CakeTreeDataType } from '@/constant/model/cakesTreeData';
+import { LoginUserDataType } from '@/utils/cookies'; // <-- ✅ 순서 조정
+
 import {
   AccountInfoType,
   MainProgressDataType,
@@ -6,7 +8,7 @@ import {
   TransferInfoType,
   WishStatusType,
 } from '../wishesType';
-import { LoginUserDataType } from '@/utils/common/cookies';
+
 import { WishesLinkDataType } from '../input';
 
 export type DefaultResponseType<T = unknown> = {
@@ -31,11 +33,14 @@ export type WishesHistoryListResponseType = DefaultResponseType<{
   wishes: WishesHistoryListType[];
 }>;
 
-export type WishesCreateResponseType = DefaultResponseType<number>; //생일잔치아이디
+export type WishesCreateResponseType = DefaultResponseType<number>; // 생일잔치아이디 ✅ 주석 띄어쓰기
 
 export type LoginResponseType = DefaultResponseType<LoginUserDataType>;
 
-export type PresingedURLResponseType = DefaultResponseType<{ filename: string; signedUrl: string }>;
+export type PresingedURLResponseType = DefaultResponseType<{
+  filename: string;
+  signedUrl: string;
+}>;
 
 export type MainProgressDataResponseType = DefaultResponseType<MainProgressDataType>;
 
@@ -80,6 +85,7 @@ export type CakePresentMessageDataType = {
 };
 
 export type CakePresentMessageResponseType = DefaultResponseType<CakePresentMessageDataType>;
+
 export type GetCakesResultResponseType = DefaultResponseType<Array<CakeTreeDataType>>;
 
 export type UpdateTokenResponseType = DefaultResponseType<{

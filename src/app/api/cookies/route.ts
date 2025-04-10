@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { LOGIN_USER_COOKIE_KEY } from '@/constant/cookies';
+import LOGIN_USER_COOKIE_KEY from '@/constant/cookies';
 import { DefaultResponseType } from '@/types/api/response';
-import { LoginUserDataType } from '@/utils/common/cookies';
+import { LoginUserDataType } from '@/utils/cookies';
 
 export async function POST(request: Request) {
   const cookiesData = await request.json();
@@ -13,24 +13,25 @@ export async function POST(request: Request) {
     httpOnly: true,
   });
 
-  const data: LoginUserDataType = JSON.parse(cookieStore.get(LOGIN_USER_COOKIE_KEY)?.value);
+  const resData: LoginUserDataType = JSON.parse(cookieStore.get(LOGIN_USER_COOKIE_KEY)?.value);
+
   return NextResponse.json<DefaultResponseType<LoginUserDataType>>({
     success: true,
     message: '쿠키 데이터 저장성공',
-    data: data,
+    data: resData,
   });
 }
 
-export async function GET(req: any) {
+export async function GET() {
   const cookieStore = cookies();
 
   if (!cookieStore) {
     return NextResponse.json({ success: false });
   }
 
-  const data = cookieStore;
+  const resData = cookieStore;
 
-  return NextResponse.json({ success: true, data: data });
+  return NextResponse.json({ success: true, data: resData });
 }
 
 export async function DELETE() {

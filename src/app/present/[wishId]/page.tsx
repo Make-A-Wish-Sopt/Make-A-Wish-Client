@@ -2,15 +2,15 @@ import { getPublicWishes } from '@/api/public';
 import ErrorPage from '@/app/error';
 import { Step } from '@/components/Modules/Funnel';
 import MainLayout from '@/layouts/MainLayout';
-import { WishInfoForGiver } from './components/PresentForm.Server';
-import PresentForm from './components/PresentForm';
 import { PresentFunnelStep } from '@/constant/funnelStep';
-import { FunnelContainer } from '@/app/_components/FunnelContainer';
+import FunnelContainer from '@/app/_components/FunnelContainer';
 import Header from '@/components/Elements/Header';
-import { BackButton } from '@/components/Elements/Button/BackButton';
-import { AlimTalkMessageButton } from '@/app/wishes/_components/AlimTalckButton';
 import dynamic from 'next/dynamic';
 import { DefaultResponseType, PublicWishesDataType } from '@/types/api/response';
+import BackButton from '@/components/Elements/Button/BackButton';
+import AlimTalkMessageButton from '@/app/wishes/_components/AlimTalckButton';
+import WishInfoForGiver from './components/PresentForm.Server';
+import PresentForm from './components/PresentForm';
 
 const DynamicPaymentForm = dynamic(() => import('./components/PaymentForm'));
 const DynamicCompleteForm = dynamic(() => import('./components/CompleteForm'));
@@ -57,7 +57,7 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
           </Step.FormSection>
 
           <Step.ButtonWrapper fixedBottom className="z-30">
-            <AlimTalkMessageButton buttonText={'제 생일에도 써볼래요!'} />
+            <AlimTalkMessageButton buttonText="제 생일에도 써볼래요!" />
           </Step.ButtonWrapper>
         </MainLayout>
       </Step>

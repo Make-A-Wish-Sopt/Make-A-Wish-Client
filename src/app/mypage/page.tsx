@@ -1,10 +1,13 @@
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import { getProgressWishLinkData } from '@/api/wishes';
 import Header from '@/components/Elements/Header';
+import BackButton from '@/components/Elements/Button/BackButton';
 import MainLayout from '@/layouts/MainLayout';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/cookies';
 import { MypageDefaultCakeImg } from '@public/assets/images';
-import Image from 'next/image';
-import React from 'react';
 import {
   CloseWishMenu,
   CSLinkMenu,
@@ -15,59 +18,50 @@ import {
   PrevWishesData,
   ServiceGuideMenu,
 } from './_components/client';
-import Link from 'next/link';
-import { BackButton } from '@/components/Elements/Button/BackButton';
 
-export const dynamic = 'force-dynamic';
-
-const page = async () => {
+export default async function page() {
   const loginUserData = await getLoginUserCookiesData();
 
   if (!loginUserData) {
     return (
       <MainLayout Header={<Header leftMenu={<BackButton routePath="/" />} />}>
-        <MypageUserName nickName={'조물주'} />
+        <MypageUserName nickName="조물주" />
         <MypageMenuContainer>
           <ServiceGuideMenu />
           <CSLinkMenu />
         </MypageMenuContainer>
-
         <MypageAuthButtons isLoggedIn={false} />
       </MainLayout>
     );
   }
+
   const { nickName } = loginUserData;
   const progressWishes = await getProgressWishLinkData();
 
-  const EditWishDisabled =
-    progressWishes === undefined || (progressWishes && progressWishes.status === 'END');
+  const EditWishDisabled = !progressWishes || (progressWishes && progressWishes.status === 'END');
   const EditSelectPaymentMenuDisabled = progressWishes ? !progressWishes.wantsGift : false;
 
   return (
     <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
       <MypageUserName nickName={nickName} />
-
       <MypageMenuContainer>
-        <Link href={'/mypage/edit/wish'}>
+        <Link href="/mypage/edit/wish">
           <EditWishMenu disabled={EditWishDisabled} />
         </Link>
         <EditSelectPaymnetMenu disabled={EditSelectPaymentMenuDisabled} />
         <CloseWishMenu disabled={EditWishDisabled} />
-        <Link href={'/mypage/history'}>
+        <Link href="/mypage/history">
           <PrevWishesData />
         </Link>
         <ServiceGuideMenu />
         <CSLinkMenu />
       </MypageMenuContainer>
-
       <MypageAuthButtons isLoggedIn />
     </MainLayout>
   );
-};
+}
 
-export default page;
-
-const MypageUserName = ({ nickName }: { nickName: string }) => {
+function MypageUserName({ nickName }: { nickName: string }) {
   return (
     <div className="flex gap-10 items-center mt-11 mb-20">
       <Image
@@ -79,4 +73,4 @@ const MypageUserName = ({ nickName }: { nickName: string }) => {
       <span className="font-bitbit text-[24px] text-white">{nickName}님</span>
     </div>
   );
-};
+}

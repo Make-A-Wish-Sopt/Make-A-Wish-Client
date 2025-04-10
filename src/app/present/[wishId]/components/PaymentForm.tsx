@@ -4,9 +4,8 @@ import { useFunnelContext } from '@/Context/FunnelContext';
 import React from 'react';
 import { presentListObject } from '@/constant/model/present';
 import Image from 'next/image';
-import { convertMoneyText } from '@/utils/common/convert';
+import convertMoneyText from '@/utils/regex';
 import useBoolean from '@/hooks/useBoolean';
-import { useFormState, useWatch } from 'react-hook-form';
 import Button from '@/components/Elements/Button';
 import { Step } from '@/components/Modules/Funnel';
 import { BeefCakeImg, MainCakeImg } from '@public/assets/images';
@@ -14,60 +13,16 @@ import { TransferInfoType } from '@/types/wishesType';
 import { postPublicCakes } from '@/api/public';
 import { useParams } from 'next/navigation';
 import { AccountCopySpeechBubbleIc } from '@public/assets/icons';
-import { clipboardCopy } from '@/utils/common/clipboardCopy';
+import clipboardCopy from '@/utils/clipboardCopy';
 import { paymentListArray, paymentListObject } from '@/constant/bankList';
 import InputForm from '@/components/UI/InputForm';
 import { PresentFunnelStepType } from '@/constant/funnelStep';
 import { toast } from 'sonner';
 import { PresentFormSchemaType } from '@/Schema/present.schema';
 import { useFetch } from '@/hooks/useFetch';
-import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
+import { LoadingCake } from '@/components/UI/Loading';
 
-const PaymentForm = ({
-  transferInfo,
-  nickname,
-}: {
-  transferInfo: TransferInfoType;
-  nickname: string;
-}) => {
-  if (!transferInfo) {
-    return <div>해당 유저는 편지만 받길 원해요!</div>;
-  }
-
-  const { forPayCode } = transferInfo;
-  const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
-  const presentFormData = getSharedData('present');
-
-  if (!presentFormData) {
-    toast.error('선물정보를 먼저 입력해주세요!');
-    onMoveStep('present');
-    return;
-  }
-
-  const { giftMenuId } = getSharedData('present') as PresentFormSchemaType;
-
-  const presentPrice = giftMenuId > 0 ? presentListObject[giftMenuId].price.toString() : '0';
-
-  return (
-    <>
-      {forPayCode ? (
-        <KakaopayCodePayment
-          송금할친구이름={nickname}
-          송금금액={presentPrice}
-          transferInfo={transferInfo}
-        />
-      ) : (
-        <AccountDepositPayment
-          송금할친구이름={nickname}
-          송금금액={presentPrice}
-          transferInfo={transferInfo}
-        />
-      )}
-    </>
-  );
-};
-
-const KakaopayCodePayment = ({
+function KakaopayCodePayment({
   송금할친구이름,
   송금금액,
   transferInfo,
@@ -75,7 +30,7 @@ const KakaopayCodePayment = ({
   송금할친구이름: string;
   송금금액: string;
   transferInfo: TransferInfoType;
-}) => {
+}) {
   const { wishId } = useParams();
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
   const presentFormData = getSharedData('present') as PresentFormSchemaType;
@@ -120,10 +75,10 @@ const KakaopayCodePayment = ({
       <Image src={BeefCakeImg} alt="케이크 이미지" width={121} className="mt-120" />
       <p>{`${송금할친구이름}님에게`}</p>
       <p className="text-main_blue text-[50px] leading-none">{`${convertMoneyText(송금금액) || 0}원`}</p>
-      <p>{`송금하기`}</p>
+      <p>송금하기</p>
 
       <Step.ButtonWrapper vertical fixedBottom className="gap-10">
-        <Button onClick={onLinkKakaopayApp}>{'카카오페이 송금하기'}</Button>
+        <Button onClick={() => onLinkKakaopayApp()}>카카오페이 송금하기</Button>
 
         <Button disabled={clickYet.state} onClick={handleNextClick}>
           {clickYet.state ? '카카오로 송금하고, 편지 확인하기' : '송금 완료했어요!'}
@@ -132,9 +87,9 @@ const KakaopayCodePayment = ({
       <LoadingModal render={<LoadingCake text="선물 중" />} />
     </div>
   );
-};
+}
 
-const AccountDepositPayment = ({
+function AccountDepositPayment({
   송금할친구이름,
   송금금액,
   transferInfo,
@@ -142,7 +97,7 @@ const AccountDepositPayment = ({
   송금할친구이름: string;
   송금금액: string;
   transferInfo: TransferInfoType;
-}) => {
+}) {
   const { wishId } = useParams();
 
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
@@ -157,7 +112,7 @@ const AccountDepositPayment = ({
     const { accountInfo } = transferInfo;
 
     const 계좌정보 = `${accountInfo.account} ${accountInfo.bank}`;
-    alert(`${계좌정보} 계좌를 복사했어요!`);
+    toast.success(`${계좌정보} 계좌를 복사했어요!`);
     await clipboardCopy(계좌정보);
   };
 
@@ -206,7 +161,7 @@ const AccountDepositPayment = ({
     <div className="flex flex-col items-center w-full text-white font-bitbit">
       <span className="text-[24px] mt-54 ">{`${송금할친구이름}님에게`}</span>
       <span className="text-main_blue text-[50px] leading-none">{`${convertMoneyText(송금금액)}원`}</span>
-      <span className="text-[24px] ">{`송금하기`}</span>
+      <span className="text-[24px] ">송금하기</span>
       <div className="relative mt-62">
         <Image
           src={AccountCopySpeechBubbleIc}
@@ -216,7 +171,7 @@ const AccountDepositPayment = ({
             animation: 'bounce 1.3s ease-in-out infinite',
           }}
         />
-        <button onClick={() => 계좌번호복사하기()}>
+        <button type="button" onClick={() => 계좌번호복사하기()}>
           <Image
             className="duration-300 transition-all "
             src={MainCakeImg}
@@ -247,16 +202,18 @@ const AccountDepositPayment = ({
         <InputForm title="송금수단으로 이동하기" textCenter>
           <ul className="flex gap-8">
             {paymentListArray.map((paymentItem) => (
-              <li
-                className={`flex flex-col gap-10  items-center justify-center w-full h-92 rounded-xl bg-dark_green cursor-pointer`}
-                key={paymentItem.paymentId}
-                onClick={() => {
-                  handleDeepLink(paymentItem.paymentId);
-                  최초은행앱연결실행확인();
-                }}
-              >
-                <Image src={paymentItem.bankIconImg} alt="은행 로고 이미지" />
-                <span className="font-galmuri text-[14px] ">{paymentItem.name}</span>
+              <li key={paymentItem.paymentId} className="w-full">
+                <button
+                  type="button"
+                  className="flex flex-col gap-10 items-center justify-center w-full h-92 rounded-xl bg-dark_green cursor-pointer"
+                  onClick={() => {
+                    handleDeepLink(paymentItem.paymentId);
+                    최초은행앱연결실행확인();
+                  }}
+                >
+                  <Image src={paymentItem.bankIconImg} alt="은행 로고 이미지" />
+                  <span className="font-galmuri text-[14px]">{paymentItem.name}</span>
+                </button>
               </li>
             ))}
           </ul>
@@ -271,6 +228,43 @@ const AccountDepositPayment = ({
       <LoadingModal render={<LoadingCake text="선물 중" />} />
     </div>
   );
-};
+}
 
-export default PaymentForm;
+export default function PaymentForm({
+  transferInfo,
+  nickname,
+}: {
+  transferInfo: TransferInfoType;
+  nickname: string;
+}) {
+  const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
+  if (!transferInfo) {
+    return <div>해당 유저는 편지만 받길 원해요!</div>;
+  }
+
+  const { forPayCode } = transferInfo;
+  const presentFormData = getSharedData('present');
+
+  if (!presentFormData) {
+    toast.error('선물정보를 먼저 입력해주세요!');
+    onMoveStep('present');
+  }
+
+  const { giftMenuId } = getSharedData('present') as PresentFormSchemaType;
+
+  const presentPrice = giftMenuId > 0 ? presentListObject[giftMenuId].price.toString() : '0';
+
+  return forPayCode ? (
+    <KakaopayCodePayment
+      송금할친구이름={nickname}
+      송금금액={presentPrice}
+      transferInfo={transferInfo}
+    />
+  ) : (
+    <AccountDepositPayment
+      송금할친구이름={nickname}
+      송금금액={presentPrice}
+      transferInfo={transferInfo}
+    />
+  );
+}

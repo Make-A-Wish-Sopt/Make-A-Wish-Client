@@ -11,7 +11,7 @@ export async function GET() {
     });
   }
 
-  const authUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+  const loginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
 
-  return NextResponse.json({ authUrl: authUrl });
+  return NextResponse.json({ authUrl: loginUrl });
 }

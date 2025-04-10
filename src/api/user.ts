@@ -1,9 +1,9 @@
+import { client } from '@/configs/apiConfig';
 import { BANK_LIST } from '@/constant/bankList';
-import { client } from '../configs/apiConfig';
-import { API_VERSION_01, PATH_USER } from './path';
 import { DefaultResponseType, UserAccountDataResponseType } from '@/types/api/response';
 import { AccountInfoType } from '@/types/wishesType';
 import { AccountFormSchemaType } from '@/Schema/wishes.schema';
+import { API_VERSION_01, PATH_USER } from './path';
 
 export const putUserAccount = async (accountInputs: AccountFormSchemaType) => {
   try {
@@ -22,7 +22,9 @@ export const putUserAccount = async (accountInputs: AccountFormSchemaType) => {
     );
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+    return null;
+  }
 };
 
 export const getUserAccount = async () => {
@@ -32,7 +34,9 @@ export const getUserAccount = async () => {
     );
 
     return data?.data.data;
-  } catch (error) {}
+  } catch (error) {
+    return null;
+  }
 };
 
 export const deleteUserInfo = async () => {
@@ -44,7 +48,9 @@ export const deleteUserInfo = async () => {
     });
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+    return null;
+  }
 };
 
 export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
@@ -67,6 +73,6 @@ export const postVerifyAccount = async (accountInfo: AccountInfoType) => {
 
     return response.data;
   } catch (error) {
-    return;
+    return null;
   }
 };

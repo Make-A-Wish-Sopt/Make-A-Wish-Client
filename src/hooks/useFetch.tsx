@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import useModals from './useModals';
-import ClipLoader from 'react-spinners/ClipLoader';
-import { colors } from '@/styles/styles';
 
 export type FetchStatusType = 'idle' | 'loading' | 'success' | 'error';
 
@@ -13,16 +11,16 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
   const [error, setError] = useState<unknown>(null);
   const { Modal, openModal, closeModal } = useModals<['loading']>();
 
+  useEffect(() => {
+    if (status === 'loading') {
+      openModal('loading');
+    } else {
+      closeModal('loading');
+    }
+  }, [status, closeModal, openModal]);
+
   const changeStatus = (state: FetchStatusType) => {
     setStatus(state);
-  };
-
-  const delayFetchData = (delayMs: number, ...args: A) => {
-    setStatus('loading');
-
-    setTimeout(() => {
-      fetchData(...args);
-    }, delayMs || 1000);
   };
 
   const fetchData = async (...args: A) => {
@@ -35,18 +33,19 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
     } catch (err) {
       setError(err);
       setStatus('error');
+      return null;
     }
   };
 
-  useEffect(() => {
-    if (status === 'loading') {
-      openModal('loading');
-    } else {
-      closeModal('loading');
-    }
-  }, [status]);
+  const delayFetchData = (delayMs: number, ...args: A) => {
+    setStatus('loading');
 
-  const LoadingModal = ({ render }: { render: JSX.Element }) => {
+    setTimeout(() => {
+      fetchData(...args);
+    }, delayMs || 1000);
+  };
+
+  function LoadingModal({ render }: { render: JSX.Element }) {
     if (status !== 'loading') return null;
 
     return (
@@ -54,7 +53,7 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
         <Modal.ModalOverlay>{render}</Modal.ModalOverlay>
       </Modal>
     );
-  };
+  }
 
   return { status, data, error, fetchData, delayFetchData, changeStatus, LoadingModal };
 };

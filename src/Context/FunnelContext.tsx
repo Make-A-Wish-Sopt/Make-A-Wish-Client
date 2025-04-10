@@ -2,8 +2,7 @@
 
 import Button, { ButtonProps } from '@/components/Elements/Button';
 import { Funnel } from '@/components/Modules/Funnel';
-import { ExtractStepNames, FunnelProps, FunnelStepsType } from '@/hooks/useFunnel';
-import useFunnel from '@/hooks/useFunnel';
+import useFunnel, { ExtractStepNames, FunnelStepsType } from '@/hooks/useFunnel';
 import {
   createContext,
   Dispatch,
@@ -33,22 +32,22 @@ type SharedDataMap<T extends FunnelStepsType> = Partial<Record<ExtractStepNames<
 
 const FunnelContext = createContext<FunnelContextProps<any> | null>(null);
 
-export const FunnelProvider = <T extends FunnelStepsType>({
+export function FunnelProvider<T extends FunnelStepsType>({
   steps,
   children,
-}: PropsWithChildren<{ steps: T }>) => {
+}: PropsWithChildren<{ steps: T }>) {
   const funnel = useFunnel(steps);
 
   const [sharedData, setSharedData] = useState<SharedDataMap<T>>({});
+
+  const isSharedDataEmpty = () => {
+    return Object.keys(sharedData).length === 0;
+  };
 
   const getSharedData = (key: ExtractStepNames<T>) => {
     if (isSharedDataEmpty()) return;
 
     return sharedData[key];
-  };
-
-  const isSharedDataEmpty = () => {
-    return Object.keys(sharedData).length === 0;
   };
 
   const contextValue: FunnelContextProps<T> = {
@@ -63,7 +62,7 @@ export const FunnelProvider = <T extends FunnelStepsType>({
       <Funnel current={funnel.currentStep()}>{children}</Funnel>
     </FunnelContext.Provider>
   );
-};
+}
 
 export const useFunnelContext = <T extends FunnelStepsType>() => {
   const context = useContext(FunnelContext);

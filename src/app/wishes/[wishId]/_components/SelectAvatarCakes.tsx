@@ -2,13 +2,13 @@
 
 import Button from '@/components/Elements/Button';
 import { defaultAvatarCakesDataArray } from '@/constant/model/avatarCakesData';
-import useCarousel, { CarouselType } from '@/hooks/useCarousel';
+import useCarousel from '@/hooks/useCarousel';
 import { useRouters } from '@/hooks/useRouters';
 import { ArrowLeftIc, ArrowRightIc } from '@public/assets/icons';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const SelectAvatarCakesButton = ({ wishId }: { wishId: string }) => {
+export default function SelectAvatarCakesButton({ wishId }: { wishId: string }) {
   const selectLength = 7;
   const carousel = useCarousel(defaultAvatarCakesDataArray.length - 1, selectLength);
   const { selectArr, next, prev } = carousel;
@@ -88,6 +88,7 @@ const SelectAvatarCakesButton = ({ wishId }: { wishId: string }) => {
         </li>
 
         <button
+          type="button"
           className="absolute flex justify-center items-center w-30 h-30"
           onClick={handlePrev}
           style={{
@@ -109,6 +110,7 @@ const SelectAvatarCakesButton = ({ wishId }: { wishId: string }) => {
         </li>
 
         <button
+          type="button"
           className="absolute flex justify-center items-center w-30 h-30"
           onClick={handleNext}
           style={{
@@ -179,6 +181,4 @@ const SelectAvatarCakesButton = ({ wishId }: { wishId: string }) => {
       `}</style>
     </>
   );
-};
-
-export default SelectAvatarCakesButton;
+}

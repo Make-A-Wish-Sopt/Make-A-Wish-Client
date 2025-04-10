@@ -2,7 +2,7 @@
 
 import { useFunnelContext } from '@/Context/FunnelContext';
 import React from 'react';
-import useBoolean, { BooleanHookType } from '@/hooks/useBoolean';
+import useBoolean from '@/hooks/useBoolean';
 import { FormProvider, useForm, useFormContext, useFormState } from 'react-hook-form';
 import Button from '@/components/Elements/Button';
 import { Step } from '@/components/Modules/Funnel';
@@ -16,7 +16,28 @@ import {
   SelectPresentItem,
 } from '@/app/present/[wishId]/components/PresentForm';
 
-export const PreviewPresentForm = () => {
+function NextButton() {
+  const { nextStep, setSharedData } = useFunnelContext<PresentFunnelStepType>();
+  const { control, getValues } = useFormContext<PresentFormSchemaType>();
+  const { isValid } = useFormState({ control });
+
+  const handleNextStep = async () => {
+    const presentFormData = getValues();
+    nextStep();
+    setSharedData((prev) => ({
+      ...prev,
+      present: { ...presentFormData },
+    }));
+  };
+
+  return (
+    <Button disabled={!isValid} onClick={handleNextStep}>
+      친구생일 축하해주기
+    </Button>
+  );
+}
+
+export default function PreviewPresentForm() {
   const onlyPresentMessageToggle = useBoolean();
 
   const previewPresentFormMethods = useForm<PresentFormSchemaType>({
@@ -39,25 +60,4 @@ export const PreviewPresentForm = () => {
       </Step.ButtonWrapper>
     </FormProvider>
   );
-};
-
-const NextButton = () => {
-  const { nextStep, setSharedData } = useFunnelContext<PresentFunnelStepType>();
-  const { control, getValues } = useFormContext<PresentFormSchemaType>();
-  const { isValid } = useFormState({ control });
-
-  const handleNextStep = async () => {
-    const presentFormData = getValues();
-    nextStep();
-    setSharedData((prev) => ({
-      ...prev,
-      present: { ...presentFormData },
-    }));
-  };
-
-  return (
-    <Button disabled={!isValid} onClick={handleNextStep}>
-      {'친구생일 축하해주기'}
-    </Button>
-  );
-};
+}

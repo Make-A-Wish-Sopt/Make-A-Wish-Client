@@ -12,20 +12,20 @@ import { Step } from '@/components/Modules/Funnel';
 import InputForm from '@/components/UI/InputForm';
 import { useRouters } from '@/hooks/useRouters';
 import { TransferInfoType, WishStatusType } from '@/types/wishesType';
-import { getDate } from '@/utils/common/getDate';
+import { getDate } from '@/utils/date';
 import { WishesFormSchema, WishesFormScehmaType } from '@/Schema/wishes.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { memo, PropsWithChildren, useEffect } from 'react';
+import { memo, PropsWithChildren } from 'react';
 import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 
-export const WisheEditFormFormProvider = ({
+export function WisheEditFormFormProvider({
   progressWishesData,
 
   children,
 }: {
   progressWishesData: WishesFormScehmaType;
-} & PropsWithChildren) => {
+} & PropsWithChildren) {
   const wishesFormMethods = useForm<WishesFormScehmaType>({
     mode: 'onChange',
     defaultValues: {
@@ -37,15 +37,27 @@ export const WisheEditFormFormProvider = ({
   });
 
   return <FormProvider {...wishesFormMethods}>{children}</FormProvider>;
-};
+}
 
-export const WishEditForm = ({
+const WishesEditFormButton = memo(
+  ({ disabled, onNextClick }: { disabled: boolean; onNextClick: () => void }) => {
+    return (
+      <Step.ButtonWrapper className="mb-24">
+        <Button disabled={disabled} onClick={onNextClick}>
+          수정 완료
+        </Button>
+      </Step.ButtonWrapper>
+    );
+  },
+);
+
+export function WishEditForm({
   wishStatus,
   transferInfo,
 }: {
   wishStatus: WishStatusType;
   transferInfo: TransferInfoType;
-}) => {
+}) {
   const { handleBack } = useRouters();
   const { setValue, control, getValues } = useFormContext<WishesFormScehmaType>();
   const { isValid } = useFormState({ control });
@@ -116,16 +128,4 @@ export const WishEditForm = ({
       <WishesEditFormButton disabled={!isValid} onNextClick={() => handleEditWisheLink()} />
     </>
   );
-};
-
-const WishesEditFormButton = memo(
-  ({ disabled, onNextClick }: { disabled: boolean; onNextClick: () => void }) => {
-    return (
-      <Step.ButtonWrapper className="mb-24">
-        <Button disabled={disabled} onClick={onNextClick}>
-          {'수정 완료'}
-        </Button>
-      </Step.ButtonWrapper>
-    );
-  },
-);
+}

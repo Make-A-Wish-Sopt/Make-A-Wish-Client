@@ -6,12 +6,10 @@ import { useFunnelContext } from '@/Context/FunnelContext';
 import React, { PropsWithChildren, useEffect } from 'react';
 import { presentListArray } from '@/constant/model/present';
 import Image from 'next/image';
-import { convertMoneyText } from '@/utils/common/convert';
 import Box from '@/components/Elements/Box';
 import CheckBox from '@/components/UI/CheckBox';
 import useBoolean, { BooleanHookType } from '@/hooks/useBoolean';
 import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
-import InputTextForm from '@/components/UI/InputTextForm';
 import { MAX_TEXTAREA_LENGTH } from '@/constant/input';
 import Button from '@/components/Elements/Button';
 import { Step } from '@/components/Modules/Funnel';
@@ -22,36 +20,10 @@ import { presentFormSchema, PresentFormSchemaType } from '@/Schema/present.schem
 import { PresentFunnelStepType } from '@/constant/funnelStep';
 import { postPublicCakes } from '@/api/public';
 import { toast } from 'sonner';
+import { InputTextForm } from '@/components/UI/InputTextForm';
+import convertMoneyText from '@/utils/regex';
 
-const PresentForm = () => {
-  const searchParams = useSearchParams();
-  const avatarCakeId = searchParams.get('avatarCakeId');
-
-  const onlyPresentMessageToggle = useBoolean();
-
-  const presentFormMethods = useForm<PresentFormSchemaType>({
-    mode: 'onChange',
-    defaultValues: {
-      ...presentFormInitValues,
-      cakeId: Number(avatarCakeId) || 1,
-    },
-    resolver: yupResolver(presentFormSchema),
-  });
-
-  return (
-    <FormProvider {...presentFormMethods}>
-      <GiverNameInput />
-      <SelectPresentItem onlyMessageToggle={onlyPresentMessageToggle} />
-      <LetterToFriendInput />
-
-      <Step.ButtonWrapper>
-        <NextButton onlyPresentMessage={onlyPresentMessageToggle.state} />
-      </Step.ButtonWrapper>
-    </FormProvider>
-  );
-};
-
-export const GiverNameInput = () => {
+export function GiverNameInput() {
   const { register } = useFormContext<PresentFormSchemaType>();
 
   return (
@@ -62,64 +34,9 @@ export const GiverNameInput = () => {
       />
     </InputForm>
   );
-};
+}
 
-export const SelectPresentItem = ({
-  onlyMessageToggle,
-}: {
-  onlyMessageToggle: BooleanHookType;
-}) => {
-  const { setValue, control } = useFormContext<PresentFormSchemaType>();
-
-  const selectedPresentId = useWatch({
-    control,
-    name: 'giftMenuId',
-  });
-
-  const onSelectPresentItem = (id: number) => {
-    setValue('giftMenuId', id);
-  };
-
-  useEffect(() => {
-    if (onlyMessageToggle.state) {
-      setValue('giftMenuId', 0);
-    }
-  }, [onlyMessageToggle.state]);
-
-  return (
-    <InputForm title="선물하고 싶은 항목 선택하기">
-      <PresentList
-        onlyPresentMessage={onlyMessageToggle.state}
-        selectedId={selectedPresentId}
-        onSelectItem={onSelectPresentItem}
-      />
-
-      <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
-        <CheckBox changeCheckedState={onlyMessageToggle.changeState}>
-          <span className="font-galmuri text-[14px] ml-8">{'편지만 보낼게요'}</span>
-        </CheckBox>
-      </Box>
-    </InputForm>
-  );
-};
-
-export const LetterToFriendInput = () => {
-  const { register, control } = useFormContext<PresentFormSchemaType>();
-
-  return (
-    <InputForm title="친구에게 편지남기기">
-      <InputTextForm
-        inputType="textarea"
-        register={register('message')}
-        control={control}
-        placeholder="ex.) 생일을 축하합니다~"
-        maxLength={MAX_TEXTAREA_LENGTH}
-      />
-    </InputForm>
-  );
-};
-
-export const PresentList = ({
+export function PresentList({
   onlyPresentMessage,
   onSelectItem,
   selectedId,
@@ -128,7 +45,7 @@ export const PresentList = ({
   onlyPresentMessage: boolean;
   onSelectItem: (id: number) => void;
   selectedId?: number;
-} & PropsWithChildren) => {
+} & PropsWithChildren) {
   return (
     <>
       <div
@@ -162,9 +79,60 @@ export const PresentList = ({
       {children}
     </>
   );
-};
+}
 
-const NextButton = ({ onlyPresentMessage }: { onlyPresentMessage: boolean }) => {
+export function SelectPresentItem({ onlyMessageToggle }: { onlyMessageToggle: BooleanHookType }) {
+  const { setValue, control } = useFormContext<PresentFormSchemaType>();
+
+  const selectedPresentId = useWatch({
+    control,
+    name: 'giftMenuId',
+  });
+
+  const onSelectPresentItem = (id: number) => {
+    setValue('giftMenuId', id);
+  };
+
+  useEffect(() => {
+    if (onlyMessageToggle.state) {
+      setValue('giftMenuId', 0);
+    }
+  }, [onlyMessageToggle.state, setValue]);
+
+  return (
+    <InputForm title="선물하고 싶은 항목 선택하기">
+      <PresentList
+        onlyPresentMessage={onlyMessageToggle.state}
+        selectedId={selectedPresentId}
+        onSelectItem={onSelectPresentItem}
+      />
+
+      <Box bgColor="dark_green" fontColor="gray2" styles={{ marginTop: '0.6rem' }}>
+        <CheckBox changeCheckedState={onlyMessageToggle.changeState}>
+          <span className="font-galmuri text-[14px] ml-8">편지만 보낼게요</span>
+        </CheckBox>
+      </Box>
+    </InputForm>
+  );
+}
+
+export function LetterToFriendInput() {
+  const { register, control } = useFormContext<PresentFormSchemaType>();
+
+  return (
+    <InputForm title="친구에게 편지남기기">
+      <InputTextForm
+        inputType="textarea"
+        register={register('message')}
+        control={control}
+        placeholder="ex.) 생일을 축하합니다~"
+        maxLength={MAX_TEXTAREA_LENGTH}
+      />
+    </InputForm>
+  );
+}
+
+function NextButton({ onlyPresentMessage }: { onlyPresentMessage: boolean }) {
   const { nextStep, setSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
   const { control, getValues } = useFormContext<PresentFormSchemaType>();
   const { isValid } = useFormState({ control });
@@ -197,9 +165,35 @@ const NextButton = ({ onlyPresentMessage }: { onlyPresentMessage: boolean }) => 
 
   return (
     <Button disabled={!isValid} onClick={handleNextStep}>
-      {'친구생일 축하해주기'}
+      친구생일 축하해주기
     </Button>
   );
-};
+}
 
-export default PresentForm;
+export default function PresentForm() {
+  const searchParams = useSearchParams();
+  const avatarCakeId = searchParams.get('avatarCakeId');
+
+  const onlyPresentMessageToggle = useBoolean();
+
+  const presentFormMethods = useForm<PresentFormSchemaType>({
+    mode: 'onChange',
+    defaultValues: {
+      ...presentFormInitValues,
+      cakeId: Number(avatarCakeId) || 1,
+    },
+    resolver: yupResolver(presentFormSchema),
+  });
+
+  return (
+    <FormProvider {...presentFormMethods}>
+      <GiverNameInput />
+      <SelectPresentItem onlyMessageToggle={onlyPresentMessageToggle} />
+      <LetterToFriendInput />
+
+      <Step.ButtonWrapper>
+        <NextButton onlyPresentMessage={onlyPresentMessageToggle.state} />
+      </Step.ButtonWrapper>
+    </FormProvider>
+  );
+}

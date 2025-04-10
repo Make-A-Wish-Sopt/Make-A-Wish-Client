@@ -2,7 +2,7 @@
 
 import { presentListArray } from '@/constant/model/present';
 import useSelectItem from '@/hooks/useSelectItem';
-import { convertMoneyText } from '@/utils/common/convert';
+import convertMoneyText from '@/utils/regex';
 import Image from 'next/image';
 import { PropsWithChildren, useEffect } from 'react';
 
@@ -28,7 +28,7 @@ export default function PresentList({
 
   useEffect(() => {
     handleSelectOne(selectedGiftMenuId);
-  }, [selectedGiftMenuId]);
+  }, [selectedGiftMenuId, handleSelectOne]);
 
   return (
     <>
@@ -43,11 +43,17 @@ export default function PresentList({
       >
         {presentListArray.map((item) => (
           <div
-            className={`flex flex-col items-center p-9  ${
-              isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
-            }
-            font-bitbit rounded-xl text-[14px]`}
+            role="button"
+            tabIndex={0} // 키보드로 포커스 가능
             onClick={() => handleSelectPresent(item.id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleSelectPresent(item.id);
+              }
+            }}
+            className={`flex flex-col items-center p-9 ${
+              isSelected(item.id) ? 'bg-main_blue text-black' : 'bg-dark_green text-white'
+            } font-bitbit rounded-xl text-[14px]`}
             key={item.id}
           >
             <Image src={item.image} alt="선물 이미지" width={56} />

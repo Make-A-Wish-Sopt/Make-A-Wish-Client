@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-export function ItemWrapper({
+export default function ItemWrapper({
   className,
   fixedBottom,
   fixedCenter,

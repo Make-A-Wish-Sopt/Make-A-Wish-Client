@@ -1,6 +1,6 @@
 import { PresentFormDataType } from '@/types/input';
 import { TransferInfoType } from '@/types/wishesType';
-import { getDate } from '@/utils/common/getDate';
+import { getDate } from '@/utils/date';
 import { WishesFormScehmaType } from '@/Schema/wishes.schema';
 
 export const wishesFormInitValues: WishesFormScehmaType = {

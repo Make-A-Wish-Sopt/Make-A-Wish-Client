@@ -1,26 +1,26 @@
 'use client';
 
-import { snsShareListArray } from '@/constant/model/snsShareList';
-import useModals from './useModals';
 import Image from 'next/image';
+import { PropsWithChildren, useEffect } from 'react';
 import InputText from '@/components/Elements/Input/inputText';
-import { CloseSmallIc, LinkCopyIc } from '@public/assets/icons';
+import { snsShareListArray } from '@/constant/model/snsShareList';
 import { CakeMessageContent } from '@/app/wishes/_components/CakePresentList';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
-import { PropsWithChildren, useEffect } from 'react';
+import { CloseSmallIc, LinkCopyIc } from '@public/assets/icons';
 import { VitaminCakeImg } from '@public/assets/images';
-import { toast } from 'sonner';
+import clipboardCopy from '@/utils/clipboardCopy';
+import useModals from './useModals';
 
-export const useModalContent = <T extends [string]>() => {
+const useModalContent = <T extends [string]>() => {
   const { Modal, openModal, ...rest } = useModals<T>();
 
-  const PresentMessageModalContent = ({
+  function PresentMessageModalContent({
     선물받은사람이름,
     cakePresentMessage,
   }: {
     선물받은사람이름: string;
     cakePresentMessage: ReceivedCakeTreeMessageDataType;
-  }) => {
+  }) {
     const { isAdminMessage, name } = cakePresentMessage;
 
     return (
@@ -43,61 +43,46 @@ export const useModalContent = <T extends [string]>() => {
         </Modal.ModalLayout>
       </Modal.ModalOverlay>
     );
-  };
+  }
 
-  const ConfirmModalContent = ({
+  function ConfirmModalContent({
     contentTitle,
     children,
-  }: { contentTitle: string } & PropsWithChildren) => {
+  }: { contentTitle: string } & PropsWithChildren) {
     return (
-      <>
-        <Modal.ModalOverlay>
-          <Modal.ModalLayout>
-            <Modal.ContentFrame>
-              <Modal.ContentHeader
-                className="flex justify-end"
-                CloseIcon={<Image src={CloseSmallIc} alt="닫기" />}
-              />
-              <Modal.ContentBody className="flex flex-col items-center w-full gap-20">
-                <div className="flex flex-col items-center w-full">
-                  <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
-                  <p className="font-bitbit text-[24px] text-background leading-none text-center whitespace-pre-line">
-                    {contentTitle}
-                  </p>
-                </div>
-                {children}
-              </Modal.ContentBody>
-            </Modal.ContentFrame>
-          </Modal.ModalLayout>
-        </Modal.ModalOverlay>
-      </>
+      <Modal.ModalOverlay>
+        <Modal.ModalLayout>
+          <Modal.ContentFrame>
+            <Modal.ContentHeader
+              className="flex justify-end"
+              CloseIcon={<Image src={CloseSmallIc} alt="닫기" />}
+            />
+            <Modal.ContentBody className="flex flex-col items-center w-full gap-20">
+              <div className="flex flex-col items-center w-full">
+                <Image src={VitaminCakeImg} alt="케이크 이미지" width={60} height={60} />
+                <p className="font-bitbit text-[24px] text-background leading-none text-center whitespace-pre-line">
+                  {contentTitle}
+                </p>
+              </div>
+              {children}
+            </Modal.ContentBody>
+          </Modal.ContentFrame>
+        </Modal.ModalLayout>
+      </Modal.ModalOverlay>
     );
-  };
+  }
 
-  const ShareWishLinkModalContent = ({
-    wishId,
-    nickName,
-  }: {
-    wishId: string;
-    nickName: string;
-  }) => {
+  function ShareWishLinkModalContent({ wishId, nickName }: { wishId: string; nickName: string }) {
     const wishLink = `sunmulzu.com/wishes/${wishId}`;
+
     useEffect(() => {
       if (typeof window !== 'undefined') {
         const { Kakao } = window;
-
         if (!Kakao.isInitialized()) {
           Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
         }
       }
     }, []);
-
-    async function handleAccountWishesLink() {
-      try {
-        await navigator.clipboard.writeText(wishLink);
-        toast.success('링크가 복사됐어요!');
-      } catch (error) {}
-    }
 
     return (
       <Modal.ContentFrame>
@@ -109,9 +94,8 @@ export const useModalContent = <T extends [string]>() => {
           <div className="flex gap-10 justify-center w-full p-10 mb-10">
             {snsShareListArray.map((snsItem) => (
               <button
-                onClick={() => {
-                  snsItem.onClick(wishLink, nickName);
-                }}
+                type="button"
+                onClick={() => snsItem.onClick(wishLink, nickName)}
                 key={snsItem.name}
               >
                 <Image src={snsItem.image} alt="sns아이콘" />
@@ -119,15 +103,15 @@ export const useModalContent = <T extends [string]>() => {
             ))}
           </div>
 
-          <InputText onClick={handleAccountWishesLink} value={wishLink} readOnly>
-            <button onClick={handleAccountWishesLink}>
+          <InputText onClick={() => clipboardCopy(wishLink)} value={wishLink} readOnly>
+            <button type="button" onClick={() => clipboardCopy(wishLink)}>
               <Image src={LinkCopyIc} alt="링크복사" />
             </button>
           </InputText>
         </Modal.ContentBody>
       </Modal.ContentFrame>
     );
-  };
+  }
 
   return {
     Modal,
@@ -135,7 +119,8 @@ export const useModalContent = <T extends [string]>() => {
     ShareWishLinkModalContent,
     PresentMessageModalContent,
     ConfirmModalContent,
-
     ...rest,
   };
 };
+
+export default useModalContent;

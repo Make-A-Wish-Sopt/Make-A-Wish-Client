@@ -8,23 +8,27 @@ interface DropDownBoxProps extends BoxProps {
   toggleState: () => void;
 }
 
-export default function DropDwonBox({
+export default function DropDownBox({
   isOpen,
   toggleState,
-  ...rest
+  children,
+  className,
+  styles,
 }: PropsWithChildren<DropDownBoxProps>) {
   return (
     <Box
-      {...rest}
+      className={className}
       styles={{
+        ...styles,
         height: isOpen && 'auto',
       }}
     >
       <div className="flex items-center gap-8 w-full h-full text-[14px] ">
-        {rest.children}
+        {children}
         <button
-          onClick={() => toggleState()}
-          className="flex justify-center items-center w-30 h-30 "
+          type="button"
+          onClick={toggleState}
+          className="flex justify-center items-center w-30 h-30"
         >
           <Image
             src={MainBlueArrowIc}

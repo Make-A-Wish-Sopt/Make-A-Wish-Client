@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import { BackBtnIc, MenuIc } from '../../../public/assets/icons';
 import { RoutePathType } from '@/hooks/useRouters';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { MenuIc } from '@public/assets/icons';
 
 interface HeaderProps {
   leftMenu?: JSX.Element;
@@ -24,24 +23,20 @@ export default function Header(props: HeaderProps) {
   );
 }
 
-export const IconRouteButton = ({
+export function IconRouteButton({
   Icon,
   routePath,
 }: {
   Icon: JSX.Element;
   routePath: RoutePathType;
-}) => {
-  // const { handleRouter } = useRouters();
-  // return <button onClick={() => handleRouter(routePath)}>{Icon}</button>;
+}) {
   return <Link href={routePath}>{Icon}</Link>;
-};
+}
 
 export function MypageButton() {
-  // const { handleRouter } = useRouters();
-
   return (
-    <button>
-      <Link href={'/mypage'}>
+    <button type="button">
+      <Link href="/mypage">
         <Image src={MenuIc} alt="메뉴 아이콘" />
       </Link>
     </button>

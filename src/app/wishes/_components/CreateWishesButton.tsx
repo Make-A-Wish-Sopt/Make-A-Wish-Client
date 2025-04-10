@@ -5,46 +5,13 @@ import Image from 'next/image';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useRouters } from '@/hooks/useRouters';
 import { CloseSmallIc } from '@public/assets/icons';
-import { useModalContent } from '@/hooks/useModalContent';
 import Box from '@/components/Elements/Box';
 import InputField from '@/components/Elements/Input/InputField';
-import { ItemWrapper } from '@/components/Elements/Button/FixedBottomButton';
-import { LoadingCake } from '@/components/Elements/Modal/ValidateLoadingModal';
+import ItemWrapper from '@/components/Elements/Button/FixedBottomButton';
+import useModalContent from '@/hooks/useModalContent';
+import { LoadingCake } from '@/components/UI/Loading';
 
-export const CreateWishesButton = () => {
-  const { Modal, openModal, ConfirmModalContent } = useModalContent<['create']>();
-  const createWishMethods = useForm<{ wishTitle: string }>({
-    mode: 'onChange',
-    defaultValues: {
-      wishTitle: '',
-    },
-  });
-
-  return (
-    <Modal
-      modalKey="create"
-      Trigger={<Button onClick={() => openModal('create')}>{'생일잔치 링크 생성하기'}</Button>}
-    >
-      <Modal.ModalOverlay>
-        <Modal.ModalLayout className="flex justify-center items-center">
-          <Modal.ContentFrame>
-            <Modal.ContentHeader
-              className="flex justify-end"
-              CloseIcon={<Image src={CloseSmallIc} alt="닫기" />}
-            />
-            <ConfirmModalContent contentTitle="생일잔치상 만들기">
-              <FormProvider {...createWishMethods}>
-                <WishesCreateTitleInput />
-              </FormProvider>
-            </ConfirmModalContent>
-          </Modal.ContentFrame>
-        </Modal.ModalLayout>
-      </Modal.ModalOverlay>
-    </Modal>
-  );
-};
-
-const WishesCreateTitleInput = () => {
+function WishesCreateTitleInput() {
   const methods = useFormContext<{ wishTitle: string }>();
   const { register } = methods;
 
@@ -97,4 +64,37 @@ const WishesCreateTitleInput = () => {
       </ItemWrapper>
     </>
   );
-};
+}
+
+export default function CreateWishesButton() {
+  const { Modal, openModal, ConfirmModalContent } = useModalContent<['create']>();
+  const createWishMethods = useForm<{ wishTitle: string }>({
+    mode: 'onChange',
+    defaultValues: {
+      wishTitle: '',
+    },
+  });
+
+  return (
+    <Modal
+      modalKey="create"
+      Trigger={<Button onClick={() => openModal('create')}>생일잔치 링크 생성하기</Button>}
+    >
+      <Modal.ModalOverlay>
+        <Modal.ModalLayout className="flex justify-center items-center">
+          <Modal.ContentFrame>
+            <Modal.ContentHeader
+              className="flex justify-end"
+              CloseIcon={<Image src={CloseSmallIc} alt="닫기" />}
+            />
+            <ConfirmModalContent contentTitle="생일잔치상 만들기">
+              <FormProvider {...createWishMethods}>
+                <WishesCreateTitleInput />
+              </FormProvider>
+            </ConfirmModalContent>
+          </Modal.ContentFrame>
+        </Modal.ModalLayout>
+      </Modal.ModalOverlay>
+    </Modal>
+  );
+}

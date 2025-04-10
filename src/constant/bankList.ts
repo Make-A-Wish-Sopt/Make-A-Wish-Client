@@ -1,6 +1,99 @@
+// import { StaticImageData } from 'next/image';
+// import { BankListType } from '@/types/bankListType';
+// import bankImgs from '../../public/assets/images';
+
+// // ✅ 1. 은행 정보 통합 정의
+// const BANK_DATA: {
+//   name: string;
+//   code: string;
+//   logoKey: keyof typeof bankImgs;
+// }[] = [
+//   { name: 'NH농협', code: '0011', logoKey: 'bank1Img' },
+//   { name: '카카오뱅크', code: '0090', logoKey: 'bank2Img' },
+//   { name: 'KB국민', code: '0004', logoKey: 'bank3Img' },
+//   { name: '신한', code: '0088', logoKey: 'bank4Img' },
+//   { name: '우리', code: '0020', logoKey: 'bank5Img' },
+//   { name: '토스뱅크', code: '0092', logoKey: 'bank6Img' },
+//   { name: 'IBK기업', code: '0003', logoKey: 'bank7Img' },
+//   { name: '하나', code: '0081', logoKey: 'bank8Img' },
+//   { name: '새마을', code: '0045', logoKey: 'bank9Img' },
+//   { name: '부산', code: '0032', logoKey: 'bank10Img' },
+//   { name: '대구', code: '0031', logoKey: 'bank11Img' },
+//   { name: '케이뱅크', code: '0089', logoKey: 'bank12Img' },
+//   { name: '신협', code: '0048', logoKey: 'bank13Img' },
+//   { name: '우체국', code: '0071', logoKey: 'bank14Img' },
+//   { name: 'SC제일', code: '0023', logoKey: 'bank15Img' },
+//   { name: '경남', code: '0039', logoKey: 'bank16Img' },
+//   { name: '광주', code: '0034', logoKey: 'bank17Img' },
+//   { name: '수협', code: '0007', logoKey: 'bank18Img' },
+//   { name: '전북', code: '0037', logoKey: 'bank19Img' },
+//   { name: '저축은행', code: '0050', logoKey: 'bank20Img' },
+//   { name: '제주', code: '0035', logoKey: 'bank21Img' },
+//   { name: '씨티', code: '0027', logoKey: 'bank22Img' },
+//   { name: 'KDB산업', code: '0002', logoKey: 'bank23Img' },
+//   { name: '산림조합', code: '0064', logoKey: 'bank24Img' },
+//   { name: 'SBI저축은행', code: '0050', logoKey: 'bank25Img' },
+//   { name: 'BOA', code: '0060', logoKey: 'bank26Img' },
+//   { name: '중국', code: '0062', logoKey: 'bank27Img' },
+//   { name: 'HSBC', code: '0054', logoKey: 'bank28Img' },
+//   { name: '중국공상', code: '0067', logoKey: 'bank29Img' },
+//   { name: '도이치', code: '0055', logoKey: 'bank30Img' },
+//   { name: 'JP모간', code: '0057', logoKey: 'bank31Img' },
+//   { name: 'BNP파리바', code: '0061', logoKey: 'bank32Img' },
+//   { name: '중국건설', code: '0067', logoKey: 'bank32Img' }, // ❗중복 처리 확인 필요
+// ];
+
+// // ✅ 2. BANK_LIST 생성
+// export const BANK_LIST: BankListType[] = BANK_DATA.map((bank, idx) => ({
+//   name: bank.name,
+//   bankNumber: idx + 1,
+//   bankCode: bank.code,
+//   logo: bankImgs[bank.logoKey],
+// }));
+
+// // ✅ 3. 결제 수단 ID
+// export const paymentId = {
+//   toss: 5,
+//   kakaobank: 1,
+//   kakaopay: 100,
+// } as const;
+
+// export type PaymentIdType = (typeof paymentId)[keyof typeof paymentId];
+
+// export type PaymentDataType = {
+//   name: string;
+//   bankIconImg: StaticImageData;
+// };
+
+// // ✅ 4. 결제 수단 정보 맵
+// const paymentListMap = new Map<PaymentIdType, PaymentDataType>([
+//   [
+//     paymentId.toss,
+//     {
+//       name: '토스뱅크',
+//       bankIconImg: BANK_LIST[paymentId.toss].logo,
+//     },
+//   ],
+//   [
+//     paymentId.kakaobank,
+//     {
+//       name: '카카오뱅크',
+//       bankIconImg: BANK_LIST[paymentId.kakaobank].logo,
+//     },
+//   ],
+// ]);
+
+// // ✅ 5. 배열/객체 변환
+// export const paymentListArray = Array.from(paymentListMap.entries()).map(([id, value]) => ({
+//   id,
+//   ...value,
+// }));
+
+// export const paymentListObject = Object.fromEntries(paymentListMap);
+
 import { BankListType } from '@/types/bankListType';
 import { StaticImageData } from 'next/image';
-import bankImgs, { KakaopayLogoIc } from '../../public/assets/images';
+import bankImgs from '../../public/assets/images';
 
 export const BANK_LIST: BankListType[] = [];
 

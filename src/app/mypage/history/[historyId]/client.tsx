@@ -1,7 +1,6 @@
 'use client';
 
-import { getCakePresentMessage } from '@/api/cakes';
-import CakePresentList from '@/app/wishes/_components/CakePresentList';
+import { CakePresentList } from '@/app/wishes/_components/CakePresentList';
 import { ReceivedCakeTreeMessageDataType } from '@/constant/model/cakesTreeData';
 import { WishesHistoryType } from '@/types/api/response';
 

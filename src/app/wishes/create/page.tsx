@@ -1,14 +1,12 @@
 import { Step } from '@/components/Modules/Funnel';
 import MainLayout from '@/layouts/MainLayout';
-import { ReactNode } from 'react';
-import Image from 'next/image';
-import { WishesFormPresentIc } from '@public/assets/icons';
 import ErrorPage from '@/app/error';
 import Header from '@/components/Elements/Header';
 import { WishesCreateFunnelSteps } from '@/constant/funnelStep';
-import { FunnelContainer } from '@/app/_components/FunnelContainer';
-import { BackButton } from '@/components/Elements/Button/BackButton';
+import FunnelContainer from '@/app/_components/FunnelContainer';
+import BackButton from '@/components/Elements/Button/BackButton';
 import dynamic from 'next/dynamic';
+import StepTitle from '@/components/UI/StepTitle';
 
 const DynamicWishesFormStep = dynamic(() => import('./_components/Steps/WishesFormStep'));
 const DynamicSelectPaymentFormStep = dynamic(
@@ -17,7 +15,7 @@ const DynamicSelectPaymentFormStep = dynamic(
 const DynamicAccountFormStep = dynamic(() => import('./_components/Steps/AccountFormStep'));
 const DynamicKakaopayCodeForm = dynamic(() => import('./_components/Steps/KakaopayCodeFormStep'));
 
-const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: string } }) => {
+async function WishesCreatePage({ searchParams }: { searchParams: { wishTitle: string } }) {
   if (!searchParams.wishTitle) {
     return <ErrorPage alertMessage={`생일잔치제목을 입력하고\n입장해주세요!`} />;
   }
@@ -26,7 +24,7 @@ const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: s
     <FunnelContainer steps={WishesCreateFunnelSteps}>
       <Step name="wishes">
         <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
-          <StepTitle title={'생일잔치 링크 생성하기'} />
+          <StepTitle title="생일잔치 링크 생성하기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicWishesFormStep />
           </Step.FormSection>
@@ -35,7 +33,7 @@ const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: s
 
       <Step name="selectPayment">
         <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
-          <StepTitle title={'현금 입금 방식 선택하기'} />
+          <StepTitle title="현금 입금 방식 선택하기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicSelectPaymentFormStep />
           </Step.FormSection>
@@ -44,7 +42,7 @@ const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: s
 
       <Step name="account">
         <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
-          <StepTitle title={'입금 받을 계좌 입력하기'} />
+          <StepTitle title="입금 받을 계좌 입력하기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicAccountFormStep />
           </Step.FormSection>
@@ -53,7 +51,7 @@ const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: s
 
       <Step name="kakaopay">
         <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
-          <StepTitle title={'카카오톡 송금코드 가져오기'} />
+          <StepTitle title="카카오톡 송금코드 가져오기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicKakaopayCodeForm />
           </Step.FormSection>
@@ -61,15 +59,6 @@ const WishesCreatePage = async ({ searchParams }: { searchParams: { wishTitle: s
       </Step>
     </FunnelContainer>
   );
-};
+}
 
 export default WishesCreatePage;
-
-const StepTitle = ({ title }: { title: ReactNode }) => {
-  return (
-    <div className="flex items-center gap-10 mt-26 mb-20">
-      <Image src={WishesFormPresentIc} alt="선물 아이콘 이미지" />
-      <h1 className="font-bitbit text-main_blue text-[24px]">{title}</h1>
-    </div>
-  );
-};

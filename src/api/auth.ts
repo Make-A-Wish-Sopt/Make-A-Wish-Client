@@ -1,6 +1,6 @@
 import { API_VERSION_01, PATH_AUTH } from './path';
 import { LoginResponseType, UpdateTokenResponseType } from '@/types/api/response';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/cookies';
 import axios from 'axios';
 
 export const postAuthKakao = async (code: string) => {

@@ -1,11 +1,11 @@
+import React from 'react';
 import { getCakesResult } from '@/api/cakes';
 import { getSingleWishInfo } from '@/api/wishes';
+import { CakePresentList } from '@/app/wishes/_components/CakePresentList';
 import Header, { MypageButton } from '@/components/Elements/Header';
 import MainLayout from '@/layouts/MainLayout';
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
-import { defineCakeTree } from '@/utils/common/defineCakeTree';
-import React from 'react';
-import CakePresentList from '@/app/wishes/_components/CakePresentList';
+import { getLoginUserCookiesData } from '@/utils/cookies';
+import defineCakeTree from '@/utils/defineCakeTree';
 
 const page = async ({ params }: { params: { historyId: string } }) => {
   const { historyId } = params;

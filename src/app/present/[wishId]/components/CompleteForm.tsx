@@ -1,6 +1,6 @@
 'use client';
 
-import { useModalContent } from '@/hooks/useModalContent';
+import useModalContent from '@/hooks/useModalContent';
 import { useEffect } from 'react';
 import { useFunnelContext } from '@/Context/FunnelContext';
 import {
@@ -8,40 +8,42 @@ import {
   defaultCakeTreeDataObject,
   ReceivedCakeTreeMessageDataType,
 } from '@/constant/model/cakesTreeData';
-import { PresentSuccessCakeTree } from '@/components/UI/PresentSuccessCakeTree';
+import PresentSuccessCakeTree from '@/components/UI/PresentSuccessCakeTree';
 import BottomGradientShadow from '@/components/UI/GradientShadow';
 import { PresentFunnelStepType } from '@/constant/funnelStep';
 import { toast } from 'sonner';
 import { PresentFormSchemaType } from '@/Schema/present.schema';
 
-const CompleteForm = ({ nickName }: { nickName: string }) => {
+function CompleteForm({ nickName }: { nickName: string }) {
   const { Modal, modalState, openModal, PresentMessageModalContent } =
     useModalContent<['complete']>();
   const { getSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
 
   const presentFormData = getSharedData('present');
 
-  if (!presentFormData) {
-    toast.error('선물정보를 먼저 입력해주세요!');
-    onMoveStep('present');
-    return;
-  }
+  useEffect(() => {
+    if (!presentFormData) {
+      toast.error('선물정보를 먼저 입력해주세요!');
+      onMoveStep('present');
+      return;
+    }
+
+    openModal('complete');
+  }, [presentFormData, onMoveStep, openModal]);
+
+  if (!presentFormData) return null;
 
   const { name, message, giftMenuId, cakeId } = presentFormData as PresentFormSchemaType;
 
   const receivedCakeMessageData: ReceivedCakeTreeMessageDataType = {
-    name: name,
-    message: message,
-    giftMenuId: giftMenuId,
+    name,
+    message,
+    giftMenuId,
     cakeId: Number(cakeId),
     cakeImg: defaultCakeTreeDataObject[Number(cakeId)].cakeImg,
     presentId: giftMenuId,
     isAdminMessage: false,
   };
-
-  useEffect(() => {
-    openModal('complete');
-  }, []);
 
   return (
     <>
@@ -67,6 +69,6 @@ const CompleteForm = ({ nickName }: { nickName: string }) => {
       <BottomGradientShadow height={19} fixedBottom />
     </>
   );
-};
+}
 
 export default CompleteForm;

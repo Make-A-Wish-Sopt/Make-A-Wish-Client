@@ -8,7 +8,7 @@ import { memo, useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { WishesFormScehmaType } from '@/Schema/wishes.schema';
 import useUploadItemInfo from '@/hooks/useUploadItemInfo';
-import { UploadImageBox } from '@/components/UI/UploadImageBox';
+import UploadImageBox from '@/components/UI/UploadImageBox';
 import useModals from '@/hooks/useModals';
 import Calendar from '@/components/Elements/Calendar/Calendar';
 import CalendarDateBox from '@/components/Elements/Calendar/CalendarDateBox';
@@ -29,9 +29,14 @@ export const ImageUploadBox = memo(
       if (!imageUrl) return;
 
       handleSetImage(imageUrl);
-    }, [imageUrl]);
+    }, [imageUrl, handleSetImage]);
+
     const getPreviewImage = () => {
-      return signedImage ? signedImage : preview;
+      if (!signedImage) {
+        return preview;
+      }
+
+      return signedImage;
     };
 
     return (
@@ -75,22 +80,23 @@ export const WantsGiftOption = memo(
 
     return (
       <ul className="flex flex-col gap-12 font-galmuri text-white">
-        <li
-          className={`flex flex-col w-full bg-dark_green rounded-xl duration-300 cursor-pointer`}
-          onClick={() => {
-            handleChangeOption(true);
-          }}
-          style={{
-            maxHeight: guideOepn.state ? '415px' : '50px',
-            transition: 'max-height 0.3s ease-out, opacity 0.3s ease-out',
-          }}
-        >
-          <div>
+        <li>
+          <button
+            type="button"
+            className="flex flex-col w-full bg-dark_green rounded-xl duration-300 cursor-pointer"
+            onClick={() => {
+              handleChangeOption(true);
+            }}
+            style={{
+              maxHeight: guideOepn.state ? '415px' : '50px',
+              transition: 'max-height 0.3s ease-out, opacity 0.3s ease-out',
+            }}
+          >
             <DropDwonBox isOpen={guideOepn.state} toggleState={guideOepn.handleState}>
               <RadioSelect isSelect={selectedOption} />
               <span className="w-full">네! 생일 선물도 받아볼래요</span>
             </DropDwonBox>
-          </div>
+          </button>
           <div
             className="duration-300"
             style={{
@@ -102,15 +108,18 @@ export const WantsGiftOption = memo(
           </div>
         </li>
 
-        <li
-          className="flex items-center gap-8 w-full h-50 text-[14px] bg-dark_green round-xl px-10 py-14 rounded-xl cursor-pointer"
-          onClick={() => {
-            handleChangeOption(false);
-            guideOepn.changeState(false);
-          }}
-        >
-          <RadioSelect isSelect={!selectedOption} />
-          아니요. 편지만 받을래요!
+        <li>
+          <button
+            type="button"
+            className="flex items-center gap-8 w-full h-50 text-[14px] bg-dark_green round-xl px-10 py-14 rounded-xl cursor-pointer"
+            onClick={() => {
+              handleChangeOption(false);
+              guideOepn.changeState(false);
+            }}
+          >
+            <RadioSelect isSelect={!selectedOption} />
+            아니요. 편지만 받을래요!
+          </button>
         </li>
       </ul>
     );
@@ -155,9 +164,9 @@ export const BirthdayWeekRangeSetter = memo(
         <Modal
           modalKey="calendar"
           Trigger={
-            <div onClick={handleOpenCalendar}>
+            <button type="button" onClick={() => handleOpenCalendar()}>
               <CalendarDateBox date={startDate} readonly={disabled} />
-            </div>
+            </button>
           }
         >
           <Modal.ModalOverlay>

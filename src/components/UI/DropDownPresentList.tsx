@@ -1,8 +1,26 @@
 import { presentListArray } from '@/constant/model/present';
 import Image from 'next/image';
-import { convertMoneyText } from '@/utils/common/convert';
+import convertMoneyText from '@/utils/regex';
 
-const DropDownPresentList = () => {
+export function PresentList() {
+  return (
+    <div className="grid grid-cols-3 gap-6 w-full">
+      {presentListArray.map((item) => (
+        <div
+          className={`flex flex-col items-center p-9 font-bitbit rounded-xl text-[12px] `}
+          style={{ backgroundColor: '#08232B' }}
+          key={item.id}
+        >
+          <Image src={item.image} alt="선물 이미지" width={56} />
+          <span className="opacity-70">{item.itemName}</span>
+          <span className="opacity-70">{convertMoneyText(item.price.toString())}원</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function DropDownPresentList() {
   return (
     <div className="w-full px-10 pb-12">
       <div className="w-full  bg-background  px-12 py-14 rounded-xl">
@@ -19,24 +37,4 @@ const DropDownPresentList = () => {
       </div>
     </div>
   );
-};
-
-export default DropDownPresentList;
-
-export const PresentList = () => {
-  return (
-    <div className="grid grid-cols-3 gap-6 w-full">
-      {presentListArray.map((item) => (
-        <div
-          className={`flex flex-col items-center p-9 font-bitbit rounded-xl text-[12px] `}
-          style={{ backgroundColor: '#08232B' }}
-          key={item.id}
-        >
-          <Image src={item.image} alt="선물 이미지" width={56} />
-          <span className="opacity-70">{item.itemName}</span>
-          <span className="opacity-70">{convertMoneyText(item.price.toString())}원</span>
-        </div>
-      ))}
-    </div>
-  );
-};
+}

@@ -1,6 +1,12 @@
 {
-  // "env": {
-  //   "jest": true
-  // },
-  "extends": ["next/core-web-vitals"]
+  "extends": ["next/core-web-vitals", "airbnb", "airbnb-typescript", "plugin:prettier/recommended", "prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/require-default-props": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off"
+  }
 }

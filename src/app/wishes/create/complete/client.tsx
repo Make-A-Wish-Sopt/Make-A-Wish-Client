@@ -1,14 +1,14 @@
 'use client';
 
 import Button from '@/components/Elements/Button';
+import useModalContent from '@/hooks/useModalContent';
 import { useRouters } from '@/hooks/useRouters';
-import { useModalContent } from '@/hooks/useModalContent';
 import { PropsWithChildren } from 'react';
 
-export const PreviewGiftFlowButton = ({
+export function PreviewGiftFlowButton({
   wishId,
   children,
-}: { wishId: string } & PropsWithChildren) => {
+}: { wishId: string } & PropsWithChildren) {
   const { handleRouter } = useRouters();
 
   return (
@@ -21,16 +21,16 @@ export const PreviewGiftFlowButton = ({
       생일잔치 체험해보기
     </Button>
   );
-};
+}
 
-export const LinkShareSaveButton = ({
+export function LinkShareSaveButton({
   children,
   wishId,
   nickName,
 }: {
   wishId: string;
   nickName: string;
-} & PropsWithChildren) => {
+} & PropsWithChildren) {
   const { Modal, openModal, ShareWishLinkModalContent } = useModalContent<['share']>();
 
   return (
@@ -55,4 +55,4 @@ export const LinkShareSaveButton = ({
       </Modal.ModalOverlay>
     </Modal>
   );
-};
+}

@@ -1,4 +1,4 @@
-import { getLoginUserCookiesData } from '@/utils/common/cookies';
+import { getLoginUserCookiesData } from '@/utils/cookies';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_CAKES } from './path';
 import { CakePresentMessageResponseType, GetCakesResultResponseType } from '@/types/api/response';

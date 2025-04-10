@@ -2,8 +2,7 @@
 
 import { Step } from '@/components/Modules/Funnel';
 import useBoolean from '@/hooks/useBoolean';
-import {
-  AccountForm,
+import AccountForm, {
   createAccountWithWishData,
   updateAccount,
 } from '@/app/_components/Form/wish/AccountForm';
@@ -22,74 +21,7 @@ import { accountFormInitValues } from '@/constant/init';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useMemo } from 'react';
 
-const AccountFormStep = ({ isEdit }: { isEdit?: boolean }) => {
-  const { setSharedData, getSharedData } = useFunnelContext<WishesFunnelStepType>();
-
-  const defaultValues = useMemo(() => {
-    const saved = getSharedData('account') as AccountFormSchemaType;
-    return saved ? { ...saved, forPayCode: true } : { ...accountFormInitValues, forPayCode: true };
-  }, [getSharedData]);
-
-  const accountFormMethods = useForm<AccountFormSchemaType>({
-    mode: 'onChange',
-    defaultValues: { ...defaultValues },
-    resolver: yupResolver(AccountFormSchema),
-  });
-
-  const isAccountValidToggle = useBoolean();
-  const noticeAgreeToggle = useBoolean();
-
-  useEffect(() => {
-    const savedAccountFormData = getSharedData('account');
-
-    if (savedAccountFormData) return;
-
-    const fetchData = async () => {
-      try {
-        const response = await getUserAccount();
-        if (response.transferInfo) {
-          // 📌 Yup 유효성 검사 실행
-          const accountValidator = AccountFormSchema.pick(['accountInfo']);
-
-          await accountValidator.validate({ accountInfo: response.transferInfo.accountInfo });
-          isAccountValidToggle.changeState(true);
-
-          // ✅ 유효성 검사를 통과하면 reset 실행
-          accountFormMethods.reset({ ...response.transferInfo });
-          setSharedData((prev) => ({
-            ...prev,
-            account: { ...response.transferInfo },
-          }));
-        }
-      } catch (error) {
-        isAccountValidToggle.changeState(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return (
-    <FormProvider {...accountFormMethods}>
-      <AccountForm
-        accountFormMethods={accountFormMethods}
-        isAccountValidToggle={isAccountValidToggle}
-        noticeAgreeToggle={noticeAgreeToggle}
-      />
-
-      <Step.ButtonWrapper horizontal className="gap-10">
-        <PrevButton />
-        <NextButton
-          isAccountValid={isAccountValidToggle.state}
-          noticeAgree={noticeAgreeToggle.state}
-          isEdit={isEdit}
-        />
-      </Step.ButtonWrapper>
-    </FormProvider>
-  );
-};
-
-const PrevButton = () => {
+function AccountFormPrevButton() {
   const { PrevButton, prevStep, setSharedData, getSharedData } =
     useFunnelContext<WishesFunnelStepType>();
   const { getValues, reset } = useFormContext<AccountFormSchemaType>();
@@ -99,7 +31,7 @@ const PrevButton = () => {
     if (savedData) {
       reset({ ...savedData, forPayCode: false });
     }
-  }, []);
+  }, [getSharedData, reset]);
 
   const handlePrevStep = () => {
     setSharedData((prev) => ({
@@ -110,9 +42,9 @@ const PrevButton = () => {
   };
 
   return <PrevButton onClick={handlePrevStep} />;
-};
+}
 
-const NextButton = ({
+function NextButton({
   isAccountValid,
   noticeAgree,
   isEdit,
@@ -120,7 +52,7 @@ const NextButton = ({
   isAccountValid: boolean;
   noticeAgree: boolean;
   isEdit?: boolean;
-}) => {
+}) {
   const { getSharedData } = useFunnelContext<WishesFunnelStepType>();
   const { handleRouter } = useRouters();
   const { control, getValues, reset } = useFormContext<AccountFormSchemaType>();
@@ -131,7 +63,7 @@ const NextButton = ({
     if (savedData) {
       reset(savedData);
     }
-  }, []);
+  }, [getSharedData, reset]);
 
   const handleNextStep = async () => {
     const accountData = getValues();
@@ -153,6 +85,70 @@ const NextButton = ({
       {isEdit ? '수정 완료' : '생일잔치생성!'}
     </Button>
   );
-};
+}
+
+function AccountFormStep({ isEdit }: { isEdit?: boolean }) {
+  const { setSharedData, getSharedData } = useFunnelContext<WishesFunnelStepType>();
+
+  const defaultValues = useMemo(() => {
+    const saved = getSharedData('account') as AccountFormSchemaType;
+    return saved ? { ...saved, forPayCode: true } : { ...accountFormInitValues, forPayCode: true };
+  }, [getSharedData]);
+
+  const accountFormMethods = useForm<AccountFormSchemaType>({
+    mode: 'onChange',
+    defaultValues,
+    resolver: yupResolver(AccountFormSchema),
+  });
+
+  const isAccountValidToggle = useBoolean();
+  const noticeAgreeToggle = useBoolean();
+
+  useEffect(() => {
+    const savedAccountFormData = getSharedData('account');
+
+    if (savedAccountFormData) return;
+
+    const fetchData = async () => {
+      try {
+        const response = await getUserAccount();
+        if (response.transferInfo) {
+          const accountValidator = AccountFormSchema.pick(['accountInfo']);
+          await accountValidator.validate({ accountInfo: response.transferInfo.accountInfo });
+          isAccountValidToggle.changeState(true);
+
+          accountFormMethods.reset({ ...response.transferInfo });
+          setSharedData((prev) => ({
+            ...prev,
+            account: { ...response.transferInfo },
+          }));
+        }
+      } catch (error) {
+        isAccountValidToggle.changeState(false);
+      }
+    };
+
+    fetchData();
+  }, [accountFormMethods, getSharedData, isAccountValidToggle, setSharedData]);
+
+  return (
+    <FormProvider {...accountFormMethods}>
+      <AccountForm
+        accountFormMethods={accountFormMethods}
+        isAccountValidToggle={isAccountValidToggle}
+        noticeAgreeToggle={noticeAgreeToggle}
+      />
+
+      <Step.ButtonWrapper horizontal className="gap-10">
+        <AccountFormPrevButton />
+        <NextButton
+          isAccountValid={isAccountValidToggle.state}
+          noticeAgree={noticeAgreeToggle.state}
+          isEdit={isEdit}
+        />
+      </Step.ButtonWrapper>
+    </FormProvider>
+  );
+}
 
 export default AccountFormStep;

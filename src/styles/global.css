@@ -21,6 +21,33 @@
     position: relative;
     transform: translateY(-13px);
   }
+
+  @-webkit-keyframes appearAnimation {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes appearAnimation {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-appear {
+    -webkit-animation: appearAnimation 0.3s ease-out forwards;
+    animation: appearAnimation 0.3s ease-out forwards;
+  }
 }
 
 html,
@@ -78,6 +105,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
+  -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
   -webkit-transition: background-color 9999s ease-out;
   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
