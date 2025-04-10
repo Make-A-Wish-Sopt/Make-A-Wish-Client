@@ -65,6 +65,8 @@ export { default as PayCodeGuideStep3Img } from '../images/ModalContent/PayCodeG
 export { default as GuideImg } from '../images/GuideImg.png';
 export { default as KakaoCodeGuideImg } from '../images/KakaoCodeGuideImg.png';
 
+export { default as Thumbnail } from '../images/Thumbnail.png';
+
 // bank
 const bankImgs: Record<string, any> = {};
 for (let i = 1; i <= 33; i++) {

@@ -22,7 +22,6 @@ import { BooleanHookType } from '@/hooks/useBoolean';
 import useModals from '@/hooks/useModals';
 import { toast } from 'sonner';
 import { FetchStatusType, useFetch } from '@/hooks/useFetch';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { AccountInfoType } from '@/types/wishesType';
 import { isEqual } from 'lodash';
 import {

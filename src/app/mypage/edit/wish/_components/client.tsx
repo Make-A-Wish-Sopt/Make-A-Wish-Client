@@ -98,7 +98,7 @@ export const WishEditForm = ({
         <WantsGiftOption handleChangeOption={handleChangeOption} />
       </InputForm>
 
-      <InputForm title={`링크에 들어온 친구가 보게 될\n 재밌는 이미지를 등록해보세요!`}>
+      <InputForm title={`링크에 들어온 친구가 보게 될\n재밌는 이미지를 등록해보세요!`}>
         <ImageUploadBox handleSetImage={handleSetImage} />
       </InputForm>
 

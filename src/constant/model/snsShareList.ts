@@ -23,7 +23,7 @@ export const snsShareListObject: Record<ShareSnskeyType, SnsDataType> = {
           objectType: 'feed',
           content: {
             title: `${name}님의 생일선물을 고민하고 있다면?`,
-            description: `고민할 필요없이 이 귀여운 케이크를 선물해 ${name}님의 생일 펀딩에 참여해보세요!`,
+            description: `선물 고민할 필요없이 현금을 송금해 ${name}님의 생일을 축하해주세요!`,
             imageUrl:
               'https://github.com/user-attachments/assets/eb031b35-c689-451d-8788-6e48b9448593',
             link: {
