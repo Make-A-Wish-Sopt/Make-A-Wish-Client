@@ -17,7 +17,7 @@ async function Page() {
       <Link href={kakaoLoginUrl || '#'}>
         <Button bgColor="yellow" className="mt-33">
           <Image src={KakaoLoginIc} alt="카카오 로고 아이콘" />
-          {'카카오톡 로그인으로 시작하기'}
+          카카오톡 로그인으로 시작하기
         </Button>
       </Link>
     </MainLayout>
@@ -26,7 +26,7 @@ async function Page() {
 
 export default Page;
 
-const MainHereSection = () => {
+function MainHereSection() {
   return (
     <section className="flex flex-col items-center" aria-label="메인 히어로 섹션">
       <h1 className="text-[56px] leading-none text-main_blue mt-[28px] font-bitbit">
@@ -41,4 +41,4 @@ const MainHereSection = () => {
       </p>
     </section>
   );
-};
+}

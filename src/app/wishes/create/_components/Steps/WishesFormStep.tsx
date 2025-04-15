@@ -3,7 +3,6 @@
 import { useFunnelContext } from '@/Context/FunnelContext';
 import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { memo, useEffect } from 'react';
-import { getDate } from '@/utils/date';
 import Button from '@/components/Elements/Button';
 import { postWishes } from '@/api/wishes';
 import { useRouters } from '@/hooks/useRouters';
@@ -92,29 +91,15 @@ function WishesFormStep() {
     defaultValues: { ...wishesFormInitValues, title: wishTitle },
     resolver: yupResolver(WishesFormSchema),
   });
-  const { setValue } = wishesFormMethods;
-
-  const handleChangeDate = (selectedDate: Date) => {
-    setValue('startDate', selectedDate);
-    setValue('endDate', getDate(selectedDate, 7));
-  };
-
-  const handleChangeOption = (state: boolean) => {
-    setValue('wantsGift', state);
-  };
-
-  const handleSetImage = (imageUrl: string) => {
-    setValue('imageUrl', imageUrl, { shouldValidate: true });
-  };
 
   return (
     <FormProvider {...wishesFormMethods}>
       <InputForm title="생일 선물도 받고 싶어요!">
-        <WantsGiftOption handleChangeOption={handleChangeOption} />
+        <WantsGiftOption />
       </InputForm>
 
       <InputForm title={`링크에 들어온 친구가 보게 될\n재밌는 이미지를 등록해보세요!`}>
-        <ImageUploadBox handleSetImage={handleSetImage} />
+        <ImageUploadBox />
       </InputForm>
 
       <InputForm title="친구에게 남기고 싶은 한마디">
@@ -122,7 +107,7 @@ function WishesFormStep() {
       </InputForm>
 
       <InputForm title="내 생일 주간 설정하기">
-        <BirthdayWeekRangeSetter handleChangeDate={handleChangeDate} />
+        <BirthdayWeekRangeSetter />
       </InputForm>
 
       <WishesFormButtons />

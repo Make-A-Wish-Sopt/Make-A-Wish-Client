@@ -6,51 +6,45 @@ import {
   WishesHistoryResponseType,
   WishesProgressDataResponseType,
 } from '@/types/api/response';
+import { AccountFormSchemaType, WishesFormScehmaType } from '@/Schema/wishes.schema';
 import { client } from '../configs/apiConfig';
 import { API_VERSION_01, PATH_WISHES } from './path';
-import { AccountFormSchemaType, WishesFormScehmaType } from '@/Schema/wishes.schema';
 
 /**
  * 진행중인 생일잔치 조회
  */
 export const getMainProgressWishesData = async () => {
-  try {
-    const data = await client.get<MainProgressDataResponseType>(
-      `${API_VERSION_01}${PATH_WISHES.MAIN}`,
-    );
+  const data = await client.get<MainProgressDataResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.MAIN}`,
+  );
 
-    return data.data.data;
-  } catch (error) {}
+  return data.data.data;
 };
 
 /**
  * 모든 생일잔치리스트 조회
  */
 export const getWishes = async () => {
-  try {
-    const data = await client.get<WishesHistoryListResponseType>(
-      `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
-      {},
-    );
+  const data = await client.get<WishesHistoryListResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
+    {},
+  );
 
-    return data.data.data.wishes;
-  } catch (error) {}
+  return data.data.data.wishes;
 };
 
 /**
  * 생일잔치링크 생성
  */
 export const postWishes = async (wishesData: WishesFormScehmaType) => {
-  try {
-    const data = await client.post<WishesCreateResponseType>(
-      `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
-      {
-        ...wishesData,
-      },
-    );
+  const data = await client.post<WishesCreateResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.DEFAULT}`,
+    {
+      ...wishesData,
+    },
+  );
 
-    return data;
-  } catch (error) {}
+  return data;
 };
 
 /**
@@ -70,13 +64,11 @@ export const deleteWishes = async (wishesIdList: number[]) => {
  * 진행중인 생일잔치 정보 조회
  */
 export const getProgressWishLinkData = async () => {
-  try {
-    const data = await client.get<WishesProgressDataResponseType>(
-      `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
-    );
+  const data = await client.get<WishesProgressDataResponseType>(
+    `${API_VERSION_01}${PATH_WISHES.PROGRESS}`,
+  );
 
-    return data.data.data;
-  } catch (error) {}
+  return data.data.data;
 };
 
 /**

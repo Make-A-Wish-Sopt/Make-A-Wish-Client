@@ -175,7 +175,7 @@ export function CakePresentList({
 
       {cakePresentMessage && (
         <Modal modalKey="cakeMessage">
-          <Modal.ModalOverlay bgColor="background">
+          <Modal.ModalOverlay className="bg-background">
             <Modal.ModalLayout className="flex flex-col justify-center items-center">
               <Modal.ModalHeader className="flex flex-col" onCloseButton>
                 <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">

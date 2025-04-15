@@ -11,6 +11,7 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
+  useMemo,
   useState,
 } from 'react';
 
@@ -32,38 +33,6 @@ type SharedDataMap<T extends FunnelStepsType> = Partial<Record<ExtractStepNames<
 
 const FunnelContext = createContext<FunnelContextProps<any> | null>(null);
 
-export function FunnelProvider<T extends FunnelStepsType>({
-  steps,
-  children,
-}: PropsWithChildren<{ steps: T }>) {
-  const funnel = useFunnel(steps);
-
-  const [sharedData, setSharedData] = useState<SharedDataMap<T>>({});
-
-  const isSharedDataEmpty = () => {
-    return Object.keys(sharedData).length === 0;
-  };
-
-  const getSharedData = (key: ExtractStepNames<T>) => {
-    if (isSharedDataEmpty()) return;
-
-    return sharedData[key];
-  };
-
-  const contextValue: FunnelContextProps<T> = {
-    ...funnel,
-    PrevButton: PrevButtonBase,
-    setSharedData: setSharedData,
-    getSharedData: getSharedData,
-  };
-
-  return (
-    <FunnelContext.Provider value={contextValue}>
-      <Funnel current={funnel.currentStep()}>{children}</Funnel>
-    </FunnelContext.Provider>
-  );
-}
-
 export const useFunnelContext = <T extends FunnelStepsType>() => {
   const context = useContext(FunnelContext);
   if (!context) {
@@ -73,7 +42,7 @@ export const useFunnelContext = <T extends FunnelStepsType>() => {
 };
 
 const PrevButtonBase = memo(({ bgColor = 'gray4', fontColor = 'white', ...rest }: ButtonProps) => {
-  const { prevStep, isFirstStep, currentStep } = useFunnelContext();
+  const { prevStep, isFirstStep } = useFunnelContext();
 
   return (
     <Button
@@ -87,3 +56,38 @@ const PrevButtonBase = memo(({ bgColor = 'gray4', fontColor = 'white', ...rest }
     </Button>
   );
 });
+
+export function FunnelProvider<T extends FunnelStepsType>({
+  steps,
+  children,
+}: PropsWithChildren<{ steps: T }>) {
+  const funnel = useFunnel(steps);
+
+  const [sharedData, setSharedData] = useState<SharedDataMap<T>>({});
+
+  const isSharedDataEmpty = () => {
+    return Object.keys(sharedData).length === 0;
+  };
+
+  const getSharedData = (key: ExtractStepNames<T>) => {
+    if (isSharedDataEmpty()) return null;
+
+    return sharedData[key];
+  };
+
+  const contextValue = useMemo<FunnelContextProps<T>>(
+    () => ({
+      ...funnel,
+      PrevButton: PrevButtonBase,
+      setSharedData,
+      getSharedData,
+    }),
+    [sharedData],
+  );
+
+  return (
+    <FunnelContext.Provider value={contextValue}>
+      <Funnel current={funnel.currentStep()}>{children}</Funnel>
+    </FunnelContext.Provider>
+  );
+}

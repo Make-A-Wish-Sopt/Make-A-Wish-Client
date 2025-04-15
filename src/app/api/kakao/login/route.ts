@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+/* eslint-disable import/prefer-default-export */
 export async function GET() {
   const clientId = process.env.KAKAO_RESTAPI_KEY;
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;

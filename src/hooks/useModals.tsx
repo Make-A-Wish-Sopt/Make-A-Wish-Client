@@ -1,7 +1,7 @@
 'use client';
 
 import ModalPortal from '@/layouts/ModalPortal';
-import { colors, ColorsTypes } from '@/styles/styles';
+import { ColorsTypes } from '@/styles/styles';
 import { CloseBlueIc } from '@public/assets/icons';
 import Image from 'next/image';
 import {
@@ -16,11 +16,6 @@ import {
 interface ModalProps<T extends string[]> {
   modalKey: T[number];
   Trigger?: JSX.Element;
-}
-
-interface ModalOverlayType {
-  bgColor?: keyof ColorsTypes | 'black/70';
-  backDrop?: boolean;
 }
 
 interface ModalSubComponentProps extends PropsWithChildren {
@@ -58,16 +53,11 @@ const useModals = <T extends string[]>() => {
     );
   }
 
-  function ModalOverlay({
-    bgColor = 'black/70',
-    backDrop = true,
-    className = 'fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999]',
-    children,
-  }: ModalSubComponentProps & ModalOverlayType) {
+  function ModalOverlay({ className, children }: ModalSubComponentProps) {
     const modalKey = useContext(ModalKeyContext);
 
     const handleClick = () => {
-      if (modalKey && backDrop) closeModal(modalKey);
+      if (modalKey) closeModal(modalKey);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -79,8 +69,7 @@ const useModals = <T extends string[]>() => {
         id="modal-overlay"
         role="button"
         tabIndex={0}
-        className={`${className}`}
-        style={{ backgroundColor: colors[bgColor] }}
+        className={`fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999] bg-black/70 ${className}`}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
       >

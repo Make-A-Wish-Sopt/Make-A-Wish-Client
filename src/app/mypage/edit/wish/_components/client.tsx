@@ -12,11 +12,10 @@ import { Step } from '@/components/Modules/Funnel';
 import InputForm from '@/components/UI/InputForm';
 import { useRouters } from '@/hooks/useRouters';
 import { TransferInfoType, WishStatusType } from '@/types/wishesType';
-import { getDate } from '@/utils/date';
 import { WishesFormSchema, WishesFormScehmaType } from '@/Schema/wishes.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { memo, PropsWithChildren } from 'react';
-import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export function WisheEditFormFormProvider({
@@ -59,28 +58,8 @@ export function WishEditForm({
   transferInfo: TransferInfoType;
 }) {
   const { handleBack } = useRouters();
-  const { setValue, control, getValues } = useFormContext<WishesFormScehmaType>();
-  const { isValid } = useFormState({ control });
-
-  const startDate = useWatch({
-    control,
-    name: 'startDate',
-  });
-
-  const handleChangeDate = (selectedDate: Date) => {
-    if (selectedDate === startDate) return;
-
-    setValue('startDate', selectedDate);
-    setValue('endDate', getDate(selectedDate, 7));
-  };
-
-  const handleChangeOption = (state: boolean) => {
-    setValue('wantsGift', state);
-  };
-
-  const handleSetImage = (imageUrl: string) => {
-    setValue('imageUrl', imageUrl, { shouldValidate: true });
-  };
+  const { control, getValues } = useFormContext<WishesFormScehmaType>();
+  const { isValid, isDirty } = useFormState({ control });
 
   const handleEditWisheLink = async () => {
     const editWishFormData = getValues();
@@ -94,24 +73,26 @@ export function WishEditForm({
 
     const response = await putProgressWishes(editFormData);
 
-    if (!response) {
-      toast.error('생일잔치정보를 수정시 오류가 발생했어요ㅠㅠ');
-    } else {
-      toast.success('생일잔치정보 수정완료!!');
-      setTimeout(() => {
-        handleBack();
-      }, 1000);
-    }
+    console.log(response);
+
+    // if (!response) {
+    //   toast.error('생일잔치정보를 수정시 오류가 발생했어요ㅠㅠ');
+    // } else {
+    //   toast.success('생일잔치정보 수정완료!!');
+    //   setTimeout(() => {
+    //     handleBack();
+    //   }, 1000);
+    // }
   };
 
   return (
     <>
       <InputForm title="생일 선물도 받고 싶어요!">
-        <WantsGiftOption handleChangeOption={handleChangeOption} />
+        <WantsGiftOption />
       </InputForm>
 
       <InputForm title={`링크에 들어온 친구가 보게 될\n재밌는 이미지를 등록해보세요!`}>
-        <ImageUploadBox handleSetImage={handleSetImage} />
+        <ImageUploadBox />
       </InputForm>
 
       <InputForm title="친구에게 남기고 싶은 한마디">
@@ -119,13 +100,13 @@ export function WishEditForm({
       </InputForm>
 
       <InputForm title="내 생일 주간 설정하기">
-        <BirthdayWeekRangeSetter
-          handleChangeDate={handleChangeDate}
-          disabled={wishStatus === 'WHILE' || wishStatus === 'END'}
-        />
+        <BirthdayWeekRangeSetter disabled={wishStatus === 'WHILE' || wishStatus === 'END'} />
       </InputForm>
 
-      <WishesEditFormButton disabled={!isValid} onNextClick={() => handleEditWisheLink()} />
+      <WishesEditFormButton
+        disabled={!isValid || !isDirty}
+        onNextClick={() => handleEditWisheLink()}
+      />
     </>
   );
 }

@@ -22,7 +22,7 @@ export function PresentList() {
 
 export default function DropDownPresentList() {
   return (
-    <div className="w-full px-10 pb-12">
+    <div className="w-full ">
       <div className="w-full  bg-background  px-12 py-14 rounded-xl">
         <span className="font-galmuri text-gray2 text-[14px]">
           현금으로 선물 받을 수 있는 항목이에요

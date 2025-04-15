@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import InputText from '@/components/Elements/Input/inputText';
 import { snsShareListArray } from '@/constant/model/snsShareList';
 import { CakeMessageContent } from '@/app/wishes/_components/CakePresentList';
@@ -24,7 +24,7 @@ const useModalContent = <T extends [string]>() => {
     const { isAdminMessage, name } = cakePresentMessage;
 
     return (
-      <Modal.ModalOverlay bgColor="background">
+      <Modal.ModalOverlay className="bg-background">
         <Modal.ModalLayout className="flex flex-col justify-center items-center">
           <Modal.ModalHeader className="flex flex-col" onCloseButton>
             <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
@@ -74,15 +74,6 @@ const useModalContent = <T extends [string]>() => {
 
   function ShareWishLinkModalContent({ wishId, nickName }: { wishId: string; nickName: string }) {
     const wishLink = `sunmulzu.com/wishes/${wishId}`;
-
-    useEffect(() => {
-      if (typeof window !== 'undefined') {
-        const { Kakao } = window;
-        if (!Kakao.isInitialized()) {
-          Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
-        }
-      }
-    }, []);
 
     return (
       <Modal.ContentFrame>

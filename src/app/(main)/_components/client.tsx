@@ -4,7 +4,7 @@ import useModals from '@/hooks/useModals';
 import { GuideImg, MainCakeListImg } from '@public/assets/images';
 import Image from 'next/image';
 
-export const ServiceGuideModal = () => {
+export function ServiceGuideModal() {
   const { Modal, openModal } = useModals<['guide']>();
   return (
     <Modal
@@ -27,4 +27,4 @@ export const ServiceGuideModal = () => {
       </Modal.ModalOverlay>
     </Modal>
   );
-};
+}

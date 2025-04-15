@@ -17,7 +17,7 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
     } else {
       closeModal('loading');
     }
-  }, [status, closeModal, openModal]);
+  }, [status]);
 
   const changeStatus = (state: FetchStatusType) => {
     setStatus(state);

@@ -202,12 +202,12 @@ function AccountDepositPayment({
         <InputForm title="송금수단으로 이동하기" textCenter>
           <ul className="flex gap-8">
             {paymentListArray.map((paymentItem) => (
-              <li key={paymentItem.paymentId} className="w-full">
+              <li key={paymentItem.id} className="w-full">
                 <button
                   type="button"
                   className="flex flex-col gap-10 items-center justify-center w-full h-92 rounded-xl bg-dark_green cursor-pointer"
                   onClick={() => {
-                    handleDeepLink(paymentItem.paymentId);
+                    handleDeepLink(paymentItem.id);
                     최초은행앱연결실행확인();
                   }}
                 >

@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { getProgressWishLinkData } from '@/api/wishes';
 import Header from '@/components/Elements/Header';
 import BackButton from '@/components/Elements/Button/BackButton';

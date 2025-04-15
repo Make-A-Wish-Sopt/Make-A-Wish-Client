@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { client } from '../configs/apiConfig';
-import { API_VERSION_01 } from './path';
 import { PresingedURLResponseType } from '@/types/api/response';
 import PATH from '@/constant/apiPath';
+import { client } from '../configs/apiConfig';
+import { API_VERSION_01 } from './path';
 
 export const uploadPresignedURL = async (signedURL: string, file: File | Blob | null) => {
   const data = await axios.put(signedURL, file, {

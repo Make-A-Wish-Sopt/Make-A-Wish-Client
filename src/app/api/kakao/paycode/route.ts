@@ -2,6 +2,7 @@ import { DefaultResponseType } from '@/types/api/response';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
+/* eslint-disable import/prefer-default-export */
 export async function POST(req: Request) {
   const { kakaoPayCode } = await req.json();
 
