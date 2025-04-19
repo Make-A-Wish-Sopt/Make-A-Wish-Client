@@ -81,10 +81,6 @@ function NextButton({
     }
   };
 
-  console.log(!!errors.accountInfo);
-  console.log(isAccountValid);
-  console.log(!noticeAgree);
-
   return (
     <Button
       disabled={!!errors.accountInfo || !isAccountValid || !noticeAgree}

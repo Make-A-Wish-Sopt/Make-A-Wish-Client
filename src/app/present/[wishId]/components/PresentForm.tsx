@@ -22,6 +22,7 @@ import { postPublicCakes } from '@/api/public';
 import { toast } from 'sonner';
 import { InputTextForm } from '@/components/UI/InputTextForm';
 import convertMoneyText from '@/utils/regex';
+import { useFetch } from '@/hooks/useFetch';
 
 export function GiverNameInput() {
   const { register } = useFormContext<PresentFormSchemaType>();
@@ -144,13 +145,16 @@ function NextButton({
   const { isValid } = useFormState({ control });
   const { wishId } = useParams();
   const giftMenuId = useWatch({ control, name: 'giftMenuId' });
+  const { status, fetchData } = useFetch(postPublicCakes);
 
   const handleNextStep = async () => {
     const presentFormData = getValues();
     if (!presentFormData) return;
 
+    if (status === 'loading') return;
+
     if (onlyPresentMessage || !wantsGift) {
-      const response = await postPublicCakes({ ...presentFormData, wishId: wishId as string });
+      const response = await fetchData({ ...presentFormData, wishId: wishId as string });
       if (!response) {
         toast.error('선물을 보내는 중 오류가 발생했어요ㅠㅠ');
 

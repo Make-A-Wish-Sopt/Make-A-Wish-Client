@@ -22,8 +22,6 @@ function SelectPaymentFormStep({ isForPayCode }: { isForPayCode?: boolean }) {
     }
   };
 
-  console.log(isForPayCode);
-
   useEffect(() => {
     if (!isForPayCode) {
       selectedAccountToggle.changeState(true);
@@ -35,8 +33,6 @@ function SelectPaymentFormStep({ isForPayCode }: { isForPayCode?: boolean }) {
 
     selectedAccountToggle.changeState(!savedData.forPayCode);
   }, []);
-
-  console.log(selectedAccountToggle.state);
 
   return (
     <>

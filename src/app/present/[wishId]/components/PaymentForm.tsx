@@ -34,7 +34,7 @@ function KakaopayCodePayment({
   const { wishId } = useParams();
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
   const presentFormData = getSharedData('present') as PresentFormSchemaType;
-  const { delayFetchData, LoadingModal } = useFetch(postPublicCakes);
+  const { status, delayFetchData, LoadingModal } = useFetch(postPublicCakes);
 
   const clickYet = useBoolean(true);
 
@@ -59,6 +59,8 @@ function KakaopayCodePayment({
   }
 
   const handleNextClick = () => {
+    if (status === 'loading') return;
+
     최초은행앱연결실행확인();
 
     delayFetchData(1000, { ...presentFormData, wishId: wishId as string });
@@ -102,7 +104,7 @@ function AccountDepositPayment({
 
   const { nextStep, getSharedData } = useFunnelContext<PresentFunnelStepType>();
   const presentFormData = getSharedData('present') as PresentFormSchemaType;
-  const { delayFetchData, LoadingModal } = useFetch(postPublicCakes);
+  const { status, delayFetchData, LoadingModal } = useFetch(postPublicCakes);
 
   const clickYet = useBoolean(true);
 
@@ -117,6 +119,8 @@ function AccountDepositPayment({
   };
 
   const handleNextButtonClick = () => {
+    if (status === 'loading') return;
+
     delayFetchData(1000, { ...presentFormData, wishId: wishId as string });
     nextStep();
   };
