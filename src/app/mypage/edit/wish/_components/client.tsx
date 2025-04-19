@@ -57,7 +57,7 @@ export function WishEditForm({
   wishStatus: WishStatusType;
   transferInfo: TransferInfoType;
 }) {
-  const { handleBack } = useRouters();
+  const { handleReplace } = useRouters();
   const { control, getValues } = useFormContext<WishesFormScehmaType>();
   const { isValid, isDirty } = useFormState({ control });
 
@@ -73,16 +73,14 @@ export function WishEditForm({
 
     const response = await putProgressWishes(editFormData);
 
-    console.log(response);
-
-    // if (!response) {
-    //   toast.error('생일잔치정보를 수정시 오류가 발생했어요ㅠㅠ');
-    // } else {
-    //   toast.success('생일잔치정보 수정완료!!');
-    //   setTimeout(() => {
-    //     handleBack();
-    //   }, 1000);
-    // }
+    if (!response) {
+      toast.error('생일잔치정보를 수정시 오류가 발생했어요ㅠㅠ');
+    } else {
+      toast.success('생일잔치정보 수정완료!!');
+      setTimeout(() => {
+        handleReplace('/mypage');
+      }, 1000);
+    }
   };
 
   return (

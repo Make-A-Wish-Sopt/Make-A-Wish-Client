@@ -1,47 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import { toast } from 'sonner';
 import { useRouters } from './useRouters';
 
 export default function useKakaoAuth() {
-  const [loginUrl, setLoginUrl] = useState<string | null>(null);
-  const [logoutUrl, setLogoutUrl] = useState<string | null>(null);
   const { handleReplace } = useRouters();
 
-  useEffect(() => {
-    async function fetchAuthLoginUrl() {
+  const handleKakaoLogin = useCallback(async () => {
+    try {
       const response = await fetch('/api/kakao/login');
       const data = await response.json();
-      setLoginUrl(data.authUrl);
+      if (data.authUrl) {
+        handleReplace(data.authUrl);
+      }
+    } catch (err) {
+      toast.error('카카오 로그인 실패:');
     }
+  }, [handleReplace]);
 
-    fetchAuthLoginUrl();
-  }, []);
-
-  useEffect(() => {
-    async function fetchAuthLogoutUrl() {
+  const handleKakaoLogout = useCallback(async () => {
+    try {
       const response = await fetch('/api/kakao/logout');
       const data = await response.json();
-
-      setLogoutUrl(data.authUrl);
+      if (data.authUrl) {
+        handleReplace(data.authUrl);
+      }
+    } catch (err) {
+      toast.error('카카오 로그아웃 실패:');
     }
+  }, [handleReplace]);
 
-    fetchAuthLogoutUrl();
-  }, []);
-
-  const handleKaKaoLogin = () => {
-    if (loginUrl) {
-      handleReplace(loginUrl);
-    }
-  };
-
-  const handleKaKaoLogout = () => {
-    if (logoutUrl) {
-      handleReplace(logoutUrl);
-    }
-  };
   return {
-    handleKaKaoLogin,
-    handleKaKaoLogout,
+    handleKakaoLogin,
+    handleKakaoLogout,
   };
 }

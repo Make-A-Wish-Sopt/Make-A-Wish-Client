@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { RoutePathType } from '@/hooks/useRouters';
 import Link from 'next/link';
 import { MenuIc } from '@public/assets/icons';
+import { memo } from 'react';
 
 interface HeaderProps {
   leftMenu?: JSX.Element;
@@ -9,7 +10,7 @@ interface HeaderProps {
   rightMenu?: JSX.Element;
 }
 
-export default function Header(props: HeaderProps) {
+const Header = memo((props: HeaderProps) => {
   const { leftMenu, centerMenu, rightMenu } = props;
 
   return (
@@ -21,7 +22,9 @@ export default function Header(props: HeaderProps) {
       </div>
     </header>
   );
-}
+});
+
+export default Header;
 
 export function IconRouteButton({
   Icon,

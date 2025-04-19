@@ -14,6 +14,10 @@ export type RoutePathType =
   | '/present'
   | `/present/${string}`;
 
+interface RouteOptions {
+  scroll?: boolean;
+}
+
 export function useRouters() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -22,24 +26,24 @@ export function useRouters() {
     router.back();
   }
 
-  function handleRouter(path: RoutePathType) {
+  function handleRouter(path: RoutePathType, options?: RouteOptions) {
     if (!path) handleBack();
-    else router.push(path);
+    else router.push(path, options);
   }
 
-  function handleReplace(path: string) {
-    router.replace(path);
+  function handleReplace(path: string, options?: RouteOptions) {
+    router.replace(path, options);
   }
 
   function handleRefresh() {
     router.refresh();
   }
 
-  const handleDelayRouter = (path: RoutePathType, delayMs?: number) => {
+  const handleDelayRouter = (path: RoutePathType, delayMs?: number, options?: RouteOptions) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      handleRouter(path);
+      handleRouter(path, options);
     }, delayMs || 800);
   };
 

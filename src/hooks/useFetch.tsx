@@ -12,6 +12,8 @@ export const useFetch = <T, A extends unknown[]>(fetch: (...args: A) => Promise<
   const { Modal, openModal, closeModal } = useModals<['loading']>();
 
   useEffect(() => {
+    if (status === 'idle') return;
+
     if (status === 'loading') {
       openModal('loading');
     } else {

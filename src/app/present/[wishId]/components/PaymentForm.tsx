@@ -47,18 +47,13 @@ function KakaopayCodePayment({
   async function onLinkKakaopayApp() {
     최초은행앱연결실행확인();
 
-    if (!송금금액) {
-      return;
-    }
-
-    if (!transferInfo.kakaoPayCode) {
-      return;
-    }
+    if (!송금금액) return;
+    if (!transferInfo.kakaoPayCode) return;
 
     const { forPayCode, kakaoPayCode } = transferInfo;
 
     if (forPayCode) {
-      await clipboardCopy(convertMoneyText(송금금액));
+      await clipboardCopy(convertMoneyText(송금금액), '금액복사 성공!');
       window.open(kakaoPayCode);
     }
   }
@@ -80,8 +75,13 @@ function KakaopayCodePayment({
       <Step.ButtonWrapper vertical fixedBottom className="gap-10">
         <Button onClick={() => onLinkKakaopayApp()}>카카오페이 송금하기</Button>
 
-        <Button disabled={clickYet.state} onClick={handleNextClick}>
-          {clickYet.state ? '카카오로 송금하고, 편지 확인하기' : '송금 완료했어요!'}
+        <Button
+          disabled={clickYet.state}
+          bgColor={(!clickYet.state && 'gray4') || 'main_blue'}
+          fontColor={(!clickYet.state && 'white') || 'black'}
+          onClick={handleNextClick}
+        >
+          송금 완료했다면 편지 확인하기
         </Button>
       </Step.ButtonWrapper>
       <LoadingModal render={<LoadingCake text="선물 중" />} />

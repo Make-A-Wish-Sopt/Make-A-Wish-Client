@@ -36,7 +36,6 @@ export default async function page() {
 
   const { nickName } = loginUserData;
   const progressWishes = await getProgressWishLinkData();
-
   const EditWishDisabled = !progressWishes || (progressWishes && progressWishes.status === 'END');
   const EditSelectPaymentMenuDisabled = progressWishes ? !progressWishes.wantsGift : false;
 

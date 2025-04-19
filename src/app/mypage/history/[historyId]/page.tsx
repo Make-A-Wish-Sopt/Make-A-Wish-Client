@@ -7,7 +7,7 @@ import MainLayout from '@/layouts/MainLayout';
 import { getLoginUserCookiesData } from '@/utils/cookies';
 import defineCakeTree from '@/utils/defineCakeTree';
 
-const page = async ({ params }: { params: { historyId: string } }) => {
+export default async function Page({ params }: { params: { historyId: string } }) {
   const { historyId } = params;
 
   const wishesHistory = await getSingleWishInfo(historyId);
@@ -26,6 +26,4 @@ const page = async ({ params }: { params: { historyId: string } }) => {
       </section>
     </MainLayout>
   );
-};
-
-export default page;
+}

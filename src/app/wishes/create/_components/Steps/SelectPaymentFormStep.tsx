@@ -9,8 +9,9 @@ import SelectPayment from '@/app/_components/Form/wish/SelectPaymentForm';
 import { useEffect } from 'react';
 import { AccountFormSchemaType } from '@/Schema/wishes.schema';
 
-function SelectPaymentFormStep() {
-  const { nextStep, PrevButton, getSharedData } = useFunnelContext<WishesFunnelStepType>();
+function SelectPaymentFormStep({ isForPayCode }: { isForPayCode?: boolean }) {
+  const { nextStep, prevStep, getSharedData, prevDisabled } =
+    useFunnelContext<WishesFunnelStepType>();
   const selectedAccountToggle = useBoolean();
 
   const handleNextStep = () => {
@@ -22,12 +23,15 @@ function SelectPaymentFormStep() {
   };
 
   useEffect(() => {
-    const accountSavedData = getSharedData('account') as AccountFormSchemaType;
-
-    if (accountSavedData) {
-      selectedAccountToggle.changeState(!accountSavedData.forPayCode);
+    if (!isForPayCode) {
+      selectedAccountToggle.changeState(true);
     }
-  }, [getSharedData, selectedAccountToggle]);
+
+    const savedData = getSharedData('account') as AccountFormSchemaType;
+    if (!savedData) return;
+
+    selectedAccountToggle.changeState(!savedData.forPayCode);
+  }, []);
 
   return (
     <>
@@ -39,7 +43,9 @@ function SelectPaymentFormStep() {
       </Step.FormSection>
 
       <Step.ButtonWrapper fixedBottom className="flex gap-10 justify-between pb-58">
-        <PrevButton />
+        <Button bgColor="gray4" fontColor="white" onClick={prevStep} disabled={prevDisabled}>
+          이전
+        </Button>
         <Button onClick={handleNextStep}>다음</Button>;
       </Step.ButtonWrapper>
     </>

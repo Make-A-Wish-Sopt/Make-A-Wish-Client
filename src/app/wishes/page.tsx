@@ -89,7 +89,7 @@ async function Page() {
               : '지금 바로 친구 초대하기',
           )
         : renderNoWishes()}
-      <GradientShadow height={19} />
+      <GradientShadow height={29.7} />
     </MainLayout>
   );
 }

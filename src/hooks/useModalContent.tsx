@@ -28,7 +28,7 @@ const useModalContent = <T extends [string]>() => {
         <Modal.ModalLayout className="flex flex-col justify-center items-center">
           <Modal.ModalHeader className="flex flex-col" onCloseButton>
             <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
-              {`${name}님이\n${선물받은사람이름}님에게 남긴 편지에요\n이미지를 저장해보세요!`}
+              {`${name}님이\n${선물받은사람이름}님에게 남긴 편지에요!`}
             </span>
           </Modal.ModalHeader>
 

@@ -15,7 +15,7 @@ import {
 
 interface ModalProps<T extends string[]> {
   modalKey: T[number];
-  Trigger?: JSX.Element;
+  Trigger?: JSX.Element | (() => JSX.Element);
 }
 
 interface ModalSubComponentProps extends PropsWithChildren {
@@ -47,7 +47,11 @@ const useModals = <T extends string[]>() => {
   function Modal({ modalKey, Trigger, children }: ModalProps<T> & PropsWithChildren) {
     return (
       <ModalKeyContext.Provider value={modalKey}>
-        {Trigger && <div className="cursor-pointer">{Trigger}</div>}
+        {Trigger && (
+          <div className="cursor-pointer">
+            {typeof Trigger === 'function' ? <>{Trigger()}</> : Trigger}
+          </div>
+        )}
         {modalState[modalKey] && <ModalPortal>{children}</ModalPortal>}
       </ModalKeyContext.Provider>
     );
@@ -69,7 +73,7 @@ const useModals = <T extends string[]>() => {
         id="modal-overlay"
         role="button"
         tabIndex={0}
-        className={`fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999] bg-black/70 ${className}`}
+        className={`fixed top-0 left-0 flex justify-center items-center w-full h-full z-[9999]  ${className || 'bg-black/70'}`}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
       >

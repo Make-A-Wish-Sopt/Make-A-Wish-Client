@@ -150,7 +150,7 @@ export function CakePresentList({
               backgroundPosition: 'center 1px',
             }}
           >
-            <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
+            <ul className="grid custom-grid-offset-15 grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
               {cakeList.slice(rowIndex * 3, rowIndex * 3 + 3).map((cake) => (
                 <li key={`cake-${cake.cakeId}`} className="justify-self-center">
                   <button
@@ -179,7 +179,7 @@ export function CakePresentList({
             <Modal.ModalLayout className="flex flex-col justify-center items-center">
               <Modal.ModalHeader className="flex flex-col" onCloseButton>
                 <span className="text-white font-bitbit text-[24px] whitespace-pre-wrap text-center leading-tight mt-2 mb-40">
-                  {`${cakePresentMessage.name}님이\n${nickName}님에게 남긴 편지에요\n이미지를 저장해보세요!`}
+                  {`${cakePresentMessage.name}님이\n${nickName}님에게 남긴 편지에요!`}
                 </span>
               </Modal.ModalHeader>
               <Modal.ContentFrame

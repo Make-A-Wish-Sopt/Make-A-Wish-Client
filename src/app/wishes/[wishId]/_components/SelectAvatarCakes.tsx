@@ -26,6 +26,7 @@ export default function SelectAvatarCakesButton({ wishId }: { wishId: string }) 
     if (isCooldown) return;
     setAnimationClass('slide-left');
     setIsCooldown(true);
+
     setTimeout(() => {
       prev();
       setAnimationClass('');
@@ -37,6 +38,7 @@ export default function SelectAvatarCakesButton({ wishId }: { wishId: string }) 
     if (isCooldown) return;
     setAnimationClass('slide-right');
     setIsCooldown(true);
+
     setTimeout(() => {
       next();
       setAnimationClass('');

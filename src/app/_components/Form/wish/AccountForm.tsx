@@ -24,6 +24,7 @@ import { FetchStatusType, useFetch } from '@/hooks/useFetch';
 import { AccountInfoType } from '@/types/wishesType';
 import { isEqual } from 'lodash';
 import {
+  AccountFormSchema,
   AccountFormSchemaType,
   WishesFormScehmaType,
   WishesFormSchema,
@@ -110,7 +111,7 @@ export const SelectBankInput = memo(() => {
     >
       <Modal.ModalOverlay>
         <Modal.ModalLayout className="flex justify-center items-center">
-          <Modal.ContentFrame bgColor="background" className="w-335 overflow-scroll">
+          <Modal.ContentFrame bgColor="background" className="w-335 h-[608px] overflow-scroll">
             <Modal.ContentHeader>
               <h2 className="font-galmuri text-[16px] text-white mb-20">은행을 선택해주세요.</h2>
             </Modal.ContentHeader>
@@ -159,14 +160,36 @@ export function AccountNumberInput({
   onCheckAccountValid: (state: boolean) => void;
 }) {
   const { data, status, delayFetchData, LoadingModal } = useFetch(postVerifyAccount);
-  const { register, control } = useFormContext<AccountFormSchemaType>();
+  const { register, control, getValues } = useFormContext<AccountFormSchemaType>();
   const [validAccount, setValidAccount] = useState<AccountInfoType | null>(null);
-  const { errors } = useFormState({ control, name: ['accountInfo'] });
+  const { errors, isDirty } = useFormState({ control, name: ['accountInfo'] });
 
   const accountInfo = useWatch({
     control,
     name: 'accountInfo',
   });
+
+  useEffect(() => {
+    const validateInitialAccountInfo = async () => {
+      const formData = getValues();
+      try {
+        const accountValidator = AccountFormSchema.pick(['accountInfo']);
+        await accountValidator.validate({ accountInfo: formData.accountInfo });
+
+        // 검증 통과 시 validAccount로 설정
+        setValidAccount({
+          name: formData.accountInfo.name,
+          bank: formData.accountInfo.bank,
+          account: formData.accountInfo.account,
+        });
+        onCheckAccountValid(true);
+      } catch (err) {
+        onCheckAccountValid(false);
+      }
+    };
+
+    validateInitialAccountInfo();
+  }, []);
 
   useEffect(() => {
     if (isEqual(accountInfo, validAccount)) {
@@ -201,8 +224,8 @@ export function AccountNumberInput({
     });
   };
 
-  const get상태아이콘 = (statusData: FetchStatusType) => {
-    if (statusData === 'idle') return;
+  const getStatusIcon = (statusData: FetchStatusType) => {
+    if (statusData === 'idle' || status === 'loading') return null;
 
     if (statusData === 'success' && isAccountValid) {
       return <CheckedIcon width={24} />;
@@ -217,14 +240,14 @@ export function AccountNumberInput({
     <div className="flex justify-between gap-6">
       <div className="flex-grow-3 w-full">
         <InputText placeholder="계좌번호를 입력해주세요" register={register('accountInfo.account')}>
-          {get상태아이콘(status)}
+          {getStatusIcon(status)}
         </InputText>
       </div>
 
       <div className="flex-grow-1">
         <div className="w-115 h-50 font-galmuri">
           <Button
-            disabled={isEqual(accountInfo, validAccount) || !!errors.accountInfo}
+            disabled={isEqual(accountInfo, validAccount) || !!errors.accountInfo || !isDirty}
             fontColor="white"
             font="galmuri"
             onClick={handleCheckAccount}

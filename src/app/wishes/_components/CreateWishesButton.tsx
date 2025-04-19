@@ -48,6 +48,7 @@ function WishesCreateTitleInput() {
             placeholder="ex) 에어팟맥스 받게 해주세요"
             onKeyDown={handleKeyDown}
             className="plachoder-gray1"
+            autoFocus
           />
         </Box>
       </div>

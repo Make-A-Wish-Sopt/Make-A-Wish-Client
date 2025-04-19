@@ -19,7 +19,7 @@ export default function ShareWishesButton({
       modalKey="share"
       Trigger={<Button onClick={() => openModal('share')}>{buttonText}</Button>}
     >
-      <Modal.ModalOverlay className="bg-black/70">
+      <Modal.ModalOverlay>
         <Modal.ModalLayout className="flex justify-center items-center">
           <ShareWishLinkModalContent wishId={wishId} nickName={nickName} />
         </Modal.ModalLayout>

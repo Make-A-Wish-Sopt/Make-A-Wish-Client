@@ -2,8 +2,11 @@ import { getLoginUserCookiesData } from '@/utils/cookies';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// 보호된 경로를 정규식으로 정의
-const protectedRoutes = [/^\/wishes/, /^\/mypage\/edit(\/|$)/, /^\/mypage\/history(\/|$)/];
+// 정확한 경로 보호 목록
+const exactProtectedRoutes = ['/wishes'];
+
+// 정규식으로 보호되는 경로
+const regexProtectedRoutes = [/^\/mypage\/edit(\/|$)/, /^\/mypage\/history(\/|$)/];
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -19,8 +22,10 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/wishes', request.url));
   }
 
-  // 보호된 경로 접근 여부 판단 (정규식 사용)
-  const isProtected = protectedRoutes.some((route) => route.test(pathname));
+  // 보호된 경로 접근 여부 판단
+  const isExactProtected = exactProtectedRoutes.includes(pathname);
+  const isRegexProtected = regexProtectedRoutes.some((route) => route.test(pathname));
+  const isProtected = isExactProtected || isRegexProtected;
 
   // 로그인하지 않은 사용자가 보호된 경로 접근 시 /로 리디렉션
   if (!isLoggedIn && isProtected) {

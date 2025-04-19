@@ -24,7 +24,7 @@ import { LoadingCake } from '@/components/UI/Loading';
 
 const WishesFormButtons = memo(() => {
   const { handleDelayRouter, LoadingModal } = useRouters();
-  const { PrevButton, setSharedData, nextStep, getSharedData } =
+  const { setSharedData, nextStep, getSharedData, prevStep, prevDisabled } =
     useFunnelContext<WishesFunnelStepType>();
   const { control, getValues, reset } = useFormContext<WishesFormScehmaType>();
   const { isValid } = useFormState({ control });
@@ -73,9 +73,11 @@ const WishesFormButtons = memo(() => {
   return (
     <>
       <Step.ButtonWrapper horizontal className="gap-10 mb-24">
-        <PrevButton />
+        <Button bgColor="gray4" fontColor="white" onClick={prevStep} disabled={prevDisabled}>
+          이전
+        </Button>
         <Button disabled={!isValid} onClick={handleNextFlow}>
-          {wantsGift ? '다음' : '생일잔치 생성'}
+          {wantsGift ? '다음' : '생성 완료!'}
         </Button>
       </Step.ButtonWrapper>
       <LoadingModal render={<LoadingCake text="생성 중" />} />

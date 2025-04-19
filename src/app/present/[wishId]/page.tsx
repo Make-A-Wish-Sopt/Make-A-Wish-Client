@@ -9,6 +9,9 @@ import dynamic from 'next/dynamic';
 import { DefaultResponseType, PublicWishesDataType } from '@/types/api/response';
 import BackButton from '@/components/Elements/Button/BackButton';
 import AlimTalkMessageButton from '@/app/wishes/_components/AlimTalckButton';
+import { CloseBlueIc } from '@public/assets/icons';
+import Link from 'next/link';
+import Image from 'next/image';
 import WishInfoForGiver from './components/PresentForm.Server';
 import PresentForm from './components/PresentForm';
 
@@ -23,9 +26,9 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
     return <ErrorPage alertMessage={`${errorResonse.message}`} />;
   }
 
-  const publicWishesData = publicProgressWishes.data as PublicWishesDataType;
+  const publicWishesData = publicProgressWishes?.data as PublicWishesDataType;
 
-  const { title, presentImageUrl, hint, transferInfo, nickname } = publicWishesData;
+  const { title, presentImageUrl, hint, transferInfo, nickname, wantsGift } = publicWishesData;
 
   return (
     <FunnelContainer steps={PresentFunnelStep}>
@@ -37,7 +40,7 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
             친구가남긴메세지={hint}
           />
           <Step.FormSection className="flex flex-col mb-24">
-            <PresentForm />
+            <PresentForm wantsGift={wantsGift} />
           </Step.FormSection>
         </MainLayout>
       </Step>
@@ -51,13 +54,29 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
       </Step>
 
       <Step name="complete">
-        <MainLayout>
+        <MainLayout
+          Header={
+            <Header
+              rightMenu={
+                <button type="button">
+                  <Link href="/">
+                    <Image src={CloseBlueIc} alt="홈으로 돌아가기" />
+                  </Link>
+                </button>
+              }
+            />
+          }
+        >
           <Step.FormSection>
             <DynamicCompleteForm nickName={nickname} />
           </Step.FormSection>
 
           <Step.ButtonWrapper fixedBottom className="z-30">
-            <AlimTalkMessageButton buttonText="제 생일에도 써볼래요!" />
+            <AlimTalkMessageButton
+              buttonText="제 생일에도 써볼래요!"
+              buttonColor="main_blue"
+              fontColor="black"
+            />
           </Step.ButtonWrapper>
         </MainLayout>
       </Step>

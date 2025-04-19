@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type FunnelStepsType = readonly (string | readonly string[])[];
 
@@ -26,10 +26,19 @@ export type ExtractStepNames<T extends readonly (string | readonly string[])[]> 
 const useFunnel = <T extends FunnelStepsType>(steps: T) => {
   const [stepIdx, setStepIdx] = useState(0);
   const [subIdx, setSubIdx] = useState<null | number>(null);
-  const [history, setHistory] = useState<Array<number | [number, number]>>([]);
+  const [stepHistory, setStepHistory] = useState<Array<number | [number, number]>>([]);
+  const [prevDisabled, setPrevDisabled] = useState(false);
+
+  useEffect(() => {
+    if (stepHistory.length === 0 || stepIdx === 0) {
+      setPrevDisabled(true);
+    } else {
+      setPrevDisabled(false);
+    }
+  }, [stepHistory]);
 
   const addHistory = (index: number | [number, number]) => {
-    setHistory((prev) => [...prev, index]);
+    setStepHistory((prev) => [...prev, index]);
   };
 
   const findStepIndex = (target: ExtractStepNames<T>): [number, number?] | null => {
@@ -46,19 +55,20 @@ const useFunnel = <T extends FunnelStepsType>(steps: T) => {
   };
 
   const onMoveStep = (target: ExtractStepNames<T>) => {
-    const found = findStepIndex(target);
-    if (!found) return;
+    const foundStep = findStepIndex(target);
 
-    const [mainIdx, subIndex] = found;
+    if (!foundStep) return;
 
-    if (subIndex === undefined) {
+    const [targetMainIdx, targetSubIndex] = [...foundStep];
+
+    if (subIdx === null) {
       addHistory(stepIdx);
     } else {
-      addHistory([stepIdx, subIndex]);
+      addHistory([stepIdx, subIdx]);
     }
 
-    setStepIdx(mainIdx);
-    setSubIdx(subIndex ?? null);
+    setStepIdx(targetMainIdx);
+    setSubIdx(targetSubIndex ?? null);
   };
 
   const nextStep = (target?: ExtractStepNames<T>) => {
@@ -76,11 +86,10 @@ const useFunnel = <T extends FunnelStepsType>(steps: T) => {
   };
 
   const prevStep = () => {
-    const temp = [...history];
+    const temp = [...stepHistory];
     if (temp.length === 0) return;
 
     const last = temp.pop();
-    setHistory(temp);
 
     if (typeof last === 'number') {
       setStepIdx(last);
@@ -90,6 +99,8 @@ const useFunnel = <T extends FunnelStepsType>(steps: T) => {
       setStepIdx(mainIdx);
       setSubIdx(subIndex);
     }
+
+    setStepHistory(temp);
   };
 
   const currentStep = (): ExtractStepNames<T> => {
@@ -106,8 +117,7 @@ const useFunnel = <T extends FunnelStepsType>(steps: T) => {
     nextStep,
     prevStep,
     onMoveStep,
-    isEmptyHistory: () => history.length === 0,
-    isFirstStep: () => history.length === 0 || stepIdx === 0,
+    prevDisabled,
   };
 };
 

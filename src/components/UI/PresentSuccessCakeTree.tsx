@@ -57,7 +57,7 @@ export default function PresentSuccessCakeTree({ cakeList }: { cakeList: CakeTre
                 backgroundPosition: 'center 1px',
               }}
             >
-              <ul className="grid grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
+              <ul className="grid custom-grid-offset-m-15 grid-cols-3 justify-center gap-x-[-10px] custom-grid w-full h-full mt-70 px-65">
                 {cakesInRow.map((cake) => (
                   <li
                     className="relative z-10 flex flex-col items-center w-100 aspect-square transform translate-y-[-30px] justify-self-center"

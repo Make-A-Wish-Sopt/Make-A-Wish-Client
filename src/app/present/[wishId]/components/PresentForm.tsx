@@ -132,17 +132,26 @@ export function LetterToFriendInput() {
   );
 }
 
-function NextButton({ onlyPresentMessage }: { onlyPresentMessage: boolean }) {
+function NextButton({
+  wantsGift,
+  onlyPresentMessage,
+}: {
+  wantsGift: boolean;
+  onlyPresentMessage: boolean;
+}) {
   const { nextStep, setSharedData, onMoveStep } = useFunnelContext<PresentFunnelStepType>();
   const { control, getValues } = useFormContext<PresentFormSchemaType>();
   const { isValid } = useFormState({ control });
   const { wishId } = useParams();
+  const giftMenuId = useWatch({ control, name: 'giftMenuId' });
+
+  console.log(isValid);
 
   const handleNextStep = async () => {
     const presentFormData = getValues();
     if (!presentFormData) return;
 
-    if (onlyPresentMessage) {
+    if (onlyPresentMessage || !wantsGift) {
       const response = await postPublicCakes({ ...presentFormData, wishId: wishId as string });
       if (!response) {
         toast.error('선물을 보내는 중 오류가 발생했어요ㅠㅠ');
@@ -163,14 +172,21 @@ function NextButton({ onlyPresentMessage }: { onlyPresentMessage: boolean }) {
     }
   };
 
+  const checkDisabled = () => {
+    if (!isValid) return true;
+    if (!onlyPresentMessage && !giftMenuId) return true;
+
+    return false;
+  };
+
   return (
-    <Button disabled={!isValid} onClick={handleNextStep}>
+    <Button disabled={checkDisabled()} onClick={handleNextStep}>
       친구생일 축하해주기
     </Button>
   );
 }
 
-export default function PresentForm() {
+export default function PresentForm({ wantsGift }: { wantsGift: boolean }) {
   const searchParams = useSearchParams();
   const avatarCakeId = searchParams.get('avatarCakeId');
 
@@ -188,11 +204,11 @@ export default function PresentForm() {
   return (
     <FormProvider {...presentFormMethods}>
       <GiverNameInput />
-      <SelectPresentItem onlyMessageToggle={onlyPresentMessageToggle} />
+      {wantsGift && <SelectPresentItem onlyMessageToggle={onlyPresentMessageToggle} />}
       <LetterToFriendInput />
 
       <Step.ButtonWrapper>
-        <NextButton onlyPresentMessage={onlyPresentMessageToggle.state} />
+        <NextButton wantsGift={wantsGift} onlyPresentMessage={onlyPresentMessageToggle.state} />
       </Step.ButtonWrapper>
     </FormProvider>
   );

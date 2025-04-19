@@ -8,7 +8,7 @@ import StepTitle from '@/components/UI/StepTitle';
 import BackButton from '@/components/Elements/Button/BackButton';
 import { WishEditForm, WisheEditFormFormProvider } from './_components/client';
 
-const page = async () => {
+export default async function Page() {
   const progressWishLinkData = await getProgressWishLinkData();
 
   if (!progressWishLinkData) {
@@ -20,7 +20,7 @@ const page = async () => {
   const { status, transferInfo, ...progressWishesData } = progressWishLinkData;
 
   return (
-    <MainLayout Header={<Header leftMenu={<BackButton routePath="/" />} />}>
+    <MainLayout Header={<Header leftMenu={<BackButton routePath="/mypage" />} />}>
       <WisheEditFormFormProvider progressWishesData={progressWishesData}>
         <StepTitle title="생일잔치 링크 수정하기" />
         <Step.FormSection className="flex flex-col gap-12 mb-24">
@@ -29,6 +29,4 @@ const page = async () => {
       </WisheEditFormFormProvider>
     </MainLayout>
   );
-};
-
-export default page;
+}

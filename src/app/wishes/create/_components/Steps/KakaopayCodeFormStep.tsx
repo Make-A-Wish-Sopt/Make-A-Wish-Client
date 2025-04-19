@@ -2,8 +2,7 @@
 
 import { useFunnelContext } from '@/Context/FunnelContext';
 import useBoolean from '@/hooks/useBoolean';
-import { FormProvider, useForm, useFormContext, useFormState } from 'react-hook-form';
-import { getUserAccount } from '@/api/user';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import Button from '@/components/Elements/Button';
 import { useRouters } from '@/hooks/useRouters';
 import { WishesFunnelStepType } from '@/constant/funnelStep';
@@ -12,121 +11,82 @@ import {
   KakaopayCodeGuideImage,
   AccountAgreementCheckbox,
 } from '@/app/_components/Form/wish/KakaopayCodeForm';
-import {
-  AccountFormSchema,
-  AccountFormSchemaType,
-  WishesFormScehmaType,
-} from '@/Schema/wishes.schema';
+import { AccountFormSchema, AccountFormSchemaType } from '@/Schema/wishes.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Step } from '@/components/Modules/Funnel';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { createAccountWithWishData, updateAccount } from '@/app/_components/Form/wish/AccountForm';
-import { accountFormInitValues } from '@/constant/init';
 
-function KakaoCodeFormPrevButton() {
-  const { PrevButton, prevStep, setSharedData, getSharedData } =
+export function PrevButtonWithSaveData({
+  formData,
+  resetData,
+}: {
+  formData: AccountFormSchemaType;
+  resetData: () => void;
+}) {
+  const { prevStep, setSharedData, getSharedData, prevDisabled } =
     useFunnelContext<WishesFunnelStepType>();
-  const { getValues, reset } = useFormContext<AccountFormSchemaType>();
 
   useEffect(() => {
     const savedData = getSharedData('account') as AccountFormSchemaType;
-    if (savedData) {
-      reset({ ...savedData, forPayCode: true });
-    }
-  }, [getSharedData, reset]);
+    if (!savedData) return;
 
-  const handlePrevStep = () => {
+    resetData();
+  }, []);
+
+  const saveSharedData = async () => {
     setSharedData((prev) => ({
       ...prev,
-      account: { ...getValues(), forPayCode: true },
+      account: { ...formData },
     }));
-    prevStep();
   };
 
-  return <PrevButton onClick={handlePrevStep} />;
-}
-
-function NextButton({
-  isKakaoPayCodeValid,
-  noticeAgree,
-  isEdit,
-}: {
-  isKakaoPayCodeValid: boolean;
-  noticeAgree: boolean;
-  isEdit?: boolean;
-}) {
-  const { getSharedData } = useFunnelContext<WishesFunnelStepType>();
-  const { control, getValues } = useFormContext<AccountFormSchemaType>();
-  const { errors } = useFormState({ control, name: ['kakaoPayCode'] });
-  const { handleRouter } = useRouters();
-
-  const handleNextStep = async () => {
-    const accountData = getValues();
-    if (isEdit) {
-      updateAccount(accountData, () => handleRouter('/mypage'));
-    } else {
-      const wishFormData = getSharedData('wishes') as WishesFormScehmaType;
-      createAccountWithWishData(accountData, wishFormData, () =>
-        handleRouter('/wishes/create/complete'),
-      );
-    }
+  const handlePrevStep = async () => {
+    await saveSharedData();
+    prevStep();
   };
 
   return (
     <Button
-      disabled={!!errors.kakaoPayCode || !isKakaoPayCodeValid || !noticeAgree}
-      onClick={handleNextStep}
+      bgColor="gray4"
+      fontColor="white"
+      onClick={() => handlePrevStep()}
+      disabled={prevDisabled}
     >
-      {isEdit ? '수정 완료' : '생일잔치생성!'}
+      이전
     </Button>
   );
 }
 
-function KakaopayCodeFormStep({ isEdit }: { isEdit?: boolean }) {
-  const { setSharedData, getSharedData } = useFunnelContext<WishesFunnelStepType>();
-
-  const defaultValues = useMemo(() => {
-    const saved = getSharedData('account') as AccountFormSchemaType;
-    return saved ? { ...saved, forPayCode: true } : { ...accountFormInitValues, forPayCode: true };
-  }, [getSharedData]);
+function KakaopayCodeFormStep({
+  isEdit,
+  defaultFormValues,
+}: {
+  isEdit?: boolean;
+  defaultFormValues: AccountFormSchemaType;
+}) {
+  const { getSharedData } = useFunnelContext<WishesFunnelStepType>();
 
   const kakaopayCodeForm = useForm<AccountFormSchemaType>({
     mode: 'onChange',
-    defaultValues: { ...defaultValues },
+    defaultValues: { ...defaultFormValues, forPayCode: true },
     resolver: yupResolver(AccountFormSchema),
   });
-
   const isKakaoPayCodeValidToggle = useBoolean();
   const noticeAgreeToggle = useBoolean();
 
-  useEffect(() => {
-    const savedAccountFormData = getSharedData('account');
+  const { getValues, control, reset } = kakaopayCodeForm;
+  const { errors } = useFormState({ control, name: ['kakaoPayCode'] });
 
-    if (savedAccountFormData) return;
+  const { handleRouter } = useRouters();
 
-    const kakaoPayValidator = AccountFormSchema.pick(['kakaoPayCode']);
-    const fetchData = async () => {
-      try {
-        const response = await getUserAccount();
-        if (response.transferInfo) {
-          await kakaoPayValidator.validate({
-            kakaoPayCode: response.transferInfo.kakaoPayCode,
-          });
+  const checkDisabled = () => {
+    if (!isKakaoPayCodeValidToggle.state) return true;
+    if (!noticeAgreeToggle.state) return true;
+    if (errors.kakaoPayCode) return true;
 
-          kakaopayCodeForm.reset({ ...response.transferInfo });
-          setSharedData((prev) => ({
-            ...prev,
-            account: { ...response.transferInfo },
-          }));
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('초기 데이터 유효성 검사 실패:', error);
-      }
-    };
-
-    fetchData();
-  }, [getSharedData, setSharedData, kakaopayCodeForm]);
+    return false;
+  };
 
   return (
     <FormProvider {...kakaopayCodeForm}>
@@ -140,12 +100,26 @@ function KakaopayCodeFormStep({ isEdit }: { isEdit?: boolean }) {
       </Step.FormSection>
 
       <Step.ButtonWrapper horizontal className="gap-10">
-        <KakaoCodeFormPrevButton />
-        <NextButton
-          isEdit={isEdit}
-          isKakaoPayCodeValid={isKakaoPayCodeValidToggle.state}
-          noticeAgree={noticeAgreeToggle.state}
-        />
+        <PrevButtonWithSaveData formData={getValues()} resetData={() => reset(getValues())} />
+        {isEdit ? (
+          <Button
+            onClick={() => updateAccount(getValues(), () => handleRouter('/mypage'))}
+            disabled={checkDisabled()}
+          >
+            수정 완료
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              createAccountWithWishData(getValues(), getSharedData('wishes'), () =>
+                handleRouter('/wishes/create/complete'),
+              );
+            }}
+            disabled={checkDisabled()}
+          >
+            생성 완료!
+          </Button>
+        )}
       </Step.ButtonWrapper>
     </FormProvider>
   );

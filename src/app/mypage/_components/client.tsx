@@ -9,12 +9,12 @@ import useModalContent from '@/hooks/useModalContent';
 import Button from '@/components/Elements/Button';
 import { patchProgressWishes } from '@/api/wishes';
 import { toast } from 'sonner';
-import useKakaoAuth from '@/hooks/useKakaoAuth';
 import Image from 'next/image';
 import { GuideImg } from '@public/assets/images';
 import { useFetch } from '@/hooks/useFetch';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { colors } from '@/styles/styles';
+import useKakaoAuth from '@/hooks/useKakaoAuth';
 
 const authButtonStyle = 'font-bitbit text-[18px] text-main_blue cursor-pointer';
 
@@ -47,7 +47,15 @@ export function MypageMenuContainer({ children }: PropsWithChildren) {
 }
 
 export function EditWishMenu({ disabled }: { disabled?: boolean }) {
-  return <MoreButton text="진행 중인 생일잔치 정보 수정하기" disabled={disabled} />;
+  const { handleRouter } = useRouters();
+
+  return (
+    <MoreButton
+      text="진행 중인 생일잔치 정보 수정하기"
+      handleClick={() => handleRouter(`/mypage/edit/wish`)}
+      disabled={disabled}
+    />
+  );
 }
 
 export function PrevWishesData({ disabled }: { disabled?: boolean }) {
@@ -63,6 +71,7 @@ export function CSLinkMenu() {
 
 export function EditSelectPaymnetMenu({ disabled }: { disabled?: boolean }) {
   const { handleRouter } = useRouters();
+
   return (
     <MoreButton
       text="현금 입금 방식 변경하기"
@@ -104,9 +113,10 @@ export function CloseWishMenu({ disabled }: { disabled?: boolean }) {
     }
 
     setTimeout(() => {
-      closeModal('closeWish');
       handleRefresh();
-    }, 1500);
+    }, 1000);
+
+    closeModal('closeWish');
   };
 
   return (
@@ -143,7 +153,8 @@ export function CloseWishMenu({ disabled }: { disabled?: boolean }) {
 }
 
 export function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const { handleKaKaoLogin, handleKaKaoLogout } = useKakaoAuth();
+  const { handleKakaoLogout, handleKakaoLogin } = useKakaoAuth();
+
   const {
     Modal: LogoutModal,
     openModal: openLogoutModal,
@@ -159,7 +170,7 @@ export function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
       },
     })
       .then(() => {
-        handleKaKaoLogout();
+        handleKakaoLogout();
       })
       .catch(() => {});
   };
@@ -195,7 +206,7 @@ export function MypageAuthButtons({ isLoggedIn }: { isLoggedIn: boolean }) {
         </LogoutModal>
       ) : (
         <li>
-          <button type="button" onClick={handleKaKaoLogin} className={authButtonStyle}>
+          <button type="button" onClick={handleKakaoLogin} className={authButtonStyle}>
             회원가입
           </button>
         </li>

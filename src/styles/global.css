@@ -17,9 +17,12 @@
 }
 
 @layer utilities {
-  .custom-grid li:nth-child(3n + 2) {
-    position: relative;
-    transform: translateY(-13px);
+  .custom-grid-offset-15 li:nth-child(3n + 2) {
+    transform: translateY(15px);
+  }
+
+  .custom-grid-offset-m-15 li:nth-child(3n + 2) {
+    transform: translateY(-15px);
   }
 
   @-webkit-keyframes appearAnimation {

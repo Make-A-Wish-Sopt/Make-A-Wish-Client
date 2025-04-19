@@ -33,11 +33,13 @@ function MainHereSection() {
         조물주보다 <br />
         생일선물주
       </h1>
-      <figure className="mt-8 px-[2.2rem]">
+      <figure className="mt-8">
         <ServiceGuideModal />
       </figure>
-      <p className="text-[24px] text-main_blue mt-[31px] font-bitbit">
-        현금으로 선물 받는 생일잔치
+      <p className="text-[24px] text-main_blue mt-[31px] font-bitbit leading-tight text-center">
+        불필요한 선물이 지겹다면,
+        <br />
+        올해 생일엔 현금으로 선물 받기
       </p>
     </section>
   );

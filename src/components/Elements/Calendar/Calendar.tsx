@@ -1,6 +1,5 @@
 import React, { CSSProperties } from 'react';
 import { DayPicker, NextMonthButtonProps, PreviousMonthButtonProps } from 'react-day-picker';
-import { ko } from 'date-fns/locale';
 import 'react-day-picker/dist/style.css';
 import ArrowIcon from '../Icon/ArrowIcon';
 
@@ -39,7 +38,6 @@ export default function Calendar({ date, changeDate, isOpen, style }: CalendarPr
       mode="single"
       selected={date}
       onSelect={changeDate}
-      locale={ko}
       components={{
         NextMonthButton: NextMonthArrowButton,
         PreviousMonthButton: PreviousMonthArrowButton,

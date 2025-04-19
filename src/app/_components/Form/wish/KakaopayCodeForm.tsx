@@ -9,7 +9,7 @@ import { memo, useEffect, useState } from 'react';
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { FetchStatusType, useFetch } from '@/hooks/useFetch';
 import CheckedIcon, { WarningCheckedIcon } from '@/components/Elements/Icon/CheckedIcon';
-import { AccountFormSchemaType } from '@/Schema/wishes.schema';
+import { AccountFormSchema, AccountFormSchemaType } from '@/Schema/wishes.schema';
 import { LoadingCake } from '@/components/UI/Loading';
 
 export function AccountAgreementCheckbox({ onCheck }: { onCheck: (state: boolean) => void }) {
@@ -61,7 +61,9 @@ function getStatusIcon(
   isValid: boolean,
   hasError?: unknown,
 ): JSX.Element | null {
-  if (status === 'idle') return null;
+  if (status === 'idle' && isValid) return <CheckedIcon width={24} />;
+
+  if (status === 'idle' || status === 'loading') return null;
 
   if (status === 'success' && isValid) {
     return <CheckedIcon width={24} />;
@@ -88,12 +90,31 @@ export function KakaopayCodeInput({
   const [validCode, setValidCode] = useState<string | null>(null);
 
   useEffect(() => {
+    const validateInitialKakaoPayCode = async () => {
+      const formData = getValues();
+
+      try {
+        const accountValidator = AccountFormSchema.pick(['kakaoPayCode']);
+        await accountValidator.validate({ kakaoPayCode: formData.kakaoPayCode });
+
+        // 검증 통과 시 validAccount로 설정
+        setValidCode(formData.kakaoPayCode);
+        changeValidState(true);
+      } catch (err) {
+        changeValidState(false);
+      }
+    };
+
+    validateInitialKakaoPayCode();
+  }, []);
+
+  useEffect(() => {
     if (validCode === kakaoPayCode) {
       changeValidState(true);
       return;
     }
     changeValidState(false);
-  }, [kakaoPayCode, validCode, changeValidState]);
+  }, [kakaoPayCode]);
 
   useEffect(() => {
     if (!fetchData) return;

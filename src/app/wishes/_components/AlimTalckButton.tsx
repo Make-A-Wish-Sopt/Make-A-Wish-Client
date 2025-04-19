@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { postAlimTalk } from '@/api/public';
 import { useFetch } from '@/hooks/useFetch';
 import { LoadingCake } from '@/components/UI/Loading';
+import { ColorsTypes } from '@/styles/styles';
 
 // 🟢 알림톡 입력 필드 컴포넌트
 function AlimTalkInfoInputs({
@@ -86,12 +87,22 @@ function AlimTalkInfoInputs({
 }
 
 // 🟢 알림톡 버튼 + 모달
-function AlimTalkMessageButton({ buttonText }: { buttonText: string }) {
+function AlimTalkMessageButton({
+  buttonText,
+  buttonColor = 'gray4',
+  fontColor = 'white',
+}: {
+  buttonText: string;
+  buttonColor?: keyof ColorsTypes;
+  fontColor?: keyof ColorsTypes;
+}) {
   const { Modal, openModal, closeModal, ConfirmModalContent } = useModalContent<['alimTalk']>();
 
-  if (!window.Kakao.isInitialized()) {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
-  }
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
 
   const alimtalkMethods = useForm<AlimTalkSchemaType>({
     mode: 'onChange',
@@ -114,7 +125,7 @@ function AlimTalkMessageButton({ buttonText }: { buttonText: string }) {
     <Modal
       modalKey="alimTalk"
       Trigger={
-        <Button bgColor="gray4" fontColor="white" onClick={() => openModal('alimTalk')}>
+        <Button bgColor={buttonColor} fontColor={fontColor} onClick={() => openModal('alimTalk')}>
           {buttonText}
         </Button>
       }
