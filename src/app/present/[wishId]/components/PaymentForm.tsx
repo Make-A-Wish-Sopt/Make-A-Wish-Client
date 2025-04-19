@@ -112,8 +112,8 @@ function AccountDepositPayment({
     const { accountInfo } = transferInfo;
 
     const 계좌정보 = `${accountInfo.account} ${accountInfo.bank}`;
-    toast.success(`${계좌정보} 계좌를 복사했어요!`);
-    await clipboardCopy(계좌정보);
+
+    await clipboardCopy(계좌정보, `${계좌정보} 계좌를 복사했어요!`);
   };
 
   const handleNextButtonClick = () => {

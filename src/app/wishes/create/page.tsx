@@ -1,15 +1,16 @@
 import { Step } from '@/components/Modules/Funnel';
 import MainLayout from '@/layouts/MainLayout';
 import ErrorPage from '@/app/error';
-import Header from '@/components/Elements/Header';
 import { WishesCreateFunnelSteps } from '@/constant/funnelStep';
 import FunnelContainer from '@/app/_components/FunnelContainer';
-import BackButton from '@/components/Elements/Button/BackButton';
 import dynamic from 'next/dynamic';
 import StepTitle from '@/components/UI/StepTitle';
 import { getUserAccount } from '@/api/user';
 import { accountFormInitValues } from '@/constant/init';
+import Header from '@/components/Elements/Header';
+import BackButton from '@/components/Elements/Button/BackButton';
 import WishesFormStep from './_components/Steps/WishesFormStep';
+import StepBackHeader from '../../_components/StepBackHeader';
 
 const DynamicSelectPaymentFormStep = dynamic(
   () => import('./_components/Steps/SelectPaymentFormStep'),
@@ -41,16 +42,18 @@ async function WishesCreatePage({ searchParams }: { searchParams: { wishTitle: s
       </Step>
 
       <Step name="selectPayment">
-        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+        <MainLayout>
+          <StepBackHeader />
           <StepTitle title="현금 입금 방식 선택하기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
-            <DynamicSelectPaymentFormStep />
+            <DynamicSelectPaymentFormStep isForPayCode />
           </Step.FormSection>
         </MainLayout>
       </Step>
 
       <Step name="account">
-        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+        <MainLayout>
+          <StepBackHeader />
           <StepTitle title="입금 받을 계좌 입력하기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicAccountFormStep
@@ -64,7 +67,8 @@ async function WishesCreatePage({ searchParams }: { searchParams: { wishTitle: s
       </Step>
 
       <Step name="kakaopay">
-        <MainLayout Header={<Header leftMenu={<BackButton routePath="/wishes" />} />}>
+        <MainLayout>
+          <StepBackHeader />
           <StepTitle title="카카오톡 송금코드 가져오기" />
           <Step.FormSection className="flex flex-col gap-12 mb-24">
             <DynamicKakaopayCodeForm

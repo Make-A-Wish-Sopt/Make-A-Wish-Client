@@ -12,6 +12,7 @@ import AlimTalkMessageButton from '@/app/wishes/_components/AlimTalckButton';
 import { CloseBlueIc } from '@public/assets/icons';
 import Link from 'next/link';
 import Image from 'next/image';
+import StepBackHeader from '@/app/_components/StepBackHeader';
 import WishInfoForGiver from './components/PresentForm.Server';
 import PresentForm from './components/PresentForm';
 
@@ -47,6 +48,7 @@ export default async function GivePresentPage({ params }: { params: { wishId: st
 
       <Step name="payment">
         <MainLayout>
+          <StepBackHeader />
           <Step.FormSection className="flex flex-col mb-24">
             <DynamicPaymentForm transferInfo={transferInfo} nickname={nickname} />
           </Step.FormSection>

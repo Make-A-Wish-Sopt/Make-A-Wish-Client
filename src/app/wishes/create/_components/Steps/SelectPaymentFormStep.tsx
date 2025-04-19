@@ -22,16 +22,21 @@ function SelectPaymentFormStep({ isForPayCode }: { isForPayCode?: boolean }) {
     }
   };
 
+  console.log(isForPayCode);
+
   useEffect(() => {
     if (!isForPayCode) {
       selectedAccountToggle.changeState(true);
     }
 
     const savedData = getSharedData('account') as AccountFormSchemaType;
+
     if (!savedData) return;
 
     selectedAccountToggle.changeState(!savedData.forPayCode);
   }, []);
+
+  console.log(selectedAccountToggle.state);
 
   return (
     <>

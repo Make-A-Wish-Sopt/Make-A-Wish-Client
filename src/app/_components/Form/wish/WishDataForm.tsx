@@ -11,14 +11,12 @@ import UploadImageBox from '@/components/UI/UploadImageBox';
 import useModals from '@/hooks/useModals';
 import Calendar from '@/components/Elements/Calendar/Calendar';
 import CalendarDateBox from '@/components/Elements/Calendar/CalendarDateBox';
-import dynamic from 'next/dynamic';
 import ItemWrapper from '@/components/Elements/Button/FixedBottomButton';
 import Box from '@/components/Elements/Box';
 import { MainBlueArrowIc } from '@public/assets/icons';
 import Image from 'next/image';
 import { getDate } from '@/utils/date';
-
-const DynamicDropDownPresentList = dynamic(() => import('@/components/UI/DropDownPresentList'));
+import DropDownPresentList from '@/components/UI/DropDownPresentList';
 
 export const ImageUploadBox = memo(() => {
   const { imageUrl, preview, uploadImageFile, isLoading } = useUploadItemInfo();
@@ -143,7 +141,7 @@ export const WantsGiftOption = memo(() => {
               ${guideOepn.state ? 'max-h-388 opacity-100 visible' : 'max-h-0 opacity-0 invisible'}
             `}
         >
-          {guideOepn.state && <DynamicDropDownPresentList />}
+          <DropDownPresentList />
         </div>
       </Box>
 

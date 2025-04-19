@@ -145,8 +145,6 @@ function NextButton({
   const { wishId } = useParams();
   const giftMenuId = useWatch({ control, name: 'giftMenuId' });
 
-  console.log(isValid);
-
   const handleNextStep = async () => {
     const presentFormData = getValues();
     if (!presentFormData) return;
@@ -174,6 +172,7 @@ function NextButton({
 
   const checkDisabled = () => {
     if (!isValid) return true;
+    if (!wantsGift && isValid) return false;
     if (!onlyPresentMessage && !giftMenuId) return true;
 
     return false;
@@ -189,8 +188,8 @@ function NextButton({
 export default function PresentForm({ wantsGift }: { wantsGift: boolean }) {
   const searchParams = useSearchParams();
   const avatarCakeId = searchParams.get('avatarCakeId');
-
   const onlyPresentMessageToggle = useBoolean();
+  const { getSharedData } = useFunnelContext<PresentFunnelStepType>();
 
   const presentFormMethods = useForm<PresentFormSchemaType>({
     mode: 'onChange',
@@ -200,6 +199,14 @@ export default function PresentForm({ wantsGift }: { wantsGift: boolean }) {
     },
     resolver: yupResolver(presentFormSchema),
   });
+
+  useEffect(() => {
+    const savedData = getSharedData('present') as PresentFormSchemaType;
+
+    if (!savedData) return;
+
+    presentFormMethods.reset(savedData);
+  }, []);
 
   return (
     <FormProvider {...presentFormMethods}>
