@@ -181,24 +181,7 @@ function AccountDepositPayment({
             src={MainCakeImg}
             alt="계좌번호 복사하기 이미지"
             width={128}
-            style={{
-              animation: 'growShrink 1s ease-out infinite',
-            }}
           />
-          <style jsx>{`
-            @keyframes growShrink {
-              0% {
-                transform: scale(1);
-              }
-
-              50% {
-                transform: scale(1.1);
-              }
-              100% {
-                transform: scale(1);
-              }
-            }
-          `}</style>
         </button>
       </div>
 
