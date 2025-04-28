@@ -10,14 +10,17 @@ export function ServiceGuideModal() {
     <Modal
       modalKey="guide"
       Trigger={
-        <Image
-          src={MainCakeListImg}
-          onClick={() => openModal('guide')}
-          alt="생일 케이크 이미지 모음"
-          priority
-          width={330}
-          height={330}
-        />
+        <div className="flex flex-col items-center w-full">
+          <Image
+            src={MainCakeListImg}
+            className="w-[85%]"
+            onClick={() => openModal('guide')}
+            alt="생일 케이크 이미지 모음"
+            priority
+            width={330}
+            height={330}
+          />
+        </div>
       }
     >
       <Modal.ModalOverlay>

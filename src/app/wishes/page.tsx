@@ -17,6 +17,8 @@ import ShareWishesButton from './_components/ShareWishesButtonWithModal';
 import CreateWishesButton from './_components/CreateWishesButton';
 import AlimTalkMessageButton from './_components/AlimTalckButton';
 
+export const dynamic = 'force-dynamic';
+
 const dayTextStyle =
   'flex flex-row-reverse w-full text-[24px] font-bitbit text-center text-main_blue mt-12 mb-10';
 

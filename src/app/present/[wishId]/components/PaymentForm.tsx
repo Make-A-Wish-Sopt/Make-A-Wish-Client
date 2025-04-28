@@ -224,7 +224,7 @@ function AccountDepositPayment({
         </InputForm>
       </div>
 
-      <Step.ButtonWrapper fixedBottom>
+      <Step.ButtonWrapper className="w-full">
         <Button disabled={clickYet.state} onClick={() => handleNextButtonClick()}>
           {clickYet.state ? '송금하고, 편지 확인하기' : '송금 완료했어요!'}
         </Button>

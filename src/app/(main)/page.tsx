@@ -37,9 +37,7 @@ function MainHereSection() {
         <ServiceGuideModal />
       </figure>
       <p className="text-[24px] text-main_blue mt-[31px] font-bitbit leading-tight text-center">
-        불필요한 선물이 지겹다면,
-        <br />
-        올해 생일엔 현금으로 선물 받기
+        생일선물 현금으로 받고 싶다면?
       </p>
     </section>
   );
